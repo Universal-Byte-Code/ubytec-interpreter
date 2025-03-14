@@ -9,6 +9,6 @@ using static ubytec_interpreter.Operations.Primitives;
 
 namespace ubytec_interpreter
 {
-    public readonly record struct Variable(PrimitiveType BlockType, bool nullable, string Name, object? Value);
+    public readonly record struct Variable(PrimitiveType BlockType, bool Nullable, string Name, object? Value, SyntaxToken[] SyntaxTokens);
     public readonly record struct Condition(object? Left, string? Operand, object? Right);
 }

@@ -30,19 +30,29 @@ using static ubytec_interpreter.Operations.StackOperarions;
 
 var code = @"
 block t_void
-    if 1 == 1
-        if 2 != 2
+    t_bool thisIsFromTheBlock true
+    loop t_void
+        t_bool hello false
+        if 1 == 1
+            if 2 != 2
+            t_half theHalf 0.8
+                nop
+            end
+        else
+            t_int32 uwu 17
             nop
         end
-    else
+    end
+    while 666 t_bool 2 != 2 
+        t_void dearGoffyGod false
         nop
     end
 end
 ";
 
-var (byteCode, opCode, tokens) = Compiler.Parse(code);
-var compiled = Compiler.CompileSyntax(opCode, tokens);
-var nasm = Compiler.CompileAST(compiled);
+var (opCode, tokens) = ASTCompiler.Parse(code);
+var compiled = ASTCompiler.CompileSyntax(opCode, tokens);
+var nasm = ASTCompiler.CompileAST(compiled);
 //var b = Compiler.ParseOperationsToByteArray(opC0de);
 //var compiled = Compiler.CompileToX86(byteCode); 
 //var optimized = Optimizer.OptimizePushPop(compiled);
@@ -57,6 +67,12 @@ var options = new JsonSerializerOptions
 options.Converters.Add(new IOpCodeConverter());
 
 string json = JsonSerializer.Serialize(compiled, options);
-Console.WriteLine(nasm);
 
-Console.ReadLine();
+using (var file1 = File.CreateText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop),"ubc-compiled.ubc.nasm")))
+{
+    file1.WriteLine(nasm);
+}
+using (var file2 = File.CreateText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "ubc-compiled.ubc.ast.json")))
+{
+    file2.WriteLine(json);
+}

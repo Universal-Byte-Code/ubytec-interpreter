@@ -99,7 +99,7 @@ namespace ubytec_interpreter.Operations
                 stacks[1].Push(ifLabel);      //  If start label is pushed to the stack
 
                 // ✅ Ensure RETURN validation works
-                if (BlockType == null)
+                if (BlockType == null || BlockType == PrimitiveType.Default)
                 {
                     stacks[2].Push((byte)PrimitiveType.Bool); //  If no type is provided push a bool value
                     stacks[3].Push((byte)PrimitiveType.Bool); //  If no type is provided push a bool value
@@ -187,12 +187,12 @@ namespace ubytec_interpreter.Operations
                 {
                     // WHILE loops need counter checking before breaking
                     output +=
-                        "pop rax       ; Load loop counter\n" +
-                        "dec rax       ; Decrement counter\n" +
-                        "push rax      ; Store updated counter\n" +
-                        "cmp rax, 0    ; Check if counter is zero\n" +
-                        "je {blockEnd} ; Exit loop if counter == 0\n" +
-                        "jmp {blockStart} ; Otherwise, continue loop";
+                        "  pop rax       ; Load loop counter\n" +
+                        "  dec rax       ; Decrement counter\n" +
+                        "  push rax      ; Store updated counter\n" +
+                        "  cmp rax, 0    ; Check if counter is zero\n" +
+                        $"  je {blockEnd} ; Exit loop if counter == 0\n" +
+                        $"  jmp {blockStart} ; Otherwise, continue loop\n";
                 }
 
                 output += $"{blockEnd}: ; END of {blockStart}";
@@ -478,32 +478,46 @@ namespace ubytec_interpreter.Operations
                 return $"{switchStartLabel}: ; SWITCH: Salto múltiple\n";
             }
         }
-        public readonly record struct WHILE(int[]? LabelIDxs, List<Variable>? Variables = null) : IOpCode
+        public readonly record struct WHILE(PrimitiveType? BlockType = PrimitiveType.Default, Condition? Condition = null, int[]? LabelIDxs = null, List<Variable>? Variables = null) : IOpCode
         {
             public readonly byte OpCode => 0x0C;
 
-            public string Compile(Stack<object> blockEndStack, Stack<object> blockStartStack) =>
-                ((IOpCode)this).Compile(blockEndStack, blockStartStack);
+            public string Compile(Stack<object> blockEndStack, Stack<object> blockStartStack, Stack<object> blockExpectedTypeStack, Stack<object> blockActualTypeStack) =>
+                ((IOpCode)this).Compile(blockEndStack, blockStartStack, blockExpectedTypeStack, blockActualTypeStack);
+            private static bool ValidateWhileType(PrimitiveType blockType) => IsNumeric(blockType) || IsBool(blockType);
             string IOpCode.Compile(params Stack<object>[]? stacks)
             {
                 ArgumentNullException.ThrowIfNull(stacks);
 
+                if (!ValidateWhileType(BlockType == PrimitiveType.Default ?
+                    PrimitiveType.Bool :
+                    BlockType ?? PrimitiveType.Bool))
+                    throw new Exception($"Invalid IF blockType {BlockType}");
+
                 string? whileStartLabel;
                 string? whileEndLabel;
 
-                if (LabelIDxs != null)
+                // ✅ Ensure RETURN validation works
+                if (BlockType == null || BlockType == PrimitiveType.Default)
+                {
+                    stacks[2].Push((byte)PrimitiveType.Bool); //  If no type is provided push a bool value
+                    stacks[3].Push((byte)PrimitiveType.Bool); //  If no type is provided push a bool value
+                }
+                else
+                {
+                    stacks[2].Push((byte)BlockType); // Else push the specified type to the stack
+                    stacks[3].Push((byte)BlockType); // Else push the specified type to the stack
+                }
+
+                if (LabelIDxs is { Length: > 0 })
                 {
                     var output = string.Empty;
                     foreach (var labelIDx in LabelIDxs)
                     {
-                        whileEndLabel = NextLabel("end_while");
+                        whileEndLabel = $"end_while_{labelIDx}";
                         whileStartLabel = $"while_{labelIDx}";
 
-                        output +=
-                         $"{whileStartLabel}: ; WHILE start\n" +
-                         $"pop rax\n" +
-                         $"cmp rax, 0\n" +
-                         $"je {whileEndLabel}   ; Exit loop if condition == 0";
+                        output += $"{whileStartLabel}: ; WHILE start\n{GenerateWhileCondition(Condition, whileEndLabel)}";
 
                         // Push to block stack (ensures proper END handling)
                         stacks[0].Push(whileEndLabel);
@@ -520,10 +534,39 @@ namespace ubytec_interpreter.Operations
                 stacks[0].Push(whileEndLabel);
                 stacks[1].Push(whileStartLabel);
 
-                return $"{whileStartLabel}: ; WHILE start\n" +
-                 $"pop rax\n" +
-                 $"cmp rax, 0\n" +
-                 $"je {whileEndLabel}   ; Exit loop if condition == 0";
+                return $"{whileStartLabel}: ; WHILE start\n{GenerateWhileCondition(Condition, whileEndLabel)}";
+            }
+
+            /// <summary>
+            /// Similar logic to your IF’s condition. If Condition != null,
+            /// do “mov rax, left; cmp rax, right; [jumpInstruction] endLabel”.
+            /// Otherwise do “pop rax; cmp rax, 0; je endLabel”.
+            /// </summary>
+            private static string GenerateWhileCondition(Condition? cond, string endLabel)
+            {
+                if (cond is null)
+                    return $"  pop rax ; WHILE Condition\n  cmp rax, 0\n  je {endLabel}   ; Exit loop if condition == 0";
+
+                // Condition-based approach
+                // We replicate the logic from your IF
+                var left = cond.Value.Left;
+                var right = cond.Value.Right;
+                var op = cond.Value.Operand;
+
+                // The jump instruction is "inverse" => if condition is *not* satisfied, jump out.
+                // The mapping is the same as your IF example:
+                string jumpInstruction = op switch
+                {
+                    "==" => "jne",  // if left != right => exit
+                    "!=" => "je",   // if left == right => exit
+                    "<" => "jge",  // if left >= right => exit
+                    "<=" => "jg",   // if left > right  => exit
+                    ">" => "jle",  // if left <= right => exit
+                    ">=" => "jl",   // if left < right  => exit
+                    _ => "jne"
+                };
+
+                return $"  mov rax, {left}    ; Evaluate left\n  cmp rax, {right}   ; Compare with right\n  {jumpInstruction} {endLabel}    ; Jump if condition is false";
             }
         }
         public readonly record struct CLEAR : IOpCode
@@ -547,6 +590,15 @@ namespace ubytec_interpreter.Operations
             public string Compile() => ((IOpCode)this).Compile();
 
             string IOpCode.Compile(params Stack<object>[]? stacks) => "xor rax, rax   ; NULL = 0\n  push rax";
+        }
+
+        public readonly record struct VAR(Variable Variable) : IOpCode
+        {
+            public readonly byte OpCode => 0x10;
+
+            public string Compile() => ((IOpCode)this).Compile();
+
+            string IOpCode.Compile(params Stack<object>[]? stacks) => string.Empty;
         }
     }
 }
