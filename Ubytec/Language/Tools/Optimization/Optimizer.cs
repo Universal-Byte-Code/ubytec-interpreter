@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace ubytec_interpreter
+namespace Ubytec.Language.Tools.Optimization
 {
     internal static class Optimizer
     {
@@ -199,10 +199,8 @@ namespace ubytec_interpreter
         {
             // e.g. if reg="rax", synonymsForReg = ["rax","eax","ax","ah","al"]
             if (!SubregisterSynonyms.TryGetValue(reg.ToLower(), out var synonymsForReg))
-            {
                 // If no synonyms known, fallback to a simpler pattern
                 synonymsForReg = new[] { reg.ToLower() };
-            }
 
             // Build an OR pattern with the synonyms
             var synonyms = string.Join("|", synonymsForReg.Select(Regex.Escape));

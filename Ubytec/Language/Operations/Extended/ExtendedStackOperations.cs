@@ -1,7 +1,8 @@
 ﻿using System.Collections.ObjectModel;
-using static ubytec_interpreter.Operations.StackOperarions;
+using Ubytec.Language.Operations;
+using static Ubytec.Language.Operations.StackOperarions;
 
-namespace ubytec_interpreter.Operations.Extended
+namespace Ubytec.Language.Operations.Extended
 {
     public static class ExtendedStackOperations
     {
@@ -10,8 +11,6 @@ namespace ubytec_interpreter.Operations.Extended
             public byte OpCode => 0xFF;
             public readonly byte ExtensionGroup => 0x10;
             public readonly byte ExtendedOpCode => 0x11;
-
-            public readonly ReadOnlyCollection<byte> Operands => ToolBox.EncodeOperands(ExtensionGroup, ExtendedOpCode, stackIndex);
 
             string IOpCode.Compile(params Stack<object>[]? stacks)
             {
@@ -26,8 +25,6 @@ namespace ubytec_interpreter.Operations.Extended
             public readonly byte ExtensionGroup => 0x10;
             public readonly byte ExtendedOpCode => 0x18;
 
-            public readonly ReadOnlyCollection<byte> Operands => ToolBox.EncodeOperands(ExtensionGroup, ExtendedOpCode, stackIndex);
-
             string IOpCode.Compile(params Stack<object>[]? stacks)
             {
                 throw new NotImplementedException();
@@ -40,8 +37,6 @@ namespace ubytec_interpreter.Operations.Extended
             public readonly byte ExtensionGroup => 0x10;
             public readonly byte ExtendedOpCode => 0x1D;
 
-            public readonly ReadOnlyCollection<byte> Operands => ToolBox.EncodeOperands(ExtensionGroup, ExtendedOpCode, n);
-
             string IOpCode.Compile(params Stack<object>[]? stacks)
             {
                 throw new NotImplementedException();
@@ -53,8 +48,6 @@ namespace ubytec_interpreter.Operations.Extended
             public byte OpCode => 0xFF;
             public readonly byte ExtensionGroup => 0x10;
             public readonly byte ExtendedOpCode => 0x1E;
-
-            public readonly ReadOnlyCollection<byte> Operands => ToolBox.EncodeOperands(ExtensionGroup, ExtendedOpCode, n);
 
             string IOpCode.Compile(params Stack<object>[]? stacks)
             {

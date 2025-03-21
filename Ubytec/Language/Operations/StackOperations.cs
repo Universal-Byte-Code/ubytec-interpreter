@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using static ubytec_interpreter.Operations.CoreOperations;
+using static Ubytec.Language.Operations.CoreOperations;
 
-namespace ubytec_interpreter.Operations
+namespace Ubytec.Language.Operations
 {
     public static class StackOperarions
     {

@@ -1,17 +1,17 @@
-﻿using static ubytec_interpreter.Operations.Primitives;
-using static ubytec_interpreter.Operations.StackOperarions;
+﻿using Ubytec.Language.Syntax.ExpressionFragments;
+using static Ubytec.Language.Syntax.Enum.Primitives;
 
-namespace ubytec_interpreter.Operations
+namespace Ubytec.Language.Operations
 {
     public static class CoreOperations
     {
-        private static readonly Dictionary<string, int> PrefixToLabelCounterMap = [];
+        private static readonly Dictionary<string, int> _prefixToLabelCounterMap = [];
 
         // Generate a unique label for jumps
         private static string NextLabel(string prefix)
         {
-            PrefixToLabelCounterMap.TryAdd(prefix, 0);
-            return $"{prefix}_{PrefixToLabelCounterMap[prefix]++}";
+            _prefixToLabelCounterMap.TryAdd(prefix, 0);
+            return $"{prefix}_{_prefixToLabelCounterMap[prefix]++}";
         }
 
         public readonly record struct TRAP : IOpCode
@@ -28,7 +28,7 @@ namespace ubytec_interpreter.Operations
             public string Compile() => ((IOpCode)this).Compile();
             string IOpCode.Compile(params Stack<object>[]? stacks) => "nop   ; NOP";
         }
-        public readonly record struct BLOCK(PrimitiveType? BlockType = PrimitiveType.Default, List<Variable>? Variables = null) : IOpCode
+        public readonly record struct BLOCK(PrimitiveType? BlockType = PrimitiveType.Default, List<VariableExpressionFragment>? Variables = null) : IOpCode
         {
             public readonly byte OpCode => 0x02;
 
@@ -51,7 +51,7 @@ namespace ubytec_interpreter.Operations
                 return $"{blockLabel}: ; BLOCK start";
             }
         }
-        public readonly record struct LOOP(PrimitiveType? BlockType = PrimitiveType.Default, List<Variable>? Variables = null) : IOpCode
+        public readonly record struct LOOP(PrimitiveType? BlockType = PrimitiveType.Default, List<VariableExpressionFragment>? Variables = null) : IOpCode
         {
             public readonly byte OpCode => 0x03;
 
@@ -76,7 +76,7 @@ namespace ubytec_interpreter.Operations
             }
         }
 
-        public readonly record struct IF(PrimitiveType? BlockType = PrimitiveType.Default, Condition? Condition = null, List<Variable>? Variables = null) : IOpCode
+        public readonly record struct IF(PrimitiveType? BlockType = PrimitiveType.Default, ConditionExpressionFragment? Condition = null, List<VariableExpressionFragment>? Variables = null) : IOpCode
         {
             public readonly byte OpCode => 0x04;
 
@@ -88,7 +88,7 @@ namespace ubytec_interpreter.Operations
                 ArgumentNullException.ThrowIfNull(stacks);
 
                 if (!ValidateIfType(BlockType == PrimitiveType.Default ?
-                    PrimitiveType.Bool : 
+                    PrimitiveType.Bool :
                     BlockType ?? PrimitiveType.Bool))
                     throw new Exception($"Invalid IF blockType {BlockType}");
 
@@ -137,7 +137,7 @@ namespace ubytec_interpreter.Operations
                 return $"{ifLabel}: ; IF START\n{raxHandling}\n  cmp rax, 0\n  je {ifEndLabel}   ; Jump if condition == 0";
             }
         }
-        public readonly record struct ELSE(List<Variable>? Variables = null) : IOpCode
+        public readonly record struct ELSE(List<VariableExpressionFragment>? Variables = null) : IOpCode
         {
             public readonly byte OpCode => 0x05;
 
@@ -317,7 +317,7 @@ namespace ubytec_interpreter.Operations
                 return output ?? throw new Exception("Invalid CONTINUE instruction...");
             }
         }
-        public readonly record struct RETURN(List<Variable>? Variables = null) : IOpCode
+        public readonly record struct RETURN(List<VariableExpressionFragment>? Variables = null) : IOpCode
         {
             public readonly byte OpCode => 0x09;
 
@@ -327,8 +327,8 @@ namespace ubytec_interpreter.Operations
             {
                 ArgumentNullException.ThrowIfNull(stacks);
 
-                string? endLabel = (string)stacks[0].Pop();
-                string? startLabel = (string)stacks[1].Pop();
+                string? endLabel = string.Empty;
+                string? startLabel = string.Empty;
 
                 var poppedEnds = new Stack<string>();
                 var poppedStarts = new Stack<string>();
@@ -377,20 +377,18 @@ namespace ubytec_interpreter.Operations
                 }
 
                 if (!foundFunctionBoundary)
-                {
                     // No se encontró un bloque de función: error o caso especial
                     throw new Exception("RETURN without a valid function boundary.");
-                }
 
 
                 // Rearmamos la cadena final
-                var output = $"pop rax   ; RETURN value\n  ret\n{endLabel}: ; End of function => {startLabel}";
+                var output = $"  pop rax   ; RETURN value\n  ret\n{endLabel}: ; End of function => {startLabel}";
 
                 // Devolvemos el resultado
                 return output;
             }
         }
-        public readonly record struct BRANCH(object CaseValue, int? LabelIDx, PrimitiveType? BlockType = PrimitiveType.Default, List<Variable>? Variables = null) : IOpCode
+        public readonly record struct BRANCH(object CaseValue, int? LabelIDx, PrimitiveType? BlockType = PrimitiveType.Default, List<VariableExpressionFragment>? Variables = null) : IOpCode
         {
             public readonly byte OpCode => 0x0A;
 
@@ -409,8 +407,8 @@ namespace ubytec_interpreter.Operations
                 if (stacks[2].Count == 0 || stacks[3].Count == 0)
                     throw new Exception("BRANCH: El stack de tipos esperados está vacío.");
 
-                var expectedType = ((byte)stacks[2].Peek());
-                var actualType = ((byte)stacks[3].Peek());
+                var expectedType = (byte)stacks[2].Peek();
+                var actualType = (byte)stacks[3].Peek();
 
                 ValidateCasts(expectedType, actualType);
                 ValidateCasts(expectedType, (byte?)BlockType ?? (byte)PrimitiveType.Void);
@@ -432,7 +430,7 @@ namespace ubytec_interpreter.Operations
                 return output;
             }
         }
-        public readonly record struct SWITCH(int? TableIDx, PrimitiveType? BlockType = PrimitiveType.Default, List<Variable>? Variables = null) : IOpCode
+        public readonly record struct SWITCH(int? TableIDx, PrimitiveType? BlockType = PrimitiveType.Default, List<VariableExpressionFragment>? Variables = null) : IOpCode
         {
             public readonly byte OpCode => 0x0B;
 
@@ -478,7 +476,7 @@ namespace ubytec_interpreter.Operations
                 return $"{switchStartLabel}: ; SWITCH: Salto múltiple\n";
             }
         }
-        public readonly record struct WHILE(PrimitiveType? BlockType = PrimitiveType.Default, Condition? Condition = null, int[]? LabelIDxs = null, List<Variable>? Variables = null) : IOpCode
+        public readonly record struct WHILE(PrimitiveType? BlockType = PrimitiveType.Default, ConditionExpressionFragment? Condition = null, int[]? LabelIDxs = null, List<VariableExpressionFragment>? Variables = null) : IOpCode
         {
             public readonly byte OpCode => 0x0C;
 
@@ -542,7 +540,7 @@ namespace ubytec_interpreter.Operations
             /// do “mov rax, left; cmp rax, right; [jumpInstruction] endLabel”.
             /// Otherwise do “pop rax; cmp rax, 0; je endLabel”.
             /// </summary>
-            private static string GenerateWhileCondition(Condition? cond, string endLabel)
+            private static string GenerateWhileCondition(ConditionExpressionFragment? cond, string endLabel)
             {
                 if (cond is null)
                     return $"  pop rax ; WHILE Condition\n  cmp rax, 0\n  je {endLabel}   ; Exit loop if condition == 0";
@@ -592,7 +590,7 @@ namespace ubytec_interpreter.Operations
             string IOpCode.Compile(params Stack<object>[]? stacks) => "xor rax, rax   ; NULL = 0\n  push rax";
         }
 
-        public readonly record struct VAR(Variable Variable) : IOpCode
+        public readonly record struct VAR(VariableExpressionFragment Variable) : IOpCode
         {
             public readonly byte OpCode => 0x10;
 

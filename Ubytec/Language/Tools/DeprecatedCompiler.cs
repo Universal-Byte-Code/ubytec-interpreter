@@ -1,4 +1,4 @@
-﻿namespace ubytec_interpreter
+﻿namespace Ubytec.Language.Tools
 {
     internal static partial class DeprecatedCompiler
     {
@@ -113,10 +113,10 @@
             //   push / pop registers for data manipulation.
             // For BLOCK / IF / LOOP, we generate labels.
             // Each time we see a structured opcode, we'll create a label or jump.
-            Stack<object> blockEndStack = new Stack<object>();
-            Stack<object> blockStartStack = new Stack<object>();
-            Stack<object> blockExpectedTypeStack = new Stack<object>();
-            Stack<object> blockActualTypeStack = new Stack<object>();
+            var blockEndStack = new Stack<object>();
+            var blockStartStack = new Stack<object>();
+            var blockExpectedTypeStack = new Stack<object>();
+            var blockActualTypeStack = new Stack<object>();
 
             int codeCounter = 0;
             while (codeCounter < bytecode.Length)
@@ -257,9 +257,7 @@
                             asm.Add(GetDepth()+$"  ; DROP {stackIndex} - Remove item at depth {stackIndex}");
 
                             if (stackIndex == 0)
-                            {
                                 asm.Add(GetDepth()+"  pop rax   ; DROP - Remove top stack value");
-                            }
                             else
                             {
                                 asm.Add(GetDepth()+$"  mov rbx, rsp");
@@ -399,10 +397,8 @@
                             asm.Add(GetDepth()+$"  ; ROLL {index} - Move value at index {index} to the top");
 
                             if (index == 0)
-                            {
                                 // If index == 0, nothing needs to be done
                                 break;
-                            }
 
                             // Load the target element (without popping yet)
                             asm.Add(GetDepth()+$"  mov rax, [rsp + {index * 8}]   ; Load value at index {index}");

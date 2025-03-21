@@ -1,9 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ubytec-interpreter", "ubytec-interpreter\ubytec-interpreter.csproj", "{429C28A8-B354-4D90-BA4E-13C74409495E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{BC958F4A-9DBB-42AE-89CF-4C865D2B69F4}"
+	ProjectSection(SolutionItems) = preProject
+		ubc-compiled.ubc.ast.json = ubc-compiled.ubc.ast.json
+		ubc-compiled.ubc.ast.json.utf64 = ubc-compiled.ubc.ast.json.utf64
+		ubc-compiled.ubc.nasm = ubc-compiled.ubc.nasm
+	EndProjectSection
+	ProjectSection(FolderGlobals) = preProject
+		C_5_4Users_4Usuario_4source_4repos_4ubytec-interpreter_4ubc-compiled_1ubc_1ast_1json__JsonSchema = https://raw.githubusercontent.com/Universal-Byte-Code/schema/refs/heads/main/.ubc.ast.json
+		C_5_4Users_4Usuario_4source_4repos_4ubytec-interpreter_4_1ubc_1ast_1schema_1json__JsonSchema = 
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubytec", "Ubytec\Ubytec.csproj", "{E69D9447-810C-40F0-83D6-E7FA74BCD919}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +22,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{429C28A8-B354-4D90-BA4E-13C74409495E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{429C28A8-B354-4D90-BA4E-13C74409495E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{429C28A8-B354-4D90-BA4E-13C74409495E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{429C28A8-B354-4D90-BA4E-13C74409495E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E69D9447-810C-40F0-83D6-E7FA74BCD919}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E69D9447-810C-40F0-83D6-E7FA74BCD919}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E69D9447-810C-40F0-83D6-E7FA74BCD919}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E69D9447-810C-40F0-83D6-E7FA74BCD919}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

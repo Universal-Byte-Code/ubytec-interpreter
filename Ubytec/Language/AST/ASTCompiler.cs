@@ -1,10 +1,16 @@
-﻿using System.Text;
+﻿using NJsonSchema;
+using System.Text;
 using System.Text.RegularExpressions;
-using ubytec_interpreter.Operations;
-using static ubytec_interpreter.Operations.CoreOperations;
-using static ubytec_interpreter.Operations.Primitives;
+using static Ubytec.Language.Operations.ArithmeticOperations;
+using static Ubytec.Language.Operations.BitwiseOperations;
+using static Ubytec.Language.Operations.CoreOperations;
+using static Ubytec.Language.Syntax.Enum.Primitives;
+using static Ubytec.Language.Operations.StackOperarions;
+using Ubytec.Language.Operations;
+using Ubytec.Language.Syntax.ExpressionFragments;
+using Ubytec.Language.Syntax.Syntaxes;
 
-namespace ubytec_interpreter
+namespace Ubytec.Tools.AST
 {
     public static partial class ASTCompiler
     {
@@ -29,42 +35,42 @@ namespace ubytec_interpreter
             { nameof(NULL), 0x0F },
 
             // Inline var
-            { "VAR", 0x10 },
+            { nameof(VAR), 0x10 },
         
             // Stack Manipulation
-            { "PUSH", 0x11 },
-            { "POP", 0x12 },
-            { "DUP", 0x13 },
-            { "SWAP", 0x14 },
-            { "ROT", 0x15 },
-            { "OVER", 0x16 },
-            { "NIP", 0x17 },
-            { "DROP", 0x18 },
-            { "2DUP", 0x19 },
-            { "2SWAP", 0x1A },
-            { "2ROT", 0x1B },
-            { "2OVER", 0x1C },
-            { "PICK", 0x1D },
-            { "ROLL", 0x1E },
+            { nameof(PUSH), 0x11 },
+            { nameof(POP), 0x12 },
+            { nameof(DUP), 0x13 },
+            { nameof(SWAP), 0x14 },
+            { nameof(ROT), 0x15 },
+            { nameof(OVER), 0x16 },
+            { nameof(NIP), 0x17 },
+            { nameof(DROP), 0x18 },
+            { nameof(TwoDUP), 0x19 },
+            { nameof(TwoSWAP), 0x1A },
+            { nameof(TwoROT), 0x1B },
+            { nameof(TwoOVER), 0x1C },
+            { nameof(PICK), 0x1D },
+            { nameof(ROLL), 0x1E },
         
             // Arithmetic Operations
-            { "ADD", 0x20 },
-            { "SUB", 0x21 },
-            { "MUL", 0x22 },
-            { "DIV", 0x23 },
-            { "MOD", 0x24 },
-            { "INC", 0x25 },
-            { "DEC", 0x26 },
-            { "NEG", 0x27 },
-            { "ABS", 0x28 },
+            { nameof(ADD), 0x20 },
+            { nameof(SUB), 0x21 },
+            { nameof(MUL), 0x22 },
+            { nameof(DIV), 0x23 },
+            { nameof(MOD), 0x24 },
+            { nameof(INC), 0x25 },
+            { nameof(DEC), 0x26 },
+            { nameof(NEG), 0x27 },
+            { nameof(ABS), 0x28 },
         
             // Logical Operations
-            { "AND", 0x30 },
-            { "OR", 0x31 },
-            { "XOR", 0x32 },
-            { "NOT", 0x33 },
-            { "SHL", 0x34 },
-            { "SHR", 0x35 },
+            { nameof(AND), 0x30 },
+            { nameof(OR), 0x31 },
+            { nameof(XOR), 0x32 },
+            { nameof(NOT), 0x33 },
+            { nameof(SHL), 0x34 },
+            { nameof(SHR), 0x35 },
         
             // Comparisons
             { "EQ", 0x40 },
@@ -89,37 +95,40 @@ namespace ubytec_interpreter
         /// A tuple containing an array of generated opCodes and an array of SyntaxToken 
         /// representing the tokens for each instruction.
         /// </returns>
-        public static (IOpCode[], SyntaxToken[]) Parse(string code)
+        public static IOpCode[] Parse(SyntaxToken[] code)
         {
             List<IOpCode> opCodes = [];
-            List<SyntaxToken> syntaxTokens = [];
 
             // Holds the currently 'open' blocks or conditional structures
             Stack<IOpCode> blockStack = new();
 
-            var lines = code.Split('\n', ';')
-                            .Select(line => line.Trim())
-                            .Where(line => !string.IsNullOrWhiteSpace(line) && !line.StartsWith("//"))
-                            .ToArray();
-
-            for (int y = 0; y < lines.Length; y++)
+            for (int y = 0; y < code.Length; y++)
             {
-                var line = lines[y];
-                var tokens = CodeRegex().Split(line).Where(t => !string.IsNullOrWhiteSpace(t)).ToArray();
-                if (tokens.Length == 0) continue;
+                var currToken = code[y];
 
-                string instruction = tokens[0].ToUpper().TrimEnd(';');
+                if (string.IsNullOrWhiteSpace(currToken.Source) || currToken.Scopes.Length == 0 || (currToken.Scopes.Length == 1 && currToken.Scopes[0] == "source.ubytec")) continue;
 
-                if (instruction.StartsWith("T_"))
+                var currLineIndex = currToken.Line;
+                var currLine = new List<SyntaxToken>();
+
+                for (int i = y; i < code.Length && code[i].Line == currLineIndex; i++)
                 {
-                    SyntaxToken[] tempTokens = [
-                        new(tokens[0], line, y, 0),
-                        new(tokens[1], line, y, 1),
-                        new(tokens[2], line, y, 2)];
+                    if (!string.IsNullOrWhiteSpace(code[i].Source) || code[i].Scopes.Length == 0)
+                        currLine.Add(code[i]);
+                    
+                    if (i != y && currLine.Count > 0) y++;
+                }
 
-                    var targetType = Enum.Parse<PrimitiveType>(instruction.Remove(0, 2), true);
-                    var variable = new Variable(targetType, instruction.EndsWith('?'), tokens[1], tokens[2], tempTokens);
-                    var varOp = new VAR(variable);
+                if (currToken.Scopes.FirstOrDefault(x => x.StartsWith("storage.type.")) != null)
+                {
+                    var targetType = Enum.Parse<PrimitiveType>(currToken.Source.Remove(0, 2), true);
+                    var labelToken = currLine[1];
+                    var valueToken = currLine[2];
+
+                    var nullableCheck = currToken.Scopes.FirstOrDefault(x => x.StartsWith("storage.type.")) != null &&
+                                        currToken.Scopes.FirstOrDefault(x => x.Contains("nullable")) != null;
+                    var variableFragment = new VariableExpressionFragment(targetType, nullableCheck, labelToken.Source, valueToken.Source, [currToken, labelToken, valueToken]);
+                    var varOp = new VAR(variableFragment);
 
                     // Attach it to the current block (if any)
                     IOpCode? currentBlock = blockStack.Count > 0 ? blockStack.Peek() : null;
@@ -132,128 +141,124 @@ namespace ubytec_interpreter
                     continue;
                 }
 
-                if (!OpcodeMap.TryGetValue(instruction, out byte byteCode))
-                    throw new Exception($"Unknown instruction: {instruction}");
-
-                var instructionAndOperands = new Queue<ValueType>();
-                instructionAndOperands.Enqueue(byteCode);
-
-                syntaxTokens.Add(new SyntaxToken(instruction, line, y, 0)); // Add instruction
-
-                // Process operands (assumes operands are hex or decimal values)
-                for (int i = 1; i < tokens.Length; i++)
+                if (!OpcodeMap.TryGetValue(currToken.Source.ToUpper(), out byte byteCode))
                 {
-                    var currentToken = tokens[i];
-                    syntaxTokens.Add(new SyntaxToken(currentToken, line, y, i)); // Add operands
-
-                    if (currentToken.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
-                    {
-                        var a = Convert.ToInt32(currentToken, 16);
-                        instructionAndOperands.Enqueue(a);
-                    }
-                    else if (currentToken.Contains('.', StringComparison.OrdinalIgnoreCase))
-                    {
-                        var a = Convert.ToSingle(currentToken);
-                        instructionAndOperands.Enqueue(a);
-                    }
-                    else if (currentToken.StartsWith("t_", StringComparison.OrdinalIgnoreCase))
-                    {
-                        var trimmed = currentToken.Remove(0, 2);
-                        var a = Enum.Parse<PrimitiveType>(trimmed, true);
-                        instructionAndOperands.Enqueue(a);
-                    }
-                    else if (byte.TryParse(currentToken, out byte byteValue))
-                    {
-                        instructionAndOperands.Enqueue(byteValue);
-                    }
-                    else if (int.TryParse(currentToken, out int intValue))
-                    {
-                        instructionAndOperands.Enqueue(intValue);
-                    }
-                    else if (currentToken.StartsWith(';')) break;
-                    else if (currentToken == "==" || currentToken == "!=" || currentToken == ">=" || currentToken == "<=")
-                    {
-                        instructionAndOperands.Enqueue((byte)(currentToken.First() & 0xFF));  // Lower byte 
-                        instructionAndOperands.Enqueue((byte)(currentToken.Last() & 0xFF)); //Upper byte
-                    }
-                    else if (currentToken == ">" || currentToken == "<")
-                    {
-                        // Para un operador de un solo carácter, usamos solo su valor ASCII.
-                        byte lowerByte = (byte)currentToken[0];
-                        // Si la lógica de IF espera dos bytes, podemos añadir un 0 como byte superior.
-                        byte upperByte = 0;
-
-                        instructionAndOperands.Enqueue(lowerByte);
-                        instructionAndOperands.Enqueue(upperByte);
-                    }
-                    else throw new Exception($"Invalid operand: {currentToken}");
+                    throw new Exception($"Unknown instruction: {currToken}");
                 }
-
-                var dequedByteCode = instructionAndOperands.Dequeue();
-                // Actually create the IOpCode
-                IOpCode op = CreateInstruction((byte)dequedByteCode, new(), [.. instructionAndOperands]);
-
-                // *** Attach it to the correct parent if needed ***
-                IOpCode? parent = blockStack.Count > 0 ? blockStack.Peek() : null;
-
-                // Now handle special constructs:
-                switch (instruction)
+                else
                 {
-                    case "BLOCK":
-                    case "IF":
-                    case "LOOP":
-                    case "WHILE":
-                    case "SWITCH":
-                        {
-                            // If you want the new block to “inherit” the parent’s variables:
-                            InheritVariables(parent, op);
+                    var instructionAndOperands = new Queue<ValueType>();
+                    instructionAndOperands.Enqueue(byteCode);
 
-                            // After creation, push it so subsequent instructions are inside it
-                            blockStack.Push(op);
-                            break;
-                        }
-                    case "ELSE":
+                    // Process operands (assumes operands are hex or decimal values)
+                    for (int i = 1; i < currLine.Count; i++)
+                    {
+                        var currLineToken = currLine[i];
+                        if (string.IsNullOrWhiteSpace(currLineToken.Source) || currLineToken.Scopes.Length == 0 || (currLineToken.Scopes.Length == 1 && currLineToken.Scopes[0] == "source.ubytec")) continue;
+
+                        if (currLineToken.Source.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
                         {
-                            // Typically, ELSE pairs with an IF
-                            // So pop the top if it is IF
-                            if (blockStack.Count > 0 && blockStack.Peek() is IF ifOp)
+                            var a = Convert.ToInt32(currLineToken.Source, 16);
+                            instructionAndOperands.Enqueue(a);
+                        }
+                        else if (currLineToken.Source.Contains('.', StringComparison.OrdinalIgnoreCase))
+                        {
+                            var a = Convert.ToSingle(currLineToken.Source);
+                            instructionAndOperands.Enqueue(a);
+                        }
+                        else if (currLineToken.Source.StartsWith("t_", StringComparison.OrdinalIgnoreCase))
+                        {
+                            var trimmed = currLineToken.Source.Remove(0, 2);
+                            var a = Enum.Parse<PrimitiveType>(trimmed, true);
+                            instructionAndOperands.Enqueue(a);
+                        }
+                        else if (byte.TryParse(currLineToken.Source, out byte byteValue))
+                        {
+                            instructionAndOperands.Enqueue(byteValue);
+                        }
+                        else if (int.TryParse(currLineToken.Source, out int intValue))
+                        {
+                            instructionAndOperands.Enqueue(intValue);
+                        }
+                        else if (currLineToken.Source.StartsWith(';')) break;
+                        else if (currLineToken.Source == "==" || currLineToken.Source == "!=" || currLineToken.Source == ">=" || currLineToken.Source == "<=")
+                        {
+                            instructionAndOperands.Enqueue((byte)(currLineToken.Source.First() & 0xFF));  // Lower byte 
+                            instructionAndOperands.Enqueue((byte)(currLineToken.Source.Last() & 0xFF)); //Upper byte
+                        }
+                        else if (currLineToken.Source == ">" || currLineToken.Source == "<")
+                        {
+                            // Para un operador de un solo carácter, usamos solo su valor ASCII.
+                            byte lowerByte = (byte)currLineToken.Source[0];
+                            // Si la lógica de IF espera dos bytes, podemos añadir un 0 como byte superior.
+                            byte upperByte = 0;
+
+                            instructionAndOperands.Enqueue(lowerByte);
+                            instructionAndOperands.Enqueue(upperByte);
+                        }
+                        else throw new Exception($"Invalid operand: {currLineToken}");
+                    }
+
+                    var dequedByteCode = instructionAndOperands.Dequeue();
+                    // Actually create the IOpCode
+                    IOpCode op = CreateInstruction((byte)dequedByteCode, new(), [.. instructionAndOperands]);
+
+                    // *** Attach it to the correct parent if needed ***
+                    IOpCode? parent = blockStack.Count > 0 ? blockStack.Peek() : null;
+
+                    // Now handle special constructs:
+                    switch (currToken.Source)
+                    {
+                        case "BLOCK":
+                        case "IF":
+                        case "LOOP":
+                        case "WHILE":
+                        case "SWITCH":
                             {
-                                // We might want to do something with ifOp.Variables
-                                blockStack.Pop();
+                                // If you want the new block to “inherit” the parent’s variables:
+                                InheritVariables(parent, op);
+
+                                // After creation, push it so subsequent instructions are inside it
+                                blockStack.Push(op);
+                                break;
                             }
-
-                            // Inherit parent variables if you want same scope
-                            InheritVariables(parent, op);
-
-                            // Then push the ELSE as the 'current' block
-                            blockStack.Push(op);
-                            break;
-                        }
-                    case "END":
-                        {
-                            // End typically closes the last open block
-                            if (blockStack.Count > 0)
+                        case "ELSE":
                             {
-                                blockStack.Pop();
+                                // Typically, ELSE pairs with an IF
+                                // So pop the top if it is IF
+                                if (blockStack.Count > 0 && blockStack.Peek() is IF ifOp)
+                                {
+                                    // We might want to do something with ifOp.Variables
+                                    blockStack.Pop();
+                                }
+
+                                // Inherit parent variables if you want same scope
+                                InheritVariables(parent, op);
+
+                                // Then push the ELSE as the 'current' block
+                                blockStack.Push(op);
+                                break;
                             }
-                            break;
-                        }
-                    default:
-                        {
-                            // e.g. NOP or other instructions that don't open/close blocks
-                            // Just attach them to the top of the stack if needed
-                            // if (parent is not null)
-                            // {
-                            //     InheritVariables(parent, op);
-                            // }
-                            break;
-                        }
+                        case "END":
+                            {
+                                // End typically closes the last open block
+                                if (blockStack.Count > 0)
+                                {
+                                    blockStack.Pop();
+                                }
+                                break;
+                            }
+                        default:
+                            {
+                                break;
+                            }
+                    }
+
+                    opCodes.Add(op);
                 }
-
-                opCodes.Add(op);
             }
 
-            return ([.. opCodes], [.. syntaxTokens]);
+            return [.. opCodes];
         }
         /// <summary>
         /// Creates an appropriate IOpCode instance (e.g., IF, WHILE, LOOP) based on the 
@@ -264,7 +269,7 @@ namespace ubytec_interpreter
         /// <param name="variables">A stack of variables in the current context.</param>
         /// <param name="operands">A list of ValueType operands extracted from the line of code.</param>
         /// <returns>An IOpCode object ready to be added to the instruction flow.</returns>
-        private static IOpCode CreateInstruction(byte opcode, Stack<Variable> variables, params ValueType[] operands)
+        private static IOpCode CreateInstruction(byte opcode, Stack<VariableExpressionFragment> variables, params ValueType[] operands)
         {
             return opcode switch
             {
@@ -442,7 +447,7 @@ namespace ubytec_interpreter
                     // Condition-based while, no explicit block type
                     return new WHILE(
                         BlockType: PrimitiveType.Default,
-                        Condition: new Condition(left, @operator, right),
+                        Condition: new ConditionExpressionFragment(left, @operator, right),
                         LabelIDxs: singleLabelIdArray, // if present, we keep it
                         Variables: [.. variables]
                     );
@@ -465,7 +470,7 @@ namespace ubytec_interpreter
 
                     return new WHILE(
                         BlockType: blockType,
-                        Condition: new Condition(left, @operator, right),
+                        Condition: new ConditionExpressionFragment(left, @operator, right),
                         LabelIDxs: singleLabelIdArray,
                         Variables: [.. variables]
                     );
@@ -525,7 +530,7 @@ namespace ubytec_interpreter
             dynamic dynBlock = block;
             dynamic dynVarOp = varOp;
 
-            if (dynVarOp is VAR { Variable: Variable v })
+            if (dynVarOp is VAR { Variable: VariableExpressionFragment v })
             {
                 dynBlock.Variables.Add(v);
             }
@@ -542,39 +547,69 @@ namespace ubytec_interpreter
         /// May have more tokens than opCodes due to additional operands.
         /// </param>
         /// <returns>A SyntaxTree that represents the hierarchical arrangement of statements and nodes.</returns>
-        public static SyntaxTree CompileSyntax(IOpCode[] opCodes, SyntaxToken[] tokens)
+        public static (SyntaxTree tree, List<CompileSyntaxError> errors) CompileSyntax(IOpCode[] opCodes, SyntaxToken[] tokens)
         {
             // Se crea el árbol raíz con una oración inicial.
             var lastRoot = new SyntaxTree(new SyntaxSentence());
+            var errors = new List<CompileSyntaxError>();
 
-            // Agrupamos los tokens por la propiedad "Row" (suponiendo que cada grupo corresponde a una instrucción o línea).
-            var tokensByRow = tokens
-                .GroupBy(t => t.Row)
+            var validTokens = new List<SyntaxToken>();
+
+            foreach (var token in tokens)
+            {
+                if (string.IsNullOrWhiteSpace(token.Source) || token.Scopes.Length == 0 || (token.Scopes.Length == 1 && token.Scopes[0] == "source.ubytec")) continue;
+                validTokens.Add(token);
+            }
+
+            // Agrupamos los tokens por la propiedad "Line" (suponiendo que cada grupo corresponde a una instrucción o línea).
+            var group = validTokens
+                .GroupBy(t => t.Line);
+            var tokensByRow = group
                 .OrderBy(g => g.Key)
                 .ToDictionary(g => g.Key, g => g.ToList());
 
-            var currentRow = 0;
+            var currentRow = 1;
 
             foreach (var opCode in opCodes)
             {
                 try
                 {
                     // Si se encontraron tokens para la fila actual, se usan; si no, se pasa una lista vacía.
-                    if (tokensByRow.TryGetValue(currentRow, out var rowTokens))
-                        BuildSyntaxTree(lastRoot, opCode, rowTokens);
-                    else
-                        BuildSyntaxTree(lastRoot, opCode, []);
+                    BuildSyntaxTree(lastRoot, opCode, tokensByRow.TryGetValue(currentRow, out var rowTokens) ? rowTokens : []);
                 }
                 catch (Exception e)
                 {
-                    throw new Exception($"Error at row {currentRow} on opcode {opCode}", e);
+                    errors.Add(new(currentRow, opCode, "", e));
                 }
 
                 currentRow++;
             }
 
-            return lastRoot;
+            return (lastRoot, errors);
         }
+
+        public record class CompileSyntaxError
+        {
+            public int Row { get; init; }
+            public IOpCode OpCode { get; init; }
+            public string Message { get; init; }
+            public Exception? InnerException { get; init; }
+
+            public CompileSyntaxError(int row, IOpCode opCode, string message, Exception? innerException = null)
+            {
+                Row = row;
+                OpCode = opCode;
+                Message = message;
+                InnerException = innerException;
+            }
+
+            public override string ToString()
+            {
+                return $"[CompileSyntaxError] Row: {Row}, OpCode: {OpCode}, Message: {Message}" +
+                       (InnerException != null ? $", InnerException: {InnerException.Message}" : "");
+            }
+        }
+
 
         /// <summary>
         /// Adds a node (opCode) and its associated tokens to the SyntaxTree under construction.
@@ -587,10 +622,10 @@ namespace ubytec_interpreter
         static void BuildSyntaxTree(SyntaxTree tree, IOpCode opCode, List<SyntaxToken> tokens)
         {
             // Se asegura que haya una oración activa.
-            if (tree.Sentences.Count == 0)
+            if (tree.TreeSentenceStack.Count == 0)
                 throw new Exception("The syntax tree has no active sentence.");
 
-            SyntaxSentence currentSentence = tree.Sentences.Peek();
+            SyntaxSentence currentSentence = tree.TreeSentenceStack.Peek();
 
             switch (opCode)
             {
@@ -627,14 +662,14 @@ namespace ubytec_interpreter
                         // En la nueva oración se empuja el nuevo nodo contenedor.
                         newSentence.Nodes.Push(newNode);
                         // Y se empuja la nueva oración a la pila del árbol.
-                        tree.Sentences.Push(newSentence);
+                        tree.TreeSentenceStack.Push(newSentence);
                         break;
                     }
                 // Para opCodes que abren un nuevo scope, se crea una nueva oración y un nodo contenedor.
                 case ELSE:
                     {
-                        SyntaxSentence closedSentence = tree.Sentences.Pop();
-                        SyntaxSentence parentSentence = tree.Sentences.Peek();
+                        SyntaxSentence closedSentence = tree.TreeSentenceStack.Pop();
+                        SyntaxSentence parentSentence = tree.TreeSentenceStack.Peek();
 
                         if (closedSentence.Nodes.Count > 1)
                             closedSentence.Nodes.Pop();
@@ -655,13 +690,13 @@ namespace ubytec_interpreter
 
                         parentSentence.Sentences.Add(newSentence);
                         newSentence.Nodes.Push(newElseNode);
-                        tree.Sentences.Push(newSentence);
+                        tree.TreeSentenceStack.Push(newSentence);
                         break;
                     }
                 // Para opCodes que cierran un scope (como END, BREAK o RETURN), se crea un nodo de cierre y se extrae la oración.
                 case END or BREAK or RETURN:
                     {
-                        SyntaxSentence closedSentence = tree.Sentences.Pop();
+                        SyntaxSentence closedSentence = tree.TreeSentenceStack.Pop();
                         SyntaxNode endNode = new SyntaxNode(opCode)
                         {
                             Tokens = tokens,

@@ -1,4 +1,6 @@
-﻿namespace ubytec_interpreter.Operations.Extended
+﻿using Ubytec.Language.Operations;
+
+namespace Ubytec.Language.Operations.Extended
 {
     public interface IExtendedOpCode : IOpCode
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace ubytec_interpreter.Operations
+namespace Ubytec.Language.Syntax.Enum
 {
     public static class Primitives
     {
@@ -71,7 +71,6 @@ namespace ubytec_interpreter.Operations
             if (IsVoid(from) || IsVoid(to)) return false;
 
             if (IsBool(from))
-            {
                 // We'll allow conversion from bool to any numeric type
                 //  => 0 => false,1 => true for integers
                 //  => 0.0 => false, 1.0 => true for floats
@@ -80,7 +79,6 @@ namespace ubytec_interpreter.Operations
 
                 // We'll define "numeric" as any integer or float type
                 return IsNumeric(to);
-            }
 
             if (IsNumeric(from) && IsNumeric(to))
             {

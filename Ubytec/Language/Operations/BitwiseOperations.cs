@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using static ubytec_interpreter.Operations.StackOperarions;
+using static Ubytec.Language.Operations.StackOperarions;
 
-namespace ubytec_interpreter.Operations
+namespace Ubytec.Language.Operations
 {
     public static class BitwiseOperations
     {
