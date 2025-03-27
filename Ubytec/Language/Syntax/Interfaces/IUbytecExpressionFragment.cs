@@ -4,6 +4,6 @@ namespace Ubytec.Language.Syntax.Interfaces
 {
     public interface IUbytecExpressionFragment
     {
-        List<SyntaxToken>? Tokens { get; init; }
+        SyntaxToken[]? Tokens { get; init; }
     }
 }

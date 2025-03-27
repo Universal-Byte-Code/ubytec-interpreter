@@ -6,8 +6,8 @@
     <RootNamespace>Ubytec</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AssemblyVersion>1.0.9211.3018</AssemblyVersion>
-    <FileVersion>1.0.9211.3018</FileVersion>
+    <AssemblyVersion>1.0.9216.40497</AssemblyVersion>
+    <FileVersion>1.0.9216.40497</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

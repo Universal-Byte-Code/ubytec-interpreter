@@ -5,9 +5,9 @@ using static Ubytec.Language.Syntax.Enum.Primitives;
 
 namespace Ubytec.Language.Syntax.ExpressionFragments
 {
-    public readonly record struct VariableExpressionFragment(PrimitiveType BlockType, bool Nullable, string Name, object? Value, SyntaxToken[] SyntaxTokens) : IUbytecExpressionFragment
+    public readonly record struct VariableExpressionFragment(PrimitiveType PrimitiveType, bool Nullable, string Name, object? Value) : IUbytecExpressionFragment
     {
         [JsonInclude]
-        public List<SyntaxToken>? Tokens { get; init; } = null;
+        public required SyntaxToken[]? Tokens { get; init; }
     }
 }

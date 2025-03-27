@@ -1,7 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using Ubytec.Language.Operations;
-using static Ubytec.Language.Operations.CoreOperations;
 
 namespace Ubytec.Language.Tools.Serialization;
 
@@ -19,26 +18,17 @@ public class IOpCodeConverter : JsonConverter<IOpCode>
             var typeDiscriminator = typeElement.GetString();
 
             // Map the discriminator to a concrete type.
-            Type targetType = typeDiscriminator switch
-            {
-                "TRAP" => typeof(TRAP),
-                "NOP" => typeof(NOP),
-                "BLOCK" => typeof(BLOCK),
-                "LOOP" => typeof(LOOP),
-                "IF" => typeof(IF),
-                "ELSE" => typeof(ELSE),
-                "END" => typeof(END),
-                "BREAK" => typeof(BREAK),
-                "CONTINUE" => typeof(CONTINUE),
-                "RETURN" => typeof(RETURN),
-                "BRANCH" => typeof(BRANCH),
-                "SWITCH" => typeof(SWITCH),
-                "WHILE" => typeof(WHILE),
-                "CLEAR" => typeof(CLEAR),
-                "DEFAULT" => typeof(DEFAULT),
-                "NULL" => typeof(NULL),
-                _ => throw new JsonException($"Unknown $type discriminator '{typeDiscriminator}'.")
-            };
+            var coreTypes = typeof(CoreOperations).GetNestedTypes();
+            var stackTypes = typeof(StackOperarions).GetNestedTypes();
+
+            Type[] opCodeTypes = [ ..coreTypes, ..stackTypes];
+            Type? targetType = null;
+
+            foreach (var opCodeType in opCodeTypes)
+                if (opCodeType.Name == typeDiscriminator)
+                    targetType = opCodeType;
+
+            if (targetType == null) throw new JsonException($"Unknown $type discriminator '{typeDiscriminator}'.");
 
             // Deserialize the JSON to the concrete type.
             string json = root.GetRawText();

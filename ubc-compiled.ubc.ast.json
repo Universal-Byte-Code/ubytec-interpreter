@@ -1,0 +1,815 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Universal-Byte-Code/schema/refs/heads/main/.ubc.ast.json",
+  "RootSentence": {
+    "Nodes": [],
+    "Sentences": [
+      {
+        "Nodes": [
+          {
+            "Operation": {
+              "$type": "BLOCK",
+              "BlockType": 0,
+              "Variables": {
+                "Syntaxes": [
+                  {
+                    "$type": "VariableExpressionFragment",
+                    "PrimitiveType": 9,
+                    "Nullable": false,
+                    "Name": "i",
+                    "Value": "0",
+                    "Tokens": [
+                      {
+                        "Source": "t_int32",
+                        "Line": 2,
+                        "StartColumn": 8,
+                        "EndColumn": 15,
+                        "Scopes": [
+                          "source.ubytec",
+                          "storage.type.single.ubytec"
+                        ],
+                        "Metadata": {
+                          "guid": "0195d53d-c871-73a1-9c94-f418fc3baa03"
+                        }
+                      },
+                      {
+                        "Source": "i",
+                        "Line": 2,
+                        "StartColumn": 16,
+                        "EndColumn": 17,
+                        "Scopes": [
+                          "source.ubytec",
+                          "entity.name.var.explicit.ubytec"
+                        ],
+                        "Metadata": {
+                          "guid": "0195d53d-c871-76ef-b7a5-3e01f2c411c0"
+                        }
+                      },
+                      {
+                        "Source": "0",
+                        "Line": 2,
+                        "StartColumn": 18,
+                        "EndColumn": 19,
+                        "Scopes": [
+                          "source.ubytec",
+                          "constant.numeric.int.ubytec"
+                        ],
+                        "Metadata": {
+                          "guid": "0195d53d-c871-715b-90af-5058cb66bbb0"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "Metadata": {
+                  "guid": "0195d53d-c87d-74df-8042-96e25b5db747"
+                }
+              },
+              "OpCode": 2
+            },
+            "Children": [
+              {
+                "Operation": {
+                  "$type": "VAR",
+                  "Variable": {
+                    "PrimitiveType": 9,
+                    "Nullable": false,
+                    "Name": "i",
+                    "Value": "0",
+                    "Tokens": [
+                      {
+                        "Source": "t_int32",
+                        "Line": 2,
+                        "StartColumn": 8,
+                        "EndColumn": 15,
+                        "Scopes": [
+                          "source.ubytec",
+                          "storage.type.single.ubytec"
+                        ],
+                        "Metadata": {
+                          "guid": "0195d53d-c871-73a1-9c94-f418fc3baa03"
+                        }
+                      },
+                      {
+                        "Source": "i",
+                        "Line": 2,
+                        "StartColumn": 16,
+                        "EndColumn": 17,
+                        "Scopes": [
+                          "source.ubytec",
+                          "entity.name.var.explicit.ubytec"
+                        ],
+                        "Metadata": {
+                          "guid": "0195d53d-c871-76ef-b7a5-3e01f2c411c0"
+                        }
+                      },
+                      {
+                        "Source": "0",
+                        "Line": 2,
+                        "StartColumn": 18,
+                        "EndColumn": 19,
+                        "Scopes": [
+                          "source.ubytec",
+                          "constant.numeric.int.ubytec"
+                        ],
+                        "Metadata": {
+                          "guid": "0195d53d-c871-715b-90af-5058cb66bbb0"
+                        }
+                      }
+                    ]
+                  },
+                  "OpCode": 16
+                },
+                "Children": null,
+                "Tokens": [
+                  {
+                    "Source": "t_int32",
+                    "Line": 2,
+                    "StartColumn": 8,
+                    "EndColumn": 15,
+                    "Scopes": [
+                      "source.ubytec",
+                      "storage.type.single.ubytec"
+                    ],
+                    "Metadata": {
+                      "guid": "0195d53d-c871-73a1-9c94-f418fc3baa03"
+                    }
+                  },
+                  {
+                    "Source": "i",
+                    "Line": 2,
+                    "StartColumn": 16,
+                    "EndColumn": 17,
+                    "Scopes": [
+                      "source.ubytec",
+                      "entity.name.var.explicit.ubytec"
+                    ],
+                    "Metadata": {
+                      "guid": "0195d53d-c871-76ef-b7a5-3e01f2c411c0"
+                    }
+                  },
+                  {
+                    "Source": "0",
+                    "Line": 2,
+                    "StartColumn": 18,
+                    "EndColumn": 19,
+                    "Scopes": [
+                      "source.ubytec",
+                      "constant.numeric.int.ubytec"
+                    ],
+                    "Metadata": {
+                      "guid": "0195d53d-c871-715b-90af-5058cb66bbb0"
+                    }
+                  }
+                ],
+                "Metadata": {
+                  "guid": "0195d53d-c896-731b-9877-c765fc330a1b"
+                }
+              },
+              {
+                "Operation": {
+                  "$type": "RETURN",
+                  "Variables": {
+                    "Syntaxes": [],
+                    "Metadata": {
+                      "guid": "0195d53d-c884-7a06-adc6-70defc338b7b"
+                    }
+                  },
+                  "OpCode": 9
+                },
+                "Children": null,
+                "Tokens": [
+                  {
+                    "Source": "return",
+                    "Line": 10,
+                    "StartColumn": 4,
+                    "EndColumn": 10,
+                    "Scopes": [
+                      "source.ubytec",
+                      "keyword.control.flow.ubytec"
+                    ],
+                    "Metadata": {
+                      "guid": "0195d53d-c872-7742-8758-04bede4227bf"
+                    }
+                  }
+                ],
+                "Metadata": {
+                  "guid": "0195d53d-c897-7f02-98b6-e895f9a50a84"
+                }
+              }
+            ],
+            "Tokens": [
+              {
+                "Source": "block",
+                "Line": 1,
+                "StartColumn": 4,
+                "EndColumn": 9,
+                "Scopes": [
+                  "source.ubytec",
+                  "keyword.control.flow.ubytec"
+                ],
+                "Metadata": {
+                  "guid": "0195d53d-c871-72b1-a823-0f4466ccc938"
+                }
+              },
+              {
+                "Source": "t_void",
+                "Line": 1,
+                "StartColumn": 10,
+                "EndColumn": 16,
+                "Scopes": [
+                  "source.ubytec",
+                  "storage.type.single.ubytec"
+                ],
+                "Metadata": {
+                  "guid": "0195d53d-c871-76ad-817f-3c873d467407"
+                }
+              }
+            ],
+            "Metadata": {
+              "guid": "0195d53d-c896-731f-a86a-609fa7497b37",
+              "nasm": "block_0: ; BLOCK start  while_0: ; WHILE start\n    mov rax, 2    ; Evaluate left\n    cmp rax, 10   ; Compare with right\n    je end_while_0    ; Jump if condition is false\r\n\r\n    if_0: ; IF START\n      mov rax, 0  ; Eval\u00FAa la parte izquierda\n      cmp rax, 9  ; Compara con la parte derecha\n      jne end_if_0   ; Salta si la condici\u00F3n es falsa\r\n    \r\n\r\n      nop   ; NOP\n\r\n      jmp end_else_0     ; Jump over ELSE part\n    end_if_0:    ; if_0 END\n    else_0:  ; Start ELSE block\n\r\n      nop   ; NOP\n\r\n    end_else_0: ; END of else_0\n\r\n    pop rax       ; Load loop counter\n    dec rax       ; Decrement counter\n    push rax      ; Store updated counter\n    cmp rax, 0    ; Check if counter is zero\n    je end_while_0 ; Exit loop if counter == 0\n    jmp while_0 ; Otherwise, continue loop\n  end_while_0: ; END of while_0\n\r\n  pop rax   ; RETURN value\n  ret\nend_block_0: ; End of function =\u003E block_0"
+            }
+          }
+        ],
+        "Sentences": [
+          {
+            "Nodes": [
+              {
+                "Operation": {
+                  "$type": "WHILE",
+                  "BlockType": 255,
+                  "Condition": {
+                    "Syntaxes": [
+                      {
+                        "$type": "ConditionExpressionFragment",
+                        "Left": 2,
+                        "Operand": "!=",
+                        "Right": 10,
+                        "Tokens": [
+                          {
+                            "Source": "2",
+                            "Line": 3,
+                            "StartColumn": 14,
+                            "EndColumn": 15,
+                            "Scopes": [
+                              "source.ubytec",
+                              "constant.numeric.int.ubytec"
+                            ],
+                            "Metadata": {
+                              "guid": "0195d53d-c871-75ad-bf45-56ce6c43bba8"
+                            }
+                          },
+                          {
+                            "Source": "!=",
+                            "Line": 3,
+                            "StartColumn": 16,
+                            "EndColumn": 18,
+                            "Scopes": [
+                              "source.ubytec",
+                              "operator.inequality.ubytec"
+                            ],
+                            "Metadata": {
+                              "guid": "0195d53d-c871-7c46-82ae-69a521eadffc"
+                            }
+                          },
+                          {
+                            "Source": "10",
+                            "Line": 3,
+                            "StartColumn": 19,
+                            "EndColumn": 21,
+                            "Scopes": [
+                              "source.ubytec",
+                              "constant.numeric.int.ubytec"
+                            ],
+                            "Metadata": {
+                              "guid": "0195d53d-c871-744d-bf8a-3c1de0335740"
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "Metadata": {
+                      "guid": "0195d53d-c882-73e0-ad29-c653b1b75e7b"
+                    }
+                  },
+                  "LabelIDxs": null,
+                  "Variables": {
+                    "Syntaxes": [
+                      {
+                        "$type": "VariableExpressionFragment",
+                        "PrimitiveType": 9,
+                        "Nullable": false,
+                        "Name": "i",
+                        "Value": "0",
+                        "Tokens": [
+                          {
+                            "Source": "t_int32",
+                            "Line": 2,
+                            "StartColumn": 8,
+                            "EndColumn": 15,
+                            "Scopes": [
+                              "source.ubytec",
+                              "storage.type.single.ubytec"
+                            ],
+                            "Metadata": {
+                              "guid": "0195d53d-c871-73a1-9c94-f418fc3baa03"
+                            }
+                          },
+                          {
+                            "Source": "i",
+                            "Line": 2,
+                            "StartColumn": 16,
+                            "EndColumn": 17,
+                            "Scopes": [
+                              "source.ubytec",
+                              "entity.name.var.explicit.ubytec"
+                            ],
+                            "Metadata": {
+                              "guid": "0195d53d-c871-76ef-b7a5-3e01f2c411c0"
+                            }
+                          },
+                          {
+                            "Source": "0",
+                            "Line": 2,
+                            "StartColumn": 18,
+                            "EndColumn": 19,
+                            "Scopes": [
+                              "source.ubytec",
+                              "constant.numeric.int.ubytec"
+                            ],
+                            "Metadata": {
+                              "guid": "0195d53d-c871-715b-90af-5058cb66bbb0"
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "Metadata": {
+                      "guid": "0195d53d-c882-7ae7-92ba-32b84a717eb8"
+                    }
+                  },
+                  "OpCode": 12
+                },
+                "Children": [
+                  {
+                    "Operation": {
+                      "$type": "END",
+                      "OpCode": 6
+                    },
+                    "Children": null,
+                    "Tokens": [
+                      {
+                        "Source": "end",
+                        "Line": 9,
+                        "StartColumn": 8,
+                        "EndColumn": 11,
+                        "Scopes": [
+                          "source.ubytec",
+                          "keyword.control.flow.ubytec"
+                        ],
+                        "Metadata": {
+                          "guid": "0195d53d-c872-719a-88e8-873598f97db8"
+                        }
+                      }
+                    ],
+                    "Metadata": {
+                      "guid": "0195d53d-c897-771f-ba23-ac7f771a6f45"
+                    }
+                  }
+                ],
+                "Tokens": [
+                  {
+                    "Source": "while",
+                    "Line": 3,
+                    "StartColumn": 8,
+                    "EndColumn": 13,
+                    "Scopes": [
+                      "source.ubytec",
+                      "keyword.control.flow.ubytec"
+                    ],
+                    "Metadata": {
+                      "guid": "0195d53d-c871-7dd2-8459-d4a7f0f2268b"
+                    }
+                  },
+                  {
+                    "Source": "2",
+                    "Line": 3,
+                    "StartColumn": 14,
+                    "EndColumn": 15,
+                    "Scopes": [
+                      "source.ubytec",
+                      "constant.numeric.int.ubytec"
+                    ],
+                    "Metadata": {
+                      "guid": "0195d53d-c871-75ad-bf45-56ce6c43bba8"
+                    }
+                  },
+                  {
+                    "Source": "!=",
+                    "Line": 3,
+                    "StartColumn": 16,
+                    "EndColumn": 18,
+                    "Scopes": [
+                      "source.ubytec",
+                      "operator.inequality.ubytec"
+                    ],
+                    "Metadata": {
+                      "guid": "0195d53d-c871-7c46-82ae-69a521eadffc"
+                    }
+                  },
+                  {
+                    "Source": "10",
+                    "Line": 3,
+                    "StartColumn": 19,
+                    "EndColumn": 21,
+                    "Scopes": [
+                      "source.ubytec",
+                      "constant.numeric.int.ubytec"
+                    ],
+                    "Metadata": {
+                      "guid": "0195d53d-c871-744d-bf8a-3c1de0335740"
+                    }
+                  }
+                ],
+                "Metadata": {
+                  "guid": "0195d53d-c896-73ac-8e47-c8a27d6b7ddd",
+                  "nasm": "while_0: ; WHILE start\n  mov rax, 2    ; Evaluate left\n  cmp rax, 10   ; Compare with right\n  je end_while_0    ; Jump if condition is false\r\n    if_0: ; IF START\n      mov rax, 0  ; Eval\u00FAa la parte izquierda\n      cmp rax, 9  ; Compara con la parte derecha\n      jne end_if_0   ; Salta si la condici\u00F3n es falsa\r\n    \r\n\r\n      nop   ; NOP\n\r\n      jmp end_else_0     ; Jump over ELSE part\n    end_if_0:    ; if_0 END\n    else_0:  ; Start ELSE block\n\r\n      nop   ; NOP\n\r\n    end_else_0: ; END of else_0\n\r\n  pop rax       ; Load loop counter\n  dec rax       ; Decrement counter\n  push rax      ; Store updated counter\n  cmp rax, 0    ; Check if counter is zero\n  je end_while_0 ; Exit loop if counter == 0\n  jmp while_0 ; Otherwise, continue loop\nend_while_0: ; END of while_0"
+                }
+              }
+            ],
+            "Sentences": [
+              {
+                "Nodes": [
+                  {
+                    "Operation": {
+                      "$type": "IF",
+                      "BlockType": 255,
+                      "Condition": {
+                        "Syntaxes": [
+                          {
+                            "$type": "ConditionExpressionFragment",
+                            "Left": 0,
+                            "Operand": "==",
+                            "Right": 9,
+                            "Tokens": [
+                              {
+                                "Source": "0",
+                                "Line": 4,
+                                "StartColumn": 15,
+                                "EndColumn": 16,
+                                "Scopes": [
+                                  "source.ubytec",
+                                  "constant.numeric.int.ubytec"
+                                ],
+                                "Metadata": {
+                                  "guid": "0195d53d-c871-7e4e-90a8-3707e9e55e68"
+                                }
+                              },
+                              {
+                                "Source": "==",
+                                "Line": 4,
+                                "StartColumn": 17,
+                                "EndColumn": 19,
+                                "Scopes": [
+                                  "source.ubytec",
+                                  "operator.equality.ubytec"
+                                ],
+                                "Metadata": {
+                                  "guid": "0195d53d-c871-7979-aca4-674cb22dbacb"
+                                }
+                              },
+                              {
+                                "Source": "9",
+                                "Line": 4,
+                                "StartColumn": 20,
+                                "EndColumn": 21,
+                                "Scopes": [
+                                  "source.ubytec",
+                                  "constant.numeric.int.ubytec"
+                                ],
+                                "Metadata": {
+                                  "guid": "0195d53d-c871-7b94-8067-67a359d2cc18"
+                                }
+                              }
+                            ]
+                          }
+                        ],
+                        "Metadata": {
+                          "guid": "0195d53d-c883-78e9-8179-ea9985dc7fd2"
+                        }
+                      },
+                      "Variables": {
+                        "Syntaxes": [
+                          {
+                            "$type": "VariableExpressionFragment",
+                            "PrimitiveType": 9,
+                            "Nullable": false,
+                            "Name": "i",
+                            "Value": "0",
+                            "Tokens": [
+                              {
+                                "Source": "t_int32",
+                                "Line": 2,
+                                "StartColumn": 8,
+                                "EndColumn": 15,
+                                "Scopes": [
+                                  "source.ubytec",
+                                  "storage.type.single.ubytec"
+                                ],
+                                "Metadata": {
+                                  "guid": "0195d53d-c871-73a1-9c94-f418fc3baa03"
+                                }
+                              },
+                              {
+                                "Source": "i",
+                                "Line": 2,
+                                "StartColumn": 16,
+                                "EndColumn": 17,
+                                "Scopes": [
+                                  "source.ubytec",
+                                  "entity.name.var.explicit.ubytec"
+                                ],
+                                "Metadata": {
+                                  "guid": "0195d53d-c871-76ef-b7a5-3e01f2c411c0"
+                                }
+                              },
+                              {
+                                "Source": "0",
+                                "Line": 2,
+                                "StartColumn": 18,
+                                "EndColumn": 19,
+                                "Scopes": [
+                                  "source.ubytec",
+                                  "constant.numeric.int.ubytec"
+                                ],
+                                "Metadata": {
+                                  "guid": "0195d53d-c871-715b-90af-5058cb66bbb0"
+                                }
+                              }
+                            ]
+                          }
+                        ],
+                        "Metadata": {
+                          "guid": "0195d53d-c883-78f0-857b-e77874ffc64e"
+                        }
+                      },
+                      "OpCode": 4
+                    },
+                    "Children": [
+                      {
+                        "Operation": {
+                          "$type": "NOP",
+                          "OpCode": 1
+                        },
+                        "Children": null,
+                        "Tokens": [
+                          {
+                            "Source": "nop",
+                            "Line": 5,
+                            "StartColumn": 16,
+                            "EndColumn": 19,
+                            "Scopes": [
+                              "source.ubytec",
+                              "keyword.control.flow.ubytec"
+                            ],
+                            "Metadata": {
+                              "guid": "0195d53d-c871-7918-b892-6430d0f09078"
+                            }
+                          }
+                        ],
+                        "Metadata": {
+                          "guid": "0195d53d-c896-732c-ab7a-603da9f16a01"
+                        }
+                      }
+                    ],
+                    "Tokens": [
+                      {
+                        "Source": "if",
+                        "Line": 4,
+                        "StartColumn": 12,
+                        "EndColumn": 14,
+                        "Scopes": [
+                          "source.ubytec",
+                          "keyword.control.flow.ubytec"
+                        ],
+                        "Metadata": {
+                          "guid": "0195d53d-c871-7e68-b41e-6e88e26679da"
+                        }
+                      },
+                      {
+                        "Source": "0",
+                        "Line": 4,
+                        "StartColumn": 15,
+                        "EndColumn": 16,
+                        "Scopes": [
+                          "source.ubytec",
+                          "constant.numeric.int.ubytec"
+                        ],
+                        "Metadata": {
+                          "guid": "0195d53d-c871-7e4e-90a8-3707e9e55e68"
+                        }
+                      },
+                      {
+                        "Source": "==",
+                        "Line": 4,
+                        "StartColumn": 17,
+                        "EndColumn": 19,
+                        "Scopes": [
+                          "source.ubytec",
+                          "operator.equality.ubytec"
+                        ],
+                        "Metadata": {
+                          "guid": "0195d53d-c871-7979-aca4-674cb22dbacb"
+                        }
+                      },
+                      {
+                        "Source": "9",
+                        "Line": 4,
+                        "StartColumn": 20,
+                        "EndColumn": 21,
+                        "Scopes": [
+                          "source.ubytec",
+                          "constant.numeric.int.ubytec"
+                        ],
+                        "Metadata": {
+                          "guid": "0195d53d-c871-7b94-8067-67a359d2cc18"
+                        }
+                      }
+                    ],
+                    "Metadata": {
+                      "guid": "0195d53d-c896-7c7a-88c4-2339d2ee8950",
+                      "nasm": "if_0: ; IF START\n  mov rax, 0  ; Eval\u00FAa la parte izquierda\n  cmp rax, 9  ; Compara con la parte derecha\n  jne end_if_0   ; Salta si la condici\u00F3n es falsa\r\n\r\nnop   ; NOP"
+                    }
+                  }
+                ],
+                "Sentences": [],
+                "Metadata": {
+                  "guid": "0195d53d-c896-74f6-a00b-5b6f2200325b",
+                  "type": "if"
+                }
+              },
+              {
+                "Nodes": [
+                  {
+                    "Operation": {
+                      "$type": "ELSE",
+                      "Variables": {
+                        "Syntaxes": [
+                          {
+                            "$type": "VariableExpressionFragment",
+                            "PrimitiveType": 9,
+                            "Nullable": false,
+                            "Name": "i",
+                            "Value": "0",
+                            "Tokens": [
+                              {
+                                "Source": "t_int32",
+                                "Line": 2,
+                                "StartColumn": 8,
+                                "EndColumn": 15,
+                                "Scopes": [
+                                  "source.ubytec",
+                                  "storage.type.single.ubytec"
+                                ],
+                                "Metadata": {
+                                  "guid": "0195d53d-c871-73a1-9c94-f418fc3baa03"
+                                }
+                              },
+                              {
+                                "Source": "i",
+                                "Line": 2,
+                                "StartColumn": 16,
+                                "EndColumn": 17,
+                                "Scopes": [
+                                  "source.ubytec",
+                                  "entity.name.var.explicit.ubytec"
+                                ],
+                                "Metadata": {
+                                  "guid": "0195d53d-c871-76ef-b7a5-3e01f2c411c0"
+                                }
+                              },
+                              {
+                                "Source": "0",
+                                "Line": 2,
+                                "StartColumn": 18,
+                                "EndColumn": 19,
+                                "Scopes": [
+                                  "source.ubytec",
+                                  "constant.numeric.int.ubytec"
+                                ],
+                                "Metadata": {
+                                  "guid": "0195d53d-c871-715b-90af-5058cb66bbb0"
+                                }
+                              }
+                            ]
+                          }
+                        ],
+                        "Metadata": {
+                          "guid": "0195d53d-c884-7daa-af7c-5b6b10f33cf1"
+                        }
+                      },
+                      "OpCode": 5
+                    },
+                    "Children": [
+                      {
+                        "Operation": {
+                          "$type": "NOP",
+                          "OpCode": 1
+                        },
+                        "Children": null,
+                        "Tokens": [
+                          {
+                            "Source": "nop",
+                            "Line": 7,
+                            "StartColumn": 16,
+                            "EndColumn": 19,
+                            "Scopes": [
+                              "source.ubytec",
+                              "keyword.control.flow.ubytec"
+                            ],
+                            "Metadata": {
+                              "guid": "0195d53d-c871-738c-9237-802dd9485012"
+                            }
+                          }
+                        ],
+                        "Metadata": {
+                          "guid": "0195d53d-c897-7ffa-86cb-d6404d800989"
+                        }
+                      },
+                      {
+                        "Operation": {
+                          "$type": "END",
+                          "OpCode": 6
+                        },
+                        "Children": null,
+                        "Tokens": [
+                          {
+                            "Source": "end",
+                            "Line": 8,
+                            "StartColumn": 12,
+                            "EndColumn": 15,
+                            "Scopes": [
+                              "source.ubytec",
+                              "keyword.control.flow.ubytec"
+                            ],
+                            "Metadata": {
+                              "guid": "0195d53d-c871-7a78-b720-fe6e5864f34c"
+                            }
+                          }
+                        ],
+                        "Metadata": {
+                          "guid": "0195d53d-c897-7961-bc1e-f646d1b0bb4c"
+                        }
+                      }
+                    ],
+                    "Tokens": [
+                      {
+                        "Source": "else",
+                        "Line": 6,
+                        "StartColumn": 12,
+                        "EndColumn": 16,
+                        "Scopes": [
+                          "source.ubytec",
+                          "keyword.control.flow.ubytec"
+                        ],
+                        "Metadata": {
+                          "guid": "0195d53d-c871-77e3-9495-b5fd98343e1f"
+                        }
+                      }
+                    ],
+                    "Metadata": {
+                      "guid": "0195d53d-c897-707d-9f71-f692a8abaf39",
+                      "nasm": "  jmp end_else_0     ; Jump over ELSE part\nend_if_0:    ; if_0 END\nelse_0:  ; Start ELSE blocknop   ; NOPend_else_0: ; END of else_0"
+                    }
+                  }
+                ],
+                "Sentences": [],
+                "Metadata": {
+                  "guid": "0195d53d-c897-77db-bd7d-6b0c4c4dcdaa",
+                  "type": "else"
+                }
+              }
+            ],
+            "Metadata": {
+              "guid": "0195d53d-c896-7314-a459-7726f329e8c1",
+              "type": "while"
+            }
+          }
+        ],
+        "Metadata": {
+          "guid": "0195d53d-c896-710f-a827-2334188e7320",
+          "type": "block"
+        }
+      }
+    ],
+    "Metadata": {
+      "guid": "0195d53d-c887-7ed2-8d83-6a5416e37ace",
+      "type": "root"
+    }
+  },
+  "Metadata": {
+    "guid": "0195d53d-c888-70bd-b344-82c5e5ac6cce",
+    "encoding": "Unicode (UTF-8)",
+    "langver": "1.0.9216.40497"
+  }
+}

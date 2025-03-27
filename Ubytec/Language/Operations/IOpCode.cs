@@ -1,8 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using static Ubytec.Language.Operations.CoreOperations;
-using System.Text.Json.Serialization;
-
-namespace Ubytec.Language.Operations
+﻿namespace Ubytec.Language.Operations
 {
     public interface IOpCode
     {

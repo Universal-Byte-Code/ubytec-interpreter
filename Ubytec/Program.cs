@@ -36,7 +36,7 @@ var code = @"
     block t_void
         t_int32 i 0
         while 2 != 10
-            if 2 == 9
+            if 0 == 9
                 nop
             else
                 nop
@@ -69,13 +69,14 @@ Console.WriteLine("Correctly compiled to nasm!");
 //var optimized2 = Compiler.Optimize(optimized);
 var options = new JsonSerializerOptions
 {
-    WriteIndented = false,
+    WriteIndented = true,
     IncludeFields = false,
     RespectNullableAnnotations = true
 };
 
 options.Converters.Add(new IOpCodeConverter());
 options.Converters.Add(new ISyntaxTreeConverter());
+options.Converters.Add(new IUbytecExpressionFragmentConverter());
 
 string json = JsonSerializer.Serialize(compiled, options);
 string codecJson = Utf64Codec.Encode(json);

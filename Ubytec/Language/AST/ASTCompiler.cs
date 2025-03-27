@@ -9,6 +9,8 @@ using static Ubytec.Language.Operations.StackOperarions;
 using Ubytec.Language.Operations;
 using Ubytec.Language.Syntax.ExpressionFragments;
 using Ubytec.Language.Syntax.Syntaxes;
+using System.Collections.Generic;
+using Ubytec.Language.Exceptions;
 
 namespace Ubytec.Tools.AST
 {
@@ -100,11 +102,12 @@ namespace Ubytec.Tools.AST
             List<IOpCode> opCodes = [];
 
             // Holds the currently 'open' blocks or conditional structures
-            Stack<IOpCode> blockStack = new();
+            Stack<IBlockOpCode> blockStack = new();
 
             for (int y = 0; y < code.Length; y++)
             {
                 var currToken = code[y];
+                IBlockOpCode? currentBlock = blockStack.Count > 0 ? blockStack.Peek() : null;
 
                 if (string.IsNullOrWhiteSpace(currToken.Source) || currToken.Scopes.Length == 0 || (currToken.Scopes.Length == 1 && currToken.Scopes[0] == "source.ubytec")) continue;
 
@@ -127,11 +130,14 @@ namespace Ubytec.Tools.AST
 
                     var nullableCheck = currToken.Scopes.FirstOrDefault(x => x.StartsWith("storage.type.")) != null &&
                                         currToken.Scopes.FirstOrDefault(x => x.Contains("nullable")) != null;
-                    var variableFragment = new VariableExpressionFragment(targetType, nullableCheck, labelToken.Source, valueToken.Source, [currToken, labelToken, valueToken]);
+                    var variableFragment = new VariableExpressionFragment(targetType, nullableCheck, labelToken.Source, valueToken.Source) 
+                    { 
+                        Tokens = [currToken, labelToken, valueToken] 
+                    };
+
                     var varOp = new VAR(variableFragment);
 
                     // Attach it to the current block (if any)
-                    IOpCode? currentBlock = blockStack.Count > 0 ? blockStack.Peek() : null;
                     if (currentBlock is not null)
                         // Merge block's variables, or do something similar
                         MergeVariables(currentBlock, varOp);
@@ -156,73 +162,43 @@ namespace Ubytec.Tools.AST
                         var currLineToken = currLine[i];
                         if (string.IsNullOrWhiteSpace(currLineToken.Source) || currLineToken.Scopes.Length == 0 || (currLineToken.Scopes.Length == 1 && currLineToken.Scopes[0] == "source.ubytec")) continue;
 
-                        if (currLineToken.Source.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
-                        {
-                            var a = Convert.ToInt32(currLineToken.Source, 16);
-                            instructionAndOperands.Enqueue(a);
-                        }
-                        else if (currLineToken.Source.Contains('.', StringComparison.OrdinalIgnoreCase))
-                        {
-                            var a = Convert.ToSingle(currLineToken.Source);
-                            instructionAndOperands.Enqueue(a);
-                        }
-                        else if (currLineToken.Source.StartsWith("t_", StringComparison.OrdinalIgnoreCase))
-                        {
-                            var trimmed = currLineToken.Source.Remove(0, 2);
-                            var a = Enum.Parse<PrimitiveType>(trimmed, true);
-                            instructionAndOperands.Enqueue(a);
-                        }
-                        else if (byte.TryParse(currLineToken.Source, out byte byteValue))
-                        {
-                            instructionAndOperands.Enqueue(byteValue);
-                        }
-                        else if (int.TryParse(currLineToken.Source, out int intValue))
-                        {
-                            instructionAndOperands.Enqueue(intValue);
-                        }
-                        else if (currLineToken.Source.StartsWith(';')) break;
-                        else if (currLineToken.Source == "==" || currLineToken.Source == "!=" || currLineToken.Source == ">=" || currLineToken.Source == "<=")
-                        {
-                            instructionAndOperands.Enqueue((byte)(currLineToken.Source.First() & 0xFF));  // Lower byte 
-                            instructionAndOperands.Enqueue((byte)(currLineToken.Source.Last() & 0xFF)); //Upper byte
-                        }
-                        else if (currLineToken.Source == ">" || currLineToken.Source == "<")
-                        {
-                            // Para un operador de un solo carácter, usamos solo su valor ASCII.
-                            byte lowerByte = (byte)currLineToken.Source[0];
-                            // Si la lógica de IF espera dos bytes, podemos añadir un 0 como byte superior.
-                            byte upperByte = 0;
 
-                            instructionAndOperands.Enqueue(lowerByte);
-                            instructionAndOperands.Enqueue(upperByte);
-                        }
-                        else throw new Exception($"Invalid operand: {currLineToken}");
+                        ///if (currLineToken.Source.StartsWith("@", StringComparison.OrdinalIgnoreCase))
+                        ///{
+                        ///    var trimmed = currLineToken.Source.Remove(0, 1);
+                        ///    foreach (VAR variableOp in opCodes.Where(t => t.OpCode == OpcodeMap[nameof(VAR)]).Select(v => (VAR)v))
+                        ///        if (variableOp.Variable.Name == trimmed)
+                        ///            ProcessOperand(
+                        ///                new SyntaxToken(variableOp.Variable.Value?.ToString() ?? string.Empty, currLineToken.Line, currLineToken.StartColumn + 1, currLineToken.EndColumn, [.. currLineToken.Scopes, "entity.name.var.reference.ubytec"]),
+                        ///                instructionAndOperands);
+                        ///}
+                        ///else
+                        ProcessOperand(currLineToken, instructionAndOperands);
                     }
 
                     var dequedByteCode = instructionAndOperands.Dequeue();
-                    // Actually create the IOpCode
-                    IOpCode op = CreateInstruction((byte)dequedByteCode, new(), [.. instructionAndOperands]);
 
-                    // *** Attach it to the correct parent if needed ***
-                    IOpCode? parent = blockStack.Count > 0 ? blockStack.Peek() : null;
+                    List<VariableExpressionFragment>? variableExpressionFragments = [..currentBlock?.Variables?.Syntaxes.Cast<VariableExpressionFragment>() ?? []];
+                    // Actually create the IOpCode
+                    IOpCode op = CreateInstruction((byte)dequedByteCode, currLine, [.. instructionAndOperands]);
 
                     // Now handle special constructs:
-                    switch (currToken.Source)
+                    switch (op)
                     {
-                        case "BLOCK":
-                        case "IF":
-                        case "LOOP":
-                        case "WHILE":
-                        case "SWITCH":
+                        case BLOCK:
+                        case IF:
+                        case LOOP:
+                        case WHILE:
+                        case SWITCH:
                             {
                                 // If you want the new block to “inherit” the parent’s variables:
-                                InheritVariables(parent, op);
+                                InheritVariables(currentBlock, (IOpInheritance)op);
 
                                 // After creation, push it so subsequent instructions are inside it
-                                blockStack.Push(op);
+                                blockStack.Push((IBlockOpCode)op);
                                 break;
                             }
-                        case "ELSE":
+                        case ELSE:
                             {
                                 // Typically, ELSE pairs with an IF
                                 // So pop the top if it is IF
@@ -230,16 +206,17 @@ namespace Ubytec.Tools.AST
                                 {
                                     // We might want to do something with ifOp.Variables
                                     blockStack.Pop();
+                                    currentBlock = blockStack.Count > 0 ? blockStack.Peek() : null;
                                 }
 
                                 // Inherit parent variables if you want same scope
-                                InheritVariables(parent, op);
+                                InheritVariables(currentBlock, (IOpInheritance)op);
 
                                 // Then push the ELSE as the 'current' block
-                                blockStack.Push(op);
+                                blockStack.Push((IBlockOpCode)op);
                                 break;
                             }
-                        case "END":
+                        case END:
                             {
                                 // End typically closes the last open block
                                 if (blockStack.Count > 0)
@@ -260,6 +237,254 @@ namespace Ubytec.Tools.AST
 
             return [.. opCodes];
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="currLineToken"></param>
+        /// <param name="instructionAndOperands"></param>
+        /// <exception cref="Exception"></exception>
+        private static void ProcessOperand(SyntaxToken currLineToken, Queue<ValueType> instructionAndOperands)
+        {
+            // Storage Types
+            var isArrayNullableBoth = currLineToken.Scopes.Contains("storage.type.array.nullable-both.ubytec");
+            var isArrayNullableArray = currLineToken.Scopes.Contains("storage.type.array.nullable-array.ubytec");
+            var isArrayNullableItems = currLineToken.Scopes.Contains("storage.type.array.nullable-items.ubytec");
+            var isSingleNullable = currLineToken.Scopes.Contains("storage.type.single.nullable.ubytec");
+            var isSingle = currLineToken.Scopes.Contains("storage.type.single.ubytec");
+            var isArray = currLineToken.Scopes.Contains("storage.type.array.ubytec");
+
+            // Comments
+            var isCommentLineDoubleSlash = currLineToken.Scopes.Contains("comment.line.double-slash.ubytec");
+            var isCommentBlock = currLineToken.Scopes.Contains("comment.block.ubytec");
+
+            // Modifiers
+            var isModifier = currLineToken.Scopes.Contains("storage.modifier.ubytec");
+
+            // Constants
+            var isBooleanConstant = currLineToken.Scopes.Contains("constant.boolean.ubytec");
+            var isNumericFloat = currLineToken.Scopes.Contains("constant.numeric.float.ubytec");
+            var isNumericDouble = currLineToken.Scopes.Contains("constant.numeric.double.ubytec");
+            var isNumericInt = currLineToken.Scopes.Contains("constant.numeric.int.ubytec");
+            var isNumericHex = currLineToken.Scopes.Contains("constant.numeric.hex.ubytec");
+            var isNumericBinary = currLineToken.Scopes.Contains("constant.numeric.binary.ubytec");
+
+            // Code Structures
+            var isArrayStructure = currLineToken.Scopes.Contains("meta.array.ubytec");
+            var isGroupingStructure = currLineToken.Scopes.Contains("meta.grouping.ubytec");
+            var isBlockStructure = currLineToken.Scopes.Contains("meta.block.ubytec");
+            var isAngleGrouping = currLineToken.Scopes.Contains("meta.angle.grouping.ubytec");
+
+            // Strings
+            var isDoubleQuotedString = currLineToken.Scopes.Contains("string.quoted.double.ubytec");
+            var isSingleQuotedString = currLineToken.Scopes.Contains("string.quoted.single.ubytec");
+
+            // Keywords
+            var isDeclarationKeyword = currLineToken.Scopes.Contains("keyword.control.declaration.ubytec");
+            var isControlKeyword = currLineToken.Scopes.Contains("keyword.control.ubytec");
+            var isFlowKeyword = currLineToken.Scopes.Contains("keyword.control.flow.ubytec");
+            var isVarKeyword = currLineToken.Scopes.Contains("keyword.storage.var.ubytec");
+            var isStackKeyword = currLineToken.Scopes.Contains("keyword.stack.ubytec");
+            var isArithmeticKeyword = currLineToken.Scopes.Contains("keyword.operator.arithmetic.ubytec");
+            var isBitwiseKeyword = currLineToken.Scopes.Contains("keyword.operator.bitwise.ubytec");
+            var isComparisonKeyword = currLineToken.Scopes.Contains("keyword.operator.comparison.ubytec");
+            var isMemoryKeyword = currLineToken.Scopes.Contains("keyword.memory.ubytec");
+            var isJumpKeyword = currLineToken.Scopes.Contains("keyword.control.jump.ubytec");
+            var isFuncCallKeyword = currLineToken.Scopes.Contains("keyword.function.call.ubytec");
+            var isSyscallKeyword = currLineToken.Scopes.Contains("keyword.syscall.ubytec");
+            var isThreadingKeyword = currLineToken.Scopes.Contains("keyword.threading.ubytec");
+            var isSecurityKeyword = currLineToken.Scopes.Contains("keyword.security.ubytec");
+            var isExceptionKeyword = currLineToken.Scopes.Contains("keyword.exception.ubytec");
+            var isVectorKeyword = currLineToken.Scopes.Contains("keyword.vector.ubytec");
+            var isAudioKeyword = currLineToken.Scopes.Contains("keyword.audio.ubytec");
+            var isSystemKeyword = currLineToken.Scopes.Contains("keyword.system.ubytec");
+            var isMLKeyword = currLineToken.Scopes.Contains("keyword.ml.ubytec");
+            var isPowerKeyword = currLineToken.Scopes.Contains("keyword.power.ubytec");
+            var isQuantumKeyword = currLineToken.Scopes.Contains("keyword.quantum.ubytec");
+
+            // Operators
+            var isEqualityOperator = currLineToken.Scopes.Contains("operator.equality.ubytec");
+            var isInequalityOperator = currLineToken.Scopes.Contains("operator.inequality.ubytec");
+            var isLessThanEqualsOperator = currLineToken.Scopes.Contains("operator.less-than-equals.ubytec");
+            var isGreaterThanEqualsOperator = currLineToken.Scopes.Contains("operator.greater-than-equals.ubytec");
+            var isLessThanOperator = currLineToken.Scopes.Contains("operator.less-than.ubytec");
+            var isGreaterThanOperator = currLineToken.Scopes.Contains("operator.greater-than.ubytec");
+            var isNegationOperator = currLineToken.Scopes.Contains("operator.negation.ubytec");
+            var isUnsignedRightShift = currLineToken.Scopes.Contains("operator.unsigned-right-shift.ubytec");
+            var isUnsignedLeftShift = currLineToken.Scopes.Contains("operator.unsigned-left-shift.ubytec");
+            var isLeftShift = currLineToken.Scopes.Contains("operator.left-shift.ubytec");
+            var isRightShift = currLineToken.Scopes.Contains("operator.right-shift.ubytec");
+            var isAdditionOperator = currLineToken.Scopes.Contains("operator.addition.ubytec");
+            var isSubtractionOperator = currLineToken.Scopes.Contains("operator.subtraction.ubytec");
+            var isDivisionOperator = currLineToken.Scopes.Contains("operator.division.ubytec");
+            var isMultiplicationOperator = currLineToken.Scopes.Contains("operator.multiplication.ubytec");
+            var isExponentiationOperator = currLineToken.Scopes.Contains("operator.exponentiation.ubytec");
+            var isModuloOperator = currLineToken.Scopes.Contains("operator.modulo.ubytec");
+            var isBitwiseAndOperator = currLineToken.Scopes.Contains("operator.bitwise-and.ubytec");
+            var isHashOperator = currLineToken.Scopes.Contains("operator.hash.ubytec");
+            var isIncrementOperator = currLineToken.Scopes.Contains("operator.increment.ubytec");
+            var isDecrementOperator = currLineToken.Scopes.Contains("operator.decrement.ubytec");
+            var isLogicalAndOperator = currLineToken.Scopes.Contains("operator.logical-and.ubytec");
+            var isLogicalOrOperator = currLineToken.Scopes.Contains("operator.logical-or.ubytec");
+            var isOptionalChaining = currLineToken.Scopes.Contains("operator.optional-chaining.ubytec");
+            var isPipeOperator = currLineToken.Scopes.Contains("operator.pipe.ubytec");
+            var isPipeInOperator = currLineToken.Scopes.Contains("operator.pipe-in.ubytec");
+            var isPipeOutOperator = currLineToken.Scopes.Contains("operator.pipe-out.ubytec");
+            var isNullableCoalescence = currLineToken.Scopes.Contains("operator.nullable-coalescence.ubytec");
+            var isSpreadOperator = currLineToken.Scopes.Contains("operator.spread.ubytec");
+            var isSchematizeOperator = currLineToken.Scopes.Contains("operator.schematize.ubytec");
+            var isAssignOperator = currLineToken.Scopes.Contains("operator.assign.ubytec");
+
+            // Punctuation
+            var isComma = currLineToken.Scopes.Contains("punctuation.comma.ubytec");
+            var isKeyValueSeparator = currLineToken.Scopes.Contains("punctuation.separator.key-value.ubytec");
+            var isScopeSeparator = currLineToken.Scopes.Contains("punctuation.scope.ubytec");
+            var isParentChildSeparator = currLineToken.Scopes.Contains("punctuation.separator.parent-child.ubytec");
+            var isSemicolon = currLineToken.Scopes.Contains("punctuation.semicolon.ubytec");
+            var isArrow = currLineToken.Scopes.Contains("punctuation.arrow.ubytec");
+
+            // Arguments
+            var isArgumentName = currLineToken.Scopes.Contains("entity.name.argument.ubytec");
+
+            // Labels
+            var isClassLabel = currLineToken.Scopes.Contains("entity.name.type.class.ubytec");
+            var isRecordLabel = currLineToken.Scopes.Contains("entity.name.type.record.ubytec");
+            var isStructLabel = currLineToken.Scopes.Contains("entity.name.type.struct.ubytec");
+            var isEnumLabel = currLineToken.Scopes.Contains("entity.name.type.enum.ubytec");
+            var isInterfaceLabel = currLineToken.Scopes.Contains("entity.name.type.interface.ubytec");
+            var isActionLabel = currLineToken.Scopes.Contains("entity.name.type.action.ubytec");
+            var isFuncLabel = currLineToken.Scopes.Contains("entity.name.type.func.ubytec");
+            var isImplicitVarLabel = currLineToken.Scopes.Contains("entity.name.var.implicit.ubytec");
+            var isFieldLabel = currLineToken.Scopes.Contains("entity.name.field.ubytec");
+            var isExplicitVarLabel = currLineToken.Scopes.Contains("entity.name.var.explicit.ubytec");
+
+            // Invalid tokens
+            var isInvalid = currLineToken.Scopes.Contains("invalid.illegal.ubytec");
+
+            if (isInvalid) throw new IlegalTokenException(0x484834053EA2B37C, $"Invalid token used as operand: {currLineToken.Source}");
+            if (isComma) return;
+            if (isSemicolon) return;
+
+            // Process numeric, type, comment, and operator tokens using boolean checks
+
+            else if (isNumericBinary)
+            {
+                // Hexadecimal literal detected (e.g. 0x1A3F)
+                var a = Convert.ToInt32(currLineToken.Source, 2);
+                instructionAndOperands.Enqueue(a);
+            }
+            else if (isNumericHex)
+            {
+                // Hexadecimal literal detected (e.g. 0x1A3F)
+                var a = Convert.ToInt32(currLineToken.Source, 16);
+                instructionAndOperands.Enqueue(a);
+            }
+            else if (isNumericFloat || isNumericDouble)
+            {
+                // Floating-point literal (with a decimal point) detected
+                var a = Convert.ToSingle(currLineToken.Source);
+                instructionAndOperands.Enqueue(a);
+            }
+            else if (currLineToken.Source.StartsWith("t_", StringComparison.OrdinalIgnoreCase))
+            {
+                // Removemos el prefijo "t_" para obtener el nombre del tipo.
+                string typeToken = currLineToken.Source.Substring(2);
+
+                // Usamos las flags definidas en el token para determinar si es nullable y/o array.
+                // Las condiciones se basan en los scopes ya asignados:
+                //   - isSingleNullable, isArrayNullableBoth, isArrayNullableItems indican nullabilidad.
+                //   - isArray, isArrayNullableBoth, isArrayNullableArray, isArrayNullableItems indican un array.
+                bool isNullable = isSingleNullable || isArrayNullableBoth || isArrayNullableItems;
+                bool isArrayType = isArray || isArrayNullableBoth || isArrayNullableArray || isArrayNullableItems;
+
+                // Si por alguna razón el token termina con '?' (y no lo refleja el scope), lo eliminamos.
+                if (typeToken.EndsWith('?'))
+                {
+                    typeToken = typeToken[..^1];
+                }
+
+                // Intentamos convertir el tipo a un enum de PrimitiveType.
+                if (Enum.TryParse<PrimitiveType>(typeToken, true, out PrimitiveType parsedType))
+                {
+                    // Codificamos la nullabilidad y la condición array en un byte (primer bit para nullable, segundo para array).
+                    byte flags = 0;
+                    if (isNullable) flags |= 0x01;
+                    if (isArrayType) flags |= 0x02;
+
+                    instructionAndOperands.Enqueue((byte)parsedType);
+                    instructionAndOperands.Enqueue(flags);
+                }
+                else
+                {
+                    // Para tipos personalizados, convertimos cada carácter en un byte.
+                    foreach (char c in typeToken)
+                        instructionAndOperands.Enqueue((byte)c);
+
+                    // Añadimos el byte de flags al final.
+                    byte flags = 0;
+                    if (isNullable) flags |= 0x01;
+                    if (isArrayType) flags |= 0x02;
+                    instructionAndOperands.Enqueue(flags);
+                }
+            }
+            else if (isNumericInt)
+            {
+                // Integer literal detected
+                if (int.TryParse(currLineToken.Source, out int intValue))
+                    instructionAndOperands.Enqueue(intValue);
+                else if (byte.TryParse(currLineToken.Source, out byte byteValue))
+                    instructionAndOperands.Enqueue(byteValue);
+                else
+                    throw new IlegalTokenException(0xA47A4945647CBC9D, $"Invalid integer constant: {currLineToken.Source}");
+            }
+            else if (isCommentLineDoubleSlash || isCommentBlock)
+            {
+                // Skip comments
+                return;
+            }
+            else if (isEqualityOperator || isInequalityOperator || 
+                     isLessThanEqualsOperator || isGreaterThanEqualsOperator ||
+                     isLessThanOperator || isGreaterThanOperator ||
+                     isAdditionOperator || isSubtractionOperator ||
+                     isDivisionOperator || isMultiplicationOperator ||
+                     isExponentiationOperator || isModuloOperator ||
+                     isBitwiseAndOperator || isHashOperator ||
+                     isIncrementOperator || isDecrementOperator ||
+                     isLogicalAndOperator || isLogicalOrOperator ||
+                     isOptionalChaining || isPipeOperator ||
+                     isPipeInOperator || isPipeOutOperator ||
+                     isNullableCoalescence || isSpreadOperator ||
+                     isSchematizeOperator || isAssignOperator)
+            {
+                // Here we process all other operators.
+                // If the operator token is a single character, we enqueue it and pad with 0.
+                // If it’s two characters long, we enqueue both characters.
+                // For longer operators (if any emerge in the future), we iterate through each character.
+                if (currLineToken.Source.Length == 1)
+                {
+                    instructionAndOperands.Enqueue((byte)currLineToken.Source[0]);
+                    instructionAndOperands.Enqueue(0); // Padding for expected two-byte format
+                }
+                else if (currLineToken.Source.Length == 2)
+                {
+                    instructionAndOperands.Enqueue((byte)currLineToken.Source[0]);
+                    instructionAndOperands.Enqueue((byte)currLineToken.Source[1]);
+                }
+                else
+                {
+                    foreach (char c in currLineToken.Source)
+                    {
+                        instructionAndOperands.Enqueue((byte)c);
+                    }
+                }
+            }
+            else
+            {
+                throw new IlegalTokenException(0xFDDEFC54BA8E0600, $"Invalid operand: {currLineToken}");
+            }
+
+        }
+
         /// <summary>
         /// Creates an appropriate IOpCode instance (e.g., IF, WHILE, LOOP) based on the 
         /// given opcode byte and additional operands. Also delegates to specialized 
@@ -269,7 +494,7 @@ namespace Ubytec.Tools.AST
         /// <param name="variables">A stack of variables in the current context.</param>
         /// <param name="operands">A list of ValueType operands extracted from the line of code.</param>
         /// <returns>An IOpCode object ready to be added to the instruction flow.</returns>
-        private static IOpCode CreateInstruction(byte opcode, Stack<VariableExpressionFragment> variables, params ValueType[] operands)
+        private static IOpCode CreateInstruction(byte opcode, List<SyntaxToken> tokens, params ValueType[] operands)
         {
             return opcode switch
             {
@@ -277,26 +502,26 @@ namespace Ubytec.Tools.AST
                 0x00 => new TRAP(),
                 0x01 => new NOP(),
                 0x02 => new BLOCK(operands.Length > 0 ? (PrimitiveType)operands[0] : PrimitiveType.Void,
-                    [.. variables]),
+                    new([])),
                 0x03 => new LOOP(operands.Length > 0 ? (PrimitiveType)operands[0] : PrimitiveType.Default,
-                    [.. variables]),
-                0x04 => ProcessIf(),
+                    new([])),
+                0x04 => IF.CreateInstruction([], [..tokens], operands),
                 0x05 => new ELSE(
-                    [.. variables]),
+                    new([])),
                 0x06 => new END(),
                 0x07 => new BREAK(operands.Length > 0 ? Convert.ToInt32(operands[0]) : null),
                 0x08 => new CONTINUE(operands.Length > 0 ? Convert.ToInt32(operands[0]) : null),
                 0x09 => new RETURN(
-                    [.. variables]),
+                    new([])),
                 0x0A => new BRANCH(
                     operands.Length > 0 ? operands[0] : default!,
                     operands.Length > 1 ? Convert.ToInt32(operands[1]) : null,
                     operands.Length > 2 ? (PrimitiveType)operands[2] : PrimitiveType.Default,
-                    [.. variables]),
+                    new([])),
                 0x0B => new SWITCH(
                     operands.Length > 0 ? Convert.ToInt32(operands[0]) : null,
                     operands.Length > 1 ? (PrimitiveType)operands[1] : PrimitiveType.Default,
-                    [.. variables]),
+                    new([])),
                 0x0C => ProcessWhile(),
                 0x0D => new CLEAR(),
                 0x0E => new DEFAULT(),
@@ -340,55 +565,16 @@ namespace Ubytec.Tools.AST
                 _ => throw new Exception($"Unknown opcode: 0x{opcode:X4}")
             };
 
-            IF ProcessIf()
-            {
-                // IF sin condición explícita.
-                if (operands.Length == 0)
-                {
-                    return new IF(Variables: [.. variables]);
-                }
-                // Caso: IF left [op] right
-                // Se esperan 4 operandos: left, equalsLower, equalsUpper, right.
-                else if (operands.Length == 4) // Caso sin bloque tipo: left, opLower, opUpper, right
-                {
-                    var left = operands[0];
-                    var opLower = Convert.ToByte(operands[1]);
-                    var opUpper = Convert.ToByte(operands[2]);
-                    // Para operadores de un solo carácter, opUpper será 0.
-                    string equals = opUpper == 0 ? new string([(char)opLower]) : new string([(char)opLower, (char)opUpper]);
-                    var right = operands[3];
-                    return new IF(PrimitiveType.Default, Condition: new(left, equals, right), [.. variables]);
-                }
-
-                // Caso: IF t_<tipo> left [op] right
-                // Se esperan 5 operandos: blockType, left, equalsLower, equalsUpper, right.
-                else if (operands.Length == 5)
-                {
-                    var blockType = (PrimitiveType)operands[0];
-                    var left = operands[1];
-                    var equalsLower = Convert.ToByte(operands[2]);
-                    var equalsUpper = Convert.ToByte(operands[3]);
-                    string equals = equalsUpper == 0 ? new string([(char)equalsLower]) : new string([(char)equalsLower, (char)equalsUpper]);
-                    var right = operands[4];
-                    return new IF(blockType, Condition: new(left, equals, right), [.. variables]);
-                }
-                // Fallback: Si se proporciona solo el bloque tipo.
-                else
-                {
-                    var blockType = (PrimitiveType)operands[0];
-                    return new IF(blockType, Variables: [.. variables]);
-                }
-            }
             WHILE ProcessWhile()
             {
                 // 1) Gather leading integer operands as label IDs
-                List<int> allLabelIds = new();
+                List<int> allLabelIds = [];
                 int index = 0;
-                while (index < operands.Length && operands[index] is int intVal)
+                /*while (index < operands.Length && operands[index] is int intVal)
                 {
                     allLabelIds.Add(intVal);
                     index++;
-                }
+                }*/
                 // We'll unify them into either zero or one label ID
                 // (If you truly want multiple loops from one line, you'd have to return multiple WHILE objects.)
                 int[]? singleLabelIdArray = null;
@@ -414,7 +600,7 @@ namespace Ubytec.Tools.AST
                             // meaning the compile method can do: pop rax, cmp rax, 0, jne while_label
                             LabelIDxs: singleLabelIdArray,
                             // No condition => you’ll handle in the WHILE compile to jump if nonzero
-                            Variables: [.. variables]
+                            Variables: new([])
                         );
                     else
                         // No label IDs, no operands => structured loop
@@ -425,7 +611,7 @@ namespace Ubytec.Tools.AST
                         //   ...
                         //   jmp while_x
                         return new WHILE(
-                            Variables: [.. variables]
+                            Variables: new([])
                         );
                 }
 
@@ -447,9 +633,9 @@ namespace Ubytec.Tools.AST
                     // Condition-based while, no explicit block type
                     return new WHILE(
                         BlockType: PrimitiveType.Default,
-                        Condition: new ConditionExpressionFragment(left, @operator, right),
+                        Condition: new(new ConditionExpressionFragment(left, @operator, right) { Tokens = [..tokens.Skip(1)] }),
                         LabelIDxs: singleLabelIdArray, // if present, we keep it
-                        Variables: [.. variables]
+                        Variables: new([])
                     );
                 }
 
@@ -470,9 +656,9 @@ namespace Ubytec.Tools.AST
 
                     return new WHILE(
                         BlockType: blockType,
-                        Condition: new ConditionExpressionFragment(left, @operator, right),
+                        Condition: new(new ConditionExpressionFragment(left, @operator, right) { Tokens = [.. tokens.Skip(1)] }),
                         LabelIDxs: singleLabelIdArray,
-                        Variables: [.. variables]
+                        Variables: new([])
                     );
                 }
 
@@ -488,7 +674,7 @@ namespace Ubytec.Tools.AST
                     return new WHILE(
                         BlockType: blockType,
                         LabelIDxs: singleLabelIdArray,
-                        Variables: [.. variables]
+                        Variables: new([])
                     );
                 }
 
@@ -507,15 +693,12 @@ namespace Ubytec.Tools.AST
         /// </summary>
         /// <param name="parent">The parent opCode holding the variable list.</param>
         /// <param name="child">The child opCode to which the variables will be added.</param>
-        private static void InheritVariables(IOpCode? parent, IOpCode child)
+        private static void InheritVariables(IBlockOpCode? parent, IOpInheritance child)
         {
-            if (parent is null) return;
-
-            dynamic dynParent = parent;
-            dynamic dynChild = child;
+            if (parent is null || parent!.Variables is null) return;
 
             // Each block-like opcode has a `List<Variable> Variables` property
-            dynChild.Variables.AddRange(dynParent.Variables);
+            child.Variables?.Syntaxes.AddRange(parent.Variables?.Syntaxes ?? []);
         }
         /// <summary>
         /// Merges the declared variable (from a VAR instruction) into the 
@@ -524,16 +707,13 @@ namespace Ubytec.Tools.AST
         /// </summary>
         /// <param name="block">The block opCode (e.g., BLOCK, IF, LOOP).</param>
         /// <param name="varOp">The VAR instruction that contains the newly declared variable.</param>
-        private static void MergeVariables(IOpCode block, IOpCode varOp)
+        private static void MergeVariables(IBlockOpCode block, VAR varOp)
         {
-            // add the declared variable to the block's variable list
-            dynamic dynBlock = block;
-            dynamic dynVarOp = varOp;
+            if (block!.Variables is null) return;
 
-            if (dynVarOp is VAR { Variable: VariableExpressionFragment v })
-            {
-                dynBlock.Variables.Add(v);
-            }
+            if (block.Variables == null) return;
+
+            block.Variables?.Syntaxes.Add(varOp.Variable);
         }
 
         /// <summary>

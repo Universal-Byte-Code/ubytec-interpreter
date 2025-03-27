@@ -20,6 +20,7 @@ namespace Ubytec.Language.AST
         {
             _options.Converters.Add(new IOpCodeConverter());
             _options.Converters.Add(new ISyntaxTreeConverter());
+            _options.Converters.Add(new IUbytecExpressionFragmentConverter());
         }
 
         public static ICollection<ValidationError> CheckSyntaxTreeSchema(SyntaxTree tree)
