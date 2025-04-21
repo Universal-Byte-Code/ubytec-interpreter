@@ -1,13 +1,13 @@
 ﻿using System.Text.Json.Serialization;
 using Ubytec.Language.Syntax.Interfaces;
-using Ubytec.Language.Syntax.Syntaxes;
-using static Ubytec.Language.Syntax.Enum.Primitives;
+using Ubytec.Language.Syntax.Model;
+using static Ubytec.Language.Syntax.TypeSystem.Types;
 
 namespace Ubytec.Language.Syntax.ExpressionFragments
 {
-    public readonly record struct VariableExpressionFragment(PrimitiveType PrimitiveType, bool Nullable, string Name, object? Value) : IUbytecExpressionFragment
+    public readonly record struct VariableExpressionFragment(UbytecType Type, string Name, object? Value) : IUbytecExpressionFragment
     {
         [JsonInclude]
-        public required SyntaxToken[]? Tokens { get; init; }
+        public required SyntaxToken[] Tokens { get; init; } = [];
     }
 }

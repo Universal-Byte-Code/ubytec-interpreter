@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using static Ubytec.Language.Operations.CoreOperations;
+﻿using Ubytec.Language.Syntax.Scopes;
 
 namespace Ubytec.Language.Operations
 {
@@ -9,7 +8,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x11;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            string IOpCode.Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -18,7 +17,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x12;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            string IOpCode.Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -27,7 +26,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x13;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            string IOpCode.Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -36,7 +35,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x14;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            string IOpCode.Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -45,7 +44,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x15;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            string IOpCode.Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -54,7 +53,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x16;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            string IOpCode.Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -63,7 +62,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x17;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            string IOpCode.Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -72,7 +71,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x18;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            string IOpCode.Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -81,7 +80,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x19;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            string IOpCode.Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -90,7 +89,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x1A;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            string IOpCode.Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -99,7 +98,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x1B;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            string IOpCode.Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -108,7 +107,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x1C;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            string IOpCode.Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -117,7 +116,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x1D;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            string IOpCode.Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -126,7 +125,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x1E;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            string IOpCode.Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }

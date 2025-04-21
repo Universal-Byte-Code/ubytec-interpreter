@@ -2,7 +2,7 @@
 using NJsonSchema;
 using NJsonSchema.Validation;
 using System.Text.Json;
-using Ubytec.Language.Syntax.Syntaxes;
+using Ubytec.Language.Syntax.Model;
 using Ubytec.Language.Tools.Serialization;
 
 namespace Ubytec.Language.AST

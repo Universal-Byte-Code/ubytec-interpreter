@@ -1,12 +1,12 @@
-﻿using System.Reflection.PortableExecutable;
-using System.Text;
+﻿using System.Text;
 using TextMateSharp.Internal.Grammars.Reader;
 using TextMateSharp.Internal.Themes.Reader;
 using TextMateSharp.Internal.Types;
 using TextMateSharp.Registry;
 using TextMateSharp.Themes;
 using Ubytec.Language.Exceptions;
-namespace Ubytec.Language.Lexical;
+
+namespace Ubytec.Language.Grammar;
 
 public class UbytecRegistryOptions : IRegistryOptions
 {
@@ -24,9 +24,7 @@ public class UbytecRegistryOptions : IRegistryOptions
         var lexiconReadTask = lexiconFetchTask.ContinueWith(task =>
         {
             if (task.IsFaulted)
-            {
                 return null;
-            }
             else if (task.IsCanceled)
             {
                 return null;
@@ -43,9 +41,7 @@ public class UbytecRegistryOptions : IRegistryOptions
         lexiconReadTask.Wait();
 
         if (lexiconReadTask.IsFaulted)
-        {
             return null;
-        }
         else if (lexiconReadTask.IsCanceled)
         {
             return null;
@@ -56,15 +52,18 @@ public class UbytecRegistryOptions : IRegistryOptions
 
     public IRawTheme GetTheme(string scopeName) => null;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="HttpIOException"></exception>
     public IRawTheme GetDefaultTheme()
     {
         var themeFetchTask = FetchTheme(DefaultThemeUrl);
         var themeReadTask = themeFetchTask.ContinueWith(task =>
         {
             if (task.IsFaulted)
-            {
                 return null;
-            }
             else if (task.IsCanceled)
             {
                 return null;
@@ -81,15 +80,13 @@ public class UbytecRegistryOptions : IRegistryOptions
         themeReadTask.Wait();
 
         if (themeReadTask.IsFaulted)
-        {
             return null;
-        }
         else if (themeReadTask.IsCanceled)
         {
             return null;
         }
 
-        return themeReadTask.Result;
+        return themeReadTask.Result ?? throw new HttpIOException(HttpRequestError.ConnectionError);
     }
 #nullable restore
 

@@ -6,8 +6,9 @@
     <RootNamespace>Ubytec</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AssemblyVersion>1.0.9216.40497</AssemblyVersion>
-    <FileVersion>1.0.9216.40497</FileVersion>
+    <AssemblyVersion>1.0.9241.42686</AssemblyVersion>
+    <FileVersion>1.0.9241.42686</FileVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>

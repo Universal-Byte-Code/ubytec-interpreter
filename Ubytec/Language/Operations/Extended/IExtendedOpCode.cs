@@ -1,6 +1,4 @@
-﻿using Ubytec.Language.Operations;
-
-namespace Ubytec.Language.Operations.Extended
+﻿namespace Ubytec.Language.Operations.Extended
 {
     public interface IExtendedOpCode : IOpCode
     {

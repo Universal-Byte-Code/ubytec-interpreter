@@ -21,7 +21,7 @@ public class IOpCodeConverter : JsonConverter<IOpCode>
             var coreTypes = typeof(CoreOperations).GetNestedTypes();
             var stackTypes = typeof(StackOperarions).GetNestedTypes();
 
-            Type[] opCodeTypes = [ ..coreTypes, ..stackTypes];
+            Type[] opCodeTypes = [.. coreTypes, .. stackTypes];
             Type? targetType = null;
 
             foreach (var opCodeType in opCodeTypes)

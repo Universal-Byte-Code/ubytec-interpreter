@@ -8,227 +8,262 @@
           {
             "Operation": {
               "$type": "BLOCK",
-              "BlockType": 0,
+              "BlockType": {
+                "Type": 0,
+                "CustomID": null,
+                "Name": "Void",
+                "Modifiers": 0,
+                "FixedArraySize": 1,
+                "IsArray": false,
+                "IsNullableArray": false,
+                "IsNullableItems": false,
+                "IsFullyNullableArray": false,
+                "IsSingleNullable": false
+              },
               "Variables": {
                 "Syntaxes": [
                   {
                     "$type": "VariableExpressionFragment",
-                    "PrimitiveType": 9,
-                    "Nullable": false,
+                    "Type": {
+                      "Type": 9,
+                      "CustomID": null,
+                      "Name": "Int32",
+                      "Modifiers": 0,
+                      "FixedArraySize": 1,
+                      "IsArray": false,
+                      "IsNullableArray": false,
+                      "IsNullableItems": false,
+                      "IsFullyNullableArray": false,
+                      "IsSingleNullable": false
+                    },
                     "Name": "i",
                     "Value": "0",
                     "Tokens": [
                       {
                         "Source": "t_int32",
                         "Line": 2,
-                        "StartColumn": 8,
-                        "EndColumn": 15,
+                        "StartColumn": 4,
+                        "EndColumn": 11,
                         "Scopes": [
                           "source.ubytec",
                           "storage.type.single.ubytec"
                         ],
                         "Metadata": {
-                          "guid": "0195d53d-c871-73a1-9c94-f418fc3baa03"
+                          "guid": "01965595-67f3-7492-9195-10da39215dc5"
                         }
                       },
                       {
                         "Source": "i",
                         "Line": 2,
-                        "StartColumn": 16,
-                        "EndColumn": 17,
+                        "StartColumn": 12,
+                        "EndColumn": 13,
                         "Scopes": [
                           "source.ubytec",
                           "entity.name.var.explicit.ubytec"
                         ],
                         "Metadata": {
-                          "guid": "0195d53d-c871-76ef-b7a5-3e01f2c411c0"
+                          "guid": "01965595-67f3-7d9d-9860-b7d33b06c72a"
                         }
                       },
                       {
                         "Source": "0",
                         "Line": 2,
-                        "StartColumn": 18,
-                        "EndColumn": 19,
+                        "StartColumn": 14,
+                        "EndColumn": 15,
                         "Scopes": [
                           "source.ubytec",
                           "constant.numeric.int.ubytec"
                         ],
                         "Metadata": {
-                          "guid": "0195d53d-c871-715b-90af-5058cb66bbb0"
+                          "guid": "01965595-67f3-70e2-8b4f-f1745de589ae"
                         }
                       }
                     ]
                   }
                 ],
                 "Metadata": {
-                  "guid": "0195d53d-c87d-74df-8042-96e25b5db747"
+                  "guid": "01965595-6804-7380-b87b-3644f4ace217"
                 }
               },
               "OpCode": 2
             },
+            "HighLevelEntity": null,
             "Children": [
               {
                 "Operation": {
                   "$type": "VAR",
                   "Variable": {
-                    "PrimitiveType": 9,
-                    "Nullable": false,
+                    "Type": {
+                      "Type": 9,
+                      "CustomID": null,
+                      "Name": "Int32",
+                      "Modifiers": 0,
+                      "FixedArraySize": 1,
+                      "IsArray": false,
+                      "IsNullableArray": false,
+                      "IsNullableItems": false,
+                      "IsFullyNullableArray": false,
+                      "IsSingleNullable": false
+                    },
                     "Name": "i",
                     "Value": "0",
                     "Tokens": [
                       {
                         "Source": "t_int32",
                         "Line": 2,
-                        "StartColumn": 8,
-                        "EndColumn": 15,
+                        "StartColumn": 4,
+                        "EndColumn": 11,
                         "Scopes": [
                           "source.ubytec",
                           "storage.type.single.ubytec"
                         ],
                         "Metadata": {
-                          "guid": "0195d53d-c871-73a1-9c94-f418fc3baa03"
+                          "guid": "01965595-67f3-7492-9195-10da39215dc5"
                         }
                       },
                       {
                         "Source": "i",
                         "Line": 2,
-                        "StartColumn": 16,
-                        "EndColumn": 17,
+                        "StartColumn": 12,
+                        "EndColumn": 13,
                         "Scopes": [
                           "source.ubytec",
                           "entity.name.var.explicit.ubytec"
                         ],
                         "Metadata": {
-                          "guid": "0195d53d-c871-76ef-b7a5-3e01f2c411c0"
+                          "guid": "01965595-67f3-7d9d-9860-b7d33b06c72a"
                         }
                       },
                       {
                         "Source": "0",
                         "Line": 2,
-                        "StartColumn": 18,
-                        "EndColumn": 19,
+                        "StartColumn": 14,
+                        "EndColumn": 15,
                         "Scopes": [
                           "source.ubytec",
                           "constant.numeric.int.ubytec"
                         ],
                         "Metadata": {
-                          "guid": "0195d53d-c871-715b-90af-5058cb66bbb0"
+                          "guid": "01965595-67f3-70e2-8b4f-f1745de589ae"
                         }
                       }
                     ]
                   },
                   "OpCode": 16
                 },
+                "HighLevelEntity": null,
                 "Children": null,
                 "Tokens": [
                   {
                     "Source": "t_int32",
                     "Line": 2,
-                    "StartColumn": 8,
-                    "EndColumn": 15,
+                    "StartColumn": 4,
+                    "EndColumn": 11,
                     "Scopes": [
                       "source.ubytec",
                       "storage.type.single.ubytec"
                     ],
                     "Metadata": {
-                      "guid": "0195d53d-c871-73a1-9c94-f418fc3baa03"
+                      "guid": "01965595-67f3-7492-9195-10da39215dc5"
                     }
                   },
                   {
                     "Source": "i",
                     "Line": 2,
-                    "StartColumn": 16,
-                    "EndColumn": 17,
+                    "StartColumn": 12,
+                    "EndColumn": 13,
                     "Scopes": [
                       "source.ubytec",
                       "entity.name.var.explicit.ubytec"
                     ],
                     "Metadata": {
-                      "guid": "0195d53d-c871-76ef-b7a5-3e01f2c411c0"
+                      "guid": "01965595-67f3-7d9d-9860-b7d33b06c72a"
                     }
                   },
                   {
                     "Source": "0",
                     "Line": 2,
-                    "StartColumn": 18,
-                    "EndColumn": 19,
+                    "StartColumn": 14,
+                    "EndColumn": 15,
                     "Scopes": [
                       "source.ubytec",
                       "constant.numeric.int.ubytec"
                     ],
                     "Metadata": {
-                      "guid": "0195d53d-c871-715b-90af-5058cb66bbb0"
+                      "guid": "01965595-67f3-70e2-8b4f-f1745de589ae"
                     }
                   }
                 ],
                 "Metadata": {
-                  "guid": "0195d53d-c896-731b-9877-c765fc330a1b"
-                }
+                  "guid": "01965595-681b-7cf2-b545-95781af9969a"
+                },
+                "IsHighLevel": false,
+                "IsOpCode": true
               },
               {
                 "Operation": {
-                  "$type": "RETURN",
-                  "Variables": {
-                    "Syntaxes": [],
-                    "Metadata": {
-                      "guid": "0195d53d-c884-7a06-adc6-70defc338b7b"
-                    }
-                  },
-                  "OpCode": 9
+                  "$type": "END",
+                  "OpCode": 6
                 },
+                "HighLevelEntity": null,
                 "Children": null,
                 "Tokens": [
                   {
-                    "Source": "return",
-                    "Line": 10,
-                    "StartColumn": 4,
-                    "EndColumn": 10,
+                    "Source": "end",
+                    "Line": 20,
+                    "StartColumn": 0,
+                    "EndColumn": 3,
                     "Scopes": [
                       "source.ubytec",
                       "keyword.control.flow.ubytec"
                     ],
                     "Metadata": {
-                      "guid": "0195d53d-c872-7742-8758-04bede4227bf"
+                      "guid": "01965595-67f5-73a8-83f0-dc5f6f23fc1c"
                     }
                   }
                 ],
                 "Metadata": {
-                  "guid": "0195d53d-c897-7f02-98b6-e895f9a50a84"
-                }
+                  "guid": "01965595-681b-7e5d-9042-58599e909295"
+                },
+                "IsHighLevel": false,
+                "IsOpCode": true
               }
             ],
             "Tokens": [
               {
                 "Source": "block",
                 "Line": 1,
-                "StartColumn": 4,
-                "EndColumn": 9,
+                "StartColumn": 0,
+                "EndColumn": 5,
                 "Scopes": [
                   "source.ubytec",
                   "keyword.control.flow.ubytec"
                 ],
                 "Metadata": {
-                  "guid": "0195d53d-c871-72b1-a823-0f4466ccc938"
+                  "guid": "01965595-67f3-7fe1-98d7-66e27d01e6a9"
                 }
               },
               {
                 "Source": "t_void",
                 "Line": 1,
-                "StartColumn": 10,
-                "EndColumn": 16,
+                "StartColumn": 6,
+                "EndColumn": 12,
                 "Scopes": [
                   "source.ubytec",
                   "storage.type.single.ubytec"
                 ],
                 "Metadata": {
-                  "guid": "0195d53d-c871-76ad-817f-3c873d467407"
+                  "guid": "01965595-67f3-7d27-b55d-b8745b4ddf12"
                 }
               }
             ],
             "Metadata": {
-              "guid": "0195d53d-c896-731f-a86a-609fa7497b37",
-              "nasm": "block_0: ; BLOCK start  while_0: ; WHILE start\n    mov rax, 2    ; Evaluate left\n    cmp rax, 10   ; Compare with right\n    je end_while_0    ; Jump if condition is false\r\n\r\n    if_0: ; IF START\n      mov rax, 0  ; Eval\u00FAa la parte izquierda\n      cmp rax, 9  ; Compara con la parte derecha\n      jne end_if_0   ; Salta si la condici\u00F3n es falsa\r\n    \r\n\r\n      nop   ; NOP\n\r\n      jmp end_else_0     ; Jump over ELSE part\n    end_if_0:    ; if_0 END\n    else_0:  ; Start ELSE block\n\r\n      nop   ; NOP\n\r\n    end_else_0: ; END of else_0\n\r\n    pop rax       ; Load loop counter\n    dec rax       ; Decrement counter\n    push rax      ; Store updated counter\n    cmp rax, 0    ; Check if counter is zero\n    je end_while_0 ; Exit loop if counter == 0\n    jmp while_0 ; Otherwise, continue loop\n  end_while_0: ; END of while_0\n\r\n  pop rax   ; RETURN value\n  ret\nend_block_0: ; End of function =\u003E block_0"
-            }
+              "initialDepth": "",
+              "guid": "01965595-681a-7202-b937-cdd46ef08bb9",
+              "depth": ""
+            },
+            "IsHighLevel": false,
+            "IsOpCode": true
           }
         ],
         "Sentences": [
@@ -237,7 +272,18 @@
               {
                 "Operation": {
                   "$type": "WHILE",
-                  "BlockType": 255,
+                  "BlockType": {
+                    "Type": 240,
+                    "CustomID": null,
+                    "Name": "Default",
+                    "Modifiers": 0,
+                    "FixedArraySize": 1,
+                    "IsArray": false,
+                    "IsNullableArray": false,
+                    "IsNullableItems": false,
+                    "IsFullyNullableArray": false,
+                    "IsSingleNullable": false
+                  },
                   "Condition": {
                     "Syntaxes": [
                       {
@@ -249,47 +295,47 @@
                           {
                             "Source": "2",
                             "Line": 3,
-                            "StartColumn": 14,
-                            "EndColumn": 15,
+                            "StartColumn": 10,
+                            "EndColumn": 11,
                             "Scopes": [
                               "source.ubytec",
                               "constant.numeric.int.ubytec"
                             ],
                             "Metadata": {
-                              "guid": "0195d53d-c871-75ad-bf45-56ce6c43bba8"
+                              "guid": "01965595-67f3-7cf8-b43d-9b7fd5dc9ec9"
                             }
                           },
                           {
                             "Source": "!=",
                             "Line": 3,
-                            "StartColumn": 16,
-                            "EndColumn": 18,
+                            "StartColumn": 12,
+                            "EndColumn": 14,
                             "Scopes": [
                               "source.ubytec",
                               "operator.inequality.ubytec"
                             ],
                             "Metadata": {
-                              "guid": "0195d53d-c871-7c46-82ae-69a521eadffc"
+                              "guid": "01965595-67f3-79bb-8b7d-bdffe2e0ac48"
                             }
                           },
                           {
                             "Source": "10",
                             "Line": 3,
-                            "StartColumn": 19,
-                            "EndColumn": 21,
+                            "StartColumn": 15,
+                            "EndColumn": 17,
                             "Scopes": [
                               "source.ubytec",
                               "constant.numeric.int.ubytec"
                             ],
                             "Metadata": {
-                              "guid": "0195d53d-c871-744d-bf8a-3c1de0335740"
+                              "guid": "01965595-67f3-720d-aabd-198595a85db5"
                             }
                           }
                         ]
                       }
                     ],
                     "Metadata": {
-                      "guid": "0195d53d-c882-73e0-ad29-c653b1b75e7b"
+                      "guid": "01965595-6809-71a6-949c-14e7d07ba9b9"
                     }
                   },
                   "LabelIDxs": null,
@@ -297,144 +343,161 @@
                     "Syntaxes": [
                       {
                         "$type": "VariableExpressionFragment",
-                        "PrimitiveType": 9,
-                        "Nullable": false,
+                        "Type": {
+                          "Type": 9,
+                          "CustomID": null,
+                          "Name": "Int32",
+                          "Modifiers": 0,
+                          "FixedArraySize": 1,
+                          "IsArray": false,
+                          "IsNullableArray": false,
+                          "IsNullableItems": false,
+                          "IsFullyNullableArray": false,
+                          "IsSingleNullable": false
+                        },
                         "Name": "i",
                         "Value": "0",
                         "Tokens": [
                           {
                             "Source": "t_int32",
                             "Line": 2,
-                            "StartColumn": 8,
-                            "EndColumn": 15,
+                            "StartColumn": 4,
+                            "EndColumn": 11,
                             "Scopes": [
                               "source.ubytec",
                               "storage.type.single.ubytec"
                             ],
                             "Metadata": {
-                              "guid": "0195d53d-c871-73a1-9c94-f418fc3baa03"
+                              "guid": "01965595-67f3-7492-9195-10da39215dc5"
                             }
                           },
                           {
                             "Source": "i",
                             "Line": 2,
-                            "StartColumn": 16,
-                            "EndColumn": 17,
+                            "StartColumn": 12,
+                            "EndColumn": 13,
                             "Scopes": [
                               "source.ubytec",
                               "entity.name.var.explicit.ubytec"
                             ],
                             "Metadata": {
-                              "guid": "0195d53d-c871-76ef-b7a5-3e01f2c411c0"
+                              "guid": "01965595-67f3-7d9d-9860-b7d33b06c72a"
                             }
                           },
                           {
                             "Source": "0",
                             "Line": 2,
-                            "StartColumn": 18,
-                            "EndColumn": 19,
+                            "StartColumn": 14,
+                            "EndColumn": 15,
                             "Scopes": [
                               "source.ubytec",
                               "constant.numeric.int.ubytec"
                             ],
                             "Metadata": {
-                              "guid": "0195d53d-c871-715b-90af-5058cb66bbb0"
+                              "guid": "01965595-67f3-70e2-8b4f-f1745de589ae"
                             }
                           }
                         ]
                       }
                     ],
                     "Metadata": {
-                      "guid": "0195d53d-c882-7ae7-92ba-32b84a717eb8"
+                      "guid": "01965595-6809-7485-bdd7-3aa905bbaefe"
                     }
                   },
                   "OpCode": 12
                 },
+                "HighLevelEntity": null,
                 "Children": [
                   {
                     "Operation": {
                       "$type": "END",
                       "OpCode": 6
                     },
+                    "HighLevelEntity": null,
                     "Children": null,
                     "Tokens": [
                       {
                         "Source": "end",
-                        "Line": 9,
-                        "StartColumn": 8,
-                        "EndColumn": 11,
+                        "Line": 19,
+                        "StartColumn": 4,
+                        "EndColumn": 7,
                         "Scopes": [
                           "source.ubytec",
                           "keyword.control.flow.ubytec"
                         ],
                         "Metadata": {
-                          "guid": "0195d53d-c872-719a-88e8-873598f97db8"
+                          "guid": "01965595-67f5-7154-8fa4-f0088a417064"
                         }
                       }
                     ],
                     "Metadata": {
-                      "guid": "0195d53d-c897-771f-ba23-ac7f771a6f45"
-                    }
+                      "guid": "01965595-681b-7358-b576-9d3d32ca1dc1"
+                    },
+                    "IsHighLevel": false,
+                    "IsOpCode": true
                   }
                 ],
                 "Tokens": [
                   {
                     "Source": "while",
                     "Line": 3,
-                    "StartColumn": 8,
-                    "EndColumn": 13,
+                    "StartColumn": 4,
+                    "EndColumn": 9,
                     "Scopes": [
                       "source.ubytec",
                       "keyword.control.flow.ubytec"
                     ],
                     "Metadata": {
-                      "guid": "0195d53d-c871-7dd2-8459-d4a7f0f2268b"
+                      "guid": "01965595-67f3-72d5-8c6a-d9b47cc75b36"
                     }
                   },
                   {
                     "Source": "2",
                     "Line": 3,
-                    "StartColumn": 14,
-                    "EndColumn": 15,
+                    "StartColumn": 10,
+                    "EndColumn": 11,
                     "Scopes": [
                       "source.ubytec",
                       "constant.numeric.int.ubytec"
                     ],
                     "Metadata": {
-                      "guid": "0195d53d-c871-75ad-bf45-56ce6c43bba8"
+                      "guid": "01965595-67f3-7cf8-b43d-9b7fd5dc9ec9"
                     }
                   },
                   {
                     "Source": "!=",
                     "Line": 3,
-                    "StartColumn": 16,
-                    "EndColumn": 18,
+                    "StartColumn": 12,
+                    "EndColumn": 14,
                     "Scopes": [
                       "source.ubytec",
                       "operator.inequality.ubytec"
                     ],
                     "Metadata": {
-                      "guid": "0195d53d-c871-7c46-82ae-69a521eadffc"
+                      "guid": "01965595-67f3-79bb-8b7d-bdffe2e0ac48"
                     }
                   },
                   {
                     "Source": "10",
                     "Line": 3,
-                    "StartColumn": 19,
-                    "EndColumn": 21,
+                    "StartColumn": 15,
+                    "EndColumn": 17,
                     "Scopes": [
                       "source.ubytec",
                       "constant.numeric.int.ubytec"
                     ],
                     "Metadata": {
-                      "guid": "0195d53d-c871-744d-bf8a-3c1de0335740"
+                      "guid": "01965595-67f3-720d-aabd-198595a85db5"
                     }
                   }
                 ],
                 "Metadata": {
-                  "guid": "0195d53d-c896-73ac-8e47-c8a27d6b7ddd",
-                  "nasm": "while_0: ; WHILE start\n  mov rax, 2    ; Evaluate left\n  cmp rax, 10   ; Compare with right\n  je end_while_0    ; Jump if condition is false\r\n    if_0: ; IF START\n      mov rax, 0  ; Eval\u00FAa la parte izquierda\n      cmp rax, 9  ; Compara con la parte derecha\n      jne end_if_0   ; Salta si la condici\u00F3n es falsa\r\n    \r\n\r\n      nop   ; NOP\n\r\n      jmp end_else_0     ; Jump over ELSE part\n    end_if_0:    ; if_0 END\n    else_0:  ; Start ELSE block\n\r\n      nop   ; NOP\n\r\n    end_else_0: ; END of else_0\n\r\n  pop rax       ; Load loop counter\n  dec rax       ; Decrement counter\n  push rax      ; Store updated counter\n  cmp rax, 0    ; Check if counter is zero\n  je end_while_0 ; Exit loop if counter == 0\n  jmp while_0 ; Otherwise, continue loop\nend_while_0: ; END of while_0"
-                }
+                  "initialDepth": "  ",
+                  "guid": "01965595-681b-73ea-965d-1862876f10be",
+                  "depth": "  "
+                },
+                "IsHighLevel": false,
+                "IsOpCode": true
               }
             ],
             "Sentences": [
@@ -442,374 +505,1085 @@
                 "Nodes": [
                   {
                     "Operation": {
-                      "$type": "IF",
-                      "BlockType": 255,
-                      "Condition": {
-                        "Syntaxes": [
-                          {
-                            "$type": "ConditionExpressionFragment",
-                            "Left": 0,
-                            "Operand": "==",
-                            "Right": 9,
-                            "Tokens": [
-                              {
-                                "Source": "0",
-                                "Line": 4,
-                                "StartColumn": 15,
-                                "EndColumn": 16,
-                                "Scopes": [
-                                  "source.ubytec",
-                                  "constant.numeric.int.ubytec"
-                                ],
-                                "Metadata": {
-                                  "guid": "0195d53d-c871-7e4e-90a8-3707e9e55e68"
-                                }
-                              },
-                              {
-                                "Source": "==",
-                                "Line": 4,
-                                "StartColumn": 17,
-                                "EndColumn": 19,
-                                "Scopes": [
-                                  "source.ubytec",
-                                  "operator.equality.ubytec"
-                                ],
-                                "Metadata": {
-                                  "guid": "0195d53d-c871-7979-aca4-674cb22dbacb"
-                                }
-                              },
-                              {
-                                "Source": "9",
-                                "Line": 4,
-                                "StartColumn": 20,
-                                "EndColumn": 21,
-                                "Scopes": [
-                                  "source.ubytec",
-                                  "constant.numeric.int.ubytec"
-                                ],
-                                "Metadata": {
-                                  "guid": "0195d53d-c871-7b94-8067-67a359d2cc18"
-                                }
-                              }
-                            ]
-                          }
-                        ],
-                        "Metadata": {
-                          "guid": "0195d53d-c883-78e9-8179-ea9985dc7fd2"
-                        }
+                      "$type": "LOOP",
+                      "BlockType": {
+                        "Type": 254,
+                        "CustomID": null,
+                        "Name": "CustomType",
+                        "Modifiers": 0,
+                        "FixedArraySize": 1,
+                        "IsArray": false,
+                        "IsNullableArray": false,
+                        "IsNullableItems": false,
+                        "IsFullyNullableArray": false,
+                        "IsSingleNullable": false
                       },
                       "Variables": {
                         "Syntaxes": [
                           {
                             "$type": "VariableExpressionFragment",
-                            "PrimitiveType": 9,
-                            "Nullable": false,
+                            "Type": {
+                              "Type": 9,
+                              "CustomID": null,
+                              "Name": "Int32",
+                              "Modifiers": 0,
+                              "FixedArraySize": 1,
+                              "IsArray": false,
+                              "IsNullableArray": false,
+                              "IsNullableItems": false,
+                              "IsFullyNullableArray": false,
+                              "IsSingleNullable": false
+                            },
                             "Name": "i",
                             "Value": "0",
                             "Tokens": [
                               {
                                 "Source": "t_int32",
                                 "Line": 2,
-                                "StartColumn": 8,
-                                "EndColumn": 15,
+                                "StartColumn": 4,
+                                "EndColumn": 11,
                                 "Scopes": [
                                   "source.ubytec",
                                   "storage.type.single.ubytec"
                                 ],
                                 "Metadata": {
-                                  "guid": "0195d53d-c871-73a1-9c94-f418fc3baa03"
+                                  "guid": "01965595-67f3-7492-9195-10da39215dc5"
                                 }
                               },
                               {
                                 "Source": "i",
                                 "Line": 2,
-                                "StartColumn": 16,
-                                "EndColumn": 17,
+                                "StartColumn": 12,
+                                "EndColumn": 13,
                                 "Scopes": [
                                   "source.ubytec",
                                   "entity.name.var.explicit.ubytec"
                                 ],
                                 "Metadata": {
-                                  "guid": "0195d53d-c871-76ef-b7a5-3e01f2c411c0"
+                                  "guid": "01965595-67f3-7d9d-9860-b7d33b06c72a"
                                 }
                               },
                               {
                                 "Source": "0",
                                 "Line": 2,
-                                "StartColumn": 18,
-                                "EndColumn": 19,
+                                "StartColumn": 14,
+                                "EndColumn": 15,
                                 "Scopes": [
                                   "source.ubytec",
                                   "constant.numeric.int.ubytec"
                                 ],
                                 "Metadata": {
-                                  "guid": "0195d53d-c871-715b-90af-5058cb66bbb0"
+                                  "guid": "01965595-67f3-70e2-8b4f-f1745de589ae"
                                 }
                               }
                             ]
                           }
                         ],
                         "Metadata": {
-                          "guid": "0195d53d-c883-78f0-857b-e77874ffc64e"
+                          "guid": "01965595-680c-7522-bf84-fb5d4b44f3e8"
                         }
                       },
-                      "OpCode": 4
+                      "OpCode": 3
                     },
+                    "HighLevelEntity": null,
                     "Children": [
                       {
                         "Operation": {
-                          "$type": "NOP",
-                          "OpCode": 1
+                          "$type": "END",
+                          "OpCode": 6
                         },
+                        "HighLevelEntity": null,
                         "Children": null,
                         "Tokens": [
                           {
-                            "Source": "nop",
-                            "Line": 5,
-                            "StartColumn": 16,
-                            "EndColumn": 19,
+                            "Source": "end",
+                            "Line": 10,
+                            "StartColumn": 8,
+                            "EndColumn": 11,
                             "Scopes": [
                               "source.ubytec",
                               "keyword.control.flow.ubytec"
                             ],
                             "Metadata": {
-                              "guid": "0195d53d-c871-7918-b892-6430d0f09078"
+                              "guid": "01965595-67f4-73eb-a055-bb646d48dd25"
                             }
                           }
                         ],
                         "Metadata": {
-                          "guid": "0195d53d-c896-732c-ab7a-603da9f16a01"
-                        }
+                          "guid": "01965595-681b-7de5-a78c-b356067af28d"
+                        },
+                        "IsHighLevel": false,
+                        "IsOpCode": true
                       }
                     ],
                     "Tokens": [
                       {
-                        "Source": "if",
+                        "Source": "loop",
                         "Line": 4,
-                        "StartColumn": 12,
-                        "EndColumn": 14,
+                        "StartColumn": 8,
+                        "EndColumn": 12,
                         "Scopes": [
                           "source.ubytec",
                           "keyword.control.flow.ubytec"
                         ],
                         "Metadata": {
-                          "guid": "0195d53d-c871-7e68-b41e-6e88e26679da"
+                          "guid": "01965595-67f3-7fe4-b6c2-db49585b5270"
                         }
                       },
                       {
-                        "Source": "0",
+                        "Source": "t_bool",
                         "Line": 4,
-                        "StartColumn": 15,
-                        "EndColumn": 16,
-                        "Scopes": [
-                          "source.ubytec",
-                          "constant.numeric.int.ubytec"
-                        ],
-                        "Metadata": {
-                          "guid": "0195d53d-c871-7e4e-90a8-3707e9e55e68"
-                        }
-                      },
-                      {
-                        "Source": "==",
-                        "Line": 4,
-                        "StartColumn": 17,
+                        "StartColumn": 13,
                         "EndColumn": 19,
                         "Scopes": [
                           "source.ubytec",
-                          "operator.equality.ubytec"
+                          "storage.type.single.ubytec"
                         ],
                         "Metadata": {
-                          "guid": "0195d53d-c871-7979-aca4-674cb22dbacb"
-                        }
-                      },
-                      {
-                        "Source": "9",
-                        "Line": 4,
-                        "StartColumn": 20,
-                        "EndColumn": 21,
-                        "Scopes": [
-                          "source.ubytec",
-                          "constant.numeric.int.ubytec"
-                        ],
-                        "Metadata": {
-                          "guid": "0195d53d-c871-7b94-8067-67a359d2cc18"
+                          "guid": "01965595-67f3-779c-af80-4b718b6b1356"
                         }
                       }
                     ],
                     "Metadata": {
-                      "guid": "0195d53d-c896-7c7a-88c4-2339d2ee8950",
-                      "nasm": "if_0: ; IF START\n  mov rax, 0  ; Eval\u00FAa la parte izquierda\n  cmp rax, 9  ; Compara con la parte derecha\n  jne end_if_0   ; Salta si la condici\u00F3n es falsa\r\n\r\nnop   ; NOP"
+                      "initialDepth": "    ",
+                      "guid": "01965595-681b-79fa-9f6a-48d1825d9387",
+                      "depth": "    "
+                    },
+                    "IsHighLevel": false,
+                    "IsOpCode": true
+                  }
+                ],
+                "Sentences": [
+                  {
+                    "Nodes": [
+                      {
+                        "Operation": {
+                          "$type": "IF",
+                          "BlockType": {
+                            "Type": 240,
+                            "CustomID": null,
+                            "Name": "Default",
+                            "Modifiers": 0,
+                            "FixedArraySize": 1,
+                            "IsArray": false,
+                            "IsNullableArray": false,
+                            "IsNullableItems": false,
+                            "IsFullyNullableArray": false,
+                            "IsSingleNullable": false
+                          },
+                          "Condition": {
+                            "Syntaxes": [
+                              {
+                                "$type": "ConditionExpressionFragment",
+                                "Left": 0,
+                                "Operand": "==",
+                                "Right": 9,
+                                "Tokens": [
+                                  {
+                                    "Source": "0",
+                                    "Line": 5,
+                                    "StartColumn": 15,
+                                    "EndColumn": 16,
+                                    "Scopes": [
+                                      "source.ubytec",
+                                      "constant.numeric.int.ubytec"
+                                    ],
+                                    "Metadata": {
+                                      "guid": "01965595-67f4-7bfd-95d7-69e89c79c9ba"
+                                    }
+                                  },
+                                  {
+                                    "Source": "==",
+                                    "Line": 5,
+                                    "StartColumn": 17,
+                                    "EndColumn": 19,
+                                    "Scopes": [
+                                      "source.ubytec",
+                                      "operator.equality.ubytec"
+                                    ],
+                                    "Metadata": {
+                                      "guid": "01965595-67f4-7801-99bd-0b46c9e35ebc"
+                                    }
+                                  },
+                                  {
+                                    "Source": "9",
+                                    "Line": 5,
+                                    "StartColumn": 20,
+                                    "EndColumn": 21,
+                                    "Scopes": [
+                                      "source.ubytec",
+                                      "constant.numeric.int.ubytec"
+                                    ],
+                                    "Metadata": {
+                                      "guid": "01965595-67f4-7c47-874e-e8f383f878b5"
+                                    }
+                                  }
+                                ]
+                              }
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-680d-7fbb-8fad-79754029c08c"
+                            }
+                          },
+                          "Variables": {
+                            "Syntaxes": [
+                              {
+                                "$type": "VariableExpressionFragment",
+                                "Type": {
+                                  "Type": 9,
+                                  "CustomID": null,
+                                  "Name": "Int32",
+                                  "Modifiers": 0,
+                                  "FixedArraySize": 1,
+                                  "IsArray": false,
+                                  "IsNullableArray": false,
+                                  "IsNullableItems": false,
+                                  "IsFullyNullableArray": false,
+                                  "IsSingleNullable": false
+                                },
+                                "Name": "i",
+                                "Value": "0",
+                                "Tokens": [
+                                  {
+                                    "Source": "t_int32",
+                                    "Line": 2,
+                                    "StartColumn": 4,
+                                    "EndColumn": 11,
+                                    "Scopes": [
+                                      "source.ubytec",
+                                      "storage.type.single.ubytec"
+                                    ],
+                                    "Metadata": {
+                                      "guid": "01965595-67f3-7492-9195-10da39215dc5"
+                                    }
+                                  },
+                                  {
+                                    "Source": "i",
+                                    "Line": 2,
+                                    "StartColumn": 12,
+                                    "EndColumn": 13,
+                                    "Scopes": [
+                                      "source.ubytec",
+                                      "entity.name.var.explicit.ubytec"
+                                    ],
+                                    "Metadata": {
+                                      "guid": "01965595-67f3-7d9d-9860-b7d33b06c72a"
+                                    }
+                                  },
+                                  {
+                                    "Source": "0",
+                                    "Line": 2,
+                                    "StartColumn": 14,
+                                    "EndColumn": 15,
+                                    "Scopes": [
+                                      "source.ubytec",
+                                      "constant.numeric.int.ubytec"
+                                    ],
+                                    "Metadata": {
+                                      "guid": "01965595-67f3-70e2-8b4f-f1745de589ae"
+                                    }
+                                  }
+                                ]
+                              }
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-680e-7efa-b780-c5452ef7008b"
+                            }
+                          },
+                          "OpCode": 4
+                        },
+                        "HighLevelEntity": null,
+                        "Children": [
+                          {
+                            "Operation": {
+                              "$type": "NOP",
+                              "OpCode": 1
+                            },
+                            "HighLevelEntity": null,
+                            "Children": null,
+                            "Tokens": [
+                              {
+                                "Source": "nop",
+                                "Line": 6,
+                                "StartColumn": 16,
+                                "EndColumn": 19,
+                                "Scopes": [
+                                  "source.ubytec",
+                                  "keyword.control.flow.ubytec"
+                                ],
+                                "Metadata": {
+                                  "guid": "01965595-67f4-74f6-bde2-1933903c8c1f"
+                                }
+                              }
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-681b-7864-bc30-d7ac4022da17"
+                            },
+                            "IsHighLevel": false,
+                            "IsOpCode": true
+                          }
+                        ],
+                        "Tokens": [
+                          {
+                            "Source": "if",
+                            "Line": 5,
+                            "StartColumn": 12,
+                            "EndColumn": 14,
+                            "Scopes": [
+                              "source.ubytec",
+                              "keyword.control.flow.ubytec"
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-67f4-726b-9e6e-de7e7416b43b"
+                            }
+                          },
+                          {
+                            "Source": "0",
+                            "Line": 5,
+                            "StartColumn": 15,
+                            "EndColumn": 16,
+                            "Scopes": [
+                              "source.ubytec",
+                              "constant.numeric.int.ubytec"
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-67f4-7bfd-95d7-69e89c79c9ba"
+                            }
+                          },
+                          {
+                            "Source": "==",
+                            "Line": 5,
+                            "StartColumn": 17,
+                            "EndColumn": 19,
+                            "Scopes": [
+                              "source.ubytec",
+                              "operator.equality.ubytec"
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-67f4-7801-99bd-0b46c9e35ebc"
+                            }
+                          },
+                          {
+                            "Source": "9",
+                            "Line": 5,
+                            "StartColumn": 20,
+                            "EndColumn": 21,
+                            "Scopes": [
+                              "source.ubytec",
+                              "constant.numeric.int.ubytec"
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-67f4-7c47-874e-e8f383f878b5"
+                            }
+                          }
+                        ],
+                        "Metadata": {
+                          "initialDepth": "      ",
+                          "guid": "01965595-681b-7628-bce9-5c43150eb881",
+                          "depth": "      "
+                        },
+                        "IsHighLevel": false,
+                        "IsOpCode": true
+                      }
+                    ],
+                    "Sentences": [],
+                    "Metadata": {
+                      "guid": "01965595-681b-7660-92e7-002f821ffdba",
+                      "type": "if"
+                    }
+                  },
+                  {
+                    "Nodes": [
+                      {
+                        "Operation": {
+                          "$type": "ELSE",
+                          "BlockType": {
+                            "Type": 240,
+                            "CustomID": null,
+                            "Name": "Default",
+                            "Modifiers": 0,
+                            "FixedArraySize": 1,
+                            "IsArray": false,
+                            "IsNullableArray": false,
+                            "IsNullableItems": false,
+                            "IsFullyNullableArray": false,
+                            "IsSingleNullable": false
+                          },
+                          "Variables": {
+                            "Syntaxes": [
+                              {
+                                "$type": "VariableExpressionFragment",
+                                "Type": {
+                                  "Type": 9,
+                                  "CustomID": null,
+                                  "Name": "Int32",
+                                  "Modifiers": 0,
+                                  "FixedArraySize": 1,
+                                  "IsArray": false,
+                                  "IsNullableArray": false,
+                                  "IsNullableItems": false,
+                                  "IsFullyNullableArray": false,
+                                  "IsSingleNullable": false
+                                },
+                                "Name": "i",
+                                "Value": "0",
+                                "Tokens": [
+                                  {
+                                    "Source": "t_int32",
+                                    "Line": 2,
+                                    "StartColumn": 4,
+                                    "EndColumn": 11,
+                                    "Scopes": [
+                                      "source.ubytec",
+                                      "storage.type.single.ubytec"
+                                    ],
+                                    "Metadata": {
+                                      "guid": "01965595-67f3-7492-9195-10da39215dc5"
+                                    }
+                                  },
+                                  {
+                                    "Source": "i",
+                                    "Line": 2,
+                                    "StartColumn": 12,
+                                    "EndColumn": 13,
+                                    "Scopes": [
+                                      "source.ubytec",
+                                      "entity.name.var.explicit.ubytec"
+                                    ],
+                                    "Metadata": {
+                                      "guid": "01965595-67f3-7d9d-9860-b7d33b06c72a"
+                                    }
+                                  },
+                                  {
+                                    "Source": "0",
+                                    "Line": 2,
+                                    "StartColumn": 14,
+                                    "EndColumn": 15,
+                                    "Scopes": [
+                                      "source.ubytec",
+                                      "constant.numeric.int.ubytec"
+                                    ],
+                                    "Metadata": {
+                                      "guid": "01965595-67f3-70e2-8b4f-f1745de589ae"
+                                    }
+                                  }
+                                ]
+                              }
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-680e-78f6-b9da-f95c2a9d1bc5"
+                            }
+                          },
+                          "OpCode": 5
+                        },
+                        "HighLevelEntity": null,
+                        "Children": [
+                          {
+                            "Operation": {
+                              "$type": "NOP",
+                              "OpCode": 1
+                            },
+                            "HighLevelEntity": null,
+                            "Children": null,
+                            "Tokens": [
+                              {
+                                "Source": "nop",
+                                "Line": 8,
+                                "StartColumn": 16,
+                                "EndColumn": 19,
+                                "Scopes": [
+                                  "source.ubytec",
+                                  "keyword.control.flow.ubytec"
+                                ],
+                                "Metadata": {
+                                  "guid": "01965595-67f4-77fb-b730-4fd0784deda7"
+                                }
+                              }
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-681b-7fa3-bc4b-243425156c7b"
+                            },
+                            "IsHighLevel": false,
+                            "IsOpCode": true
+                          },
+                          {
+                            "Operation": {
+                              "$type": "END",
+                              "OpCode": 6
+                            },
+                            "HighLevelEntity": null,
+                            "Children": null,
+                            "Tokens": [
+                              {
+                                "Source": "end",
+                                "Line": 9,
+                                "StartColumn": 12,
+                                "EndColumn": 15,
+                                "Scopes": [
+                                  "source.ubytec",
+                                  "keyword.control.flow.ubytec"
+                                ],
+                                "Metadata": {
+                                  "guid": "01965595-67f4-7e6f-be33-7775967155af"
+                                }
+                              }
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-681b-79eb-810b-341e862278c5"
+                            },
+                            "IsHighLevel": false,
+                            "IsOpCode": true
+                          }
+                        ],
+                        "Tokens": [
+                          {
+                            "Source": "else",
+                            "Line": 7,
+                            "StartColumn": 12,
+                            "EndColumn": 16,
+                            "Scopes": [
+                              "source.ubytec",
+                              "keyword.control.flow.ubytec"
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-67f4-71b6-aeda-ba3480a28bb8"
+                            }
+                          }
+                        ],
+                        "Metadata": {
+                          "initialDepth": "        ",
+                          "guid": "01965595-681b-7d94-a1cc-e62e37da96eb",
+                          "depth": "      "
+                        },
+                        "IsHighLevel": false,
+                        "IsOpCode": true
+                      }
+                    ],
+                    "Sentences": [],
+                    "Metadata": {
+                      "guid": "01965595-681b-7572-b9b1-586140a0b623",
+                      "type": "else"
                     }
                   }
                 ],
-                "Sentences": [],
                 "Metadata": {
-                  "guid": "0195d53d-c896-74f6-a00b-5b6f2200325b",
-                  "type": "if"
+                  "guid": "01965595-681b-7ba6-8db1-a81f4131daa5",
+                  "type": "loop"
                 }
               },
               {
                 "Nodes": [
                   {
                     "Operation": {
-                      "$type": "ELSE",
+                      "$type": "SWITCH",
+                      "TableIDx": null,
+                      "BlockType": null,
                       "Variables": {
                         "Syntaxes": [
                           {
                             "$type": "VariableExpressionFragment",
-                            "PrimitiveType": 9,
-                            "Nullable": false,
+                            "Type": {
+                              "Type": 9,
+                              "CustomID": null,
+                              "Name": "Int32",
+                              "Modifiers": 0,
+                              "FixedArraySize": 1,
+                              "IsArray": false,
+                              "IsNullableArray": false,
+                              "IsNullableItems": false,
+                              "IsFullyNullableArray": false,
+                              "IsSingleNullable": false
+                            },
                             "Name": "i",
                             "Value": "0",
                             "Tokens": [
                               {
                                 "Source": "t_int32",
                                 "Line": 2,
-                                "StartColumn": 8,
-                                "EndColumn": 15,
+                                "StartColumn": 4,
+                                "EndColumn": 11,
                                 "Scopes": [
                                   "source.ubytec",
                                   "storage.type.single.ubytec"
                                 ],
                                 "Metadata": {
-                                  "guid": "0195d53d-c871-73a1-9c94-f418fc3baa03"
+                                  "guid": "01965595-67f3-7492-9195-10da39215dc5"
                                 }
                               },
                               {
                                 "Source": "i",
                                 "Line": 2,
-                                "StartColumn": 16,
-                                "EndColumn": 17,
+                                "StartColumn": 12,
+                                "EndColumn": 13,
                                 "Scopes": [
                                   "source.ubytec",
                                   "entity.name.var.explicit.ubytec"
                                 ],
                                 "Metadata": {
-                                  "guid": "0195d53d-c871-76ef-b7a5-3e01f2c411c0"
+                                  "guid": "01965595-67f3-7d9d-9860-b7d33b06c72a"
                                 }
                               },
                               {
                                 "Source": "0",
                                 "Line": 2,
-                                "StartColumn": 18,
-                                "EndColumn": 19,
+                                "StartColumn": 14,
+                                "EndColumn": 15,
                                 "Scopes": [
                                   "source.ubytec",
                                   "constant.numeric.int.ubytec"
                                 ],
                                 "Metadata": {
-                                  "guid": "0195d53d-c871-715b-90af-5058cb66bbb0"
+                                  "guid": "01965595-67f3-70e2-8b4f-f1745de589ae"
                                 }
                               }
                             ]
                           }
                         ],
                         "Metadata": {
-                          "guid": "0195d53d-c884-7daa-af7c-5b6b10f33cf1"
+                          "guid": "01965595-6810-757f-a5d3-319c88ff4d0c"
                         }
                       },
-                      "OpCode": 5
+                      "OpCode": 11
                     },
+                    "HighLevelEntity": null,
                     "Children": [
-                      {
-                        "Operation": {
-                          "$type": "NOP",
-                          "OpCode": 1
-                        },
-                        "Children": null,
-                        "Tokens": [
-                          {
-                            "Source": "nop",
-                            "Line": 7,
-                            "StartColumn": 16,
-                            "EndColumn": 19,
-                            "Scopes": [
-                              "source.ubytec",
-                              "keyword.control.flow.ubytec"
-                            ],
-                            "Metadata": {
-                              "guid": "0195d53d-c871-738c-9237-802dd9485012"
-                            }
-                          }
-                        ],
-                        "Metadata": {
-                          "guid": "0195d53d-c897-7ffa-86cb-d6404d800989"
-                        }
-                      },
                       {
                         "Operation": {
                           "$type": "END",
                           "OpCode": 6
                         },
+                        "HighLevelEntity": null,
                         "Children": null,
                         "Tokens": [
                           {
                             "Source": "end",
-                            "Line": 8,
-                            "StartColumn": 12,
-                            "EndColumn": 15,
+                            "Line": 18,
+                            "StartColumn": 8,
+                            "EndColumn": 11,
                             "Scopes": [
                               "source.ubytec",
                               "keyword.control.flow.ubytec"
                             ],
                             "Metadata": {
-                              "guid": "0195d53d-c871-7a78-b720-fe6e5864f34c"
+                              "guid": "01965595-67f5-7b77-bcc3-4f7945a42b72"
                             }
                           }
                         ],
                         "Metadata": {
-                          "guid": "0195d53d-c897-7961-bc1e-f646d1b0bb4c"
-                        }
+                          "guid": "01965595-681b-7f78-a6bb-92fbcbb66426"
+                        },
+                        "IsHighLevel": false,
+                        "IsOpCode": true
                       }
                     ],
                     "Tokens": [
                       {
-                        "Source": "else",
-                        "Line": 6,
-                        "StartColumn": 12,
-                        "EndColumn": 16,
+                        "Source": "switch",
+                        "Line": 11,
+                        "StartColumn": 8,
+                        "EndColumn": 14,
                         "Scopes": [
                           "source.ubytec",
                           "keyword.control.flow.ubytec"
                         ],
                         "Metadata": {
-                          "guid": "0195d53d-c871-77e3-9495-b5fd98343e1f"
+                          "guid": "01965595-67f4-7ddf-a565-2356f12cf718"
                         }
                       }
                     ],
                     "Metadata": {
-                      "guid": "0195d53d-c897-707d-9f71-f692a8abaf39",
-                      "nasm": "  jmp end_else_0     ; Jump over ELSE part\nend_if_0:    ; if_0 END\nelse_0:  ; Start ELSE blocknop   ; NOPend_else_0: ; END of else_0"
+                      "initialDepth": "    ",
+                      "guid": "01965595-681b-7ec3-9be6-c933e6a61843",
+                      "depth": "    "
+                    },
+                    "IsHighLevel": false,
+                    "IsOpCode": true
+                  }
+                ],
+                "Sentences": [
+                  {
+                    "Nodes": [
+                      {
+                        "Operation": {
+                          "$type": "BRANCH",
+                          "CaseValue": 30,
+                          "LabelIDx": null,
+                          "BlockType": null,
+                          "Variables": {
+                            "Syntaxes": [
+                              {
+                                "$type": "VariableExpressionFragment",
+                                "Type": {
+                                  "Type": 9,
+                                  "CustomID": null,
+                                  "Name": "Int32",
+                                  "Modifiers": 0,
+                                  "FixedArraySize": 1,
+                                  "IsArray": false,
+                                  "IsNullableArray": false,
+                                  "IsNullableItems": false,
+                                  "IsFullyNullableArray": false,
+                                  "IsSingleNullable": false
+                                },
+                                "Name": "i",
+                                "Value": "0",
+                                "Tokens": [
+                                  {
+                                    "Source": "t_int32",
+                                    "Line": 2,
+                                    "StartColumn": 4,
+                                    "EndColumn": 11,
+                                    "Scopes": [
+                                      "source.ubytec",
+                                      "storage.type.single.ubytec"
+                                    ],
+                                    "Metadata": {
+                                      "guid": "01965595-67f3-7492-9195-10da39215dc5"
+                                    }
+                                  },
+                                  {
+                                    "Source": "i",
+                                    "Line": 2,
+                                    "StartColumn": 12,
+                                    "EndColumn": 13,
+                                    "Scopes": [
+                                      "source.ubytec",
+                                      "entity.name.var.explicit.ubytec"
+                                    ],
+                                    "Metadata": {
+                                      "guid": "01965595-67f3-7d9d-9860-b7d33b06c72a"
+                                    }
+                                  },
+                                  {
+                                    "Source": "0",
+                                    "Line": 2,
+                                    "StartColumn": 14,
+                                    "EndColumn": 15,
+                                    "Scopes": [
+                                      "source.ubytec",
+                                      "constant.numeric.int.ubytec"
+                                    ],
+                                    "Metadata": {
+                                      "guid": "01965595-67f3-70e2-8b4f-f1745de589ae"
+                                    }
+                                  }
+                                ]
+                              }
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-6810-79cf-9bcd-006b3fe93af1"
+                            }
+                          },
+                          "OpCode": 10
+                        },
+                        "HighLevelEntity": null,
+                        "Children": [
+                          {
+                            "Operation": {
+                              "$type": "NOP",
+                              "OpCode": 1
+                            },
+                            "HighLevelEntity": null,
+                            "Children": null,
+                            "Tokens": [
+                              {
+                                "Source": "nop",
+                                "Line": 13,
+                                "StartColumn": 16,
+                                "EndColumn": 19,
+                                "Scopes": [
+                                  "source.ubytec",
+                                  "keyword.control.flow.ubytec"
+                                ],
+                                "Metadata": {
+                                  "guid": "01965595-67f4-7ebd-b303-0602eab4b316"
+                                }
+                              }
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-681b-7a5f-bbbd-83229d95d9ba"
+                            },
+                            "IsHighLevel": false,
+                            "IsOpCode": true
+                          },
+                          {
+                            "Operation": {
+                              "$type": "BREAK",
+                              "LabelIDx": null,
+                              "OpCode": 7
+                            },
+                            "HighLevelEntity": null,
+                            "Children": null,
+                            "Tokens": [
+                              {
+                                "Source": "break",
+                                "Line": 14,
+                                "StartColumn": 12,
+                                "EndColumn": 17,
+                                "Scopes": [
+                                  "source.ubytec",
+                                  "keyword.control.flow.ubytec"
+                                ],
+                                "Metadata": {
+                                  "guid": "01965595-67f5-7184-95dd-aba7b4893ae1"
+                                }
+                              }
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-681b-7d08-bc19-0c7860882713"
+                            },
+                            "IsHighLevel": false,
+                            "IsOpCode": true
+                          }
+                        ],
+                        "Tokens": [
+                          {
+                            "Source": "branch",
+                            "Line": 12,
+                            "StartColumn": 12,
+                            "EndColumn": 18,
+                            "Scopes": [
+                              "source.ubytec",
+                              "keyword.control.flow.ubytec"
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-67f4-74ea-b50b-536564622fed"
+                            }
+                          },
+                          {
+                            "Source": "30",
+                            "Line": 12,
+                            "StartColumn": 19,
+                            "EndColumn": 21,
+                            "Scopes": [
+                              "source.ubytec",
+                              "constant.numeric.int.ubytec"
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-67f4-7247-8db8-972eee9fc187"
+                            }
+                          }
+                        ],
+                        "Metadata": {
+                          "initialDepth": "      ",
+                          "guid": "01965595-681b-79f5-ba47-bdfc0745f212",
+                          "depth": "      "
+                        },
+                        "IsHighLevel": false,
+                        "IsOpCode": true
+                      }
+                    ],
+                    "Sentences": [],
+                    "Metadata": {
+                      "guid": "01965595-681b-7db9-9329-57cb7aa5701f",
+                      "type": "branch"
+                    }
+                  },
+                  {
+                    "Nodes": [
+                      {
+                        "Operation": {
+                          "$type": "BRANCH",
+                          "CaseValue": 666,
+                          "LabelIDx": null,
+                          "BlockType": null,
+                          "Variables": {
+                            "Syntaxes": [
+                              {
+                                "$type": "VariableExpressionFragment",
+                                "Type": {
+                                  "Type": 9,
+                                  "CustomID": null,
+                                  "Name": "Int32",
+                                  "Modifiers": 0,
+                                  "FixedArraySize": 1,
+                                  "IsArray": false,
+                                  "IsNullableArray": false,
+                                  "IsNullableItems": false,
+                                  "IsFullyNullableArray": false,
+                                  "IsSingleNullable": false
+                                },
+                                "Name": "i",
+                                "Value": "0",
+                                "Tokens": [
+                                  {
+                                    "Source": "t_int32",
+                                    "Line": 2,
+                                    "StartColumn": 4,
+                                    "EndColumn": 11,
+                                    "Scopes": [
+                                      "source.ubytec",
+                                      "storage.type.single.ubytec"
+                                    ],
+                                    "Metadata": {
+                                      "guid": "01965595-67f3-7492-9195-10da39215dc5"
+                                    }
+                                  },
+                                  {
+                                    "Source": "i",
+                                    "Line": 2,
+                                    "StartColumn": 12,
+                                    "EndColumn": 13,
+                                    "Scopes": [
+                                      "source.ubytec",
+                                      "entity.name.var.explicit.ubytec"
+                                    ],
+                                    "Metadata": {
+                                      "guid": "01965595-67f3-7d9d-9860-b7d33b06c72a"
+                                    }
+                                  },
+                                  {
+                                    "Source": "0",
+                                    "Line": 2,
+                                    "StartColumn": 14,
+                                    "EndColumn": 15,
+                                    "Scopes": [
+                                      "source.ubytec",
+                                      "constant.numeric.int.ubytec"
+                                    ],
+                                    "Metadata": {
+                                      "guid": "01965595-67f3-70e2-8b4f-f1745de589ae"
+                                    }
+                                  }
+                                ]
+                              }
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-6811-7e22-a7d6-0ed9a09e06ed"
+                            }
+                          },
+                          "OpCode": 10
+                        },
+                        "HighLevelEntity": null,
+                        "Children": [
+                          {
+                            "Operation": {
+                              "$type": "TRAP",
+                              "OpCode": 0
+                            },
+                            "HighLevelEntity": null,
+                            "Children": null,
+                            "Tokens": [
+                              {
+                                "Source": "trap",
+                                "Line": 16,
+                                "StartColumn": 16,
+                                "EndColumn": 20,
+                                "Scopes": [
+                                  "source.ubytec",
+                                  "keyword.control.flow.ubytec"
+                                ],
+                                "Metadata": {
+                                  "guid": "01965595-67f5-746a-b686-92c3c7c5e182"
+                                }
+                              }
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-681b-72c5-91dd-63c4f48b0a91"
+                            },
+                            "IsHighLevel": false,
+                            "IsOpCode": true
+                          },
+                          {
+                            "Operation": {
+                              "$type": "BREAK",
+                              "LabelIDx": null,
+                              "OpCode": 7
+                            },
+                            "HighLevelEntity": null,
+                            "Children": null,
+                            "Tokens": [
+                              {
+                                "Source": "break",
+                                "Line": 17,
+                                "StartColumn": 12,
+                                "EndColumn": 17,
+                                "Scopes": [
+                                  "source.ubytec",
+                                  "keyword.control.flow.ubytec"
+                                ],
+                                "Metadata": {
+                                  "guid": "01965595-67f5-780d-8e30-c44d84278a3c"
+                                }
+                              }
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-681b-76fe-9b05-ab0d9b8f9bff"
+                            },
+                            "IsHighLevel": false,
+                            "IsOpCode": true
+                          }
+                        ],
+                        "Tokens": [
+                          {
+                            "Source": "branch",
+                            "Line": 15,
+                            "StartColumn": 12,
+                            "EndColumn": 18,
+                            "Scopes": [
+                              "source.ubytec",
+                              "keyword.control.flow.ubytec"
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-67f5-74d2-9642-d9777d97e915"
+                            }
+                          },
+                          {
+                            "Source": "666",
+                            "Line": 15,
+                            "StartColumn": 19,
+                            "EndColumn": 22,
+                            "Scopes": [
+                              "source.ubytec",
+                              "constant.numeric.int.ubytec"
+                            ],
+                            "Metadata": {
+                              "guid": "01965595-67f5-7510-b732-066891c1007d"
+                            }
+                          }
+                        ],
+                        "Metadata": {
+                          "initialDepth": "      ",
+                          "guid": "01965595-681b-70bf-8b7c-ecf6b8589f34",
+                          "depth": "      "
+                        },
+                        "IsHighLevel": false,
+                        "IsOpCode": true
+                      }
+                    ],
+                    "Sentences": [],
+                    "Metadata": {
+                      "guid": "01965595-681b-77c1-8956-61fcd80b247e",
+                      "type": "branch"
                     }
                   }
                 ],
-                "Sentences": [],
                 "Metadata": {
-                  "guid": "0195d53d-c897-77db-bd7d-6b0c4c4dcdaa",
-                  "type": "else"
+                  "guid": "01965595-681b-74f3-8258-a64942d7539d",
+                  "type": "switch"
                 }
               }
             ],
             "Metadata": {
-              "guid": "0195d53d-c896-7314-a459-7726f329e8c1",
+              "guid": "01965595-681b-71b0-83fe-be0f9cdb80b0",
               "type": "while"
             }
           }
         ],
         "Metadata": {
-          "guid": "0195d53d-c896-710f-a827-2334188e7320",
+          "guid": "01965595-681b-7782-b5f2-a52425f8a379",
           "type": "block"
         }
       }
     ],
     "Metadata": {
-      "guid": "0195d53d-c887-7ed2-8d83-6a5416e37ace",
+      "guid": "01965595-6813-7562-aa24-e79dfbc52b27",
       "type": "root"
     }
   },
   "Metadata": {
-    "guid": "0195d53d-c888-70bd-b344-82c5e5ac6cce",
+    "guid": "01965595-6814-7eb9-9074-aa890dd7afad",
     "encoding": "Unicode (UTF-8)",
-    "langver": "1.0.9216.40497"
+    "langver": "1.0.9241.42686"
   }
 }

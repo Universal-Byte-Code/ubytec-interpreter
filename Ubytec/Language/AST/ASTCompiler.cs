@@ -1,20 +1,19 @@
 ﻿using NJsonSchema;
 using System.Text;
-using System.Text.RegularExpressions;
+using Ubytec.Language.Exceptions;
+using Ubytec.Language.Operations;
+using Ubytec.Language.Syntax.ExpressionFragments;
+using Ubytec.Language.Syntax.Model;
+using Ubytec.Language.Syntax.Scopes;
 using static Ubytec.Language.Operations.ArithmeticOperations;
 using static Ubytec.Language.Operations.BitwiseOperations;
 using static Ubytec.Language.Operations.CoreOperations;
-using static Ubytec.Language.Syntax.Enum.Primitives;
 using static Ubytec.Language.Operations.StackOperarions;
-using Ubytec.Language.Operations;
-using Ubytec.Language.Syntax.ExpressionFragments;
-using Ubytec.Language.Syntax.Syntaxes;
-using System.Collections.Generic;
-using Ubytec.Language.Exceptions;
+using static Ubytec.Language.Syntax.TypeSystem.Types;
 
-namespace Ubytec.Tools.AST
+namespace Ubytec.Language.AST
 {
-    public static partial class ASTCompiler
+    public static class ASTCompiler
     {
         private static readonly Dictionary<string, byte> OpcodeMap = new()
         {
@@ -109,7 +108,7 @@ namespace Ubytec.Tools.AST
                 var currToken = code[y];
                 IBlockOpCode? currentBlock = blockStack.Count > 0 ? blockStack.Peek() : null;
 
-                if (string.IsNullOrWhiteSpace(currToken.Source) || currToken.Scopes.Length == 0 || (currToken.Scopes.Length == 1 && currToken.Scopes[0] == "source.ubytec")) continue;
+                if (string.IsNullOrWhiteSpace(currToken.Source) || currToken.Scopes.Length == 0 || currToken.Scopes.Length == 1 && currToken.Scopes[0] == "source.ubytec") continue;
 
                 var currLineIndex = currToken.Line;
                 var currLine = new List<SyntaxToken>();
@@ -118,39 +117,80 @@ namespace Ubytec.Tools.AST
                 {
                     if (!string.IsNullOrWhiteSpace(code[i].Source) || code[i].Scopes.Length == 0)
                         currLine.Add(code[i]);
-                    
+
                     if (i != y && currLine.Count > 0) y++;
                 }
 
-                if (currToken.Scopes.FirstOrDefault(x => x.StartsWith("storage.type.")) != null)
+                if (currToken.Scopes.FirstOrDefault(x => x.StartsWith("storage.type.")) is string typeScope)
                 {
-                    var targetType = Enum.Parse<PrimitiveType>(currToken.Source.Remove(0, 2), true);
                     var labelToken = currLine[1];
                     var valueToken = currLine[2];
 
-                    var nullableCheck = currToken.Scopes.FirstOrDefault(x => x.StartsWith("storage.type.")) != null &&
-                                        currToken.Scopes.FirstOrDefault(x => x.Contains("nullable")) != null;
-                    var variableFragment = new VariableExpressionFragment(targetType, nullableCheck, labelToken.Source, valueToken.Source) 
-                    { 
-                        Tokens = [currToken, labelToken, valueToken] 
+                    var typeModifiers = TypeModifiers.None;
+
+                    // Determinar si es array y/o nullable según scope
+                    if (typeScope.Contains("nullable-both"))
+                        typeModifiers |= TypeModifiers.Nullable | TypeModifiers.IsArray;
+                    else if (typeScope.Contains("nullable-array"))
+                        typeModifiers |= TypeModifiers.IsArray | TypeModifiers.Nullable;
+                    else if (typeScope.Contains("nullable-items"))
+                        typeModifiers |= TypeModifiers.IsArray;
+                    else if (typeScope.Contains("single.nullable"))
+                        typeModifiers |= TypeModifiers.Nullable;
+                    else if (typeScope.Contains("array"))
+                        typeModifiers |= TypeModifiers.IsArray;
+
+                    // Determinar modificadores adicionales desde scopes
+                    foreach (var scope in currLine.SelectMany(t => t.Scopes))
+                    {
+                        if (!scope.StartsWith("storage.modifier.")) continue;
+                        var keyword = currLine.First(t => t.Scopes.Contains(scope)).Source.ToLowerInvariant();
+
+                        typeModifiers |= keyword switch
+                        {
+                            "public" => TypeModifiers.Public,
+                            "private" => TypeModifiers.Private,
+                            "protected" => TypeModifiers.Protected,
+                            "internal" => TypeModifiers.Internal,
+                            "const" => TypeModifiers.Const,
+                            "abstract" => TypeModifiers.Abstract,
+                            "virtual" => TypeModifiers.Virtual,
+                            "override" => TypeModifiers.Override,
+                            "sealed" => TypeModifiers.Sealed,
+                            "readonly" => TypeModifiers.ReadOnly,
+                            "local" => TypeModifiers.Local,
+                            "global" => TypeModifiers.Global,
+                            "secret" => TypeModifiers.Secret,
+                            _ => TypeModifiers.None
+                        };
+                    }
+
+                    // Obtener tipo base
+                    var targetType = Enum.Parse<PrimitiveType>(currToken.Source.Remove(0, 2), ignoreCase: true);
+
+                    var ubytecType = new UbytecType(
+                        targetType,
+                        typeModifiers,
+                        targetType == PrimitiveType.CustomType ? Guid.NewGuid() : null,
+                        targetType == PrimitiveType.CustomType ? labelToken.Source : targetType.ToString()
+                    );
+
+                    var variableFragment = new VariableExpressionFragment(ubytecType, labelToken.Source, valueToken.Source)
+                    {
+                        Tokens = [currToken, labelToken, valueToken]
                     };
 
                     var varOp = new VAR(variableFragment);
 
-                    // Attach it to the current block (if any)
                     if (currentBlock is not null)
-                        // Merge block's variables, or do something similar
                         MergeVariables(currentBlock, varOp);
 
                     opCodes.Add(varOp);
-
                     continue;
                 }
 
                 if (!OpcodeMap.TryGetValue(currToken.Source.ToUpper(), out byte byteCode))
-                {
                     throw new Exception($"Unknown instruction: {currToken}");
-                }
                 else
                 {
                     var instructionAndOperands = new Queue<ValueType>();
@@ -160,7 +200,7 @@ namespace Ubytec.Tools.AST
                     for (int i = 1; i < currLine.Count; i++)
                     {
                         var currLineToken = currLine[i];
-                        if (string.IsNullOrWhiteSpace(currLineToken.Source) || currLineToken.Scopes.Length == 0 || (currLineToken.Scopes.Length == 1 && currLineToken.Scopes[0] == "source.ubytec")) continue;
+                        if (string.IsNullOrWhiteSpace(currLineToken.Source) || currLineToken.Scopes.Length == 0 || currLineToken.Scopes.Length == 1 && currLineToken.Scopes[0] == "source.ubytec") continue;
 
 
                         ///if (currLineToken.Source.StartsWith("@", StringComparison.OrdinalIgnoreCase))
@@ -173,15 +213,22 @@ namespace Ubytec.Tools.AST
                         ///                instructionAndOperands);
                         ///}
                         ///else
-                        ProcessOperand(currLineToken, instructionAndOperands);
+                        ///
+
+                        try
+                        {
+                            ProcessOperand(currLineToken, instructionAndOperands);
+                        }
+                        catch(Exception e)
+                        {
+                            throw new SyntaxException(0xD7D2BB3DFE8411EA, e.Message);
+                        }
                     }
 
                     var dequedByteCode = instructionAndOperands.Dequeue();
 
-                    List<VariableExpressionFragment>? variableExpressionFragments = [..currentBlock?.Variables?.Syntaxes.Cast<VariableExpressionFragment>() ?? []];
                     // Actually create the IOpCode
-                    IOpCode op = CreateInstruction((byte)dequedByteCode, currLine, [.. instructionAndOperands]);
-
+                    IOpCode op = OpcodeFactory.Create((byte)dequedByteCode, [], [.. currLine], [.. instructionAndOperands]);
                     // Now handle special constructs:
                     switch (op)
                     {
@@ -191,43 +238,61 @@ namespace Ubytec.Tools.AST
                         case WHILE:
                         case SWITCH:
                             {
-                                // If you want the new block to “inherit” the parent’s variables:
                                 InheritVariables(currentBlock, (IOpInheritance)op);
-
-                                // After creation, push it so subsequent instructions are inside it
                                 blockStack.Push((IBlockOpCode)op);
                                 break;
                             }
                         case ELSE:
                             {
-                                // Typically, ELSE pairs with an IF
-                                // So pop the top if it is IF
                                 if (blockStack.Count > 0 && blockStack.Peek() is IF ifOp)
                                 {
-                                    // We might want to do something with ifOp.Variables
                                     blockStack.Pop();
                                     currentBlock = blockStack.Count > 0 ? blockStack.Peek() : null;
                                 }
 
-                                // Inherit parent variables if you want same scope
                                 InheritVariables(currentBlock, (IOpInheritance)op);
-
-                                // Then push the ELSE as the 'current' block
                                 blockStack.Push((IBlockOpCode)op);
                                 break;
                             }
                         case END:
                             {
-                                // End typically closes the last open block
                                 if (blockStack.Count > 0)
-                                {
                                     blockStack.Pop();
-                                }
                                 break;
                             }
+
+                        // Opcodes con efecto de control de flujo o salidas:
+                        case BREAK:
+                        case CONTINUE:
+                        case RETURN:
+                            {
+                                // Estos podrían validar si hay contexto válido o tipo de retorno esperado.
+                                // Por ahora no hacemos nada extra con ellos.
+                                break;
+                            }
+
+                        // Operaciones neutras o constantes:
+                        case TRAP:
+                        case NOP:
+                        case CLEAR:
+                        case DEFAULT:
+                        case NULL:
+                            {
+                                // Estas instrucciones se ejecutan tal cual sin manipular el stack de bloques.
+                                break;
+                            }
+
+                        // Casos especiales con saltos condicionados
+                        case BRANCH:
+                            {
+                                InheritVariables(currentBlock, (IOpInheritance)op);
+                                blockStack.Push((IBlockOpCode)op);
+                                break;
+                            }
+
                         default:
                             {
-                                break;
+                                throw new InvalidOperationException($"Unhandled opcode in switch: {op.GetType().Name}");
                             }
                     }
 
@@ -366,7 +431,6 @@ namespace Ubytec.Tools.AST
             if (isSemicolon) return;
 
             // Process numeric, type, comment, and operator tokens using boolean checks
-
             else if (isNumericBinary)
             {
                 // Hexadecimal literal detected (e.g. 0x1A3F)
@@ -388,7 +452,7 @@ namespace Ubytec.Tools.AST
             else if (currLineToken.Source.StartsWith("t_", StringComparison.OrdinalIgnoreCase))
             {
                 // Removemos el prefijo "t_" para obtener el nombre del tipo.
-                string typeToken = currLineToken.Source.Substring(2);
+                string typeToken = currLineToken.Source[2..];
 
                 // Usamos las flags definidas en el token para determinar si es nullable y/o array.
                 // Las condiciones se basan en los scopes ya asignados:
@@ -399,12 +463,11 @@ namespace Ubytec.Tools.AST
 
                 // Si por alguna razón el token termina con '?' (y no lo refleja el scope), lo eliminamos.
                 if (typeToken.EndsWith('?'))
-                {
-                    typeToken = typeToken[..^1];
-                }
+                    throw new IlegalTokenException(0x6A9283F9FB0248A1,
+                        "There was an error processing the type a '?' token was detected, and it does not correspond to a nullable. Did you misspell something?");
 
                 // Intentamos convertir el tipo a un enum de PrimitiveType.
-                if (Enum.TryParse<PrimitiveType>(typeToken, true, out PrimitiveType parsedType))
+                if (Enum.TryParse(typeToken, true, out PrimitiveType parsedType))
                 {
                     // Codificamos la nullabilidad y la condición array en un byte (primer bit para nullable, segundo para array).
                     byte flags = 0;
@@ -442,7 +505,7 @@ namespace Ubytec.Tools.AST
                 // Skip comments
                 return;
             }
-            else if (isEqualityOperator || isInequalityOperator || 
+            else if (isEqualityOperator || isInequalityOperator ||
                      isLessThanEqualsOperator || isGreaterThanEqualsOperator ||
                      isLessThanOperator || isGreaterThanOperator ||
                      isAdditionOperator || isSubtractionOperator ||
@@ -485,208 +548,6 @@ namespace Ubytec.Tools.AST
 
         }
 
-        /// <summary>
-        /// Creates an appropriate IOpCode instance (e.g., IF, WHILE, LOOP) based on the 
-        /// given opcode byte and additional operands. Also delegates to specialized 
-        /// constructors like ProcessIf() and ProcessWhile() when needed.
-        /// </summary>
-        /// <param name="opcode">The opcode (byte) identifying which instruction to create.</param>
-        /// <param name="variables">A stack of variables in the current context.</param>
-        /// <param name="operands">A list of ValueType operands extracted from the line of code.</param>
-        /// <returns>An IOpCode object ready to be added to the instruction flow.</returns>
-        private static IOpCode CreateInstruction(byte opcode, List<SyntaxToken> tokens, params ValueType[] operands)
-        {
-            return opcode switch
-            {
-                // Core Control Instructions
-                0x00 => new TRAP(),
-                0x01 => new NOP(),
-                0x02 => new BLOCK(operands.Length > 0 ? (PrimitiveType)operands[0] : PrimitiveType.Void,
-                    new([])),
-                0x03 => new LOOP(operands.Length > 0 ? (PrimitiveType)operands[0] : PrimitiveType.Default,
-                    new([])),
-                0x04 => IF.CreateInstruction([], [..tokens], operands),
-                0x05 => new ELSE(
-                    new([])),
-                0x06 => new END(),
-                0x07 => new BREAK(operands.Length > 0 ? Convert.ToInt32(operands[0]) : null),
-                0x08 => new CONTINUE(operands.Length > 0 ? Convert.ToInt32(operands[0]) : null),
-                0x09 => new RETURN(
-                    new([])),
-                0x0A => new BRANCH(
-                    operands.Length > 0 ? operands[0] : default!,
-                    operands.Length > 1 ? Convert.ToInt32(operands[1]) : null,
-                    operands.Length > 2 ? (PrimitiveType)operands[2] : PrimitiveType.Default,
-                    new([])),
-                0x0B => new SWITCH(
-                    operands.Length > 0 ? Convert.ToInt32(operands[0]) : null,
-                    operands.Length > 1 ? (PrimitiveType)operands[1] : PrimitiveType.Default,
-                    new([])),
-                0x0C => ProcessWhile(),
-                0x0D => new CLEAR(),
-                0x0E => new DEFAULT(),
-                0x0F => new NULL(),
-
-                // Stack Manipulation Instructions
-                //0x11 => new PUSH(operands),  // Accepts multiple bytes for type + value
-                //0x12 => new POP(),
-                //0x13 => new DUP(),
-                //0x14 => new SWAP(),
-                //0x15 => new ROT(),
-                //0x16 => new OVER(),
-                //0x17 => new NIP(),
-                //0x18 => new DROP(operands.Length > 0 ? operands[0] : throw new Exception("DROP requires a stack index.")),
-                //0x19 => new TwoDUP(),
-                //0x1A => new TwoSWAP(),
-                //0x1B => new TwoROT(),
-                //0x1C => new TwoOVER(),
-                //0x1D => new PICK(operands.Length > 0 ? operands[0] : throw new Exception("PICK requires an index.")),
-                //0x1E => new ROLL(operands.Length > 0 ? operands[0] : throw new Exception("ROLL requires an index.")),
-                //
-                //// Arithmetic Instructions (Placeholders for now)
-                //0x20 => new ADD(),
-                //0x21 => new SUB(),
-                //0x22 => new MUL(),
-                //0x23 => new DIV(),
-                //0x24 => new MOD(),
-                //0x25 => new INC(),
-                //0x26 => new DEC(),
-                //0x27 => new NEG(),
-                //0x28 => new ABS(),
-                //
-                ////Bitwise Instructions
-                //0x30 => new AND(),
-                //0x31 => new OR(),
-                //0x32 => new XOR(),
-                //0x33 => new NOT(),
-                //0x34 => new SHL(),
-                //0x35 => new SHR(),
-
-                _ => throw new Exception($"Unknown opcode: 0x{opcode:X4}")
-            };
-
-            WHILE ProcessWhile()
-            {
-                // 1) Gather leading integer operands as label IDs
-                List<int> allLabelIds = [];
-                int index = 0;
-                /*while (index < operands.Length && operands[index] is int intVal)
-                {
-                    allLabelIds.Add(intVal);
-                    index++;
-                }*/
-                // We'll unify them into either zero or one label ID
-                // (If you truly want multiple loops from one line, you'd have to return multiple WHILE objects.)
-                int[]? singleLabelIdArray = null;
-                if (allLabelIds.Count == 1) singleLabelIdArray = [allLabelIds[0]];
-                else if (allLabelIds.Count > 1)
-                {
-                    Console.WriteLine($"[WARNING] Multiple label IDs detected: {string.Join(", ", allLabelIds)}. Using only the first.");
-                    singleLabelIdArray = [allLabelIds[0]];
-                }
-
-                // 2) Now figure out how many operands remain after label IDs
-                int remaining = operands.Length - index;
-
-                // ---------------------------------------------------------------------------------
-                // A) No more operands => either structured loop or single-label jump
-                // ---------------------------------------------------------------------------------
-                if (remaining == 0)
-                {
-                    // If we have at least one label ID => "pop rax; cmp rax,0; jne while_<label>"
-                    if (singleLabelIdArray is not null)
-                        return new WHILE(
-                            // We treat it as a "stack-check jump" loop
-                            // meaning the compile method can do: pop rax, cmp rax, 0, jne while_label
-                            LabelIDxs: singleLabelIdArray,
-                            // No condition => you’ll handle in the WHILE compile to jump if nonzero
-                            Variables: new([])
-                        );
-                    else
-                        // No label IDs, no operands => structured loop
-                        //   while_x:
-                        //     pop rax
-                        //     cmp rax, 0
-                        //     je end_while_x
-                        //   ...
-                        //   jmp while_x
-                        return new WHILE(
-                            Variables: new([])
-                        );
-                }
-
-                // ---------------------------------------------------------------------------------
-                // B) 4 operands => typical "left, opLower, opUpper, right"
-                // ---------------------------------------------------------------------------------
-                else if (remaining == 4)
-                {
-                    var left = operands[index + 0];
-                    var opLower = Convert.ToByte(operands[index + 1]);
-                    var opUpper = Convert.ToByte(operands[index + 2]);
-                    var right = operands[index + 3];
-
-                    // For single-char operators, opUpper == 0
-                    string @operator = (opUpper == 0)
-                        ? new string((char)opLower, 1)
-                        : new string([(char)opLower, (char)opUpper]);
-
-                    // Condition-based while, no explicit block type
-                    return new WHILE(
-                        BlockType: PrimitiveType.Default,
-                        Condition: new(new ConditionExpressionFragment(left, @operator, right) { Tokens = [..tokens.Skip(1)] }),
-                        LabelIDxs: singleLabelIdArray, // if present, we keep it
-                        Variables: new([])
-                    );
-                }
-
-                // ---------------------------------------------------------------------------------
-                // C) 5 operands => "blockType, left, opLower, opUpper, right"
-                // ---------------------------------------------------------------------------------
-                else if (remaining == 5)
-                {
-                    var blockType = (PrimitiveType)operands[index + 0];
-                    var left = operands[index + 1];
-                    var opLower = Convert.ToByte(operands[index + 2]);
-                    var opUpper = Convert.ToByte(operands[index + 3]);
-                    var right = operands[index + 4];
-
-                    string @operator = (opUpper == 0)
-                        ? new string((char)opLower, 1)
-                        : new string([(char)opLower, (char)opUpper]);
-
-                    return new WHILE(
-                        BlockType: blockType,
-                        Condition: new(new ConditionExpressionFragment(left, @operator, right) { Tokens = [.. tokens.Skip(1)] }),
-                        LabelIDxs: singleLabelIdArray,
-                        Variables: new([])
-                    );
-                }
-
-                // ---------------------------------------------------------------------------------
-                // D) 1 operand left => interpret as blockType (no condition)
-                // ---------------------------------------------------------------------------------
-                else if (remaining == 1)
-                {
-                    var blockType = (PrimitiveType)operands[index];
-                    // This means "while t_int32" for instance, no explicit condition
-                    // The compile method can do structured logic with that type, or
-                    // pop rax if you want. Up to you.
-                    return new WHILE(
-                        BlockType: blockType,
-                        LabelIDxs: singleLabelIdArray,
-                        Variables: new([])
-                    );
-                }
-
-                // ---------------------------------------------------------------------------------
-                // E) Otherwise => unknown pattern
-                // ---------------------------------------------------------------------------------
-                else
-                {
-                    throw new Exception($"Invalid WHILE operand pattern. Found {operands.Length} total operands.");
-                }
-            }
-        }
         /// <summary>
         /// Inherits variables from a parent opCode (e.g., a block or IF) 
         /// into the child opCode so that they share the same variable context.
@@ -737,7 +598,7 @@ namespace Ubytec.Tools.AST
 
             foreach (var token in tokens)
             {
-                if (string.IsNullOrWhiteSpace(token.Source) || token.Scopes.Length == 0 || (token.Scopes.Length == 1 && token.Scopes[0] == "source.ubytec")) continue;
+                if (string.IsNullOrWhiteSpace(token.Source) || token.Scopes.Length == 0 || token.Scopes.Length == 1 && token.Scopes[0] == "source.ubytec") continue;
                 validTokens.Add(token);
             }
 
@@ -820,7 +681,7 @@ namespace Ubytec.Tools.AST
                         };
 
                         // Se crea una nueva oración para contener los nodos dentro de este scope.
-                        SyntaxSentence newSentence = new SyntaxSentence()
+                        var newSentence = new SyntaxSentence()
                         {
                             Nodes = new(),
                             Sentences = [],
@@ -861,7 +722,7 @@ namespace Ubytec.Tools.AST
                         };
 
                         // Se crea una nueva oración para contener los nodos dentro de este scope.
-                        SyntaxSentence newSentence = new SyntaxSentence()
+                        var newSentence = new SyntaxSentence()
                         {
                             Nodes = new(),
                             Sentences = [],
@@ -873,11 +734,43 @@ namespace Ubytec.Tools.AST
                         tree.TreeSentenceStack.Push(newSentence);
                         break;
                     }
+                case BRANCH:
+                    {
+                        if (tree.TreeSentenceStack.Count < 1)
+                            throw new Exception("Unexpected BRANCH without parent SWITCH.");
+
+                        SyntaxSentence branchParent = tree.TreeSentenceStack.Peek();
+
+                        if (!branchParent.Metadata.TryGetValue("type", out var parentType) || parentType?.ToString() != "switch")
+                        {
+                            throw new Exception("BRANCH must be inside a SWITCH block.");
+                        }
+
+                        // No hagas Pop si no es necesario, solo anida correctamente
+                        var newBranchNode = new SyntaxNode(opCode)
+                        {
+                            Children = [],
+                            Tokens = tokens,
+                        };
+
+                        SyntaxSentence newBranchSentence = new()
+                        {
+                            Nodes = new(),
+                            Sentences = [],
+                        };
+                        newBranchSentence.Metadata.Add("type", nameof(BRANCH).ToLower());
+
+                        branchParent.Sentences.Add(newBranchSentence);
+                        newBranchSentence.Nodes.Push(newBranchNode);
+                        tree.TreeSentenceStack.Push(newBranchSentence);
+
+                        break;
+                    }
                 // Para opCodes que cierran un scope (como END, BREAK o RETURN), se crea un nodo de cierre y se extrae la oración.
                 case END or BREAK or RETURN:
                     {
                         SyntaxSentence closedSentence = tree.TreeSentenceStack.Pop();
-                        SyntaxNode endNode = new SyntaxNode(opCode)
+                        var endNode = new SyntaxNode(opCode)
                         {
                             Tokens = tokens,
                         };
@@ -892,7 +785,7 @@ namespace Ubytec.Tools.AST
                 // Para cualquier otro opCode, se crea un nodo simple y se agrega como hijo del nodo activo.
                 default:
                     {
-                        SyntaxNode newNode = new SyntaxNode(opCode)
+                        var newNode = new SyntaxNode(opCode)
                         {
                             Tokens = tokens,
                         };
@@ -909,7 +802,7 @@ namespace Ubytec.Tools.AST
         /// </summary>
         /// <param name="tree">The full SyntaxTree to compile.</param>
         /// <returns>A string containing the generated NASM assembly code.</returns>
-        public static string CompileAST(SyntaxTree tree) => CompileSentence(tree.RootSentence.Sentences.First(), new(), new(), new(), new());
+        public static string CompileAST(SyntaxTree tree) => CompileSentence(tree.RootSentence.Sentences.First(), new CompilationScopes());
         /// <summary>
         /// Compiles a specific SyntaxSentence into NASM assembly, 
         /// handling nested statements recursively.
@@ -917,25 +810,34 @@ namespace Ubytec.Tools.AST
         /// <param name="sentence">The SyntaxSentence to compile.</param>
         /// <param name="stacks">Auxiliary stacks used for scope control or type checking, if applicable.</param>
         /// <returns>A string fragment with the NASM code for that sentence.</returns>
-        private static string CompileSentence(SyntaxSentence sentence, params Stack<object>[] stacks)
+        private static string CompileSentence(SyntaxSentence sentence, CompilationScopes scopes)
         {
-            StringBuilder output = new StringBuilder();
+            var output = new StringBuilder();
 
             // Si hay nodos, asumimos que el primero representa la estructura (apertura + cierre)
             if (sentence.Nodes != null && sentence.Nodes.Count > 0)
             {
                 // Usamos Peek() para no alterar la pila
                 var node = sentence.Nodes.Peek();
-                output.Append(CompileBlockNode(sentence, node, stacks));
+                output.Append(CompileBlockNode(sentence, node, scopes));
             }
             // Si no hay nodos, simplemente compilamos las oraciones anidadas (si las hubiera)
             else if (sentence.Sentences != null)
             {
                 foreach (var childSentence in sentence.Sentences)
-                    output.Append(CompileSentence(childSentence, stacks));
+                    output.Append(CompileSentence(childSentence, scopes));
             }
 
-            return output.ToString();
+            // Filtramos las líneas vacías o con solo espacios/tabs
+            var cleaned = string.Join(
+                Environment.NewLine,
+                output.ToString()
+                      .Split(["\r\n", "\r", "\n"], StringSplitOptions.None)
+                      .Where(line => !string.IsNullOrWhiteSpace(line))
+            );
+
+            return cleaned;
+
         }
         /// <summary>
         /// Compiles a block node (e.g., IF with an END, a BLOCK with its END) and 
@@ -945,22 +847,19 @@ namespace Ubytec.Tools.AST
         /// <param name="node">The SyntaxNode holding the operation (BLOCK, IF, ELSE, etc.).</param>
         /// <param name="stacks">Environment stacks used for scope control or validation.</param>
         /// <returns>The resulting NASM code for opening, populating, and closing this block.</returns>
-        private static string CompileBlockNode(SyntaxSentence sentence, SyntaxNode node, params Stack<object>[] stacks)
+        private static string CompileBlockNode(SyntaxSentence sentence, SyntaxNode node, CompilationScopes scopes)
         {
-            StringBuilder code = new StringBuilder();
+            var code = new StringBuilder();
 
             var initialDepth = GetDepth();
-
+            node.Metadata.Add("initialDepth", initialDepth);
             var depth = node.Operation is ELSE ? GetDepth(-1) : initialDepth;
+            node.Metadata.Add("depth", depth);
 
             // Compilamos la operación de apertura
             if (node.Operation != null)
             {
-                var compiled = node.Operation.Compile(stacks);
-
-                if (!node.Metadata.TryAdd("nasm", compiled))
-                    node.Metadata["nasm"] += compiled;
-
+                var compiled = node.Operation.Compile(scopes);
                 code.AppendLine(FormatCompiledLines(compiled, depth));
             }
 
@@ -968,11 +867,7 @@ namespace Ubytec.Tools.AST
             if (sentence.Sentences != null)
                 foreach (var childSentence in sentence.Sentences)
                 {
-                    var compiled = CompileSentence(childSentence, stacks);
-
-                    if (!node.Metadata.TryAdd("nasm", compiled))
-                        node.Metadata["nasm"] += compiled;
-
+                    var compiled = CompileSentence(childSentence, scopes);
                     code.Append(FormatCompiledLines(compiled, string.Empty));
                 }
 
@@ -987,11 +882,7 @@ namespace Ubytec.Tools.AST
             foreach (var n in nodeActions)
                 if (n.Operation != null)
                 {
-                    var compiled = n.Operation.Compile(stacks);
-
-                    if (!node.Metadata.TryAdd("nasm", compiled))
-                        node.Metadata["nasm"] += compiled;
-
+                    var compiled = n.Operation.Compile(scopes);
                     code.AppendLine(FormatCompiledLines(compiled, GetDepth()));
                 }
 
@@ -999,11 +890,7 @@ namespace Ubytec.Tools.AST
             // Finalmente, compilamos la operación de cierre, que asumimos es el último hijo del nodo
             if (closingNode.Operation != null)
             {
-                var compiled = closingNode.Operation.Compile(stacks);
-
-                if (!node.Metadata.TryAdd("nasm", compiled))
-                    node.Metadata["nasm"] += compiled;
-
+                var compiled = closingNode.Operation.Compile(scopes);
                 code.AppendLine(FormatCompiledLines(compiled, GetDepth()));
             }
 
@@ -1012,7 +899,7 @@ namespace Ubytec.Tools.AST
             string GetDepth(int basis = 0)
             {
                 var output = string.Empty;
-                var depth = stacks[0].Count + basis;
+                var depth = scopes.Count + basis;
                 for (int i = 0; i < depth; i++)
                     output += "  ";
                 return output;
@@ -1026,8 +913,5 @@ namespace Ubytec.Tools.AST
                 return f_0x00;
             }
         }
-
-        [GeneratedRegex(@"\s+")]
-        private static partial Regex CodeRegex();
     }
 }

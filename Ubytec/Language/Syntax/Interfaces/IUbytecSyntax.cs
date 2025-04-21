@@ -1,7 +1,9 @@
-﻿namespace Ubytec.Language.Syntax.Interfaces
+﻿using Ubytec.Language.Syntax.Fast.Metadata;
+
+namespace Ubytec.Language.Syntax.Interfaces
 {
     public interface IUbytecSyntax
     {
-        Dictionary<string, object> Metadata { get; }
+        public ref MetadataRegistry Metadata { get; }
     }
 }

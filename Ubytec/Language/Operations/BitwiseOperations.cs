@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using static Ubytec.Language.Operations.StackOperarions;
+﻿using Ubytec.Language.Syntax.Scopes;
 
 namespace Ubytec.Language.Operations
 {
@@ -9,7 +8,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x30;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            public string Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -18,7 +17,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x31;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            public string Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -27,7 +26,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x32;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            public string Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -36,7 +35,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x33;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            public string Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -45,7 +44,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x34;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            public string Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -54,7 +53,7 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x35;
 
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            public string Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }

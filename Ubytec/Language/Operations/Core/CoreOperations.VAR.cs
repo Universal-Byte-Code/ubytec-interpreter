@@ -1,4 +1,7 @@
-﻿using Ubytec.Language.Syntax.ExpressionFragments;
+﻿using Ubytec.Language.Exceptions;
+using Ubytec.Language.Syntax.ExpressionFragments;
+using Ubytec.Language.Syntax.Model;
+using Ubytec.Language.Syntax.Scopes;
 
 namespace Ubytec.Language.Operations
 {
@@ -8,9 +11,19 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x10;
 
-            public string Compile() => ((IOpCode)this).Compile();
+            public static VAR CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
+            {
+                if (operands.Length > 0 || variables.Length > 1)
+                    throw new SyntaxException(0x10BADBEEF, $"VAR opcode should not receive any operands, but received: {operands.Length}");
 
-            string IOpCode.Compile(params Stack<object>[]? stacks) => string.Empty;
+                var variable = variables.FirstOrDefault();
+
+                return new VAR(variable);
+            }
+
+            public string Compile(CompilationScopes scopes) => ((IOpCode)this).Compile(scopes);
+
+            string IOpCode.Compile(CompilationScopes scopes) => _ = string.Empty;
         }
     }
 }

@@ -1,12 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 using Ubytec.Language.Syntax.Interfaces;
-using Ubytec.Language.Syntax.Syntaxes;
+using Ubytec.Language.Syntax.Model;
 
 namespace Ubytec.Language.Syntax.ExpressionFragments
 {
     public readonly record struct ConditionExpressionFragment(object? Left, string? Operand, object? Right) : IUbytecExpressionFragment
     {
         [JsonInclude]
-        public required SyntaxToken[]? Tokens { get; init; }
+        public required SyntaxToken[] Tokens { get; init; } = [];
     }
 }

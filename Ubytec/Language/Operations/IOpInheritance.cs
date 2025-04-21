@@ -1,5 +1,4 @@
-﻿using Ubytec.Language.Syntax.ExpressionFragments;
-using Ubytec.Language.Syntax.Syntaxes;
+﻿using Ubytec.Language.Syntax.Model;
 
 namespace Ubytec.Language.Operations
 {

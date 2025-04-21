@@ -2,7 +2,7 @@
 
 namespace Ubytec.Language.Exceptions
 {
-    public abstract class UbytecException(string message, string? helpLink = null): Exception
+    public abstract class UbytecException(string message, string? helpLink = null) : Exception
     {
         public abstract ulong ErrorCode { get; }
 

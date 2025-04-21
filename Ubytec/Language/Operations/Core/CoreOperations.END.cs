@@ -1,4 +1,7 @@
-﻿using static Ubytec.Language.Syntax.Enum.Primitives;
+﻿using Ubytec.Language.Exceptions;
+using Ubytec.Language.Syntax.ExpressionFragments;
+using Ubytec.Language.Syntax.Model;
+using Ubytec.Language.Syntax.Scopes;
 
 namespace Ubytec.Language.Operations
 {
@@ -8,39 +11,60 @@ namespace Ubytec.Language.Operations
         {
             public readonly byte OpCode => 0x06;
 
-            public string Compile(Stack<object> blockEndStack, Stack<object> blockStartStack, Stack<object> blockExpectedTypeStack, Stack<object> blockActualTypeStack) =>
-                ((IOpCode)this).Compile(blockEndStack, blockStartStack, blockExpectedTypeStack, blockActualTypeStack);
-            string IOpCode.Compile(params Stack<object>[]? stacks)
+            public static END CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
             {
-                ArgumentNullException.ThrowIfNull(stacks);
+                if (operands.Length > 0)
+                    throw new SyntaxException(0x06BADBEEF, $"END opcode should not receive any operands, but received: {operands.Length}");
 
-                if (stacks[0].Count == 0 || stacks[1].Count == 0 || stacks[2].Count == 0)
-                    throw new Exception("END found without matching BLOCK, IF, or LOOP");
+                return new END();
+            }
 
-                var blockEnd = (string)stacks[0].Pop();
-                var blockStart = (string)stacks[1].Pop();
-                var expectedType = Convert.ToByte(stacks[2].Pop());
-                var actualType = stacks[3].Count > 0 ? Convert.ToByte(stacks[3].Pop()) : (byte)PrimitiveType.Void;
+            public string Compile(CompilationScopes scopes) =>
+                ((IOpCode)this).Compile(scopes);
 
-                ValidateCasts(expectedType, actualType);
+            string IOpCode.Compile(CompilationScopes scopes)
+            {
+                if (scopes.Count == 0)
+                    throw new SyntaxStackException(0x06FACADE, "END without matching block start or expected type.");
 
-                var output = string.Empty;
+                scopes.ValidateFinalScope();
 
-                if (blockStart.StartsWith("while"))
+                var blockContext = scopes.TryPopUntil(_ => true)
+                    ?? throw new SyntaxStackException(0x06E0FFFACE, "END could not find a block to close.");
+
+
+                var sb = new System.Text.StringBuilder();
+
+                switch (blockContext.DeclaredByKeyword)
                 {
-                    // WHILE loops need counter checking before breaking
-                    output +=
-                        "  pop rax       ; Load loop counter\n" +
-                        "  dec rax       ; Decrement counter\n" +
-                        "  push rax      ; Store updated counter\n" +
-                        "  cmp rax, 0    ; Check if counter is zero\n" +
-                        $"  je {blockEnd} ; Exit loop if counter == 0\n" +
-                        $"  jmp {blockStart} ; Otherwise, continue loop\n";
+                    case "while":
+                        sb.AppendLine("  pop rax       ; Load loop counter")
+                          .AppendLine("  dec rax       ; Decrement counter")
+                          .AppendLine("  push rax      ; Store updated counter")
+                          .AppendLine("  cmp rax, 0    ; Check if counter is zero")
+                          .AppendLine($"  je {blockContext.EndLabel} ; Exit loop if counter == 0")
+                          .AppendLine($"  jmp {blockContext.StartLabel} ; Continue loop if not zero");
+                        break;
+
+                    case "loop":
+                        sb.AppendLine($"  jmp {blockContext.StartLabel} ; LOOP: continue iteration");
+                        break;
+
+                    case "branch":
+                    case "switch":
+                    case "block":
+                    case "func":
+                    case "if":
+                    case "else":
+                        // No salto necesario
+                        break;
+
+                    default:
+                        throw new SyntaxStackException(0x06DEADBEEF, $"Unknown block type '{blockContext.DeclaredByKeyword}' in END.");
                 }
 
-                output += $"{blockEnd}: ; END of {blockStart}";
-
-                return output;
+                sb.AppendLine($"{blockContext.EndLabel}: ; END of {blockContext.StartLabel}");
+                return sb.ToString();
             }
         }
     }

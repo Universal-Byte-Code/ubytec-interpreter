@@ -1,9 +1,10 @@
-﻿using System.Text.Json;
+﻿using System.Runtime.InteropServices;
+using System.Text.Json;
 using Ubytec.Language.AST;
-using Ubytec.Language.Lexical;
+using Ubytec.Language.Grammar;
+using Ubytec.Language.Syntax.Fast;
 using Ubytec.Language.Tools;
 using Ubytec.Language.Tools.Serialization;
-using Ubytec.Tools.AST;
 
 //var code = @"
 //BLOCK 0x7F
@@ -31,28 +32,36 @@ using Ubytec.Tools.AST;
 
 //SEGUNDA SENTENCE ES ELSE
 
-
 var code = @"
-    block t_void
-        t_int32 i 0
-        while 2 != 10
+block t_void
+    t_int32 i 0
+    while 2 != 10
+        loop t_bool
             if 0 == 9
                 nop
             else
                 nop
             end
         end
-    return
+        switch
+            branch 30
+                nop
+            break
+            branch 666
+                trap
+            break
+        end
+    end
+end
 ";
-
 
 LexicalAnalyst.InitializeGrammar();
 var tmTokens = LexicalAnalyst.Tokenize(code);
 
-var opCode = ASTCompiler.Parse([..tmTokens]);
+var opCode = ASTCompiler.Parse([.. tmTokens]);
 Console.WriteLine("Correctly parsed the ubytec source code!");
 
-var (compiled, errors0) = ASTCompiler.CompileSyntax(opCode, [..tmTokens]);
+var (compiled, errors0) = ASTCompiler.CompileSyntax(opCode, [.. tmTokens]);
 foreach (var error in errors0) Console.WriteLine(error);
 if (errors0.Count == 0) Console.WriteLine("Correctly compiled the AST!");
 
@@ -62,11 +71,7 @@ if (errors1.Count == 0) Console.WriteLine("Correctly validated the AST!");
 
 var nasm = ASTCompiler.CompileAST(compiled);
 Console.WriteLine("Correctly compiled to nasm!");
-//var b = Compiler.ParseOperationsToByteArray(opC0de);
-//var compiled = Compiler.CompileToX86(byteCode); 
-//var optimized = Optimizer.OptimizePushPop(compiled);
-//optimized = Optimizer.OptimizeMiscPatterns(optimized);
-//var optimized2 = Compiler.Optimize(optimized);
+
 var options = new JsonSerializerOptions
 {
     WriteIndented = true,
@@ -80,6 +85,8 @@ options.Converters.Add(new IUbytecExpressionFragmentConverter());
 
 string json = JsonSerializer.Serialize(compiled, options);
 string codecJson = Utf64Codec.Encode(json);
+
+compiled.Dispose();
 
 using (var file1 = File.CreateText(Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName, "ubc-compiled.ubc.nasm")))
 {

@@ -1,9 +1,9 @@
-﻿using Ubytec.Language.Syntax.Syntaxes;
+﻿using Ubytec.Language.Syntax.Model;
 
 namespace Ubytec.Language.Syntax.Interfaces
 {
     public interface IUbytecExpressionFragment
     {
-        SyntaxToken[]? Tokens { get; init; }
+        SyntaxToken[] Tokens { get; init; }
     }
 }
