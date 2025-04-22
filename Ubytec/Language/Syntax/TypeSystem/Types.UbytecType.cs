@@ -5,7 +5,7 @@ namespace Ubytec.Language.Syntax.TypeSystem
     public static partial class Types
     {
         [StructLayout(LayoutKind.Sequential)]
-        public readonly struct UbytecType(
+        public readonly struct UType(
             PrimitiveType type = PrimitiveType.Default,
             TypeModifiers modifiers = TypeModifiers.None,
             Guid? customID = null,
@@ -25,11 +25,11 @@ namespace Ubytec.Language.Syntax.TypeSystem
             public bool IsFullyNullableArray => Modifiers.HasFlag(TypeModifiers.NullableArray) && Modifiers.HasFlag(TypeModifiers.NullableItems);
             public bool IsSingleNullable => Modifiers.HasFlag(TypeModifiers.Nullable) && !IsArray;
 
-            public static UbytecType FromOperands(byte typeByte, byte flagsByte)
+            public static UType FromOperands(byte typeByte, byte flagsByte)
             {
                 var type = (PrimitiveType)typeByte;
                 var modifiers = (TypeModifiers)flagsByte;
-                return new UbytecType(type, modifiers);
+                return new UType(type, modifiers);
             }
 
             public override string ToString()

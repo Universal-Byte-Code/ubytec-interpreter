@@ -5,7 +5,7 @@ using static Ubytec.Language.Syntax.TypeSystem.Types;
 
 namespace Ubytec.Language.Syntax.ExpressionFragments
 {
-    public readonly record struct VariableExpressionFragment(UbytecType Type, string Name, object? Value) : IUbytecExpressionFragment
+    public readonly record struct VariableExpressionFragment(UType Type, string Name, object? Value) : IUbytecExpressionFragment
     {
         [JsonInclude]
         public required SyntaxToken[] Tokens { get; init; } = [];

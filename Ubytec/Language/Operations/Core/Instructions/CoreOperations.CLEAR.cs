@@ -21,7 +21,7 @@ namespace Ubytec.Language.Operations
             }
 
             public string Compile(CompilationScopes scopes) => ((IOpCode)this).Compile(scopes);
-            string IOpCode.Compile(CompilationScopes scopes) => "mov rsp, rbp   ; CLEAR - Reset stack pointer to base pointer\n  ; Stack is now empty";
+            string IUbytecEntity.Compile(CompilationScopes scopes) => "mov rsp, rbp   ; CLEAR - Reset stack pointer to base pointer\n  ; Stack is now empty";
         }
     }
 }

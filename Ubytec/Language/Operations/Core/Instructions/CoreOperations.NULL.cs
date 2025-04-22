@@ -23,7 +23,7 @@ namespace Ubytec.Language.Operations
 
             public string Compile(CompilationScopes scopes) => ((IOpCode)this).Compile(scopes);
 
-            string IOpCode.Compile(CompilationScopes scopes) => "xor rax, rax   ; NULL = 0\n  push rax";
+            string IUbytecEntity.Compile(CompilationScopes scopes) => "xor rax, rax   ; NULL = 0\n  push rax";
         }
     }
 }

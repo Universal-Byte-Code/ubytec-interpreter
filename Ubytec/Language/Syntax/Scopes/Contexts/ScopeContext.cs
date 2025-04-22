@@ -6,7 +6,7 @@ namespace Ubytec.Language.Syntax.Scopes.Contexts
     {
         public string StartLabel { get; set; } = string.Empty;
         public string EndLabel { get; set; } = string.Empty;
-        public UbytecType? ExpectedReturnType { get; set; }
+        public UType? ExpectedReturnType { get; set; }
 
         public bool HasReturn { get; set; } = false;
         public bool HasBreak { get; set; } = false;

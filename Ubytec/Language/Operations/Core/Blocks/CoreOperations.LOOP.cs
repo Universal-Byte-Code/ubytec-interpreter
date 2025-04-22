@@ -8,7 +8,7 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct LOOP(UbytecType? BlockType = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpInheritance
+        public readonly record struct LOOP(UType? BlockType = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpInheritance
         {
             public readonly byte OpCode => 0x03;
 
@@ -39,7 +39,7 @@ namespace Ubytec.Language.Operations
                     operands[..^1].All(o => o is byte))
                 {
                     var typeName = new string(operands[..^1].Cast<byte>().Select(b => (char)b).ToArray());
-                    var typeWithFlags = new UbytecType(PrimitiveType.CustomType, (TypeModifiers)finalFlags);
+                    var typeWithFlags = new UType(PrimitiveType.CustomType, (TypeModifiers)finalFlags);
                     return new LOOP
                     {
                         BlockType = typeWithFlags,
@@ -54,7 +54,7 @@ namespace Ubytec.Language.Operations
 
             public string Compile(CompilationScopes scopes) =>
                 ((IOpCode)this).Compile(scopes);
-            string IOpCode.Compile(CompilationScopes scopes)
+            string IUbytecEntity.Compile(CompilationScopes scopes)
             {
                 string loopStartLabel = NextLabel("loop");
                 string loopEndLabel = NextLabel("end_loop");

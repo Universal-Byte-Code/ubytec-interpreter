@@ -8,7 +8,7 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct BRANCH(object CaseValue, int? LabelIDx = null, UbytecType? BlockType = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpInheritance
+        public readonly record struct BRANCH(object CaseValue, int? LabelIDx = null, UType? BlockType = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpInheritance
         {
             public readonly byte OpCode => 0x0A;
 
@@ -33,7 +33,7 @@ namespace Ubytec.Language.Operations
                 }
 
                 // Caso 3: BRANCH con CaseValue, LabelIDx y BlockType
-                if (operands.Length == 3 && operands[1] is int labelIdx3 && operands[2] is UbytecType blockType3)
+                if (operands.Length == 3 && operands[1] is int labelIdx3 && operands[2] is UType blockType3)
                 {
                     return new BRANCH(operands[0], labelIdx3, blockType3)
                     {
@@ -42,7 +42,7 @@ namespace Ubytec.Language.Operations
                 }
 
                 // Caso 4: BRANCH con CaseValue y BlockType (sin LabelIDx)
-                if (operands.Length == 2 && operands[1] is UbytecType blockType2)
+                if (operands.Length == 2 && operands[1] is UType blockType2)
                 {
                     return new BRANCH(operands[0], null, blockType2)
                     {
@@ -56,7 +56,7 @@ namespace Ubytec.Language.Operations
             public string Compile(CompilationScopes scopes) =>
                 ((IOpCode)this).Compile(scopes);
 
-            string IOpCode.Compile(CompilationScopes scopes)
+            string IUbytecEntity.Compile(CompilationScopes scopes)
             {
                 if (scopes.Count == 0)
                     throw new SyntaxStackException(0x0AFACADE, "BRANCH without matching SWITCH");

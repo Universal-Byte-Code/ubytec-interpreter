@@ -1,8 +1,7 @@
 ﻿namespace Ubytec.Language.HighLevel.Interfaces
 {
-    public interface IUbytecContextEntity
+    public interface IUbytecContextEntity : IUbytecHighLevelEntity
     {
-        string Name { get; }
-        Guid? CustomID { get; }
+        public string Name { get; }
     }
 }

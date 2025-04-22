@@ -29,8 +29,8 @@ public sealed class SyntaxSentence : IUbytecSyntax, IDisposable
     {
         var temp = new List<IOpCode>(Nodes.Count);
         foreach (var node in Nodes)
-            if (node.Operation != null)
-                temp.Add(node.Operation);
+            if (node.Entity is IOpCode oc)
+                temp.Add(oc);
         return [.. temp];
     }
 

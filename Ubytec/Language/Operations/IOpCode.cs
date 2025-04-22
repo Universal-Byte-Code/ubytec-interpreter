@@ -2,9 +2,8 @@
 
 namespace Ubytec.Language.Operations
 {
-    public interface IOpCode
+    public interface IOpCode : IUbytecEntity
     {
-        public byte OpCode { get; }
-        public string Compile(CompilationScopes scopes);
+        byte OpCode { get; }
     }
 }

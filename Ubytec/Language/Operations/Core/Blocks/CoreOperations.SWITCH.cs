@@ -9,7 +9,7 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct SWITCH(int? TableIDx, UbytecType? BlockType = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpInheritance
+        public readonly record struct SWITCH(int? TableIDx, UType? BlockType = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpInheritance
         {
             public readonly byte OpCode => 0x0B;
 
@@ -34,7 +34,7 @@ namespace Ubytec.Language.Operations
                 }
 
                 // Caso 3: SWITCH con TableIDx y BlockType
-                if (operands.Length == 2 && operands[0] is int tableIdx2 && operands[1] is UbytecType blockType)
+                if (operands.Length == 2 && operands[0] is int tableIdx2 && operands[1] is UType blockType)
                 {
                     return new SWITCH(tableIdx2, blockType)
                     {
@@ -43,7 +43,7 @@ namespace Ubytec.Language.Operations
                 }
 
                 // Caso 4: SWITCH con solo BlockType (sin TableIDx)
-                if (operands.Length == 1 && operands[0] is UbytecType onlyBlockType)
+                if (operands.Length == 1 && operands[0] is UType onlyBlockType)
                 {
                     return new SWITCH(null, onlyBlockType)
                     {
@@ -57,7 +57,7 @@ namespace Ubytec.Language.Operations
                     operands[1] is byte typeByte &&
                     operands[2] is byte flagsByte)
                 {
-                    var typeWithFlags = UbytecType.FromOperands(typeByte, flagsByte);
+                    var typeWithFlags = UType.FromOperands(typeByte, flagsByte);
                     return new SWITCH(tableIdx3, typeWithFlags)
                     {
                         Variables = new([.. variables])
@@ -70,7 +70,7 @@ namespace Ubytec.Language.Operations
                     operands[..^1].All(o => o is byte))
                 {
                     var typeName = new string(operands[..^1].Cast<byte>().Select(b => (char)b).ToArray());
-                    var typeWithFlags = new UbytecType(PrimitiveType.CustomType, (TypeModifiers)finalFlags);
+                    var typeWithFlags = new UType(PrimitiveType.CustomType, (TypeModifiers)finalFlags);
                     return new SWITCH(null, typeWithFlags)
                     {
                         Variables = new([.. variables])
@@ -83,7 +83,7 @@ namespace Ubytec.Language.Operations
 
             public string Compile(CompilationScopes scopes) =>
                 ((IOpCode)this).Compile(scopes);
-            string IOpCode.Compile(CompilationScopes scopes)
+            string IUbytecEntity.Compile(CompilationScopes scopes)
             {
                 string switchEndLabel = TableIDx == null ? NextLabel("end_switch") : $"end_switch_{TableIDx}";
                 string switchStartLabel = TableIDx == null ? NextLabel("switch") : $"switch_{TableIDx}";

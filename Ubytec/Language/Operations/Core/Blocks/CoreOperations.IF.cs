@@ -11,7 +11,7 @@ namespace Ubytec.Language.Operations
     {
         public readonly record struct IF() : IBlockOpCode, IOpInheritance
         {
-            public readonly UbytecType? BlockType { get; init; } = null;
+            public readonly UType? BlockType { get; init; } = null;
             public readonly SyntaxExpression? Condition { get; init; } = null;
             public readonly SyntaxExpression? Variables { get; init; } = null;
             public readonly byte OpCode => 0x04;
@@ -66,7 +66,7 @@ namespace Ubytec.Language.Operations
                 // IF con TypeWithFlags desde 2 bytes: tipo y flags
                 if (operands.Length == 2 && operands[0] is byte typeByte && operands[1] is byte flagsByte)
                 {
-                    var typeWithFlags = UbytecType.FromOperands(typeByte, flagsByte);
+                    var typeWithFlags = UType.FromOperands(typeByte, flagsByte);
                     return new IF
                     {
                         BlockType = typeWithFlags,
@@ -78,7 +78,7 @@ namespace Ubytec.Language.Operations
                 if (operands.Length >= 2 && operands[^1] is byte finalFlags && operands[..^1].All(o => o is byte))
                 {
                     var typeName = new string(operands[..^1].Cast<byte>().Select(b => (char)b).ToArray());
-                    var typeWithFlags = new UbytecType(PrimitiveType.CustomType, (TypeModifiers)finalFlags);
+                    var typeWithFlags = new UType(PrimitiveType.CustomType, (TypeModifiers)finalFlags);
                     return new IF
                     {
                         BlockType = typeWithFlags,
@@ -92,7 +92,7 @@ namespace Ubytec.Language.Operations
             public string Compile(CompilationScopes scopes) =>
                 ((IOpCode)this).Compile(scopes);
 
-            string IOpCode.Compile(CompilationScopes scopes)
+            string IUbytecEntity.Compile(CompilationScopes scopes)
             {
                 if (!ValidateConditionalBlockType(BlockType?.Type == PrimitiveType.Default ?
                     PrimitiveType.Bool :

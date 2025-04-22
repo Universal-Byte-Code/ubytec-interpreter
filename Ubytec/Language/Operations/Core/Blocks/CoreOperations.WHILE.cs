@@ -10,7 +10,7 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct WHILE(UbytecType? BlockType = null, SyntaxExpression? Condition = null, int[]? LabelIDxs = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpInheritance
+        public readonly record struct WHILE(UType? BlockType = null, SyntaxExpression? Condition = null, int[]? LabelIDxs = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpInheritance
         {
             public readonly byte OpCode => 0x0C;
 
@@ -69,7 +69,7 @@ namespace Ubytec.Language.Operations
                 // Caso 4: WHILE con tipo explícito codificado como bytes (typeByte + flagsByte)
                 if (operands.Length == 2 && operands[0] is byte typeByte && operands[1] is byte flagsByte)
                 {
-                    var typeWithFlags = UbytecType.FromOperands(typeByte, flagsByte);
+                    var typeWithFlags = UType.FromOperands(typeByte, flagsByte);
                     return new WHILE
                     {
                         BlockType = typeWithFlags,
@@ -83,7 +83,7 @@ namespace Ubytec.Language.Operations
                     operands[..^1].All(o => o is byte))
                 {
                     var typeName = new string(operands[..^1].Cast<byte>().Select(b => (char)b).ToArray());
-                    var typeWithFlags = new UbytecType(PrimitiveType.CustomType, (TypeModifiers)finalFlags);
+                    var typeWithFlags = new UType(PrimitiveType.CustomType, (TypeModifiers)finalFlags);
                     return new WHILE
                     {
                         BlockType = typeWithFlags,
@@ -107,7 +107,7 @@ namespace Ubytec.Language.Operations
             }
 
             public string Compile(CompilationScopes scopes) => ((IOpCode)this).Compile(scopes);
-            string IOpCode.Compile(CompilationScopes scopes)
+            string IUbytecEntity.Compile(CompilationScopes scopes)
             {
                 if (!ValidateConditionalBlockType(BlockType?.Type == PrimitiveType.Default ?
                     PrimitiveType.Bool :

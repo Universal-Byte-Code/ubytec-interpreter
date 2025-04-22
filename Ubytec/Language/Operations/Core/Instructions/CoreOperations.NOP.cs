@@ -22,7 +22,7 @@ namespace Ubytec.Language.Operations
 
 
             public string Compile(CompilationScopes scopes) => ((IOpCode)this).Compile(scopes);
-            string IOpCode.Compile(CompilationScopes scopes) => "nop   ; NOP";
+            string IUbytecEntity.Compile(CompilationScopes scopes) => "nop   ; NOP";
         }
     }
 }

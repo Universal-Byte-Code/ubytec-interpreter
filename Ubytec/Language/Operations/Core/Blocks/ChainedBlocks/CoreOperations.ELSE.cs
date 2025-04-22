@@ -8,7 +8,7 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct ELSE(UbytecType? BlockType = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpInheritance
+        public readonly record struct ELSE(UType? BlockType = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpInheritance
         {
             public readonly byte OpCode => 0x05;
 
@@ -39,7 +39,7 @@ namespace Ubytec.Language.Operations
 
             public string Compile(CompilationScopes scopes) =>
                 ((IOpCode)this).Compile(scopes);
-            string IOpCode.Compile(CompilationScopes scopes)
+            string IUbytecEntity.Compile(CompilationScopes scopes)
             {
                 if (!ValidateConditionalBlockType(BlockType?.Type == PrimitiveType.Default ?
                     PrimitiveType.Bool :

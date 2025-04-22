@@ -10,7 +10,7 @@ namespace Ubytec.Language.Operations.Extended
             public readonly byte ExtensionGroup => 0x10;
             public readonly byte ExtendedOpCode => 0x11;
 
-            string IOpCode.Compile(CompilationScopes scopes)
+            string IUbytecEntity.Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -23,7 +23,7 @@ namespace Ubytec.Language.Operations.Extended
             public readonly byte ExtensionGroup => 0x10;
             public readonly byte ExtendedOpCode => 0x18;
 
-            string IOpCode.Compile(CompilationScopes scopes)
+            string IUbytecEntity.Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -35,7 +35,7 @@ namespace Ubytec.Language.Operations.Extended
             public readonly byte ExtensionGroup => 0x10;
             public readonly byte ExtendedOpCode => 0x1D;
 
-            string IOpCode.Compile(CompilationScopes scopes)
+            string IUbytecEntity.Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }
@@ -47,7 +47,7 @@ namespace Ubytec.Language.Operations.Extended
             public readonly byte ExtensionGroup => 0x10;
             public readonly byte ExtendedOpCode => 0x1E;
 
-            string IOpCode.Compile(CompilationScopes scopes)
+            string IUbytecEntity.Compile(CompilationScopes scopes)
             {
                 throw new NotImplementedException();
             }

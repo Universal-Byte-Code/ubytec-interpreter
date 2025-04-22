@@ -8,7 +8,7 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct RETURN(UbytecType? BlockType = null, SyntaxExpression? Variables = null) : IOpInheritance
+        public readonly record struct RETURN(UType? BlockType = null, SyntaxExpression? Variables = null) : IOpInheritance
         {
             public readonly byte OpCode => 0x09;
 
@@ -24,7 +24,7 @@ namespace Ubytec.Language.Operations
                 }
 
                 // Caso 2: un único tipo explícito como retorno
-                if (operands.Length == 1 && operands[0] is UbytecType blockType)
+                if (operands.Length == 1 && operands[0] is UType blockType)
                 {
                     return new RETURN
                     {
@@ -39,7 +39,7 @@ namespace Ubytec.Language.Operations
             public string Compile(CompilationScopes scopes) =>
                 ((IOpCode)this).Compile(scopes);
 
-            string IOpCode.Compile(CompilationScopes scopes)
+            string IUbytecEntity.Compile(CompilationScopes scopes)
             {
                 if (scopes.Count == 0)
                     throw new SyntaxStackException(0x09FACADE, "RETURN found without any open block context");
@@ -49,7 +49,7 @@ namespace Ubytec.Language.Operations
                 var functionBlock = scopes.Peek();
 
                 var expectedType = functionBlock.ExpectedReturnType;
-                var actualType = BlockType ?? new UbytecType(PrimitiveType.Void, TypeModifiers.None);
+                var actualType = BlockType ?? new UType(PrimitiveType.Void, TypeModifiers.None);
 
                 // Validate primitive vs. custom type nature
                 if ((expectedType?.Type == PrimitiveType.CustomType) != (actualType.Type == PrimitiveType.CustomType))

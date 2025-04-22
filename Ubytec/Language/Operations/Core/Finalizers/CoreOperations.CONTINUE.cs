@@ -25,7 +25,7 @@ namespace Ubytec.Language.Operations
             public string Compile(CompilationScopes scopes) =>
                 ((IOpCode)this).Compile(scopes);
 
-            string IOpCode.Compile(CompilationScopes scopes)
+            string IUbytecEntity.Compile(CompilationScopes scopes)
             {
                 if (scopes.Count == 0)
                     throw new SyntaxStackException(0x08FACADE, "CONTINUE without a valid enclosing LOOP or WHILE block");

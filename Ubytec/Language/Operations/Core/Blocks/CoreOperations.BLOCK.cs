@@ -8,7 +8,7 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct BLOCK(UbytecType? BlockType = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpInheritance
+        public readonly record struct BLOCK(UType? BlockType = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpInheritance
         {
             public readonly byte OpCode => 0x02;
 
@@ -28,7 +28,7 @@ namespace Ubytec.Language.Operations
                     operands[0] is byte typeByte &&
                     operands[1] is byte flagsByte)
                 {
-                    var typeWithFlags = UbytecType.FromOperands(typeByte, flagsByte);
+                    var typeWithFlags = UType.FromOperands(typeByte, flagsByte);
                     return new BLOCK
                     {
                         BlockType = typeWithFlags,
@@ -42,7 +42,7 @@ namespace Ubytec.Language.Operations
                     operands[..^1].All(o => o is byte))
                 {
                     var typeName = new string(operands[..^1].Cast<byte>().Select(b => (char)b).ToArray());
-                    var typeWithFlags = new UbytecType(PrimitiveType.Default, (TypeModifiers)finalFlags);
+                    var typeWithFlags = new UType(PrimitiveType.Default, (TypeModifiers)finalFlags);
 
                     // En este punto se asume que el tipo personalizado será manejado por su nombre y sus flags
                     // Si necesitas guardar el nombre, podrías extender BLOCK con otra propiedad opcional: `CustomTypeName`
@@ -61,7 +61,7 @@ namespace Ubytec.Language.Operations
             public string Compile(CompilationScopes scopes) =>
                 ((IOpCode)this).Compile(scopes);
 
-            string IOpCode.Compile(CompilationScopes scopes)
+            string IUbytecEntity.Compile(CompilationScopes scopes)
             {
                 string blockLabel = NextLabel("block");
                 string endLabel = NextLabel("end_block");

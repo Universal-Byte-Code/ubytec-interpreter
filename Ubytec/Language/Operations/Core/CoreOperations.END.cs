@@ -22,7 +22,7 @@ namespace Ubytec.Language.Operations
             public string Compile(CompilationScopes scopes) =>
                 ((IOpCode)this).Compile(scopes);
 
-            string IOpCode.Compile(CompilationScopes scopes)
+            string IUbytecEntity.Compile(CompilationScopes scopes)
             {
                 if (scopes.Count == 0)
                     throw new SyntaxStackException(0x06FACADE, "END without matching block start or expected type.");

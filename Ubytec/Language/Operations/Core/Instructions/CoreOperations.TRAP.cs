@@ -19,7 +19,7 @@ namespace Ubytec.Language.Operations
                 return new TRAP();
             }
             public string Compile(CompilationScopes scopes) => ((IOpCode)this).Compile(scopes);
-            string IOpCode.Compile(CompilationScopes scopes) => "ud2   ; TRAP";
+            string IUbytecEntity.Compile(CompilationScopes scopes) => "ud2   ; TRAP";
         }
     }
 }

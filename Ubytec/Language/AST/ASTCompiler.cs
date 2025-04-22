@@ -168,7 +168,7 @@ namespace Ubytec.Language.AST
                     // Obtener tipo base
                     var targetType = Enum.Parse<PrimitiveType>(currToken.Source.Remove(0, 2), ignoreCase: true);
 
-                    var ubytecType = new UbytecType(
+                    var ubytecType = new UType(
                         targetType,
                         typeModifiers,
                         targetType == PrimitiveType.CustomType ? Guid.NewGuid() : null,
@@ -853,13 +853,13 @@ namespace Ubytec.Language.AST
 
             var initialDepth = GetDepth();
             node.Metadata.Add("initialDepth", initialDepth);
-            var depth = node.Operation is ELSE ? GetDepth(-1) : initialDepth;
+            var depth = node.Entity is ELSE ? GetDepth(-1) : initialDepth;
             node.Metadata.Add("depth", depth);
 
             // Compilamos la operación de apertura
-            if (node.Operation != null)
+            if (node.Entity != null)
             {
-                var compiled = node.Operation.Compile(scopes);
+                var compiled = node.Entity.Compile(scopes);
                 code.AppendLine(FormatCompiledLines(compiled, depth));
             }
 
@@ -880,17 +880,17 @@ namespace Ubytec.Language.AST
             var nodeActions = node.Children.GetRange(0, node.Children.Count - 1);
 
             foreach (var n in nodeActions)
-                if (n.Operation != null)
+                if (n.Entity != null)
                 {
-                    var compiled = n.Operation.Compile(scopes);
+                    var compiled = n.Entity.Compile(scopes);
                     code.AppendLine(FormatCompiledLines(compiled, GetDepth()));
                 }
 
 
             // Finalmente, compilamos la operación de cierre, que asumimos es el último hijo del nodo
-            if (closingNode.Operation != null)
+            if (closingNode.Entity != null)
             {
-                var compiled = closingNode.Operation.Compile(scopes);
+                var compiled = closingNode.Entity.Compile(scopes);
                 code.AppendLine(FormatCompiledLines(compiled, GetDepth()));
             }
 
