@@ -1,0 +1,881 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions
+  commentId: T:Ubytec.Language.Grammar.UbytecRegistryOptions
+  id: UbytecRegistryOptions
+  parent: Ubytec.Language.Grammar
+  children:
+  - Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl
+  - Ubytec.Language.Grammar.UbytecRegistryOptions.GetDefaultTheme
+  - Ubytec.Language.Grammar.UbytecRegistryOptions.GetGrammar(System.String)
+  - Ubytec.Language.Grammar.UbytecRegistryOptions.GetInjections(System.String)
+  - Ubytec.Language.Grammar.UbytecRegistryOptions.GetTheme(System.String)
+  - Ubytec.Language.Grammar.UbytecRegistryOptions.LexiconUrl
+  langs:
+  - csharp
+  - vb
+  name: UbytecRegistryOptions
+  nameWithType: UbytecRegistryOptions
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions
+  type: Class
+  source:
+    remote:
+      path: Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: UbytecRegistryOptions
+    path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+    startLine: 10
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Grammar
+  syntax:
+    content: 'public class UbytecRegistryOptions : IRegistryOptions'
+    content.vb: Public Class UbytecRegistryOptions Implements IRegistryOptions
+  inheritance:
+  - System.Object
+  implements:
+  - TextMateSharp.Registry.IRegistryOptions
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions.LexiconUrl
+  commentId: P:Ubytec.Language.Grammar.UbytecRegistryOptions.LexiconUrl
+  id: LexiconUrl
+  parent: Ubytec.Language.Grammar.UbytecRegistryOptions
+  langs:
+  - csharp
+  - vb
+  name: LexiconUrl
+  nameWithType: UbytecRegistryOptions.LexiconUrl
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.LexiconUrl
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: LexiconUrl
+    path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+    startLine: 14
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Grammar
+  syntax:
+    content: public string? LexiconUrl { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property LexiconUrl As String
+  overload: Ubytec.Language.Grammar.UbytecRegistryOptions.LexiconUrl*
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl
+  commentId: P:Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl
+  id: DefaultThemeUrl
+  parent: Ubytec.Language.Grammar.UbytecRegistryOptions
+  langs:
+  - csharp
+  - vb
+  name: DefaultThemeUrl
+  nameWithType: UbytecRegistryOptions.DefaultThemeUrl
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: DefaultThemeUrl
+    path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+    startLine: 15
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Grammar
+  syntax:
+    content: public string? DefaultThemeUrl { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property DefaultThemeUrl As String
+  overload: Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl*
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions.GetInjections(System.String)
+  commentId: M:Ubytec.Language.Grammar.UbytecRegistryOptions.GetInjections(System.String)
+  id: GetInjections(System.String)
+  parent: Ubytec.Language.Grammar.UbytecRegistryOptions
+  langs:
+  - csharp
+  - vb
+  name: GetInjections(string)
+  nameWithType: UbytecRegistryOptions.GetInjections(string)
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.GetInjections(string)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: GetInjections
+    path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+    startLine: 18
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Grammar
+  example: []
+  syntax:
+    content: public ICollection<string> GetInjections(string scopeName)
+    parameters:
+    - id: scopeName
+      type: System.String
+    return:
+      type: System.Collections.Generic.ICollection{System.String}
+    content.vb: Public Function GetInjections(scopeName As String) As ICollection(Of String)
+  overload: Ubytec.Language.Grammar.UbytecRegistryOptions.GetInjections*
+  implements:
+  - TextMateSharp.Registry.IRegistryOptions.GetInjections(System.String)
+  nameWithType.vb: UbytecRegistryOptions.GetInjections(String)
+  fullName.vb: Ubytec.Language.Grammar.UbytecRegistryOptions.GetInjections(String)
+  name.vb: GetInjections(String)
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions.GetGrammar(System.String)
+  commentId: M:Ubytec.Language.Grammar.UbytecRegistryOptions.GetGrammar(System.String)
+  id: GetGrammar(System.String)
+  parent: Ubytec.Language.Grammar.UbytecRegistryOptions
+  langs:
+  - csharp
+  - vb
+  name: GetGrammar(string)
+  nameWithType: UbytecRegistryOptions.GetGrammar(string)
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.GetGrammar(string)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: GetGrammar
+    path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+    startLine: 20
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Grammar
+  example: []
+  syntax:
+    content: public IRawGrammar GetGrammar(string scopeName)
+    parameters:
+    - id: scopeName
+      type: System.String
+    return:
+      type: TextMateSharp.Internal.Types.IRawGrammar
+    content.vb: Public Function GetGrammar(scopeName As String) As IRawGrammar
+  overload: Ubytec.Language.Grammar.UbytecRegistryOptions.GetGrammar*
+  implements:
+  - TextMateSharp.Registry.IRegistryOptions.GetGrammar(System.String)
+  nameWithType.vb: UbytecRegistryOptions.GetGrammar(String)
+  fullName.vb: Ubytec.Language.Grammar.UbytecRegistryOptions.GetGrammar(String)
+  name.vb: GetGrammar(String)
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions.GetTheme(System.String)
+  commentId: M:Ubytec.Language.Grammar.UbytecRegistryOptions.GetTheme(System.String)
+  id: GetTheme(System.String)
+  parent: Ubytec.Language.Grammar.UbytecRegistryOptions
+  langs:
+  - csharp
+  - vb
+  name: GetTheme(string)
+  nameWithType: UbytecRegistryOptions.GetTheme(string)
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.GetTheme(string)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: GetTheme
+    path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+    startLine: 52
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Grammar
+  example: []
+  syntax:
+    content: public IRawTheme GetTheme(string scopeName)
+    parameters:
+    - id: scopeName
+      type: System.String
+    return:
+      type: TextMateSharp.Themes.IRawTheme
+    content.vb: Public Function GetTheme(scopeName As String) As IRawTheme
+  overload: Ubytec.Language.Grammar.UbytecRegistryOptions.GetTheme*
+  implements:
+  - TextMateSharp.Registry.IRegistryOptions.GetTheme(System.String)
+  nameWithType.vb: UbytecRegistryOptions.GetTheme(String)
+  fullName.vb: Ubytec.Language.Grammar.UbytecRegistryOptions.GetTheme(String)
+  name.vb: GetTheme(String)
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions.GetDefaultTheme
+  commentId: M:Ubytec.Language.Grammar.UbytecRegistryOptions.GetDefaultTheme
+  id: GetDefaultTheme
+  parent: Ubytec.Language.Grammar.UbytecRegistryOptions
+  langs:
+  - csharp
+  - vb
+  name: GetDefaultTheme()
+  nameWithType: UbytecRegistryOptions.GetDefaultTheme()
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.GetDefaultTheme()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: GetDefaultTheme
+    path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+    startLine: 59
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Grammar
+  summary: ''
+  example: []
+  syntax:
+    content: public IRawTheme GetDefaultTheme()
+    return:
+      type: TextMateSharp.Themes.IRawTheme
+      description: ''
+    content.vb: Public Function GetDefaultTheme() As IRawTheme
+  overload: Ubytec.Language.Grammar.UbytecRegistryOptions.GetDefaultTheme*
+  exceptions:
+  - type: System.Net.Http.HttpIOException
+    commentId: T:System.Net.Http.HttpIOException
+    description: ''
+  implements:
+  - TextMateSharp.Registry.IRegistryOptions.GetDefaultTheme
+references:
+- uid: Ubytec.Language.Grammar
+  commentId: N:Ubytec.Language.Grammar
+  href: Ubytec.html
+  name: Ubytec.Language.Grammar
+  nameWithType: Ubytec.Language.Grammar
+  fullName: Ubytec.Language.Grammar
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Grammar
+    name: Grammar
+    href: Ubytec.Language.Grammar.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Grammar
+    name: Grammar
+    href: Ubytec.Language.Grammar.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: TextMateSharp.Registry.IRegistryOptions
+  commentId: T:TextMateSharp.Registry.IRegistryOptions
+  parent: TextMateSharp.Registry
+  isExternal: true
+  name: IRegistryOptions
+  nameWithType: IRegistryOptions
+  fullName: TextMateSharp.Registry.IRegistryOptions
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: TextMateSharp.Registry
+  commentId: N:TextMateSharp.Registry
+  isExternal: true
+  name: TextMateSharp.Registry
+  nameWithType: TextMateSharp.Registry
+  fullName: TextMateSharp.Registry
+  spec.csharp:
+  - uid: TextMateSharp
+    name: TextMateSharp
+    isExternal: true
+  - name: .
+  - uid: TextMateSharp.Registry
+    name: Registry
+    isExternal: true
+  spec.vb:
+  - uid: TextMateSharp
+    name: TextMateSharp
+    isExternal: true
+  - name: .
+  - uid: TextMateSharp.Registry
+    name: Registry
+    isExternal: true
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions.LexiconUrl*
+  commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.LexiconUrl
+  href: Ubytec.Language.Grammar.UbytecRegistryOptions.html#Ubytec_Language_Grammar_UbytecRegistryOptions_LexiconUrl
+  name: LexiconUrl
+  nameWithType: UbytecRegistryOptions.LexiconUrl
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.LexiconUrl
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl*
+  commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl
+  href: Ubytec.Language.Grammar.UbytecRegistryOptions.html#Ubytec_Language_Grammar_UbytecRegistryOptions_DefaultThemeUrl
+  name: DefaultThemeUrl
+  nameWithType: UbytecRegistryOptions.DefaultThemeUrl
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions.GetInjections*
+  commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.GetInjections
+  href: Ubytec.Language.Grammar.UbytecRegistryOptions.html#Ubytec_Language_Grammar_UbytecRegistryOptions_GetInjections_System_String_
+  name: GetInjections
+  nameWithType: UbytecRegistryOptions.GetInjections
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.GetInjections
+- uid: TextMateSharp.Registry.IRegistryOptions.GetInjections(System.String)
+  commentId: M:TextMateSharp.Registry.IRegistryOptions.GetInjections(System.String)
+  parent: TextMateSharp.Registry.IRegistryOptions
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: GetInjections(string)
+  nameWithType: IRegistryOptions.GetInjections(string)
+  fullName: TextMateSharp.Registry.IRegistryOptions.GetInjections(string)
+  nameWithType.vb: IRegistryOptions.GetInjections(String)
+  fullName.vb: TextMateSharp.Registry.IRegistryOptions.GetInjections(String)
+  name.vb: GetInjections(String)
+  spec.csharp:
+  - uid: TextMateSharp.Registry.IRegistryOptions.GetInjections(System.String)
+    name: GetInjections
+    isExternal: true
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: TextMateSharp.Registry.IRegistryOptions.GetInjections(System.String)
+    name: GetInjections
+    isExternal: true
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Collections.Generic.ICollection{System.String}
+  commentId: T:System.Collections.Generic.ICollection{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.ICollection`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  name: ICollection<string>
+  nameWithType: ICollection<string>
+  fullName: System.Collections.Generic.ICollection<string>
+  nameWithType.vb: ICollection(Of String)
+  fullName.vb: System.Collections.Generic.ICollection(Of String)
+  name.vb: ICollection(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Collections.Generic.ICollection`1
+  commentId: T:System.Collections.Generic.ICollection`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  name: ICollection<T>
+  nameWithType: ICollection<T>
+  fullName: System.Collections.Generic.ICollection<T>
+  nameWithType.vb: ICollection(Of T)
+  fullName.vb: System.Collections.Generic.ICollection(Of T)
+  name.vb: ICollection(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions.GetGrammar*
+  commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.GetGrammar
+  href: Ubytec.Language.Grammar.UbytecRegistryOptions.html#Ubytec_Language_Grammar_UbytecRegistryOptions_GetGrammar_System_String_
+  name: GetGrammar
+  nameWithType: UbytecRegistryOptions.GetGrammar
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.GetGrammar
+- uid: TextMateSharp.Registry.IRegistryOptions.GetGrammar(System.String)
+  commentId: M:TextMateSharp.Registry.IRegistryOptions.GetGrammar(System.String)
+  parent: TextMateSharp.Registry.IRegistryOptions
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: GetGrammar(string)
+  nameWithType: IRegistryOptions.GetGrammar(string)
+  fullName: TextMateSharp.Registry.IRegistryOptions.GetGrammar(string)
+  nameWithType.vb: IRegistryOptions.GetGrammar(String)
+  fullName.vb: TextMateSharp.Registry.IRegistryOptions.GetGrammar(String)
+  name.vb: GetGrammar(String)
+  spec.csharp:
+  - uid: TextMateSharp.Registry.IRegistryOptions.GetGrammar(System.String)
+    name: GetGrammar
+    isExternal: true
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: TextMateSharp.Registry.IRegistryOptions.GetGrammar(System.String)
+    name: GetGrammar
+    isExternal: true
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: TextMateSharp.Internal.Types.IRawGrammar
+  commentId: T:TextMateSharp.Internal.Types.IRawGrammar
+  parent: TextMateSharp.Internal.Types
+  isExternal: true
+  name: IRawGrammar
+  nameWithType: IRawGrammar
+  fullName: TextMateSharp.Internal.Types.IRawGrammar
+- uid: TextMateSharp.Internal.Types
+  commentId: N:TextMateSharp.Internal.Types
+  isExternal: true
+  name: TextMateSharp.Internal.Types
+  nameWithType: TextMateSharp.Internal.Types
+  fullName: TextMateSharp.Internal.Types
+  spec.csharp:
+  - uid: TextMateSharp
+    name: TextMateSharp
+    isExternal: true
+  - name: .
+  - uid: TextMateSharp.Internal
+    name: Internal
+    isExternal: true
+  - name: .
+  - uid: TextMateSharp.Internal.Types
+    name: Types
+    isExternal: true
+  spec.vb:
+  - uid: TextMateSharp
+    name: TextMateSharp
+    isExternal: true
+  - name: .
+  - uid: TextMateSharp.Internal
+    name: Internal
+    isExternal: true
+  - name: .
+  - uid: TextMateSharp.Internal.Types
+    name: Types
+    isExternal: true
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions.GetTheme*
+  commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.GetTheme
+  href: Ubytec.Language.Grammar.UbytecRegistryOptions.html#Ubytec_Language_Grammar_UbytecRegistryOptions_GetTheme_System_String_
+  name: GetTheme
+  nameWithType: UbytecRegistryOptions.GetTheme
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.GetTheme
+- uid: TextMateSharp.Registry.IRegistryOptions.GetTheme(System.String)
+  commentId: M:TextMateSharp.Registry.IRegistryOptions.GetTheme(System.String)
+  parent: TextMateSharp.Registry.IRegistryOptions
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: GetTheme(string)
+  nameWithType: IRegistryOptions.GetTheme(string)
+  fullName: TextMateSharp.Registry.IRegistryOptions.GetTheme(string)
+  nameWithType.vb: IRegistryOptions.GetTheme(String)
+  fullName.vb: TextMateSharp.Registry.IRegistryOptions.GetTheme(String)
+  name.vb: GetTheme(String)
+  spec.csharp:
+  - uid: TextMateSharp.Registry.IRegistryOptions.GetTheme(System.String)
+    name: GetTheme
+    isExternal: true
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: TextMateSharp.Registry.IRegistryOptions.GetTheme(System.String)
+    name: GetTheme
+    isExternal: true
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: TextMateSharp.Themes.IRawTheme
+  commentId: T:TextMateSharp.Themes.IRawTheme
+  parent: TextMateSharp.Themes
+  isExternal: true
+  name: IRawTheme
+  nameWithType: IRawTheme
+  fullName: TextMateSharp.Themes.IRawTheme
+- uid: TextMateSharp.Themes
+  commentId: N:TextMateSharp.Themes
+  isExternal: true
+  name: TextMateSharp.Themes
+  nameWithType: TextMateSharp.Themes
+  fullName: TextMateSharp.Themes
+  spec.csharp:
+  - uid: TextMateSharp
+    name: TextMateSharp
+    isExternal: true
+  - name: .
+  - uid: TextMateSharp.Themes
+    name: Themes
+    isExternal: true
+  spec.vb:
+  - uid: TextMateSharp
+    name: TextMateSharp
+    isExternal: true
+  - name: .
+  - uid: TextMateSharp.Themes
+    name: Themes
+    isExternal: true
+- uid: System.Net.Http.HttpIOException
+  commentId: T:System.Net.Http.HttpIOException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.net.http.httpioexception
+  name: HttpIOException
+  nameWithType: HttpIOException
+  fullName: System.Net.Http.HttpIOException
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions.GetDefaultTheme*
+  commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.GetDefaultTheme
+  href: Ubytec.Language.Grammar.UbytecRegistryOptions.html#Ubytec_Language_Grammar_UbytecRegistryOptions_GetDefaultTheme
+  name: GetDefaultTheme
+  nameWithType: UbytecRegistryOptions.GetDefaultTheme
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.GetDefaultTheme
+- uid: TextMateSharp.Registry.IRegistryOptions.GetDefaultTheme
+  commentId: M:TextMateSharp.Registry.IRegistryOptions.GetDefaultTheme
+  parent: TextMateSharp.Registry.IRegistryOptions
+  isExternal: true
+  name: GetDefaultTheme()
+  nameWithType: IRegistryOptions.GetDefaultTheme()
+  fullName: TextMateSharp.Registry.IRegistryOptions.GetDefaultTheme()
+  spec.csharp:
+  - uid: TextMateSharp.Registry.IRegistryOptions.GetDefaultTheme
+    name: GetDefaultTheme
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: TextMateSharp.Registry.IRegistryOptions.GetDefaultTheme
+    name: GetDefaultTheme
+    isExternal: true
+  - name: (
+  - name: )

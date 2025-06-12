@@ -1,0 +1,37 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Tools.Serialization
+  commentId: N:Ubytec.Language.Tools.Serialization
+  id: Ubytec.Language.Tools.Serialization
+  children:
+  - Ubytec.Language.Tools.Serialization.IOpCodeConverter
+  - Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter
+  - Ubytec.Language.Tools.Serialization.IUbytecExpressionFragmentConverter
+  langs:
+  - csharp
+  - vb
+  name: Ubytec.Language.Tools.Serialization
+  nameWithType: Ubytec.Language.Tools.Serialization
+  fullName: Ubytec.Language.Tools.Serialization
+  type: Namespace
+  assemblies:
+  - Ubytec
+references:
+- uid: Ubytec.Language.Tools.Serialization.IOpCodeConverter
+  commentId: T:Ubytec.Language.Tools.Serialization.IOpCodeConverter
+  href: Ubytec.Language.Tools.Serialization.IOpCodeConverter.html
+  name: IOpCodeConverter
+  nameWithType: IOpCodeConverter
+  fullName: Ubytec.Language.Tools.Serialization.IOpCodeConverter
+- uid: Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter
+  commentId: T:Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter
+  href: Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter.html
+  name: ISyntaxTreeConverter
+  nameWithType: ISyntaxTreeConverter
+  fullName: Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter
+- uid: Ubytec.Language.Tools.Serialization.IUbytecExpressionFragmentConverter
+  commentId: T:Ubytec.Language.Tools.Serialization.IUbytecExpressionFragmentConverter
+  href: Ubytec.Language.Tools.Serialization.IUbytecExpressionFragmentConverter.html
+  name: IUbytecExpressionFragmentConverter
+  nameWithType: IUbytecExpressionFragmentConverter
+  fullName: Ubytec.Language.Tools.Serialization.IUbytecExpressionFragmentConverter

@@ -1,0 +1,652 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.AST.ASTCompiler
+  commentId: T:Ubytec.Language.AST.ASTCompiler
+  id: ASTCompiler
+  parent: Ubytec.Language.AST
+  children:
+  - Ubytec.Language.AST.ASTCompiler.CompileAST(Ubytec.Language.Syntax.Model.SyntaxTree)
+  - Ubytec.Language.AST.ASTCompiler.CompileSyntax(Ubytec.Language.Operations.IOpCode[],Ubytec.Language.Syntax.Model.SyntaxToken[])
+  - Ubytec.Language.AST.ASTCompiler.Parse(Ubytec.Language.Syntax.Model.SyntaxToken[])
+  langs:
+  - csharp
+  - vb
+  name: ASTCompiler
+  nameWithType: ASTCompiler
+  fullName: Ubytec.Language.AST.ASTCompiler
+  type: Class
+  source:
+    remote:
+      path: Ubytec/Language/AST/ASTCompiler.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ASTCompiler
+    path: ../Ubytec/Language/AST/ASTCompiler.cs
+    startLine: 15
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: public static class ASTCompiler
+    content.vb: Public Module ASTCompiler
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Ubytec.Language.AST.ASTCompiler.Parse(Ubytec.Language.Syntax.Model.SyntaxToken[])
+  commentId: M:Ubytec.Language.AST.ASTCompiler.Parse(Ubytec.Language.Syntax.Model.SyntaxToken[])
+  id: Parse(Ubytec.Language.Syntax.Model.SyntaxToken[])
+  parent: Ubytec.Language.AST.ASTCompiler
+  langs:
+  - csharp
+  - vb
+  name: Parse(SyntaxToken[])
+  nameWithType: ASTCompiler.Parse(SyntaxToken[])
+  fullName: Ubytec.Language.AST.ASTCompiler.Parse(Ubytec.Language.Syntax.Model.SyntaxToken[])
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/ASTCompiler.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Parse
+    path: ../Ubytec/Language/AST/ASTCompiler.cs
+    startLine: 98
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  summary: >-
+    Parses the source code line by line, tokenizes each line, builds opCodes,
+
+    and handles opening/closing of blocks (BLOCK, IF, ELSE, LOOP, WHILE, etc.)
+
+    using a stack-based approach.
+  example: []
+  syntax:
+    content: public static IOpCode[] Parse(SyntaxToken[] code)
+    parameters:
+    - id: code
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+      description: A string representing the source code to parse.
+    return:
+      type: Ubytec.Language.Operations.IOpCode[]
+      description: >-
+        A tuple containing an array of generated opCodes and an array of SyntaxToken 
+
+        representing the tokens for each instruction.
+    content.vb: Public Shared Function Parse(code As SyntaxToken()) As IOpCode()
+  overload: Ubytec.Language.AST.ASTCompiler.Parse*
+  nameWithType.vb: ASTCompiler.Parse(SyntaxToken())
+  fullName.vb: Ubytec.Language.AST.ASTCompiler.Parse(Ubytec.Language.Syntax.Model.SyntaxToken())
+  name.vb: Parse(SyntaxToken())
+- uid: Ubytec.Language.AST.ASTCompiler.CompileSyntax(Ubytec.Language.Operations.IOpCode[],Ubytec.Language.Syntax.Model.SyntaxToken[])
+  commentId: M:Ubytec.Language.AST.ASTCompiler.CompileSyntax(Ubytec.Language.Operations.IOpCode[],Ubytec.Language.Syntax.Model.SyntaxToken[])
+  id: CompileSyntax(Ubytec.Language.Operations.IOpCode[],Ubytec.Language.Syntax.Model.SyntaxToken[])
+  parent: Ubytec.Language.AST.ASTCompiler
+  langs:
+  - csharp
+  - vb
+  name: CompileSyntax(IOpCode[], SyntaxToken[])
+  nameWithType: ASTCompiler.CompileSyntax(IOpCode[], SyntaxToken[])
+  fullName: Ubytec.Language.AST.ASTCompiler.CompileSyntax(Ubytec.Language.Operations.IOpCode[], Ubytec.Language.Syntax.Model.SyntaxToken[])
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/ASTCompiler.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: CompileSyntax
+    path: ../Ubytec/Language/AST/ASTCompiler.cs
+    startLine: 590
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  summary: >-
+    Builds a SyntaxTree from the provided opCodes and tokens. 
+
+    Assumes each row of tokens corresponds to one instruction, 
+
+    inserting nodes into the tree based on the structure of blocks (BLOCK, IF, ELSE, LOOP, WHILE, etc.).
+  example: []
+  syntax:
+    content: public static (SyntaxTree tree, List<ASTCompiler.CompileSyntaxError> errors) CompileSyntax(IOpCode[] opCodes, SyntaxToken[] tokens)
+    parameters:
+    - id: opCodes
+      type: Ubytec.Language.Operations.IOpCode[]
+      description: An array of IOpCode objects representing program logic.
+    - id: tokens
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+      description: >-
+        An array of SyntaxToken objects containing lexical info (operands, symbols, etc.).
+
+        May have more tokens than opCodes due to additional operands.
+    return:
+      type: System.ValueTuple{Ubytec.Language.Syntax.Model.SyntaxTree,System.Collections.Generic.List{Ubytec.Language.AST.ASTCompiler.CompileSyntaxError}}
+      description: A SyntaxTree that represents the hierarchical arrangement of statements and nodes.
+    content.vb: Public Shared Function CompileSyntax(opCodes As IOpCode(), tokens As SyntaxToken()) As (tree As SyntaxTree, errors As List(Of ASTCompiler.CompileSyntaxError))
+  overload: Ubytec.Language.AST.ASTCompiler.CompileSyntax*
+  nameWithType.vb: ASTCompiler.CompileSyntax(IOpCode(), SyntaxToken())
+  fullName.vb: Ubytec.Language.AST.ASTCompiler.CompileSyntax(Ubytec.Language.Operations.IOpCode(), Ubytec.Language.Syntax.Model.SyntaxToken())
+  name.vb: CompileSyntax(IOpCode(), SyntaxToken())
+- uid: Ubytec.Language.AST.ASTCompiler.CompileAST(Ubytec.Language.Syntax.Model.SyntaxTree)
+  commentId: M:Ubytec.Language.AST.ASTCompiler.CompileAST(Ubytec.Language.Syntax.Model.SyntaxTree)
+  id: CompileAST(Ubytec.Language.Syntax.Model.SyntaxTree)
+  parent: Ubytec.Language.AST.ASTCompiler
+  langs:
+  - csharp
+  - vb
+  name: CompileAST(SyntaxTree)
+  nameWithType: ASTCompiler.CompileAST(SyntaxTree)
+  fullName: Ubytec.Language.AST.ASTCompiler.CompileAST(Ubytec.Language.Syntax.Model.SyntaxTree)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/ASTCompiler.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: CompileAST
+    path: ../Ubytec/Language/AST/ASTCompiler.cs
+    startLine: 804
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  summary: >-
+    Compiles a SyntaxTree into NASM assembly code. 
+
+    Starts by processing the root sentence and recurses through all nested nodes.
+  example: []
+  syntax:
+    content: public static string CompileAST(SyntaxTree tree)
+    parameters:
+    - id: tree
+      type: Ubytec.Language.Syntax.Model.SyntaxTree
+      description: The full SyntaxTree to compile.
+    return:
+      type: System.String
+      description: A string containing the generated NASM assembly code.
+    content.vb: Public Shared Function CompileAST(tree As SyntaxTree) As String
+  overload: Ubytec.Language.AST.ASTCompiler.CompileAST*
+references:
+- uid: Ubytec.Language.AST
+  commentId: N:Ubytec.Language.AST
+  href: Ubytec.html
+  name: Ubytec.Language.AST
+  nameWithType: Ubytec.Language.AST
+  fullName: Ubytec.Language.AST
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.AST
+    name: AST
+    href: Ubytec.Language.AST.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.AST
+    name: AST
+    href: Ubytec.Language.AST.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubytec.Language.AST.ASTCompiler.Parse*
+  commentId: Overload:Ubytec.Language.AST.ASTCompiler.Parse
+  href: Ubytec.Language.AST.ASTCompiler.html#Ubytec_Language_AST_ASTCompiler_Parse_Ubytec_Language_Syntax_Model_SyntaxToken___
+  name: Parse
+  nameWithType: ASTCompiler.Parse
+  fullName: Ubytec.Language.AST.ASTCompiler.Parse
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken[]
+  isExternal: true
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  name: SyntaxToken[]
+  nameWithType: SyntaxToken[]
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken[]
+  nameWithType.vb: SyntaxToken()
+  fullName.vb: Ubytec.Language.Syntax.Model.SyntaxToken()
+  name.vb: SyntaxToken()
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
+    name: SyntaxToken
+    href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
+    name: SyntaxToken
+    href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  - name: (
+  - name: )
+- uid: Ubytec.Language.Operations.IOpCode[]
+  isExternal: true
+  href: Ubytec.Language.Operations.IOpCode.html
+  name: IOpCode[]
+  nameWithType: IOpCode[]
+  fullName: Ubytec.Language.Operations.IOpCode[]
+  nameWithType.vb: IOpCode()
+  fullName.vb: Ubytec.Language.Operations.IOpCode()
+  name.vb: IOpCode()
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.IOpCode
+    name: IOpCode
+    href: Ubytec.Language.Operations.IOpCode.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Ubytec.Language.Operations.IOpCode
+    name: IOpCode
+    href: Ubytec.Language.Operations.IOpCode.html
+  - name: (
+  - name: )
+- uid: Ubytec.Language.AST.ASTCompiler.CompileSyntax*
+  commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileSyntax
+  href: Ubytec.Language.AST.ASTCompiler.html#Ubytec_Language_AST_ASTCompiler_CompileSyntax_Ubytec_Language_Operations_IOpCode___Ubytec_Language_Syntax_Model_SyntaxToken___
+  name: CompileSyntax
+  nameWithType: ASTCompiler.CompileSyntax
+  fullName: Ubytec.Language.AST.ASTCompiler.CompileSyntax
+- uid: System.ValueTuple{Ubytec.Language.Syntax.Model.SyntaxTree,System.Collections.Generic.List{Ubytec.Language.AST.ASTCompiler.CompileSyntaxError}}
+  commentId: T:System.ValueTuple{Ubytec.Language.Syntax.Model.SyntaxTree,System.Collections.Generic.List{Ubytec.Language.AST.ASTCompiler.CompileSyntaxError}}
+  parent: System
+  definition: System.ValueTuple`2
+  href: Ubytec.Language.Syntax.Model.SyntaxTree.html
+  name: (SyntaxTree tree, List<ASTCompiler.CompileSyntaxError> errors)
+  nameWithType: (SyntaxTree tree, List<ASTCompiler.CompileSyntaxError> errors)
+  fullName: (Ubytec.Language.Syntax.Model.SyntaxTree tree, System.Collections.Generic.List<Ubytec.Language.AST.ASTCompiler.CompileSyntaxError> errors)
+  nameWithType.vb: (tree As SyntaxTree, errors As List(Of ASTCompiler.CompileSyntaxError))
+  fullName.vb: (tree As Ubytec.Language.Syntax.Model.SyntaxTree, errors As System.Collections.Generic.List(Of Ubytec.Language.AST.ASTCompiler.CompileSyntaxError))
+  name.vb: (tree As SyntaxTree, errors As List(Of ASTCompiler.CompileSyntaxError))
+  spec.csharp:
+  - name: (
+  - uid: Ubytec.Language.Syntax.Model.SyntaxTree
+    name: SyntaxTree
+    href: Ubytec.Language.Syntax.Model.SyntaxTree.html
+  - name: " "
+  - uid: System.ValueTuple{Ubytec.Language.Syntax.Model.SyntaxTree,System.Collections.Generic.List{Ubytec.Language.AST.ASTCompiler.CompileSyntaxError}}.tree
+    name: tree
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-ubytec.language.syntax.model.syntaxtree,system.collections.generic.list-ubytec.language.ast.astcompiler.compilesyntaxerror--.tree
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: Ubytec.Language.AST.ASTCompiler
+    name: ASTCompiler
+    href: Ubytec.Language.AST.ASTCompiler.html
+  - name: .
+  - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError
+    name: CompileSyntaxError
+    href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.html
+  - name: '>'
+  - name: " "
+  - uid: System.ValueTuple{Ubytec.Language.Syntax.Model.SyntaxTree,System.Collections.Generic.List{Ubytec.Language.AST.ASTCompiler.CompileSyntaxError}}.errors
+    name: errors
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-ubytec.language.syntax.model.syntaxtree,system.collections.generic.list-ubytec.language.ast.astcompiler.compilesyntaxerror--.errors
+  - name: )
+  spec.vb:
+  - name: (
+  - uid: System.ValueTuple{Ubytec.Language.Syntax.Model.SyntaxTree,System.Collections.Generic.List{Ubytec.Language.AST.ASTCompiler.CompileSyntaxError}}.tree
+    name: tree
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-ubytec.language.syntax.model.syntaxtree,system.collections.generic.list-ubytec.language.ast.astcompiler.compilesyntaxerror--.tree
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Model.SyntaxTree
+    name: SyntaxTree
+    href: Ubytec.Language.Syntax.Model.SyntaxTree.html
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{Ubytec.Language.Syntax.Model.SyntaxTree,System.Collections.Generic.List{Ubytec.Language.AST.ASTCompiler.CompileSyntaxError}}.errors
+    name: errors
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-ubytec.language.syntax.model.syntaxtree,system.collections.generic.list-ubytec.language.ast.astcompiler.compilesyntaxerror--.errors
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.AST.ASTCompiler
+    name: ASTCompiler
+    href: Ubytec.Language.AST.ASTCompiler.html
+  - name: .
+  - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError
+    name: CompileSyntaxError
+    href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.html
+  - name: )
+  - name: )
+- uid: System.ValueTuple`2
+  commentId: T:System.ValueTuple`2
+  name: (T1, T2)
+  nameWithType: (T1, T2)
+  fullName: (T1, T2)
+  spec.csharp:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+  spec.vb:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+- uid: Ubytec.Language.AST.ASTCompiler.CompileAST*
+  commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileAST
+  href: Ubytec.Language.AST.ASTCompiler.html#Ubytec_Language_AST_ASTCompiler_CompileAST_Ubytec_Language_Syntax_Model_SyntaxTree_
+  name: CompileAST
+  nameWithType: ASTCompiler.CompileAST
+  fullName: Ubytec.Language.AST.ASTCompiler.CompileAST
+- uid: Ubytec.Language.Syntax.Model.SyntaxTree
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxTree
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxTree.html
+  name: SyntaxTree
+  nameWithType: SyntaxTree
+  fullName: Ubytec.Language.Syntax.Model.SyntaxTree
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubytec.Language.Syntax.Model
+  commentId: N:Ubytec.Language.Syntax.Model
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Model
+  nameWithType: Ubytec.Language.Syntax.Model
+  fullName: Ubytec.Language.Syntax.Model
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html

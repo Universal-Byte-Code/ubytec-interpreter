@@ -1,0 +1,960 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.HighLevel.Variable
+  commentId: T:Ubytec.Language.HighLevel.Variable
+  id: Variable
+  parent: Ubytec.Language.HighLevel
+  children:
+  - Ubytec.Language.HighLevel.Variable.#ctor(System.String,Ubytec.Language.Syntax.TypeSystem.Types.UType,System.Guid,Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers,System.Object)
+  - Ubytec.Language.HighLevel.Variable.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  - Ubytec.Language.HighLevel.Variable.ID
+  - Ubytec.Language.HighLevel.Variable.Modifiers
+  - Ubytec.Language.HighLevel.Variable.Name
+  - Ubytec.Language.HighLevel.Variable.Type
+  - Ubytec.Language.HighLevel.Variable.Validate
+  - Ubytec.Language.HighLevel.Variable.Value
+  langs:
+  - csharp
+  - vb
+  name: Variable
+  nameWithType: Variable
+  fullName: Ubytec.Language.HighLevel.Variable
+  type: Struct
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Variable.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Variable
+    path: ../Ubytec/Language/HighLevel/Variable.cs
+    startLine: 28
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  summary: >-
+    Represents a high-level language variable, encapsulating its name, type,
+
+    modifiers, optional initial value, and unique identifier.
+
+
+    <example>
+
+
+    <pre><code class="lang-csharp">// Create a simple integer variable:
+
+    var variable = new Variable(
+        name: "counter",
+        type: UType.Int,
+        id: Guid.NewGuid(),
+        modifiers: TypeModifiers.None,
+        value: valueToken.Source
+    );
+
+
+    // Validate and compile to assembly directive:
+
+    variable.Validate();
+
+    string asm = variable.Compile(new CompilationScopes());</code></pre>
+
+    </example>
+  example: []
+  syntax:
+    content: 'public readonly struct Variable : IUbytecHighLevelEntity, IUbytecEntity'
+    content.vb: Public Structure Variable Implements IUbytecHighLevelEntity, IUbytecEntity
+  implements:
+  - Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  - Ubytec.Language.IUbytecEntity
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubytec.Language.HighLevel.Variable.Name
+  commentId: P:Ubytec.Language.HighLevel.Variable.Name
+  id: Name
+  parent: Ubytec.Language.HighLevel.Variable
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: Variable.Name
+  fullName: Ubytec.Language.HighLevel.Variable.Name
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Variable.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Name
+    path: ../Ubytec/Language/HighLevel/Variable.cs
+    startLine: 33
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  summary: Gets the name of the variable.
+  example: []
+  syntax:
+    content: public string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Name As String
+  overload: Ubytec.Language.HighLevel.Variable.Name*
+- uid: Ubytec.Language.HighLevel.Variable.Type
+  commentId: P:Ubytec.Language.HighLevel.Variable.Type
+  id: Type
+  parent: Ubytec.Language.HighLevel.Variable
+  langs:
+  - csharp
+  - vb
+  name: Type
+  nameWithType: Variable.Type
+  fullName: Ubytec.Language.HighLevel.Variable.Type
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Variable.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Type
+    path: ../Ubytec/Language/HighLevel/Variable.cs
+    startLine: 38
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  summary: Gets the <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType" data-throw-if-not-resolved="false"></xref> of the variable.
+  example: []
+  syntax:
+    content: public Types.UType Type { get; }
+    parameters: []
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    content.vb: Public ReadOnly Property Type As Types.UType
+  overload: Ubytec.Language.HighLevel.Variable.Type*
+- uid: Ubytec.Language.HighLevel.Variable.Modifiers
+  commentId: P:Ubytec.Language.HighLevel.Variable.Modifiers
+  id: Modifiers
+  parent: Ubytec.Language.HighLevel.Variable
+  langs:
+  - csharp
+  - vb
+  name: Modifiers
+  nameWithType: Variable.Modifiers
+  fullName: Ubytec.Language.HighLevel.Variable.Modifiers
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Variable.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Modifiers
+    path: ../Ubytec/Language/HighLevel/Variable.cs
+    startLine: 43
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  summary: Gets the <xref href="Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers" data-throw-if-not-resolved="false"></xref> applied to the variable.
+  example: []
+  syntax:
+    content: public Types.TypeModifiers Modifiers { get; }
+    parameters: []
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    content.vb: Public ReadOnly Property Modifiers As Types.TypeModifiers
+  overload: Ubytec.Language.HighLevel.Variable.Modifiers*
+- uid: Ubytec.Language.HighLevel.Variable.Value
+  commentId: P:Ubytec.Language.HighLevel.Variable.Value
+  id: Value
+  parent: Ubytec.Language.HighLevel.Variable
+  langs:
+  - csharp
+  - vb
+  name: Value
+  nameWithType: Variable.Value
+  fullName: Ubytec.Language.HighLevel.Variable.Value
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Variable.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Value
+    path: ../Ubytec/Language/HighLevel/Variable.cs
+    startLine: 48
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  summary: Gets the initial value of the variable, or <code>null</code> if none is set.
+  example: []
+  syntax:
+    content: public object? Value { get; }
+    parameters: []
+    return:
+      type: System.Object
+    content.vb: Public ReadOnly Property Value As Object
+  overload: Ubytec.Language.HighLevel.Variable.Value*
+- uid: Ubytec.Language.HighLevel.Variable.ID
+  commentId: P:Ubytec.Language.HighLevel.Variable.ID
+  id: ID
+  parent: Ubytec.Language.HighLevel.Variable
+  langs:
+  - csharp
+  - vb
+  name: ID
+  nameWithType: Variable.ID
+  fullName: Ubytec.Language.HighLevel.Variable.ID
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Variable.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ID
+    path: ../Ubytec/Language/HighLevel/Variable.cs
+    startLine: 53
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  summary: Gets the unique identifier for this variable instance.
+  example: []
+  syntax:
+    content: public Guid ID { get; }
+    parameters: []
+    return:
+      type: System.Guid
+    content.vb: Public ReadOnly Property ID As Guid
+  overload: Ubytec.Language.HighLevel.Variable.ID*
+  implements:
+  - Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
+- uid: Ubytec.Language.HighLevel.Variable.#ctor(System.String,Ubytec.Language.Syntax.TypeSystem.Types.UType,System.Guid,Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers,System.Object)
+  commentId: M:Ubytec.Language.HighLevel.Variable.#ctor(System.String,Ubytec.Language.Syntax.TypeSystem.Types.UType,System.Guid,Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers,System.Object)
+  id: '#ctor(System.String,Ubytec.Language.Syntax.TypeSystem.Types.UType,System.Guid,Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers,System.Object)'
+  parent: Ubytec.Language.HighLevel.Variable
+  langs:
+  - csharp
+  - vb
+  name: Variable(string, UType, Guid, TypeModifiers, object?)
+  nameWithType: Variable.Variable(string, Types.UType, Guid, Types.TypeModifiers, object?)
+  fullName: Ubytec.Language.HighLevel.Variable.Variable(string, Ubytec.Language.Syntax.TypeSystem.Types.UType, System.Guid, Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers, object?)
+  type: Constructor
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Variable.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: .ctor
+    path: ../Ubytec/Language/HighLevel/Variable.cs
+    startLine: 72
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  summary: Initializes a new instance of the <xref href="Ubytec.Language.HighLevel.Variable" data-throw-if-not-resolved="false"></xref> struct.
+  example: []
+  syntax:
+    content: public Variable(string name, Types.UType type, Guid id, Types.TypeModifiers modifiers = TypeModifiers.None, object? value = null)
+    parameters:
+    - id: name
+      type: System.String
+      description: The variable’s name. Must be non-null and non-empty.
+    - id: type
+      type: Ubytec.Language.Syntax.TypeSystem.Types.UType
+      description: The <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType" data-throw-if-not-resolved="false"></xref> of the variable.
+    - id: id
+      type: System.Guid
+      description: A unique <xref href="System.Guid" data-throw-if-not-resolved="false"></xref> identifying this variable.
+    - id: modifiers
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+      description: >-
+        Optional <xref href="Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers" data-throw-if-not-resolved="false"></xref> flags. Only storage-related modifiers
+
+        (e.g. <code>Const</code>, <code>ReadOnly</code>) are allowed.
+    - id: value
+      type: System.Object
+      description: Optional initial value. Must be non-null if <xref href="Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Const" data-throw-if-not-resolved="false"></xref> is specified.
+    content.vb: Public Sub New(name As String, type As Types.UType, id As Guid, modifiers As Types.TypeModifiers = TypeModifiers.None, value As Object = Nothing)
+  overload: Ubytec.Language.HighLevel.Variable.#ctor*
+  exceptions:
+  - type: System.Exception
+    commentId: T:System.Exception
+    description: >-
+      Thrown if the name is null/empty, invalid modifiers are present,
+
+      both <code>Const</code> and <code>ReadOnly</code> are set, or a const variable has no value.
+  nameWithType.vb: Variable.New(String, Types.UType, Guid, Types.TypeModifiers, Object)
+  fullName.vb: Ubytec.Language.HighLevel.Variable.New(String, Ubytec.Language.Syntax.TypeSystem.Types.UType, System.Guid, Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers, Object)
+  name.vb: New(String, UType, Guid, TypeModifiers, Object)
+- uid: Ubytec.Language.HighLevel.Variable.Validate
+  commentId: M:Ubytec.Language.HighLevel.Variable.Validate
+  id: Validate
+  parent: Ubytec.Language.HighLevel.Variable
+  langs:
+  - csharp
+  - vb
+  name: Validate()
+  nameWithType: Variable.Validate()
+  fullName: Ubytec.Language.HighLevel.Variable.Validate()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Variable.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Validate
+    path: ../Ubytec/Language/HighLevel/Variable.cs
+    startLine: 95
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  summary: >-
+    Validates the variable’s configuration, ensuring:
+
+    <ul><li>Name is not null or whitespace.</li><li>No invalid modifiers (visibility, abstract, override, etc.) are set.</li><li>At most one of <code>Const</code> or <code>ReadOnly</code> is specified.</li><li>Const variables have a non-null <xref href="Ubytec.Language.HighLevel.Variable.Value" data-throw-if-not-resolved="false"></xref>.</li></ul>
+  example: []
+  syntax:
+    content: public void Validate()
+    content.vb: Public Sub Validate()
+  overload: Ubytec.Language.HighLevel.Variable.Validate*
+  exceptions:
+  - type: System.Exception
+    commentId: T:System.Exception
+    description: Thrown if any of the above validation rules are violated.
+  implements:
+  - Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+- uid: Ubytec.Language.HighLevel.Variable.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  commentId: M:Ubytec.Language.HighLevel.Variable.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  id: Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  parent: Ubytec.Language.HighLevel.Variable
+  langs:
+  - csharp
+  - vb
+  name: Compile(CompilationScopes)
+  nameWithType: Variable.Compile(CompilationScopes)
+  fullName: Ubytec.Language.HighLevel.Variable.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Variable.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Compile
+    path: ../Ubytec/Language/HighLevel/Variable.cs
+    startLine: 132
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  summary: Compiles the variable declaration into a low-level assembly reference code snippet.
+  example: []
+  syntax:
+    content: public string Compile(CompilationScopes scopes)
+    parameters:
+    - id: scopes
+      type: Ubytec.Language.Syntax.Scopes.CompilationScopes
+      description: The <xref href="Ubytec.Language.Syntax.Scopes.CompilationScopes" data-throw-if-not-resolved="false"></xref> providing context for label generation.
+    return:
+      type: System.String
+      description: An assembly directive string that defines a constant label for the variable’s stack offset.
+    content.vb: Public Function Compile(scopes As CompilationScopes) As String
+  overload: Ubytec.Language.HighLevel.Variable.Compile*
+  implements:
+  - Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+references:
+- uid: Ubytec.Language.HighLevel
+  commentId: N:Ubytec.Language.HighLevel
+  href: Ubytec.html
+  name: Ubytec.Language.HighLevel
+  nameWithType: Ubytec.Language.HighLevel
+  fullName: Ubytec.Language.HighLevel
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  commentId: T:Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  parent: Ubytec.Language.HighLevel.Interfaces
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html
+  name: IUbytecHighLevelEntity
+  nameWithType: IUbytecHighLevelEntity
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+- uid: Ubytec.Language.IUbytecEntity
+  commentId: T:Ubytec.Language.IUbytecEntity
+  parent: Ubytec.Language
+  href: Ubytec.Language.IUbytecEntity.html
+  name: IUbytecEntity
+  nameWithType: IUbytecEntity
+  fullName: Ubytec.Language.IUbytecEntity
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Ubytec.Language.HighLevel.Interfaces
+  commentId: N:Ubytec.Language.HighLevel.Interfaces
+  href: Ubytec.html
+  name: Ubytec.Language.HighLevel.Interfaces
+  nameWithType: Ubytec.Language.HighLevel.Interfaces
+  fullName: Ubytec.Language.HighLevel.Interfaces
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.HighLevel.Interfaces.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.HighLevel.Interfaces.html
+- uid: Ubytec.Language
+  commentId: N:Ubytec.Language
+  href: Ubytec.html
+  name: Ubytec.Language
+  nameWithType: Ubytec.Language
+  fullName: Ubytec.Language
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubytec.Language.HighLevel.Variable.Name*
+  commentId: Overload:Ubytec.Language.HighLevel.Variable.Name
+  href: Ubytec.Language.HighLevel.Variable.html#Ubytec_Language_HighLevel_Variable_Name
+  name: Name
+  nameWithType: Variable.Name
+  fullName: Ubytec.Language.HighLevel.Variable.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.UType
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  name: Types.UType
+  nameWithType: Types.UType
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    name: UType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    name: UType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html
+- uid: Ubytec.Language.HighLevel.Variable.Type*
+  commentId: Overload:Ubytec.Language.HighLevel.Variable.Type
+  href: Ubytec.Language.HighLevel.Variable.html#Ubytec_Language_HighLevel_Variable_Type
+  name: Type
+  nameWithType: Variable.Type
+  fullName: Ubytec.Language.HighLevel.Variable.Type
+- uid: Ubytec.Language.Syntax.TypeSystem
+  commentId: N:Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.TypeSystem
+  nameWithType: Ubytec.Language.Syntax.TypeSystem
+  fullName: Ubytec.Language.Syntax.TypeSystem
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  name: Types.TypeModifiers
+  nameWithType: Types.TypeModifiers
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
+- uid: Ubytec.Language.HighLevel.Variable.Modifiers*
+  commentId: Overload:Ubytec.Language.HighLevel.Variable.Modifiers
+  href: Ubytec.Language.HighLevel.Variable.html#Ubytec_Language_HighLevel_Variable_Modifiers
+  name: Modifiers
+  nameWithType: Variable.Modifiers
+  fullName: Ubytec.Language.HighLevel.Variable.Modifiers
+- uid: Ubytec.Language.HighLevel.Variable.Value*
+  commentId: Overload:Ubytec.Language.HighLevel.Variable.Value
+  href: Ubytec.Language.HighLevel.Variable.html#Ubytec_Language_HighLevel_Variable_Value
+  name: Value
+  nameWithType: Variable.Value
+  fullName: Ubytec.Language.HighLevel.Variable.Value
+- uid: Ubytec.Language.HighLevel.Variable.ID*
+  commentId: Overload:Ubytec.Language.HighLevel.Variable.ID
+  href: Ubytec.Language.HighLevel.Variable.html#Ubytec_Language_HighLevel_Variable_ID
+  name: ID
+  nameWithType: Variable.ID
+  fullName: Ubytec.Language.HighLevel.Variable.ID
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
+  commentId: P:Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
+  parent: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_ID
+  name: ID
+  nameWithType: IUbytecHighLevelEntity.ID
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
+- uid: System.Guid
+  commentId: T:System.Guid
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.guid
+  name: Guid
+  nameWithType: Guid
+  fullName: System.Guid
+- uid: Ubytec.Language.HighLevel.Variable
+  commentId: T:Ubytec.Language.HighLevel.Variable
+  href: Ubytec.Language.HighLevel.Variable.html
+  name: Variable
+  nameWithType: Variable
+  fullName: Ubytec.Language.HighLevel.Variable
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Const
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Const
+  href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html#Ubytec_Language_Syntax_TypeSystem_Types_TypeModifiers_Const
+  name: Const
+  nameWithType: Types.TypeModifiers.Const
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Const
+- uid: System.Exception
+  commentId: T:System.Exception
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.exception
+  name: Exception
+  nameWithType: Exception
+  fullName: System.Exception
+- uid: Ubytec.Language.HighLevel.Variable.#ctor*
+  commentId: Overload:Ubytec.Language.HighLevel.Variable.#ctor
+  href: Ubytec.Language.HighLevel.Variable.html#Ubytec_Language_HighLevel_Variable__ctor_System_String_Ubytec_Language_Syntax_TypeSystem_Types_UType_System_Guid_Ubytec_Language_Syntax_TypeSystem_Types_TypeModifiers_System_Object_
+  name: Variable
+  nameWithType: Variable.Variable
+  fullName: Ubytec.Language.HighLevel.Variable.Variable
+  nameWithType.vb: Variable.New
+  fullName.vb: Ubytec.Language.HighLevel.Variable.New
+  name.vb: New
+- uid: Ubytec.Language.HighLevel.Variable.Value
+  commentId: P:Ubytec.Language.HighLevel.Variable.Value
+  href: Ubytec.Language.HighLevel.Variable.html#Ubytec_Language_HighLevel_Variable_Value
+  name: Value
+  nameWithType: Variable.Value
+  fullName: Ubytec.Language.HighLevel.Variable.Value
+- uid: Ubytec.Language.HighLevel.Variable.Validate*
+  commentId: Overload:Ubytec.Language.HighLevel.Variable.Validate
+  href: Ubytec.Language.HighLevel.Variable.html#Ubytec_Language_HighLevel_Variable_Validate
+  name: Validate
+  nameWithType: Variable.Validate
+  fullName: Ubytec.Language.HighLevel.Variable.Validate
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+  commentId: M:Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+  parent: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
+  name: Validate()
+  nameWithType: IUbytecHighLevelEntity.Validate()
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate()
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+    name: Validate
+    href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+    name: Validate
+    href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
+  - name: (
+  - name: )
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  commentId: T:Ubytec.Language.Syntax.Scopes.CompilationScopes
+  parent: Ubytec.Language.Syntax.Scopes
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  name: CompilationScopes
+  nameWithType: CompilationScopes
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes
+- uid: Ubytec.Language.HighLevel.Variable.Compile*
+  commentId: Overload:Ubytec.Language.HighLevel.Variable.Compile
+  href: Ubytec.Language.HighLevel.Variable.html#Ubytec_Language_HighLevel_Variable_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  name: Compile
+  nameWithType: Variable.Compile
+  fullName: Ubytec.Language.HighLevel.Variable.Compile
+- uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  commentId: M:Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  parent: Ubytec.Language.IUbytecEntity
+  href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  name: Compile(CompilationScopes)
+  nameWithType: IUbytecEntity.Compile(CompilationScopes)
+  fullName: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  spec.csharp:
+  - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+    name: Compile
+    href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+    name: Compile
+    href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  - name: )
+- uid: Ubytec.Language.Syntax.Scopes
+  commentId: N:Ubytec.Language.Syntax.Scopes
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Scopes
+  nameWithType: Ubytec.Language.Syntax.Scopes
+  fullName: Ubytec.Language.Syntax.Scopes
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html

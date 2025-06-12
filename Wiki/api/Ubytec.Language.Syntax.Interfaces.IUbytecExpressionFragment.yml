@@ -1,0 +1,124 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+  commentId: T:Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+  id: IUbytecExpressionFragment
+  parent: Ubytec.Language.Syntax.Interfaces
+  children:
+  - Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens
+  langs:
+  - csharp
+  - vb
+  name: IUbytecExpressionFragment
+  nameWithType: IUbytecExpressionFragment
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+  type: Interface
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Interfaces/IUbytecExpressionFragment.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IUbytecExpressionFragment
+    path: ../Ubytec/Language/Syntax/Interfaces/IUbytecExpressionFragment.cs
+    startLine: 4
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Interfaces
+  syntax:
+    content: public interface IUbytecExpressionFragment
+    content.vb: Public Interface IUbytecExpressionFragment
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens
+  commentId: P:Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens
+  id: Tokens
+  parent: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+  langs:
+  - csharp
+  - vb
+  name: Tokens
+  nameWithType: IUbytecExpressionFragment.Tokens
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Interfaces/IUbytecExpressionFragment.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Tokens
+    path: ../Ubytec/Language/Syntax/Interfaces/IUbytecExpressionFragment.cs
+    startLine: 6
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Interfaces
+  syntax:
+    content: SyntaxToken[] Tokens { get; init; }
+    parameters: []
+    return:
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    content.vb: Property Tokens As SyntaxToken()
+  overload: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens*
+references:
+- uid: Ubytec.Language.Syntax.Interfaces
+  commentId: N:Ubytec.Language.Syntax.Interfaces
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Interfaces
+  nameWithType: Ubytec.Language.Syntax.Interfaces
+  fullName: Ubytec.Language.Syntax.Interfaces
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Syntax.Interfaces.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Syntax.Interfaces.html
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens*
+  commentId: Overload:Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens
+  href: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.html#Ubytec_Language_Syntax_Interfaces_IUbytecExpressionFragment_Tokens
+  name: Tokens
+  nameWithType: IUbytecExpressionFragment.Tokens
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken[]
+  isExternal: true
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  name: SyntaxToken[]
+  nameWithType: SyntaxToken[]
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken[]
+  nameWithType.vb: SyntaxToken()
+  fullName.vb: Ubytec.Language.Syntax.Model.SyntaxToken()
+  name.vb: SyntaxToken()
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
+    name: SyntaxToken
+    href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
+    name: SyntaxToken
+    href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  - name: (
+  - name: )

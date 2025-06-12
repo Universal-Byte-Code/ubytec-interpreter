@@ -1,0 +1,30 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Tools
+  commentId: N:Ubytec.Language.Tools
+  id: Ubytec.Language.Tools
+  children:
+  - Ubytec.Language.Tools.FormattingHelper
+  - Ubytec.Language.Tools.Utf64Codec
+  langs:
+  - csharp
+  - vb
+  name: Ubytec.Language.Tools
+  nameWithType: Ubytec.Language.Tools
+  fullName: Ubytec.Language.Tools
+  type: Namespace
+  assemblies:
+  - Ubytec
+references:
+- uid: Ubytec.Language.Tools.FormattingHelper
+  commentId: T:Ubytec.Language.Tools.FormattingHelper
+  href: Ubytec.Language.Tools.FormattingHelper.html
+  name: FormattingHelper
+  nameWithType: FormattingHelper
+  fullName: Ubytec.Language.Tools.FormattingHelper
+- uid: Ubytec.Language.Tools.Utf64Codec
+  commentId: T:Ubytec.Language.Tools.Utf64Codec
+  href: Ubytec.Language.Tools.Utf64Codec.html
+  name: Utf64Codec
+  nameWithType: Utf64Codec
+  fullName: Ubytec.Language.Tools.Utf64Codec

@@ -1,0 +1,442 @@
+### YamlMime:TableOfContent
+items:
+- uid: Ubytec.Language
+  name: Ubytec.Language
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.IUbytecEntity
+    name: IUbytecEntity
+    type: Interface
+- uid: Ubytec.Language.AST
+  name: Ubytec.Language.AST
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.AST.ASTCompiler
+    name: ASTCompiler
+    type: Class
+  - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError
+    name: ASTCompiler.CompileSyntaxError
+    type: Class
+  - uid: Ubytec.Language.AST.HighLevelParser
+    name: HighLevelParser
+    type: Class
+  - uid: Ubytec.Language.AST.HighLevelParser.ParseError
+    name: HighLevelParser.ParseError
+    type: Struct
+  - uid: Ubytec.Language.AST.SyntaxTreeValidator
+    name: SyntaxTreeValidator
+    type: Class
+- uid: Ubytec.Language.Exceptions
+  name: Ubytec.Language.Exceptions
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.Exceptions.LanguageVersionException
+    name: LanguageVersionException
+    type: Class
+  - uid: Ubytec.Language.Exceptions.RegisterDataException
+    name: RegisterDataException
+    type: Class
+  - uid: Ubytec.Language.Exceptions.SyntaxException
+    name: SyntaxException
+    type: Class
+  - uid: Ubytec.Language.Exceptions.SyntaxStackException
+    name: SyntaxStackException
+    type: Class
+  - uid: Ubytec.Language.Exceptions.SyntaxTreeDeserializationException
+    name: SyntaxTreeDeserializationException
+    type: Class
+  - uid: Ubytec.Language.Exceptions.TokenizationOperationException
+    name: TokenizationOperationException
+    type: Class
+  - uid: Ubytec.Language.Exceptions.UbytecException
+    name: UbytecException
+    type: Class
+- uid: Ubytec.Language.Grammar
+  name: Ubytec.Language.Grammar
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.Grammar.LexicalAnalyst
+    name: LexicalAnalyst
+    type: Class
+  - uid: Ubytec.Language.Grammar.UbytecRegistryOptions
+    name: UbytecRegistryOptions
+    type: Class
+- uid: Ubytec.Language.HighLevel
+  name: Ubytec.Language.HighLevel
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.HighLevel.AccessorContext
+    name: AccessorContext
+    type: Struct
+  - uid: Ubytec.Language.HighLevel.Action
+    name: Action
+    type: Struct
+  - uid: Ubytec.Language.HighLevel.Argument
+    name: Argument
+    type: Struct
+  - uid: Ubytec.Language.HighLevel.Class
+    name: Class
+    type: Struct
+  - uid: Ubytec.Language.HighLevel.Enum
+    name: Enum
+    type: Struct
+  - uid: Ubytec.Language.HighLevel.Field
+    name: Field
+    type: Struct
+  - uid: Ubytec.Language.HighLevel.Func
+    name: Func
+    type: Struct
+  - uid: Ubytec.Language.HighLevel.GlobalContext
+    name: GlobalContext
+    type: Struct
+  - uid: Ubytec.Language.HighLevel.Interface
+    name: Interface
+    type: Struct
+  - uid: Ubytec.Language.HighLevel.LocalContext
+    name: LocalContext
+    type: Struct
+  - uid: Ubytec.Language.HighLevel.Module
+    name: Module
+    type: Struct
+  - uid: Ubytec.Language.HighLevel.Property
+    name: Property
+    type: Struct
+  - uid: Ubytec.Language.HighLevel.Record
+    name: Record
+    type: Struct
+  - uid: Ubytec.Language.HighLevel.Struct
+    name: Struct
+    type: Struct
+  - uid: Ubytec.Language.HighLevel.Variable
+    name: Variable
+    type: Struct
+- uid: Ubytec.Language.HighLevel.Interfaces
+  name: Ubytec.Language.HighLevel.Interfaces
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
+    name: IUbytecContextEntity
+    type: Interface
+  - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+    name: IUbytecHighLevelEntity
+    type: Interface
+- uid: Ubytec.Language.Operations
+  name: Ubytec.Language.Operations
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    type: Class
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.ABS
+    name: ArithmeticOperations.ABS
+    type: Struct
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.ADD
+    name: ArithmeticOperations.ADD
+    type: Struct
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.DEC
+    name: ArithmeticOperations.DEC
+    type: Struct
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.DIV
+    name: ArithmeticOperations.DIV
+    type: Struct
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.INC
+    name: ArithmeticOperations.INC
+    type: Struct
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.MOD
+    name: ArithmeticOperations.MOD
+    type: Struct
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.MUL
+    name: ArithmeticOperations.MUL
+    type: Struct
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.NEG
+    name: ArithmeticOperations.NEG
+    type: Struct
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.SUB
+    name: ArithmeticOperations.SUB
+    type: Struct
+  - uid: Ubytec.Language.Operations.BitwiseOperations
+    name: BitwiseOperations
+    type: Class
+  - uid: Ubytec.Language.Operations.BitwiseOperations.AND
+    name: BitwiseOperations.AND
+    type: Struct
+  - uid: Ubytec.Language.Operations.BitwiseOperations.NOT
+    name: BitwiseOperations.NOT
+    type: Struct
+  - uid: Ubytec.Language.Operations.BitwiseOperations.OR
+    name: BitwiseOperations.OR
+    type: Struct
+  - uid: Ubytec.Language.Operations.BitwiseOperations.SHL
+    name: BitwiseOperations.SHL
+    type: Struct
+  - uid: Ubytec.Language.Operations.BitwiseOperations.SHR
+    name: BitwiseOperations.SHR
+    type: Struct
+  - uid: Ubytec.Language.Operations.BitwiseOperations.XOR
+    name: BitwiseOperations.XOR
+    type: Struct
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    type: Class
+  - uid: Ubytec.Language.Operations.CoreOperations.BLOCK
+    name: CoreOperations.BLOCK
+    type: Struct
+  - uid: Ubytec.Language.Operations.CoreOperations.BRANCH
+    name: CoreOperations.BRANCH
+    type: Struct
+  - uid: Ubytec.Language.Operations.CoreOperations.BREAK
+    name: CoreOperations.BREAK
+    type: Struct
+  - uid: Ubytec.Language.Operations.CoreOperations.CLEAR
+    name: CoreOperations.CLEAR
+    type: Struct
+  - uid: Ubytec.Language.Operations.CoreOperations.CONTINUE
+    name: CoreOperations.CONTINUE
+    type: Struct
+  - uid: Ubytec.Language.Operations.CoreOperations.DEFAULT
+    name: CoreOperations.DEFAULT
+    type: Struct
+  - uid: Ubytec.Language.Operations.CoreOperations.ELSE
+    name: CoreOperations.ELSE
+    type: Struct
+  - uid: Ubytec.Language.Operations.CoreOperations.END
+    name: CoreOperations.END
+    type: Struct
+  - uid: Ubytec.Language.Operations.CoreOperations.IF
+    name: CoreOperations.IF
+    type: Struct
+  - uid: Ubytec.Language.Operations.CoreOperations.LOOP
+    name: CoreOperations.LOOP
+    type: Struct
+  - uid: Ubytec.Language.Operations.CoreOperations.NOP
+    name: CoreOperations.NOP
+    type: Struct
+  - uid: Ubytec.Language.Operations.CoreOperations.NULL
+    name: CoreOperations.NULL
+    type: Struct
+  - uid: Ubytec.Language.Operations.CoreOperations.RETURN
+    name: CoreOperations.RETURN
+    type: Struct
+  - uid: Ubytec.Language.Operations.CoreOperations.SWITCH
+    name: CoreOperations.SWITCH
+    type: Struct
+  - uid: Ubytec.Language.Operations.CoreOperations.TRAP
+    name: CoreOperations.TRAP
+    type: Struct
+  - uid: Ubytec.Language.Operations.CoreOperations.VAR
+    name: CoreOperations.VAR
+    type: Struct
+  - uid: Ubytec.Language.Operations.CoreOperations.WHILE
+    name: CoreOperations.WHILE
+    type: Struct
+  - uid: Ubytec.Language.Operations.IBlockOpCode
+    name: IBlockOpCode
+    type: Interface
+  - uid: Ubytec.Language.Operations.IOpCode
+    name: IOpCode
+    type: Interface
+  - uid: Ubytec.Language.Operations.IOpInheritance
+    name: IOpInheritance
+    type: Interface
+  - uid: Ubytec.Language.Operations.OpcodeFactory
+    name: OpcodeFactory
+    type: Class
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    type: Class
+  - uid: Ubytec.Language.Operations.StackOperarions.DROP
+    name: StackOperarions.DROP
+    type: Struct
+  - uid: Ubytec.Language.Operations.StackOperarions.DUP
+    name: StackOperarions.DUP
+    type: Struct
+  - uid: Ubytec.Language.Operations.StackOperarions.NIP
+    name: StackOperarions.NIP
+    type: Struct
+  - uid: Ubytec.Language.Operations.StackOperarions.OVER
+    name: StackOperarions.OVER
+    type: Struct
+  - uid: Ubytec.Language.Operations.StackOperarions.PICK
+    name: StackOperarions.PICK
+    type: Struct
+  - uid: Ubytec.Language.Operations.StackOperarions.POP
+    name: StackOperarions.POP
+    type: Struct
+  - uid: Ubytec.Language.Operations.StackOperarions.PUSH
+    name: StackOperarions.PUSH
+    type: Struct
+  - uid: Ubytec.Language.Operations.StackOperarions.ROLL
+    name: StackOperarions.ROLL
+    type: Struct
+  - uid: Ubytec.Language.Operations.StackOperarions.ROT
+    name: StackOperarions.ROT
+    type: Struct
+  - uid: Ubytec.Language.Operations.StackOperarions.SWAP
+    name: StackOperarions.SWAP
+    type: Struct
+  - uid: Ubytec.Language.Operations.StackOperarions.TwoDUP
+    name: StackOperarions.TwoDUP
+    type: Struct
+  - uid: Ubytec.Language.Operations.StackOperarions.TwoOVER
+    name: StackOperarions.TwoOVER
+    type: Struct
+  - uid: Ubytec.Language.Operations.StackOperarions.TwoROT
+    name: StackOperarions.TwoROT
+    type: Struct
+  - uid: Ubytec.Language.Operations.StackOperarions.TwoSWAP
+    name: StackOperarions.TwoSWAP
+    type: Struct
+- uid: Ubytec.Language.Operations.Extended
+  name: Ubytec.Language.Operations.Extended
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations
+    name: ExtendedStackOperations
+    type: Class
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.DROP16
+    name: ExtendedStackOperations.DROP16
+    type: Struct
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PICK16
+    name: ExtendedStackOperations.PICK16
+    type: Struct
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16
+    name: ExtendedStackOperations.PUSH16
+    type: Struct
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.ROLL16
+    name: ExtendedStackOperations.ROLL16
+    type: Struct
+  - uid: Ubytec.Language.Operations.Extended.IExtendedOpCode
+    name: IExtendedOpCode
+    type: Interface
+- uid: Ubytec.Language.Syntax.ExpressionFragments
+  name: Ubytec.Language.Syntax.ExpressionFragments
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment
+    name: ConditionExpressionFragment
+    type: Struct
+  - uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+    name: VariableExpressionFragment
+    type: Struct
+- uid: Ubytec.Language.Syntax.Fast.Metadata
+  name: Ubytec.Language.Syntax.Fast.Metadata
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+    name: MetadataEntry
+    type: Struct
+  - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+    name: MetadataRegistry
+    type: Struct
+  - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions
+    name: MetadataRegistryExtensions
+    type: Class
+- uid: Ubytec.Language.Syntax.Interfaces
+  name: Ubytec.Language.Syntax.Interfaces
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+    name: IUbytecExpressionFragment
+    type: Interface
+  - uid: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+    name: IUbytecSyntax
+    type: Interface
+- uid: Ubytec.Language.Syntax.Memory
+  name: Ubytec.Language.Syntax.Memory
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
+    name: MemoryRegionTemplate
+    type: Struct
+  - uid: Ubytec.Language.Syntax.Memory.MemoryTemplates
+    name: MemoryTemplates
+    type: Class
+- uid: Ubytec.Language.Syntax.Model
+  name: Ubytec.Language.Syntax.Model
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.Syntax.Model.SyntaxExpression
+    name: SyntaxExpression
+    type: Class
+  - uid: Ubytec.Language.Syntax.Model.SyntaxNode
+    name: SyntaxNode
+    type: Class
+  - uid: Ubytec.Language.Syntax.Model.SyntaxSentence
+    name: SyntaxSentence
+    type: Class
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
+    name: SyntaxToken
+    type: Class
+  - uid: Ubytec.Language.Syntax.Model.SyntaxTree
+    name: SyntaxTree
+    type: Class
+- uid: Ubytec.Language.Syntax.Scopes
+  name: Ubytec.Language.Syntax.Scopes
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    type: Class
+- uid: Ubytec.Language.Syntax.Scopes.Contexts
+  name: Ubytec.Language.Syntax.Scopes.Contexts
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+    name: FinalizersContext
+    type: Class
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    name: ScopeContext
+    type: Class
+- uid: Ubytec.Language.Syntax.Scopes.Trackers
+  name: Ubytec.Language.Syntax.Scopes.Trackers
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker
+    name: FinalizersTracker
+    type: Class
+  - uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+    name: ScopeTracker
+    type: Class
+- uid: Ubytec.Language.Syntax.TypeSystem
+  name: Ubytec.Language.Syntax.TypeSystem
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions
+    name: TypeModifiersExtensions
+    type: Class
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    type: Class
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: Types.PrimitiveType
+    type: Enum
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: Types.TypeModifiers
+    type: Enum
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    name: Types.UType
+    type: Struct
+- uid: Ubytec.Language.Tools
+  name: Ubytec.Language.Tools
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.Tools.FormattingHelper
+    name: FormattingHelper
+    type: Class
+  - uid: Ubytec.Language.Tools.Utf64Codec
+    name: Utf64Codec
+    type: Class
+- uid: Ubytec.Language.Tools.Serialization
+  name: Ubytec.Language.Tools.Serialization
+  type: Namespace
+  items:
+  - uid: Ubytec.Language.Tools.Serialization.IOpCodeConverter
+    name: IOpCodeConverter
+    type: Class
+  - uid: Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter
+    name: ISyntaxTreeConverter
+    type: Class
+  - uid: Ubytec.Language.Tools.Serialization.IUbytecExpressionFragmentConverter
+    name: IUbytecExpressionFragmentConverter
+    type: Class
+memberLayout: SamePage

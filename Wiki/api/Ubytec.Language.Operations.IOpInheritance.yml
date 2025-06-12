@@ -1,0 +1,211 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Operations.IOpInheritance
+  commentId: T:Ubytec.Language.Operations.IOpInheritance
+  id: IOpInheritance
+  parent: Ubytec.Language.Operations
+  children:
+  - Ubytec.Language.Operations.IOpInheritance.Variables
+  langs:
+  - csharp
+  - vb
+  name: IOpInheritance
+  nameWithType: IOpInheritance
+  fullName: Ubytec.Language.Operations.IOpInheritance
+  type: Interface
+  source:
+    remote:
+      path: Ubytec/Language/Operations/IOpInheritance.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IOpInheritance
+    path: ../Ubytec/Language/Operations/IOpInheritance.cs
+    startLine: 4
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations
+  syntax:
+    content: 'public interface IOpInheritance : IOpCode, IUbytecEntity'
+    content.vb: Public Interface IOpInheritance Inherits IOpCode, IUbytecEntity
+  inheritedMembers:
+  - Ubytec.Language.Operations.IOpCode.OpCode
+  - Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+- uid: Ubytec.Language.Operations.IOpInheritance.Variables
+  commentId: P:Ubytec.Language.Operations.IOpInheritance.Variables
+  id: Variables
+  parent: Ubytec.Language.Operations.IOpInheritance
+  langs:
+  - csharp
+  - vb
+  name: Variables
+  nameWithType: IOpInheritance.Variables
+  fullName: Ubytec.Language.Operations.IOpInheritance.Variables
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Operations/IOpInheritance.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Variables
+    path: ../Ubytec/Language/Operations/IOpInheritance.cs
+    startLine: 6
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations
+  syntax:
+    content: SyntaxExpression? Variables { get; init; }
+    parameters: []
+    return:
+      type: Ubytec.Language.Syntax.Model.SyntaxExpression
+    content.vb: Property Variables As SyntaxExpression
+  overload: Ubytec.Language.Operations.IOpInheritance.Variables*
+references:
+- uid: Ubytec.Language.Operations
+  commentId: N:Ubytec.Language.Operations
+  href: Ubytec.html
+  name: Ubytec.Language.Operations
+  nameWithType: Ubytec.Language.Operations
+  fullName: Ubytec.Language.Operations
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+- uid: Ubytec.Language.Operations.IOpCode.OpCode
+  commentId: P:Ubytec.Language.Operations.IOpCode.OpCode
+  parent: Ubytec.Language.Operations.IOpCode
+  href: Ubytec.Language.Operations.IOpCode.html#Ubytec_Language_Operations_IOpCode_OpCode
+  name: OpCode
+  nameWithType: IOpCode.OpCode
+  fullName: Ubytec.Language.Operations.IOpCode.OpCode
+- uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  commentId: M:Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  parent: Ubytec.Language.IUbytecEntity
+  href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  name: Compile(CompilationScopes)
+  nameWithType: IUbytecEntity.Compile(CompilationScopes)
+  fullName: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  spec.csharp:
+  - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+    name: Compile
+    href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+    name: Compile
+    href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  - name: )
+- uid: Ubytec.Language.Operations.IOpCode
+  commentId: T:Ubytec.Language.Operations.IOpCode
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.IOpCode.html
+  name: IOpCode
+  nameWithType: IOpCode
+  fullName: Ubytec.Language.Operations.IOpCode
+- uid: Ubytec.Language.IUbytecEntity
+  commentId: T:Ubytec.Language.IUbytecEntity
+  parent: Ubytec.Language
+  href: Ubytec.Language.IUbytecEntity.html
+  name: IUbytecEntity
+  nameWithType: IUbytecEntity
+  fullName: Ubytec.Language.IUbytecEntity
+- uid: Ubytec.Language
+  commentId: N:Ubytec.Language
+  href: Ubytec.html
+  name: Ubytec.Language
+  nameWithType: Ubytec.Language
+  fullName: Ubytec.Language
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+- uid: Ubytec.Language.Operations.IOpInheritance.Variables*
+  commentId: Overload:Ubytec.Language.Operations.IOpInheritance.Variables
+  href: Ubytec.Language.Operations.IOpInheritance.html#Ubytec_Language_Operations_IOpInheritance_Variables
+  name: Variables
+  nameWithType: IOpInheritance.Variables
+  fullName: Ubytec.Language.Operations.IOpInheritance.Variables
+- uid: Ubytec.Language.Syntax.Model.SyntaxExpression
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxExpression
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxExpression.html
+  name: SyntaxExpression
+  nameWithType: SyntaxExpression
+  fullName: Ubytec.Language.Syntax.Model.SyntaxExpression
+- uid: Ubytec.Language.Syntax.Model
+  commentId: N:Ubytec.Language.Syntax.Model
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Model
+  nameWithType: Ubytec.Language.Syntax.Model
+  fullName: Ubytec.Language.Syntax.Model
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html

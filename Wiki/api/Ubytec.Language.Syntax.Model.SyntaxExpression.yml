@@ -1,0 +1,846 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.Model.SyntaxExpression
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxExpression
+  id: SyntaxExpression
+  parent: Ubytec.Language.Syntax.Model
+  children:
+  - Ubytec.Language.Syntax.Model.SyntaxExpression.#ctor(Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment[])
+  - Ubytec.Language.Syntax.Model.SyntaxExpression.Dispose
+  - Ubytec.Language.Syntax.Model.SyntaxExpression.Metadata
+  - Ubytec.Language.Syntax.Model.SyntaxExpression.SerializableMetadata
+  - Ubytec.Language.Syntax.Model.SyntaxExpression.Syntaxes
+  langs:
+  - csharp
+  - vb
+  name: SyntaxExpression
+  nameWithType: SyntaxExpression
+  fullName: Ubytec.Language.Syntax.Model.SyntaxExpression
+  type: Class
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxExpression.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: SyntaxExpression
+    path: ../Ubytec/Language/Syntax/Model/SyntaxExpression.cs
+    startLine: 6
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  syntax:
+    content: 'public sealed class SyntaxExpression : IUbytecSyntax, IDisposable'
+    content.vb: Public NotInheritable Class SyntaxExpression Implements IUbytecSyntax, IDisposable
+  inheritance:
+  - System.Object
+  implements:
+  - Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Ubytec.Language.Syntax.Model.SyntaxExpression.Syntaxes
+  commentId: P:Ubytec.Language.Syntax.Model.SyntaxExpression.Syntaxes
+  id: Syntaxes
+  parent: Ubytec.Language.Syntax.Model.SyntaxExpression
+  langs:
+  - csharp
+  - vb
+  name: Syntaxes
+  nameWithType: SyntaxExpression.Syntaxes
+  fullName: Ubytec.Language.Syntax.Model.SyntaxExpression.Syntaxes
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxExpression.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Syntaxes
+    path: ../Ubytec/Language/Syntax/Model/SyntaxExpression.cs
+    startLine: 8
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  syntax:
+    content: public List<IUbytecExpressionFragment> Syntaxes { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment}
+    content.vb: Public ReadOnly Property Syntaxes As List(Of IUbytecExpressionFragment)
+  overload: Ubytec.Language.Syntax.Model.SyntaxExpression.Syntaxes*
+- uid: Ubytec.Language.Syntax.Model.SyntaxExpression.Metadata
+  commentId: P:Ubytec.Language.Syntax.Model.SyntaxExpression.Metadata
+  id: Metadata
+  parent: Ubytec.Language.Syntax.Model.SyntaxExpression
+  langs:
+  - csharp
+  - vb
+  name: Metadata
+  nameWithType: SyntaxExpression.Metadata
+  fullName: Ubytec.Language.Syntax.Model.SyntaxExpression.Metadata
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxExpression.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Metadata
+    path: ../Ubytec/Language/Syntax/Model/SyntaxExpression.cs
+    startLine: 12
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  example: []
+  syntax:
+    content: >-
+      [JsonIgnore]
+
+      public ref MetadataRegistry Metadata { get; }
+    parameters: []
+    return:
+      type: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+    content.vb: >-
+      <JsonIgnore>
+
+      Public ReadOnly ByRef Property Metadata As MetadataRegistry
+  overload: Ubytec.Language.Syntax.Model.SyntaxExpression.Metadata*
+  implements:
+  - Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
+  attributes:
+  - type: System.Text.Json.Serialization.JsonIgnoreAttribute
+    ctor: System.Text.Json.Serialization.JsonIgnoreAttribute.#ctor
+    arguments: []
+- uid: Ubytec.Language.Syntax.Model.SyntaxExpression.SerializableMetadata
+  commentId: P:Ubytec.Language.Syntax.Model.SyntaxExpression.SerializableMetadata
+  id: SerializableMetadata
+  parent: Ubytec.Language.Syntax.Model.SyntaxExpression
+  langs:
+  - csharp
+  - vb
+  name: SerializableMetadata
+  nameWithType: SyntaxExpression.SerializableMetadata
+  fullName: Ubytec.Language.Syntax.Model.SyntaxExpression.SerializableMetadata
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxExpression.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: SerializableMetadata
+    path: ../Ubytec/Language/Syntax/Model/SyntaxExpression.cs
+    startLine: 15
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  syntax:
+    content: >-
+      [JsonInclude]
+
+      [JsonPropertyName("Metadata")]
+
+      public Dictionary<string, object> SerializableMetadata { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,System.Object}
+    content.vb: >-
+      <JsonInclude>
+
+      <JsonPropertyName("Metadata")>
+
+      Public ReadOnly Property SerializableMetadata As Dictionary(Of String, Object)
+  overload: Ubytec.Language.Syntax.Model.SyntaxExpression.SerializableMetadata*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonIncludeAttribute
+    ctor: System.Text.Json.Serialization.JsonIncludeAttribute.#ctor
+    arguments: []
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Metadata
+- uid: Ubytec.Language.Syntax.Model.SyntaxExpression.#ctor(Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment[])
+  commentId: M:Ubytec.Language.Syntax.Model.SyntaxExpression.#ctor(Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment[])
+  id: '#ctor(Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment[])'
+  parent: Ubytec.Language.Syntax.Model.SyntaxExpression
+  langs:
+  - csharp
+  - vb
+  name: SyntaxExpression(params IUbytecExpressionFragment[])
+  nameWithType: SyntaxExpression.SyntaxExpression(params IUbytecExpressionFragment[])
+  fullName: Ubytec.Language.Syntax.Model.SyntaxExpression.SyntaxExpression(params Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment[])
+  type: Constructor
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxExpression.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: .ctor
+    path: ../Ubytec/Language/Syntax/Model/SyntaxExpression.cs
+    startLine: 19
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  syntax:
+    content: public SyntaxExpression(params IUbytecExpressionFragment[] syntaxes)
+    parameters:
+    - id: syntaxes
+      type: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment[]
+    content.vb: Public Sub New(ParamArray syntaxes As IUbytecExpressionFragment())
+  overload: Ubytec.Language.Syntax.Model.SyntaxExpression.#ctor*
+  nameWithType.vb: SyntaxExpression.New(ParamArray IUbytecExpressionFragment())
+  fullName.vb: Ubytec.Language.Syntax.Model.SyntaxExpression.New(ParamArray Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment())
+  name.vb: New(ParamArray IUbytecExpressionFragment())
+- uid: Ubytec.Language.Syntax.Model.SyntaxExpression.Dispose
+  commentId: M:Ubytec.Language.Syntax.Model.SyntaxExpression.Dispose
+  id: Dispose
+  parent: Ubytec.Language.Syntax.Model.SyntaxExpression
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: SyntaxExpression.Dispose()
+  fullName: Ubytec.Language.Syntax.Model.SyntaxExpression.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxExpression.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Dispose
+    path: ../Ubytec/Language/Syntax/Model/SyntaxExpression.cs
+    startLine: 25
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Ubytec.Language.Syntax.Model.SyntaxExpression.Dispose*
+  implements:
+  - System.IDisposable.Dispose
+references:
+- uid: Ubytec.Language.Syntax.Model
+  commentId: N:Ubytec.Language.Syntax.Model
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Model
+  nameWithType: Ubytec.Language.Syntax.Model
+  fullName: Ubytec.Language.Syntax.Model
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+  commentId: T:Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+  parent: Ubytec.Language.Syntax.Interfaces
+  href: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.html
+  name: IUbytecSyntax
+  nameWithType: IUbytecSyntax
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubytec.Language.Syntax.Interfaces
+  commentId: N:Ubytec.Language.Syntax.Interfaces
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Interfaces
+  nameWithType: Ubytec.Language.Syntax.Interfaces
+  fullName: Ubytec.Language.Syntax.Interfaces
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Syntax.Interfaces.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Syntax.Interfaces.html
+- uid: Ubytec.Language.Syntax.Model.SyntaxExpression.Syntaxes*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxExpression.Syntaxes
+  href: Ubytec.Language.Syntax.Model.SyntaxExpression.html#Ubytec_Language_Syntax_Model_SyntaxExpression_Syntaxes
+  name: Syntaxes
+  nameWithType: SyntaxExpression.Syntaxes
+  fullName: Ubytec.Language.Syntax.Model.SyntaxExpression.Syntaxes
+- uid: System.Collections.Generic.List{Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment}
+  commentId: T:System.Collections.Generic.List{Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<IUbytecExpressionFragment>
+  nameWithType: List<IUbytecExpressionFragment>
+  fullName: System.Collections.Generic.List<Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment>
+  nameWithType.vb: List(Of IUbytecExpressionFragment)
+  fullName.vb: System.Collections.Generic.List(Of Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment)
+  name.vb: List(Of IUbytecExpressionFragment)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+    name: IUbytecExpressionFragment
+    href: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+    name: IUbytecExpressionFragment
+    href: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Ubytec.Language.Syntax.Model.SyntaxExpression.Metadata*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxExpression.Metadata
+  href: Ubytec.Language.Syntax.Model.SyntaxExpression.html#Ubytec_Language_Syntax_Model_SyntaxExpression_Metadata
+  name: Metadata
+  nameWithType: SyntaxExpression.Metadata
+  fullName: Ubytec.Language.Syntax.Model.SyntaxExpression.Metadata
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
+  commentId: P:Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
+  parent: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+  href: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.html#Ubytec_Language_Syntax_Interfaces_IUbytecSyntax_Metadata
+  name: Metadata
+  nameWithType: IUbytecSyntax.Metadata
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+  commentId: T:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+  parent: Ubytec.Language.Syntax.Fast.Metadata
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.html
+  name: MetadataRegistry
+  nameWithType: MetadataRegistry
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+- uid: Ubytec.Language.Syntax.Fast.Metadata
+  commentId: N:Ubytec.Language.Syntax.Fast.Metadata
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Fast.Metadata
+  nameWithType: Ubytec.Language.Syntax.Fast.Metadata
+  fullName: Ubytec.Language.Syntax.Fast.Metadata
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Fast
+    name: Fast
+    href: Ubytec.Language.Syntax.Fast.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Fast.Metadata
+    name: Metadata
+    href: Ubytec.Language.Syntax.Fast.Metadata.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Fast
+    name: Fast
+    href: Ubytec.Language.Syntax.Fast.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Fast.Metadata
+    name: Metadata
+    href: Ubytec.Language.Syntax.Fast.Metadata.html
+- uid: Ubytec.Language.Syntax.Model.SyntaxExpression.SerializableMetadata*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxExpression.SerializableMetadata
+  href: Ubytec.Language.Syntax.Model.SyntaxExpression.html#Ubytec_Language_Syntax_Model_SyntaxExpression_SerializableMetadata
+  name: SerializableMetadata
+  nameWithType: SyntaxExpression.SerializableMetadata
+  fullName: Ubytec.Language.Syntax.Model.SyntaxExpression.SerializableMetadata
+- uid: System.Collections.Generic.Dictionary{System.String,System.Object}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,System.Object}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<string, object>
+  nameWithType: Dictionary<string, object>
+  fullName: System.Collections.Generic.Dictionary<string, object>
+  nameWithType.vb: Dictionary(Of String, Object)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, Object)
+  name.vb: Dictionary(Of String, Object)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Ubytec.Language.Syntax.Model.SyntaxExpression.#ctor*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxExpression.#ctor
+  href: Ubytec.Language.Syntax.Model.SyntaxExpression.html#Ubytec_Language_Syntax_Model_SyntaxExpression__ctor_Ubytec_Language_Syntax_Interfaces_IUbytecExpressionFragment___
+  name: SyntaxExpression
+  nameWithType: SyntaxExpression.SyntaxExpression
+  fullName: Ubytec.Language.Syntax.Model.SyntaxExpression.SyntaxExpression
+  nameWithType.vb: SyntaxExpression.New
+  fullName.vb: Ubytec.Language.Syntax.Model.SyntaxExpression.New
+  name.vb: New
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment[]
+  isExternal: true
+  href: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.html
+  name: IUbytecExpressionFragment[]
+  nameWithType: IUbytecExpressionFragment[]
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment[]
+  nameWithType.vb: IUbytecExpressionFragment()
+  fullName.vb: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment()
+  name.vb: IUbytecExpressionFragment()
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+    name: IUbytecExpressionFragment
+    href: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+    name: IUbytecExpressionFragment
+    href: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.html
+  - name: (
+  - name: )
+- uid: Ubytec.Language.Syntax.Model.SyntaxExpression.Dispose*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxExpression.Dispose
+  href: Ubytec.Language.Syntax.Model.SyntaxExpression.html#Ubytec_Language_Syntax_Model_SyntaxExpression_Dispose
+  name: Dispose
+  nameWithType: SyntaxExpression.Dispose
+  fullName: Ubytec.Language.Syntax.Model.SyntaxExpression.Dispose
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )

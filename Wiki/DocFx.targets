@@ -1,0 +1,46 @@
+<Project>
+  <PropertyGroup>
+    <DocFxExePath Condition=" '$(OS)' == 'Windows_NT' ">
+      $(UserProfile)\.dotnet\tools\docfx.exe
+    </DocFxExePath>
+    <DocFxExePath Condition=" '$(OS)' != 'Windows_NT' ">
+      $(HOME)/.dotnet/tools/docfx
+    </DocFxExePath>
+    <DocFxRoot>$(MSBuildThisFileDirectory)</DocFxRoot>
+  </PropertyGroup>
+
+  <Target Name="RunDocFx"
+          AfterTargets="Build">
+    <!-- Kill previous server -->
+    <Exec
+      WorkingDirectory="$(DocFxRoot)"
+      Condition=" '$(OS)' == 'Windows_NT' "
+      Command="taskkill /F /IM docfx.exe"
+      ContinueOnError="true" />
+    <Exec
+      WorkingDirectory="$(DocFxRoot)"
+      Condition=" '$(OS)' != 'Windows_NT' "
+      Command="pkill -f &quot;docfx serve _site -p 8256&quot;"
+      ContinueOnError="true" />
+
+    <!-- Install docfx if needed -->
+    <Exec
+      WorkingDirectory="$(DocFxRoot)"
+      Condition="!Exists('$(DocFxExePath)')"
+      Command="dotnet tool install -g docfx" />
+
+    <!-- Build metadata -->
+    <Exec WorkingDirectory="$(DocFxRoot)" Command="docfx metadata" />
+    <Exec WorkingDirectory="$(DocFxRoot)" Command="docfx build" />
+
+    <!-- Background server -->
+    <Exec
+      WorkingDirectory="$(DocFxRoot)"
+      Condition=" '$(OS)' == 'Windows_NT' "
+      Command="powershell -NoProfile -Command Start-Process docfx -ArgumentList 'serve','_site','-p','8256','--open-browser','--open-file','api/Ubytec.Language.html'" />
+    <Exec
+      WorkingDirectory="$(DocFxRoot)"
+      Condition=" '$(OS)' != 'Windows_NT' "
+      Command="bash -lc &quot;setsid docfx serve _site -p 8256 --open-browser --open-file api/Ubytec.Language.html &gt;/dev/null 2&gt;&amp;1&lt;/dev/null &amp;&quot;" />
+  </Target>
+</Project>

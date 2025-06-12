@@ -1,0 +1,869 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.HighLevel.GlobalContext
+  commentId: T:Ubytec.Language.HighLevel.GlobalContext
+  id: GlobalContext
+  parent: Ubytec.Language.HighLevel
+  children:
+  - Ubytec.Language.HighLevel.GlobalContext.#ctor(Ubytec.Language.HighLevel.Field[],Ubytec.Language.HighLevel.Property[],Ubytec.Language.HighLevel.Func[],Ubytec.Language.HighLevel.Action[],System.Guid)
+  - Ubytec.Language.HighLevel.GlobalContext.Actions
+  - Ubytec.Language.HighLevel.GlobalContext.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  - Ubytec.Language.HighLevel.GlobalContext.Fields
+  - Ubytec.Language.HighLevel.GlobalContext.Functions
+  - Ubytec.Language.HighLevel.GlobalContext.ID
+  - Ubytec.Language.HighLevel.GlobalContext.Properties
+  - Ubytec.Language.HighLevel.GlobalContext.Validate
+  langs:
+  - csharp
+  - vb
+  name: GlobalContext
+  nameWithType: GlobalContext
+  fullName: Ubytec.Language.HighLevel.GlobalContext
+  type: Struct
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/GlobalContext.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: GlobalContext
+    path: ../Ubytec/Language/HighLevel/GlobalContext.cs
+    startLine: 7
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  syntax:
+    content: 'public readonly struct GlobalContext : IUbytecHighLevelEntity, IUbytecEntity'
+    content.vb: Public Structure GlobalContext Implements IUbytecHighLevelEntity, IUbytecEntity
+  implements:
+  - Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  - Ubytec.Language.IUbytecEntity
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubytec.Language.HighLevel.GlobalContext.Fields
+  commentId: P:Ubytec.Language.HighLevel.GlobalContext.Fields
+  id: Fields
+  parent: Ubytec.Language.HighLevel.GlobalContext
+  langs:
+  - csharp
+  - vb
+  name: Fields
+  nameWithType: GlobalContext.Fields
+  fullName: Ubytec.Language.HighLevel.GlobalContext.Fields
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/GlobalContext.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Fields
+    path: ../Ubytec/Language/HighLevel/GlobalContext.cs
+    startLine: 9
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  syntax:
+    content: public Field[] Fields { get; }
+    parameters: []
+    return:
+      type: Ubytec.Language.HighLevel.Field[]
+    content.vb: Public ReadOnly Property Fields As Field()
+  overload: Ubytec.Language.HighLevel.GlobalContext.Fields*
+- uid: Ubytec.Language.HighLevel.GlobalContext.Properties
+  commentId: P:Ubytec.Language.HighLevel.GlobalContext.Properties
+  id: Properties
+  parent: Ubytec.Language.HighLevel.GlobalContext
+  langs:
+  - csharp
+  - vb
+  name: Properties
+  nameWithType: GlobalContext.Properties
+  fullName: Ubytec.Language.HighLevel.GlobalContext.Properties
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/GlobalContext.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Properties
+    path: ../Ubytec/Language/HighLevel/GlobalContext.cs
+    startLine: 10
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  syntax:
+    content: public Property[] Properties { get; }
+    parameters: []
+    return:
+      type: Ubytec.Language.HighLevel.Property[]
+    content.vb: Public ReadOnly Property Properties As [Property]()
+  overload: Ubytec.Language.HighLevel.GlobalContext.Properties*
+- uid: Ubytec.Language.HighLevel.GlobalContext.Functions
+  commentId: P:Ubytec.Language.HighLevel.GlobalContext.Functions
+  id: Functions
+  parent: Ubytec.Language.HighLevel.GlobalContext
+  langs:
+  - csharp
+  - vb
+  name: Functions
+  nameWithType: GlobalContext.Functions
+  fullName: Ubytec.Language.HighLevel.GlobalContext.Functions
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/GlobalContext.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Functions
+    path: ../Ubytec/Language/HighLevel/GlobalContext.cs
+    startLine: 11
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  syntax:
+    content: public Func[] Functions { get; }
+    parameters: []
+    return:
+      type: Ubytec.Language.HighLevel.Func[]
+    content.vb: Public ReadOnly Property Functions As Func()
+  overload: Ubytec.Language.HighLevel.GlobalContext.Functions*
+- uid: Ubytec.Language.HighLevel.GlobalContext.Actions
+  commentId: P:Ubytec.Language.HighLevel.GlobalContext.Actions
+  id: Actions
+  parent: Ubytec.Language.HighLevel.GlobalContext
+  langs:
+  - csharp
+  - vb
+  name: Actions
+  nameWithType: GlobalContext.Actions
+  fullName: Ubytec.Language.HighLevel.GlobalContext.Actions
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/GlobalContext.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Actions
+    path: ../Ubytec/Language/HighLevel/GlobalContext.cs
+    startLine: 12
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  syntax:
+    content: public Action[] Actions { get; }
+    parameters: []
+    return:
+      type: Ubytec.Language.HighLevel.Action[]
+    content.vb: Public ReadOnly Property Actions As Action()
+  overload: Ubytec.Language.HighLevel.GlobalContext.Actions*
+- uid: Ubytec.Language.HighLevel.GlobalContext.ID
+  commentId: P:Ubytec.Language.HighLevel.GlobalContext.ID
+  id: ID
+  parent: Ubytec.Language.HighLevel.GlobalContext
+  langs:
+  - csharp
+  - vb
+  name: ID
+  nameWithType: GlobalContext.ID
+  fullName: Ubytec.Language.HighLevel.GlobalContext.ID
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/GlobalContext.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ID
+    path: ../Ubytec/Language/HighLevel/GlobalContext.cs
+    startLine: 13
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  example: []
+  syntax:
+    content: public Guid ID { get; }
+    parameters: []
+    return:
+      type: System.Guid
+    content.vb: Public ReadOnly Property ID As Guid
+  overload: Ubytec.Language.HighLevel.GlobalContext.ID*
+  implements:
+  - Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
+- uid: Ubytec.Language.HighLevel.GlobalContext.#ctor(Ubytec.Language.HighLevel.Field[],Ubytec.Language.HighLevel.Property[],Ubytec.Language.HighLevel.Func[],Ubytec.Language.HighLevel.Action[],System.Guid)
+  commentId: M:Ubytec.Language.HighLevel.GlobalContext.#ctor(Ubytec.Language.HighLevel.Field[],Ubytec.Language.HighLevel.Property[],Ubytec.Language.HighLevel.Func[],Ubytec.Language.HighLevel.Action[],System.Guid)
+  id: '#ctor(Ubytec.Language.HighLevel.Field[],Ubytec.Language.HighLevel.Property[],Ubytec.Language.HighLevel.Func[],Ubytec.Language.HighLevel.Action[],System.Guid)'
+  parent: Ubytec.Language.HighLevel.GlobalContext
+  langs:
+  - csharp
+  - vb
+  name: GlobalContext(Field[], Property[], Func[], Action[], Guid)
+  nameWithType: GlobalContext.GlobalContext(Field[], Property[], Func[], Action[], Guid)
+  fullName: Ubytec.Language.HighLevel.GlobalContext.GlobalContext(Ubytec.Language.HighLevel.Field[], Ubytec.Language.HighLevel.Property[], Ubytec.Language.HighLevel.Func[], Ubytec.Language.HighLevel.Action[], System.Guid)
+  type: Constructor
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/GlobalContext.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: .ctor
+    path: ../Ubytec/Language/HighLevel/GlobalContext.cs
+    startLine: 15
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  syntax:
+    content: public GlobalContext(Field[] fields, Property[] properties, Func[] funcs, Action[] actions, Guid id)
+    parameters:
+    - id: fields
+      type: Ubytec.Language.HighLevel.Field[]
+    - id: properties
+      type: Ubytec.Language.HighLevel.Property[]
+    - id: funcs
+      type: Ubytec.Language.HighLevel.Func[]
+    - id: actions
+      type: Ubytec.Language.HighLevel.Action[]
+    - id: id
+      type: System.Guid
+    content.vb: Public Sub New(fields As Field(), properties As [Property](), funcs As Func(), actions As Action(), id As Guid)
+  overload: Ubytec.Language.HighLevel.GlobalContext.#ctor*
+  nameWithType.vb: GlobalContext.New(Field(), Property(), Func(), Action(), Guid)
+  fullName.vb: Ubytec.Language.HighLevel.GlobalContext.New(Ubytec.Language.HighLevel.Field(), Ubytec.Language.HighLevel.Property(), Ubytec.Language.HighLevel.Func(), Ubytec.Language.HighLevel.Action(), System.Guid)
+  name.vb: New(Field(), Property(), Func(), Action(), Guid)
+- uid: Ubytec.Language.HighLevel.GlobalContext.Validate
+  commentId: M:Ubytec.Language.HighLevel.GlobalContext.Validate
+  id: Validate
+  parent: Ubytec.Language.HighLevel.GlobalContext
+  langs:
+  - csharp
+  - vb
+  name: Validate()
+  nameWithType: GlobalContext.Validate()
+  fullName: Ubytec.Language.HighLevel.GlobalContext.Validate()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/GlobalContext.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Validate
+    path: ../Ubytec/Language/HighLevel/GlobalContext.cs
+    startLine: 25
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  example: []
+  syntax:
+    content: public void Validate()
+    content.vb: Public Sub Validate()
+  overload: Ubytec.Language.HighLevel.GlobalContext.Validate*
+  implements:
+  - Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+- uid: Ubytec.Language.HighLevel.GlobalContext.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  commentId: M:Ubytec.Language.HighLevel.GlobalContext.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  id: Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  parent: Ubytec.Language.HighLevel.GlobalContext
+  langs:
+  - csharp
+  - vb
+  name: Compile(CompilationScopes)
+  nameWithType: GlobalContext.Compile(CompilationScopes)
+  fullName: Ubytec.Language.HighLevel.GlobalContext.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/GlobalContext.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Compile
+    path: ../Ubytec/Language/HighLevel/GlobalContext.cs
+    startLine: 60
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  example: []
+  syntax:
+    content: public string Compile(CompilationScopes scopes)
+    parameters:
+    - id: scopes
+      type: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    return:
+      type: System.String
+    content.vb: Public Function Compile(scopes As CompilationScopes) As String
+  overload: Ubytec.Language.HighLevel.GlobalContext.Compile*
+  implements:
+  - Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+references:
+- uid: Ubytec.Language.HighLevel
+  commentId: N:Ubytec.Language.HighLevel
+  href: Ubytec.html
+  name: Ubytec.Language.HighLevel
+  nameWithType: Ubytec.Language.HighLevel
+  fullName: Ubytec.Language.HighLevel
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  commentId: T:Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  parent: Ubytec.Language.HighLevel.Interfaces
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html
+  name: IUbytecHighLevelEntity
+  nameWithType: IUbytecHighLevelEntity
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+- uid: Ubytec.Language.IUbytecEntity
+  commentId: T:Ubytec.Language.IUbytecEntity
+  parent: Ubytec.Language
+  href: Ubytec.Language.IUbytecEntity.html
+  name: IUbytecEntity
+  nameWithType: IUbytecEntity
+  fullName: Ubytec.Language.IUbytecEntity
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Ubytec.Language.HighLevel.Interfaces
+  commentId: N:Ubytec.Language.HighLevel.Interfaces
+  href: Ubytec.html
+  name: Ubytec.Language.HighLevel.Interfaces
+  nameWithType: Ubytec.Language.HighLevel.Interfaces
+  fullName: Ubytec.Language.HighLevel.Interfaces
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.HighLevel.Interfaces.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.HighLevel.Interfaces.html
+- uid: Ubytec.Language
+  commentId: N:Ubytec.Language
+  href: Ubytec.html
+  name: Ubytec.Language
+  nameWithType: Ubytec.Language
+  fullName: Ubytec.Language
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubytec.Language.HighLevel.GlobalContext.Fields*
+  commentId: Overload:Ubytec.Language.HighLevel.GlobalContext.Fields
+  href: Ubytec.Language.HighLevel.GlobalContext.html#Ubytec_Language_HighLevel_GlobalContext_Fields
+  name: Fields
+  nameWithType: GlobalContext.Fields
+  fullName: Ubytec.Language.HighLevel.GlobalContext.Fields
+- uid: Ubytec.Language.HighLevel.Field[]
+  isExternal: true
+  href: Ubytec.Language.HighLevel.Field.html
+  name: Field[]
+  nameWithType: Field[]
+  fullName: Ubytec.Language.HighLevel.Field[]
+  nameWithType.vb: Field()
+  fullName.vb: Ubytec.Language.HighLevel.Field()
+  name.vb: Field()
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.Field
+    name: Field
+    href: Ubytec.Language.HighLevel.Field.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.Field
+    name: Field
+    href: Ubytec.Language.HighLevel.Field.html
+  - name: (
+  - name: )
+- uid: Ubytec.Language.HighLevel.GlobalContext.Properties*
+  commentId: Overload:Ubytec.Language.HighLevel.GlobalContext.Properties
+  href: Ubytec.Language.HighLevel.GlobalContext.html#Ubytec_Language_HighLevel_GlobalContext_Properties
+  name: Properties
+  nameWithType: GlobalContext.Properties
+  fullName: Ubytec.Language.HighLevel.GlobalContext.Properties
+- uid: Ubytec.Language.HighLevel.Property[]
+  isExternal: true
+  href: Ubytec.Language.HighLevel.Property.html
+  name: Property[]
+  nameWithType: Property[]
+  fullName: Ubytec.Language.HighLevel.Property[]
+  nameWithType.vb: Property()
+  fullName.vb: Ubytec.Language.HighLevel.Property()
+  name.vb: Property()
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.Property
+    name: Property
+    href: Ubytec.Language.HighLevel.Property.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.Property
+    name: Property
+    href: Ubytec.Language.HighLevel.Property.html
+  - name: (
+  - name: )
+- uid: Ubytec.Language.HighLevel.GlobalContext.Functions*
+  commentId: Overload:Ubytec.Language.HighLevel.GlobalContext.Functions
+  href: Ubytec.Language.HighLevel.GlobalContext.html#Ubytec_Language_HighLevel_GlobalContext_Functions
+  name: Functions
+  nameWithType: GlobalContext.Functions
+  fullName: Ubytec.Language.HighLevel.GlobalContext.Functions
+- uid: Ubytec.Language.HighLevel.Func[]
+  isExternal: true
+  href: Ubytec.Language.HighLevel.Func.html
+  name: Func[]
+  nameWithType: Func[]
+  fullName: Ubytec.Language.HighLevel.Func[]
+  nameWithType.vb: Func()
+  fullName.vb: Ubytec.Language.HighLevel.Func()
+  name.vb: Func()
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.Func
+    name: Func
+    href: Ubytec.Language.HighLevel.Func.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.Func
+    name: Func
+    href: Ubytec.Language.HighLevel.Func.html
+  - name: (
+  - name: )
+- uid: Ubytec.Language.HighLevel.GlobalContext.Actions*
+  commentId: Overload:Ubytec.Language.HighLevel.GlobalContext.Actions
+  href: Ubytec.Language.HighLevel.GlobalContext.html#Ubytec_Language_HighLevel_GlobalContext_Actions
+  name: Actions
+  nameWithType: GlobalContext.Actions
+  fullName: Ubytec.Language.HighLevel.GlobalContext.Actions
+- uid: Ubytec.Language.HighLevel.Action[]
+  isExternal: true
+  href: Ubytec.Language.HighLevel.Action.html
+  name: Action[]
+  nameWithType: Action[]
+  fullName: Ubytec.Language.HighLevel.Action[]
+  nameWithType.vb: Action()
+  fullName.vb: Ubytec.Language.HighLevel.Action()
+  name.vb: Action()
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.Action
+    name: Action
+    href: Ubytec.Language.HighLevel.Action.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.Action
+    name: Action
+    href: Ubytec.Language.HighLevel.Action.html
+  - name: (
+  - name: )
+- uid: Ubytec.Language.HighLevel.GlobalContext.ID*
+  commentId: Overload:Ubytec.Language.HighLevel.GlobalContext.ID
+  href: Ubytec.Language.HighLevel.GlobalContext.html#Ubytec_Language_HighLevel_GlobalContext_ID
+  name: ID
+  nameWithType: GlobalContext.ID
+  fullName: Ubytec.Language.HighLevel.GlobalContext.ID
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
+  commentId: P:Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
+  parent: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_ID
+  name: ID
+  nameWithType: IUbytecHighLevelEntity.ID
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
+- uid: System.Guid
+  commentId: T:System.Guid
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.guid
+  name: Guid
+  nameWithType: Guid
+  fullName: System.Guid
+- uid: Ubytec.Language.HighLevel.GlobalContext.#ctor*
+  commentId: Overload:Ubytec.Language.HighLevel.GlobalContext.#ctor
+  href: Ubytec.Language.HighLevel.GlobalContext.html#Ubytec_Language_HighLevel_GlobalContext__ctor_Ubytec_Language_HighLevel_Field___Ubytec_Language_HighLevel_Property___Ubytec_Language_HighLevel_Func___Ubytec_Language_HighLevel_Action___System_Guid_
+  name: GlobalContext
+  nameWithType: GlobalContext.GlobalContext
+  fullName: Ubytec.Language.HighLevel.GlobalContext.GlobalContext
+  nameWithType.vb: GlobalContext.New
+  fullName.vb: Ubytec.Language.HighLevel.GlobalContext.New
+  name.vb: New
+- uid: Ubytec.Language.HighLevel.GlobalContext.Validate*
+  commentId: Overload:Ubytec.Language.HighLevel.GlobalContext.Validate
+  href: Ubytec.Language.HighLevel.GlobalContext.html#Ubytec_Language_HighLevel_GlobalContext_Validate
+  name: Validate
+  nameWithType: GlobalContext.Validate
+  fullName: Ubytec.Language.HighLevel.GlobalContext.Validate
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+  commentId: M:Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+  parent: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
+  name: Validate()
+  nameWithType: IUbytecHighLevelEntity.Validate()
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate()
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+    name: Validate
+    href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+    name: Validate
+    href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
+  - name: (
+  - name: )
+- uid: Ubytec.Language.HighLevel.GlobalContext.Compile*
+  commentId: Overload:Ubytec.Language.HighLevel.GlobalContext.Compile
+  href: Ubytec.Language.HighLevel.GlobalContext.html#Ubytec_Language_HighLevel_GlobalContext_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  name: Compile
+  nameWithType: GlobalContext.Compile
+  fullName: Ubytec.Language.HighLevel.GlobalContext.Compile
+- uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  commentId: M:Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  parent: Ubytec.Language.IUbytecEntity
+  href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  name: Compile(CompilationScopes)
+  nameWithType: IUbytecEntity.Compile(CompilationScopes)
+  fullName: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  spec.csharp:
+  - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+    name: Compile
+    href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+    name: Compile
+    href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  - name: )
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  commentId: T:Ubytec.Language.Syntax.Scopes.CompilationScopes
+  parent: Ubytec.Language.Syntax.Scopes
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  name: CompilationScopes
+  nameWithType: CompilationScopes
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubytec.Language.Syntax.Scopes
+  commentId: N:Ubytec.Language.Syntax.Scopes
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Scopes
+  nameWithType: Ubytec.Language.Syntax.Scopes
+  fullName: Ubytec.Language.Syntax.Scopes
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html

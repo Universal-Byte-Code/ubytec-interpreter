@@ -1,102 +1,94 @@
-﻿using System.Runtime.InteropServices;
+﻿// Program.cs
+//
+// * end-to-end* driver for the whole Ubytec tool-chain.
+//
+// ────────────────────────────────────────────────────────────────
+//  1.  LexicalAnalyst  →  SyntaxToken[]
+//  2.  HighLevelParser →  Module  (+ collected ParseErrors)
+//  3.  `module.Compile(scopes)`  →  NASM
+//  4.  JSON  +  UTF-64 dumps
+// ────────────────────────────────────────────────────────────────
+
 using System.Text.Json;
 using Ubytec.Language.AST;
 using Ubytec.Language.Grammar;
-using Ubytec.Language.Syntax.Fast;
+using Ubytec.Language.Syntax.Scopes;
 using Ubytec.Language.Tools;
 using Ubytec.Language.Tools.Serialization;
 
-//var code = @"
-//BLOCK 0x7F
-//    PUSH 0x7F 0x00     ; First Fibonacci number (fib1 = 0)
-//    PUSH 0x7F 0x01     ; Second Fibonacci number (fib2 = 1)
-//    PUSH 0x7F 0x0A     ; Push 10 (countdown from 10)
-//    WHILE
-//        BLOCK 0x7F
-//            DUP          ; Duplicate count
-//            IF 0x7F
-//                OVER     ; Copy fib1
-//                OVER     ; Copy fib2
-//                ADD      ; fibNext = fib1 + fib2
-//                PICK 2   ; Get fib2
-//                SWAP     ; Swap fibNext and fib2
-//                PICK 4   ; Get fib1
-//                ROLL 3   ; Roll fib1 to bottom
-//                DEC      ; Decrease counter
-//            ELSE
-//                BREAK  ; Exit loop if count == 0
-//            END
-//        END
-//    RETURN
-//";
-
-//SEGUNDA SENTENCE ES ELSE
-
-var code = @"
-block t_void
-    t_int32 i 0
-    while 2 != 10
-        loop t_bool
-            if 0 == 9
-                nop
-            else
-                nop
-            end
-        end
-        switch
-            branch 30
-                nop
-            break
-            branch 666
-                trap
-            break
-        end
-    end
-end
-";
-
-LexicalAnalyst.InitializeGrammar();
-var tmTokens = LexicalAnalyst.Tokenize(code);
-
-var opCode = ASTCompiler.Parse([.. tmTokens]);
-Console.WriteLine("Correctly parsed the ubytec source code!");
-
-var (compiled, errors0) = ASTCompiler.CompileSyntax(opCode, [.. tmTokens]);
-foreach (var error in errors0) Console.WriteLine(error);
-if (errors0.Count == 0) Console.WriteLine("Correctly compiled the AST!");
-
-var errors1 = SyntaxTreeValidator.CheckSyntaxTreeSchema(compiled);
-foreach (var error in errors1) Console.WriteLine(error);
-if (errors1.Count == 0) Console.WriteLine("Correctly validated the AST!");
-
-var nasm = ASTCompiler.CompileAST(compiled);
-Console.WriteLine("Correctly compiled to nasm!");
-
-var options = new JsonSerializerOptions
+var source = """
+module (name:"demo", version:"0.1", author:"papifuckingshushi")
 {
-    WriteIndented = true,
-    IncludeFields = false,
+    func Main() -> t_void
+    {
+        local
+        {
+            t_int32 counter 0
+        }
+
+        block t_void
+            t_bool thisIsFromTheBlock true
+            loop t_void
+                t_bool hello false
+                if 2 != 2
+                    t_half theHalf 0.8
+                    nop
+                    if 3 == 3
+                        nop
+                    end
+                else
+                    t_int32 uwu 17
+                    nop
+                end
+            end
+
+    }
+}
+""";
+
+// 1.  lexical analysis -------------------------------------------------------
+LexicalAnalyst.InitializeGrammar();
+var tokens = LexicalAnalyst.Tokenize(source);
+
+// 2.  high-level parse (with graceful error collection) ----------------------..
+var (rootModule, parseErrors) = HighLevelParser.ParseModuleWithErrors([.. tokens]);
+
+if (parseErrors.Length > 0)
+{
+    Console.ForegroundColor = ConsoleColor.Yellow;
+    Console.WriteLine("High-level parse completed with warnings/errors:");
+    foreach (var e in parseErrors)
+        Console.WriteLine($"[line {e.Line}] {e.Where}: {e.Message}");
+    Console.ResetColor();
+}
+else
+{
+    Console.WriteLine("High-level parse succeeded (0 errors).");
+}
+
+// 3.  compile the *root module* directly -------------------------------------
+var scopes = new CompilationScopes();          // empty stack
+var nasm = rootModule.Compile(scopes);       // every nested entity compiles itself!
+
+File.WriteAllText("output.ubc.nasm", nasm);
+Console.WriteLine($"✓ NASM written to  {Path.GetFullPath("output.ubc.nasm")}");
+
+// 4.  JSON + UTF-64 serialisation -------------------------------------------
+var opts = new JsonSerializerOptions
+{
+    WriteIndented              = true,
+    IncludeFields              = false,
     RespectNullableAnnotations = true
 };
 
-options.Converters.Add(new IOpCodeConverter());
-options.Converters.Add(new ISyntaxTreeConverter());
-options.Converters.Add(new IUbytecExpressionFragmentConverter());
+opts.Converters.Add(new IOpCodeConverter());
+opts.Converters.Add(new ISyntaxTreeConverter());
+opts.Converters.Add(new IUbytecExpressionFragmentConverter());
 
-string json = JsonSerializer.Serialize(compiled, options);
-string codecJson = Utf64Codec.Encode(json);
+var json = JsonSerializer.Serialize(rootModule, opts);
+var utf64 = Utf64Codec.Encode(json);
 
-compiled.Dispose();
+File.WriteAllText("output.module.ubc.json", json);
+File.WriteAllText("output.module.ubc.json.utf64", utf64);
 
-using (var file1 = File.CreateText(Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName, "ubc-compiled.ubc.nasm")))
-{
-    file1.Write(nasm);
-}
-using (var file2 = File.CreateText(Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName, "ubc-compiled.ubc.ast.json")))
-{
-    file2.Write(json);
-}
-using (var file3 = File.CreateText(Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName, "ubc-compiled.ubc.ast.json.utf64")))
-{
-    file3.Write(codecJson);
-}
+Console.WriteLine("✓ JSON and UTF-64 artefacts written.");

@@ -4,7 +4,7 @@ using Ubytec.Language.Syntax.Interfaces;
 
 namespace Ubytec.Language.Syntax.Model;
 
-public sealed class SyntaxExpression : IUbytecSyntax, IDisposable
+public sealed class SyntaxExpression : IUbytecSyntax
 {
     public List<IUbytecExpressionFragment> Syntaxes { get; } = [];
 

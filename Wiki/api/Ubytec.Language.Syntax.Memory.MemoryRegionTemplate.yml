@@ -1,0 +1,628 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
+  commentId: T:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
+  id: MemoryRegionTemplate
+  parent: Ubytec.Language.Syntax.Memory
+  children:
+  - Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.#ctor(System.String,System.UIntPtr,System.UIntPtr,System.Int64,System.Boolean)
+  - Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Alignment
+  - Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.DefaultValue
+  - Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.EmitZeroDirective
+  - Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.SectionName
+  - Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Size
+  langs:
+  - csharp
+  - vb
+  name: MemoryRegionTemplate
+  nameWithType: MemoryRegionTemplate
+  fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
+  type: Struct
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Memory/MemoryRegionTemplate.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: MemoryRegionTemplate
+    path: ../Ubytec/Language/Syntax/Memory/MemoryRegionTemplate.cs
+    startLine: 2
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Memory
+  syntax:
+    content: 'public readonly record struct MemoryRegionTemplate : IEquatable<MemoryRegionTemplate>'
+    content.vb: Public Structure MemoryRegionTemplate Implements IEquatable(Of MemoryRegionTemplate)
+  implements:
+  - System.IEquatable{Ubytec.Language.Syntax.Memory.MemoryRegionTemplate}
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.#ctor(System.String,System.UIntPtr,System.UIntPtr,System.Int64,System.Boolean)
+  commentId: M:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.#ctor(System.String,System.UIntPtr,System.UIntPtr,System.Int64,System.Boolean)
+  id: '#ctor(System.String,System.UIntPtr,System.UIntPtr,System.Int64,System.Boolean)'
+  parent: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
+  langs:
+  - csharp
+  - vb
+  name: MemoryRegionTemplate(string, nuint, nuint, long, bool)
+  nameWithType: MemoryRegionTemplate.MemoryRegionTemplate(string, nuint, nuint, long, bool)
+  fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.MemoryRegionTemplate(string, nuint, nuint, long, bool)
+  type: Constructor
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Memory/MemoryRegionTemplate.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: .ctor
+    path: ../Ubytec/Language/Syntax/Memory/MemoryRegionTemplate.cs
+    startLine: 2
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Memory
+  syntax:
+    content: public MemoryRegionTemplate(string SectionName, nuint Alignment, nuint Size, long DefaultValue, bool EmitZeroDirective)
+    parameters:
+    - id: SectionName
+      type: System.String
+    - id: Alignment
+      type: System.UIntPtr
+    - id: Size
+      type: System.UIntPtr
+    - id: DefaultValue
+      type: System.Int64
+    - id: EmitZeroDirective
+      type: System.Boolean
+    content.vb: Public Sub New(SectionName As String, Alignment As UIntPtr, Size As UIntPtr, DefaultValue As Long, EmitZeroDirective As Boolean)
+  overload: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.#ctor*
+  nameWithType.vb: MemoryRegionTemplate.New(String, UIntPtr, UIntPtr, Long, Boolean)
+  fullName.vb: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.New(String, System.UIntPtr, System.UIntPtr, Long, Boolean)
+  name.vb: New(String, UIntPtr, UIntPtr, Long, Boolean)
+- uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.SectionName
+  commentId: P:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.SectionName
+  id: SectionName
+  parent: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
+  langs:
+  - csharp
+  - vb
+  name: SectionName
+  nameWithType: MemoryRegionTemplate.SectionName
+  fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.SectionName
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Memory/MemoryRegionTemplate.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: SectionName
+    path: ../Ubytec/Language/Syntax/Memory/MemoryRegionTemplate.cs
+    startLine: 3
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Memory
+  syntax:
+    content: public string SectionName { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property SectionName As String
+  overload: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.SectionName*
+- uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Alignment
+  commentId: P:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Alignment
+  id: Alignment
+  parent: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
+  langs:
+  - csharp
+  - vb
+  name: Alignment
+  nameWithType: MemoryRegionTemplate.Alignment
+  fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Alignment
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Memory/MemoryRegionTemplate.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Alignment
+    path: ../Ubytec/Language/Syntax/Memory/MemoryRegionTemplate.cs
+    startLine: 4
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Memory
+  syntax:
+    content: public nuint Alignment { get; init; }
+    parameters: []
+    return:
+      type: System.UIntPtr
+    content.vb: Public Property Alignment As UIntPtr
+  overload: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Alignment*
+- uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Size
+  commentId: P:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Size
+  id: Size
+  parent: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
+  langs:
+  - csharp
+  - vb
+  name: Size
+  nameWithType: MemoryRegionTemplate.Size
+  fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Size
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Memory/MemoryRegionTemplate.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Size
+    path: ../Ubytec/Language/Syntax/Memory/MemoryRegionTemplate.cs
+    startLine: 5
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Memory
+  syntax:
+    content: public nuint Size { get; init; }
+    parameters: []
+    return:
+      type: System.UIntPtr
+    content.vb: Public Property Size As UIntPtr
+  overload: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Size*
+- uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.DefaultValue
+  commentId: P:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.DefaultValue
+  id: DefaultValue
+  parent: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
+  langs:
+  - csharp
+  - vb
+  name: DefaultValue
+  nameWithType: MemoryRegionTemplate.DefaultValue
+  fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.DefaultValue
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Memory/MemoryRegionTemplate.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: DefaultValue
+    path: ../Ubytec/Language/Syntax/Memory/MemoryRegionTemplate.cs
+    startLine: 6
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Memory
+  syntax:
+    content: public long DefaultValue { get; init; }
+    parameters: []
+    return:
+      type: System.Int64
+    content.vb: Public Property DefaultValue As Long
+  overload: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.DefaultValue*
+- uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.EmitZeroDirective
+  commentId: P:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.EmitZeroDirective
+  id: EmitZeroDirective
+  parent: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
+  langs:
+  - csharp
+  - vb
+  name: EmitZeroDirective
+  nameWithType: MemoryRegionTemplate.EmitZeroDirective
+  fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.EmitZeroDirective
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Memory/MemoryRegionTemplate.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: EmitZeroDirective
+    path: ../Ubytec/Language/Syntax/Memory/MemoryRegionTemplate.cs
+    startLine: 7
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Memory
+  syntax:
+    content: public bool EmitZeroDirective { get; init; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property EmitZeroDirective As Boolean
+  overload: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.EmitZeroDirective*
+references:
+- uid: Ubytec.Language.Syntax.Memory
+  commentId: N:Ubytec.Language.Syntax.Memory
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Memory
+  nameWithType: Ubytec.Language.Syntax.Memory
+  fullName: Ubytec.Language.Syntax.Memory
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Memory
+    name: Memory
+    href: Ubytec.Language.Syntax.Memory.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Memory
+    name: Memory
+    href: Ubytec.Language.Syntax.Memory.html
+- uid: System.IEquatable{Ubytec.Language.Syntax.Memory.MemoryRegionTemplate}
+  commentId: T:System.IEquatable{Ubytec.Language.Syntax.Memory.MemoryRegionTemplate}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<MemoryRegionTemplate>
+  nameWithType: IEquatable<MemoryRegionTemplate>
+  fullName: System.IEquatable<Ubytec.Language.Syntax.Memory.MemoryRegionTemplate>
+  nameWithType.vb: IEquatable(Of MemoryRegionTemplate)
+  fullName.vb: System.IEquatable(Of Ubytec.Language.Syntax.Memory.MemoryRegionTemplate)
+  name.vb: IEquatable(Of MemoryRegionTemplate)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
+    name: MemoryRegionTemplate
+    href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
+    name: MemoryRegionTemplate
+    href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.html
+  - name: )
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.#ctor*
+  commentId: Overload:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.#ctor
+  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.html#Ubytec_Language_Syntax_Memory_MemoryRegionTemplate__ctor_System_String_System_UIntPtr_System_UIntPtr_System_Int64_System_Boolean_
+  name: MemoryRegionTemplate
+  nameWithType: MemoryRegionTemplate.MemoryRegionTemplate
+  fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.MemoryRegionTemplate
+  nameWithType.vb: MemoryRegionTemplate.New
+  fullName.vb: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.New
+  name.vb: New
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.UIntPtr
+  commentId: T:System.UIntPtr
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uintptr
+  name: nuint
+  nameWithType: nuint
+  fullName: nuint
+  nameWithType.vb: UIntPtr
+  fullName.vb: System.UIntPtr
+  name.vb: UIntPtr
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.SectionName*
+  commentId: Overload:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.SectionName
+  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.html#Ubytec_Language_Syntax_Memory_MemoryRegionTemplate_SectionName
+  name: SectionName
+  nameWithType: MemoryRegionTemplate.SectionName
+  fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.SectionName
+- uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Alignment*
+  commentId: Overload:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Alignment
+  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.html#Ubytec_Language_Syntax_Memory_MemoryRegionTemplate_Alignment
+  name: Alignment
+  nameWithType: MemoryRegionTemplate.Alignment
+  fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Alignment
+- uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Size*
+  commentId: Overload:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Size
+  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.html#Ubytec_Language_Syntax_Memory_MemoryRegionTemplate_Size
+  name: Size
+  nameWithType: MemoryRegionTemplate.Size
+  fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Size
+- uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.DefaultValue*
+  commentId: Overload:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.DefaultValue
+  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.html#Ubytec_Language_Syntax_Memory_MemoryRegionTemplate_DefaultValue
+  name: DefaultValue
+  nameWithType: MemoryRegionTemplate.DefaultValue
+  fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.DefaultValue
+- uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.EmitZeroDirective*
+  commentId: Overload:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.EmitZeroDirective
+  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.html#Ubytec_Language_Syntax_Memory_MemoryRegionTemplate_EmitZeroDirective
+  name: EmitZeroDirective
+  nameWithType: MemoryRegionTemplate.EmitZeroDirective
+  fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.EmitZeroDirective

@@ -1,0 +1,93 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.Model
+  commentId: N:Ubytec.Language.Syntax.Model
+  id: Ubytec.Language.Syntax.Model
+  children:
+  - Ubytec.Language.Syntax.Model.SyntaxExpression
+  - Ubytec.Language.Syntax.Model.SyntaxNode
+  - Ubytec.Language.Syntax.Model.SyntaxSentence
+  - Ubytec.Language.Syntax.Model.SyntaxToken
+  - Ubytec.Language.Syntax.Model.SyntaxTree
+  langs:
+  - csharp
+  - vb
+  name: Ubytec.Language.Syntax.Model
+  nameWithType: Ubytec.Language.Syntax.Model
+  fullName: Ubytec.Language.Syntax.Model
+  type: Namespace
+  assemblies:
+  - Ubytec
+references:
+- uid: Ubytec.Language.Syntax.Model.SyntaxExpression
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxExpression
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxExpression.html
+  name: SyntaxExpression
+  nameWithType: SyntaxExpression
+  fullName: Ubytec.Language.Syntax.Model.SyntaxExpression
+- uid: Ubytec.Language.Syntax.Model.SyntaxNode
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxNode
+  href: Ubytec.Language.Syntax.Model.SyntaxNode.html
+  name: SyntaxNode
+  nameWithType: SyntaxNode
+  fullName: Ubytec.Language.Syntax.Model.SyntaxNode
+- uid: Ubytec.Language.Syntax.Model.SyntaxSentence
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxSentence
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxSentence.html
+  name: SyntaxSentence
+  nameWithType: SyntaxSentence
+  fullName: Ubytec.Language.Syntax.Model.SyntaxSentence
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxToken
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  name: SyntaxToken
+  nameWithType: SyntaxToken
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken
+- uid: Ubytec.Language.Syntax.Model.SyntaxTree
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxTree
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxTree.html
+  name: SyntaxTree
+  nameWithType: SyntaxTree
+  fullName: Ubytec.Language.Syntax.Model.SyntaxTree
+- uid: Ubytec.Language.Syntax.Model
+  commentId: N:Ubytec.Language.Syntax.Model
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Model
+  nameWithType: Ubytec.Language.Syntax.Model
+  fullName: Ubytec.Language.Syntax.Model
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html

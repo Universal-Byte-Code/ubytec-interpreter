@@ -1,0 +1,152 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.IUbytecEntity
+  commentId: T:Ubytec.Language.IUbytecEntity
+  id: IUbytecEntity
+  parent: Ubytec.Language
+  children:
+  - Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  langs:
+  - csharp
+  - vb
+  name: IUbytecEntity
+  nameWithType: IUbytecEntity
+  fullName: Ubytec.Language.IUbytecEntity
+  type: Interface
+  source:
+    remote:
+      path: Ubytec/Language/IUbytecEntity.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IUbytecEntity
+    path: ../Ubytec/Language/IUbytecEntity.cs
+    startLine: 4
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language
+  syntax:
+    content: public interface IUbytecEntity
+    content.vb: Public Interface IUbytecEntity
+- uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  commentId: M:Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  id: Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  parent: Ubytec.Language.IUbytecEntity
+  langs:
+  - csharp
+  - vb
+  name: Compile(CompilationScopes)
+  nameWithType: IUbytecEntity.Compile(CompilationScopes)
+  fullName: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/IUbytecEntity.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Compile
+    path: ../Ubytec/Language/IUbytecEntity.cs
+    startLine: 6
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language
+  syntax:
+    content: string Compile(CompilationScopes scopes)
+    parameters:
+    - id: scopes
+      type: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    return:
+      type: System.String
+    content.vb: Function Compile(scopes As CompilationScopes) As String
+  overload: Ubytec.Language.IUbytecEntity.Compile*
+references:
+- uid: Ubytec.Language
+  commentId: N:Ubytec.Language
+  href: Ubytec.html
+  name: Ubytec.Language
+  nameWithType: Ubytec.Language
+  fullName: Ubytec.Language
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+- uid: Ubytec.Language.IUbytecEntity.Compile*
+  commentId: Overload:Ubytec.Language.IUbytecEntity.Compile
+  href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  name: Compile
+  nameWithType: IUbytecEntity.Compile
+  fullName: Ubytec.Language.IUbytecEntity.Compile
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  commentId: T:Ubytec.Language.Syntax.Scopes.CompilationScopes
+  parent: Ubytec.Language.Syntax.Scopes
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  name: CompilationScopes
+  nameWithType: CompilationScopes
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubytec.Language.Syntax.Scopes
+  commentId: N:Ubytec.Language.Syntax.Scopes
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Scopes
+  nameWithType: Ubytec.Language.Syntax.Scopes
+  fullName: Ubytec.Language.Syntax.Scopes
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System

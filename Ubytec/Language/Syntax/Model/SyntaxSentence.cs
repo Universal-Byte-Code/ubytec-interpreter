@@ -6,7 +6,7 @@ using Ubytec.Language.Syntax.Interfaces;
 
 namespace Ubytec.Language.Syntax.Model;
 
-public sealed class SyntaxSentence : IUbytecSyntax, IDisposable
+public sealed class SyntaxSentence : IUbytecSyntax
 {
     [JsonInclude]
     public Stack<SyntaxNode> Nodes { get; set; } = new();

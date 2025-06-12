@@ -14,10 +14,10 @@ namespace Ubytec.Language.Operations
         private static string NextLabel(string prefix)
         {
             _prefixToLabelCounterMap.TryAdd(prefix, 0);
-            return $"{prefix}_{_prefixToLabelCounterMap[prefix]++}";
+            return $"{prefix}_{Guid.CreateVersion7()}_{_prefixToLabelCounterMap[prefix]++}";
         }
 
-        private static bool ValidateConditionalBlockType(PrimitiveType blockType) => IsNumeric(blockType) || IsBool(blockType);
+        private static bool ValidateConditionalBlockType(PrimitiveType blockType) => blockType.IsNumeric() || blockType.IsBool();
         private static string ProcessConditionFragment(ConditionExpressionFragment fragment, string ifLabel, string ifEndLabel)
         {
             var sb = new StringBuilder();

@@ -1,0 +1,309 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
+  commentId: T:Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
+  id: IUbytecContextEntity
+  parent: Ubytec.Language.HighLevel.Interfaces
+  children:
+  - Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Modifiers
+  - Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Name
+  langs:
+  - csharp
+  - vb
+  name: IUbytecContextEntity
+  nameWithType: IUbytecContextEntity
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
+  type: Interface
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Interfaces/IUbytecContextEntity.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IUbytecContextEntity
+    path: ../Ubytec/Language/HighLevel/Interfaces/IUbytecContextEntity.cs
+    startLine: 4
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel.Interfaces
+  syntax:
+    content: 'public interface IUbytecContextEntity : IUbytecHighLevelEntity, IUbytecEntity'
+    content.vb: Public Interface IUbytecContextEntity Inherits IUbytecHighLevelEntity, IUbytecEntity
+  inheritedMembers:
+  - Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
+  - Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+  - Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Name
+  commentId: P:Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Name
+  id: Name
+  parent: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: IUbytecContextEntity.Name
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Name
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Interfaces/IUbytecContextEntity.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Name
+    path: ../Ubytec/Language/HighLevel/Interfaces/IUbytecContextEntity.cs
+    startLine: 6
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel.Interfaces
+  syntax:
+    content: string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property Name As String
+  overload: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Name*
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Modifiers
+  commentId: P:Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Modifiers
+  id: Modifiers
+  parent: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
+  langs:
+  - csharp
+  - vb
+  name: Modifiers
+  nameWithType: IUbytecContextEntity.Modifiers
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Modifiers
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Interfaces/IUbytecContextEntity.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Modifiers
+    path: ../Ubytec/Language/HighLevel/Interfaces/IUbytecContextEntity.cs
+    startLine: 7
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel.Interfaces
+  syntax:
+    content: Types.TypeModifiers Modifiers { get; }
+    parameters: []
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    content.vb: ReadOnly Property Modifiers As Types.TypeModifiers
+  overload: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Modifiers*
+references:
+- uid: Ubytec.Language.HighLevel.Interfaces
+  commentId: N:Ubytec.Language.HighLevel.Interfaces
+  href: Ubytec.html
+  name: Ubytec.Language.HighLevel.Interfaces
+  nameWithType: Ubytec.Language.HighLevel.Interfaces
+  fullName: Ubytec.Language.HighLevel.Interfaces
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.HighLevel.Interfaces.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.HighLevel.Interfaces.html
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
+  commentId: P:Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
+  parent: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_ID
+  name: ID
+  nameWithType: IUbytecHighLevelEntity.ID
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+  commentId: M:Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+  parent: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
+  name: Validate()
+  nameWithType: IUbytecHighLevelEntity.Validate()
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate()
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+    name: Validate
+    href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+    name: Validate
+    href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
+  - name: (
+  - name: )
+- uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  commentId: M:Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  parent: Ubytec.Language.IUbytecEntity
+  href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  name: Compile(CompilationScopes)
+  nameWithType: IUbytecEntity.Compile(CompilationScopes)
+  fullName: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  spec.csharp:
+  - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+    name: Compile
+    href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+    name: Compile
+    href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  - name: )
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  commentId: T:Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  parent: Ubytec.Language.HighLevel.Interfaces
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html
+  name: IUbytecHighLevelEntity
+  nameWithType: IUbytecHighLevelEntity
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+- uid: Ubytec.Language.IUbytecEntity
+  commentId: T:Ubytec.Language.IUbytecEntity
+  parent: Ubytec.Language
+  href: Ubytec.Language.IUbytecEntity.html
+  name: IUbytecEntity
+  nameWithType: IUbytecEntity
+  fullName: Ubytec.Language.IUbytecEntity
+- uid: Ubytec.Language
+  commentId: N:Ubytec.Language
+  href: Ubytec.html
+  name: Ubytec.Language
+  nameWithType: Ubytec.Language
+  fullName: Ubytec.Language
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Name*
+  commentId: Overload:Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Name
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecContextEntity_Name
+  name: Name
+  nameWithType: IUbytecContextEntity.Name
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Modifiers*
+  commentId: Overload:Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Modifiers
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecContextEntity_Modifiers
+  name: Modifiers
+  nameWithType: IUbytecContextEntity.Modifiers
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Modifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  name: Types.TypeModifiers
+  nameWithType: Types.TypeModifiers
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
+- uid: Ubytec.Language.Syntax.TypeSystem
+  commentId: N:Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.TypeSystem
+  nameWithType: Ubytec.Language.Syntax.TypeSystem
+  fullName: Ubytec.Language.Syntax.TypeSystem
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html

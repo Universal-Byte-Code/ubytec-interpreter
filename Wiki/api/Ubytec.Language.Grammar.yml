@@ -1,0 +1,30 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Grammar
+  commentId: N:Ubytec.Language.Grammar
+  id: Ubytec.Language.Grammar
+  children:
+  - Ubytec.Language.Grammar.LexicalAnalyst
+  - Ubytec.Language.Grammar.UbytecRegistryOptions
+  langs:
+  - csharp
+  - vb
+  name: Ubytec.Language.Grammar
+  nameWithType: Ubytec.Language.Grammar
+  fullName: Ubytec.Language.Grammar
+  type: Namespace
+  assemblies:
+  - Ubytec
+references:
+- uid: Ubytec.Language.Grammar.LexicalAnalyst
+  commentId: T:Ubytec.Language.Grammar.LexicalAnalyst
+  href: Ubytec.Language.Grammar.LexicalAnalyst.html
+  name: LexicalAnalyst
+  nameWithType: LexicalAnalyst
+  fullName: Ubytec.Language.Grammar.LexicalAnalyst
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions
+  commentId: T:Ubytec.Language.Grammar.UbytecRegistryOptions
+  href: Ubytec.Language.Grammar.UbytecRegistryOptions.html
+  name: UbytecRegistryOptions
+  nameWithType: UbytecRegistryOptions
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions

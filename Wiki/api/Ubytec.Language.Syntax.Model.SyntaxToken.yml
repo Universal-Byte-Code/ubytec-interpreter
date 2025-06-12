@@ -1,0 +1,1355 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxToken
+  id: SyntaxToken
+  parent: Ubytec.Language.Syntax.Model
+  children:
+  - Ubytec.Language.Syntax.Model.SyntaxToken.#ctor(System.String,System.Int32,System.Int32,System.Int32,System.Collections.Immutable.ImmutableArray{System.String})
+  - Ubytec.Language.Syntax.Model.SyntaxToken.Dispose
+  - Ubytec.Language.Syntax.Model.SyntaxToken.EndColumn
+  - Ubytec.Language.Syntax.Model.SyntaxToken.Equals(System.Object)
+  - Ubytec.Language.Syntax.Model.SyntaxToken.Equals(Ubytec.Language.Syntax.Model.SyntaxToken)
+  - Ubytec.Language.Syntax.Model.SyntaxToken.GetHashCode
+  - Ubytec.Language.Syntax.Model.SyntaxToken.Line
+  - Ubytec.Language.Syntax.Model.SyntaxToken.Scopes
+  - Ubytec.Language.Syntax.Model.SyntaxToken.SerializableMetadata
+  - Ubytec.Language.Syntax.Model.SyntaxToken.Source
+  - Ubytec.Language.Syntax.Model.SyntaxToken.StartColumn
+  - Ubytec.Language.Syntax.Model.SyntaxToken.ToString
+  - Ubytec.Language.Syntax.Model.SyntaxToken.op_Equality(Ubytec.Language.Syntax.Model.SyntaxToken,Ubytec.Language.Syntax.Model.SyntaxToken)
+  - Ubytec.Language.Syntax.Model.SyntaxToken.op_Inequality(Ubytec.Language.Syntax.Model.SyntaxToken,Ubytec.Language.Syntax.Model.SyntaxToken)
+  langs:
+  - csharp
+  - vb
+  name: SyntaxToken
+  nameWithType: SyntaxToken
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken
+  type: Class
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxToken.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: SyntaxToken
+    path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
+    startLine: 18
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  summary: >-
+    Represents a lexical token identified during Ubytec source code analysis.
+
+    Contains information about its source content, position, semantic scopes, and metadata.
+  example: []
+  syntax:
+    content: 'public sealed class SyntaxToken : IEquatable<SyntaxToken>, IUbytecSyntax, IDisposable'
+    content.vb: Public NotInheritable Class SyntaxToken Implements IEquatable(Of SyntaxToken), IUbytecSyntax, IDisposable
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Ubytec.Language.Syntax.Model.SyntaxToken}
+  - Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.Source
+  commentId: P:Ubytec.Language.Syntax.Model.SyntaxToken.Source
+  id: Source
+  parent: Ubytec.Language.Syntax.Model.SyntaxToken
+  langs:
+  - csharp
+  - vb
+  name: Source
+  nameWithType: SyntaxToken.Source
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.Source
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxToken.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Source
+    path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
+    startLine: 26
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  summary: Gets the raw string content of the token.
+  example: []
+  syntax:
+    content: public string Source { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Source As String
+  overload: Ubytec.Language.Syntax.Model.SyntaxToken.Source*
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.Line
+  commentId: P:Ubytec.Language.Syntax.Model.SyntaxToken.Line
+  id: Line
+  parent: Ubytec.Language.Syntax.Model.SyntaxToken
+  langs:
+  - csharp
+  - vb
+  name: Line
+  nameWithType: SyntaxToken.Line
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.Line
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxToken.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Line
+    path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
+    startLine: 31
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  summary: Gets the zero-based line number where the token is located.
+  example: []
+  syntax:
+    content: public int Line { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Line As Integer
+  overload: Ubytec.Language.Syntax.Model.SyntaxToken.Line*
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.StartColumn
+  commentId: P:Ubytec.Language.Syntax.Model.SyntaxToken.StartColumn
+  id: StartColumn
+  parent: Ubytec.Language.Syntax.Model.SyntaxToken
+  langs:
+  - csharp
+  - vb
+  name: StartColumn
+  nameWithType: SyntaxToken.StartColumn
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.StartColumn
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxToken.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: StartColumn
+    path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
+    startLine: 36
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  summary: Gets the starting column index (inclusive) of the token in the line.
+  example: []
+  syntax:
+    content: public int StartColumn { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property StartColumn As Integer
+  overload: Ubytec.Language.Syntax.Model.SyntaxToken.StartColumn*
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.EndColumn
+  commentId: P:Ubytec.Language.Syntax.Model.SyntaxToken.EndColumn
+  id: EndColumn
+  parent: Ubytec.Language.Syntax.Model.SyntaxToken
+  langs:
+  - csharp
+  - vb
+  name: EndColumn
+  nameWithType: SyntaxToken.EndColumn
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.EndColumn
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxToken.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: EndColumn
+    path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
+    startLine: 41
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  summary: Gets the ending column index (exclusive) of the token in the line.
+  example: []
+  syntax:
+    content: public int EndColumn { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property EndColumn As Integer
+  overload: Ubytec.Language.Syntax.Model.SyntaxToken.EndColumn*
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.Scopes
+  commentId: P:Ubytec.Language.Syntax.Model.SyntaxToken.Scopes
+  id: Scopes
+  parent: Ubytec.Language.Syntax.Model.SyntaxToken
+  langs:
+  - csharp
+  - vb
+  name: Scopes
+  nameWithType: SyntaxToken.Scopes
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.Scopes
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxToken.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Scopes
+    path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
+    startLine: 46
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  summary: Gets the immutable list of semantic scopes (e.g., keyword, identifier, comment) assigned to the token.
+  example: []
+  syntax:
+    content: public ImmutableArray<string> Scopes { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Immutable.ImmutableArray{System.String}
+    content.vb: Public Property Scopes As ImmutableArray(Of String)
+  overload: Ubytec.Language.Syntax.Model.SyntaxToken.Scopes*
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.SerializableMetadata
+  commentId: P:Ubytec.Language.Syntax.Model.SyntaxToken.SerializableMetadata
+  id: SerializableMetadata
+  parent: Ubytec.Language.Syntax.Model.SyntaxToken
+  langs:
+  - csharp
+  - vb
+  name: SerializableMetadata
+  nameWithType: SyntaxToken.SerializableMetadata
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.SerializableMetadata
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxToken.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: SerializableMetadata
+    path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
+    startLine: 56
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  syntax:
+    content: >-
+      [JsonInclude]
+
+      [JsonPropertyName("Metadata")]
+
+      public Dictionary<string, object> SerializableMetadata { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,System.Object}
+    content.vb: >-
+      <JsonInclude>
+
+      <JsonPropertyName("Metadata")>
+
+      Public ReadOnly Property SerializableMetadata As Dictionary(Of String, Object)
+  overload: Ubytec.Language.Syntax.Model.SyntaxToken.SerializableMetadata*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonIncludeAttribute
+    ctor: System.Text.Json.Serialization.JsonIncludeAttribute.#ctor
+    arguments: []
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Metadata
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.#ctor(System.String,System.Int32,System.Int32,System.Int32,System.Collections.Immutable.ImmutableArray{System.String})
+  commentId: M:Ubytec.Language.Syntax.Model.SyntaxToken.#ctor(System.String,System.Int32,System.Int32,System.Int32,System.Collections.Immutable.ImmutableArray{System.String})
+  id: '#ctor(System.String,System.Int32,System.Int32,System.Int32,System.Collections.Immutable.ImmutableArray{System.String})'
+  parent: Ubytec.Language.Syntax.Model.SyntaxToken
+  langs:
+  - csharp
+  - vb
+  name: SyntaxToken(string, int, int, int, ImmutableArray<string>)
+  nameWithType: SyntaxToken.SyntaxToken(string, int, int, int, ImmutableArray<string>)
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.SyntaxToken(string, int, int, int, System.Collections.Immutable.ImmutableArray<string>)
+  type: Constructor
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxToken.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: .ctor
+    path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
+    startLine: 61
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  syntax:
+    content: public SyntaxToken(string source, int line, int startColumn, int endColumn, ImmutableArray<string> scopes)
+    parameters:
+    - id: source
+      type: System.String
+    - id: line
+      type: System.Int32
+    - id: startColumn
+      type: System.Int32
+    - id: endColumn
+      type: System.Int32
+    - id: scopes
+      type: System.Collections.Immutable.ImmutableArray{System.String}
+    content.vb: Public Sub New(source As String, line As Integer, startColumn As Integer, endColumn As Integer, scopes As ImmutableArray(Of String))
+  overload: Ubytec.Language.Syntax.Model.SyntaxToken.#ctor*
+  nameWithType.vb: SyntaxToken.New(String, Integer, Integer, Integer, ImmutableArray(Of String))
+  fullName.vb: Ubytec.Language.Syntax.Model.SyntaxToken.New(String, Integer, Integer, Integer, System.Collections.Immutable.ImmutableArray(Of String))
+  name.vb: New(String, Integer, Integer, Integer, ImmutableArray(Of String))
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.ToString
+  commentId: M:Ubytec.Language.Syntax.Model.SyntaxToken.ToString
+  id: ToString
+  parent: Ubytec.Language.Syntax.Model.SyntaxToken
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: SyntaxToken.ToString()
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.ToString()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxToken.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ToString
+    path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
+    startLine: 77
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  summary: Returns a human-readable representation of the token.
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+      description: A string describing the token content, line, column range, and scopes.
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.Object.ToString
+  overload: Ubytec.Language.Syntax.Model.SyntaxToken.ToString*
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.Equals(Ubytec.Language.Syntax.Model.SyntaxToken)
+  commentId: M:Ubytec.Language.Syntax.Model.SyntaxToken.Equals(Ubytec.Language.Syntax.Model.SyntaxToken)
+  id: Equals(Ubytec.Language.Syntax.Model.SyntaxToken)
+  parent: Ubytec.Language.Syntax.Model.SyntaxToken
+  langs:
+  - csharp
+  - vb
+  name: Equals(SyntaxToken?)
+  nameWithType: SyntaxToken.Equals(SyntaxToken?)
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.Equals(Ubytec.Language.Syntax.Model.SyntaxToken?)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxToken.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Equals
+    path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
+    startLine: 87
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  summary: >-
+    Checks whether the current token is equal to another <xref href="Ubytec.Language.Syntax.Model.SyntaxToken" data-throw-if-not-resolved="false"></xref>, including scopes.
+
+    Uses unsafe access for performance.
+  example: []
+  syntax:
+    content: public bool Equals(SyntaxToken? other)
+    parameters:
+    - id: other
+      type: Ubytec.Language.Syntax.Model.SyntaxToken
+      description: The token to compare with.
+    return:
+      type: System.Boolean
+      description: <code>true</code> if tokens are equal; otherwise, <code>false</code>.
+    content.vb: Public Function Equals(other As SyntaxToken) As Boolean
+  overload: Ubytec.Language.Syntax.Model.SyntaxToken.Equals*
+  implements:
+  - System.IEquatable{Ubytec.Language.Syntax.Model.SyntaxToken}.Equals(Ubytec.Language.Syntax.Model.SyntaxToken)
+  nameWithType.vb: SyntaxToken.Equals(SyntaxToken)
+  fullName.vb: Ubytec.Language.Syntax.Model.SyntaxToken.Equals(Ubytec.Language.Syntax.Model.SyntaxToken)
+  name.vb: Equals(SyntaxToken)
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.Equals(System.Object)
+  commentId: M:Ubytec.Language.Syntax.Model.SyntaxToken.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: Ubytec.Language.Syntax.Model.SyntaxToken
+  langs:
+  - csharp
+  - vb
+  name: Equals(object?)
+  nameWithType: SyntaxToken.Equals(object?)
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.Equals(object?)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxToken.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Equals
+    path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
+    startLine: 114
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  summary: Determines whether the specified object is equal to the current token.
+  example: []
+  syntax:
+    content: public override bool Equals(object? obj)
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The object to compare.
+    return:
+      type: System.Boolean
+      description: <code>true</code> if equal; otherwise, <code>false</code>.
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.Object.Equals(System.Object)
+  overload: Ubytec.Language.Syntax.Model.SyntaxToken.Equals*
+  nameWithType.vb: SyntaxToken.Equals(Object)
+  fullName.vb: Ubytec.Language.Syntax.Model.SyntaxToken.Equals(Object)
+  name.vb: Equals(Object)
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.GetHashCode
+  commentId: M:Ubytec.Language.Syntax.Model.SyntaxToken.GetHashCode
+  id: GetHashCode
+  parent: Ubytec.Language.Syntax.Model.SyntaxToken
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: SyntaxToken.GetHashCode()
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxToken.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: GetHashCode
+    path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
+    startLine: 123
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  summary: >-
+    Returns a hash code for this token, combining source, position and a subset of scopes.
+
+    Uses <code>Unsafe.Add</code> for fast scope access.
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+      description: The hash code of the token.
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.Object.GetHashCode
+  overload: Ubytec.Language.Syntax.Model.SyntaxToken.GetHashCode*
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.Dispose
+  commentId: M:Ubytec.Language.Syntax.Model.SyntaxToken.Dispose
+  id: Dispose
+  parent: Ubytec.Language.Syntax.Model.SyntaxToken
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: SyntaxToken.Dispose()
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxToken.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Dispose
+    path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
+    startLine: 138
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Ubytec.Language.Syntax.Model.SyntaxToken.Dispose*
+  implements:
+  - System.IDisposable.Dispose
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.op_Equality(Ubytec.Language.Syntax.Model.SyntaxToken,Ubytec.Language.Syntax.Model.SyntaxToken)
+  commentId: M:Ubytec.Language.Syntax.Model.SyntaxToken.op_Equality(Ubytec.Language.Syntax.Model.SyntaxToken,Ubytec.Language.Syntax.Model.SyntaxToken)
+  id: op_Equality(Ubytec.Language.Syntax.Model.SyntaxToken,Ubytec.Language.Syntax.Model.SyntaxToken)
+  parent: Ubytec.Language.Syntax.Model.SyntaxToken
+  langs:
+  - csharp
+  - vb
+  name: operator ==(SyntaxToken, SyntaxToken)
+  nameWithType: SyntaxToken.operator ==(SyntaxToken, SyntaxToken)
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.operator ==(Ubytec.Language.Syntax.Model.SyntaxToken, Ubytec.Language.Syntax.Model.SyntaxToken)
+  type: Operator
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxToken.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: op_Equality
+    path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
+    startLine: 147
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  summary: Determines whether two tokens are equal.
+  example: []
+  syntax:
+    content: public static bool operator ==(SyntaxToken left, SyntaxToken right)
+    parameters:
+    - id: left
+      type: Ubytec.Language.Syntax.Model.SyntaxToken
+    - id: right
+      type: Ubytec.Language.Syntax.Model.SyntaxToken
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator =(left As SyntaxToken, right As SyntaxToken) As Boolean
+  overload: Ubytec.Language.Syntax.Model.SyntaxToken.op_Equality*
+  nameWithType.vb: SyntaxToken.=(SyntaxToken, SyntaxToken)
+  fullName.vb: Ubytec.Language.Syntax.Model.SyntaxToken.=(Ubytec.Language.Syntax.Model.SyntaxToken, Ubytec.Language.Syntax.Model.SyntaxToken)
+  name.vb: =(SyntaxToken, SyntaxToken)
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.op_Inequality(Ubytec.Language.Syntax.Model.SyntaxToken,Ubytec.Language.Syntax.Model.SyntaxToken)
+  commentId: M:Ubytec.Language.Syntax.Model.SyntaxToken.op_Inequality(Ubytec.Language.Syntax.Model.SyntaxToken,Ubytec.Language.Syntax.Model.SyntaxToken)
+  id: op_Inequality(Ubytec.Language.Syntax.Model.SyntaxToken,Ubytec.Language.Syntax.Model.SyntaxToken)
+  parent: Ubytec.Language.Syntax.Model.SyntaxToken
+  langs:
+  - csharp
+  - vb
+  name: operator !=(SyntaxToken, SyntaxToken)
+  nameWithType: SyntaxToken.operator !=(SyntaxToken, SyntaxToken)
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.operator !=(Ubytec.Language.Syntax.Model.SyntaxToken, Ubytec.Language.Syntax.Model.SyntaxToken)
+  type: Operator
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxToken.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: op_Inequality
+    path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
+    startLine: 152
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  summary: Determines whether two tokens are not equal.
+  example: []
+  syntax:
+    content: public static bool operator !=(SyntaxToken left, SyntaxToken right)
+    parameters:
+    - id: left
+      type: Ubytec.Language.Syntax.Model.SyntaxToken
+    - id: right
+      type: Ubytec.Language.Syntax.Model.SyntaxToken
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator <>(left As SyntaxToken, right As SyntaxToken) As Boolean
+  overload: Ubytec.Language.Syntax.Model.SyntaxToken.op_Inequality*
+  nameWithType.vb: SyntaxToken.<>(SyntaxToken, SyntaxToken)
+  fullName.vb: Ubytec.Language.Syntax.Model.SyntaxToken.<>(Ubytec.Language.Syntax.Model.SyntaxToken, Ubytec.Language.Syntax.Model.SyntaxToken)
+  name.vb: <>(SyntaxToken, SyntaxToken)
+references:
+- uid: Ubytec.Language.Syntax.Model
+  commentId: N:Ubytec.Language.Syntax.Model
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Model
+  nameWithType: Ubytec.Language.Syntax.Model
+  fullName: Ubytec.Language.Syntax.Model
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Ubytec.Language.Syntax.Model.SyntaxToken}
+  commentId: T:System.IEquatable{Ubytec.Language.Syntax.Model.SyntaxToken}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<SyntaxToken>
+  nameWithType: IEquatable<SyntaxToken>
+  fullName: System.IEquatable<Ubytec.Language.Syntax.Model.SyntaxToken>
+  nameWithType.vb: IEquatable(Of SyntaxToken)
+  fullName.vb: System.IEquatable(Of Ubytec.Language.Syntax.Model.SyntaxToken)
+  name.vb: IEquatable(Of SyntaxToken)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
+    name: SyntaxToken
+    href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
+    name: SyntaxToken
+    href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  - name: )
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+  commentId: T:Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+  parent: Ubytec.Language.Syntax.Interfaces
+  href: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.html
+  name: IUbytecSyntax
+  nameWithType: IUbytecSyntax
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubytec.Language.Syntax.Interfaces
+  commentId: N:Ubytec.Language.Syntax.Interfaces
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Interfaces
+  nameWithType: Ubytec.Language.Syntax.Interfaces
+  fullName: Ubytec.Language.Syntax.Interfaces
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Syntax.Interfaces.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Syntax.Interfaces.html
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.Source*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxToken.Source
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html#Ubytec_Language_Syntax_Model_SyntaxToken_Source
+  name: Source
+  nameWithType: SyntaxToken.Source
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.Source
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.Line*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxToken.Line
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html#Ubytec_Language_Syntax_Model_SyntaxToken_Line
+  name: Line
+  nameWithType: SyntaxToken.Line
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.Line
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.StartColumn*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxToken.StartColumn
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html#Ubytec_Language_Syntax_Model_SyntaxToken_StartColumn
+  name: StartColumn
+  nameWithType: SyntaxToken.StartColumn
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.StartColumn
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.EndColumn*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxToken.EndColumn
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html#Ubytec_Language_Syntax_Model_SyntaxToken_EndColumn
+  name: EndColumn
+  nameWithType: SyntaxToken.EndColumn
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.EndColumn
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.Scopes*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxToken.Scopes
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html#Ubytec_Language_Syntax_Model_SyntaxToken_Scopes
+  name: Scopes
+  nameWithType: SyntaxToken.Scopes
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.Scopes
+- uid: System.Collections.Immutable.ImmutableArray{System.String}
+  commentId: T:System.Collections.Immutable.ImmutableArray{System.String}
+  parent: System.Collections.Immutable
+  definition: System.Collections.Immutable.ImmutableArray`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutablearray-1
+  name: ImmutableArray<string>
+  nameWithType: ImmutableArray<string>
+  fullName: System.Collections.Immutable.ImmutableArray<string>
+  nameWithType.vb: ImmutableArray(Of String)
+  fullName.vb: System.Collections.Immutable.ImmutableArray(Of String)
+  name.vb: ImmutableArray(Of String)
+  spec.csharp:
+  - uid: System.Collections.Immutable.ImmutableArray`1
+    name: ImmutableArray
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutablearray-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Immutable.ImmutableArray`1
+    name: ImmutableArray
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutablearray-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Collections.Immutable.ImmutableArray`1
+  commentId: T:System.Collections.Immutable.ImmutableArray`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutablearray-1
+  name: ImmutableArray<T>
+  nameWithType: ImmutableArray<T>
+  fullName: System.Collections.Immutable.ImmutableArray<T>
+  nameWithType.vb: ImmutableArray(Of T)
+  fullName.vb: System.Collections.Immutable.ImmutableArray(Of T)
+  name.vb: ImmutableArray(Of T)
+  spec.csharp:
+  - uid: System.Collections.Immutable.ImmutableArray`1
+    name: ImmutableArray
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutablearray-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Immutable.ImmutableArray`1
+    name: ImmutableArray
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutablearray-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Immutable
+  commentId: N:System.Collections.Immutable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Immutable
+  nameWithType: System.Collections.Immutable
+  fullName: System.Collections.Immutable
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Immutable
+    name: Immutable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.immutable
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Immutable
+    name: Immutable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.immutable
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.SerializableMetadata*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxToken.SerializableMetadata
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html#Ubytec_Language_Syntax_Model_SyntaxToken_SerializableMetadata
+  name: SerializableMetadata
+  nameWithType: SyntaxToken.SerializableMetadata
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.SerializableMetadata
+- uid: System.Collections.Generic.Dictionary{System.String,System.Object}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,System.Object}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<string, object>
+  nameWithType: Dictionary<string, object>
+  fullName: System.Collections.Generic.Dictionary<string, object>
+  nameWithType.vb: Dictionary(Of String, Object)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, Object)
+  name.vb: Dictionary(Of String, Object)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.#ctor*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxToken.#ctor
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html#Ubytec_Language_Syntax_Model_SyntaxToken__ctor_System_String_System_Int32_System_Int32_System_Int32_System_Collections_Immutable_ImmutableArray_System_String__
+  name: SyntaxToken
+  nameWithType: SyntaxToken.SyntaxToken
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.SyntaxToken
+  nameWithType.vb: SyntaxToken.New
+  fullName.vb: Ubytec.Language.Syntax.Model.SyntaxToken.New
+  name.vb: New
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.ToString*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxToken.ToString
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html#Ubytec_Language_Syntax_Model_SyntaxToken_ToString
+  name: ToString
+  nameWithType: SyntaxToken.ToString
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.ToString
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxToken
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  name: SyntaxToken
+  nameWithType: SyntaxToken
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.Equals*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxToken.Equals
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html#Ubytec_Language_Syntax_Model_SyntaxToken_Equals_Ubytec_Language_Syntax_Model_SyntaxToken_
+  name: Equals
+  nameWithType: SyntaxToken.Equals
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.Equals
+- uid: System.IEquatable{Ubytec.Language.Syntax.Model.SyntaxToken}.Equals(Ubytec.Language.Syntax.Model.SyntaxToken)
+  commentId: M:System.IEquatable{Ubytec.Language.Syntax.Model.SyntaxToken}.Equals(Ubytec.Language.Syntax.Model.SyntaxToken)
+  parent: System.IEquatable{Ubytec.Language.Syntax.Model.SyntaxToken}
+  definition: System.IEquatable`1.Equals(`0)
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(SyntaxToken)
+  nameWithType: IEquatable<SyntaxToken>.Equals(SyntaxToken)
+  fullName: System.IEquatable<Ubytec.Language.Syntax.Model.SyntaxToken>.Equals(Ubytec.Language.Syntax.Model.SyntaxToken)
+  nameWithType.vb: IEquatable(Of SyntaxToken).Equals(SyntaxToken)
+  fullName.vb: System.IEquatable(Of Ubytec.Language.Syntax.Model.SyntaxToken).Equals(Ubytec.Language.Syntax.Model.SyntaxToken)
+  spec.csharp:
+  - uid: System.IEquatable{Ubytec.Language.Syntax.Model.SyntaxToken}.Equals(Ubytec.Language.Syntax.Model.SyntaxToken)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
+    name: SyntaxToken
+    href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable{Ubytec.Language.Syntax.Model.SyntaxToken}.Equals(Ubytec.Language.Syntax.Model.SyntaxToken)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
+    name: SyntaxToken
+    href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.IEquatable`1.Equals(`0)
+  commentId: M:System.IEquatable`1.Equals(`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(T)
+  nameWithType: IEquatable<T>.Equals(T)
+  fullName: System.IEquatable<T>.Equals(T)
+  nameWithType.vb: IEquatable(Of T).Equals(T)
+  fullName.vb: System.IEquatable(Of T).Equals(T)
+  spec.csharp:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - name: T
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.GetHashCode*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxToken.GetHashCode
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html#Ubytec_Language_Syntax_Model_SyntaxToken_GetHashCode
+  name: GetHashCode
+  nameWithType: SyntaxToken.GetHashCode
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.GetHashCode
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.Dispose*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxToken.Dispose
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html#Ubytec_Language_Syntax_Model_SyntaxToken_Dispose
+  name: Dispose
+  nameWithType: SyntaxToken.Dispose
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.Dispose
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.op_Equality*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxToken.op_Equality
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html#Ubytec_Language_Syntax_Model_SyntaxToken_op_Equality_Ubytec_Language_Syntax_Model_SyntaxToken_Ubytec_Language_Syntax_Model_SyntaxToken_
+  name: operator ==
+  nameWithType: SyntaxToken.operator ==
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.operator ==
+  nameWithType.vb: SyntaxToken.=
+  fullName.vb: Ubytec.Language.Syntax.Model.SyntaxToken.=
+  name.vb: =
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken.op_Equality*
+    name: ==
+    href: Ubytec.Language.Syntax.Model.SyntaxToken.html#Ubytec_Language_Syntax_Model_SyntaxToken_op_Equality_Ubytec_Language_Syntax_Model_SyntaxToken_Ubytec_Language_Syntax_Model_SyntaxToken_
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken.op_Inequality*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxToken.op_Inequality
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html#Ubytec_Language_Syntax_Model_SyntaxToken_op_Inequality_Ubytec_Language_Syntax_Model_SyntaxToken_Ubytec_Language_Syntax_Model_SyntaxToken_
+  name: operator !=
+  nameWithType: SyntaxToken.operator !=
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken.operator !=
+  nameWithType.vb: SyntaxToken.<>
+  fullName.vb: Ubytec.Language.Syntax.Model.SyntaxToken.<>
+  name.vb: <>
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken.op_Inequality*
+    name: '!='
+    href: Ubytec.Language.Syntax.Model.SyntaxToken.html#Ubytec_Language_Syntax_Model_SyntaxToken_op_Inequality_Ubytec_Language_Syntax_Model_SyntaxToken_Ubytec_Language_Syntax_Model_SyntaxToken_

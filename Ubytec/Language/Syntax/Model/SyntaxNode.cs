@@ -6,7 +6,7 @@ using Ubytec.Language.Syntax.Interfaces;
 
 namespace Ubytec.Language.Syntax.Model;
 
-public sealed class SyntaxNode : IUbytecSyntax, IDisposable
+public sealed class SyntaxNode : IUbytecSyntax
 {
     [JsonInclude]
     public IUbytecEntity? Entity { get; init; }
@@ -61,13 +61,6 @@ public sealed class SyntaxNode : IUbytecSyntax, IDisposable
 
     public bool IsHighLevel => Entity is IUbytecHighLevelEntity;
     public bool IsOpCode => Entity is IOpCode;
-
-    public override string ToString()
-    {
-        if (Entity is IUbytecHighLevelEntity hl) return $"HighLevel: {hl.ID}";
-        if (Entity is IOpCode oc) return $"OpCode: {oc.GetType().Name}";
-        return "<Empty Node>";
-    }
 
     public void Dispose() => _metadata.Dispose();
 }

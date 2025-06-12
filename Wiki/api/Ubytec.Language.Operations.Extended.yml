@@ -1,0 +1,161 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Operations.Extended
+  commentId: N:Ubytec.Language.Operations.Extended
+  id: Ubytec.Language.Operations.Extended
+  children:
+  - Ubytec.Language.Operations.Extended.ExtendedStackOperations
+  - Ubytec.Language.Operations.Extended.ExtendedStackOperations.DROP16
+  - Ubytec.Language.Operations.Extended.ExtendedStackOperations.PICK16
+  - Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16
+  - Ubytec.Language.Operations.Extended.ExtendedStackOperations.ROLL16
+  - Ubytec.Language.Operations.Extended.IExtendedOpCode
+  langs:
+  - csharp
+  - vb
+  name: Ubytec.Language.Operations.Extended
+  nameWithType: Ubytec.Language.Operations.Extended
+  fullName: Ubytec.Language.Operations.Extended
+  type: Namespace
+  assemblies:
+  - Ubytec
+references:
+- uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations
+  commentId: T:Ubytec.Language.Operations.Extended.ExtendedStackOperations
+  href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.html
+  name: ExtendedStackOperations
+  nameWithType: ExtendedStackOperations
+  fullName: Ubytec.Language.Operations.Extended.ExtendedStackOperations
+- uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16
+  commentId: T:Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16
+  href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.html
+  name: ExtendedStackOperations.PUSH16
+  nameWithType: ExtendedStackOperations.PUSH16
+  fullName: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations
+    name: ExtendedStackOperations
+    href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16
+    name: PUSH16
+    href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations
+    name: ExtendedStackOperations
+    href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16
+    name: PUSH16
+    href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.html
+- uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.DROP16
+  commentId: T:Ubytec.Language.Operations.Extended.ExtendedStackOperations.DROP16
+  href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.html
+  name: ExtendedStackOperations.DROP16
+  nameWithType: ExtendedStackOperations.DROP16
+  fullName: Ubytec.Language.Operations.Extended.ExtendedStackOperations.DROP16
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations
+    name: ExtendedStackOperations
+    href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.DROP16
+    name: DROP16
+    href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.DROP16.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations
+    name: ExtendedStackOperations
+    href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.DROP16
+    name: DROP16
+    href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.DROP16.html
+- uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PICK16
+  commentId: T:Ubytec.Language.Operations.Extended.ExtendedStackOperations.PICK16
+  href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.html
+  name: ExtendedStackOperations.PICK16
+  nameWithType: ExtendedStackOperations.PICK16
+  fullName: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PICK16
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations
+    name: ExtendedStackOperations
+    href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PICK16
+    name: PICK16
+    href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PICK16.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations
+    name: ExtendedStackOperations
+    href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PICK16
+    name: PICK16
+    href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PICK16.html
+- uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.ROLL16
+  commentId: T:Ubytec.Language.Operations.Extended.ExtendedStackOperations.ROLL16
+  href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.html
+  name: ExtendedStackOperations.ROLL16
+  nameWithType: ExtendedStackOperations.ROLL16
+  fullName: Ubytec.Language.Operations.Extended.ExtendedStackOperations.ROLL16
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations
+    name: ExtendedStackOperations
+    href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.ROLL16
+    name: ROLL16
+    href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.ROLL16.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations
+    name: ExtendedStackOperations
+    href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.ROLL16
+    name: ROLL16
+    href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.ROLL16.html
+- uid: Ubytec.Language.Operations.Extended.IExtendedOpCode
+  commentId: T:Ubytec.Language.Operations.Extended.IExtendedOpCode
+  parent: Ubytec.Language.Operations.Extended
+  href: Ubytec.Language.Operations.Extended.IExtendedOpCode.html
+  name: IExtendedOpCode
+  nameWithType: IExtendedOpCode
+  fullName: Ubytec.Language.Operations.Extended.IExtendedOpCode
+- uid: Ubytec.Language.Operations.Extended
+  commentId: N:Ubytec.Language.Operations.Extended
+  href: Ubytec.html
+  name: Ubytec.Language.Operations.Extended
+  nameWithType: Ubytec.Language.Operations.Extended
+  fullName: Ubytec.Language.Operations.Extended
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Extended
+    name: Extended
+    href: Ubytec.Language.Operations.Extended.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Extended
+    name: Extended
+    href: Ubytec.Language.Operations.Extended.html

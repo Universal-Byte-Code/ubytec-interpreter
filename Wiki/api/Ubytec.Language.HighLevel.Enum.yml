@@ -1,0 +1,1005 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.HighLevel.Enum
+  commentId: T:Ubytec.Language.HighLevel.Enum
+  id: Enum
+  parent: Ubytec.Language.HighLevel
+  children:
+  - Ubytec.Language.HighLevel.Enum.#ctor(System.String,System.ValueTuple{System.String,System.Int64}[],System.Guid,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,System.Boolean,Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers)
+  - Ubytec.Language.HighLevel.Enum.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  - Ubytec.Language.HighLevel.Enum.ID
+  - Ubytec.Language.HighLevel.Enum.IsBitfield
+  - Ubytec.Language.HighLevel.Enum.Members
+  - Ubytec.Language.HighLevel.Enum.Modifiers
+  - Ubytec.Language.HighLevel.Enum.Name
+  - Ubytec.Language.HighLevel.Enum.TypeSize
+  - Ubytec.Language.HighLevel.Enum.Validate
+  langs:
+  - csharp
+  - vb
+  name: Enum
+  nameWithType: Enum
+  fullName: Ubytec.Language.HighLevel.Enum
+  type: Struct
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Enum.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Enum
+    path: ../Ubytec/Language/HighLevel/Enum.cs
+    startLine: 10
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  syntax:
+    content: 'public readonly struct Enum : IUbytecContextEntity, IUbytecHighLevelEntity, IUbytecEntity'
+    content.vb: Public Structure [Enum] Implements IUbytecContextEntity, IUbytecHighLevelEntity, IUbytecEntity
+  implements:
+  - Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
+  - Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  - Ubytec.Language.IUbytecEntity
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubytec.Language.HighLevel.Enum.Name
+  commentId: P:Ubytec.Language.HighLevel.Enum.Name
+  id: Name
+  parent: Ubytec.Language.HighLevel.Enum
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: Enum.Name
+  fullName: Ubytec.Language.HighLevel.Enum.Name
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Enum.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Name
+    path: ../Ubytec/Language/HighLevel/Enum.cs
+    startLine: 12
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  example: []
+  syntax:
+    content: public string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Name As String
+  overload: Ubytec.Language.HighLevel.Enum.Name*
+  implements:
+  - Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Name
+- uid: Ubytec.Language.HighLevel.Enum.ID
+  commentId: P:Ubytec.Language.HighLevel.Enum.ID
+  id: ID
+  parent: Ubytec.Language.HighLevel.Enum
+  langs:
+  - csharp
+  - vb
+  name: ID
+  nameWithType: Enum.ID
+  fullName: Ubytec.Language.HighLevel.Enum.ID
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Enum.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ID
+    path: ../Ubytec/Language/HighLevel/Enum.cs
+    startLine: 13
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  example: []
+  syntax:
+    content: public Guid ID { get; }
+    parameters: []
+    return:
+      type: System.Guid
+    content.vb: Public ReadOnly Property ID As Guid
+  overload: Ubytec.Language.HighLevel.Enum.ID*
+  implements:
+  - Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
+- uid: Ubytec.Language.HighLevel.Enum.TypeSize
+  commentId: P:Ubytec.Language.HighLevel.Enum.TypeSize
+  id: TypeSize
+  parent: Ubytec.Language.HighLevel.Enum
+  langs:
+  - csharp
+  - vb
+  name: TypeSize
+  nameWithType: Enum.TypeSize
+  fullName: Ubytec.Language.HighLevel.Enum.TypeSize
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Enum.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: TypeSize
+    path: ../Ubytec/Language/HighLevel/Enum.cs
+    startLine: 14
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  syntax:
+    content: public Types.PrimitiveType TypeSize { get; }
+    parameters: []
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    content.vb: Public ReadOnly Property TypeSize As Types.PrimitiveType
+  overload: Ubytec.Language.HighLevel.Enum.TypeSize*
+- uid: Ubytec.Language.HighLevel.Enum.Modifiers
+  commentId: P:Ubytec.Language.HighLevel.Enum.Modifiers
+  id: Modifiers
+  parent: Ubytec.Language.HighLevel.Enum
+  langs:
+  - csharp
+  - vb
+  name: Modifiers
+  nameWithType: Enum.Modifiers
+  fullName: Ubytec.Language.HighLevel.Enum.Modifiers
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Enum.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Modifiers
+    path: ../Ubytec/Language/HighLevel/Enum.cs
+    startLine: 15
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  example: []
+  syntax:
+    content: public Types.TypeModifiers Modifiers { get; }
+    parameters: []
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    content.vb: Public ReadOnly Property Modifiers As Types.TypeModifiers
+  overload: Ubytec.Language.HighLevel.Enum.Modifiers*
+  implements:
+  - Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Modifiers
+- uid: Ubytec.Language.HighLevel.Enum.IsBitfield
+  commentId: P:Ubytec.Language.HighLevel.Enum.IsBitfield
+  id: IsBitfield
+  parent: Ubytec.Language.HighLevel.Enum
+  langs:
+  - csharp
+  - vb
+  name: IsBitfield
+  nameWithType: Enum.IsBitfield
+  fullName: Ubytec.Language.HighLevel.Enum.IsBitfield
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Enum.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IsBitfield
+    path: ../Ubytec/Language/HighLevel/Enum.cs
+    startLine: 16
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  syntax:
+    content: public bool IsBitfield { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsBitfield As Boolean
+  overload: Ubytec.Language.HighLevel.Enum.IsBitfield*
+- uid: Ubytec.Language.HighLevel.Enum.Members
+  commentId: P:Ubytec.Language.HighLevel.Enum.Members
+  id: Members
+  parent: Ubytec.Language.HighLevel.Enum
+  langs:
+  - csharp
+  - vb
+  name: Members
+  nameWithType: Enum.Members
+  fullName: Ubytec.Language.HighLevel.Enum.Members
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Enum.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Members
+    path: ../Ubytec/Language/HighLevel/Enum.cs
+    startLine: 18
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  syntax:
+    content: public (string Name, long Value)[] Members { get; }
+    parameters: []
+    return:
+      type: System.ValueTuple{System.String,System.Int64}[]
+    content.vb: Public ReadOnly Property Members As (Name As String, Value As Long)()
+  overload: Ubytec.Language.HighLevel.Enum.Members*
+- uid: Ubytec.Language.HighLevel.Enum.#ctor(System.String,System.ValueTuple{System.String,System.Int64}[],System.Guid,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,System.Boolean,Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers)
+  commentId: M:Ubytec.Language.HighLevel.Enum.#ctor(System.String,System.ValueTuple{System.String,System.Int64}[],System.Guid,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,System.Boolean,Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers)
+  id: '#ctor(System.String,System.ValueTuple{System.String,System.Int64}[],System.Guid,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,System.Boolean,Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers)'
+  parent: Ubytec.Language.HighLevel.Enum
+  langs:
+  - csharp
+  - vb
+  name: Enum(string, (string Name, long Value)[], Guid, PrimitiveType, bool, TypeModifiers)
+  nameWithType: Enum.Enum(string, (string Name, long Value)[], Guid, Types.PrimitiveType, bool, Types.TypeModifiers)
+  fullName: Ubytec.Language.HighLevel.Enum.Enum(string, (string Name, long Value)[], System.Guid, Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType, bool, Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers)
+  type: Constructor
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Enum.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: .ctor
+    path: ../Ubytec/Language/HighLevel/Enum.cs
+    startLine: 20
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  syntax:
+    content: public Enum(string name, (string Name, long Value)[] members, Guid id, Types.PrimitiveType typeSize = PrimitiveType.Byte, bool isBitField = false, Types.TypeModifiers modifiers = TypeModifiers.None)
+    parameters:
+    - id: name
+      type: System.String
+    - id: members
+      type: System.ValueTuple{System.String,System.Int64}[]
+    - id: id
+      type: System.Guid
+    - id: typeSize
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    - id: isBitField
+      type: System.Boolean
+    - id: modifiers
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    content.vb: Public Sub New(name As String, members As (Name As String, Value As Long)(), id As Guid, typeSize As Types.PrimitiveType = PrimitiveType.Byte, isBitField As Boolean = False, modifiers As Types.TypeModifiers = TypeModifiers.None)
+  overload: Ubytec.Language.HighLevel.Enum.#ctor*
+  nameWithType.vb: Enum.New(String, (Name As String, Value As Long)(), Guid, Types.PrimitiveType, Boolean, Types.TypeModifiers)
+  fullName.vb: Ubytec.Language.HighLevel.Enum.New(String, (Name As String, Value As Long)(), System.Guid, Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType, Boolean, Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers)
+  name.vb: New(String, (Name As String, Value As Long)(), Guid, PrimitiveType, Boolean, TypeModifiers)
+- uid: Ubytec.Language.HighLevel.Enum.Validate
+  commentId: M:Ubytec.Language.HighLevel.Enum.Validate
+  id: Validate
+  parent: Ubytec.Language.HighLevel.Enum
+  langs:
+  - csharp
+  - vb
+  name: Validate()
+  nameWithType: Enum.Validate()
+  fullName: Ubytec.Language.HighLevel.Enum.Validate()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Enum.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Validate
+    path: ../Ubytec/Language/HighLevel/Enum.cs
+    startLine: 31
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  example: []
+  syntax:
+    content: public void Validate()
+    content.vb: Public Sub Validate()
+  overload: Ubytec.Language.HighLevel.Enum.Validate*
+  implements:
+  - Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+- uid: Ubytec.Language.HighLevel.Enum.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  commentId: M:Ubytec.Language.HighLevel.Enum.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  id: Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  parent: Ubytec.Language.HighLevel.Enum
+  langs:
+  - csharp
+  - vb
+  name: Compile(CompilationScopes)
+  nameWithType: Enum.Compile(CompilationScopes)
+  fullName: Ubytec.Language.HighLevel.Enum.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/Enum.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Compile
+    path: ../Ubytec/Language/HighLevel/Enum.cs
+    startLine: 80
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  example: []
+  syntax:
+    content: public string Compile(CompilationScopes scopes)
+    parameters:
+    - id: scopes
+      type: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    return:
+      type: System.String
+    content.vb: Public Function Compile(scopes As CompilationScopes) As String
+  overload: Ubytec.Language.HighLevel.Enum.Compile*
+  implements:
+  - Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+references:
+- uid: Ubytec.Language.HighLevel
+  commentId: N:Ubytec.Language.HighLevel
+  href: Ubytec.html
+  name: Ubytec.Language.HighLevel
+  nameWithType: Ubytec.Language.HighLevel
+  fullName: Ubytec.Language.HighLevel
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
+  commentId: T:Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
+  parent: Ubytec.Language.HighLevel.Interfaces
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.html
+  name: IUbytecContextEntity
+  nameWithType: IUbytecContextEntity
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  commentId: T:Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  parent: Ubytec.Language.HighLevel.Interfaces
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html
+  name: IUbytecHighLevelEntity
+  nameWithType: IUbytecHighLevelEntity
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+- uid: Ubytec.Language.IUbytecEntity
+  commentId: T:Ubytec.Language.IUbytecEntity
+  parent: Ubytec.Language
+  href: Ubytec.Language.IUbytecEntity.html
+  name: IUbytecEntity
+  nameWithType: IUbytecEntity
+  fullName: Ubytec.Language.IUbytecEntity
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Ubytec.Language.HighLevel.Interfaces
+  commentId: N:Ubytec.Language.HighLevel.Interfaces
+  href: Ubytec.html
+  name: Ubytec.Language.HighLevel.Interfaces
+  nameWithType: Ubytec.Language.HighLevel.Interfaces
+  fullName: Ubytec.Language.HighLevel.Interfaces
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.HighLevel.Interfaces.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.HighLevel.Interfaces.html
+- uid: Ubytec.Language
+  commentId: N:Ubytec.Language
+  href: Ubytec.html
+  name: Ubytec.Language
+  nameWithType: Ubytec.Language
+  fullName: Ubytec.Language
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubytec.Language.HighLevel.Enum.Name*
+  commentId: Overload:Ubytec.Language.HighLevel.Enum.Name
+  href: Ubytec.Language.HighLevel.Enum.html#Ubytec_Language_HighLevel_Enum_Name
+  name: Name
+  nameWithType: Enum.Name
+  fullName: Ubytec.Language.HighLevel.Enum.Name
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Name
+  commentId: P:Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Name
+  parent: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecContextEntity_Name
+  name: Name
+  nameWithType: IUbytecContextEntity.Name
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubytec.Language.HighLevel.Enum.ID*
+  commentId: Overload:Ubytec.Language.HighLevel.Enum.ID
+  href: Ubytec.Language.HighLevel.Enum.html#Ubytec_Language_HighLevel_Enum_ID
+  name: ID
+  nameWithType: Enum.ID
+  fullName: Ubytec.Language.HighLevel.Enum.ID
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
+  commentId: P:Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
+  parent: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_ID
+  name: ID
+  nameWithType: IUbytecHighLevelEntity.ID
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
+- uid: System.Guid
+  commentId: T:System.Guid
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.guid
+  name: Guid
+  nameWithType: Guid
+  fullName: System.Guid
+- uid: Ubytec.Language.HighLevel.Enum.TypeSize*
+  commentId: Overload:Ubytec.Language.HighLevel.Enum.TypeSize
+  href: Ubytec.Language.HighLevel.Enum.html#Ubytec_Language_HighLevel_Enum_TypeSize
+  name: TypeSize
+  nameWithType: Enum.TypeSize
+  fullName: Ubytec.Language.HighLevel.Enum.TypeSize
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  name: Types.PrimitiveType
+  nameWithType: Types.PrimitiveType
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+- uid: Ubytec.Language.Syntax.TypeSystem
+  commentId: N:Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.TypeSystem
+  nameWithType: Ubytec.Language.Syntax.TypeSystem
+  fullName: Ubytec.Language.Syntax.TypeSystem
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
+- uid: Ubytec.Language.HighLevel.Enum.Modifiers*
+  commentId: Overload:Ubytec.Language.HighLevel.Enum.Modifiers
+  href: Ubytec.Language.HighLevel.Enum.html#Ubytec_Language_HighLevel_Enum_Modifiers
+  name: Modifiers
+  nameWithType: Enum.Modifiers
+  fullName: Ubytec.Language.HighLevel.Enum.Modifiers
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Modifiers
+  commentId: P:Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Modifiers
+  parent: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecContextEntity_Modifiers
+  name: Modifiers
+  nameWithType: IUbytecContextEntity.Modifiers
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Modifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  name: Types.TypeModifiers
+  nameWithType: Types.TypeModifiers
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
+- uid: Ubytec.Language.HighLevel.Enum.IsBitfield*
+  commentId: Overload:Ubytec.Language.HighLevel.Enum.IsBitfield
+  href: Ubytec.Language.HighLevel.Enum.html#Ubytec_Language_HighLevel_Enum_IsBitfield
+  name: IsBitfield
+  nameWithType: Enum.IsBitfield
+  fullName: Ubytec.Language.HighLevel.Enum.IsBitfield
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Ubytec.Language.HighLevel.Enum.Members*
+  commentId: Overload:Ubytec.Language.HighLevel.Enum.Members
+  href: Ubytec.Language.HighLevel.Enum.html#Ubytec_Language_HighLevel_Enum_Members
+  name: Members
+  nameWithType: Enum.Members
+  fullName: Ubytec.Language.HighLevel.Enum.Members
+- uid: System.ValueTuple{System.String,System.Int64}[]
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: (string Name, long Value)[]
+  nameWithType: (string Name, long Value)[]
+  fullName: (string Name, long Value)[]
+  nameWithType.vb: (Name As String, Value As Long)()
+  fullName.vb: (Name As String, Value As Long)()
+  name.vb: (Name As String, Value As Long)()
+  spec.csharp:
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: " "
+  - uid: System.ValueTuple{System.String,System.Int64}.Name
+    name: Name
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-system.string,system.int64-.name
+  - name: ','
+  - name: " "
+  - uid: System.Int64
+    name: long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: " "
+  - uid: System.ValueTuple{System.String,System.Int64}.Value
+    name: Value
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-system.string,system.int64-.value
+  - name: )
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - name: (
+  - uid: System.ValueTuple{System.String,System.Int64}.Name
+    name: Name
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-system.string,system.int64-.name
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.String,System.Int64}.Value
+    name: Value
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-system.string,system.int64-.value
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: )
+  - name: (
+  - name: )
+- uid: Ubytec.Language.HighLevel.Enum.#ctor*
+  commentId: Overload:Ubytec.Language.HighLevel.Enum.#ctor
+  href: Ubytec.Language.HighLevel.Enum.html#Ubytec_Language_HighLevel_Enum__ctor_System_String_System_ValueTuple_System_String_System_Int64____System_Guid_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_System_Boolean_Ubytec_Language_Syntax_TypeSystem_Types_TypeModifiers_
+  name: Enum
+  nameWithType: Enum.Enum
+  fullName: Ubytec.Language.HighLevel.Enum.Enum
+  nameWithType.vb: Enum.New
+  fullName.vb: Ubytec.Language.HighLevel.Enum.New
+  name.vb: New
+- uid: Ubytec.Language.HighLevel.Enum.Validate*
+  commentId: Overload:Ubytec.Language.HighLevel.Enum.Validate
+  href: Ubytec.Language.HighLevel.Enum.html#Ubytec_Language_HighLevel_Enum_Validate
+  name: Validate
+  nameWithType: Enum.Validate
+  fullName: Ubytec.Language.HighLevel.Enum.Validate
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+  commentId: M:Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+  parent: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
+  name: Validate()
+  nameWithType: IUbytecHighLevelEntity.Validate()
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate()
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+    name: Validate
+    href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+    name: Validate
+    href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
+  - name: (
+  - name: )
+- uid: Ubytec.Language.HighLevel.Enum.Compile*
+  commentId: Overload:Ubytec.Language.HighLevel.Enum.Compile
+  href: Ubytec.Language.HighLevel.Enum.html#Ubytec_Language_HighLevel_Enum_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  name: Compile
+  nameWithType: Enum.Compile
+  fullName: Ubytec.Language.HighLevel.Enum.Compile
+- uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  commentId: M:Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  parent: Ubytec.Language.IUbytecEntity
+  href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  name: Compile(CompilationScopes)
+  nameWithType: IUbytecEntity.Compile(CompilationScopes)
+  fullName: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  spec.csharp:
+  - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+    name: Compile
+    href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+    name: Compile
+    href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  - name: )
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  commentId: T:Ubytec.Language.Syntax.Scopes.CompilationScopes
+  parent: Ubytec.Language.Syntax.Scopes
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  name: CompilationScopes
+  nameWithType: CompilationScopes
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes
+- uid: Ubytec.Language.Syntax.Scopes
+  commentId: N:Ubytec.Language.Syntax.Scopes
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Scopes
+  nameWithType: Ubytec.Language.Syntax.Scopes
+  fullName: Ubytec.Language.Syntax.Scopes
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html

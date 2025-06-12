@@ -1,0 +1,70 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.Interfaces
+  commentId: N:Ubytec.Language.Syntax.Interfaces
+  id: Ubytec.Language.Syntax.Interfaces
+  children:
+  - Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+  - Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+  langs:
+  - csharp
+  - vb
+  name: Ubytec.Language.Syntax.Interfaces
+  nameWithType: Ubytec.Language.Syntax.Interfaces
+  fullName: Ubytec.Language.Syntax.Interfaces
+  type: Namespace
+  assemblies:
+  - Ubytec
+references:
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+  commentId: T:Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+  parent: Ubytec.Language.Syntax.Interfaces
+  href: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.html
+  name: IUbytecExpressionFragment
+  nameWithType: IUbytecExpressionFragment
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+  commentId: T:Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+  parent: Ubytec.Language.Syntax.Interfaces
+  href: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.html
+  name: IUbytecSyntax
+  nameWithType: IUbytecSyntax
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+- uid: Ubytec.Language.Syntax.Interfaces
+  commentId: N:Ubytec.Language.Syntax.Interfaces
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Interfaces
+  nameWithType: Ubytec.Language.Syntax.Interfaces
+  fullName: Ubytec.Language.Syntax.Interfaces
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Syntax.Interfaces.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Syntax.Interfaces.html

@@ -7,7 +7,7 @@ using Ubytec.Language.Syntax.Interfaces;
 
 namespace Ubytec.Language.Syntax.Model;
 
-public sealed class SyntaxTree : IUbytecSyntax, IDisposable
+public sealed class SyntaxTree : IUbytecSyntax
 {
     [JsonInclude]
     public SyntaxSentence RootSentence { get; set; }

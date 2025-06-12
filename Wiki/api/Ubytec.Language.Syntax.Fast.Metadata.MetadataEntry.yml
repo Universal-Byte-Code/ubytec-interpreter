@@ -1,0 +1,683 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  commentId: T:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  id: MetadataEntry
+  parent: Ubytec.Language.Syntax.Fast.Metadata
+  children:
+  - Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.#ctor
+  - Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.GetValuePointer(Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*)
+  - Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KEY_SIZE
+  - Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.Key
+  - Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KeyEquals(Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*,System.String)
+  - Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetKey(System.String)
+  - Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetValue(System.String)
+  - Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.VALUE_SIZE
+  - Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.Value
+  langs:
+  - csharp
+  - vb
+  name: MetadataEntry
+  nameWithType: MetadataEntry
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  type: Struct
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: MetadataEntry
+    path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+    startLine: 7
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Fast.Metadata
+  syntax:
+    content: public struct MetadataEntry
+    content.vb: Public Structure MetadataEntry
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KEY_SIZE
+  commentId: F:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KEY_SIZE
+  id: KEY_SIZE
+  parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  langs:
+  - csharp
+  - vb
+  name: KEY_SIZE
+  nameWithType: MetadataEntry.KEY_SIZE
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KEY_SIZE
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: KEY_SIZE
+    path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+    startLine: 11
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Fast.Metadata
+  syntax:
+    content: public const int KEY_SIZE = 64
+    return:
+      type: System.Int32
+    content.vb: Public Const KEY_SIZE As Integer = 64
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.VALUE_SIZE
+  commentId: F:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.VALUE_SIZE
+  id: VALUE_SIZE
+  parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  langs:
+  - csharp
+  - vb
+  name: VALUE_SIZE
+  nameWithType: MetadataEntry.VALUE_SIZE
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.VALUE_SIZE
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: VALUE_SIZE
+    path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+    startLine: 12
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Fast.Metadata
+  syntax:
+    content: public const int VALUE_SIZE = 256
+    return:
+      type: System.Int32
+    content.vb: Public Const VALUE_SIZE As Integer = 256
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.Key
+  commentId: F:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.Key
+  id: Key
+  parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  langs:
+  - csharp
+  - vb
+  name: Key
+  nameWithType: MetadataEntry.Key
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.Key
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Key
+    path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+    startLine: 16
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Fast.Metadata
+  syntax:
+    content: public byte* Key
+    return:
+      type: System.Byte*
+    content.vb: Public Key As Byte*
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.Value
+  commentId: F:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.Value
+  id: Value
+  parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  langs:
+  - csharp
+  - vb
+  name: Value
+  nameWithType: MetadataEntry.Value
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.Value
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Value
+    path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+    startLine: 19
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Fast.Metadata
+  syntax:
+    content: public byte* Value
+    return:
+      type: System.Byte*
+    content.vb: Public Value As Byte*
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.#ctor
+  commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.#ctor
+  id: '#ctor'
+  parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  langs:
+  - csharp
+  - vb
+  name: MetadataEntry()
+  nameWithType: MetadataEntry.MetadataEntry()
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.MetadataEntry()
+  type: Constructor
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: .ctor
+    path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+    startLine: 21
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Fast.Metadata
+  syntax:
+    content: public MetadataEntry()
+    content.vb: Public Sub New()
+  overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.#ctor*
+  nameWithType.vb: MetadataEntry.New()
+  fullName.vb: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.New()
+  name.vb: New()
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetKey(System.String)
+  commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetKey(System.String)
+  id: TrySetKey(System.String)
+  parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  langs:
+  - csharp
+  - vb
+  name: TrySetKey(string)
+  nameWithType: MetadataEntry.TrySetKey(string)
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetKey(string)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: TrySetKey
+    path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+    startLine: 27
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Fast.Metadata
+  syntax:
+    content: public readonly bool TrySetKey(string key)
+    parameters:
+    - id: key
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function TrySetKey(key As String) As Boolean
+  overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetKey*
+  nameWithType.vb: MetadataEntry.TrySetKey(String)
+  fullName.vb: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetKey(String)
+  name.vb: TrySetKey(String)
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetValue(System.String)
+  commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetValue(System.String)
+  id: TrySetValue(System.String)
+  parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  langs:
+  - csharp
+  - vb
+  name: TrySetValue(string)
+  nameWithType: MetadataEntry.TrySetValue(string)
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetValue(string)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: TrySetValue
+    path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+    startLine: 43
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Fast.Metadata
+  syntax:
+    content: public readonly bool TrySetValue(string str)
+    parameters:
+    - id: str
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function TrySetValue(str As String) As Boolean
+  overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetValue*
+  nameWithType.vb: MetadataEntry.TrySetValue(String)
+  fullName.vb: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetValue(String)
+  name.vb: TrySetValue(String)
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KeyEquals(Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*,System.String)
+  commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KeyEquals(Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*,System.String)
+  id: KeyEquals(Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*,System.String)
+  parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  langs:
+  - csharp
+  - vb
+  name: KeyEquals(MetadataEntry*, string)
+  nameWithType: MetadataEntry.KeyEquals(MetadataEntry*, string)
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KeyEquals(Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*, string)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: KeyEquals
+    path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+    startLine: 59
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Fast.Metadata
+  syntax:
+    content: public static bool KeyEquals(MetadataEntry* entry, string key)
+    parameters:
+    - id: entry
+      type: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*
+    - id: key
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function KeyEquals(entry As MetadataEntry*, key As String) As Boolean
+  overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KeyEquals*
+  nameWithType.vb: MetadataEntry.KeyEquals(MetadataEntry*, String)
+  fullName.vb: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KeyEquals(Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*, String)
+  name.vb: KeyEquals(MetadataEntry*, String)
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.GetValuePointer(Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*)
+  commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.GetValuePointer(Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*)
+  id: GetValuePointer(Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*)
+  parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  langs:
+  - csharp
+  - vb
+  name: GetValuePointer(MetadataEntry*)
+  nameWithType: MetadataEntry.GetValuePointer(MetadataEntry*)
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.GetValuePointer(Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: GetValuePointer
+    path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
+    startLine: 75
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Fast.Metadata
+  syntax:
+    content: public static byte* GetValuePointer(MetadataEntry* entry)
+    parameters:
+    - id: entry
+      type: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*
+    return:
+      type: System.Byte*
+    content.vb: Public Shared Function GetValuePointer(entry As MetadataEntry*) As Byte*
+  overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.GetValuePointer*
+references:
+- uid: Ubytec.Language.Syntax.Fast.Metadata
+  commentId: N:Ubytec.Language.Syntax.Fast.Metadata
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Fast.Metadata
+  nameWithType: Ubytec.Language.Syntax.Fast.Metadata
+  fullName: Ubytec.Language.Syntax.Fast.Metadata
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Fast
+    name: Fast
+    href: Ubytec.Language.Syntax.Fast.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Fast.Metadata
+    name: Metadata
+    href: Ubytec.Language.Syntax.Fast.Metadata.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Fast
+    name: Fast
+    href: Ubytec.Language.Syntax.Fast.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Fast.Metadata
+    name: Metadata
+    href: Ubytec.Language.Syntax.Fast.Metadata.html
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Byte*
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.byte
+  name: byte*
+  nameWithType: byte*
+  fullName: byte*
+  nameWithType.vb: Byte*
+  fullName.vb: Byte*
+  name.vb: Byte*
+  spec.csharp:
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: '*'
+  spec.vb:
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: '*'
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.#ctor*
+  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.#ctor
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry__ctor
+  name: MetadataEntry
+  nameWithType: MetadataEntry.MetadataEntry
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.MetadataEntry
+  nameWithType.vb: MetadataEntry.New
+  fullName.vb: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.New
+  name.vb: New
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetKey*
+  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetKey
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry_TrySetKey_System_String_
+  name: TrySetKey
+  nameWithType: MetadataEntry.TrySetKey
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetKey
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetValue*
+  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetValue
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry_TrySetValue_System_String_
+  name: TrySetValue
+  nameWithType: MetadataEntry.TrySetValue
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetValue
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KeyEquals*
+  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KeyEquals
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry_KeyEquals_Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry__System_String_
+  name: KeyEquals
+  nameWithType: MetadataEntry.KeyEquals
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KeyEquals
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*
+  isExternal: true
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.html
+  name: MetadataEntry*
+  nameWithType: MetadataEntry*
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+    name: MetadataEntry
+    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.html
+  - name: '*'
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+    name: MetadataEntry
+    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.html
+  - name: '*'
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.GetValuePointer*
+  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.GetValuePointer
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry_GetValuePointer_Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry__
+  name: GetValuePointer
+  nameWithType: MetadataEntry.GetValuePointer
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.GetValuePointer

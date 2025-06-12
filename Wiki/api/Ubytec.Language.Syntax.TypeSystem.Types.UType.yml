@@ -1,0 +1,1264 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.UType
+  id: Types.UType
+  parent: Ubytec.Language.Syntax.TypeSystem
+  children:
+  - Ubytec.Language.Syntax.TypeSystem.Types.UType.#ctor(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers,System.Nullable{System.Guid},System.String,System.UIntPtr)
+  - Ubytec.Language.Syntax.TypeSystem.Types.UType.FixedArraySize
+  - Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Byte)
+  - Ubytec.Language.Syntax.TypeSystem.Types.UType.ID
+  - Ubytec.Language.Syntax.TypeSystem.Types.UType.IsArray
+  - Ubytec.Language.Syntax.TypeSystem.Types.UType.IsFullyNullableArray
+  - Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableArray
+  - Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableItems
+  - Ubytec.Language.Syntax.TypeSystem.Types.UType.IsSingleNullable
+  - Ubytec.Language.Syntax.TypeSystem.Types.UType.Modifiers
+  - Ubytec.Language.Syntax.TypeSystem.Types.UType.Name
+  - Ubytec.Language.Syntax.TypeSystem.Types.UType.ToString
+  - Ubytec.Language.Syntax.TypeSystem.Types.UType.Type
+  - Ubytec.Language.Syntax.TypeSystem.Types.UType.TypeIDLUT
+  langs:
+  - csharp
+  - vb
+  name: Types.UType
+  nameWithType: Types.UType
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  type: Struct
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: UType
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+    startLine: 40
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: >-
+    Represents a type descriptor in the Ubytec type system, including primitive category,
+
+    modifiers such as array or nullability, and optional identifier and name.
+  remarks: >-
+    <p>
+
+    Use <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte%2cSystem.Byte)" data-throw-if-not-resolved="false"></xref> to reconstruct a <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType" data-throw-if-not-resolved="false"></xref> from
+
+    low-level operand bytes.</p>
+  example:
+  - >-
+    <pre><code class="lang-csharp">// Simple primitive:
+
+    var t1 = new UType(PrimitiveType.Int);
+
+    Console.WriteLine(t1); // "Int"
+
+
+    // Nullable primitive:
+
+    var t2 = new UType(PrimitiveType.Bool, TypeModifiers.Nullable);
+
+    Console.WriteLine(t2); // "Bool?"
+
+
+    // Array of strings (nullable items):
+
+    var t3 = new UType(PrimitiveType.String, TypeModifiers.IsArray | TypeModifiers.NullableItems);
+
+    Console.WriteLine(t3); // "String?[]"
+
+
+    // Fully nullable array:
+
+    var t4 = new UType(PrimitiveType.Byte, TypeModifiers.IsArray | TypeModifiers.NullableArray | TypeModifiers.NullableItems);
+
+    Console.WriteLine(t4); // "Byte?[]?"</code></pre>
+  syntax:
+    content: public readonly struct Types.UType
+    content.vb: Public Structure Types.UType
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.#ctor(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers,System.Nullable{System.Guid},System.String,System.UIntPtr)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.UType.#ctor(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers,System.Nullable{System.Guid},System.String,System.UIntPtr)
+  id: '#ctor(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers,System.Nullable{System.Guid},System.String,System.UIntPtr)'
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  langs:
+  - csharp
+  - vb
+  name: UType(PrimitiveType, TypeModifiers, Guid?, string?, nuint)
+  nameWithType: Types.UType.UType(Types.PrimitiveType, Types.TypeModifiers, Guid?, string?, nuint)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.UType(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType, Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers, System.Guid?, string?, nuint)
+  type: Constructor
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: .ctor
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+    startLine: 40
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: >-
+    Represents a type descriptor in the Ubytec type system, including primitive category,
+
+    modifiers such as array or nullability, and optional identifier and name.
+  remarks: >-
+    <p>
+
+    Use <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte%2cSystem.Byte)" data-throw-if-not-resolved="false"></xref> to reconstruct a <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType" data-throw-if-not-resolved="false"></xref> from
+
+    low-level operand bytes.</p>
+  example:
+  - >-
+    <pre><code class="lang-csharp">// Simple primitive:
+
+    var t1 = new UType(PrimitiveType.Int);
+
+    Console.WriteLine(t1); // "Int"
+
+
+    // Nullable primitive:
+
+    var t2 = new UType(PrimitiveType.Bool, TypeModifiers.Nullable);
+
+    Console.WriteLine(t2); // "Bool?"
+
+
+    // Array of strings (nullable items):
+
+    var t3 = new UType(PrimitiveType.String, TypeModifiers.IsArray | TypeModifiers.NullableItems);
+
+    Console.WriteLine(t3); // "String?[]"
+
+
+    // Fully nullable array:
+
+    var t4 = new UType(PrimitiveType.Byte, TypeModifiers.IsArray | TypeModifiers.NullableArray | TypeModifiers.NullableItems);
+
+    Console.WriteLine(t4); // "Byte?[]?"</code></pre>
+  syntax:
+    content: public UType(Types.PrimitiveType type = PrimitiveType.Default, Types.TypeModifiers modifiers = TypeModifiers.None, Guid? id = null, string? name = null, nuint fixedArraySize = 1)
+    parameters:
+    - id: type
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+      description: Base <xref href="Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType" data-throw-if-not-resolved="false"></xref> of the type.
+    - id: modifiers
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+      description: Flags indicating array, nullability, or other modifiers.
+    - id: id
+      type: System.Nullable{System.Guid}
+      description: Optional unique identifier for the type.
+    - id: name
+      type: System.String
+      description: Optional custom name; defaults to the <code class="paramref">type</code> name.
+    - id: fixedArraySize
+      type: System.UIntPtr
+      description: >-
+        If <code class="paramref">modifiers</code> includes <code>TypeModifiers.IsArray</code>, this
+            specifies the fixed size of the array; defaults to 1 for non-array types.
+    content.vb: Public Sub New(type As Types.PrimitiveType = PrimitiveType.Default, modifiers As Types.TypeModifiers = TypeModifiers.None, id As Guid? = Nothing, name As String = Nothing, fixedArraySize As UIntPtr = 1)
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.UType.#ctor*
+  nameWithType.vb: Types.UType.New(Types.PrimitiveType, Types.TypeModifiers, Guid?, String, UIntPtr)
+  fullName.vb: Ubytec.Language.Syntax.TypeSystem.Types.UType.New(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType, Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers, System.Guid?, String, System.UIntPtr)
+  name.vb: New(PrimitiveType, TypeModifiers, Guid?, String, UIntPtr)
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.TypeIDLUT
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.UType.TypeIDLUT
+  id: TypeIDLUT
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  langs:
+  - csharp
+  - vb
+  name: TypeIDLUT
+  nameWithType: Types.UType.TypeIDLUT
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.TypeIDLUT
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: TypeIDLUT
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+    startLine: 51
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Lookup table mapping custom type names to GUID identifiers.
+  example: []
+  syntax:
+    content: public static readonly Dictionary<string, Guid> TypeIDLUT
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,System.Guid}
+    content.vb: Public Shared ReadOnly TypeIDLUT As Dictionary(Of String, Guid)
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.Type
+  commentId: P:Ubytec.Language.Syntax.TypeSystem.Types.UType.Type
+  id: Type
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  langs:
+  - csharp
+  - vb
+  name: Type
+  nameWithType: Types.UType.Type
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.Type
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Type
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+    startLine: 56
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Gets the base primitive category of this type.
+  example: []
+  syntax:
+    content: public Types.PrimitiveType Type { get; }
+    parameters: []
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    content.vb: Public ReadOnly Property Type As Types.PrimitiveType
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.UType.Type*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.ID
+  commentId: P:Ubytec.Language.Syntax.TypeSystem.Types.UType.ID
+  id: ID
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  langs:
+  - csharp
+  - vb
+  name: ID
+  nameWithType: Types.UType.ID
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.ID
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ID
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+    startLine: 61
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Gets the optional unique identifier associated with this type, if any.
+  example: []
+  syntax:
+    content: public Guid? ID { get; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Guid}
+    content.vb: Public ReadOnly Property ID As Guid?
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.UType.ID*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.Name
+  commentId: P:Ubytec.Language.Syntax.TypeSystem.Types.UType.Name
+  id: Name
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: Types.UType.Name
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.Name
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Name
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+    startLine: 67
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: >-
+    Gets the display name of this type. Returns <code>name</code> if provided;
+
+    otherwise, the <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType.Type" data-throw-if-not-resolved="false"></xref> name.
+  example: []
+  syntax:
+    content: public string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Name As String
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.UType.Name*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.Modifiers
+  commentId: P:Ubytec.Language.Syntax.TypeSystem.Types.UType.Modifiers
+  id: Modifiers
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  langs:
+  - csharp
+  - vb
+  name: Modifiers
+  nameWithType: Types.UType.Modifiers
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.Modifiers
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Modifiers
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+    startLine: 72
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Gets any modifiers applied to this type, such as array, nullability, or custom flags.
+  example: []
+  syntax:
+    content: public Types.TypeModifiers Modifiers { get; }
+    parameters: []
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    content.vb: Public ReadOnly Property Modifiers As Types.TypeModifiers
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.UType.Modifiers*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.FixedArraySize
+  commentId: P:Ubytec.Language.Syntax.TypeSystem.Types.UType.FixedArraySize
+  id: FixedArraySize
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  langs:
+  - csharp
+  - vb
+  name: FixedArraySize
+  nameWithType: Types.UType.FixedArraySize
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.FixedArraySize
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: FixedArraySize
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+    startLine: 77
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Gets the fixed size for array types; defaults to 1 for non-array types.
+  example: []
+  syntax:
+    content: public ulong FixedArraySize { get; }
+    parameters: []
+    return:
+      type: System.UInt64
+    content.vb: Public ReadOnly Property FixedArraySize As ULong
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.UType.FixedArraySize*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsArray
+  commentId: P:Ubytec.Language.Syntax.TypeSystem.Types.UType.IsArray
+  id: IsArray
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  langs:
+  - csharp
+  - vb
+  name: IsArray
+  nameWithType: Types.UType.IsArray
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsArray
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IsArray
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+    startLine: 80
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: True if this type represents an array.
+  example: []
+  syntax:
+    content: public bool IsArray { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsArray As Boolean
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsArray*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableArray
+  commentId: P:Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableArray
+  id: IsNullableArray
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  langs:
+  - csharp
+  - vb
+  name: IsNullableArray
+  nameWithType: Types.UType.IsNullableArray
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableArray
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IsNullableArray
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+    startLine: 82
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: True if the array itself is nullable (i.e., <code>Type[]?</code>).
+  example: []
+  syntax:
+    content: public bool IsNullableArray { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsNullableArray As Boolean
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableArray*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableItems
+  commentId: P:Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableItems
+  id: IsNullableItems
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  langs:
+  - csharp
+  - vb
+  name: IsNullableItems
+  nameWithType: Types.UType.IsNullableItems
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableItems
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IsNullableItems
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+    startLine: 84
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: True if individual array items are nullable (i.e., <code>Type?[]</code>).
+  example: []
+  syntax:
+    content: public bool IsNullableItems { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsNullableItems As Boolean
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableItems*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsFullyNullableArray
+  commentId: P:Ubytec.Language.Syntax.TypeSystem.Types.UType.IsFullyNullableArray
+  id: IsFullyNullableArray
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  langs:
+  - csharp
+  - vb
+  name: IsFullyNullableArray
+  nameWithType: Types.UType.IsFullyNullableArray
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsFullyNullableArray
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IsFullyNullableArray
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+    startLine: 86
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: True if both the array and its items are nullable.
+  example: []
+  syntax:
+    content: public bool IsFullyNullableArray { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsFullyNullableArray As Boolean
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsFullyNullableArray*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsSingleNullable
+  commentId: P:Ubytec.Language.Syntax.TypeSystem.Types.UType.IsSingleNullable
+  id: IsSingleNullable
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  langs:
+  - csharp
+  - vb
+  name: IsSingleNullable
+  nameWithType: Types.UType.IsSingleNullable
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsSingleNullable
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IsSingleNullable
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+    startLine: 88
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: True if this non-array type is nullable (i.e., <code>Type?</code>).
+  example: []
+  syntax:
+    content: public bool IsSingleNullable { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsSingleNullable As Boolean
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsSingleNullable*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Byte)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Byte)
+  id: FromOperands(System.Byte,System.Byte)
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  langs:
+  - csharp
+  - vb
+  name: FromOperands(byte, byte)
+  nameWithType: Types.UType.FromOperands(byte, byte)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(byte, byte)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: FromOperands
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+    startLine: 97
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: >-
+    Constructs a <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType" data-throw-if-not-resolved="false"></xref> from raw operand bytes representing
+
+    <xref href="Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType" data-throw-if-not-resolved="false"></xref> and <xref href="Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers" data-throw-if-not-resolved="false"></xref> flags.
+  example: []
+  syntax:
+    content: public static Types.UType FromOperands(byte typeByte, byte flagsByte)
+    parameters:
+    - id: typeByte
+      type: System.Byte
+      description: Underlying byte value for <xref href="Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType" data-throw-if-not-resolved="false"></xref>.
+    - id: flagsByte
+      type: System.Byte
+      description: Underlying byte value for <xref href="Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers" data-throw-if-not-resolved="false"></xref>.
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.UType
+      description: A new <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType" data-throw-if-not-resolved="false"></xref> instance.
+    content.vb: Public Shared Function FromOperands(typeByte As Byte, flagsByte As Byte) As Types.UType
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands*
+  nameWithType.vb: Types.UType.FromOperands(Byte, Byte)
+  fullName.vb: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(Byte, Byte)
+  name.vb: FromOperands(Byte, Byte)
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.ToString
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.UType.ToString
+  id: ToString
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: Types.UType.ToString()
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.ToString()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ToString
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+    startLine: 108
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Returns a string representation including array and nullability suffixes.
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+      description: Formatted type name (e.g., "Int", "Bool?", "String[]?").
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.UType.ToString*
+references:
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  name: Types.PrimitiveType
+  nameWithType: Types.PrimitiveType
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Byte)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Byte)
+  isExternal: true
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FromOperands_System_Byte_System_Byte_
+  name: FromOperands(byte, byte)
+  nameWithType: Types.UType.FromOperands(byte, byte)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(byte, byte)
+  nameWithType.vb: Types.UType.FromOperands(Byte, Byte)
+  fullName.vb: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(Byte, Byte)
+  name.vb: FromOperands(Byte, Byte)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Byte)
+    name: FromOperands
+    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FromOperands_System_Byte_System_Byte_
+  - name: (
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: ','
+  - name: " "
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Byte)
+    name: FromOperands
+    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FromOperands_System_Byte_System_Byte_
+  - name: (
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: ','
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.UType
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  name: Types.UType
+  nameWithType: Types.UType
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    name: UType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    name: UType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html
+- uid: Ubytec.Language.Syntax.TypeSystem
+  commentId: N:Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.TypeSystem
+  nameWithType: Ubytec.Language.Syntax.TypeSystem
+  fullName: Ubytec.Language.Syntax.TypeSystem
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.#ctor*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.#ctor
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType__ctor_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_Ubytec_Language_Syntax_TypeSystem_Types_TypeModifiers_System_Nullable_System_Guid__System_String_System_UIntPtr_
+  name: UType
+  nameWithType: Types.UType.UType
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.UType
+  nameWithType.vb: Types.UType.New
+  fullName.vb: Ubytec.Language.Syntax.TypeSystem.Types.UType.New
+  name.vb: New
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  name: Types.TypeModifiers
+  nameWithType: Types.TypeModifiers
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
+- uid: System.Nullable{System.Guid}
+  commentId: T:System.Nullable{System.Guid}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.guid
+  name: Guid?
+  nameWithType: Guid?
+  fullName: System.Guid?
+  spec.csharp:
+  - uid: System.Guid
+    name: Guid
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.guid
+  - name: '?'
+  spec.vb:
+  - uid: System.Guid
+    name: Guid
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.guid
+  - name: '?'
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.UIntPtr
+  commentId: T:System.UIntPtr
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uintptr
+  name: nuint
+  nameWithType: nuint
+  fullName: nuint
+  nameWithType.vb: UIntPtr
+  fullName.vb: System.UIntPtr
+  name.vb: UIntPtr
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic.Dictionary{System.String,System.Guid}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,System.Guid}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<string, Guid>
+  nameWithType: Dictionary<string, Guid>
+  fullName: System.Collections.Generic.Dictionary<string, System.Guid>
+  nameWithType.vb: Dictionary(Of String, Guid)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, System.Guid)
+  name.vb: Dictionary(Of String, Guid)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Guid
+    name: Guid
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.guid
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Guid
+    name: Guid
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.guid
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.Type*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.Type
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_Type
+  name: Type
+  nameWithType: Types.UType.Type
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.Type
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.ID*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.ID
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_ID
+  name: ID
+  nameWithType: Types.UType.ID
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.ID
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.Type
+  commentId: P:Ubytec.Language.Syntax.TypeSystem.Types.UType.Type
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_Type
+  name: Type
+  nameWithType: Types.UType.Type
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.Type
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.Name*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.Name
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_Name
+  name: Name
+  nameWithType: Types.UType.Name
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.Name
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.Modifiers*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.Modifiers
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_Modifiers
+  name: Modifiers
+  nameWithType: Types.UType.Modifiers
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.Modifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.FixedArraySize*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.FixedArraySize
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FixedArraySize
+  name: FixedArraySize
+  nameWithType: Types.UType.FixedArraySize
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.FixedArraySize
+- uid: System.UInt64
+  commentId: T:System.UInt64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uint64
+  name: ulong
+  nameWithType: ulong
+  fullName: ulong
+  nameWithType.vb: ULong
+  fullName.vb: ULong
+  name.vb: ULong
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsArray*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.IsArray
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_IsArray
+  name: IsArray
+  nameWithType: Types.UType.IsArray
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsArray
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableArray*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableArray
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_IsNullableArray
+  name: IsNullableArray
+  nameWithType: Types.UType.IsNullableArray
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableArray
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableItems*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableItems
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_IsNullableItems
+  name: IsNullableItems
+  nameWithType: Types.UType.IsNullableItems
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableItems
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsFullyNullableArray*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.IsFullyNullableArray
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_IsFullyNullableArray
+  name: IsFullyNullableArray
+  nameWithType: Types.UType.IsFullyNullableArray
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsFullyNullableArray
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsSingleNullable*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.IsSingleNullable
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_IsSingleNullable
+  name: IsSingleNullable
+  nameWithType: Types.UType.IsSingleNullable
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsSingleNullable
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FromOperands_System_Byte_System_Byte_
+  name: FromOperands
+  nameWithType: Types.UType.FromOperands
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.byte
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.ToString*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.ToString
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_ToString
+  name: ToString
+  nameWithType: Types.UType.ToString
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.ToString

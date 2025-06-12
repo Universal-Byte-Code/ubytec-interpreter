@@ -158,6 +158,9 @@ namespace Ubytec.Language.HighLevel
                 sb.AppendLine($"; Class: {Name} (ID: {ID})");
                 sb.AppendLine();
 
+                sb.AppendLine(Locals?.Compile(scopes));
+                sb.AppendLine(Globals?.Compile(scopes));
+
                 // Compile fields
                 foreach (var field in Fields)
                     sb.AppendLine(field.Compile(scopes));

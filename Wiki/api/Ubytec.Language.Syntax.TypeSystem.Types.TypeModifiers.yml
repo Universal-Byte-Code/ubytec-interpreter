@@ -1,0 +1,672 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  id: Types.TypeModifiers
+  parent: Ubytec.Language.Syntax.TypeSystem
+  children:
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Abstract
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Const
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Global
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Internal
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.IsArray
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Local
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.None
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Nullable
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.NullableArray
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.NullableItems
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Override
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Private
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Protected
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Public
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.ReadOnly
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Reserved
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Sealed
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Secret
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Virtual
+  langs:
+  - csharp
+  - vb
+  name: Types.TypeModifiers
+  nameWithType: Types.TypeModifiers
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  type: Enum
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: TypeModifiers
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 4
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: >-
+      [Flags]
+
+      public enum Types.TypeModifiers
+    content.vb: >-
+      <Flags>
+
+      Public Enum Types.TypeModifiers
+  extensionMethods:
+  - Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.CountSetBits
+  attributes:
+  - type: System.FlagsAttribute
+    ctor: System.FlagsAttribute.#ctor
+    arguments: []
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.None
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.None
+  id: None
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: Types.TypeModifiers.None
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.None
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: None
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 7
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: None = 0
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Nullable
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Nullable
+  id: Nullable
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: Nullable
+  nameWithType: Types.TypeModifiers.Nullable
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Nullable
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Nullable
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 10
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Nullable = 1
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.IsArray
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.IsArray
+  id: IsArray
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: IsArray
+  nameWithType: Types.TypeModifiers.IsArray
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.IsArray
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IsArray
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 11
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: IsArray = 2
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.NullableArray
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.NullableArray
+  id: NullableArray
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: NullableArray
+  nameWithType: Types.TypeModifiers.NullableArray
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.NullableArray
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: NullableArray
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 13
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: NullableArray = 4
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.NullableItems
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.NullableItems
+  id: NullableItems
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: NullableItems
+  nameWithType: Types.TypeModifiers.NullableItems
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.NullableItems
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: NullableItems
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 14
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: NullableItems = 8
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Public
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Public
+  id: Public
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: Public
+  nameWithType: Types.TypeModifiers.Public
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Public
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Public
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 17
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Public = 16
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Private
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Private
+  id: Private
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: Private
+  nameWithType: Types.TypeModifiers.Private
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Private
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Private
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 18
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Private = 32
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Protected
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Protected
+  id: Protected
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: Protected
+  nameWithType: Types.TypeModifiers.Protected
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Protected
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Protected
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 19
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Protected = 64
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Internal
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Internal
+  id: Internal
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: Internal
+  nameWithType: Types.TypeModifiers.Internal
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Internal
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Internal
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 20
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Internal = 128
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Secret
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Secret
+  id: Secret
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: Secret
+  nameWithType: Types.TypeModifiers.Secret
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Secret
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Secret
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 21
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Secret = 256
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Const
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Const
+  id: Const
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: Const
+  nameWithType: Types.TypeModifiers.Const
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Const
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Const
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 24
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Const = 512
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.ReadOnly
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.ReadOnly
+  id: ReadOnly
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: ReadOnly
+  nameWithType: Types.TypeModifiers.ReadOnly
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.ReadOnly
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ReadOnly
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 25
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: ReadOnly = 1024
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Abstract
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Abstract
+  id: Abstract
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: Abstract
+  nameWithType: Types.TypeModifiers.Abstract
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Abstract
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Abstract
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 28
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Abstract = 2048
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Virtual
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Virtual
+  id: Virtual
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: Virtual
+  nameWithType: Types.TypeModifiers.Virtual
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Virtual
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Virtual
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 29
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Virtual = 4096
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Override
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Override
+  id: Override
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: Override
+  nameWithType: Types.TypeModifiers.Override
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Override
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Override
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 30
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Override = 8192
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Sealed
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Sealed
+  id: Sealed
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: Sealed
+  nameWithType: Types.TypeModifiers.Sealed
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Sealed
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Sealed
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 31
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Sealed = 16384
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Local
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Local
+  id: Local
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: Local
+  nameWithType: Types.TypeModifiers.Local
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Local
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Local
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 34
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Local = 32768
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Global
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Global
+  id: Global
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: Global
+  nameWithType: Types.TypeModifiers.Global
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Global
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Global
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 35
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Global = 65536
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Reserved
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Reserved
+  id: Reserved
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  langs:
+  - csharp
+  - vb
+  name: Reserved
+  nameWithType: Types.TypeModifiers.Reserved
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Reserved
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Reserved
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.TypeModifiers.cs
+    startLine: 38
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Reserved = 131072
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+references:
+- uid: Ubytec.Language.Syntax.TypeSystem
+  commentId: N:Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.TypeSystem
+  nameWithType: Ubytec.Language.Syntax.TypeSystem
+  fullName: Ubytec.Language.Syntax.TypeSystem
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.CountSetBits
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.CountSetBits(Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers)
+  parent: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions
+  definition: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.CountSetBits(Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers)
+  href: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.html#Ubytec_Language_Syntax_TypeSystem_TypeModifiersExtensions_CountSetBits_Ubytec_Language_Syntax_TypeSystem_Types_TypeModifiers_
+  name: CountSetBits(TypeModifiers)
+  nameWithType: TypeModifiersExtensions.CountSetBits(Types.TypeModifiers)
+  fullName: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.CountSetBits(Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.CountSetBits(Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers)
+    name: CountSetBits
+    href: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.html#Ubytec_Language_Syntax_TypeSystem_TypeModifiersExtensions_CountSetBits_Ubytec_Language_Syntax_TypeSystem_Types_TypeModifiers_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.CountSetBits(Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers)
+    name: CountSetBits
+    href: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.html#Ubytec_Language_Syntax_TypeSystem_TypeModifiersExtensions_CountSetBits_Ubytec_Language_Syntax_TypeSystem_Types_TypeModifiers_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.CountSetBits(Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.CountSetBits(Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers)
+  href: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.html#Ubytec_Language_Syntax_TypeSystem_TypeModifiersExtensions_CountSetBits_Ubytec_Language_Syntax_TypeSystem_Types_TypeModifiers_
+  name: CountSetBits(TypeModifiers)
+  nameWithType: TypeModifiersExtensions.CountSetBits(Types.TypeModifiers)
+  fullName: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.CountSetBits(Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.CountSetBits(Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers)
+    name: CountSetBits
+    href: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.html#Ubytec_Language_Syntax_TypeSystem_TypeModifiersExtensions_CountSetBits_Ubytec_Language_Syntax_TypeSystem_Types_TypeModifiers_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.CountSetBits(Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers)
+    name: CountSetBits
+    href: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.html#Ubytec_Language_Syntax_TypeSystem_TypeModifiersExtensions_CountSetBits_Ubytec_Language_Syntax_TypeSystem_Types_TypeModifiers_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.html
+  name: TypeModifiersExtensions
+  nameWithType: TypeModifiersExtensions
+  fullName: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  name: Types.TypeModifiers
+  nameWithType: Types.TypeModifiers
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html

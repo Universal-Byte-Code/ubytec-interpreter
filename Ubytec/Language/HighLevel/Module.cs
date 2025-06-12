@@ -2,7 +2,9 @@
 using Ubytec.Language.HighLevel.Interfaces;
 using Ubytec.Language.Syntax.Scopes;
 using Ubytec.Language.Syntax.Scopes.Contexts;
+using Ubytec.Language.Tools;
 using static Ubytec.Language.Syntax.TypeSystem.Types;
+using static Ubytec.Language.Tools.FormattingHelper;
 
 namespace Ubytec.Language.HighLevel
 {
@@ -86,11 +88,6 @@ namespace Ubytec.Language.HighLevel
             // Ensure member names are unique across all top-level declarations
             var memberNames = new HashSet<string>();
             var tempName = Name;
-            void Add(string memberName, string kind)
-            {
-                if (!memberNames.Add(memberName))
-                    throw new Exception($"Duplicate {kind} name '{memberName}' in module '{tempName}'.");
-            }
 
             foreach (var f in Fields) Add(f.Name, "field");
             foreach (var p in Properties) Add(p.Name, "property");
@@ -115,101 +112,99 @@ namespace Ubytec.Language.HighLevel
 
             LocalContext?.Validate();
             GlobalContext?.Validate();
-        }
 
+            void Add(string memberName, string kind)
+            {
+                if (!memberNames.Add(memberName))
+                    throw new Exception($"Duplicate {kind} name '{memberName}' in module '{tempName}'.");
+            }
+        }
         public string Compile(CompilationScopes scopes)
         {
-            // Push module scope context
-            scopes.Push(new ScopeContext { StartLabel = $"module_{Name}_{Version}_{Author}_start", EndLabel = $"module_{Name}_{Version}_{Author}_end", DeclaredByKeyword = "module" });
+            // ------------------------------------------------------------------
+            // 1. push a scope frame for the module
+            // ------------------------------------------------------------------
+            scopes.Push(new ScopeContext
+            {
+                StartLabel        = $"module_{Name}_{ID}_{Utf64Codec.Encode(Version)}_{Utf64Codec.Encode(DateTime.UtcNow.ToString())}_{Author}_start",
+                EndLabel          = $"module_{Name}_{ID}_{Utf64Codec.Encode(Version)}_{Utf64Codec.Encode(DateTime.UtcNow.ToString())}_{Author}_end",
+                DeclaredByKeyword = "module"
+            });
+
             try
             {
                 Validate();
                 var sb = new StringBuilder();
 
-                // Header
-                sb.AppendLine($"{scopes.Peek().StartLabel}:");
-                sb.AppendLine($"; Module: {Name} v{Version} by {Author}");
-                sb.AppendLine("; Generated NASM code");
-                sb.AppendLine();
+                // ───────────────────── header ─────────────────────
+                sb.Append(FormatCompiledLines($"{scopes.Peek().StartLabel}:", GetDepth(scopes, -1)));
+                sb.AppendLine(FormatCompiledLines($"; Module: {Name} v{Version} by {Author}", GetDepth(scopes, -1)));
 
-                // DATA section
-                sb.AppendLine("section .data");
-                foreach (var field in Fields)
-                    sb.AppendLine(field.Compile(scopes));
+                // ───────────────────── .data ──────────────────────
+                sb.Append(FormatCompiledLines("section .data", GetDepth(scopes)));
+                foreach (var fld in Fields)
+                    sb.Append(FormatCompiledLines(fld.Compile(scopes), GetDepth(scopes)));
                 if (GlobalContext != null)
-                    sb.Append(GlobalContext.Value.Compile(scopes));
-
-                // BSS section
+                    sb.Append(FormatCompiledLines(GlobalContext.Value.Compile(scopes), GetDepth(scopes)));
                 sb.AppendLine();
-                sb.AppendLine("section .bss");
+
+                // ───────────────────── .bss  (zero-init)───────────
+                sb.Append(FormatCompiledLines("section .bss", GetDepth(scopes)));
                 foreach (var prop in Properties)
-                    sb.AppendLine(prop.Compile(scopes));
-
-                // TEXT section
-                sb.AppendLine();
-                sb.AppendLine("section .text");
-                sb.AppendLine("global _start");
+                    sb.Append(FormatCompiledLines(prop.Compile(scopes), GetDepth(scopes)));
                 sb.AppendLine();
 
-                // Interfaces
+                // ───────────────────── .text ──────────────────────
+                sb.Append(FormatCompiledLines("section .text", GetDepth(scopes)));
+                sb.Append(FormatCompiledLines("global _start", GetDepth(scopes)));
+                sb.AppendLine();
+
+                // interfaces first (just signatures)
                 foreach (var iface in Interfaces)
-                {
-                    sb.Append(iface.Compile(scopes));
-                    sb.AppendLine();
-                }
+                    sb.Append(FormatCompiledLines(iface.Compile(scopes), GetDepth(scopes)));
 
-                // Classes, Structs, Records, Enums
+                // user types
                 foreach (var cls in Classes)
-                {
-                    sb.Append(cls.Compile(scopes));
-                    sb.AppendLine();
-                }
-                foreach (var strct in Structs)
-                {
-                    sb.Append(strct.Compile(scopes));
-                    sb.AppendLine();
-                }
+                    sb.Append(FormatCompiledLines(cls.Compile(scopes), GetDepth(scopes)));
+                foreach (var st in Structs)
+                    sb.Append(FormatCompiledLines(st.Compile(scopes), GetDepth(scopes)));
                 foreach (var rec in Records)
-                {
-                    sb.Append(rec.Compile(scopes));
-                    sb.AppendLine();
-                }
-                foreach (var enm in Enums)
-                {
-                    sb.Append(enm.Compile(scopes));
-                    sb.AppendLine();
-                }
+                    sb.Append(FormatCompiledLines(rec.Compile(scopes), GetDepth(scopes)));
+                foreach (var en in Enums)
+                    sb.Append(FormatCompiledLines(en.Compile(scopes), GetDepth(scopes)));
 
-                // Functions and Actions
-                foreach (var func in Functions)
-                {
-                    sb.Append(func.Compile(scopes));
-                    sb.AppendLine();
-                }
-                foreach (var action in Actions)
-                {
-                    sb.Append(action.Compile(scopes));
-                    sb.AppendLine();
-                }
+                // functions & actions (now they DO contain the body)
+                foreach (var fn in Functions)
+                    sb.Append(FormatCompiledLines(fn.Compile(scopes), GetDepth(scopes)));
+                foreach (var ac in Actions)
+                    sb.Append(FormatCompiledLines(ac.Compile(scopes), GetDepth(scopes)));
 
-                // LocalContext code
+                // local context (after funcs because it may emit helpers)
                 if (LocalContext != null)
-                    sb.Append(LocalContext.Value.Compile(scopes));
+                    sb.Append(FormatCompiledLines(LocalContext.Value.Compile(scopes), GetDepth(scopes)));
 
-                // SubModules recursively
+                // sub-modules (recursively compiled)
                 foreach (var sub in SubModules)
                 {
-                    sb.AppendLine($"; Submodule: {sub.Name}");
-                    sb.Append(sub.Compile(scopes));
-                    sb.AppendLine();
+                    sb.Append(FormatCompiledLines($"; ===== sub-module: {sub.Name} =====", GetDepth(scopes)));
+                    sb.Append(FormatCompiledLines(sub.Compile(scopes), GetDepth(scopes)));
                 }
 
-                // Entry point
-                sb.AppendLine("_start:");
-                sb.AppendLine("    ; Module entry logic");
-                sb.AppendLine("    ret");
-                sb.AppendLine($"{scopes.Peek().EndLabel}:");
+                // ───────────────────── entry point ────────────────
+                sb.AppendLine();
+                var mainFunc = Functions.FirstOrDefault(f => f.Name == "Main");
+                sb.Append(FormatCompiledLines("_start:", GetDepth(scopes)));
+                if (!string.IsNullOrEmpty(mainFunc.Name) && mainFunc.Definition is not null)
+                    sb.Append(FormatCompiledLines(
+                        $"call {nameof(Func).ToLower()}_{mainFunc.Name}_{mainFunc.ID}_start",
+                        GetDepth(scopes, 1)
+                    ));
+                sb.Append(FormatCompiledLines("mov eax, 60", GetDepth(scopes, 1)));
+                sb.Append(FormatCompiledLines("xor edi, edi", GetDepth(scopes, 1)));
+                sb.Append(FormatCompiledLines("syscall", GetDepth(scopes, 1)));
 
+
+                sb.AppendLine($"{scopes.Peek().EndLabel}:");
                 return sb.ToString();
             }
             finally

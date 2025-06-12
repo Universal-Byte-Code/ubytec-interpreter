@@ -1,0 +1,85 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.Fast.Metadata
+  commentId: N:Ubytec.Language.Syntax.Fast.Metadata
+  id: Ubytec.Language.Syntax.Fast.Metadata
+  children:
+  - Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  - Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+  - Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions
+  langs:
+  - csharp
+  - vb
+  name: Ubytec.Language.Syntax.Fast.Metadata
+  nameWithType: Ubytec.Language.Syntax.Fast.Metadata
+  fullName: Ubytec.Language.Syntax.Fast.Metadata
+  type: Namespace
+  assemblies:
+  - Ubytec
+references:
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  commentId: T:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.html
+  name: MetadataEntry
+  nameWithType: MetadataEntry
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+  commentId: T:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+  parent: Ubytec.Language.Syntax.Fast.Metadata
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.html
+  name: MetadataRegistry
+  nameWithType: MetadataRegistry
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions
+  commentId: T:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions
+  parent: Ubytec.Language.Syntax.Fast.Metadata
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.html
+  name: MetadataRegistryExtensions
+  nameWithType: MetadataRegistryExtensions
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions
+- uid: Ubytec.Language.Syntax.Fast.Metadata
+  commentId: N:Ubytec.Language.Syntax.Fast.Metadata
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Fast.Metadata
+  nameWithType: Ubytec.Language.Syntax.Fast.Metadata
+  fullName: Ubytec.Language.Syntax.Fast.Metadata
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Fast
+    name: Fast
+    href: Ubytec.Language.Syntax.Fast.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Fast.Metadata
+    name: Metadata
+    href: Ubytec.Language.Syntax.Fast.Metadata.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Fast
+    name: Fast
+    href: Ubytec.Language.Syntax.Fast.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Fast.Metadata
+    name: Metadata
+    href: Ubytec.Language.Syntax.Fast.Metadata.html

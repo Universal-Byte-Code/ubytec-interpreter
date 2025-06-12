@@ -1,0 +1,1180 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Operations
+  commentId: N:Ubytec.Language.Operations
+  id: Ubytec.Language.Operations
+  children:
+  - Ubytec.Language.Operations.ArithmeticOperations
+  - Ubytec.Language.Operations.ArithmeticOperations.ABS
+  - Ubytec.Language.Operations.ArithmeticOperations.ADD
+  - Ubytec.Language.Operations.ArithmeticOperations.DEC
+  - Ubytec.Language.Operations.ArithmeticOperations.DIV
+  - Ubytec.Language.Operations.ArithmeticOperations.INC
+  - Ubytec.Language.Operations.ArithmeticOperations.MOD
+  - Ubytec.Language.Operations.ArithmeticOperations.MUL
+  - Ubytec.Language.Operations.ArithmeticOperations.NEG
+  - Ubytec.Language.Operations.ArithmeticOperations.SUB
+  - Ubytec.Language.Operations.BitwiseOperations
+  - Ubytec.Language.Operations.BitwiseOperations.AND
+  - Ubytec.Language.Operations.BitwiseOperations.NOT
+  - Ubytec.Language.Operations.BitwiseOperations.OR
+  - Ubytec.Language.Operations.BitwiseOperations.SHL
+  - Ubytec.Language.Operations.BitwiseOperations.SHR
+  - Ubytec.Language.Operations.BitwiseOperations.XOR
+  - Ubytec.Language.Operations.CoreOperations
+  - Ubytec.Language.Operations.CoreOperations.BLOCK
+  - Ubytec.Language.Operations.CoreOperations.BRANCH
+  - Ubytec.Language.Operations.CoreOperations.BREAK
+  - Ubytec.Language.Operations.CoreOperations.CLEAR
+  - Ubytec.Language.Operations.CoreOperations.CONTINUE
+  - Ubytec.Language.Operations.CoreOperations.DEFAULT
+  - Ubytec.Language.Operations.CoreOperations.ELSE
+  - Ubytec.Language.Operations.CoreOperations.END
+  - Ubytec.Language.Operations.CoreOperations.IF
+  - Ubytec.Language.Operations.CoreOperations.LOOP
+  - Ubytec.Language.Operations.CoreOperations.NOP
+  - Ubytec.Language.Operations.CoreOperations.NULL
+  - Ubytec.Language.Operations.CoreOperations.RETURN
+  - Ubytec.Language.Operations.CoreOperations.SWITCH
+  - Ubytec.Language.Operations.CoreOperations.TRAP
+  - Ubytec.Language.Operations.CoreOperations.VAR
+  - Ubytec.Language.Operations.CoreOperations.WHILE
+  - Ubytec.Language.Operations.IBlockOpCode
+  - Ubytec.Language.Operations.IOpCode
+  - Ubytec.Language.Operations.IOpInheritance
+  - Ubytec.Language.Operations.OpcodeFactory
+  - Ubytec.Language.Operations.StackOperarions
+  - Ubytec.Language.Operations.StackOperarions.DROP
+  - Ubytec.Language.Operations.StackOperarions.DUP
+  - Ubytec.Language.Operations.StackOperarions.NIP
+  - Ubytec.Language.Operations.StackOperarions.OVER
+  - Ubytec.Language.Operations.StackOperarions.PICK
+  - Ubytec.Language.Operations.StackOperarions.POP
+  - Ubytec.Language.Operations.StackOperarions.PUSH
+  - Ubytec.Language.Operations.StackOperarions.ROLL
+  - Ubytec.Language.Operations.StackOperarions.ROT
+  - Ubytec.Language.Operations.StackOperarions.SWAP
+  - Ubytec.Language.Operations.StackOperarions.TwoDUP
+  - Ubytec.Language.Operations.StackOperarions.TwoOVER
+  - Ubytec.Language.Operations.StackOperarions.TwoROT
+  - Ubytec.Language.Operations.StackOperarions.TwoSWAP
+  langs:
+  - csharp
+  - vb
+  name: Ubytec.Language.Operations
+  nameWithType: Ubytec.Language.Operations
+  fullName: Ubytec.Language.Operations
+  type: Namespace
+  assemblies:
+  - Ubytec
+references:
+- uid: Ubytec.Language.Operations.ArithmeticOperations
+  commentId: T:Ubytec.Language.Operations.ArithmeticOperations
+  href: Ubytec.Language.Operations.ArithmeticOperations.html
+  name: ArithmeticOperations
+  nameWithType: ArithmeticOperations
+  fullName: Ubytec.Language.Operations.ArithmeticOperations
+- uid: Ubytec.Language.Operations.ArithmeticOperations.ADD
+  commentId: T:Ubytec.Language.Operations.ArithmeticOperations.ADD
+  href: Ubytec.Language.Operations.ArithmeticOperations.html
+  name: ArithmeticOperations.ADD
+  nameWithType: ArithmeticOperations.ADD
+  fullName: Ubytec.Language.Operations.ArithmeticOperations.ADD
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    href: Ubytec.Language.Operations.ArithmeticOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.ADD
+    name: ADD
+    href: Ubytec.Language.Operations.ArithmeticOperations.ADD.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    href: Ubytec.Language.Operations.ArithmeticOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.ADD
+    name: ADD
+    href: Ubytec.Language.Operations.ArithmeticOperations.ADD.html
+- uid: Ubytec.Language.Operations.ArithmeticOperations.SUB
+  commentId: T:Ubytec.Language.Operations.ArithmeticOperations.SUB
+  href: Ubytec.Language.Operations.ArithmeticOperations.html
+  name: ArithmeticOperations.SUB
+  nameWithType: ArithmeticOperations.SUB
+  fullName: Ubytec.Language.Operations.ArithmeticOperations.SUB
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    href: Ubytec.Language.Operations.ArithmeticOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.SUB
+    name: SUB
+    href: Ubytec.Language.Operations.ArithmeticOperations.SUB.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    href: Ubytec.Language.Operations.ArithmeticOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.SUB
+    name: SUB
+    href: Ubytec.Language.Operations.ArithmeticOperations.SUB.html
+- uid: Ubytec.Language.Operations.ArithmeticOperations.MUL
+  commentId: T:Ubytec.Language.Operations.ArithmeticOperations.MUL
+  href: Ubytec.Language.Operations.ArithmeticOperations.html
+  name: ArithmeticOperations.MUL
+  nameWithType: ArithmeticOperations.MUL
+  fullName: Ubytec.Language.Operations.ArithmeticOperations.MUL
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    href: Ubytec.Language.Operations.ArithmeticOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.MUL
+    name: MUL
+    href: Ubytec.Language.Operations.ArithmeticOperations.MUL.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    href: Ubytec.Language.Operations.ArithmeticOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.MUL
+    name: MUL
+    href: Ubytec.Language.Operations.ArithmeticOperations.MUL.html
+- uid: Ubytec.Language.Operations.ArithmeticOperations.DIV
+  commentId: T:Ubytec.Language.Operations.ArithmeticOperations.DIV
+  href: Ubytec.Language.Operations.ArithmeticOperations.html
+  name: ArithmeticOperations.DIV
+  nameWithType: ArithmeticOperations.DIV
+  fullName: Ubytec.Language.Operations.ArithmeticOperations.DIV
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    href: Ubytec.Language.Operations.ArithmeticOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.DIV
+    name: DIV
+    href: Ubytec.Language.Operations.ArithmeticOperations.DIV.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    href: Ubytec.Language.Operations.ArithmeticOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.DIV
+    name: DIV
+    href: Ubytec.Language.Operations.ArithmeticOperations.DIV.html
+- uid: Ubytec.Language.Operations.ArithmeticOperations.MOD
+  commentId: T:Ubytec.Language.Operations.ArithmeticOperations.MOD
+  href: Ubytec.Language.Operations.ArithmeticOperations.html
+  name: ArithmeticOperations.MOD
+  nameWithType: ArithmeticOperations.MOD
+  fullName: Ubytec.Language.Operations.ArithmeticOperations.MOD
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    href: Ubytec.Language.Operations.ArithmeticOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.MOD
+    name: MOD
+    href: Ubytec.Language.Operations.ArithmeticOperations.MOD.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    href: Ubytec.Language.Operations.ArithmeticOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.MOD
+    name: MOD
+    href: Ubytec.Language.Operations.ArithmeticOperations.MOD.html
+- uid: Ubytec.Language.Operations.ArithmeticOperations.INC
+  commentId: T:Ubytec.Language.Operations.ArithmeticOperations.INC
+  href: Ubytec.Language.Operations.ArithmeticOperations.html
+  name: ArithmeticOperations.INC
+  nameWithType: ArithmeticOperations.INC
+  fullName: Ubytec.Language.Operations.ArithmeticOperations.INC
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    href: Ubytec.Language.Operations.ArithmeticOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.INC
+    name: INC
+    href: Ubytec.Language.Operations.ArithmeticOperations.INC.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    href: Ubytec.Language.Operations.ArithmeticOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.INC
+    name: INC
+    href: Ubytec.Language.Operations.ArithmeticOperations.INC.html
+- uid: Ubytec.Language.Operations.ArithmeticOperations.DEC
+  commentId: T:Ubytec.Language.Operations.ArithmeticOperations.DEC
+  href: Ubytec.Language.Operations.ArithmeticOperations.html
+  name: ArithmeticOperations.DEC
+  nameWithType: ArithmeticOperations.DEC
+  fullName: Ubytec.Language.Operations.ArithmeticOperations.DEC
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    href: Ubytec.Language.Operations.ArithmeticOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.DEC
+    name: DEC
+    href: Ubytec.Language.Operations.ArithmeticOperations.DEC.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    href: Ubytec.Language.Operations.ArithmeticOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.DEC
+    name: DEC
+    href: Ubytec.Language.Operations.ArithmeticOperations.DEC.html
+- uid: Ubytec.Language.Operations.ArithmeticOperations.NEG
+  commentId: T:Ubytec.Language.Operations.ArithmeticOperations.NEG
+  href: Ubytec.Language.Operations.ArithmeticOperations.html
+  name: ArithmeticOperations.NEG
+  nameWithType: ArithmeticOperations.NEG
+  fullName: Ubytec.Language.Operations.ArithmeticOperations.NEG
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    href: Ubytec.Language.Operations.ArithmeticOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.NEG
+    name: NEG
+    href: Ubytec.Language.Operations.ArithmeticOperations.NEG.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    href: Ubytec.Language.Operations.ArithmeticOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.NEG
+    name: NEG
+    href: Ubytec.Language.Operations.ArithmeticOperations.NEG.html
+- uid: Ubytec.Language.Operations.ArithmeticOperations.ABS
+  commentId: T:Ubytec.Language.Operations.ArithmeticOperations.ABS
+  href: Ubytec.Language.Operations.ArithmeticOperations.html
+  name: ArithmeticOperations.ABS
+  nameWithType: ArithmeticOperations.ABS
+  fullName: Ubytec.Language.Operations.ArithmeticOperations.ABS
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    href: Ubytec.Language.Operations.ArithmeticOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.ABS
+    name: ABS
+    href: Ubytec.Language.Operations.ArithmeticOperations.ABS.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.ArithmeticOperations
+    name: ArithmeticOperations
+    href: Ubytec.Language.Operations.ArithmeticOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.ArithmeticOperations.ABS
+    name: ABS
+    href: Ubytec.Language.Operations.ArithmeticOperations.ABS.html
+- uid: Ubytec.Language.Operations.BitwiseOperations
+  commentId: T:Ubytec.Language.Operations.BitwiseOperations
+  href: Ubytec.Language.Operations.BitwiseOperations.html
+  name: BitwiseOperations
+  nameWithType: BitwiseOperations
+  fullName: Ubytec.Language.Operations.BitwiseOperations
+- uid: Ubytec.Language.Operations.BitwiseOperations.AND
+  commentId: T:Ubytec.Language.Operations.BitwiseOperations.AND
+  href: Ubytec.Language.Operations.BitwiseOperations.html
+  name: BitwiseOperations.AND
+  nameWithType: BitwiseOperations.AND
+  fullName: Ubytec.Language.Operations.BitwiseOperations.AND
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.BitwiseOperations
+    name: BitwiseOperations
+    href: Ubytec.Language.Operations.BitwiseOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.BitwiseOperations.AND
+    name: AND
+    href: Ubytec.Language.Operations.BitwiseOperations.AND.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.BitwiseOperations
+    name: BitwiseOperations
+    href: Ubytec.Language.Operations.BitwiseOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.BitwiseOperations.AND
+    name: AND
+    href: Ubytec.Language.Operations.BitwiseOperations.AND.html
+- uid: Ubytec.Language.Operations.BitwiseOperations.OR
+  commentId: T:Ubytec.Language.Operations.BitwiseOperations.OR
+  href: Ubytec.Language.Operations.BitwiseOperations.html
+  name: BitwiseOperations.OR
+  nameWithType: BitwiseOperations.OR
+  fullName: Ubytec.Language.Operations.BitwiseOperations.OR
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.BitwiseOperations
+    name: BitwiseOperations
+    href: Ubytec.Language.Operations.BitwiseOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.BitwiseOperations.OR
+    name: OR
+    href: Ubytec.Language.Operations.BitwiseOperations.OR.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.BitwiseOperations
+    name: BitwiseOperations
+    href: Ubytec.Language.Operations.BitwiseOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.BitwiseOperations.OR
+    name: OR
+    href: Ubytec.Language.Operations.BitwiseOperations.OR.html
+- uid: Ubytec.Language.Operations.BitwiseOperations.XOR
+  commentId: T:Ubytec.Language.Operations.BitwiseOperations.XOR
+  href: Ubytec.Language.Operations.BitwiseOperations.html
+  name: BitwiseOperations.XOR
+  nameWithType: BitwiseOperations.XOR
+  fullName: Ubytec.Language.Operations.BitwiseOperations.XOR
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.BitwiseOperations
+    name: BitwiseOperations
+    href: Ubytec.Language.Operations.BitwiseOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.BitwiseOperations.XOR
+    name: XOR
+    href: Ubytec.Language.Operations.BitwiseOperations.XOR.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.BitwiseOperations
+    name: BitwiseOperations
+    href: Ubytec.Language.Operations.BitwiseOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.BitwiseOperations.XOR
+    name: XOR
+    href: Ubytec.Language.Operations.BitwiseOperations.XOR.html
+- uid: Ubytec.Language.Operations.BitwiseOperations.NOT
+  commentId: T:Ubytec.Language.Operations.BitwiseOperations.NOT
+  href: Ubytec.Language.Operations.BitwiseOperations.html
+  name: BitwiseOperations.NOT
+  nameWithType: BitwiseOperations.NOT
+  fullName: Ubytec.Language.Operations.BitwiseOperations.NOT
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.BitwiseOperations
+    name: BitwiseOperations
+    href: Ubytec.Language.Operations.BitwiseOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.BitwiseOperations.NOT
+    name: NOT
+    href: Ubytec.Language.Operations.BitwiseOperations.NOT.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.BitwiseOperations
+    name: BitwiseOperations
+    href: Ubytec.Language.Operations.BitwiseOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.BitwiseOperations.NOT
+    name: NOT
+    href: Ubytec.Language.Operations.BitwiseOperations.NOT.html
+- uid: Ubytec.Language.Operations.BitwiseOperations.SHL
+  commentId: T:Ubytec.Language.Operations.BitwiseOperations.SHL
+  href: Ubytec.Language.Operations.BitwiseOperations.html
+  name: BitwiseOperations.SHL
+  nameWithType: BitwiseOperations.SHL
+  fullName: Ubytec.Language.Operations.BitwiseOperations.SHL
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.BitwiseOperations
+    name: BitwiseOperations
+    href: Ubytec.Language.Operations.BitwiseOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.BitwiseOperations.SHL
+    name: SHL
+    href: Ubytec.Language.Operations.BitwiseOperations.SHL.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.BitwiseOperations
+    name: BitwiseOperations
+    href: Ubytec.Language.Operations.BitwiseOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.BitwiseOperations.SHL
+    name: SHL
+    href: Ubytec.Language.Operations.BitwiseOperations.SHL.html
+- uid: Ubytec.Language.Operations.BitwiseOperations.SHR
+  commentId: T:Ubytec.Language.Operations.BitwiseOperations.SHR
+  href: Ubytec.Language.Operations.BitwiseOperations.html
+  name: BitwiseOperations.SHR
+  nameWithType: BitwiseOperations.SHR
+  fullName: Ubytec.Language.Operations.BitwiseOperations.SHR
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.BitwiseOperations
+    name: BitwiseOperations
+    href: Ubytec.Language.Operations.BitwiseOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.BitwiseOperations.SHR
+    name: SHR
+    href: Ubytec.Language.Operations.BitwiseOperations.SHR.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.BitwiseOperations
+    name: BitwiseOperations
+    href: Ubytec.Language.Operations.BitwiseOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.BitwiseOperations.SHR
+    name: SHR
+    href: Ubytec.Language.Operations.BitwiseOperations.SHR.html
+- uid: Ubytec.Language.Operations.CoreOperations
+  commentId: T:Ubytec.Language.Operations.CoreOperations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations
+  nameWithType: CoreOperations
+  fullName: Ubytec.Language.Operations.CoreOperations
+- uid: Ubytec.Language.Operations.CoreOperations.BRANCH
+  commentId: T:Ubytec.Language.Operations.CoreOperations.BRANCH
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.BRANCH
+  nameWithType: CoreOperations.BRANCH
+  fullName: Ubytec.Language.Operations.CoreOperations.BRANCH
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.BRANCH
+    name: BRANCH
+    href: Ubytec.Language.Operations.CoreOperations.BRANCH.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.BRANCH
+    name: BRANCH
+    href: Ubytec.Language.Operations.CoreOperations.BRANCH.html
+- uid: Ubytec.Language.Operations.CoreOperations.ELSE
+  commentId: T:Ubytec.Language.Operations.CoreOperations.ELSE
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.ELSE
+  nameWithType: CoreOperations.ELSE
+  fullName: Ubytec.Language.Operations.CoreOperations.ELSE
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.ELSE
+    name: ELSE
+    href: Ubytec.Language.Operations.CoreOperations.ELSE.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.ELSE
+    name: ELSE
+    href: Ubytec.Language.Operations.CoreOperations.ELSE.html
+- uid: Ubytec.Language.Operations.CoreOperations.BLOCK
+  commentId: T:Ubytec.Language.Operations.CoreOperations.BLOCK
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.BLOCK
+  nameWithType: CoreOperations.BLOCK
+  fullName: Ubytec.Language.Operations.CoreOperations.BLOCK
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.BLOCK
+    name: BLOCK
+    href: Ubytec.Language.Operations.CoreOperations.BLOCK.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.BLOCK
+    name: BLOCK
+    href: Ubytec.Language.Operations.CoreOperations.BLOCK.html
+- uid: Ubytec.Language.Operations.CoreOperations.IF
+  commentId: T:Ubytec.Language.Operations.CoreOperations.IF
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.IF
+  nameWithType: CoreOperations.IF
+  fullName: Ubytec.Language.Operations.CoreOperations.IF
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.IF
+    name: IF
+    href: Ubytec.Language.Operations.CoreOperations.IF.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.IF
+    name: IF
+    href: Ubytec.Language.Operations.CoreOperations.IF.html
+- uid: Ubytec.Language.Operations.CoreOperations.LOOP
+  commentId: T:Ubytec.Language.Operations.CoreOperations.LOOP
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.LOOP
+  nameWithType: CoreOperations.LOOP
+  fullName: Ubytec.Language.Operations.CoreOperations.LOOP
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.LOOP
+    name: LOOP
+    href: Ubytec.Language.Operations.CoreOperations.LOOP.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.LOOP
+    name: LOOP
+    href: Ubytec.Language.Operations.CoreOperations.LOOP.html
+- uid: Ubytec.Language.Operations.CoreOperations.SWITCH
+  commentId: T:Ubytec.Language.Operations.CoreOperations.SWITCH
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.SWITCH
+  nameWithType: CoreOperations.SWITCH
+  fullName: Ubytec.Language.Operations.CoreOperations.SWITCH
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.SWITCH
+    name: SWITCH
+    href: Ubytec.Language.Operations.CoreOperations.SWITCH.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.SWITCH
+    name: SWITCH
+    href: Ubytec.Language.Operations.CoreOperations.SWITCH.html
+- uid: Ubytec.Language.Operations.CoreOperations.WHILE
+  commentId: T:Ubytec.Language.Operations.CoreOperations.WHILE
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.WHILE
+  nameWithType: CoreOperations.WHILE
+  fullName: Ubytec.Language.Operations.CoreOperations.WHILE
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.WHILE
+    name: WHILE
+    href: Ubytec.Language.Operations.CoreOperations.WHILE.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.WHILE
+    name: WHILE
+    href: Ubytec.Language.Operations.CoreOperations.WHILE.html
+- uid: Ubytec.Language.Operations.CoreOperations.END
+  commentId: T:Ubytec.Language.Operations.CoreOperations.END
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.END
+  nameWithType: CoreOperations.END
+  fullName: Ubytec.Language.Operations.CoreOperations.END
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.END
+    name: END
+    href: Ubytec.Language.Operations.CoreOperations.END.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.END
+    name: END
+    href: Ubytec.Language.Operations.CoreOperations.END.html
+- uid: Ubytec.Language.Operations.CoreOperations.VAR
+  commentId: T:Ubytec.Language.Operations.CoreOperations.VAR
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.VAR
+  nameWithType: CoreOperations.VAR
+  fullName: Ubytec.Language.Operations.CoreOperations.VAR
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.VAR
+    name: VAR
+    href: Ubytec.Language.Operations.CoreOperations.VAR.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.VAR
+    name: VAR
+    href: Ubytec.Language.Operations.CoreOperations.VAR.html
+- uid: Ubytec.Language.Operations.CoreOperations.BREAK
+  commentId: T:Ubytec.Language.Operations.CoreOperations.BREAK
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.BREAK
+  nameWithType: CoreOperations.BREAK
+  fullName: Ubytec.Language.Operations.CoreOperations.BREAK
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.BREAK
+    name: BREAK
+    href: Ubytec.Language.Operations.CoreOperations.BREAK.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.BREAK
+    name: BREAK
+    href: Ubytec.Language.Operations.CoreOperations.BREAK.html
+- uid: Ubytec.Language.Operations.CoreOperations.CONTINUE
+  commentId: T:Ubytec.Language.Operations.CoreOperations.CONTINUE
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.CONTINUE
+  nameWithType: CoreOperations.CONTINUE
+  fullName: Ubytec.Language.Operations.CoreOperations.CONTINUE
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.CONTINUE
+    name: CONTINUE
+    href: Ubytec.Language.Operations.CoreOperations.CONTINUE.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.CONTINUE
+    name: CONTINUE
+    href: Ubytec.Language.Operations.CoreOperations.CONTINUE.html
+- uid: Ubytec.Language.Operations.CoreOperations.RETURN
+  commentId: T:Ubytec.Language.Operations.CoreOperations.RETURN
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.RETURN
+  nameWithType: CoreOperations.RETURN
+  fullName: Ubytec.Language.Operations.CoreOperations.RETURN
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.RETURN
+    name: RETURN
+    href: Ubytec.Language.Operations.CoreOperations.RETURN.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.RETURN
+    name: RETURN
+    href: Ubytec.Language.Operations.CoreOperations.RETURN.html
+- uid: Ubytec.Language.Operations.CoreOperations.CLEAR
+  commentId: T:Ubytec.Language.Operations.CoreOperations.CLEAR
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.CLEAR
+  nameWithType: CoreOperations.CLEAR
+  fullName: Ubytec.Language.Operations.CoreOperations.CLEAR
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.CLEAR
+    name: CLEAR
+    href: Ubytec.Language.Operations.CoreOperations.CLEAR.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.CLEAR
+    name: CLEAR
+    href: Ubytec.Language.Operations.CoreOperations.CLEAR.html
+- uid: Ubytec.Language.Operations.CoreOperations.DEFAULT
+  commentId: T:Ubytec.Language.Operations.CoreOperations.DEFAULT
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.DEFAULT
+  nameWithType: CoreOperations.DEFAULT
+  fullName: Ubytec.Language.Operations.CoreOperations.DEFAULT
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.DEFAULT
+    name: DEFAULT
+    href: Ubytec.Language.Operations.CoreOperations.DEFAULT.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.DEFAULT
+    name: DEFAULT
+    href: Ubytec.Language.Operations.CoreOperations.DEFAULT.html
+- uid: Ubytec.Language.Operations.CoreOperations.NOP
+  commentId: T:Ubytec.Language.Operations.CoreOperations.NOP
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.NOP
+  nameWithType: CoreOperations.NOP
+  fullName: Ubytec.Language.Operations.CoreOperations.NOP
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.NOP
+    name: NOP
+    href: Ubytec.Language.Operations.CoreOperations.NOP.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.NOP
+    name: NOP
+    href: Ubytec.Language.Operations.CoreOperations.NOP.html
+- uid: Ubytec.Language.Operations.CoreOperations.NULL
+  commentId: T:Ubytec.Language.Operations.CoreOperations.NULL
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.NULL
+  nameWithType: CoreOperations.NULL
+  fullName: Ubytec.Language.Operations.CoreOperations.NULL
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.NULL
+    name: "NULL"
+    href: Ubytec.Language.Operations.CoreOperations.NULL.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.NULL
+    name: "NULL"
+    href: Ubytec.Language.Operations.CoreOperations.NULL.html
+- uid: Ubytec.Language.Operations.CoreOperations.TRAP
+  commentId: T:Ubytec.Language.Operations.CoreOperations.TRAP
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.TRAP
+  nameWithType: CoreOperations.TRAP
+  fullName: Ubytec.Language.Operations.CoreOperations.TRAP
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.TRAP
+    name: TRAP
+    href: Ubytec.Language.Operations.CoreOperations.TRAP.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.TRAP
+    name: TRAP
+    href: Ubytec.Language.Operations.CoreOperations.TRAP.html
+- uid: Ubytec.Language.Operations.IBlockOpCode
+  commentId: T:Ubytec.Language.Operations.IBlockOpCode
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.IBlockOpCode.html
+  name: IBlockOpCode
+  nameWithType: IBlockOpCode
+  fullName: Ubytec.Language.Operations.IBlockOpCode
+- uid: Ubytec.Language.Operations.IOpCode
+  commentId: T:Ubytec.Language.Operations.IOpCode
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.IOpCode.html
+  name: IOpCode
+  nameWithType: IOpCode
+  fullName: Ubytec.Language.Operations.IOpCode
+- uid: Ubytec.Language.Operations.IOpInheritance
+  commentId: T:Ubytec.Language.Operations.IOpInheritance
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.IOpInheritance.html
+  name: IOpInheritance
+  nameWithType: IOpInheritance
+  fullName: Ubytec.Language.Operations.IOpInheritance
+- uid: Ubytec.Language.Operations.OpcodeFactory
+  commentId: T:Ubytec.Language.Operations.OpcodeFactory
+  href: Ubytec.Language.Operations.OpcodeFactory.html
+  name: OpcodeFactory
+  nameWithType: OpcodeFactory
+  fullName: Ubytec.Language.Operations.OpcodeFactory
+- uid: Ubytec.Language.Operations.StackOperarions
+  commentId: T:Ubytec.Language.Operations.StackOperarions
+  href: Ubytec.Language.Operations.StackOperarions.html
+  name: StackOperarions
+  nameWithType: StackOperarions
+  fullName: Ubytec.Language.Operations.StackOperarions
+- uid: Ubytec.Language.Operations.StackOperarions.PUSH
+  commentId: T:Ubytec.Language.Operations.StackOperarions.PUSH
+  href: Ubytec.Language.Operations.StackOperarions.html
+  name: StackOperarions.PUSH
+  nameWithType: StackOperarions.PUSH
+  fullName: Ubytec.Language.Operations.StackOperarions.PUSH
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.PUSH
+    name: PUSH
+    href: Ubytec.Language.Operations.StackOperarions.PUSH.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.PUSH
+    name: PUSH
+    href: Ubytec.Language.Operations.StackOperarions.PUSH.html
+- uid: Ubytec.Language.Operations.StackOperarions.POP
+  commentId: T:Ubytec.Language.Operations.StackOperarions.POP
+  href: Ubytec.Language.Operations.StackOperarions.html
+  name: StackOperarions.POP
+  nameWithType: StackOperarions.POP
+  fullName: Ubytec.Language.Operations.StackOperarions.POP
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.POP
+    name: POP
+    href: Ubytec.Language.Operations.StackOperarions.POP.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.POP
+    name: POP
+    href: Ubytec.Language.Operations.StackOperarions.POP.html
+- uid: Ubytec.Language.Operations.StackOperarions.DUP
+  commentId: T:Ubytec.Language.Operations.StackOperarions.DUP
+  href: Ubytec.Language.Operations.StackOperarions.html
+  name: StackOperarions.DUP
+  nameWithType: StackOperarions.DUP
+  fullName: Ubytec.Language.Operations.StackOperarions.DUP
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.DUP
+    name: DUP
+    href: Ubytec.Language.Operations.StackOperarions.DUP.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.DUP
+    name: DUP
+    href: Ubytec.Language.Operations.StackOperarions.DUP.html
+- uid: Ubytec.Language.Operations.StackOperarions.SWAP
+  commentId: T:Ubytec.Language.Operations.StackOperarions.SWAP
+  href: Ubytec.Language.Operations.StackOperarions.html
+  name: StackOperarions.SWAP
+  nameWithType: StackOperarions.SWAP
+  fullName: Ubytec.Language.Operations.StackOperarions.SWAP
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.SWAP
+    name: SWAP
+    href: Ubytec.Language.Operations.StackOperarions.SWAP.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.SWAP
+    name: SWAP
+    href: Ubytec.Language.Operations.StackOperarions.SWAP.html
+- uid: Ubytec.Language.Operations.StackOperarions.ROT
+  commentId: T:Ubytec.Language.Operations.StackOperarions.ROT
+  href: Ubytec.Language.Operations.StackOperarions.html
+  name: StackOperarions.ROT
+  nameWithType: StackOperarions.ROT
+  fullName: Ubytec.Language.Operations.StackOperarions.ROT
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.ROT
+    name: ROT
+    href: Ubytec.Language.Operations.StackOperarions.ROT.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.ROT
+    name: ROT
+    href: Ubytec.Language.Operations.StackOperarions.ROT.html
+- uid: Ubytec.Language.Operations.StackOperarions.OVER
+  commentId: T:Ubytec.Language.Operations.StackOperarions.OVER
+  href: Ubytec.Language.Operations.StackOperarions.html
+  name: StackOperarions.OVER
+  nameWithType: StackOperarions.OVER
+  fullName: Ubytec.Language.Operations.StackOperarions.OVER
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.OVER
+    name: OVER
+    href: Ubytec.Language.Operations.StackOperarions.OVER.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.OVER
+    name: OVER
+    href: Ubytec.Language.Operations.StackOperarions.OVER.html
+- uid: Ubytec.Language.Operations.StackOperarions.NIP
+  commentId: T:Ubytec.Language.Operations.StackOperarions.NIP
+  href: Ubytec.Language.Operations.StackOperarions.html
+  name: StackOperarions.NIP
+  nameWithType: StackOperarions.NIP
+  fullName: Ubytec.Language.Operations.StackOperarions.NIP
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.NIP
+    name: NIP
+    href: Ubytec.Language.Operations.StackOperarions.NIP.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.NIP
+    name: NIP
+    href: Ubytec.Language.Operations.StackOperarions.NIP.html
+- uid: Ubytec.Language.Operations.StackOperarions.DROP
+  commentId: T:Ubytec.Language.Operations.StackOperarions.DROP
+  href: Ubytec.Language.Operations.StackOperarions.html
+  name: StackOperarions.DROP
+  nameWithType: StackOperarions.DROP
+  fullName: Ubytec.Language.Operations.StackOperarions.DROP
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.DROP
+    name: DROP
+    href: Ubytec.Language.Operations.StackOperarions.DROP.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.DROP
+    name: DROP
+    href: Ubytec.Language.Operations.StackOperarions.DROP.html
+- uid: Ubytec.Language.Operations.StackOperarions.TwoDUP
+  commentId: T:Ubytec.Language.Operations.StackOperarions.TwoDUP
+  href: Ubytec.Language.Operations.StackOperarions.html
+  name: StackOperarions.TwoDUP
+  nameWithType: StackOperarions.TwoDUP
+  fullName: Ubytec.Language.Operations.StackOperarions.TwoDUP
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.TwoDUP
+    name: TwoDUP
+    href: Ubytec.Language.Operations.StackOperarions.TwoDUP.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.TwoDUP
+    name: TwoDUP
+    href: Ubytec.Language.Operations.StackOperarions.TwoDUP.html
+- uid: Ubytec.Language.Operations.StackOperarions.TwoSWAP
+  commentId: T:Ubytec.Language.Operations.StackOperarions.TwoSWAP
+  href: Ubytec.Language.Operations.StackOperarions.html
+  name: StackOperarions.TwoSWAP
+  nameWithType: StackOperarions.TwoSWAP
+  fullName: Ubytec.Language.Operations.StackOperarions.TwoSWAP
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.TwoSWAP
+    name: TwoSWAP
+    href: Ubytec.Language.Operations.StackOperarions.TwoSWAP.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.TwoSWAP
+    name: TwoSWAP
+    href: Ubytec.Language.Operations.StackOperarions.TwoSWAP.html
+- uid: Ubytec.Language.Operations.StackOperarions.TwoROT
+  commentId: T:Ubytec.Language.Operations.StackOperarions.TwoROT
+  href: Ubytec.Language.Operations.StackOperarions.html
+  name: StackOperarions.TwoROT
+  nameWithType: StackOperarions.TwoROT
+  fullName: Ubytec.Language.Operations.StackOperarions.TwoROT
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.TwoROT
+    name: TwoROT
+    href: Ubytec.Language.Operations.StackOperarions.TwoROT.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.TwoROT
+    name: TwoROT
+    href: Ubytec.Language.Operations.StackOperarions.TwoROT.html
+- uid: Ubytec.Language.Operations.StackOperarions.TwoOVER
+  commentId: T:Ubytec.Language.Operations.StackOperarions.TwoOVER
+  href: Ubytec.Language.Operations.StackOperarions.html
+  name: StackOperarions.TwoOVER
+  nameWithType: StackOperarions.TwoOVER
+  fullName: Ubytec.Language.Operations.StackOperarions.TwoOVER
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.TwoOVER
+    name: TwoOVER
+    href: Ubytec.Language.Operations.StackOperarions.TwoOVER.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.TwoOVER
+    name: TwoOVER
+    href: Ubytec.Language.Operations.StackOperarions.TwoOVER.html
+- uid: Ubytec.Language.Operations.StackOperarions.PICK
+  commentId: T:Ubytec.Language.Operations.StackOperarions.PICK
+  href: Ubytec.Language.Operations.StackOperarions.html
+  name: StackOperarions.PICK
+  nameWithType: StackOperarions.PICK
+  fullName: Ubytec.Language.Operations.StackOperarions.PICK
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.PICK
+    name: PICK
+    href: Ubytec.Language.Operations.StackOperarions.PICK.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.PICK
+    name: PICK
+    href: Ubytec.Language.Operations.StackOperarions.PICK.html
+- uid: Ubytec.Language.Operations.StackOperarions.ROLL
+  commentId: T:Ubytec.Language.Operations.StackOperarions.ROLL
+  href: Ubytec.Language.Operations.StackOperarions.html
+  name: StackOperarions.ROLL
+  nameWithType: StackOperarions.ROLL
+  fullName: Ubytec.Language.Operations.StackOperarions.ROLL
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.ROLL
+    name: ROLL
+    href: Ubytec.Language.Operations.StackOperarions.ROLL.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.ROLL
+    name: ROLL
+    href: Ubytec.Language.Operations.StackOperarions.ROLL.html
+- uid: Ubytec.Language.Operations
+  commentId: N:Ubytec.Language.Operations
+  href: Ubytec.html
+  name: Ubytec.Language.Operations
+  nameWithType: Ubytec.Language.Operations
+  fullName: Ubytec.Language.Operations
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html

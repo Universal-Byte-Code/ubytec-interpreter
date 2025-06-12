@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<AssemblyVersion>1.0.9294.31407</AssemblyVersion>
+		<FileVersion>1.0.9294.31407</FileVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Folder Include="images\" />
+	  <Folder Include="templates\" />
+	</ItemGroup>
+
+	<Import Project="DocFx.targets" Condition="'$(EnableDocFxOnBuild)'=='true'" />
+
+</Project>

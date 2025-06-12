@@ -1,0 +1,83 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.AST
+  commentId: N:Ubytec.Language.AST
+  id: Ubytec.Language.AST
+  children:
+  - Ubytec.Language.AST.ASTCompiler
+  - Ubytec.Language.AST.ASTCompiler.CompileSyntaxError
+  - Ubytec.Language.AST.HighLevelParser
+  - Ubytec.Language.AST.HighLevelParser.ParseError
+  - Ubytec.Language.AST.SyntaxTreeValidator
+  langs:
+  - csharp
+  - vb
+  name: Ubytec.Language.AST
+  nameWithType: Ubytec.Language.AST
+  fullName: Ubytec.Language.AST
+  type: Namespace
+  assemblies:
+  - Ubytec
+references:
+- uid: Ubytec.Language.AST.ASTCompiler
+  commentId: T:Ubytec.Language.AST.ASTCompiler
+  href: Ubytec.Language.AST.ASTCompiler.html
+  name: ASTCompiler
+  nameWithType: ASTCompiler
+  fullName: Ubytec.Language.AST.ASTCompiler
+- uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError
+  commentId: T:Ubytec.Language.AST.ASTCompiler.CompileSyntaxError
+  href: Ubytec.Language.AST.ASTCompiler.html
+  name: ASTCompiler.CompileSyntaxError
+  nameWithType: ASTCompiler.CompileSyntaxError
+  fullName: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError
+  spec.csharp:
+  - uid: Ubytec.Language.AST.ASTCompiler
+    name: ASTCompiler
+    href: Ubytec.Language.AST.ASTCompiler.html
+  - name: .
+  - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError
+    name: CompileSyntaxError
+    href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.html
+  spec.vb:
+  - uid: Ubytec.Language.AST.ASTCompiler
+    name: ASTCompiler
+    href: Ubytec.Language.AST.ASTCompiler.html
+  - name: .
+  - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError
+    name: CompileSyntaxError
+    href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.html
+- uid: Ubytec.Language.AST.HighLevelParser
+  commentId: T:Ubytec.Language.AST.HighLevelParser
+  href: Ubytec.Language.AST.HighLevelParser.html
+  name: HighLevelParser
+  nameWithType: HighLevelParser
+  fullName: Ubytec.Language.AST.HighLevelParser
+- uid: Ubytec.Language.AST.HighLevelParser.ParseError
+  commentId: T:Ubytec.Language.AST.HighLevelParser.ParseError
+  href: Ubytec.Language.AST.HighLevelParser.html
+  name: HighLevelParser.ParseError
+  nameWithType: HighLevelParser.ParseError
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseError
+  spec.csharp:
+  - uid: Ubytec.Language.AST.HighLevelParser
+    name: HighLevelParser
+    href: Ubytec.Language.AST.HighLevelParser.html
+  - name: .
+  - uid: Ubytec.Language.AST.HighLevelParser.ParseError
+    name: ParseError
+    href: Ubytec.Language.AST.HighLevelParser.ParseError.html
+  spec.vb:
+  - uid: Ubytec.Language.AST.HighLevelParser
+    name: HighLevelParser
+    href: Ubytec.Language.AST.HighLevelParser.html
+  - name: .
+  - uid: Ubytec.Language.AST.HighLevelParser.ParseError
+    name: ParseError
+    href: Ubytec.Language.AST.HighLevelParser.ParseError.html
+- uid: Ubytec.Language.AST.SyntaxTreeValidator
+  commentId: T:Ubytec.Language.AST.SyntaxTreeValidator
+  href: Ubytec.Language.AST.SyntaxTreeValidator.html
+  name: SyntaxTreeValidator
+  nameWithType: SyntaxTreeValidator
+  fullName: Ubytec.Language.AST.SyntaxTreeValidator

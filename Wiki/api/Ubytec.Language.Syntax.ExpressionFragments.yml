@@ -1,0 +1,69 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.ExpressionFragments
+  commentId: N:Ubytec.Language.Syntax.ExpressionFragments
+  id: Ubytec.Language.Syntax.ExpressionFragments
+  children:
+  - Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment
+  - Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+  langs:
+  - csharp
+  - vb
+  name: Ubytec.Language.Syntax.ExpressionFragments
+  nameWithType: Ubytec.Language.Syntax.ExpressionFragments
+  fullName: Ubytec.Language.Syntax.ExpressionFragments
+  type: Namespace
+  assemblies:
+  - Ubytec
+references:
+- uid: Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment
+  commentId: T:Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment
+  href: Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment.html
+  name: ConditionExpressionFragment
+  nameWithType: ConditionExpressionFragment
+  fullName: Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment
+- uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+  commentId: T:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+  parent: Ubytec.Language.Syntax.ExpressionFragments
+  href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html
+  name: VariableExpressionFragment
+  nameWithType: VariableExpressionFragment
+  fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+- uid: Ubytec.Language.Syntax.ExpressionFragments
+  commentId: N:Ubytec.Language.Syntax.ExpressionFragments
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.ExpressionFragments
+  nameWithType: Ubytec.Language.Syntax.ExpressionFragments
+  fullName: Ubytec.Language.Syntax.ExpressionFragments
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.ExpressionFragments
+    name: ExpressionFragments
+    href: Ubytec.Language.Syntax.ExpressionFragments.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.ExpressionFragments
+    name: ExpressionFragments
+    href: Ubytec.Language.Syntax.ExpressionFragments.html

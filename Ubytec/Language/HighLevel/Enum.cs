@@ -45,7 +45,7 @@ namespace Ubytec.Language.HighLevel
             if ((Modifiers & (TypeModifiers.Global | TypeModifiers.Local)).CountSetBits() > 1)
                 throw new Exception($"Enum '{Name}' cannot be both global and local.");
 
-            if (!IsNumeric(TypeSize))
+            if (!TypeSize.IsNumeric())
                 throw new Exception($"Enum '{Name}' has invalid underlying type '{TypeSize}'.");
 
             var nameSet = new HashSet<string>();

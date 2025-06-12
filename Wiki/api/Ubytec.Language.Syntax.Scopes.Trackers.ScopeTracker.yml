@@ -1,0 +1,1152 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  commentId: T:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  id: ScopeTracker
+  parent: Ubytec.Language.Syntax.Scopes.Trackers
+  children:
+  - Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Count
+  - Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Find(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
+  - Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.GetEnumerator
+  - Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkBreak
+  - Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkContinue
+  - Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkReturn
+  - Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Peek
+  - Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.PeekOrDefault
+  - Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Pop
+  - Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Push(Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext)
+  - Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.TryPopUntil(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
+  - Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.ValidateFinalBlock
+  langs:
+  - csharp
+  - vb
+  name: ScopeTracker
+  nameWithType: ScopeTracker
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  type: Class
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ScopeTracker
+    path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+    startLine: 7
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  syntax:
+    content: 'public class ScopeTracker : IEnumerable<ScopeContext>, IEnumerable'
+    content.vb: Public Class ScopeTracker Implements IEnumerable(Of ScopeContext), IEnumerable
+  inheritance:
+  - System.Object
+  implements:
+  - System.Collections.Generic.IEnumerable{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext}
+  - System.Collections.IEnumerable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Push(Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext)
+  commentId: M:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Push(Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext)
+  id: Push(Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext)
+  parent: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  langs:
+  - csharp
+  - vb
+  name: Push(ScopeContext)
+  nameWithType: ScopeTracker.Push(ScopeContext)
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Push(Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Push
+    path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+    startLine: 11
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  syntax:
+    content: public void Push(ScopeContext context)
+    parameters:
+    - id: context
+      type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    content.vb: Public Sub Push(context As ScopeContext)
+  overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Push*
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Pop
+  commentId: M:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Pop
+  id: Pop
+  parent: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  langs:
+  - csharp
+  - vb
+  name: Pop()
+  nameWithType: ScopeTracker.Pop()
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Pop()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Pop
+    path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+    startLine: 13
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  syntax:
+    content: public ScopeContext Pop()
+    return:
+      type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    content.vb: Public Function Pop() As ScopeContext
+  overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Pop*
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Count
+  commentId: P:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Count
+  id: Count
+  parent: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  langs:
+  - csharp
+  - vb
+  name: Count
+  nameWithType: ScopeTracker.Count
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Count
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Count
+    path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+    startLine: 21
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  syntax:
+    content: public int Count { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Count As Integer
+  overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Count*
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Peek
+  commentId: M:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Peek
+  id: Peek
+  parent: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  langs:
+  - csharp
+  - vb
+  name: Peek()
+  nameWithType: ScopeTracker.Peek()
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Peek()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Peek
+    path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+    startLine: 23
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  syntax:
+    content: public ScopeContext Peek()
+    return:
+      type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    content.vb: Public Function Peek() As ScopeContext
+  overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Peek*
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkReturn
+  commentId: M:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkReturn
+  id: MarkReturn
+  parent: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  langs:
+  - csharp
+  - vb
+  name: MarkReturn()
+  nameWithType: ScopeTracker.MarkReturn()
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkReturn()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: MarkReturn
+    path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+    startLine: 31
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  syntax:
+    content: public void MarkReturn()
+    content.vb: Public Sub MarkReturn()
+  overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkReturn*
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkBreak
+  commentId: M:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkBreak
+  id: MarkBreak
+  parent: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  langs:
+  - csharp
+  - vb
+  name: MarkBreak()
+  nameWithType: ScopeTracker.MarkBreak()
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkBreak()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: MarkBreak
+    path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+    startLine: 37
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  syntax:
+    content: public void MarkBreak()
+    content.vb: Public Sub MarkBreak()
+  overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkBreak*
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkContinue
+  commentId: M:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkContinue
+  id: MarkContinue
+  parent: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  langs:
+  - csharp
+  - vb
+  name: MarkContinue()
+  nameWithType: ScopeTracker.MarkContinue()
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkContinue()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: MarkContinue
+    path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+    startLine: 49
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  syntax:
+    content: public void MarkContinue()
+    content.vb: Public Sub MarkContinue()
+  overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkContinue*
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.ValidateFinalBlock
+  commentId: M:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.ValidateFinalBlock
+  id: ValidateFinalBlock
+  parent: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  langs:
+  - csharp
+  - vb
+  name: ValidateFinalBlock()
+  nameWithType: ScopeTracker.ValidateFinalBlock()
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.ValidateFinalBlock()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ValidateFinalBlock
+    path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+    startLine: 61
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  syntax:
+    content: public void ValidateFinalBlock()
+    content.vb: Public Sub ValidateFinalBlock()
+  overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.ValidateFinalBlock*
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.GetEnumerator
+  commentId: M:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.GetEnumerator
+  id: GetEnumerator
+  parent: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  langs:
+  - csharp
+  - vb
+  name: GetEnumerator()
+  nameWithType: ScopeTracker.GetEnumerator()
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.GetEnumerator()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: GetEnumerator
+    path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+    startLine: 69
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: Returns an enumerator that iterates through the collection.
+  example: []
+  syntax:
+    content: public IEnumerator<ScopeContext> GetEnumerator()
+    return:
+      type: System.Collections.Generic.IEnumerator{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext}
+      description: An enumerator that can be used to iterate through the collection.
+    content.vb: Public Function GetEnumerator() As IEnumerator(Of ScopeContext)
+  overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.GetEnumerator*
+  implements:
+  - System.Collections.Generic.IEnumerable{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext}.GetEnumerator
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Find(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
+  commentId: M:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Find(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
+  id: Find(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
+  parent: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  langs:
+  - csharp
+  - vb
+  name: Find(Func<ScopeContext, bool>)
+  nameWithType: ScopeTracker.Find(Func<ScopeContext, bool>)
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Find(System.Func<Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext, bool>)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Find
+    path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+    startLine: 83
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: >-
+    Busca el primer bloque desde el top del stack que cumpla una condición.
+
+    Devuelve un resultado y mantiene el stack intacto.
+  example: []
+  syntax:
+    content: public ScopeContext? Find(Func<ScopeContext, bool> predicate)
+    parameters:
+    - id: predicate
+      type: System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean}
+    return:
+      type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    content.vb: Public Function Find(predicate As Func(Of ScopeContext, Boolean)) As ScopeContext
+  overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Find*
+  nameWithType.vb: ScopeTracker.Find(Func(Of ScopeContext, Boolean))
+  fullName.vb: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Find(System.Func(Of Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext, Boolean))
+  name.vb: Find(Func(Of ScopeContext, Boolean))
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.TryPopUntil(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
+  commentId: M:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.TryPopUntil(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
+  id: TryPopUntil(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
+  parent: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  langs:
+  - csharp
+  - vb
+  name: TryPopUntil(Func<ScopeContext, bool>)
+  nameWithType: ScopeTracker.TryPopUntil(Func<ScopeContext, bool>)
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.TryPopUntil(System.Func<Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext, bool>)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: TryPopUntil
+    path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+    startLine: 111
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: >-
+    Intenta desapilar bloques hasta encontrar uno que cumpla la condición.
+
+    Devuelve el bloque encontrado, o null si no hay ninguno. El resto del stack se conserva.
+  example: []
+  syntax:
+    content: public ScopeContext? TryPopUntil(Func<ScopeContext, bool> predicate)
+    parameters:
+    - id: predicate
+      type: System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean}
+    return:
+      type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    content.vb: Public Function TryPopUntil(predicate As Func(Of ScopeContext, Boolean)) As ScopeContext
+  overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.TryPopUntil*
+  nameWithType.vb: ScopeTracker.TryPopUntil(Func(Of ScopeContext, Boolean))
+  fullName.vb: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.TryPopUntil(System.Func(Of Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext, Boolean))
+  name.vb: TryPopUntil(Func(Of ScopeContext, Boolean))
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.PeekOrDefault
+  commentId: M:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.PeekOrDefault
+  id: PeekOrDefault
+  parent: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  langs:
+  - csharp
+  - vb
+  name: PeekOrDefault()
+  nameWithType: ScopeTracker.PeekOrDefault()
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.PeekOrDefault()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: PeekOrDefault
+    path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
+    startLine: 141
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: Devuelve el bloque del tope si existe, o null si el stack está vacío.
+  example: []
+  syntax:
+    content: public ScopeContext? PeekOrDefault()
+    return:
+      type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    content.vb: Public Function PeekOrDefault() As ScopeContext
+  overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.PeekOrDefault*
+references:
+- uid: Ubytec.Language.Syntax.Scopes.Trackers
+  commentId: N:Ubytec.Language.Syntax.Scopes.Trackers
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Scopes.Trackers
+  nameWithType: Ubytec.Language.Syntax.Scopes.Trackers
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes.Trackers
+    name: Trackers
+    href: Ubytec.Language.Syntax.Scopes.Trackers.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes.Trackers
+    name: Trackers
+    href: Ubytec.Language.Syntax.Scopes.Trackers.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext}
+  commentId: T:System.Collections.Generic.IEnumerable{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<ScopeContext>
+  nameWithType: IEnumerable<ScopeContext>
+  fullName: System.Collections.Generic.IEnumerable<Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext>
+  nameWithType.vb: IEnumerable(Of ScopeContext)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext)
+  name.vb: IEnumerable(Of ScopeContext)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    name: ScopeContext
+    href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    name: ScopeContext
+    href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html
+  - name: )
+- uid: System.Collections.IEnumerable
+  commentId: T:System.Collections.IEnumerable
+  parent: System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.ienumerable
+  name: IEnumerable
+  nameWithType: IEnumerable
+  fullName: System.Collections.IEnumerable
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: System.Collections
+  commentId: N:System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections
+  nameWithType: System.Collections
+  fullName: System.Collections
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Push*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Push
+  href: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.html#Ubytec_Language_Syntax_Scopes_Trackers_ScopeTracker_Push_Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_
+  name: Push
+  nameWithType: ScopeTracker.Push
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Push
+- uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+  commentId: T:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+  parent: Ubytec.Language.Syntax.Scopes.Contexts
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html
+  name: ScopeContext
+  nameWithType: ScopeContext
+  fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+- uid: Ubytec.Language.Syntax.Scopes.Contexts
+  commentId: N:Ubytec.Language.Syntax.Scopes.Contexts
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Scopes.Contexts
+  nameWithType: Ubytec.Language.Syntax.Scopes.Contexts
+  fullName: Ubytec.Language.Syntax.Scopes.Contexts
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts
+    name: Contexts
+    href: Ubytec.Language.Syntax.Scopes.Contexts.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts
+    name: Contexts
+    href: Ubytec.Language.Syntax.Scopes.Contexts.html
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Pop*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Pop
+  href: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.html#Ubytec_Language_Syntax_Scopes_Trackers_ScopeTracker_Pop
+  name: Pop
+  nameWithType: ScopeTracker.Pop
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Pop
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Count*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Count
+  href: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.html#Ubytec_Language_Syntax_Scopes_Trackers_ScopeTracker_Count
+  name: Count
+  nameWithType: ScopeTracker.Count
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Count
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Peek*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Peek
+  href: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.html#Ubytec_Language_Syntax_Scopes_Trackers_ScopeTracker_Peek
+  name: Peek
+  nameWithType: ScopeTracker.Peek
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Peek
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkReturn*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkReturn
+  href: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.html#Ubytec_Language_Syntax_Scopes_Trackers_ScopeTracker_MarkReturn
+  name: MarkReturn
+  nameWithType: ScopeTracker.MarkReturn
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkReturn
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkBreak*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkBreak
+  href: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.html#Ubytec_Language_Syntax_Scopes_Trackers_ScopeTracker_MarkBreak
+  name: MarkBreak
+  nameWithType: ScopeTracker.MarkBreak
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkBreak
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkContinue*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkContinue
+  href: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.html#Ubytec_Language_Syntax_Scopes_Trackers_ScopeTracker_MarkContinue
+  name: MarkContinue
+  nameWithType: ScopeTracker.MarkContinue
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkContinue
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.ValidateFinalBlock*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.ValidateFinalBlock
+  href: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.html#Ubytec_Language_Syntax_Scopes_Trackers_ScopeTracker_ValidateFinalBlock
+  name: ValidateFinalBlock
+  nameWithType: ScopeTracker.ValidateFinalBlock
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.ValidateFinalBlock
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.GetEnumerator*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.GetEnumerator
+  href: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.html#Ubytec_Language_Syntax_Scopes_Trackers_ScopeTracker_GetEnumerator
+  name: GetEnumerator
+  nameWithType: ScopeTracker.GetEnumerator
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.GetEnumerator
+- uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext}.GetEnumerator
+  commentId: M:System.Collections.Generic.IEnumerable{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext}.GetEnumerator
+  parent: System.Collections.Generic.IEnumerable{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext}
+  definition: System.Collections.Generic.IEnumerable`1.GetEnumerator
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  name: GetEnumerator()
+  nameWithType: IEnumerable<ScopeContext>.GetEnumerator()
+  fullName: System.Collections.Generic.IEnumerable<Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext>.GetEnumerator()
+  nameWithType.vb: IEnumerable(Of ScopeContext).GetEnumerator()
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext).GetEnumerator()
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext}.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext}.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  - name: (
+  - name: )
+- uid: System.Collections.Generic.IEnumerator{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext}
+  commentId: T:System.Collections.Generic.IEnumerator{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerator`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  name: IEnumerator<ScopeContext>
+  nameWithType: IEnumerator<ScopeContext>
+  fullName: System.Collections.Generic.IEnumerator<Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext>
+  nameWithType.vb: IEnumerator(Of ScopeContext)
+  fullName.vb: System.Collections.Generic.IEnumerator(Of Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext)
+  name.vb: IEnumerator(Of ScopeContext)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: <
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    name: ScopeContext
+    href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    name: ScopeContext
+    href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1.GetEnumerator
+  commentId: M:System.Collections.Generic.IEnumerable`1.GetEnumerator
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  name: GetEnumerator()
+  nameWithType: IEnumerable<T>.GetEnumerator()
+  fullName: System.Collections.Generic.IEnumerable<T>.GetEnumerator()
+  nameWithType.vb: IEnumerable(Of T).GetEnumerator()
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T).GetEnumerator()
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  - name: (
+  - name: )
+- uid: System.Collections.Generic.IEnumerator`1
+  commentId: T:System.Collections.Generic.IEnumerator`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  name: IEnumerator<T>
+  nameWithType: IEnumerator<T>
+  fullName: System.Collections.Generic.IEnumerator<T>
+  nameWithType.vb: IEnumerator(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerator(Of T)
+  name.vb: IEnumerator(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Find*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Find
+  href: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.html#Ubytec_Language_Syntax_Scopes_Trackers_ScopeTracker_Find_System_Func_Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_System_Boolean__
+  name: Find
+  nameWithType: ScopeTracker.Find
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Find
+- uid: System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean}
+  commentId: T:System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean}
+  parent: System
+  definition: System.Func`2
+  href: https://learn.microsoft.com/dotnet/api/system.func-2
+  name: Func<ScopeContext, bool>
+  nameWithType: Func<ScopeContext, bool>
+  fullName: System.Func<Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext, bool>
+  nameWithType.vb: Func(Of ScopeContext, Boolean)
+  fullName.vb: System.Func(Of Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext, Boolean)
+  name.vb: Func(Of ScopeContext, Boolean)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: <
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    name: ScopeContext
+    href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    name: ScopeContext
+    href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: System.Func`2
+  commentId: T:System.Func`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.func-2
+  name: Func<T, TResult>
+  nameWithType: Func<T, TResult>
+  fullName: System.Func<T, TResult>
+  nameWithType.vb: Func(Of T, TResult)
+  fullName.vb: System.Func(Of T, TResult)
+  name.vb: Func(Of T, TResult)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.TryPopUntil*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.TryPopUntil
+  href: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.html#Ubytec_Language_Syntax_Scopes_Trackers_ScopeTracker_TryPopUntil_System_Func_Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_System_Boolean__
+  name: TryPopUntil
+  nameWithType: ScopeTracker.TryPopUntil
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.TryPopUntil
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.PeekOrDefault*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.PeekOrDefault
+  href: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.html#Ubytec_Language_Syntax_Scopes_Trackers_ScopeTracker_PeekOrDefault
+  name: PeekOrDefault
+  nameWithType: ScopeTracker.PeekOrDefault
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.PeekOrDefault

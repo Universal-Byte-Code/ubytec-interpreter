@@ -2,7 +2,7 @@
 
 namespace Ubytec.Language.Syntax.Interfaces
 {
-    public interface IUbytecSyntax
+    public interface IUbytecSyntax : IDisposable
     {
         public ref MetadataRegistry Metadata { get; }
     }

@@ -1,0 +1,1124 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  id: Types.PrimitiveType
+  parent: Ubytec.Language.Syntax.TypeSystem
+  children:
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Bool
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Byte
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Char16
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Char8
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.CustomType
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Default
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Float128
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Float32
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Float64
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Half
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Int128
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Int16
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Int32
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Int64
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.SByte
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.UInt128
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.UInt16
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.UInt32
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.UInt64
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Unknown
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Void
+  langs:
+  - csharp
+  - vb
+  name: Types.PrimitiveType
+  nameWithType: Types.PrimitiveType
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  type: Enum
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: PrimitiveType
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 4
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: 'public enum Types.PrimitiveType : byte'
+    content.vb: Public Enum Types.PrimitiveType As Byte
+  extensionMethods:
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Ubytec.Language.Syntax.TypeSystem.Types.IsASCII
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Ubytec.Language.Syntax.TypeSystem.Types.IsBool
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Ubytec.Language.Syntax.TypeSystem.Types.IsFloat
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Ubytec.Language.Syntax.TypeSystem.Types.IsSigned
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Ubytec.Language.Syntax.TypeSystem.Types.IsUTF
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Ubytec.Language.Syntax.TypeSystem.Types.IsVoid
+  - Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Ubytec.Language.Syntax.TypeSystem.Types.Rank
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Void
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Void
+  id: Void
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: Void
+  nameWithType: Types.PrimitiveType.Void
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Void
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Void
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 7
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Void = 0
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Bool
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Bool
+  id: Bool
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: Bool
+  nameWithType: Types.PrimitiveType.Bool
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Bool
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Bool
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 10
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Bool = 1
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Char8
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Char8
+  id: Char8
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: Char8
+  nameWithType: Types.PrimitiveType.Char8
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Char8
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Char8
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 13
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Char8 = 2
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Char16
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Char16
+  id: Char16
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: Char16
+  nameWithType: Types.PrimitiveType.Char16
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Char16
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Char16
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 16
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Char16 = 3
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Byte
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Byte
+  id: Byte
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: Byte
+  nameWithType: Types.PrimitiveType.Byte
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Byte
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Byte
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 19
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Byte = 4
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.SByte
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.SByte
+  id: SByte
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: SByte
+  nameWithType: Types.PrimitiveType.SByte
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.SByte
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: SByte
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 20
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: SByte = 5
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.UInt16
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.UInt16
+  id: UInt16
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: UInt16
+  nameWithType: Types.PrimitiveType.UInt16
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.UInt16
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: UInt16
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 23
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: UInt16 = 6
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Int16
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Int16
+  id: Int16
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: Int16
+  nameWithType: Types.PrimitiveType.Int16
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Int16
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Int16
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 24
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Int16 = 7
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.UInt32
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.UInt32
+  id: UInt32
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: UInt32
+  nameWithType: Types.PrimitiveType.UInt32
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.UInt32
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: UInt32
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 27
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: UInt32 = 8
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Int32
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Int32
+  id: Int32
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: Int32
+  nameWithType: Types.PrimitiveType.Int32
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Int32
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Int32
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 28
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Int32 = 9
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.UInt64
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.UInt64
+  id: UInt64
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: UInt64
+  nameWithType: Types.PrimitiveType.UInt64
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.UInt64
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: UInt64
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 31
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: UInt64 = 10
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Int64
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Int64
+  id: Int64
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: Int64
+  nameWithType: Types.PrimitiveType.Int64
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Int64
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Int64
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 32
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Int64 = 11
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.UInt128
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.UInt128
+  id: UInt128
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: UInt128
+  nameWithType: Types.PrimitiveType.UInt128
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.UInt128
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: UInt128
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 35
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: UInt128 = 12
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Int128
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Int128
+  id: Int128
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: Int128
+  nameWithType: Types.PrimitiveType.Int128
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Int128
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Int128
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 36
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Int128 = 13
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Half
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Half
+  id: Half
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: Half
+  nameWithType: Types.PrimitiveType.Half
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Half
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Half
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 39
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Half = 14
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Float32
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Float32
+  id: Float32
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: Float32
+  nameWithType: Types.PrimitiveType.Float32
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Float32
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Float32
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 40
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Float32 = 15
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Float64
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Float64
+  id: Float64
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: Float64
+  nameWithType: Types.PrimitiveType.Float64
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Float64
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Float64
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 41
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Float64 = 16
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Float128
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Float128
+  id: Float128
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: Float128
+  nameWithType: Types.PrimitiveType.Float128
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Float128
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Float128
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 42
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Float128 = 17
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Default
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Default
+  id: Default
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: Default
+  nameWithType: Types.PrimitiveType.Default
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Default
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Default
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 45
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Default = 240
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.CustomType
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.CustomType
+  id: CustomType
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: CustomType
+  nameWithType: Types.PrimitiveType.CustomType
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.CustomType
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: CustomType
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 46
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: CustomType = 254
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Unknown
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Unknown
+  id: Unknown
+  parent: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  langs:
+  - csharp
+  - vb
+  name: Unknown
+  nameWithType: Types.PrimitiveType.Unknown
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Unknown
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Unknown
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 47
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: Unknown = 255
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+references:
+- uid: Ubytec.Language.Syntax.TypeSystem
+  commentId: N:Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.TypeSystem
+  nameWithType: Ubytec.Language.Syntax.TypeSystem
+  fullName: Ubytec.Language.Syntax.TypeSystem
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Ubytec.Language.Syntax.TypeSystem.Types.IsASCII
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsASCII(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  definition: Ubytec.Language.Syntax.TypeSystem.Types.IsASCII(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsASCII_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsASCII(PrimitiveType)
+  nameWithType: Types.IsASCII(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsASCII(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsASCII(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsASCII
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsASCII_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsASCII(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsASCII
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsASCII_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Ubytec.Language.Syntax.TypeSystem.Types.IsBool
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsBool(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  definition: Ubytec.Language.Syntax.TypeSystem.Types.IsBool(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsBool_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsBool(PrimitiveType)
+  nameWithType: Types.IsBool(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsBool(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsBool(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsBool
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsBool_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsBool(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsBool
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsBool_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Ubytec.Language.Syntax.TypeSystem.Types.IsFloat
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsFloat(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  definition: Ubytec.Language.Syntax.TypeSystem.Types.IsFloat(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsFloat_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsFloat(PrimitiveType)
+  nameWithType: Types.IsFloat(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsFloat(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsFloat(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsFloat
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsFloat_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsFloat(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsFloat
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsFloat_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  definition: Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsNumeric_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsNumeric(PrimitiveType)
+  nameWithType: Types.IsNumeric(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsNumeric
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsNumeric_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsNumeric
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsNumeric_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Ubytec.Language.Syntax.TypeSystem.Types.IsSigned
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsSigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  definition: Ubytec.Language.Syntax.TypeSystem.Types.IsSigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsSigned_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsSigned(PrimitiveType)
+  nameWithType: Types.IsSigned(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsSigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsSigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsSigned
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsSigned_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsSigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsSigned
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsSigned_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Ubytec.Language.Syntax.TypeSystem.Types.IsUTF
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsUTF(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  definition: Ubytec.Language.Syntax.TypeSystem.Types.IsUTF(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsUTF_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsUTF(PrimitiveType)
+  nameWithType: Types.IsUTF(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsUTF(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsUTF(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsUTF
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsUTF_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsUTF(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsUTF
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsUTF_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  definition: Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsUnsigned_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsUnsigned(PrimitiveType)
+  nameWithType: Types.IsUnsigned(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsUnsigned
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsUnsigned_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsUnsigned
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsUnsigned_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Ubytec.Language.Syntax.TypeSystem.Types.IsVoid
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsVoid(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  definition: Ubytec.Language.Syntax.TypeSystem.Types.IsVoid(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsVoid_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsVoid(PrimitiveType)
+  nameWithType: Types.IsVoid(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsVoid(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsVoid(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsVoid
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsVoid_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsVoid(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsVoid
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsVoid_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Ubytec.Language.Syntax.TypeSystem.Types.Rank
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.Rank(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  definition: Ubytec.Language.Syntax.TypeSystem.Types.Rank(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_Rank_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: Rank(PrimitiveType)
+  nameWithType: Types.Rank(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Rank(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.Rank(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: Rank
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_Rank_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.Rank(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: Rank
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_Rank_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsASCII(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsASCII(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsASCII_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsASCII(PrimitiveType)
+  nameWithType: Types.IsASCII(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsASCII(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsASCII(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsASCII
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsASCII_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsASCII(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsASCII
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsASCII_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  name: Types
+  nameWithType: Types
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsBool(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsBool(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsBool_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsBool(PrimitiveType)
+  nameWithType: Types.IsBool(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsBool(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsBool(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsBool
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsBool_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsBool(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsBool
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsBool_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsFloat(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsFloat(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsFloat_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsFloat(PrimitiveType)
+  nameWithType: Types.IsFloat(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsFloat(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsFloat(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsFloat
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsFloat_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsFloat(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsFloat
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsFloat_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsNumeric_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsNumeric(PrimitiveType)
+  nameWithType: Types.IsNumeric(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsNumeric
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsNumeric_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsNumeric
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsNumeric_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsSigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsSigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsSigned_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsSigned(PrimitiveType)
+  nameWithType: Types.IsSigned(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsSigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsSigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsSigned
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsSigned_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsSigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsSigned
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsSigned_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsUTF(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsUTF(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsUTF_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsUTF(PrimitiveType)
+  nameWithType: Types.IsUTF(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsUTF(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsUTF(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsUTF
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsUTF_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsUTF(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsUTF
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsUTF_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsUnsigned_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsUnsigned(PrimitiveType)
+  nameWithType: Types.IsUnsigned(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsUnsigned
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsUnsigned_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsUnsigned
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsUnsigned_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsVoid(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsVoid(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsVoid_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsVoid(PrimitiveType)
+  nameWithType: Types.IsVoid(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsVoid(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsVoid(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsVoid
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsVoid_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsVoid(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: IsVoid
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsVoid_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.Rank(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.Rank(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_Rank_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: Rank(PrimitiveType)
+  nameWithType: Types.Rank(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Rank(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.Rank(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: Rank
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_Rank_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.Rank(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+    name: Rank
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_Rank_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  - name: (
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  name: Types.PrimitiveType
+  nameWithType: Types.PrimitiveType
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html

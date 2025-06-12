@@ -1,0 +1,30 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.Scopes.Trackers
+  commentId: N:Ubytec.Language.Syntax.Scopes.Trackers
+  id: Ubytec.Language.Syntax.Scopes.Trackers
+  children:
+  - Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker
+  - Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  langs:
+  - csharp
+  - vb
+  name: Ubytec.Language.Syntax.Scopes.Trackers
+  nameWithType: Ubytec.Language.Syntax.Scopes.Trackers
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers
+  type: Namespace
+  assemblies:
+  - Ubytec
+references:
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker
+  commentId: T:Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker
+  href: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.html
+  name: FinalizersTracker
+  nameWithType: FinalizersTracker
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  commentId: T:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  href: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.html
+  name: ScopeTracker
+  nameWithType: ScopeTracker
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker

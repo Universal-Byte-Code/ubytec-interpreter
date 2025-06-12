@@ -2,13 +2,8 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net9.0</TargetFramework>
-    <RootNamespace>Ubytec</RootNamespace>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <AssemblyVersion>1.0.9243.2223</AssemblyVersion>
-    <FileVersion>1.0.9243.2223</FileVersion>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyVersion>1.0.9294.27740</AssemblyVersion>
+    <FileVersion>1.0.9294.27740</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

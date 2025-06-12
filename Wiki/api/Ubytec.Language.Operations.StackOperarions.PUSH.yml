@@ -1,0 +1,550 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Operations.StackOperarions.PUSH
+  commentId: T:Ubytec.Language.Operations.StackOperarions.PUSH
+  id: StackOperarions.PUSH
+  parent: Ubytec.Language.Operations
+  children:
+  - Ubytec.Language.Operations.StackOperarions.PUSH.#ctor(System.Byte[])
+  - Ubytec.Language.Operations.StackOperarions.PUSH.OpCode
+  - Ubytec.Language.Operations.StackOperarions.PUSH.operands
+  langs:
+  - csharp
+  - vb
+  name: StackOperarions.PUSH
+  nameWithType: StackOperarions.PUSH
+  fullName: Ubytec.Language.Operations.StackOperarions.PUSH
+  type: Struct
+  source:
+    remote:
+      path: Ubytec/Language/Operations/StackOperations.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: PUSH
+    path: ../Ubytec/Language/Operations/StackOperations.cs
+    startLine: 6
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations
+  syntax:
+    content: 'public readonly record struct StackOperarions.PUSH : IOpCode, IUbytecEntity, IEquatable<StackOperarions.PUSH>'
+    content.vb: Public Structure StackOperarions.PUSH Implements IOpCode, IUbytecEntity, IEquatable(Of StackOperarions.PUSH)
+  implements:
+  - Ubytec.Language.Operations.IOpCode
+  - Ubytec.Language.IUbytecEntity
+  - System.IEquatable{Ubytec.Language.Operations.StackOperarions.PUSH}
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubytec.Language.Operations.StackOperarions.PUSH.#ctor(System.Byte[])
+  commentId: M:Ubytec.Language.Operations.StackOperarions.PUSH.#ctor(System.Byte[])
+  id: '#ctor(System.Byte[])'
+  parent: Ubytec.Language.Operations.StackOperarions.PUSH
+  langs:
+  - csharp
+  - vb
+  name: PUSH(byte[])
+  nameWithType: StackOperarions.PUSH.PUSH(byte[])
+  fullName: Ubytec.Language.Operations.StackOperarions.PUSH.PUSH(byte[])
+  type: Constructor
+  source:
+    remote:
+      path: Ubytec/Language/Operations/StackOperations.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: .ctor
+    path: ../Ubytec/Language/Operations/StackOperations.cs
+    startLine: 6
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations
+  syntax:
+    content: public PUSH(byte[] operands)
+    parameters:
+    - id: operands
+      type: System.Byte[]
+    content.vb: Public Sub New(operands As Byte())
+  overload: Ubytec.Language.Operations.StackOperarions.PUSH.#ctor*
+  nameWithType.vb: StackOperarions.PUSH.New(Byte())
+  fullName.vb: Ubytec.Language.Operations.StackOperarions.PUSH.New(Byte())
+  name.vb: New(Byte())
+- uid: Ubytec.Language.Operations.StackOperarions.PUSH.operands
+  commentId: P:Ubytec.Language.Operations.StackOperarions.PUSH.operands
+  id: operands
+  parent: Ubytec.Language.Operations.StackOperarions.PUSH
+  langs:
+  - csharp
+  - vb
+  name: operands
+  nameWithType: StackOperarions.PUSH.operands
+  fullName: Ubytec.Language.Operations.StackOperarions.PUSH.operands
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Operations/StackOperations.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: operands
+    path: ../Ubytec/Language/Operations/StackOperations.cs
+    startLine: 6
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations
+  syntax:
+    content: public byte[] operands { get; init; }
+    parameters: []
+    return:
+      type: System.Byte[]
+    content.vb: Public Property operands As Byte()
+  overload: Ubytec.Language.Operations.StackOperarions.PUSH.operands*
+- uid: Ubytec.Language.Operations.StackOperarions.PUSH.OpCode
+  commentId: P:Ubytec.Language.Operations.StackOperarions.PUSH.OpCode
+  id: OpCode
+  parent: Ubytec.Language.Operations.StackOperarions.PUSH
+  langs:
+  - csharp
+  - vb
+  name: OpCode
+  nameWithType: StackOperarions.PUSH.OpCode
+  fullName: Ubytec.Language.Operations.StackOperarions.PUSH.OpCode
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Operations/StackOperations.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: OpCode
+    path: ../Ubytec/Language/Operations/StackOperations.cs
+    startLine: 8
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations
+  example: []
+  syntax:
+    content: public byte OpCode { get; }
+    parameters: []
+    return:
+      type: System.Byte
+    content.vb: Public ReadOnly Property OpCode As Byte
+  overload: Ubytec.Language.Operations.StackOperarions.PUSH.OpCode*
+  implements:
+  - Ubytec.Language.Operations.IOpCode.OpCode
+references:
+- uid: Ubytec.Language.Operations
+  commentId: N:Ubytec.Language.Operations
+  href: Ubytec.html
+  name: Ubytec.Language.Operations
+  nameWithType: Ubytec.Language.Operations
+  fullName: Ubytec.Language.Operations
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+- uid: Ubytec.Language.Operations.IOpCode
+  commentId: T:Ubytec.Language.Operations.IOpCode
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.IOpCode.html
+  name: IOpCode
+  nameWithType: IOpCode
+  fullName: Ubytec.Language.Operations.IOpCode
+- uid: Ubytec.Language.IUbytecEntity
+  commentId: T:Ubytec.Language.IUbytecEntity
+  parent: Ubytec.Language
+  href: Ubytec.Language.IUbytecEntity.html
+  name: IUbytecEntity
+  nameWithType: IUbytecEntity
+  fullName: Ubytec.Language.IUbytecEntity
+- uid: System.IEquatable{Ubytec.Language.Operations.StackOperarions.PUSH}
+  commentId: T:System.IEquatable{Ubytec.Language.Operations.StackOperarions.PUSH}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<StackOperarions.PUSH>
+  nameWithType: IEquatable<StackOperarions.PUSH>
+  fullName: System.IEquatable<Ubytec.Language.Operations.StackOperarions.PUSH>
+  nameWithType.vb: IEquatable(Of StackOperarions.PUSH)
+  fullName.vb: System.IEquatable(Of Ubytec.Language.Operations.StackOperarions.PUSH)
+  name.vb: IEquatable(Of StackOperarions.PUSH)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.PUSH
+    name: PUSH
+    href: Ubytec.Language.Operations.StackOperarions.PUSH.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Operations.StackOperarions
+    name: StackOperarions
+    href: Ubytec.Language.Operations.StackOperarions.html
+  - name: .
+  - uid: Ubytec.Language.Operations.StackOperarions.PUSH
+    name: PUSH
+    href: Ubytec.Language.Operations.StackOperarions.PUSH.html
+  - name: )
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Ubytec.Language
+  commentId: N:Ubytec.Language
+  href: Ubytec.html
+  name: Ubytec.Language
+  nameWithType: Ubytec.Language
+  fullName: Ubytec.Language
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubytec.Language.Operations.StackOperarions.PUSH.#ctor*
+  commentId: Overload:Ubytec.Language.Operations.StackOperarions.PUSH.#ctor
+  href: Ubytec.Language.Operations.StackOperarions.PUSH.html#Ubytec_Language_Operations_StackOperarions_PUSH__ctor_System_Byte___
+  name: PUSH
+  nameWithType: StackOperarions.PUSH.PUSH
+  fullName: Ubytec.Language.Operations.StackOperarions.PUSH.PUSH
+  nameWithType.vb: StackOperarions.PUSH.New
+  fullName.vb: Ubytec.Language.Operations.StackOperarions.PUSH.New
+  name.vb: New
+- uid: System.Byte[]
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.byte
+  name: byte[]
+  nameWithType: byte[]
+  fullName: byte[]
+  nameWithType.vb: Byte()
+  fullName.vb: Byte()
+  name.vb: Byte()
+  spec.csharp:
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: (
+  - name: )
+- uid: Ubytec.Language.Operations.StackOperarions.PUSH.operands*
+  commentId: Overload:Ubytec.Language.Operations.StackOperarions.PUSH.operands
+  href: Ubytec.Language.Operations.StackOperarions.PUSH.html#Ubytec_Language_Operations_StackOperarions_PUSH_operands
+  name: operands
+  nameWithType: StackOperarions.PUSH.operands
+  fullName: Ubytec.Language.Operations.StackOperarions.PUSH.operands
+- uid: Ubytec.Language.Operations.StackOperarions.PUSH.OpCode*
+  commentId: Overload:Ubytec.Language.Operations.StackOperarions.PUSH.OpCode
+  href: Ubytec.Language.Operations.StackOperarions.PUSH.html#Ubytec_Language_Operations_StackOperarions_PUSH_OpCode
+  name: OpCode
+  nameWithType: StackOperarions.PUSH.OpCode
+  fullName: Ubytec.Language.Operations.StackOperarions.PUSH.OpCode
+- uid: Ubytec.Language.Operations.IOpCode.OpCode
+  commentId: P:Ubytec.Language.Operations.IOpCode.OpCode
+  parent: Ubytec.Language.Operations.IOpCode
+  href: Ubytec.Language.Operations.IOpCode.html#Ubytec_Language_Operations_IOpCode_OpCode
+  name: OpCode
+  nameWithType: IOpCode.OpCode
+  fullName: Ubytec.Language.Operations.IOpCode.OpCode
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.byte
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte

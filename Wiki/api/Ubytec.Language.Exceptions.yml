@@ -1,0 +1,96 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Exceptions
+  commentId: N:Ubytec.Language.Exceptions
+  id: Ubytec.Language.Exceptions
+  children:
+  - Ubytec.Language.Exceptions.LanguageVersionException
+  - Ubytec.Language.Exceptions.RegisterDataException
+  - Ubytec.Language.Exceptions.SyntaxException
+  - Ubytec.Language.Exceptions.SyntaxStackException
+  - Ubytec.Language.Exceptions.SyntaxTreeDeserializationException
+  - Ubytec.Language.Exceptions.TokenizationOperationException
+  - Ubytec.Language.Exceptions.UbytecException
+  langs:
+  - csharp
+  - vb
+  name: Ubytec.Language.Exceptions
+  nameWithType: Ubytec.Language.Exceptions
+  fullName: Ubytec.Language.Exceptions
+  type: Namespace
+  assemblies:
+  - Ubytec
+references:
+- uid: Ubytec.Language.Exceptions.LanguageVersionException
+  commentId: T:Ubytec.Language.Exceptions.LanguageVersionException
+  href: Ubytec.Language.Exceptions.LanguageVersionException.html
+  name: LanguageVersionException
+  nameWithType: LanguageVersionException
+  fullName: Ubytec.Language.Exceptions.LanguageVersionException
+- uid: Ubytec.Language.Exceptions.RegisterDataException
+  commentId: T:Ubytec.Language.Exceptions.RegisterDataException
+  href: Ubytec.Language.Exceptions.RegisterDataException.html
+  name: RegisterDataException
+  nameWithType: RegisterDataException
+  fullName: Ubytec.Language.Exceptions.RegisterDataException
+- uid: Ubytec.Language.Exceptions.SyntaxException
+  commentId: T:Ubytec.Language.Exceptions.SyntaxException
+  href: Ubytec.Language.Exceptions.SyntaxException.html
+  name: SyntaxException
+  nameWithType: SyntaxException
+  fullName: Ubytec.Language.Exceptions.SyntaxException
+- uid: Ubytec.Language.Exceptions.SyntaxStackException
+  commentId: T:Ubytec.Language.Exceptions.SyntaxStackException
+  href: Ubytec.Language.Exceptions.SyntaxStackException.html
+  name: SyntaxStackException
+  nameWithType: SyntaxStackException
+  fullName: Ubytec.Language.Exceptions.SyntaxStackException
+- uid: Ubytec.Language.Exceptions.SyntaxTreeDeserializationException
+  commentId: T:Ubytec.Language.Exceptions.SyntaxTreeDeserializationException
+  href: Ubytec.Language.Exceptions.SyntaxTreeDeserializationException.html
+  name: SyntaxTreeDeserializationException
+  nameWithType: SyntaxTreeDeserializationException
+  fullName: Ubytec.Language.Exceptions.SyntaxTreeDeserializationException
+- uid: Ubytec.Language.Exceptions.TokenizationOperationException
+  commentId: T:Ubytec.Language.Exceptions.TokenizationOperationException
+  href: Ubytec.Language.Exceptions.TokenizationOperationException.html
+  name: TokenizationOperationException
+  nameWithType: TokenizationOperationException
+  fullName: Ubytec.Language.Exceptions.TokenizationOperationException
+- uid: Ubytec.Language.Exceptions.UbytecException
+  commentId: T:Ubytec.Language.Exceptions.UbytecException
+  parent: Ubytec.Language.Exceptions
+  href: Ubytec.Language.Exceptions.UbytecException.html
+  name: UbytecException
+  nameWithType: UbytecException
+  fullName: Ubytec.Language.Exceptions.UbytecException
+- uid: Ubytec.Language.Exceptions
+  commentId: N:Ubytec.Language.Exceptions
+  href: Ubytec.html
+  name: Ubytec.Language.Exceptions
+  nameWithType: Ubytec.Language.Exceptions
+  fullName: Ubytec.Language.Exceptions
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Exceptions
+    name: Exceptions
+    href: Ubytec.Language.Exceptions.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Exceptions
+    name: Exceptions
+    href: Ubytec.Language.Exceptions.html

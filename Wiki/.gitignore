@@ -1,0 +1,4 @@
+﻿# DocFx generated files
+/docs/**/toc.yml
+/docs/reference/
+_site

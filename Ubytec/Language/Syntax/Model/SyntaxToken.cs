@@ -4,7 +4,6 @@ using System.Runtime.InteropServices;
 using System.Text.Json.Serialization;
 using Ubytec.Language.Syntax.Fast.Metadata;
 using Ubytec.Language.Syntax.Interfaces;
-using Ubytec.Language.Tools.Serialization;
 
 namespace Ubytec.Language.Syntax.Model;
 
@@ -20,7 +19,7 @@ namespace Ubytec.Language.Syntax.Model;
 [StructLayout(LayoutKind.Auto)]
 [SkipLocalsInit]
 public sealed class SyntaxToken
-    : IEquatable<SyntaxToken>, IDisposable, IUbytecSyntax
+    : IEquatable<SyntaxToken>, IUbytecSyntax
 {
     /// <summary>
     /// Gets the raw string content of the token.

@@ -1,0 +1,1309 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  commentId: T:Ubytec.Language.Syntax.Scopes.CompilationScopes
+  id: CompilationScopes
+  parent: Ubytec.Language.Syntax.Scopes
+  children:
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.Count
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.FinalizersCount
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.Find(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.FindFinalizers(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean})
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.Peek
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizers
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizersOrDefault
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekOrDefault
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.Pop
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.Push(Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext)
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.PushBreak(Ubytec.Language.Operations.CoreOperations.BREAK)
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.PushContinue(Ubytec.Language.Operations.CoreOperations.CONTINUE)
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.PushReturn(Ubytec.Language.Operations.CoreOperations.RETURN)
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.Reset
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopFinalizersUntil(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean})
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopUntil(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.ValidateFinalScope
+  langs:
+  - csharp
+  - vb
+  name: CompilationScopes
+  nameWithType: CompilationScopes
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  type: Class
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: CompilationScopes
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 9
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  summary: Mantiene contextos de alcance, rastrea finalizadores y acumula definiciones de datos.
+  example: []
+  syntax:
+    content: public class CompilationScopes
+    content.vb: Public Class CompilationScopes
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Count
+  commentId: P:Ubytec.Language.Syntax.Scopes.CompilationScopes.Count
+  id: Count
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: Count
+  nameWithType: CompilationScopes.Count
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Count
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Count
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 17
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  summary: Número de contextos activos.
+  example: []
+  syntax:
+    content: public int Count { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Count As Integer
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.Count*
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.FinalizersCount
+  commentId: P:Ubytec.Language.Syntax.Scopes.CompilationScopes.FinalizersCount
+  id: FinalizersCount
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: FinalizersCount
+  nameWithType: CompilationScopes.FinalizersCount
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.FinalizersCount
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: FinalizersCount
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 21
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  summary: Número de contextos de finalizadores activos.
+  example: []
+  syntax:
+    content: public int FinalizersCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property FinalizersCount As Integer
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.FinalizersCount*
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Push(Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext)
+  commentId: M:Ubytec.Language.Syntax.Scopes.CompilationScopes.Push(Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext)
+  id: Push(Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext)
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: Push(ScopeContext)
+  nameWithType: CompilationScopes.Push(ScopeContext)
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Push(Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Push
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 23
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  syntax:
+    content: public void Push(ScopeContext context)
+    parameters:
+    - id: context
+      type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    content.vb: Public Sub Push(context As ScopeContext)
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.Push*
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Pop
+  commentId: M:Ubytec.Language.Syntax.Scopes.CompilationScopes.Pop
+  id: Pop
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: Pop()
+  nameWithType: CompilationScopes.Pop()
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Pop()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Pop
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 29
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  syntax:
+    content: public (ScopeContext scope, FinalizersContext finalizers) Pop()
+    return:
+      type: System.ValueTuple{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext}
+    content.vb: Public Function Pop() As (scope As ScopeContext, finalizers As FinalizersContext)
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.Pop*
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Peek
+  commentId: M:Ubytec.Language.Syntax.Scopes.CompilationScopes.Peek
+  id: Peek
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: Peek()
+  nameWithType: CompilationScopes.Peek()
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Peek()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Peek
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 32
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  syntax:
+    content: public ScopeContext Peek()
+    return:
+      type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    content.vb: Public Function Peek() As ScopeContext
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.Peek*
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekOrDefault
+  commentId: M:Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekOrDefault
+  id: PeekOrDefault
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: PeekOrDefault()
+  nameWithType: CompilationScopes.PeekOrDefault()
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekOrDefault()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: PeekOrDefault
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 33
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  syntax:
+    content: public ScopeContext? PeekOrDefault()
+    return:
+      type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    content.vb: Public Function PeekOrDefault() As ScopeContext
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekOrDefault*
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Find(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
+  commentId: M:Ubytec.Language.Syntax.Scopes.CompilationScopes.Find(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
+  id: Find(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: Find(Func<ScopeContext, bool>)
+  nameWithType: CompilationScopes.Find(Func<ScopeContext, bool>)
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Find(System.Func<Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext, bool>)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Find
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 34
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  syntax:
+    content: public ScopeContext? Find(Func<ScopeContext, bool> predicate)
+    parameters:
+    - id: predicate
+      type: System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean}
+    return:
+      type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    content.vb: Public Function Find(predicate As Func(Of ScopeContext, Boolean)) As ScopeContext
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.Find*
+  nameWithType.vb: CompilationScopes.Find(Func(Of ScopeContext, Boolean))
+  fullName.vb: Ubytec.Language.Syntax.Scopes.CompilationScopes.Find(System.Func(Of Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext, Boolean))
+  name.vb: Find(Func(Of ScopeContext, Boolean))
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopUntil(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
+  commentId: M:Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopUntil(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
+  id: TryPopUntil(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: TryPopUntil(Func<ScopeContext, bool>)
+  nameWithType: CompilationScopes.TryPopUntil(Func<ScopeContext, bool>)
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopUntil(System.Func<Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext, bool>)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: TryPopUntil
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 35
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  syntax:
+    content: public ScopeContext? TryPopUntil(Func<ScopeContext, bool> predicate)
+    parameters:
+    - id: predicate
+      type: System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean}
+    return:
+      type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    content.vb: Public Function TryPopUntil(predicate As Func(Of ScopeContext, Boolean)) As ScopeContext
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopUntil*
+  nameWithType.vb: CompilationScopes.TryPopUntil(Func(Of ScopeContext, Boolean))
+  fullName.vb: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopUntil(System.Func(Of Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext, Boolean))
+  name.vb: TryPopUntil(Func(Of ScopeContext, Boolean))
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.ValidateFinalScope
+  commentId: M:Ubytec.Language.Syntax.Scopes.CompilationScopes.ValidateFinalScope
+  id: ValidateFinalScope
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: ValidateFinalScope()
+  nameWithType: CompilationScopes.ValidateFinalScope()
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.ValidateFinalScope()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ValidateFinalScope
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 36
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  syntax:
+    content: public void ValidateFinalScope()
+    content.vb: Public Sub ValidateFinalScope()
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.ValidateFinalScope*
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushReturn(Ubytec.Language.Operations.CoreOperations.RETURN)
+  commentId: M:Ubytec.Language.Syntax.Scopes.CompilationScopes.PushReturn(Ubytec.Language.Operations.CoreOperations.RETURN)
+  id: PushReturn(Ubytec.Language.Operations.CoreOperations.RETURN)
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: PushReturn(RETURN)
+  nameWithType: CompilationScopes.PushReturn(CoreOperations.RETURN)
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushReturn(Ubytec.Language.Operations.CoreOperations.RETURN)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: PushReturn
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 38
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  syntax:
+    content: public void PushReturn(CoreOperations.RETURN op)
+    parameters:
+    - id: op
+      type: Ubytec.Language.Operations.CoreOperations.RETURN
+    content.vb: Public Sub PushReturn(op As CoreOperations.RETURN)
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushReturn*
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushBreak(Ubytec.Language.Operations.CoreOperations.BREAK)
+  commentId: M:Ubytec.Language.Syntax.Scopes.CompilationScopes.PushBreak(Ubytec.Language.Operations.CoreOperations.BREAK)
+  id: PushBreak(Ubytec.Language.Operations.CoreOperations.BREAK)
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: PushBreak(BREAK)
+  nameWithType: CompilationScopes.PushBreak(CoreOperations.BREAK)
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushBreak(Ubytec.Language.Operations.CoreOperations.BREAK)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: PushBreak
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 44
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  syntax:
+    content: public void PushBreak(CoreOperations.BREAK op)
+    parameters:
+    - id: op
+      type: Ubytec.Language.Operations.CoreOperations.BREAK
+    content.vb: Public Sub PushBreak(op As CoreOperations.BREAK)
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushBreak*
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushContinue(Ubytec.Language.Operations.CoreOperations.CONTINUE)
+  commentId: M:Ubytec.Language.Syntax.Scopes.CompilationScopes.PushContinue(Ubytec.Language.Operations.CoreOperations.CONTINUE)
+  id: PushContinue(Ubytec.Language.Operations.CoreOperations.CONTINUE)
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: PushContinue(CONTINUE)
+  nameWithType: CompilationScopes.PushContinue(CoreOperations.CONTINUE)
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushContinue(Ubytec.Language.Operations.CoreOperations.CONTINUE)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: PushContinue
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 50
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  syntax:
+    content: public void PushContinue(CoreOperations.CONTINUE op)
+    parameters:
+    - id: op
+      type: Ubytec.Language.Operations.CoreOperations.CONTINUE
+    content.vb: Public Sub PushContinue(op As CoreOperations.CONTINUE)
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushContinue*
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizers
+  commentId: M:Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizers
+  id: PeekFinalizers
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: PeekFinalizers()
+  nameWithType: CompilationScopes.PeekFinalizers()
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizers()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: PeekFinalizers
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 56
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  syntax:
+    content: public FinalizersContext PeekFinalizers()
+    return:
+      type: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+    content.vb: Public Function PeekFinalizers() As FinalizersContext
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizers*
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizersOrDefault
+  commentId: M:Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizersOrDefault
+  id: PeekFinalizersOrDefault
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: PeekFinalizersOrDefault()
+  nameWithType: CompilationScopes.PeekFinalizersOrDefault()
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizersOrDefault()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: PeekFinalizersOrDefault
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 57
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  syntax:
+    content: public FinalizersContext? PeekFinalizersOrDefault()
+    return:
+      type: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+    content.vb: Public Function PeekFinalizersOrDefault() As FinalizersContext
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizersOrDefault*
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.FindFinalizers(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean})
+  commentId: M:Ubytec.Language.Syntax.Scopes.CompilationScopes.FindFinalizers(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean})
+  id: FindFinalizers(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean})
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: FindFinalizers(Func<FinalizersContext, bool>)
+  nameWithType: CompilationScopes.FindFinalizers(Func<FinalizersContext, bool>)
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.FindFinalizers(System.Func<Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext, bool>)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: FindFinalizers
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 58
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  syntax:
+    content: public FinalizersContext? FindFinalizers(Func<FinalizersContext, bool> predicate)
+    parameters:
+    - id: predicate
+      type: System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean}
+    return:
+      type: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+    content.vb: Public Function FindFinalizers(predicate As Func(Of FinalizersContext, Boolean)) As FinalizersContext
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.FindFinalizers*
+  nameWithType.vb: CompilationScopes.FindFinalizers(Func(Of FinalizersContext, Boolean))
+  fullName.vb: Ubytec.Language.Syntax.Scopes.CompilationScopes.FindFinalizers(System.Func(Of Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext, Boolean))
+  name.vb: FindFinalizers(Func(Of FinalizersContext, Boolean))
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopFinalizersUntil(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean})
+  commentId: M:Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopFinalizersUntil(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean})
+  id: TryPopFinalizersUntil(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean})
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: TryPopFinalizersUntil(Func<FinalizersContext, bool>)
+  nameWithType: CompilationScopes.TryPopFinalizersUntil(Func<FinalizersContext, bool>)
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopFinalizersUntil(System.Func<Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext, bool>)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: TryPopFinalizersUntil
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 59
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  syntax:
+    content: public FinalizersContext? TryPopFinalizersUntil(Func<FinalizersContext, bool> predicate)
+    parameters:
+    - id: predicate
+      type: System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean}
+    return:
+      type: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+    content.vb: Public Function TryPopFinalizersUntil(predicate As Func(Of FinalizersContext, Boolean)) As FinalizersContext
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopFinalizersUntil*
+  nameWithType.vb: CompilationScopes.TryPopFinalizersUntil(Func(Of FinalizersContext, Boolean))
+  fullName.vb: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopFinalizersUntil(System.Func(Of Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext, Boolean))
+  name.vb: TryPopFinalizersUntil(Func(Of FinalizersContext, Boolean))
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Reset
+  commentId: M:Ubytec.Language.Syntax.Scopes.CompilationScopes.Reset
+  id: Reset
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: Reset()
+  nameWithType: CompilationScopes.Reset()
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Reset()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Reset
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 64
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  summary: Limpia todos los contextos y definiciones de datos.
+  example: []
+  syntax:
+    content: public void Reset()
+    content.vb: Public Sub Reset()
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.Reset*
+references:
+- uid: Ubytec.Language.Syntax.Scopes
+  commentId: N:Ubytec.Language.Syntax.Scopes
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Scopes
+  nameWithType: Ubytec.Language.Syntax.Scopes
+  fullName: Ubytec.Language.Syntax.Scopes
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Count*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.Count
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Count
+  name: Count
+  nameWithType: CompilationScopes.Count
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Count
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.FinalizersCount*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.FinalizersCount
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_FinalizersCount
+  name: FinalizersCount
+  nameWithType: CompilationScopes.FinalizersCount
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.FinalizersCount
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Push*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.Push
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Push_Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_
+  name: Push
+  nameWithType: CompilationScopes.Push
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Push
+- uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+  commentId: T:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+  parent: Ubytec.Language.Syntax.Scopes.Contexts
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html
+  name: ScopeContext
+  nameWithType: ScopeContext
+  fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+- uid: Ubytec.Language.Syntax.Scopes.Contexts
+  commentId: N:Ubytec.Language.Syntax.Scopes.Contexts
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Scopes.Contexts
+  nameWithType: Ubytec.Language.Syntax.Scopes.Contexts
+  fullName: Ubytec.Language.Syntax.Scopes.Contexts
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts
+    name: Contexts
+    href: Ubytec.Language.Syntax.Scopes.Contexts.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts
+    name: Contexts
+    href: Ubytec.Language.Syntax.Scopes.Contexts.html
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Pop*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.Pop
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Pop
+  name: Pop
+  nameWithType: CompilationScopes.Pop
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Pop
+- uid: System.ValueTuple{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext}
+  commentId: T:System.ValueTuple{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext}
+  parent: System
+  definition: System.ValueTuple`2
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html
+  name: (ScopeContext scope, FinalizersContext finalizers)
+  nameWithType: (ScopeContext scope, FinalizersContext finalizers)
+  fullName: (Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext scope, Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext finalizers)
+  nameWithType.vb: (scope As ScopeContext, finalizers As FinalizersContext)
+  fullName.vb: (scope As Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext, finalizers As Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext)
+  name.vb: (scope As ScopeContext, finalizers As FinalizersContext)
+  spec.csharp:
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    name: ScopeContext
+    href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html
+  - name: " "
+  - uid: System.ValueTuple{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext}.scope
+    name: scope
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-ubytec.language.syntax.scopes.contexts.scopecontext,ubytec.language.syntax.scopes.contexts.finalizerscontext-.scope
+  - name: ','
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+    name: FinalizersContext
+    href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html
+  - name: " "
+  - uid: System.ValueTuple{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext}.finalizers
+    name: finalizers
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-ubytec.language.syntax.scopes.contexts.scopecontext,ubytec.language.syntax.scopes.contexts.finalizerscontext-.finalizers
+  - name: )
+  spec.vb:
+  - name: (
+  - uid: System.ValueTuple{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext}.scope
+    name: scope
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-ubytec.language.syntax.scopes.contexts.scopecontext,ubytec.language.syntax.scopes.contexts.finalizerscontext-.scope
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    name: ScopeContext
+    href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext}.finalizers
+    name: finalizers
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-ubytec.language.syntax.scopes.contexts.scopecontext,ubytec.language.syntax.scopes.contexts.finalizerscontext-.finalizers
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+    name: FinalizersContext
+    href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html
+  - name: )
+- uid: System.ValueTuple`2
+  commentId: T:System.ValueTuple`2
+  name: (T1, T2)
+  nameWithType: (T1, T2)
+  fullName: (T1, T2)
+  spec.csharp:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+  spec.vb:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Peek*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.Peek
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Peek
+  name: Peek
+  nameWithType: CompilationScopes.Peek
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Peek
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekOrDefault*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekOrDefault
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PeekOrDefault
+  name: PeekOrDefault
+  nameWithType: CompilationScopes.PeekOrDefault
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekOrDefault
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Find*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.Find
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Find_System_Func_Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_System_Boolean__
+  name: Find
+  nameWithType: CompilationScopes.Find
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Find
+- uid: System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean}
+  commentId: T:System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean}
+  parent: System
+  definition: System.Func`2
+  href: https://learn.microsoft.com/dotnet/api/system.func-2
+  name: Func<ScopeContext, bool>
+  nameWithType: Func<ScopeContext, bool>
+  fullName: System.Func<Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext, bool>
+  nameWithType.vb: Func(Of ScopeContext, Boolean)
+  fullName.vb: System.Func(Of Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext, Boolean)
+  name.vb: Func(Of ScopeContext, Boolean)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: <
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    name: ScopeContext
+    href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    name: ScopeContext
+    href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: System.Func`2
+  commentId: T:System.Func`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.func-2
+  name: Func<T, TResult>
+  nameWithType: Func<T, TResult>
+  fullName: System.Func<T, TResult>
+  nameWithType.vb: Func(Of T, TResult)
+  fullName.vb: System.Func(Of T, TResult)
+  name.vb: Func(Of T, TResult)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopUntil*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopUntil
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_TryPopUntil_System_Func_Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_System_Boolean__
+  name: TryPopUntil
+  nameWithType: CompilationScopes.TryPopUntil
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopUntil
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.ValidateFinalScope*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.ValidateFinalScope
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_ValidateFinalScope
+  name: ValidateFinalScope
+  nameWithType: CompilationScopes.ValidateFinalScope
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.ValidateFinalScope
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushReturn*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.PushReturn
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PushReturn_Ubytec_Language_Operations_CoreOperations_RETURN_
+  name: PushReturn
+  nameWithType: CompilationScopes.PushReturn
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushReturn
+- uid: Ubytec.Language.Operations.CoreOperations.RETURN
+  commentId: T:Ubytec.Language.Operations.CoreOperations.RETURN
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.RETURN
+  nameWithType: CoreOperations.RETURN
+  fullName: Ubytec.Language.Operations.CoreOperations.RETURN
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.RETURN
+    name: RETURN
+    href: Ubytec.Language.Operations.CoreOperations.RETURN.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.RETURN
+    name: RETURN
+    href: Ubytec.Language.Operations.CoreOperations.RETURN.html
+- uid: Ubytec.Language.Operations
+  commentId: N:Ubytec.Language.Operations
+  href: Ubytec.html
+  name: Ubytec.Language.Operations
+  nameWithType: Ubytec.Language.Operations
+  fullName: Ubytec.Language.Operations
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushBreak*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.PushBreak
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PushBreak_Ubytec_Language_Operations_CoreOperations_BREAK_
+  name: PushBreak
+  nameWithType: CompilationScopes.PushBreak
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushBreak
+- uid: Ubytec.Language.Operations.CoreOperations.BREAK
+  commentId: T:Ubytec.Language.Operations.CoreOperations.BREAK
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.BREAK
+  nameWithType: CoreOperations.BREAK
+  fullName: Ubytec.Language.Operations.CoreOperations.BREAK
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.BREAK
+    name: BREAK
+    href: Ubytec.Language.Operations.CoreOperations.BREAK.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.BREAK
+    name: BREAK
+    href: Ubytec.Language.Operations.CoreOperations.BREAK.html
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushContinue*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.PushContinue
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PushContinue_Ubytec_Language_Operations_CoreOperations_CONTINUE_
+  name: PushContinue
+  nameWithType: CompilationScopes.PushContinue
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushContinue
+- uid: Ubytec.Language.Operations.CoreOperations.CONTINUE
+  commentId: T:Ubytec.Language.Operations.CoreOperations.CONTINUE
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.CONTINUE
+  nameWithType: CoreOperations.CONTINUE
+  fullName: Ubytec.Language.Operations.CoreOperations.CONTINUE
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.CONTINUE
+    name: CONTINUE
+    href: Ubytec.Language.Operations.CoreOperations.CONTINUE.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.CONTINUE
+    name: CONTINUE
+    href: Ubytec.Language.Operations.CoreOperations.CONTINUE.html
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizers*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizers
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PeekFinalizers
+  name: PeekFinalizers
+  nameWithType: CompilationScopes.PeekFinalizers
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizers
+- uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+  commentId: T:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+  parent: Ubytec.Language.Syntax.Scopes.Contexts
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html
+  name: FinalizersContext
+  nameWithType: FinalizersContext
+  fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizersOrDefault*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizersOrDefault
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PeekFinalizersOrDefault
+  name: PeekFinalizersOrDefault
+  nameWithType: CompilationScopes.PeekFinalizersOrDefault
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizersOrDefault
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.FindFinalizers*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.FindFinalizers
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_FindFinalizers_System_Func_Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_System_Boolean__
+  name: FindFinalizers
+  nameWithType: CompilationScopes.FindFinalizers
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.FindFinalizers
+- uid: System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean}
+  commentId: T:System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean}
+  parent: System
+  definition: System.Func`2
+  href: https://learn.microsoft.com/dotnet/api/system.func-2
+  name: Func<FinalizersContext, bool>
+  nameWithType: Func<FinalizersContext, bool>
+  fullName: System.Func<Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext, bool>
+  nameWithType.vb: Func(Of FinalizersContext, Boolean)
+  fullName.vb: System.Func(Of Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext, Boolean)
+  name.vb: Func(Of FinalizersContext, Boolean)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: <
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+    name: FinalizersContext
+    href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+    name: FinalizersContext
+    href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopFinalizersUntil*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopFinalizersUntil
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_TryPopFinalizersUntil_System_Func_Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_System_Boolean__
+  name: TryPopFinalizersUntil
+  nameWithType: CompilationScopes.TryPopFinalizersUntil
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopFinalizersUntil
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Reset*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.Reset
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Reset
+  name: Reset
+  nameWithType: CompilationScopes.Reset
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Reset

@@ -1,0 +1,153 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.HighLevel
+  commentId: N:Ubytec.Language.HighLevel
+  id: Ubytec.Language.HighLevel
+  children:
+  - Ubytec.Language.HighLevel.AccessorContext
+  - Ubytec.Language.HighLevel.Action
+  - Ubytec.Language.HighLevel.Argument
+  - Ubytec.Language.HighLevel.Class
+  - Ubytec.Language.HighLevel.Enum
+  - Ubytec.Language.HighLevel.Field
+  - Ubytec.Language.HighLevel.Func
+  - Ubytec.Language.HighLevel.GlobalContext
+  - Ubytec.Language.HighLevel.Interface
+  - Ubytec.Language.HighLevel.LocalContext
+  - Ubytec.Language.HighLevel.Module
+  - Ubytec.Language.HighLevel.Property
+  - Ubytec.Language.HighLevel.Record
+  - Ubytec.Language.HighLevel.Struct
+  - Ubytec.Language.HighLevel.Variable
+  langs:
+  - csharp
+  - vb
+  name: Ubytec.Language.HighLevel
+  nameWithType: Ubytec.Language.HighLevel
+  fullName: Ubytec.Language.HighLevel
+  type: Namespace
+  assemblies:
+  - Ubytec
+references:
+- uid: Ubytec.Language.HighLevel.AccessorContext
+  commentId: T:Ubytec.Language.HighLevel.AccessorContext
+  parent: Ubytec.Language.HighLevel
+  href: Ubytec.Language.HighLevel.AccessorContext.html
+  name: AccessorContext
+  nameWithType: AccessorContext
+  fullName: Ubytec.Language.HighLevel.AccessorContext
+- uid: Ubytec.Language.HighLevel.Action
+  commentId: T:Ubytec.Language.HighLevel.Action
+  href: Ubytec.Language.HighLevel.Action.html
+  name: Action
+  nameWithType: Action
+  fullName: Ubytec.Language.HighLevel.Action
+- uid: Ubytec.Language.HighLevel.Argument
+  commentId: T:Ubytec.Language.HighLevel.Argument
+  href: Ubytec.Language.HighLevel.Argument.html
+  name: Argument
+  nameWithType: Argument
+  fullName: Ubytec.Language.HighLevel.Argument
+- uid: Ubytec.Language.HighLevel.Class
+  commentId: T:Ubytec.Language.HighLevel.Class
+  href: Ubytec.Language.HighLevel.Class.html
+  name: Class
+  nameWithType: Class
+  fullName: Ubytec.Language.HighLevel.Class
+- uid: Ubytec.Language.HighLevel.Enum
+  commentId: T:Ubytec.Language.HighLevel.Enum
+  href: Ubytec.Language.HighLevel.Enum.html
+  name: Enum
+  nameWithType: Enum
+  fullName: Ubytec.Language.HighLevel.Enum
+- uid: Ubytec.Language.HighLevel.Field
+  commentId: T:Ubytec.Language.HighLevel.Field
+  href: Ubytec.Language.HighLevel.Field.html
+  name: Field
+  nameWithType: Field
+  fullName: Ubytec.Language.HighLevel.Field
+- uid: Ubytec.Language.HighLevel.Func
+  commentId: T:Ubytec.Language.HighLevel.Func
+  href: Ubytec.Language.HighLevel.Func.html
+  name: Func
+  nameWithType: Func
+  fullName: Ubytec.Language.HighLevel.Func
+- uid: Ubytec.Language.HighLevel.GlobalContext
+  commentId: T:Ubytec.Language.HighLevel.GlobalContext
+  href: Ubytec.Language.HighLevel.GlobalContext.html
+  name: GlobalContext
+  nameWithType: GlobalContext
+  fullName: Ubytec.Language.HighLevel.GlobalContext
+- uid: Ubytec.Language.HighLevel.Interface
+  commentId: T:Ubytec.Language.HighLevel.Interface
+  href: Ubytec.Language.HighLevel.Interface.html
+  name: Interface
+  nameWithType: Interface
+  fullName: Ubytec.Language.HighLevel.Interface
+- uid: Ubytec.Language.HighLevel.LocalContext
+  commentId: T:Ubytec.Language.HighLevel.LocalContext
+  href: Ubytec.Language.HighLevel.LocalContext.html
+  name: LocalContext
+  nameWithType: LocalContext
+  fullName: Ubytec.Language.HighLevel.LocalContext
+- uid: Ubytec.Language.HighLevel.Module
+  commentId: T:Ubytec.Language.HighLevel.Module
+  parent: Ubytec.Language.HighLevel
+  href: Ubytec.Language.HighLevel.Module.html
+  name: Module
+  nameWithType: Module
+  fullName: Ubytec.Language.HighLevel.Module
+- uid: Ubytec.Language.HighLevel.Property
+  commentId: T:Ubytec.Language.HighLevel.Property
+  href: Ubytec.Language.HighLevel.Property.html
+  name: Property
+  nameWithType: Property
+  fullName: Ubytec.Language.HighLevel.Property
+- uid: Ubytec.Language.HighLevel.Record
+  commentId: T:Ubytec.Language.HighLevel.Record
+  href: Ubytec.Language.HighLevel.Record.html
+  name: Record
+  nameWithType: Record
+  fullName: Ubytec.Language.HighLevel.Record
+- uid: Ubytec.Language.HighLevel.Struct
+  commentId: T:Ubytec.Language.HighLevel.Struct
+  href: Ubytec.Language.HighLevel.Struct.html
+  name: Struct
+  nameWithType: Struct
+  fullName: Ubytec.Language.HighLevel.Struct
+- uid: Ubytec.Language.HighLevel.Variable
+  commentId: T:Ubytec.Language.HighLevel.Variable
+  href: Ubytec.Language.HighLevel.Variable.html
+  name: Variable
+  nameWithType: Variable
+  fullName: Ubytec.Language.HighLevel.Variable
+- uid: Ubytec.Language.HighLevel
+  commentId: N:Ubytec.Language.HighLevel
+  href: Ubytec.html
+  name: Ubytec.Language.HighLevel
+  nameWithType: Ubytec.Language.HighLevel
+  fullName: Ubytec.Language.HighLevel
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html

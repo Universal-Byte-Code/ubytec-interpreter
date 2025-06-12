@@ -1,0 +1,1720 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.TypeSystem.Types
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types
+  id: Types
+  parent: Ubytec.Language.Syntax.TypeSystem
+  children:
+  - Ubytec.Language.Syntax.TypeSystem.Types.Bool
+  - Ubytec.Language.Syntax.TypeSystem.Types.Byte
+  - Ubytec.Language.Syntax.TypeSystem.Types.Char16
+  - Ubytec.Language.Syntax.TypeSystem.Types.Char8
+  - Ubytec.Language.Syntax.TypeSystem.Types.CustomType
+  - Ubytec.Language.Syntax.TypeSystem.Types.Default
+  - Ubytec.Language.Syntax.TypeSystem.Types.Float128
+  - Ubytec.Language.Syntax.TypeSystem.Types.Float32
+  - Ubytec.Language.Syntax.TypeSystem.Types.Float64
+  - Ubytec.Language.Syntax.TypeSystem.Types.FromPrimitive(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  - Ubytec.Language.Syntax.TypeSystem.Types.Half
+  - Ubytec.Language.Syntax.TypeSystem.Types.Int128
+  - Ubytec.Language.Syntax.TypeSystem.Types.Int16
+  - Ubytec.Language.Syntax.TypeSystem.Types.Int32
+  - Ubytec.Language.Syntax.TypeSystem.Types.Int64
+  - Ubytec.Language.Syntax.TypeSystem.Types.IsASCII(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  - Ubytec.Language.Syntax.TypeSystem.Types.IsBool(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  - Ubytec.Language.Syntax.TypeSystem.Types.IsFloat(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  - Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  - Ubytec.Language.Syntax.TypeSystem.Types.IsSigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  - Ubytec.Language.Syntax.TypeSystem.Types.IsUTF(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  - Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  - Ubytec.Language.Syntax.TypeSystem.Types.IsVoid(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  - Ubytec.Language.Syntax.TypeSystem.Types.NumericTypeInfo
+  - Ubytec.Language.Syntax.TypeSystem.Types.Rank(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  - Ubytec.Language.Syntax.TypeSystem.Types.SByte
+  - Ubytec.Language.Syntax.TypeSystem.Types.UInt128
+  - Ubytec.Language.Syntax.TypeSystem.Types.UInt16
+  - Ubytec.Language.Syntax.TypeSystem.Types.UInt32
+  - Ubytec.Language.Syntax.TypeSystem.Types.UInt64
+  - Ubytec.Language.Syntax.TypeSystem.Types.Unknown
+  - Ubytec.Language.Syntax.TypeSystem.Types.ValidateCasts(System.Byte,System.Byte)
+  - Ubytec.Language.Syntax.TypeSystem.Types.ValidateExplicitCast(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  - Ubytec.Language.Syntax.TypeSystem.Types.ValidateImplicitCast(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  - Ubytec.Language.Syntax.TypeSystem.Types.Void
+  langs:
+  - csharp
+  - vb
+  name: Types
+  nameWithType: Types
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types
+  type: Class
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Types
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
+    startLine: 4
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: >-
+    Provides primitive and composite type representations for the Ubytec language.
+
+    The <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType" data-throw-if-not-resolved="false"></xref> struct encapsulates a base <xref href="Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType" data-throw-if-not-resolved="false"></xref>,
+
+    type modifiers (such as nullability or array flags), and optional metadata.
+  example: []
+  syntax:
+    content: public static class Types
+    content.vb: Public Module Types
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.NumericTypeInfo
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.NumericTypeInfo
+  id: NumericTypeInfo
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: NumericTypeInfo
+  nameWithType: Types.NumericTypeInfo
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.NumericTypeInfo
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: NumericTypeInfo
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
+    startLine: 15
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly ReadOnlyDictionary<Types.PrimitiveType, (int rank, bool signed, bool floating)> NumericTypeInfo
+    return:
+      type: System.Collections.ObjectModel.ReadOnlyDictionary{Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,System.ValueTuple{System.Int32,System.Boolean,System.Boolean}}
+    content.vb: Public Shared ReadOnly NumericTypeInfo As ReadOnlyDictionary(Of Types.PrimitiveType, (rank As Integer, signed As Boolean, floating As Boolean))
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsASCII(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsASCII(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  id: IsASCII(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  isExtensionMethod: true
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: IsASCII(PrimitiveType)
+  nameWithType: Types.IsASCII(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsASCII(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IsASCII
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
+    startLine: 41
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static bool IsASCII(this Types.PrimitiveType pt)
+    parameters:
+    - id: pt
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsASCII(pt As Types.PrimitiveType) As Boolean
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.IsASCII*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsUTF(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsUTF(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  id: IsUTF(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  isExtensionMethod: true
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: IsUTF(PrimitiveType)
+  nameWithType: Types.IsUTF(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsUTF(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IsUTF
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
+    startLine: 42
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static bool IsUTF(this Types.PrimitiveType pt)
+    parameters:
+    - id: pt
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsUTF(pt As Types.PrimitiveType) As Boolean
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.IsUTF*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsVoid(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsVoid(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  id: IsVoid(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  isExtensionMethod: true
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: IsVoid(PrimitiveType)
+  nameWithType: Types.IsVoid(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsVoid(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IsVoid
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
+    startLine: 43
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static bool IsVoid(this Types.PrimitiveType pt)
+    parameters:
+    - id: pt
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsVoid(pt As Types.PrimitiveType) As Boolean
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.IsVoid*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsBool(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsBool(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  id: IsBool(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  isExtensionMethod: true
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: IsBool(PrimitiveType)
+  nameWithType: Types.IsBool(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsBool(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IsBool
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
+    startLine: 44
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static bool IsBool(this Types.PrimitiveType pt)
+    parameters:
+    - id: pt
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsBool(pt As Types.PrimitiveType) As Boolean
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.IsBool*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  id: IsNumeric(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  isExtensionMethod: true
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: IsNumeric(PrimitiveType)
+  nameWithType: Types.IsNumeric(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IsNumeric
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
+    startLine: 46
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static bool IsNumeric(this Types.PrimitiveType pt)
+    parameters:
+    - id: pt
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsNumeric(pt As Types.PrimitiveType) As Boolean
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsFloat(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsFloat(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  id: IsFloat(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  isExtensionMethod: true
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: IsFloat(PrimitiveType)
+  nameWithType: Types.IsFloat(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsFloat(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IsFloat
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
+    startLine: 47
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static bool IsFloat(this Types.PrimitiveType pt)
+    parameters:
+    - id: pt
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsFloat(pt As Types.PrimitiveType) As Boolean
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.IsFloat*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsSigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsSigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  id: IsSigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  isExtensionMethod: true
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: IsSigned(PrimitiveType)
+  nameWithType: Types.IsSigned(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsSigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IsSigned
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
+    startLine: 48
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static bool IsSigned(this Types.PrimitiveType pt)
+    parameters:
+    - id: pt
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsSigned(pt As Types.PrimitiveType) As Boolean
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.IsSigned*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  id: IsUnsigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  isExtensionMethod: true
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: IsUnsigned(PrimitiveType)
+  nameWithType: Types.IsUnsigned(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IsUnsigned
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
+    startLine: 49
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static bool IsUnsigned(this Types.PrimitiveType pt)
+    parameters:
+    - id: pt
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsUnsigned(pt As Types.PrimitiveType) As Boolean
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.Rank(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.Rank(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  id: Rank(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  isExtensionMethod: true
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: Rank(PrimitiveType)
+  nameWithType: Types.Rank(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Rank(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Rank
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
+    startLine: 51
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static int Rank(this Types.PrimitiveType pt)
+    parameters:
+    - id: pt
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    return:
+      type: System.Int32
+    content.vb: Public Shared Function Rank(pt As Types.PrimitiveType) As Integer
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.Rank*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.ValidateImplicitCast(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.ValidateImplicitCast(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  id: ValidateImplicitCast(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: ValidateImplicitCast(PrimitiveType, PrimitiveType)
+  nameWithType: Types.ValidateImplicitCast(Types.PrimitiveType, Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.ValidateImplicitCast(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType, Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ValidateImplicitCast
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
+    startLine: 88
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static bool ValidateImplicitCast(Types.PrimitiveType from, Types.PrimitiveType to)
+    parameters:
+    - id: from
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    - id: to
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function ValidateImplicitCast(from As Types.PrimitiveType, [to] As Types.PrimitiveType) As Boolean
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.ValidateImplicitCast*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.ValidateExplicitCast(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.ValidateExplicitCast(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  id: ValidateExplicitCast(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: ValidateExplicitCast(PrimitiveType, PrimitiveType)
+  nameWithType: Types.ValidateExplicitCast(Types.PrimitiveType, Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.ValidateExplicitCast(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType, Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ValidateExplicitCast
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
+    startLine: 91
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static bool ValidateExplicitCast(Types.PrimitiveType from, Types.PrimitiveType to)
+    parameters:
+    - id: from
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    - id: to
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function ValidateExplicitCast(from As Types.PrimitiveType, [to] As Types.PrimitiveType) As Boolean
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.ValidateExplicitCast*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.ValidateCasts(System.Byte,System.Byte)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.ValidateCasts(System.Byte,System.Byte)
+  id: ValidateCasts(System.Byte,System.Byte)
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: ValidateCasts(byte, byte)
+  nameWithType: Types.ValidateCasts(byte, byte)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.ValidateCasts(byte, byte)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ValidateCasts
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
+    startLine: 97
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Throw if <code class="paramref">actual</code> cannot be assigned to <code class="paramref">expected</code>.
+  example: []
+  syntax:
+    content: public static void ValidateCasts(byte expected, byte actual)
+    parameters:
+    - id: expected
+      type: System.Byte
+    - id: actual
+      type: System.Byte
+    content.vb: Public Shared Sub ValidateCasts(expected As Byte, actual As Byte)
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.ValidateCasts*
+  nameWithType.vb: Types.ValidateCasts(Byte, Byte)
+  fullName.vb: Ubytec.Language.Syntax.TypeSystem.Types.ValidateCasts(Byte, Byte)
+  name.vb: ValidateCasts(Byte, Byte)
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.Void
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.Void
+  id: Void
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: Void
+  nameWithType: Types.Void
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Void
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Void
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 50
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid Void
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly Void As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.Bool
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.Bool
+  id: Bool
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: Bool
+  nameWithType: Types.Bool
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Bool
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Bool
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 51
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid Bool
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly Bool As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.Char8
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.Char8
+  id: Char8
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: Char8
+  nameWithType: Types.Char8
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Char8
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Char8
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 52
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid Char8
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly Char8 As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.Char16
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.Char16
+  id: Char16
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: Char16
+  nameWithType: Types.Char16
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Char16
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Char16
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 53
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid Char16
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly Char16 As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.Byte
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.Byte
+  id: Byte
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: Byte
+  nameWithType: Types.Byte
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Byte
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Byte
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 54
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid Byte
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly [Byte] As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.SByte
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.SByte
+  id: SByte
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: SByte
+  nameWithType: Types.SByte
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.SByte
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: SByte
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 55
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid SByte
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly [SByte] As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UInt16
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.UInt16
+  id: UInt16
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: UInt16
+  nameWithType: Types.UInt16
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UInt16
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: UInt16
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 56
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid UInt16
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly UInt16 As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.Int16
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.Int16
+  id: Int16
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: Int16
+  nameWithType: Types.Int16
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Int16
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Int16
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 57
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid Int16
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly Int16 As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UInt32
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.UInt32
+  id: UInt32
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: UInt32
+  nameWithType: Types.UInt32
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UInt32
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: UInt32
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 58
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid UInt32
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly UInt32 As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.Int32
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.Int32
+  id: Int32
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: Int32
+  nameWithType: Types.Int32
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Int32
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Int32
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 59
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid Int32
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly Int32 As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UInt64
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.UInt64
+  id: UInt64
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: UInt64
+  nameWithType: Types.UInt64
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UInt64
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: UInt64
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 60
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid UInt64
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly UInt64 As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.Int64
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.Int64
+  id: Int64
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: Int64
+  nameWithType: Types.Int64
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Int64
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Int64
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 61
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid Int64
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly Int64 As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UInt128
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.UInt128
+  id: UInt128
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: UInt128
+  nameWithType: Types.UInt128
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UInt128
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: UInt128
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 62
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid UInt128
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly UInt128 As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.Int128
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.Int128
+  id: Int128
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: Int128
+  nameWithType: Types.Int128
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Int128
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Int128
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 63
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid Int128
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly Int128 As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.Half
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.Half
+  id: Half
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: Half
+  nameWithType: Types.Half
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Half
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Half
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 64
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid Half
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly Half As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.Float32
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.Float32
+  id: Float32
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: Float32
+  nameWithType: Types.Float32
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Float32
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Float32
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 65
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid Float32
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly Float32 As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.Float64
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.Float64
+  id: Float64
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: Float64
+  nameWithType: Types.Float64
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Float64
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Float64
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 66
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid Float64
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly Float64 As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.Float128
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.Float128
+  id: Float128
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: Float128
+  nameWithType: Types.Float128
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Float128
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Float128
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 67
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid Float128
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly Float128 As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.Default
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.Default
+  id: Default
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: Default
+  nameWithType: Types.Default
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Default
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Default
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 69
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid Default
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly [Default] As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.CustomType
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.CustomType
+  id: CustomType
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: CustomType
+  nameWithType: Types.CustomType
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.CustomType
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: CustomType
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 70
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid CustomType
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly CustomType As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.Unknown
+  commentId: F:Ubytec.Language.Syntax.TypeSystem.Types.Unknown
+  id: Unknown
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: Unknown
+  nameWithType: Types.Unknown
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Unknown
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Unknown
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 71
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  syntax:
+    content: public static readonly Guid Unknown
+    return:
+      type: System.Guid
+    content.vb: Public Shared ReadOnly Unknown As Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.FromPrimitive(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.FromPrimitive(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  id: FromPrimitive(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: FromPrimitive(PrimitiveType)
+  nameWithType: Types.FromPrimitive(Types.PrimitiveType)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.FromPrimitive(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: FromPrimitive
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
+    startLine: 74
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: 'Fast lookup: <code>PrimitiveType</code> → Guid.'
+  example: []
+  syntax:
+    content: public static Guid FromPrimitive(Types.PrimitiveType pt)
+    parameters:
+    - id: pt
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    return:
+      type: System.Guid
+    content.vb: Public Shared Function FromPrimitive(pt As Types.PrimitiveType) As Guid
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.FromPrimitive*
+references:
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.UType
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  name: Types.UType
+  nameWithType: Types.UType
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    name: UType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    name: UType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  name: Types.PrimitiveType
+  nameWithType: Types.PrimitiveType
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+- uid: Ubytec.Language.Syntax.TypeSystem
+  commentId: N:Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.TypeSystem
+  nameWithType: Ubytec.Language.Syntax.TypeSystem
+  fullName: Ubytec.Language.Syntax.TypeSystem
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Collections.ObjectModel.ReadOnlyDictionary{Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,System.ValueTuple{System.Int32,System.Boolean,System.Boolean}}
+  commentId: T:System.Collections.ObjectModel.ReadOnlyDictionary{Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,System.ValueTuple{System.Int32,System.Boolean,System.Boolean}}
+  parent: System.Collections.ObjectModel
+  definition: System.Collections.ObjectModel.ReadOnlyDictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.readonlydictionary-2
+  name: ReadOnlyDictionary<Types.PrimitiveType, (int rank, bool signed, bool floating)>
+  nameWithType: ReadOnlyDictionary<Types.PrimitiveType, (int rank, bool signed, bool floating)>
+  fullName: System.Collections.ObjectModel.ReadOnlyDictionary<Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType, (int rank, bool signed, bool floating)>
+  nameWithType.vb: ReadOnlyDictionary(Of Types.PrimitiveType, (rank As Integer, signed As Boolean, floating As Boolean))
+  fullName.vb: System.Collections.ObjectModel.ReadOnlyDictionary(Of Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType, (rank As Integer, signed As Boolean, floating As Boolean))
+  name.vb: ReadOnlyDictionary(Of Types.PrimitiveType, (rank As Integer, signed As Boolean, floating As Boolean))
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ReadOnlyDictionary`2
+    name: ReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.readonlydictionary-2
+  - name: <
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: ','
+  - name: " "
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Boolean,System.Boolean}.rank
+    name: rank
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-system.int32,system.boolean,system.boolean-.rank
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Boolean,System.Boolean}.signed
+    name: signed
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-system.int32,system.boolean,system.boolean-.signed
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Boolean,System.Boolean}.floating
+    name: floating
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-system.int32,system.boolean,system.boolean-.floating
+  - name: )
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ReadOnlyDictionary`2
+    name: ReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.readonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: ','
+  - name: " "
+  - name: (
+  - uid: System.ValueTuple{System.Int32,System.Boolean,System.Boolean}.rank
+    name: rank
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-system.int32,system.boolean,system.boolean-.rank
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Boolean,System.Boolean}.signed
+    name: signed
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-system.int32,system.boolean,system.boolean-.signed
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Boolean,System.Boolean}.floating
+    name: floating
+    href: https://learn.microsoft.com/dotnet/api/system.valuetuple-system.int32,system.boolean,system.boolean-.floating
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  - name: )
+- uid: System.Collections.ObjectModel.ReadOnlyDictionary`2
+  commentId: T:System.Collections.ObjectModel.ReadOnlyDictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.readonlydictionary-2
+  name: ReadOnlyDictionary<TKey, TValue>
+  nameWithType: ReadOnlyDictionary<TKey, TValue>
+  fullName: System.Collections.ObjectModel.ReadOnlyDictionary<TKey, TValue>
+  nameWithType.vb: ReadOnlyDictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.ObjectModel.ReadOnlyDictionary(Of TKey, TValue)
+  name.vb: ReadOnlyDictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ReadOnlyDictionary`2
+    name: ReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.readonlydictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ReadOnlyDictionary`2
+    name: ReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.readonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.ObjectModel
+  commentId: N:System.Collections.ObjectModel
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.ObjectModel
+  nameWithType: System.Collections.ObjectModel
+  fullName: System.Collections.ObjectModel
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.ObjectModel
+    name: ObjectModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.ObjectModel
+    name: ObjectModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsASCII*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.IsASCII
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsASCII_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsASCII
+  nameWithType: Types.IsASCII
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsASCII
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsUTF*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.IsUTF
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsUTF_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsUTF
+  nameWithType: Types.IsUTF
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsUTF
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsVoid*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.IsVoid
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsVoid_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsVoid
+  nameWithType: Types.IsVoid
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsVoid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsBool*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.IsBool
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsBool_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsBool
+  nameWithType: Types.IsBool
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsBool
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsNumeric_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsNumeric
+  nameWithType: Types.IsNumeric
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsFloat*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.IsFloat
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsFloat_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsFloat
+  nameWithType: Types.IsFloat
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsFloat
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsSigned*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.IsSigned
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsSigned_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsSigned
+  nameWithType: Types.IsSigned
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsSigned
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsUnsigned_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: IsUnsigned
+  nameWithType: Types.IsUnsigned
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.Rank*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.Rank
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_Rank_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: Rank
+  nameWithType: Types.Rank
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.Rank
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.ValidateImplicitCast*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.ValidateImplicitCast
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_ValidateImplicitCast_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: ValidateImplicitCast
+  nameWithType: Types.ValidateImplicitCast
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.ValidateImplicitCast
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.ValidateExplicitCast*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.ValidateExplicitCast
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_ValidateExplicitCast_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: ValidateExplicitCast
+  nameWithType: Types.ValidateExplicitCast
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.ValidateExplicitCast
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.ValidateCasts*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.ValidateCasts
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_ValidateCasts_System_Byte_System_Byte_
+  name: ValidateCasts
+  nameWithType: Types.ValidateCasts
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.ValidateCasts
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.byte
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: System.Guid
+  commentId: T:System.Guid
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.guid
+  name: Guid
+  nameWithType: Guid
+  fullName: System.Guid
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.FromPrimitive*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.FromPrimitive
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_FromPrimitive_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  name: FromPrimitive
+  nameWithType: Types.FromPrimitive
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.FromPrimitive

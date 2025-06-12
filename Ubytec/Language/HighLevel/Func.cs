@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Numerics;
+using System.Text;
 using Ubytec.Language.AST;
 using Ubytec.Language.HighLevel.Interfaces;
 using Ubytec.Language.Syntax.Model;
@@ -67,20 +68,29 @@ namespace Ubytec.Language.HighLevel
         {
             scopes.Push(new ScopeContext
             {
-                StartLabel = $"func_{Name}_{ID}_start",
-                EndLabel   = $"func_{Name}_{ID}_end",
-                DeclaredByKeyword = "func"
+                StartLabel         = $"func_{Name}_{ID}_start",
+                EndLabel           = $"func_{Name}_{ID}_end",
+                DeclaredByKeyword  = "func"
             });
+
             try
             {
                 Validate();
                 var sb = new StringBuilder();
 
+                // etiqueta de entrada sin indent
                 sb.AppendLine($"{scopes.Peek().StartLabel}:");
-                sb.AppendLine($"; Function: {Name} (ID: {ID}), ReturnType: {ReturnType}");
-                if (Arguments.Length > 0)
-                    sb.AppendLine($"; Arguments: {string.Join(", ", Arguments.Select(a => $"{a.Name}:{a.Type}"))}");
 
+                // comentario de función al nivel 0
+                sb.Append(FormatCompiledLines($"; Function: {Name} (ID: {ID}), ReturnType: {ReturnType}", string.Empty));
+
+                if (Arguments.Length > 0)
+                    sb.Append(FormatCompiledLines(
+                        $"; Arguments: {string.Join(", ", Arguments.Select(a => $"{a.Name}:{a.Type}"))}",
+                        string.Empty
+                    ));
+
+                // cálculo de tamaño total de argumentos
                 var totalArgSize = 0;
                 foreach (var arg in Arguments)
                 {
@@ -95,30 +105,62 @@ namespace Ubytec.Language.HighLevel
                     };
                     totalArgSize += size;
                 }
+
+                // reserva de stack y compilación de cada argumento
                 if (totalArgSize > 0)
                 {
-                    sb.AppendLine($"    sub rsp, {totalArgSize}  ; reserve {totalArgSize} bytes for all arguments");
+                    sb.Append(FormatCompiledLines(
+                        $"sub rsp, {totalArgSize}  ; reserve {totalArgSize} bytes for all arguments",
+                        GetDepth()
+                    ));
+
                     foreach (var arg in Arguments)
-                        sb.AppendLine(arg.Compile(scopes));
+                        sb.Append(FormatCompiledLines(arg.Compile(scopes), GetDepth()));
                 }
 
-                sb.Append(Locals?.Compile(scopes));
+                // variables locales (si existen)
+                if (Locals != null)
+                    sb.Append(FormatCompiledLines(Locals.Value.Compile(scopes), GetDepth()));
 
+                // cuerpo de la función
                 if (Definition != null)
                 {
-                    sb.AppendLine("; Function body begin");
-                    sb.AppendLine(ASTCompiler.CompileAST(new SyntaxTree(Definition)));
-                    sb.AppendLine("; Function body end");
+                    sb.Append(FormatCompiledLines("; Function body begin", GetDepth()));
+                    sb.Append(FormatCompiledLines(
+                        ASTCompiler.CompileAST(new SyntaxTree(Definition)),
+                        GetDepth()
+                    ));
+                    sb.Append(FormatCompiledLines("; Function body end", GetDepth()));
                 }
 
-                sb.AppendLine("    ret");
+                // instrucción de retorno
+                sb.Append(FormatCompiledLines("ret", GetDepth()));
 
+                // etiqueta de salida sin indent
                 sb.AppendLine($"{scopes.Peek().EndLabel}:");
+
                 return sb.ToString();
             }
             finally
             {
                 scopes.Pop();
+            }
+
+            string GetDepth(int basis = 0)
+            {
+                var output = string.Empty;
+                var depth = scopes.Count + basis;
+                for (int i = 0; i < depth; i++)
+                    output += "  ";
+                return output;
+            }
+
+            string FormatCompiledLines(string? lines, string depth)
+            {
+                var final = string.Empty;
+                foreach (var line in lines?.Split('\n', StringSplitOptions.RemoveEmptyEntries) ?? [])
+                    final += depth + line + '\n';
+                return final;
             }
         }
     }

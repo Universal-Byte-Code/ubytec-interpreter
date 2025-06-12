@@ -1,0 +1,195 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+  commentId: T:Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+  id: IUbytecSyntax
+  parent: Ubytec.Language.Syntax.Interfaces
+  children:
+  - Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
+  langs:
+  - csharp
+  - vb
+  name: IUbytecSyntax
+  nameWithType: IUbytecSyntax
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+  type: Interface
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Interfaces/IUbytecSyntax.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IUbytecSyntax
+    path: ../Ubytec/Language/Syntax/Interfaces/IUbytecSyntax.cs
+    startLine: 4
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Interfaces
+  syntax:
+    content: 'public interface IUbytecSyntax : IDisposable'
+    content.vb: Public Interface IUbytecSyntax Inherits IDisposable
+  inheritedMembers:
+  - System.IDisposable.Dispose
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
+  commentId: P:Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
+  id: Metadata
+  parent: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+  langs:
+  - csharp
+  - vb
+  name: Metadata
+  nameWithType: IUbytecSyntax.Metadata
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Interfaces/IUbytecSyntax.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Metadata
+    path: ../Ubytec/Language/Syntax/Interfaces/IUbytecSyntax.cs
+    startLine: 6
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Interfaces
+  syntax:
+    content: ref MetadataRegistry Metadata { get; }
+    parameters: []
+    return:
+      type: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+    content.vb: ReadOnly ByRef Property Metadata As MetadataRegistry
+  overload: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata*
+references:
+- uid: Ubytec.Language.Syntax.Interfaces
+  commentId: N:Ubytec.Language.Syntax.Interfaces
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Interfaces
+  nameWithType: Ubytec.Language.Syntax.Interfaces
+  fullName: Ubytec.Language.Syntax.Interfaces
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Syntax.Interfaces.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Syntax.Interfaces.html
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata*
+  commentId: Overload:Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
+  href: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.html#Ubytec_Language_Syntax_Interfaces_IUbytecSyntax_Metadata
+  name: Metadata
+  nameWithType: IUbytecSyntax.Metadata
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+  commentId: T:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+  parent: Ubytec.Language.Syntax.Fast.Metadata
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.html
+  name: MetadataRegistry
+  nameWithType: MetadataRegistry
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+- uid: Ubytec.Language.Syntax.Fast.Metadata
+  commentId: N:Ubytec.Language.Syntax.Fast.Metadata
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Fast.Metadata
+  nameWithType: Ubytec.Language.Syntax.Fast.Metadata
+  fullName: Ubytec.Language.Syntax.Fast.Metadata
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Fast
+    name: Fast
+    href: Ubytec.Language.Syntax.Fast.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Fast.Metadata
+    name: Metadata
+    href: Ubytec.Language.Syntax.Fast.Metadata.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Fast
+    name: Fast
+    href: Ubytec.Language.Syntax.Fast.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Fast.Metadata
+    name: Metadata
+    href: Ubytec.Language.Syntax.Fast.Metadata.html

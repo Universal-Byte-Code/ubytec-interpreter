@@ -1,0 +1,30 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.Memory
+  commentId: N:Ubytec.Language.Syntax.Memory
+  id: Ubytec.Language.Syntax.Memory
+  children:
+  - Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
+  - Ubytec.Language.Syntax.Memory.MemoryTemplates
+  langs:
+  - csharp
+  - vb
+  name: Ubytec.Language.Syntax.Memory
+  nameWithType: Ubytec.Language.Syntax.Memory
+  fullName: Ubytec.Language.Syntax.Memory
+  type: Namespace
+  assemblies:
+  - Ubytec
+references:
+- uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
+  commentId: T:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
+  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.html
+  name: MemoryRegionTemplate
+  nameWithType: MemoryRegionTemplate
+  fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
+- uid: Ubytec.Language.Syntax.Memory.MemoryTemplates
+  commentId: T:Ubytec.Language.Syntax.Memory.MemoryTemplates
+  href: Ubytec.Language.Syntax.Memory.MemoryTemplates.html
+  name: MemoryTemplates
+  nameWithType: MemoryTemplates
+  fullName: Ubytec.Language.Syntax.Memory.MemoryTemplates

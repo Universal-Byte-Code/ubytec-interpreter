@@ -1,0 +1,703 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+  commentId: T:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+  id: VariableExpressionFragment
+  parent: Ubytec.Language.Syntax.ExpressionFragments
+  children:
+  - Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.#ctor(Ubytec.Language.Syntax.TypeSystem.Types.UType,System.String,System.Object)
+  - Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Name
+  - Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Tokens
+  - Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Type
+  - Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Value
+  langs:
+  - csharp
+  - vb
+  name: VariableExpressionFragment
+  nameWithType: VariableExpressionFragment
+  fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+  type: Struct
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: VariableExpressionFragment
+    path: ../Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
+    startLine: 7
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.ExpressionFragments
+  syntax:
+    content: 'public readonly record struct VariableExpressionFragment : IUbytecExpressionFragment, IEquatable<VariableExpressionFragment>'
+    content.vb: Public Structure VariableExpressionFragment Implements IUbytecExpressionFragment, IEquatable(Of VariableExpressionFragment)
+  implements:
+  - Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+  - System.IEquatable{Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment}
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.#ctor(Ubytec.Language.Syntax.TypeSystem.Types.UType,System.String,System.Object)
+  commentId: M:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.#ctor(Ubytec.Language.Syntax.TypeSystem.Types.UType,System.String,System.Object)
+  id: '#ctor(Ubytec.Language.Syntax.TypeSystem.Types.UType,System.String,System.Object)'
+  parent: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+  langs:
+  - csharp
+  - vb
+  name: VariableExpressionFragment(UType, string, object?)
+  nameWithType: VariableExpressionFragment.VariableExpressionFragment(Types.UType, string, object?)
+  fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.VariableExpressionFragment(Ubytec.Language.Syntax.TypeSystem.Types.UType, string, object?)
+  type: Constructor
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: .ctor
+    path: ../Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
+    startLine: 7
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.ExpressionFragments
+  syntax:
+    content: public VariableExpressionFragment(Types.UType Type, string Name, object? Value)
+    parameters:
+    - id: Type
+      type: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    - id: Name
+      type: System.String
+    - id: Value
+      type: System.Object
+    content.vb: Public Sub New(Type As Types.UType, Name As String, Value As Object)
+  overload: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.#ctor*
+  nameWithType.vb: VariableExpressionFragment.New(Types.UType, String, Object)
+  fullName.vb: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.New(Ubytec.Language.Syntax.TypeSystem.Types.UType, String, Object)
+  name.vb: New(UType, String, Object)
+- uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Type
+  commentId: P:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Type
+  id: Type
+  parent: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+  langs:
+  - csharp
+  - vb
+  name: Type
+  nameWithType: VariableExpressionFragment.Type
+  fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Type
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Type
+    path: ../Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
+    startLine: 7
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.ExpressionFragments
+  syntax:
+    content: public Types.UType Type { get; init; }
+    parameters: []
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    content.vb: Public Property Type As Types.UType
+  overload: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Type*
+- uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Name
+  commentId: P:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Name
+  id: Name
+  parent: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: VariableExpressionFragment.Name
+  fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Name
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Name
+    path: ../Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
+    startLine: 7
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.ExpressionFragments
+  syntax:
+    content: public string Name { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Name As String
+  overload: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Name*
+- uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Value
+  commentId: P:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Value
+  id: Value
+  parent: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+  langs:
+  - csharp
+  - vb
+  name: Value
+  nameWithType: VariableExpressionFragment.Value
+  fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Value
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Value
+    path: ../Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
+    startLine: 7
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.ExpressionFragments
+  syntax:
+    content: public object? Value { get; init; }
+    parameters: []
+    return:
+      type: System.Object
+    content.vb: Public Property Value As Object
+  overload: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Value*
+- uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Tokens
+  commentId: P:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Tokens
+  id: Tokens
+  parent: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+  langs:
+  - csharp
+  - vb
+  name: Tokens
+  nameWithType: VariableExpressionFragment.Tokens
+  fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Tokens
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Tokens
+    path: ../Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
+    startLine: 9
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.ExpressionFragments
+  example: []
+  syntax:
+    content: >-
+      [JsonInclude]
+
+      public required SyntaxToken[] Tokens { get; init; }
+    parameters: []
+    return:
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    content.vb: >-
+      <JsonInclude>
+
+      Public Property Tokens As SyntaxToken()
+  overload: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Tokens*
+  implements:
+  - Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens
+  attributes:
+  - type: System.Text.Json.Serialization.JsonIncludeAttribute
+    ctor: System.Text.Json.Serialization.JsonIncludeAttribute.#ctor
+    arguments: []
+references:
+- uid: Ubytec.Language.Syntax.ExpressionFragments
+  commentId: N:Ubytec.Language.Syntax.ExpressionFragments
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.ExpressionFragments
+  nameWithType: Ubytec.Language.Syntax.ExpressionFragments
+  fullName: Ubytec.Language.Syntax.ExpressionFragments
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.ExpressionFragments
+    name: ExpressionFragments
+    href: Ubytec.Language.Syntax.ExpressionFragments.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.ExpressionFragments
+    name: ExpressionFragments
+    href: Ubytec.Language.Syntax.ExpressionFragments.html
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+  commentId: T:Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+  parent: Ubytec.Language.Syntax.Interfaces
+  href: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.html
+  name: IUbytecExpressionFragment
+  nameWithType: IUbytecExpressionFragment
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+- uid: System.IEquatable{Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment}
+  commentId: T:System.IEquatable{Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<VariableExpressionFragment>
+  nameWithType: IEquatable<VariableExpressionFragment>
+  fullName: System.IEquatable<Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment>
+  nameWithType.vb: IEquatable(Of VariableExpressionFragment)
+  fullName.vb: System.IEquatable(Of Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment)
+  name.vb: IEquatable(Of VariableExpressionFragment)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+    name: VariableExpressionFragment
+    href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+    name: VariableExpressionFragment
+    href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html
+  - name: )
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Ubytec.Language.Syntax.Interfaces
+  commentId: N:Ubytec.Language.Syntax.Interfaces
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Interfaces
+  nameWithType: Ubytec.Language.Syntax.Interfaces
+  fullName: Ubytec.Language.Syntax.Interfaces
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Syntax.Interfaces.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Syntax.Interfaces.html
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.#ctor*
+  commentId: Overload:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.#ctor
+  href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html#Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment__ctor_Ubytec_Language_Syntax_TypeSystem_Types_UType_System_String_System_Object_
+  name: VariableExpressionFragment
+  nameWithType: VariableExpressionFragment.VariableExpressionFragment
+  fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.VariableExpressionFragment
+  nameWithType.vb: VariableExpressionFragment.New
+  fullName.vb: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.New
+  name.vb: New
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.UType
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  name: Types.UType
+  nameWithType: Types.UType
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    name: UType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    name: UType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubytec.Language.Syntax.TypeSystem
+  commentId: N:Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.TypeSystem
+  nameWithType: Ubytec.Language.Syntax.TypeSystem
+  fullName: Ubytec.Language.Syntax.TypeSystem
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
+- uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Type*
+  commentId: Overload:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Type
+  href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html#Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment_Type
+  name: Type
+  nameWithType: VariableExpressionFragment.Type
+  fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Type
+- uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Name*
+  commentId: Overload:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Name
+  href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html#Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment_Name
+  name: Name
+  nameWithType: VariableExpressionFragment.Name
+  fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Name
+- uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Value*
+  commentId: Overload:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Value
+  href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html#Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment_Value
+  name: Value
+  nameWithType: VariableExpressionFragment.Value
+  fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Value
+- uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Tokens*
+  commentId: Overload:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Tokens
+  href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html#Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment_Tokens
+  name: Tokens
+  nameWithType: VariableExpressionFragment.Tokens
+  fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Tokens
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens
+  commentId: P:Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens
+  parent: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+  href: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.html#Ubytec_Language_Syntax_Interfaces_IUbytecExpressionFragment_Tokens
+  name: Tokens
+  nameWithType: IUbytecExpressionFragment.Tokens
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken[]
+  isExternal: true
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  name: SyntaxToken[]
+  nameWithType: SyntaxToken[]
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken[]
+  nameWithType.vb: SyntaxToken()
+  fullName.vb: Ubytec.Language.Syntax.Model.SyntaxToken()
+  name.vb: SyntaxToken()
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
+    name: SyntaxToken
+    href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
+    name: SyntaxToken
+    href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  - name: (
+  - name: )
