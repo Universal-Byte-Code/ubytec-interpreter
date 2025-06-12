@@ -24,7 +24,7 @@ jobs:
           dotnet-version: 9.0.*
 
       - name: Install DocFX
-        run: dotnet tool install --global docfx --version 3.3.0
+        run: dotnet tool install --global docfx
 
       - name: Add DocFX tool to PATH
         run: echo "${{ runner.toolsDirectory }}/dotnet/tools" >> $GITHUB_PATH
