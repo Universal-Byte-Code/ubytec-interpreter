@@ -10,43 +10,35 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: read    # for checkout
-      pages: write      # to publish Pages
-      id-token: write   # required by deploy-pages
+      contents: read    # para actions/checkout
+      pages: write      # para publicar en Pages
+      id-token: write   # necesario para deploy-pages
 
     steps:
-      # 1. Grab your code
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      # 2. Set up .NET 9 SDK
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 9.0.*
 
-      # 3. Install DocFX global tool
       - name: Install DocFX
         run: dotnet tool install --global docfx --version 3.3.0
 
-      # 4. Ensure tool is on PATH
-      - name: Add tools to PATH
+      - name: Add DocFX tool to PATH
         run: echo "${{ runner.toolsDirectory }}/dotnet/tools" >> $GITHUB_PATH
 
-      # 5. Build the static site
       - name: Build DocFX site
         run: docfx build Wiki/docfx.json --output Wiki/_site
 
-      # 6. Configure GitHub Pages
       - name: Configure Pages
         uses: actions/configure-pages@v3
 
-      # 7. Upload the built site
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: Wiki/_site
 
-      # 8. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
