@@ -1,0 +1,44 @@
+name: .NET DocFX → GitHub Pages
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read    # para actions/checkout
+      pages: write      # para publicar en Pages
+      id-token: write   # necesario para deploy-pages
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.*
+
+      - name: Install DocFX
+        run: dotnet tool install --global docfx
+
+      - name: Add DocFX tool to PATH
+        run: echo "${{ runner.toolsDirectory }}/dotnet/tools" >> $GITHUB_PATH
+
+      - name: Build DocFX site
+        run: docfx build Wiki/docfx.json --output Wiki/_site
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: Wiki/_site
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
