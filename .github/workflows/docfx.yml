@@ -1,4 +1,5 @@
-name: .NET
+name: .NET DocFX → GitHub Pages
+
 on:
   push:
     branches: [ "main" ]
@@ -6,23 +7,46 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read    # for checkout
+      pages: write      # to publish Pages
+      id-token: write   # required by deploy-pages
 
     steps:
-    - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v3.4.2
-      with:
-        # Optional SDK version(s) to use. If not provided, will install global.json version when available. Examples: 2.2.104, 3.1, 3.1.x, 3.x, 6.0.2xx
-        dotnet-version: 9.0.* # optional
-        # Optional quality of the build. The possible values are: daily, signed, validated, preview, ga.
-          
-    - name: docfx-action
-      # You may pin to the exact commit or the version.
-      # uses: nikeee/docfx-action@b9c2cf92e3b4aa06878a1410833a8828b4bdcd26
-      uses: nikeee/docfx-action@v1.0.0
-          
+      # 1. Grab your code
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-          
-      
+      # 2. Set up .NET 9 SDK
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.*
+
+      # 3. Install DocFX global tool
+      - name: Install DocFX
+        run: dotnet tool install --global docfx --version 3.3.0
+
+      # 4. Ensure tool is on PATH
+      - name: Add tools to PATH
+        run: echo "${{ runner.toolsDirectory }}/dotnet/tools" >> $GITHUB_PATH
+
+      # 5. Build the static site
+      - name: Build DocFX site
+        run: docfx build Wiki/docfx.json --output Wiki/_site
+
+      # 6. Configure GitHub Pages
+      - name: Configure Pages
+        uses: actions/configure-pages@v3
+
+      # 7. Upload the built site
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: Wiki/_site
+
+      # 8. Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
