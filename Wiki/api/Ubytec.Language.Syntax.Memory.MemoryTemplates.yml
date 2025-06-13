@@ -6,6 +6,7 @@ items:
   parent: Ubytec.Language.Syntax.Memory
   children:
   - Ubytec.Language.Syntax.Memory.MemoryTemplates.CustomTypeRegistry
+  - Ubytec.Language.Syntax.Memory.MemoryTemplates._baseTemplates
   langs:
   - csharp
   - vb
@@ -37,6 +38,33 @@ items:
   - System.Object.MemberwiseClone
   - System.Object.ReferenceEquals(System.Object,System.Object)
   - System.Object.ToString
+- uid: Ubytec.Language.Syntax.Memory.MemoryTemplates._baseTemplates
+  commentId: F:Ubytec.Language.Syntax.Memory.MemoryTemplates._baseTemplates
+  id: _baseTemplates
+  parent: Ubytec.Language.Syntax.Memory.MemoryTemplates
+  langs:
+  - csharp
+  - vb
+  name: _baseTemplates
+  nameWithType: MemoryTemplates._baseTemplates
+  fullName: Ubytec.Language.Syntax.Memory.MemoryTemplates._baseTemplates
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Memory/MemoryTemplates.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _baseTemplates
+    path: ../Ubytec/Language/Syntax/Memory/MemoryTemplates.cs
+    startLine: 7
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Memory
+  syntax:
+    content: private static readonly Dictionary<Types.PrimitiveType, MemoryRegionTemplate> _baseTemplates
+    return:
+      type: System.Collections.Generic.Dictionary{Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.Memory.MemoryRegionTemplate}
+    content.vb: Private Shared ReadOnly _baseTemplates As Dictionary(Of Types.PrimitiveType, MemoryRegionTemplate)
 - uid: Ubytec.Language.Syntax.Memory.MemoryTemplates.CustomTypeRegistry
   commentId: P:Ubytec.Language.Syntax.Memory.MemoryTemplates.CustomTypeRegistry
   id: CustomTypeRegistry
@@ -342,9 +370,131 @@ references:
   name: System
   nameWithType: System
   fullName: System
+- uid: System.Collections.Generic.Dictionary{Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.Memory.MemoryRegionTemplate}
+  commentId: T:System.Collections.Generic.Dictionary{Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.Memory.MemoryRegionTemplate}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<Types.PrimitiveType, MemoryRegionTemplate>
+  nameWithType: Dictionary<Types.PrimitiveType, MemoryRegionTemplate>
+  fullName: System.Collections.Generic.Dictionary<Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType, Ubytec.Language.Syntax.Memory.MemoryRegionTemplate>
+  nameWithType.vb: Dictionary(Of Types.PrimitiveType, MemoryRegionTemplate)
+  fullName.vb: System.Collections.Generic.Dictionary(Of Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType, Ubytec.Language.Syntax.Memory.MemoryRegionTemplate)
+  name.vb: Dictionary(Of Types.PrimitiveType, MemoryRegionTemplate)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: ','
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
+    name: MemoryRegionTemplate
+    href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+    name: PrimitiveType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
+  - name: ','
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
+    name: MemoryRegionTemplate
+    href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.html
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
 - uid: Ubytec.Language.Syntax.Memory.MemoryTemplates.CustomTypeRegistry*
   commentId: Overload:Ubytec.Language.Syntax.Memory.MemoryTemplates.CustomTypeRegistry
-  href: Ubytec.Language.Syntax.Memory.MemoryTemplates.html#Ubytec_Language_Syntax_Memory_MemoryTemplates_CustomTypeRegistry
+  href: Ubytec.Language.Syntax.Memory.MemoryTemplates.CustomTypeRegistry.html#Ubytec_Language_Syntax_Memory_MemoryTemplates_CustomTypeRegistry
   name: CustomTypeRegistry
   nameWithType: MemoryTemplates.CustomTypeRegistry
   fullName: Ubytec.Language.Syntax.Memory.MemoryTemplates.CustomTypeRegistry
@@ -427,40 +577,4 @@ references:
   - name: " "
   - name: TValue
   - name: )
-- uid: System.Collections.Generic
-  commentId: N:System.Collections.Generic
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system
-  name: System.Collections.Generic
-  nameWithType: System.Collections.Generic
-  fullName: System.Collections.Generic
-  spec.csharp:
-  - uid: System
-    name: System
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system
-  - name: .
-  - uid: System.Collections
-    name: Collections
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections
-  - name: .
-  - uid: System.Collections.Generic
-    name: Generic
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
-  spec.vb:
-  - uid: System
-    name: System
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system
-  - name: .
-  - uid: System.Collections
-    name: Collections
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections
-  - name: .
-  - uid: System.Collections.Generic
-    name: Generic
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+memberLayout: SeparatePages

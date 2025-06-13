@@ -10,6 +10,7 @@ items:
   - Ubytec.Language.Operations.CoreOperations.RETURN.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   - Ubytec.Language.Operations.CoreOperations.RETURN.CreateInstruction(Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
   - Ubytec.Language.Operations.CoreOperations.RETURN.OpCode
+  - Ubytec.Language.Operations.CoreOperations.RETURN.Ubytec#Language#IUbytecEntity#Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   - Ubytec.Language.Operations.CoreOperations.RETURN.Variables
   langs:
   - csharp
@@ -240,6 +241,44 @@ items:
       type: System.String
     content.vb: Public Function Compile(scopes As CompilationScopes) As String
   overload: Ubytec.Language.Operations.CoreOperations.RETURN.Compile*
+- uid: Ubytec.Language.Operations.CoreOperations.RETURN.Ubytec#Language#IUbytecEntity#Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  commentId: M:Ubytec.Language.Operations.CoreOperations.RETURN.Ubytec#Language#IUbytecEntity#Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  id: Ubytec#Language#IUbytecEntity#Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  isEii: true
+  parent: Ubytec.Language.Operations.CoreOperations.RETURN
+  langs:
+  - csharp
+  - vb
+  name: IUbytecEntity.Compile(CompilationScopes)
+  nameWithType: CoreOperations.RETURN.IUbytecEntity.Compile(CompilationScopes)
+  fullName: Ubytec.Language.Operations.CoreOperations.RETURN.Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Operations/Core/Finalizers/CoreOperations.RETURN.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Ubytec.Language.IUbytecEntity.Compile
+    path: ../Ubytec/Language/Operations/Core/Finalizers/CoreOperations.RETURN.cs
+    startLine: 41
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations
+  example: []
+  syntax:
+    content: string IUbytecEntity.Compile(CompilationScopes scopes)
+    parameters:
+    - id: scopes
+      type: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    return:
+      type: System.String
+    content.vb: ''
+  overload: Ubytec.Language.Operations.CoreOperations.RETURN.Ubytec#Language#IUbytecEntity#Compile*
+  implements:
+  - Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  nameWithType.vb: ''
+  fullName.vb: ''
+  name.vb: ''
 references:
 - uid: Ubytec.Language.Operations
   commentId: N:Ubytec.Language.Operations
@@ -602,7 +641,7 @@ references:
   name.vb: Object
 - uid: Ubytec.Language.Operations.CoreOperations.RETURN.#ctor*
   commentId: Overload:Ubytec.Language.Operations.CoreOperations.RETURN.#ctor
-  href: Ubytec.Language.Operations.CoreOperations.RETURN.html#Ubytec_Language_Operations_CoreOperations_RETURN__ctor_System_Nullable_Ubytec_Language_Syntax_TypeSystem_Types_UType__Ubytec_Language_Syntax_Model_SyntaxExpression_
+  href: Ubytec.Language.Operations.CoreOperations.RETURN.-ctor.html#Ubytec_Language_Operations_CoreOperations_RETURN__ctor_System_Nullable_Ubytec_Language_Syntax_TypeSystem_Types_UType__Ubytec_Language_Syntax_Model_SyntaxExpression_
   name: RETURN
   nameWithType: CoreOperations.RETURN.RETURN
   fullName: Ubytec.Language.Operations.CoreOperations.RETURN.RETURN
@@ -710,33 +749,33 @@ references:
     href: Ubytec.Language.Syntax.Model.html
 - uid: Ubytec.Language.Operations.CoreOperations.RETURN.BlockType*
   commentId: Overload:Ubytec.Language.Operations.CoreOperations.RETURN.BlockType
-  href: Ubytec.Language.Operations.CoreOperations.RETURN.html#Ubytec_Language_Operations_CoreOperations_RETURN_BlockType
+  href: Ubytec.Language.Operations.CoreOperations.RETURN.BlockType.html#Ubytec_Language_Operations_CoreOperations_RETURN_BlockType
   name: BlockType
   nameWithType: CoreOperations.RETURN.BlockType
   fullName: Ubytec.Language.Operations.CoreOperations.RETURN.BlockType
 - uid: Ubytec.Language.Operations.CoreOperations.RETURN.Variables*
   commentId: Overload:Ubytec.Language.Operations.CoreOperations.RETURN.Variables
-  href: Ubytec.Language.Operations.CoreOperations.RETURN.html#Ubytec_Language_Operations_CoreOperations_RETURN_Variables
+  href: Ubytec.Language.Operations.CoreOperations.RETURN.Variables.html#Ubytec_Language_Operations_CoreOperations_RETURN_Variables
   name: Variables
   nameWithType: CoreOperations.RETURN.Variables
   fullName: Ubytec.Language.Operations.CoreOperations.RETURN.Variables
 - uid: Ubytec.Language.Operations.IOpInheritance.Variables
   commentId: P:Ubytec.Language.Operations.IOpInheritance.Variables
   parent: Ubytec.Language.Operations.IOpInheritance
-  href: Ubytec.Language.Operations.IOpInheritance.html#Ubytec_Language_Operations_IOpInheritance_Variables
+  href: Ubytec.Language.Operations.IOpInheritance.Variables.html#Ubytec_Language_Operations_IOpInheritance_Variables
   name: Variables
   nameWithType: IOpInheritance.Variables
   fullName: Ubytec.Language.Operations.IOpInheritance.Variables
 - uid: Ubytec.Language.Operations.CoreOperations.RETURN.OpCode*
   commentId: Overload:Ubytec.Language.Operations.CoreOperations.RETURN.OpCode
-  href: Ubytec.Language.Operations.CoreOperations.RETURN.html#Ubytec_Language_Operations_CoreOperations_RETURN_OpCode
+  href: Ubytec.Language.Operations.CoreOperations.RETURN.OpCode.html#Ubytec_Language_Operations_CoreOperations_RETURN_OpCode
   name: OpCode
   nameWithType: CoreOperations.RETURN.OpCode
   fullName: Ubytec.Language.Operations.CoreOperations.RETURN.OpCode
 - uid: Ubytec.Language.Operations.IOpCode.OpCode
   commentId: P:Ubytec.Language.Operations.IOpCode.OpCode
   parent: Ubytec.Language.Operations.IOpCode
-  href: Ubytec.Language.Operations.IOpCode.html#Ubytec_Language_Operations_IOpCode_OpCode
+  href: Ubytec.Language.Operations.IOpCode.OpCode.html#Ubytec_Language_Operations_IOpCode_OpCode
   name: OpCode
   nameWithType: IOpCode.OpCode
   fullName: Ubytec.Language.Operations.IOpCode.OpCode
@@ -753,7 +792,7 @@ references:
   name.vb: Byte
 - uid: Ubytec.Language.Operations.CoreOperations.RETURN.CreateInstruction*
   commentId: Overload:Ubytec.Language.Operations.CoreOperations.RETURN.CreateInstruction
-  href: Ubytec.Language.Operations.CoreOperations.RETURN.html#Ubytec_Language_Operations_CoreOperations_RETURN_CreateInstruction_Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment___Ubytec_Language_Syntax_Model_SyntaxToken___System_ValueType___
+  href: Ubytec.Language.Operations.CoreOperations.RETURN.CreateInstruction.html#Ubytec_Language_Operations_CoreOperations_RETURN_CreateInstruction_Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment___Ubytec_Language_Syntax_Model_SyntaxToken___System_ValueType___
   name: CreateInstruction
   nameWithType: CoreOperations.RETURN.CreateInstruction
   fullName: Ubytec.Language.Operations.CoreOperations.RETURN.CreateInstruction
@@ -847,7 +886,7 @@ references:
     href: Ubytec.Language.Operations.CoreOperations.RETURN.html
 - uid: Ubytec.Language.Operations.CoreOperations.RETURN.Compile*
   commentId: Overload:Ubytec.Language.Operations.CoreOperations.RETURN.Compile
-  href: Ubytec.Language.Operations.CoreOperations.RETURN.html#Ubytec_Language_Operations_CoreOperations_RETURN_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  href: Ubytec.Language.Operations.CoreOperations.RETURN.Compile.html#Ubytec_Language_Operations_CoreOperations_RETURN_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
   name: Compile
   nameWithType: CoreOperations.RETURN.Compile
   fullName: Ubytec.Language.Operations.CoreOperations.RETURN.Compile
@@ -907,3 +946,43 @@ references:
   - uid: Ubytec.Language.Syntax.Scopes
     name: Scopes
     href: Ubytec.Language.Syntax.Scopes.html
+- uid: Ubytec.Language.Operations.CoreOperations.RETURN.Ubytec#Language#IUbytecEntity#Compile*
+  commentId: Overload:Ubytec.Language.Operations.CoreOperations.RETURN.Ubytec#Language#IUbytecEntity#Compile
+  href: Ubytec.Language.IUbytecEntity.html
+  name: IUbytecEntity.Compile
+  nameWithType: CoreOperations.RETURN.IUbytecEntity.Compile
+  fullName: Ubytec.Language.Operations.CoreOperations.RETURN.Ubytec.Language.IUbytecEntity.Compile
+  spec.csharp:
+  - uid: Ubytec.Language.IUbytecEntity*
+    name: IUbytecEntity
+    href: Ubytec.Language.IUbytecEntity.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.RETURN.Ubytec#Language#IUbytecEntity#Compile*
+    name: Compile
+    href: Ubytec.Language.Operations.CoreOperations.RETURN.Ubytec-Language-IUbytecEntity-Compile.html#Ubytec_Language_Operations_CoreOperations_RETURN_Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+- uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  commentId: M:Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  parent: Ubytec.Language.IUbytecEntity
+  href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  name: Compile(CompilationScopes)
+  nameWithType: IUbytecEntity.Compile(CompilationScopes)
+  fullName: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  spec.csharp:
+  - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+    name: Compile
+    href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+    name: Compile
+    href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  - name: )
+memberLayout: SeparatePages

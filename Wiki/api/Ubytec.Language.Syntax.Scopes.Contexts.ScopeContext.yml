@@ -780,7 +780,7 @@ references:
   fullName: System
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.StartLabel*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.StartLabel
-  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_StartLabel
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.StartLabel.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_StartLabel
   name: StartLabel
   nameWithType: ScopeContext.StartLabel
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.StartLabel
@@ -797,13 +797,13 @@ references:
   name.vb: String
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.EndLabel*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.EndLabel
-  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_EndLabel
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.EndLabel.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_EndLabel
   name: EndLabel
   nameWithType: ScopeContext.EndLabel
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.EndLabel
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.ExpectedReturnType*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.ExpectedReturnType
-  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_ExpectedReturnType
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.ExpectedReturnType.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_ExpectedReturnType
   name: ExpectedReturnType
   nameWithType: ScopeContext.ExpectedReturnType
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.ExpectedReturnType
@@ -863,7 +863,7 @@ references:
   - name: )
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.HasReturn*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.HasReturn
-  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_HasReturn
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.HasReturn.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_HasReturn
   name: HasReturn
   nameWithType: ScopeContext.HasReturn
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.HasReturn
@@ -880,67 +880,67 @@ references:
   name.vb: Boolean
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.HasBreak*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.HasBreak
-  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_HasBreak
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.HasBreak.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_HasBreak
   name: HasBreak
   nameWithType: ScopeContext.HasBreak
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.HasBreak
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.HasContinue*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.HasContinue
-  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_HasContinue
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.HasContinue.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_HasContinue
   name: HasContinue
   nameWithType: ScopeContext.HasContinue
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.HasContinue
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsAsync*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsAsync
-  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_IsAsync
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsAsync.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_IsAsync
   name: IsAsync
   nameWithType: ScopeContext.IsAsync
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsAsync
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsAtomic*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsAtomic
-  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_IsAtomic
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsAtomic.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_IsAtomic
   name: IsAtomic
   nameWithType: ScopeContext.IsAtomic
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsAtomic
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsThreaded*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsThreaded
-  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_IsThreaded
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsThreaded.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_IsThreaded
   name: IsThreaded
   nameWithType: ScopeContext.IsThreaded
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsThreaded
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsMLRelated*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsMLRelated
-  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_IsMLRelated
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsMLRelated.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_IsMLRelated
   name: IsMLRelated
   nameWithType: ScopeContext.IsMLRelated
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsMLRelated
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsQuantum*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsQuantum
-  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_IsQuantum
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsQuantum.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_IsQuantum
   name: IsQuantum
   nameWithType: ScopeContext.IsQuantum
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsQuantum
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.DeclaredByKeyword*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.DeclaredByKeyword
-  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_DeclaredByKeyword
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.DeclaredByKeyword.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_DeclaredByKeyword
   name: DeclaredByKeyword
   nameWithType: ScopeContext.DeclaredByKeyword
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.DeclaredByKeyword
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsLoop*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsLoop
-  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_IsLoop
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsLoop.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_IsLoop
   name: IsLoop
   nameWithType: ScopeContext.IsLoop
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsLoop
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsBranch*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsBranch
-  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_IsBranch
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsBranch.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_IsBranch
   name: IsBranch
   nameWithType: ScopeContext.IsBranch
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsBranch
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsReturnable*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsReturnable
-  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_IsReturnable
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsReturnable.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_IsReturnable
   name: IsReturnable
   nameWithType: ScopeContext.IsReturnable
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.IsReturnable
@@ -970,7 +970,8 @@ references:
   - name: )
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.ToString*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.ToString
-  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_ToString
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.ToString.html#Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_ToString
   name: ToString
   nameWithType: ScopeContext.ToString
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.ToString
+memberLayout: SeparatePages

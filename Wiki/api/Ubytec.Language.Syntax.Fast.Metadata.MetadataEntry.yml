@@ -612,7 +612,7 @@ references:
   - name: '*'
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.#ctor*
   commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.#ctor
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry__ctor
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.-ctor.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry__ctor
   name: MetadataEntry
   nameWithType: MetadataEntry.MetadataEntry
   fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.MetadataEntry
@@ -621,7 +621,7 @@ references:
   name.vb: New
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetKey*
   commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetKey
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry_TrySetKey_System_String_
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetKey.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry_TrySetKey_System_String_
   name: TrySetKey
   nameWithType: MetadataEntry.TrySetKey
   fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetKey
@@ -649,13 +649,13 @@ references:
   name.vb: Boolean
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetValue*
   commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetValue
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry_TrySetValue_System_String_
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetValue.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry_TrySetValue_System_String_
   name: TrySetValue
   nameWithType: MetadataEntry.TrySetValue
   fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetValue
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KeyEquals*
   commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KeyEquals
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry_KeyEquals_Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry__System_String_
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KeyEquals.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry_KeyEquals_Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry__System_String_
   name: KeyEquals
   nameWithType: MetadataEntry.KeyEquals
   fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KeyEquals
@@ -677,7 +677,8 @@ references:
   - name: '*'
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.GetValuePointer*
   commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.GetValuePointer
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry_GetValuePointer_Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry__
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.GetValuePointer.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry_GetValuePointer_Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry__
   name: GetValuePointer
   nameWithType: MetadataEntry.GetValuePointer
   fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.GetValuePointer
+memberLayout: SeparatePages

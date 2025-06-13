@@ -4,7 +4,14 @@ items:
   commentId: N:Ubytec.Language
   id: Ubytec.Language
   children:
+  - Ubytec.Language.AST
+  - Ubytec.Language.Exceptions
+  - Ubytec.Language.Grammar
+  - Ubytec.Language.HighLevel
   - Ubytec.Language.IUbytecEntity
+  - Ubytec.Language.Operations
+  - Ubytec.Language.Syntax
+  - Ubytec.Language.Tools
   langs:
   - csharp
   - vb
@@ -15,6 +22,188 @@ items:
   assemblies:
   - Ubytec
 references:
+- uid: Ubytec.Language.AST
+  commentId: N:Ubytec.Language.AST
+  href: Ubytec.html
+  name: Ubytec.Language.AST
+  nameWithType: Ubytec.Language.AST
+  fullName: Ubytec.Language.AST
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.AST
+    name: AST
+    href: Ubytec.Language.AST.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.AST
+    name: AST
+    href: Ubytec.Language.AST.html
+- uid: Ubytec.Language.Exceptions
+  commentId: N:Ubytec.Language.Exceptions
+  href: Ubytec.html
+  name: Ubytec.Language.Exceptions
+  nameWithType: Ubytec.Language.Exceptions
+  fullName: Ubytec.Language.Exceptions
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Exceptions
+    name: Exceptions
+    href: Ubytec.Language.Exceptions.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Exceptions
+    name: Exceptions
+    href: Ubytec.Language.Exceptions.html
+- uid: Ubytec.Language.Grammar
+  commentId: N:Ubytec.Language.Grammar
+  href: Ubytec.html
+  name: Ubytec.Language.Grammar
+  nameWithType: Ubytec.Language.Grammar
+  fullName: Ubytec.Language.Grammar
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Grammar
+    name: Grammar
+    href: Ubytec.Language.Grammar.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Grammar
+    name: Grammar
+    href: Ubytec.Language.Grammar.html
+- uid: Ubytec.Language.HighLevel
+  commentId: N:Ubytec.Language.HighLevel
+  href: Ubytec.html
+  name: Ubytec.Language.HighLevel
+  nameWithType: Ubytec.Language.HighLevel
+  fullName: Ubytec.Language.HighLevel
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+- uid: Ubytec.Language.Operations
+  commentId: N:Ubytec.Language.Operations
+  href: Ubytec.html
+  name: Ubytec.Language.Operations
+  nameWithType: Ubytec.Language.Operations
+  fullName: Ubytec.Language.Operations
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+- uid: Ubytec.Language.Syntax
+  isExternal: true
+- uid: Ubytec.Language.Tools
+  commentId: N:Ubytec.Language.Tools
+  href: Ubytec.html
+  name: Ubytec.Language.Tools
+  nameWithType: Ubytec.Language.Tools
+  fullName: Ubytec.Language.Tools
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Tools
+    name: Tools
+    href: Ubytec.Language.Tools.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Tools
+    name: Tools
+    href: Ubytec.Language.Tools.html
 - uid: Ubytec.Language.IUbytecEntity
   commentId: T:Ubytec.Language.IUbytecEntity
   parent: Ubytec.Language
@@ -44,3 +233,4 @@ references:
   - uid: Ubytec.Language
     name: Language
     href: Ubytec.Language.html
+memberLayout: SeparatePages

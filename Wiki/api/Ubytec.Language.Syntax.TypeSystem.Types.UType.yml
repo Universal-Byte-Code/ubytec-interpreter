@@ -614,7 +614,7 @@ references:
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Byte)
   commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Byte)
   isExternal: true
-  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FromOperands_System_Byte_System_Byte_
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FromOperands_System_Byte_System_Byte_
   name: FromOperands(byte, byte)
   nameWithType: Types.UType.FromOperands(byte, byte)
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(byte, byte)
@@ -624,7 +624,7 @@ references:
   spec.csharp:
   - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Byte)
     name: FromOperands
-    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FromOperands_System_Byte_System_Byte_
+    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FromOperands_System_Byte_System_Byte_
   - name: (
   - uid: System.Byte
     name: byte
@@ -640,7 +640,7 @@ references:
   spec.vb:
   - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Byte)
     name: FromOperands
-    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FromOperands_System_Byte_System_Byte_
+    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FromOperands_System_Byte_System_Byte_
   - name: (
   - uid: System.Byte
     name: Byte
@@ -911,7 +911,7 @@ references:
   fullName: System
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.#ctor*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.#ctor
-  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType__ctor_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_Ubytec_Language_Syntax_TypeSystem_Types_TypeModifiers_System_Nullable_System_Guid__System_String_System_UIntPtr_
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.-ctor.html#Ubytec_Language_Syntax_TypeSystem_Types_UType__ctor_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_Ubytec_Language_Syntax_TypeSystem_Types_TypeModifiers_System_Nullable_System_Guid__System_String_System_UIntPtr_
   name: UType
   nameWithType: Types.UType.UType
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.UType
@@ -1131,37 +1131,37 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.Type*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.Type
-  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_Type
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.Type.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_Type
   name: Type
   nameWithType: Types.UType.Type
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.Type
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.ID*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.ID
-  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_ID
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.ID.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_ID
   name: ID
   nameWithType: Types.UType.ID
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.ID
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.Type
   commentId: P:Ubytec.Language.Syntax.TypeSystem.Types.UType.Type
-  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_Type
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.Type.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_Type
   name: Type
   nameWithType: Types.UType.Type
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.Type
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.Name*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.Name
-  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_Name
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.Name.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_Name
   name: Name
   nameWithType: Types.UType.Name
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.Name
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.Modifiers*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.Modifiers
-  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_Modifiers
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.Modifiers.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_Modifiers
   name: Modifiers
   nameWithType: Types.UType.Modifiers
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.Modifiers
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.FixedArraySize*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.FixedArraySize
-  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FixedArraySize
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.FixedArraySize.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FixedArraySize
   name: FixedArraySize
   nameWithType: Types.UType.FixedArraySize
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.FixedArraySize
@@ -1178,7 +1178,7 @@ references:
   name.vb: ULong
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsArray*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.IsArray
-  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_IsArray
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsArray.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_IsArray
   name: IsArray
   nameWithType: Types.UType.IsArray
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsArray
@@ -1195,31 +1195,31 @@ references:
   name.vb: Boolean
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableArray*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableArray
-  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_IsNullableArray
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableArray.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_IsNullableArray
   name: IsNullableArray
   nameWithType: Types.UType.IsNullableArray
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableArray
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableItems*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableItems
-  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_IsNullableItems
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableItems.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_IsNullableItems
   name: IsNullableItems
   nameWithType: Types.UType.IsNullableItems
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsNullableItems
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsFullyNullableArray*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.IsFullyNullableArray
-  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_IsFullyNullableArray
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsFullyNullableArray.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_IsFullyNullableArray
   name: IsFullyNullableArray
   nameWithType: Types.UType.IsFullyNullableArray
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsFullyNullableArray
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsSingleNullable*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.IsSingleNullable
-  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_IsSingleNullable
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsSingleNullable.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_IsSingleNullable
   name: IsSingleNullable
   nameWithType: Types.UType.IsSingleNullable
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsSingleNullable
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands
-  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FromOperands_System_Byte_System_Byte_
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FromOperands_System_Byte_System_Byte_
   name: FromOperands
   nameWithType: Types.UType.FromOperands
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands
@@ -1258,7 +1258,8 @@ references:
   - name: )
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.ToString*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.ToString
-  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_ToString
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.ToString.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_ToString
   name: ToString
   nameWithType: Types.UType.ToString
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.ToString
+memberLayout: SeparatePages

@@ -2,7 +2,8 @@
 items:
 - uid: Ubytec.Language.Syntax.Interfaces
   commentId: N:Ubytec.Language.Syntax.Interfaces
-  id: Ubytec.Language.Syntax.Interfaces
+  id: Interfaces
+  parent: Ubytec.Language.Syntax
   children:
   - Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
   - Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
@@ -68,3 +69,4 @@ references:
   - uid: Ubytec.Language.Syntax.Interfaces
     name: Interfaces
     href: Ubytec.Language.Syntax.Interfaces.html
+memberLayout: SeparatePages

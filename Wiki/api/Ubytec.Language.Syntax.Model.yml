@@ -2,7 +2,8 @@
 items:
 - uid: Ubytec.Language.Syntax.Model
   commentId: N:Ubytec.Language.Syntax.Model
-  id: Ubytec.Language.Syntax.Model
+  id: Model
+  parent: Ubytec.Language.Syntax
   children:
   - Ubytec.Language.Syntax.Model.SyntaxExpression
   - Ubytec.Language.Syntax.Model.SyntaxNode
@@ -28,6 +29,7 @@ references:
   fullName: Ubytec.Language.Syntax.Model.SyntaxExpression
 - uid: Ubytec.Language.Syntax.Model.SyntaxNode
   commentId: T:Ubytec.Language.Syntax.Model.SyntaxNode
+  parent: Ubytec.Language.Syntax.Model
   href: Ubytec.Language.Syntax.Model.SyntaxNode.html
   name: SyntaxNode
   nameWithType: SyntaxNode
@@ -91,3 +93,4 @@ references:
   - uid: Ubytec.Language.Syntax.Model
     name: Model
     href: Ubytec.Language.Syntax.Model.html
+memberLayout: SeparatePages

@@ -2,7 +2,8 @@
 items:
 - uid: Ubytec.Language.Syntax.Scopes.Contexts
   commentId: N:Ubytec.Language.Syntax.Scopes.Contexts
-  id: Ubytec.Language.Syntax.Scopes.Contexts
+  id: Contexts
+  parent: Ubytec.Language.Syntax.Scopes
   children:
   - Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
   - Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
@@ -76,3 +77,4 @@ references:
   - uid: Ubytec.Language.Syntax.Scopes.Contexts
     name: Contexts
     href: Ubytec.Language.Syntax.Scopes.Contexts.html
+memberLayout: SeparatePages

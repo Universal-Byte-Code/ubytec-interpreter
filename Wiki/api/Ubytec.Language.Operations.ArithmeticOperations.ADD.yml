@@ -460,14 +460,14 @@ references:
   name.vb: Object
 - uid: Ubytec.Language.Operations.ArithmeticOperations.ADD.OpCode*
   commentId: Overload:Ubytec.Language.Operations.ArithmeticOperations.ADD.OpCode
-  href: Ubytec.Language.Operations.ArithmeticOperations.ADD.html#Ubytec_Language_Operations_ArithmeticOperations_ADD_OpCode
+  href: Ubytec.Language.Operations.ArithmeticOperations.ADD.OpCode.html#Ubytec_Language_Operations_ArithmeticOperations_ADD_OpCode
   name: OpCode
   nameWithType: ArithmeticOperations.ADD.OpCode
   fullName: Ubytec.Language.Operations.ArithmeticOperations.ADD.OpCode
 - uid: Ubytec.Language.Operations.IOpCode.OpCode
   commentId: P:Ubytec.Language.Operations.IOpCode.OpCode
   parent: Ubytec.Language.Operations.IOpCode
-  href: Ubytec.Language.Operations.IOpCode.html#Ubytec_Language_Operations_IOpCode_OpCode
+  href: Ubytec.Language.Operations.IOpCode.OpCode.html#Ubytec_Language_Operations_IOpCode_OpCode
   name: OpCode
   nameWithType: IOpCode.OpCode
   fullName: Ubytec.Language.Operations.IOpCode.OpCode
@@ -484,21 +484,21 @@ references:
   name.vb: Byte
 - uid: Ubytec.Language.Operations.ArithmeticOperations.ADD.Compile*
   commentId: Overload:Ubytec.Language.Operations.ArithmeticOperations.ADD.Compile
-  href: Ubytec.Language.Operations.ArithmeticOperations.ADD.html#Ubytec_Language_Operations_ArithmeticOperations_ADD_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  href: Ubytec.Language.Operations.ArithmeticOperations.ADD.Compile.html#Ubytec_Language_Operations_ArithmeticOperations_ADD_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
   name: Compile
   nameWithType: ArithmeticOperations.ADD.Compile
   fullName: Ubytec.Language.Operations.ArithmeticOperations.ADD.Compile
 - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   commentId: M:Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   parent: Ubytec.Language.IUbytecEntity
-  href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
   name: Compile(CompilationScopes)
   nameWithType: IUbytecEntity.Compile(CompilationScopes)
   fullName: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   spec.csharp:
   - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
     name: Compile
-    href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+    href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
   - name: (
   - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
     name: CompilationScopes
@@ -507,7 +507,7 @@ references:
   spec.vb:
   - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
     name: Compile
-    href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+    href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
   - name: (
   - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
     name: CompilationScopes
@@ -569,3 +569,4 @@ references:
   - uid: Ubytec.Language.Syntax.Scopes
     name: Scopes
     href: Ubytec.Language.Syntax.Scopes.html
+memberLayout: SeparatePages

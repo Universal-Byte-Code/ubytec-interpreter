@@ -2,7 +2,8 @@
 items:
 - uid: Ubytec.Language.Syntax.ExpressionFragments
   commentId: N:Ubytec.Language.Syntax.ExpressionFragments
-  id: Ubytec.Language.Syntax.ExpressionFragments
+  id: ExpressionFragments
+  parent: Ubytec.Language.Syntax
   children:
   - Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment
   - Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
@@ -18,6 +19,7 @@ items:
 references:
 - uid: Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment
   commentId: T:Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment
+  parent: Ubytec.Language.Syntax.ExpressionFragments
   href: Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment.html
   name: ConditionExpressionFragment
   nameWithType: ConditionExpressionFragment
@@ -67,3 +69,4 @@ references:
   - uid: Ubytec.Language.Syntax.ExpressionFragments
     name: ExpressionFragments
     href: Ubytec.Language.Syntax.ExpressionFragments.html
+memberLayout: SeparatePages

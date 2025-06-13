@@ -347,7 +347,7 @@ references:
   fullName: System
 - uid: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.CountSetBits*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.CountSetBits
-  href: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.html#Ubytec_Language_Syntax_TypeSystem_TypeModifiersExtensions_CountSetBits_Ubytec_Language_Syntax_TypeSystem_Types_TypeModifiers_
+  href: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.CountSetBits.html#Ubytec_Language_Syntax_TypeSystem_TypeModifiersExtensions_CountSetBits_Ubytec_Language_Syntax_TypeSystem_Types_TypeModifiers_
   name: CountSetBits
   nameWithType: TypeModifiersExtensions.CountSetBits
   fullName: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.CountSetBits
@@ -385,3 +385,4 @@ references:
   nameWithType.vb: Integer
   fullName.vb: Integer
   name.vb: Integer
+memberLayout: SeparatePages

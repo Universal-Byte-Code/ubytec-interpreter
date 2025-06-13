@@ -544,7 +544,7 @@ references:
   - name: )
 - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.Row*
   commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.Row
-  href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError_Row
+  href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.Row.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError_Row
   name: Row
   nameWithType: ASTCompiler.CompileSyntaxError.Row
   fullName: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.Row
@@ -561,7 +561,7 @@ references:
   name.vb: Integer
 - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.OpCode*
   commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.OpCode
-  href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError_OpCode
+  href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.OpCode.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError_OpCode
   name: OpCode
   nameWithType: ASTCompiler.CompileSyntaxError.OpCode
   fullName: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.OpCode
@@ -604,7 +604,7 @@ references:
     href: Ubytec.Language.Operations.html
 - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.Message*
   commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.Message
-  href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError_Message
+  href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.Message.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError_Message
   name: Message
   nameWithType: ASTCompiler.CompileSyntaxError.Message
   fullName: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.Message
@@ -621,7 +621,7 @@ references:
   name.vb: String
 - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.InnerException*
   commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.InnerException
-  href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError_InnerException
+  href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.InnerException.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError_InnerException
   name: InnerException
   nameWithType: ASTCompiler.CompileSyntaxError.InnerException
   fullName: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.InnerException
@@ -635,7 +635,7 @@ references:
   fullName: System.Exception
 - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.#ctor*
   commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.#ctor
-  href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError__ctor_System_Int32_Ubytec_Language_Operations_IOpCode_System_String_System_Exception_
+  href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.-ctor.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError__ctor_System_Int32_Ubytec_Language_Operations_IOpCode_System_String_System_Exception_
   name: CompileSyntaxError
   nameWithType: ASTCompiler.CompileSyntaxError.CompileSyntaxError
   fullName: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.CompileSyntaxError
@@ -668,7 +668,8 @@ references:
   - name: )
 - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.ToString*
   commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.ToString
-  href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError_ToString
+  href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.ToString.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError_ToString
   name: ToString
   nameWithType: ASTCompiler.CompileSyntaxError.ToString
   fullName: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.ToString
+memberLayout: SeparatePages

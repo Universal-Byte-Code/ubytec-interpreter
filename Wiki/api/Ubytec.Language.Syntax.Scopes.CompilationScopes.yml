@@ -22,6 +22,8 @@ items:
   - Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopFinalizersUntil(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean})
   - Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopUntil(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
   - Ubytec.Language.Syntax.Scopes.CompilationScopes.ValidateFinalScope
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes._finalizersTracker
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes._scopeTracker
   langs:
   - csharp
   - vb
@@ -55,6 +57,60 @@ items:
   - System.Object.MemberwiseClone
   - System.Object.ReferenceEquals(System.Object,System.Object)
   - System.Object.ToString
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes._scopeTracker
+  commentId: F:Ubytec.Language.Syntax.Scopes.CompilationScopes._scopeTracker
+  id: _scopeTracker
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: _scopeTracker
+  nameWithType: CompilationScopes._scopeTracker
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes._scopeTracker
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _scopeTracker
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 11
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  syntax:
+    content: private readonly ScopeTracker _scopeTracker
+    return:
+      type: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+    content.vb: Private ReadOnly _scopeTracker As ScopeTracker
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes._finalizersTracker
+  commentId: F:Ubytec.Language.Syntax.Scopes.CompilationScopes._finalizersTracker
+  id: _finalizersTracker
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: _finalizersTracker
+  nameWithType: CompilationScopes._finalizersTracker
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes._finalizersTracker
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _finalizersTracker
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 12
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  syntax:
+    content: private readonly FinalizersTracker _finalizersTracker
+    return:
+      type: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker
+    content.vb: Private ReadOnly _finalizersTracker As FinalizersTracker
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Count
   commentId: P:Ubytec.Language.Syntax.Scopes.CompilationScopes.Count
   id: Count
@@ -839,9 +895,69 @@ references:
   name: System
   nameWithType: System
   fullName: System
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  commentId: T:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+  parent: Ubytec.Language.Syntax.Scopes.Trackers
+  href: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.html
+  name: ScopeTracker
+  nameWithType: ScopeTracker
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker
+- uid: Ubytec.Language.Syntax.Scopes.Trackers
+  commentId: N:Ubytec.Language.Syntax.Scopes.Trackers
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Scopes.Trackers
+  nameWithType: Ubytec.Language.Syntax.Scopes.Trackers
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes.Trackers
+    name: Trackers
+    href: Ubytec.Language.Syntax.Scopes.Trackers.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes.Trackers
+    name: Trackers
+    href: Ubytec.Language.Syntax.Scopes.Trackers.html
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker
+  commentId: T:Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker
+  parent: Ubytec.Language.Syntax.Scopes.Trackers
+  href: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.html
+  name: FinalizersTracker
+  nameWithType: FinalizersTracker
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Count*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.Count
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Count
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.Count.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Count
   name: Count
   nameWithType: CompilationScopes.Count
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Count
@@ -858,13 +974,13 @@ references:
   name.vb: Integer
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.FinalizersCount*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.FinalizersCount
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_FinalizersCount
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.FinalizersCount.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_FinalizersCount
   name: FinalizersCount
   nameWithType: CompilationScopes.FinalizersCount
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.FinalizersCount
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Push*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.Push
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Push_Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.Push.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Push_Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_
   name: Push
   nameWithType: CompilationScopes.Push
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Push
@@ -923,7 +1039,7 @@ references:
     href: Ubytec.Language.Syntax.Scopes.Contexts.html
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Pop*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.Pop
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Pop
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.Pop.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Pop
   name: Pop
   nameWithType: CompilationScopes.Pop
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Pop
@@ -1001,19 +1117,19 @@ references:
   - name: )
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Peek*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.Peek
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Peek
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.Peek.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Peek
   name: Peek
   nameWithType: CompilationScopes.Peek
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Peek
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekOrDefault*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekOrDefault
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PeekOrDefault
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekOrDefault.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PeekOrDefault
   name: PeekOrDefault
   nameWithType: CompilationScopes.PeekOrDefault
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekOrDefault
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Find*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.Find
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Find_System_Func_Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_System_Boolean__
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.Find.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Find_System_Func_Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_System_Boolean__
   name: Find
   nameWithType: CompilationScopes.Find
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Find
@@ -1098,19 +1214,19 @@ references:
   - name: )
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopUntil*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopUntil
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_TryPopUntil_System_Func_Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_System_Boolean__
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopUntil.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_TryPopUntil_System_Func_Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_System_Boolean__
   name: TryPopUntil
   nameWithType: CompilationScopes.TryPopUntil
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopUntil
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.ValidateFinalScope*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.ValidateFinalScope
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_ValidateFinalScope
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.ValidateFinalScope.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_ValidateFinalScope
   name: ValidateFinalScope
   nameWithType: CompilationScopes.ValidateFinalScope
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.ValidateFinalScope
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushReturn*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.PushReturn
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PushReturn_Ubytec_Language_Operations_CoreOperations_RETURN_
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushReturn.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PushReturn_Ubytec_Language_Operations_CoreOperations_RETURN_
   name: PushReturn
   nameWithType: CompilationScopes.PushReturn
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushReturn
@@ -1169,7 +1285,7 @@ references:
     href: Ubytec.Language.Operations.html
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushBreak*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.PushBreak
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PushBreak_Ubytec_Language_Operations_CoreOperations_BREAK_
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushBreak.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PushBreak_Ubytec_Language_Operations_CoreOperations_BREAK_
   name: PushBreak
   nameWithType: CompilationScopes.PushBreak
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushBreak
@@ -1198,7 +1314,7 @@ references:
     href: Ubytec.Language.Operations.CoreOperations.BREAK.html
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushContinue*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.PushContinue
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PushContinue_Ubytec_Language_Operations_CoreOperations_CONTINUE_
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushContinue.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PushContinue_Ubytec_Language_Operations_CoreOperations_CONTINUE_
   name: PushContinue
   nameWithType: CompilationScopes.PushContinue
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushContinue
@@ -1227,7 +1343,7 @@ references:
     href: Ubytec.Language.Operations.CoreOperations.CONTINUE.html
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizers*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizers
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PeekFinalizers
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizers.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PeekFinalizers
   name: PeekFinalizers
   nameWithType: CompilationScopes.PeekFinalizers
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizers
@@ -1240,13 +1356,13 @@ references:
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizersOrDefault*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizersOrDefault
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PeekFinalizersOrDefault
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizersOrDefault.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PeekFinalizersOrDefault
   name: PeekFinalizersOrDefault
   nameWithType: CompilationScopes.PeekFinalizersOrDefault
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizersOrDefault
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.FindFinalizers*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.FindFinalizers
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_FindFinalizers_System_Func_Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_System_Boolean__
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.FindFinalizers.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_FindFinalizers_System_Func_Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_System_Boolean__
   name: FindFinalizers
   nameWithType: CompilationScopes.FindFinalizers
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.FindFinalizers
@@ -1297,13 +1413,14 @@ references:
   - name: )
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopFinalizersUntil*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopFinalizersUntil
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_TryPopFinalizersUntil_System_Func_Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_System_Boolean__
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopFinalizersUntil.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_TryPopFinalizersUntil_System_Func_Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_System_Boolean__
   name: TryPopFinalizersUntil
   nameWithType: CompilationScopes.TryPopFinalizersUntil
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopFinalizersUntil
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Reset*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.Reset
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Reset
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.Reset.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Reset
   name: Reset
   nameWithType: CompilationScopes.Reset
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Reset
+memberLayout: SeparatePages

@@ -9,8 +9,12 @@ items:
   - Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Add(System.String,System.Object)
   - Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count
   - Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Dispose
+  - Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand(System.UInt32)
   - Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.GetEntryPointer(System.UInt32)
   - Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.TryGetValue(System.String,System.String@)
+  - Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry._capacity
+  - Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry._count
+  - Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry._entries
   langs:
   - csharp
   - vb
@@ -44,6 +48,87 @@ items:
   extensionMethods:
   - Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable
   - Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex(System.UInt32,System.String@,System.Object@)
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry._entries
+  commentId: F:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry._entries
+  id: _entries
+  parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+  langs:
+  - csharp
+  - vb
+  name: _entries
+  nameWithType: MetadataRegistry._entries
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry._entries
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _entries
+    path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
+    startLine: 12
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Fast.Metadata
+  syntax:
+    content: private MetadataEntry* _entries
+    return:
+      type: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*
+    content.vb: Private _entries As MetadataEntry*
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry._count
+  commentId: F:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry._count
+  id: _count
+  parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+  langs:
+  - csharp
+  - vb
+  name: _count
+  nameWithType: MetadataRegistry._count
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry._count
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _count
+    path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
+    startLine: 13
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Fast.Metadata
+  syntax:
+    content: private uint _count
+    return:
+      type: System.UInt32
+    content.vb: Private _count As UInteger
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry._capacity
+  commentId: F:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry._capacity
+  id: _capacity
+  parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+  langs:
+  - csharp
+  - vb
+  name: _capacity
+  nameWithType: MetadataRegistry._capacity
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry._capacity
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _capacity
+    path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
+    startLine: 14
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Fast.Metadata
+  syntax:
+    content: private uint _capacity
+    return:
+      type: System.UInt32
+    content.vb: Private _capacity As UInteger
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.#ctor(System.UInt32)
   commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.#ctor(System.UInt32)
   id: '#ctor(System.UInt32)'
@@ -175,6 +260,38 @@ items:
   nameWithType.vb: MetadataRegistry.TryGetValue(String, String)
   fullName.vb: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.TryGetValue(String, String)
   name.vb: TryGetValue(String, String)
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand(System.UInt32)
+  commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand(System.UInt32)
+  id: Expand(System.UInt32)
+  parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+  langs:
+  - csharp
+  - vb
+  name: Expand(uint)
+  nameWithType: MetadataRegistry.Expand(uint)
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand(uint)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Expand
+    path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
+    startLine: 74
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Fast.Metadata
+  syntax:
+    content: private void Expand(uint newCap)
+    parameters:
+    - id: newCap
+      type: System.UInt32
+    content.vb: Private Sub Expand(newCap As UInteger)
+  overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand*
+  nameWithType.vb: MetadataRegistry.Expand(UInteger)
+  fullName.vb: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand(UInteger)
+  name.vb: Expand(UInteger)
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.GetEntryPointer(System.UInt32)
   commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.GetEntryPointer(System.UInt32)
   id: GetEntryPointer(System.UInt32)
@@ -489,14 +606,14 @@ references:
   commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry)
   parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions
   definition: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry)
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_ToImmutable_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_ToImmutable_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_
   name: ToImmutable(MetadataRegistry)
   nameWithType: MetadataRegistryExtensions.ToImmutable(MetadataRegistry)
   fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry)
   spec.csharp:
   - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry)
     name: ToImmutable
-    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_ToImmutable_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_
+    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_ToImmutable_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_
   - name: (
   - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
     name: MetadataRegistry
@@ -505,7 +622,7 @@ references:
   spec.vb:
   - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry)
     name: ToImmutable
-    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_ToImmutable_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_
+    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_ToImmutable_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_
   - name: (
   - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
     name: MetadataRegistry
@@ -515,7 +632,7 @@ references:
   commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry,System.UInt32,System.String@,System.Object@)
   parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions
   definition: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry,System.UInt32,System.String@,System.Object@)
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_TryGetByIndex_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_System_UInt32_System_String__System_Object__
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_TryGetByIndex_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_System_UInt32_System_String__System_Object__
   name: TryGetByIndex(MetadataRegistry, uint, out string, out object)
   nameWithType: MetadataRegistryExtensions.TryGetByIndex(MetadataRegistry, uint, out string, out object)
   fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry, uint, out string, out object)
@@ -525,7 +642,7 @@ references:
   spec.csharp:
   - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry,System.UInt32,System.String@,System.Object@)
     name: TryGetByIndex
-    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_TryGetByIndex_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_System_UInt32_System_String__System_Object__
+    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_TryGetByIndex_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_System_UInt32_System_String__System_Object__
   - name: (
   - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
     name: MetadataRegistry
@@ -556,7 +673,7 @@ references:
   spec.vb:
   - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry,System.UInt32,System.String@,System.Object@)
     name: TryGetByIndex
-    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_TryGetByIndex_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_System_UInt32_System_String__System_Object__
+    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_TryGetByIndex_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_System_UInt32_System_String__System_Object__
   - name: (
   - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
     name: MetadataRegistry
@@ -608,14 +725,14 @@ references:
   name.vb: Object
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry)
   commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry)
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_ToImmutable_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_ToImmutable_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_
   name: ToImmutable(MetadataRegistry)
   nameWithType: MetadataRegistryExtensions.ToImmutable(MetadataRegistry)
   fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry)
   spec.csharp:
   - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry)
     name: ToImmutable
-    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_ToImmutable_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_
+    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_ToImmutable_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_
   - name: (
   - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
     name: MetadataRegistry
@@ -624,7 +741,7 @@ references:
   spec.vb:
   - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry)
     name: ToImmutable
-    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_ToImmutable_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_
+    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_ToImmutable_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_
   - name: (
   - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
     name: MetadataRegistry
@@ -640,7 +757,7 @@ references:
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry,System.UInt32,System.String@,System.Object@)
   commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry,System.UInt32,System.String@,System.Object@)
   isExternal: true
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_TryGetByIndex_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_System_UInt32_System_String__System_Object__
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_TryGetByIndex_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_System_UInt32_System_String__System_Object__
   name: TryGetByIndex(MetadataRegistry, uint, out string, out object)
   nameWithType: MetadataRegistryExtensions.TryGetByIndex(MetadataRegistry, uint, out string, out object)
   fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry, uint, out string, out object)
@@ -650,7 +767,7 @@ references:
   spec.csharp:
   - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry,System.UInt32,System.String@,System.Object@)
     name: TryGetByIndex
-    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_TryGetByIndex_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_System_UInt32_System_String__System_Object__
+    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_TryGetByIndex_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_System_UInt32_System_String__System_Object__
   - name: (
   - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
     name: MetadataRegistry
@@ -681,7 +798,7 @@ references:
   spec.vb:
   - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry,System.UInt32,System.String@,System.Object@)
     name: TryGetByIndex
-    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_TryGetByIndex_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_System_UInt32_System_String__System_Object__
+    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_TryGetByIndex_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_System_UInt32_System_String__System_Object__
   - name: (
   - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
     name: MetadataRegistry
@@ -705,72 +822,6 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.object
   - name: )
-- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.#ctor*
-  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.#ctor
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry__ctor_System_UInt32_
-  name: MetadataRegistry
-  nameWithType: MetadataRegistry.MetadataRegistry
-  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.MetadataRegistry
-  nameWithType.vb: MetadataRegistry.New
-  fullName.vb: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.New
-  name.vb: New
-- uid: System.UInt32
-  commentId: T:System.UInt32
-  parent: System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.uint32
-  name: uint
-  nameWithType: uint
-  fullName: uint
-  nameWithType.vb: UInteger
-  fullName.vb: UInteger
-  name.vb: UInteger
-- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count*
-  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_Count
-  name: Count
-  nameWithType: MetadataRegistry.Count
-  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count
-- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Add*
-  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Add
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_Add_System_String_System_Object_
-  name: Add
-  nameWithType: MetadataRegistry.Add
-  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Add
-- uid: System.String
-  commentId: T:System.String
-  parent: System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.string
-  name: string
-  nameWithType: string
-  fullName: string
-  nameWithType.vb: String
-  fullName.vb: String
-  name.vb: String
-- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.TryGetValue*
-  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.TryGetValue
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_TryGetValue_System_String_System_String__
-  name: TryGetValue
-  nameWithType: MetadataRegistry.TryGetValue
-  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.TryGetValue
-- uid: System.Boolean
-  commentId: T:System.Boolean
-  parent: System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.boolean
-  name: bool
-  nameWithType: bool
-  fullName: bool
-  nameWithType.vb: Boolean
-  fullName.vb: Boolean
-  name.vb: Boolean
-- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.GetEntryPointer*
-  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.GetEntryPointer
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_GetEntryPointer_System_UInt32_
-  name: GetEntryPointer
-  nameWithType: MetadataRegistry.GetEntryPointer
-  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.GetEntryPointer
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*
   isExternal: true
   href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.html
@@ -787,9 +838,81 @@ references:
     name: MetadataEntry
     href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.html
   - name: '*'
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uint32
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.#ctor*
+  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.#ctor
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.-ctor.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry__ctor_System_UInt32_
+  name: MetadataRegistry
+  nameWithType: MetadataRegistry.MetadataRegistry
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.MetadataRegistry
+  nameWithType.vb: MetadataRegistry.New
+  fullName.vb: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.New
+  name.vb: New
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count*
+  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_Count
+  name: Count
+  nameWithType: MetadataRegistry.Count
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Add*
+  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Add
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Add.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_Add_System_String_System_Object_
+  name: Add
+  nameWithType: MetadataRegistry.Add
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Add
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.TryGetValue*
+  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.TryGetValue
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.TryGetValue.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_TryGetValue_System_String_System_String__
+  name: TryGetValue
+  nameWithType: MetadataRegistry.TryGetValue
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.TryGetValue
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand*
+  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_Expand_System_UInt32_
+  name: Expand
+  nameWithType: MetadataRegistry.Expand
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.GetEntryPointer*
+  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.GetEntryPointer
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.GetEntryPointer.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_GetEntryPointer_System_UInt32_
+  name: GetEntryPointer
+  nameWithType: MetadataRegistry.GetEntryPointer
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.GetEntryPointer
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Dispose*
   commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Dispose
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_Dispose
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Dispose.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_Dispose
   name: Dispose
   nameWithType: MetadataRegistry.Dispose
   fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Dispose
@@ -815,3 +938,4 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
   - name: (
   - name: )
+memberLayout: SeparatePages

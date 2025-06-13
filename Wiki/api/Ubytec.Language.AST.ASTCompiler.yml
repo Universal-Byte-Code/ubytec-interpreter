@@ -5,9 +5,16 @@ items:
   id: ASTCompiler
   parent: Ubytec.Language.AST
   children:
+  - Ubytec.Language.AST.ASTCompiler.BuildSyntaxTree(Ubytec.Language.Syntax.Model.SyntaxTree,Ubytec.Language.Operations.IOpCode,System.Collections.Generic.List{Ubytec.Language.Syntax.Model.SyntaxToken})
   - Ubytec.Language.AST.ASTCompiler.CompileAST(Ubytec.Language.Syntax.Model.SyntaxTree)
+  - Ubytec.Language.AST.ASTCompiler.CompileBlockNode(Ubytec.Language.Syntax.Model.SyntaxSentence,Ubytec.Language.Syntax.Model.SyntaxNode,Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  - Ubytec.Language.AST.ASTCompiler.CompileSentence(Ubytec.Language.Syntax.Model.SyntaxSentence,Ubytec.Language.Syntax.Scopes.CompilationScopes)
   - Ubytec.Language.AST.ASTCompiler.CompileSyntax(Ubytec.Language.Operations.IOpCode[],Ubytec.Language.Syntax.Model.SyntaxToken[])
+  - Ubytec.Language.AST.ASTCompiler.InheritVariables(Ubytec.Language.Operations.IBlockOpCode,Ubytec.Language.Operations.IOpInheritance)
+  - Ubytec.Language.AST.ASTCompiler.MergeVariables(Ubytec.Language.Operations.IBlockOpCode,Ubytec.Language.Operations.CoreOperations.VAR)
+  - Ubytec.Language.AST.ASTCompiler.OpcodeMap
   - Ubytec.Language.AST.ASTCompiler.Parse(Ubytec.Language.Syntax.Model.SyntaxToken[])
+  - Ubytec.Language.AST.ASTCompiler.ProcessOperand(Ubytec.Language.Syntax.Model.SyntaxToken,System.Collections.Generic.Queue{System.ValueType})
   langs:
   - csharp
   - vb
@@ -39,6 +46,33 @@ items:
   - System.Object.MemberwiseClone
   - System.Object.ReferenceEquals(System.Object,System.Object)
   - System.Object.ToString
+- uid: Ubytec.Language.AST.ASTCompiler.OpcodeMap
+  commentId: F:Ubytec.Language.AST.ASTCompiler.OpcodeMap
+  id: OpcodeMap
+  parent: Ubytec.Language.AST.ASTCompiler
+  langs:
+  - csharp
+  - vb
+  name: OpcodeMap
+  nameWithType: ASTCompiler.OpcodeMap
+  fullName: Ubytec.Language.AST.ASTCompiler.OpcodeMap
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/AST/ASTCompiler.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: OpcodeMap
+    path: ../Ubytec/Language/AST/ASTCompiler.cs
+    startLine: 17
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static readonly Dictionary<string, byte> OpcodeMap
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,System.Byte}
+    content.vb: Private Shared ReadOnly OpcodeMap As Dictionary(Of String, Byte)
 - uid: Ubytec.Language.AST.ASTCompiler.Parse(Ubytec.Language.Syntax.Model.SyntaxToken[])
   commentId: M:Ubytec.Language.AST.ASTCompiler.Parse(Ubytec.Language.Syntax.Model.SyntaxToken[])
   id: Parse(Ubytec.Language.Syntax.Model.SyntaxToken[])
@@ -85,6 +119,129 @@ items:
   nameWithType.vb: ASTCompiler.Parse(SyntaxToken())
   fullName.vb: Ubytec.Language.AST.ASTCompiler.Parse(Ubytec.Language.Syntax.Model.SyntaxToken())
   name.vb: Parse(SyntaxToken())
+- uid: Ubytec.Language.AST.ASTCompiler.ProcessOperand(Ubytec.Language.Syntax.Model.SyntaxToken,System.Collections.Generic.Queue{System.ValueType})
+  commentId: M:Ubytec.Language.AST.ASTCompiler.ProcessOperand(Ubytec.Language.Syntax.Model.SyntaxToken,System.Collections.Generic.Queue{System.ValueType})
+  id: ProcessOperand(Ubytec.Language.Syntax.Model.SyntaxToken,System.Collections.Generic.Queue{System.ValueType})
+  parent: Ubytec.Language.AST.ASTCompiler
+  langs:
+  - csharp
+  - vb
+  name: ProcessOperand(SyntaxToken, Queue<ValueType>)
+  nameWithType: ASTCompiler.ProcessOperand(SyntaxToken, Queue<ValueType>)
+  fullName: Ubytec.Language.AST.ASTCompiler.ProcessOperand(Ubytec.Language.Syntax.Model.SyntaxToken, System.Collections.Generic.Queue<System.ValueType>)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/ASTCompiler.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ProcessOperand
+    path: ../Ubytec/Language/AST/ASTCompiler.cs
+    startLine: 311
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  summary: ''
+  example: []
+  syntax:
+    content: private static void ProcessOperand(SyntaxToken currLineToken, Queue<ValueType> instructionAndOperands)
+    parameters:
+    - id: currLineToken
+      type: Ubytec.Language.Syntax.Model.SyntaxToken
+      description: ''
+    - id: instructionAndOperands
+      type: System.Collections.Generic.Queue{System.ValueType}
+      description: ''
+    content.vb: Private Shared Sub ProcessOperand(currLineToken As SyntaxToken, instructionAndOperands As Queue(Of ValueType))
+  overload: Ubytec.Language.AST.ASTCompiler.ProcessOperand*
+  exceptions:
+  - type: System.Exception
+    commentId: T:System.Exception
+    description: ''
+  nameWithType.vb: ASTCompiler.ProcessOperand(SyntaxToken, Queue(Of ValueType))
+  fullName.vb: Ubytec.Language.AST.ASTCompiler.ProcessOperand(Ubytec.Language.Syntax.Model.SyntaxToken, System.Collections.Generic.Queue(Of System.ValueType))
+  name.vb: ProcessOperand(SyntaxToken, Queue(Of ValueType))
+- uid: Ubytec.Language.AST.ASTCompiler.InheritVariables(Ubytec.Language.Operations.IBlockOpCode,Ubytec.Language.Operations.IOpInheritance)
+  commentId: M:Ubytec.Language.AST.ASTCompiler.InheritVariables(Ubytec.Language.Operations.IBlockOpCode,Ubytec.Language.Operations.IOpInheritance)
+  id: InheritVariables(Ubytec.Language.Operations.IBlockOpCode,Ubytec.Language.Operations.IOpInheritance)
+  parent: Ubytec.Language.AST.ASTCompiler
+  langs:
+  - csharp
+  - vb
+  name: InheritVariables(IBlockOpCode?, IOpInheritance)
+  nameWithType: ASTCompiler.InheritVariables(IBlockOpCode?, IOpInheritance)
+  fullName: Ubytec.Language.AST.ASTCompiler.InheritVariables(Ubytec.Language.Operations.IBlockOpCode?, Ubytec.Language.Operations.IOpInheritance)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/ASTCompiler.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: InheritVariables
+    path: ../Ubytec/Language/AST/ASTCompiler.cs
+    startLine: 556
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  summary: >-
+    Inherits variables from a parent opCode (e.g., a block or IF) 
+
+    into the child opCode so that they share the same variable context.
+  example: []
+  syntax:
+    content: private static void InheritVariables(IBlockOpCode? parent, IOpInheritance child)
+    parameters:
+    - id: parent
+      type: Ubytec.Language.Operations.IBlockOpCode
+      description: The parent opCode holding the variable list.
+    - id: child
+      type: Ubytec.Language.Operations.IOpInheritance
+      description: The child opCode to which the variables will be added.
+    content.vb: Private Shared Sub InheritVariables(parent As IBlockOpCode, child As IOpInheritance)
+  overload: Ubytec.Language.AST.ASTCompiler.InheritVariables*
+  nameWithType.vb: ASTCompiler.InheritVariables(IBlockOpCode, IOpInheritance)
+  fullName.vb: Ubytec.Language.AST.ASTCompiler.InheritVariables(Ubytec.Language.Operations.IBlockOpCode, Ubytec.Language.Operations.IOpInheritance)
+  name.vb: InheritVariables(IBlockOpCode, IOpInheritance)
+- uid: Ubytec.Language.AST.ASTCompiler.MergeVariables(Ubytec.Language.Operations.IBlockOpCode,Ubytec.Language.Operations.CoreOperations.VAR)
+  commentId: M:Ubytec.Language.AST.ASTCompiler.MergeVariables(Ubytec.Language.Operations.IBlockOpCode,Ubytec.Language.Operations.CoreOperations.VAR)
+  id: MergeVariables(Ubytec.Language.Operations.IBlockOpCode,Ubytec.Language.Operations.CoreOperations.VAR)
+  parent: Ubytec.Language.AST.ASTCompiler
+  langs:
+  - csharp
+  - vb
+  name: MergeVariables(IBlockOpCode, VAR)
+  nameWithType: ASTCompiler.MergeVariables(IBlockOpCode, CoreOperations.VAR)
+  fullName: Ubytec.Language.AST.ASTCompiler.MergeVariables(Ubytec.Language.Operations.IBlockOpCode, Ubytec.Language.Operations.CoreOperations.VAR)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/ASTCompiler.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: MergeVariables
+    path: ../Ubytec/Language/AST/ASTCompiler.cs
+    startLine: 570
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  summary: >-
+    Merges the declared variable (from a VAR instruction) into the 
+
+    variable list of the current block-like opCode (BLOCK, IF, LOOP, etc.).
+
+    Ensures each block maintains a record of variables declared in its scope.
+  example: []
+  syntax:
+    content: private static void MergeVariables(IBlockOpCode block, CoreOperations.VAR varOp)
+    parameters:
+    - id: block
+      type: Ubytec.Language.Operations.IBlockOpCode
+      description: The block opCode (e.g., BLOCK, IF, LOOP).
+    - id: varOp
+      type: Ubytec.Language.Operations.CoreOperations.VAR
+      description: The VAR instruction that contains the newly declared variable.
+    content.vb: Private Shared Sub MergeVariables(block As IBlockOpCode, varOp As CoreOperations.VAR)
+  overload: Ubytec.Language.AST.ASTCompiler.MergeVariables*
 - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntax(Ubytec.Language.Operations.IOpCode[],Ubytec.Language.Syntax.Model.SyntaxToken[])
   commentId: M:Ubytec.Language.AST.ASTCompiler.CompileSyntax(Ubytec.Language.Operations.IOpCode[],Ubytec.Language.Syntax.Model.SyntaxToken[])
   id: CompileSyntax(Ubytec.Language.Operations.IOpCode[],Ubytec.Language.Syntax.Model.SyntaxToken[])
@@ -134,6 +291,52 @@ items:
   nameWithType.vb: ASTCompiler.CompileSyntax(IOpCode(), SyntaxToken())
   fullName.vb: Ubytec.Language.AST.ASTCompiler.CompileSyntax(Ubytec.Language.Operations.IOpCode(), Ubytec.Language.Syntax.Model.SyntaxToken())
   name.vb: CompileSyntax(IOpCode(), SyntaxToken())
+- uid: Ubytec.Language.AST.ASTCompiler.BuildSyntaxTree(Ubytec.Language.Syntax.Model.SyntaxTree,Ubytec.Language.Operations.IOpCode,System.Collections.Generic.List{Ubytec.Language.Syntax.Model.SyntaxToken})
+  commentId: M:Ubytec.Language.AST.ASTCompiler.BuildSyntaxTree(Ubytec.Language.Syntax.Model.SyntaxTree,Ubytec.Language.Operations.IOpCode,System.Collections.Generic.List{Ubytec.Language.Syntax.Model.SyntaxToken})
+  id: BuildSyntaxTree(Ubytec.Language.Syntax.Model.SyntaxTree,Ubytec.Language.Operations.IOpCode,System.Collections.Generic.List{Ubytec.Language.Syntax.Model.SyntaxToken})
+  parent: Ubytec.Language.AST.ASTCompiler
+  langs:
+  - csharp
+  - vb
+  name: BuildSyntaxTree(SyntaxTree, IOpCode, List<SyntaxToken>)
+  nameWithType: ASTCompiler.BuildSyntaxTree(SyntaxTree, IOpCode, List<SyntaxToken>)
+  fullName: Ubytec.Language.AST.ASTCompiler.BuildSyntaxTree(Ubytec.Language.Syntax.Model.SyntaxTree, Ubytec.Language.Operations.IOpCode, System.Collections.Generic.List<Ubytec.Language.Syntax.Model.SyntaxToken>)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/ASTCompiler.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: BuildSyntaxTree
+    path: ../Ubytec/Language/AST/ASTCompiler.cs
+    startLine: 662
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  summary: >-
+    Adds a node (opCode) and its associated tokens to the SyntaxTree under construction.
+
+    Handles the creation of new sentences (SyntaxSentence) for scopes like BLOCK or IF, 
+
+    and places closing nodes (END, RETURN) accordingly.
+  example: []
+  syntax:
+    content: private static void BuildSyntaxTree(SyntaxTree tree, IOpCode opCode, List<SyntaxToken> tokens)
+    parameters:
+    - id: tree
+      type: Ubytec.Language.Syntax.Model.SyntaxTree
+      description: The SyntaxTree under construction.
+    - id: opCode
+      type: Ubytec.Language.Operations.IOpCode
+      description: The current IOpCode instruction to insert.
+    - id: tokens
+      type: System.Collections.Generic.List{Ubytec.Language.Syntax.Model.SyntaxToken}
+      description: The list of tokens associated with this instruction (usually by row).
+    content.vb: Private Shared Sub BuildSyntaxTree(tree As SyntaxTree, opCode As IOpCode, tokens As List(Of SyntaxToken))
+  overload: Ubytec.Language.AST.ASTCompiler.BuildSyntaxTree*
+  nameWithType.vb: ASTCompiler.BuildSyntaxTree(SyntaxTree, IOpCode, List(Of SyntaxToken))
+  fullName.vb: Ubytec.Language.AST.ASTCompiler.BuildSyntaxTree(Ubytec.Language.Syntax.Model.SyntaxTree, Ubytec.Language.Operations.IOpCode, System.Collections.Generic.List(Of Ubytec.Language.Syntax.Model.SyntaxToken))
+  name.vb: BuildSyntaxTree(SyntaxTree, IOpCode, List(Of SyntaxToken))
 - uid: Ubytec.Language.AST.ASTCompiler.CompileAST(Ubytec.Language.Syntax.Model.SyntaxTree)
   commentId: M:Ubytec.Language.AST.ASTCompiler.CompileAST(Ubytec.Language.Syntax.Model.SyntaxTree)
   id: CompileAST(Ubytec.Language.Syntax.Model.SyntaxTree)
@@ -172,6 +375,89 @@ items:
       description: A string containing the generated NASM assembly code.
     content.vb: Public Shared Function CompileAST(tree As SyntaxTree) As String
   overload: Ubytec.Language.AST.ASTCompiler.CompileAST*
+- uid: Ubytec.Language.AST.ASTCompiler.CompileSentence(Ubytec.Language.Syntax.Model.SyntaxSentence,Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  commentId: M:Ubytec.Language.AST.ASTCompiler.CompileSentence(Ubytec.Language.Syntax.Model.SyntaxSentence,Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  id: CompileSentence(Ubytec.Language.Syntax.Model.SyntaxSentence,Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  parent: Ubytec.Language.AST.ASTCompiler
+  langs:
+  - csharp
+  - vb
+  name: CompileSentence(SyntaxSentence, CompilationScopes)
+  nameWithType: ASTCompiler.CompileSentence(SyntaxSentence, CompilationScopes)
+  fullName: Ubytec.Language.AST.ASTCompiler.CompileSentence(Ubytec.Language.Syntax.Model.SyntaxSentence, Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/ASTCompiler.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: CompileSentence
+    path: ../Ubytec/Language/AST/ASTCompiler.cs
+    startLine: 812
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  summary: >-
+    Compiles a specific SyntaxSentence into NASM assembly, 
+
+    handling nested statements recursively.
+  example: []
+  syntax:
+    content: private static string CompileSentence(SyntaxSentence sentence, CompilationScopes scopes)
+    parameters:
+    - id: sentence
+      type: Ubytec.Language.Syntax.Model.SyntaxSentence
+      description: The SyntaxSentence to compile.
+    - id: scopes
+      type: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    return:
+      type: System.String
+      description: A string fragment with the NASM code for that sentence.
+    content.vb: Private Shared Function CompileSentence(sentence As SyntaxSentence, scopes As CompilationScopes) As String
+  overload: Ubytec.Language.AST.ASTCompiler.CompileSentence*
+- uid: Ubytec.Language.AST.ASTCompiler.CompileBlockNode(Ubytec.Language.Syntax.Model.SyntaxSentence,Ubytec.Language.Syntax.Model.SyntaxNode,Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  commentId: M:Ubytec.Language.AST.ASTCompiler.CompileBlockNode(Ubytec.Language.Syntax.Model.SyntaxSentence,Ubytec.Language.Syntax.Model.SyntaxNode,Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  id: CompileBlockNode(Ubytec.Language.Syntax.Model.SyntaxSentence,Ubytec.Language.Syntax.Model.SyntaxNode,Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  parent: Ubytec.Language.AST.ASTCompiler
+  langs:
+  - csharp
+  - vb
+  name: CompileBlockNode(SyntaxSentence, SyntaxNode, CompilationScopes)
+  nameWithType: ASTCompiler.CompileBlockNode(SyntaxSentence, SyntaxNode, CompilationScopes)
+  fullName: Ubytec.Language.AST.ASTCompiler.CompileBlockNode(Ubytec.Language.Syntax.Model.SyntaxSentence, Ubytec.Language.Syntax.Model.SyntaxNode, Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/ASTCompiler.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: CompileBlockNode
+    path: ../Ubytec/Language/AST/ASTCompiler.cs
+    startLine: 849
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  summary: >-
+    Compiles a block node (e.g., IF with an END, a BLOCK with its END) and 
+
+    its children into NASM format, respecting indentation and any generated labels.
+  example: []
+  syntax:
+    content: private static string CompileBlockNode(SyntaxSentence sentence, SyntaxNode node, CompilationScopes scopes)
+    parameters:
+    - id: sentence
+      type: Ubytec.Language.Syntax.Model.SyntaxSentence
+      description: The SyntaxSentence containing this node.
+    - id: node
+      type: Ubytec.Language.Syntax.Model.SyntaxNode
+      description: The SyntaxNode holding the operation (BLOCK, IF, ELSE, etc.).
+    - id: scopes
+      type: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    return:
+      type: System.String
+      description: The resulting NASM code for opening, populating, and closing this block.
+    content.vb: Private Shared Function CompileBlockNode(sentence As SyntaxSentence, node As SyntaxNode, scopes As CompilationScopes) As String
+  overload: Ubytec.Language.AST.ASTCompiler.CompileBlockNode*
 references:
 - uid: Ubytec.Language.AST
   commentId: N:Ubytec.Language.AST
@@ -440,9 +726,127 @@ references:
   name: System
   nameWithType: System
   fullName: System
+- uid: System.Collections.Generic.Dictionary{System.String,System.Byte}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,System.Byte}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<string, byte>
+  nameWithType: Dictionary<string, byte>
+  fullName: System.Collections.Generic.Dictionary<string, byte>
+  nameWithType.vb: Dictionary(Of String, Byte)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, Byte)
+  name.vb: Dictionary(Of String, Byte)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
 - uid: Ubytec.Language.AST.ASTCompiler.Parse*
   commentId: Overload:Ubytec.Language.AST.ASTCompiler.Parse
-  href: Ubytec.Language.AST.ASTCompiler.html#Ubytec_Language_AST_ASTCompiler_Parse_Ubytec_Language_Syntax_Model_SyntaxToken___
+  href: Ubytec.Language.AST.ASTCompiler.Parse.html#Ubytec_Language_AST_ASTCompiler_Parse_Ubytec_Language_Syntax_Model_SyntaxToken___
   name: Parse
   nameWithType: ASTCompiler.Parse
   fullName: Ubytec.Language.AST.ASTCompiler.Parse
@@ -488,9 +892,210 @@ references:
     href: Ubytec.Language.Operations.IOpCode.html
   - name: (
   - name: )
+- uid: System.Exception
+  commentId: T:System.Exception
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.exception
+  name: Exception
+  nameWithType: Exception
+  fullName: System.Exception
+- uid: Ubytec.Language.AST.ASTCompiler.ProcessOperand*
+  commentId: Overload:Ubytec.Language.AST.ASTCompiler.ProcessOperand
+  href: Ubytec.Language.AST.ASTCompiler.ProcessOperand.html#Ubytec_Language_AST_ASTCompiler_ProcessOperand_Ubytec_Language_Syntax_Model_SyntaxToken_System_Collections_Generic_Queue_System_ValueType__
+  name: ProcessOperand
+  nameWithType: ASTCompiler.ProcessOperand
+  fullName: Ubytec.Language.AST.ASTCompiler.ProcessOperand
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxToken
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  name: SyntaxToken
+  nameWithType: SyntaxToken
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken
+- uid: System.Collections.Generic.Queue{System.ValueType}
+  commentId: T:System.Collections.Generic.Queue{System.ValueType}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Queue`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.queue-1
+  name: Queue<ValueType>
+  nameWithType: Queue<ValueType>
+  fullName: System.Collections.Generic.Queue<System.ValueType>
+  nameWithType.vb: Queue(Of ValueType)
+  fullName.vb: System.Collections.Generic.Queue(Of System.ValueType)
+  name.vb: Queue(Of ValueType)
+  spec.csharp:
+  - uid: System.Collections.Generic.Queue`1
+    name: Queue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.queue-1
+  - name: <
+  - uid: System.ValueType
+    name: ValueType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Queue`1
+    name: Queue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.queue-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.ValueType
+    name: ValueType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  - name: )
+- uid: Ubytec.Language.Syntax.Model
+  commentId: N:Ubytec.Language.Syntax.Model
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Model
+  nameWithType: Ubytec.Language.Syntax.Model
+  fullName: Ubytec.Language.Syntax.Model
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
+- uid: System.Collections.Generic.Queue`1
+  commentId: T:System.Collections.Generic.Queue`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.queue-1
+  name: Queue<T>
+  nameWithType: Queue<T>
+  fullName: System.Collections.Generic.Queue<T>
+  nameWithType.vb: Queue(Of T)
+  fullName.vb: System.Collections.Generic.Queue(Of T)
+  name.vb: Queue(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.Queue`1
+    name: Queue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.queue-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Queue`1
+    name: Queue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.queue-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubytec.Language.AST.ASTCompiler.InheritVariables*
+  commentId: Overload:Ubytec.Language.AST.ASTCompiler.InheritVariables
+  href: Ubytec.Language.AST.ASTCompiler.InheritVariables.html#Ubytec_Language_AST_ASTCompiler_InheritVariables_Ubytec_Language_Operations_IBlockOpCode_Ubytec_Language_Operations_IOpInheritance_
+  name: InheritVariables
+  nameWithType: ASTCompiler.InheritVariables
+  fullName: Ubytec.Language.AST.ASTCompiler.InheritVariables
+- uid: Ubytec.Language.Operations.IBlockOpCode
+  commentId: T:Ubytec.Language.Operations.IBlockOpCode
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.IBlockOpCode.html
+  name: IBlockOpCode
+  nameWithType: IBlockOpCode
+  fullName: Ubytec.Language.Operations.IBlockOpCode
+- uid: Ubytec.Language.Operations.IOpInheritance
+  commentId: T:Ubytec.Language.Operations.IOpInheritance
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.IOpInheritance.html
+  name: IOpInheritance
+  nameWithType: IOpInheritance
+  fullName: Ubytec.Language.Operations.IOpInheritance
+- uid: Ubytec.Language.Operations
+  commentId: N:Ubytec.Language.Operations
+  href: Ubytec.html
+  name: Ubytec.Language.Operations
+  nameWithType: Ubytec.Language.Operations
+  fullName: Ubytec.Language.Operations
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+- uid: Ubytec.Language.AST.ASTCompiler.MergeVariables*
+  commentId: Overload:Ubytec.Language.AST.ASTCompiler.MergeVariables
+  href: Ubytec.Language.AST.ASTCompiler.MergeVariables.html#Ubytec_Language_AST_ASTCompiler_MergeVariables_Ubytec_Language_Operations_IBlockOpCode_Ubytec_Language_Operations_CoreOperations_VAR_
+  name: MergeVariables
+  nameWithType: ASTCompiler.MergeVariables
+  fullName: Ubytec.Language.AST.ASTCompiler.MergeVariables
+- uid: Ubytec.Language.Operations.CoreOperations.VAR
+  commentId: T:Ubytec.Language.Operations.CoreOperations.VAR
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.VAR
+  nameWithType: CoreOperations.VAR
+  fullName: Ubytec.Language.Operations.CoreOperations.VAR
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.VAR
+    name: VAR
+    href: Ubytec.Language.Operations.CoreOperations.VAR.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.VAR
+    name: VAR
+    href: Ubytec.Language.Operations.CoreOperations.VAR.html
 - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntax*
   commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileSyntax
-  href: Ubytec.Language.AST.ASTCompiler.html#Ubytec_Language_AST_ASTCompiler_CompileSyntax_Ubytec_Language_Operations_IOpCode___Ubytec_Language_Syntax_Model_SyntaxToken___
+  href: Ubytec.Language.AST.ASTCompiler.CompileSyntax.html#Ubytec_Language_AST_ASTCompiler_CompileSyntax_Ubytec_Language_Operations_IOpCode___Ubytec_Language_Syntax_Model_SyntaxToken___
   name: CompileSyntax
   nameWithType: ASTCompiler.CompileSyntax
   fullName: Ubytec.Language.AST.ASTCompiler.CompileSyntax
@@ -588,12 +1193,12 @@ references:
   - name: " "
   - name: T2
   - name: )
-- uid: Ubytec.Language.AST.ASTCompiler.CompileAST*
-  commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileAST
-  href: Ubytec.Language.AST.ASTCompiler.html#Ubytec_Language_AST_ASTCompiler_CompileAST_Ubytec_Language_Syntax_Model_SyntaxTree_
-  name: CompileAST
-  nameWithType: ASTCompiler.CompileAST
-  fullName: Ubytec.Language.AST.ASTCompiler.CompileAST
+- uid: Ubytec.Language.AST.ASTCompiler.BuildSyntaxTree*
+  commentId: Overload:Ubytec.Language.AST.ASTCompiler.BuildSyntaxTree
+  href: Ubytec.Language.AST.ASTCompiler.BuildSyntaxTree.html#Ubytec_Language_AST_ASTCompiler_BuildSyntaxTree_Ubytec_Language_Syntax_Model_SyntaxTree_Ubytec_Language_Operations_IOpCode_System_Collections_Generic_List_Ubytec_Language_Syntax_Model_SyntaxToken__
+  name: BuildSyntaxTree
+  nameWithType: ASTCompiler.BuildSyntaxTree
+  fullName: Ubytec.Language.AST.ASTCompiler.BuildSyntaxTree
 - uid: Ubytec.Language.Syntax.Model.SyntaxTree
   commentId: T:Ubytec.Language.Syntax.Model.SyntaxTree
   parent: Ubytec.Language.Syntax.Model
@@ -601,6 +1206,80 @@ references:
   name: SyntaxTree
   nameWithType: SyntaxTree
   fullName: Ubytec.Language.Syntax.Model.SyntaxTree
+- uid: Ubytec.Language.Operations.IOpCode
+  commentId: T:Ubytec.Language.Operations.IOpCode
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.IOpCode.html
+  name: IOpCode
+  nameWithType: IOpCode
+  fullName: Ubytec.Language.Operations.IOpCode
+- uid: System.Collections.Generic.List{Ubytec.Language.Syntax.Model.SyntaxToken}
+  commentId: T:System.Collections.Generic.List{Ubytec.Language.Syntax.Model.SyntaxToken}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<SyntaxToken>
+  nameWithType: List<SyntaxToken>
+  fullName: System.Collections.Generic.List<Ubytec.Language.Syntax.Model.SyntaxToken>
+  nameWithType.vb: List(Of SyntaxToken)
+  fullName.vb: System.Collections.Generic.List(Of Ubytec.Language.Syntax.Model.SyntaxToken)
+  name.vb: List(Of SyntaxToken)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
+    name: SyntaxToken
+    href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
+    name: SyntaxToken
+    href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubytec.Language.AST.ASTCompiler.CompileAST*
+  commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileAST
+  href: Ubytec.Language.AST.ASTCompiler.CompileAST.html#Ubytec_Language_AST_ASTCompiler_CompileAST_Ubytec_Language_Syntax_Model_SyntaxTree_
+  name: CompileAST
+  nameWithType: ASTCompiler.CompileAST
+  fullName: Ubytec.Language.AST.ASTCompiler.CompileAST
 - uid: System.String
   commentId: T:System.String
   parent: System
@@ -612,12 +1291,32 @@ references:
   nameWithType.vb: String
   fullName.vb: String
   name.vb: String
-- uid: Ubytec.Language.Syntax.Model
-  commentId: N:Ubytec.Language.Syntax.Model
+- uid: Ubytec.Language.AST.ASTCompiler.CompileSentence*
+  commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileSentence
+  href: Ubytec.Language.AST.ASTCompiler.CompileSentence.html#Ubytec_Language_AST_ASTCompiler_CompileSentence_Ubytec_Language_Syntax_Model_SyntaxSentence_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  name: CompileSentence
+  nameWithType: ASTCompiler.CompileSentence
+  fullName: Ubytec.Language.AST.ASTCompiler.CompileSentence
+- uid: Ubytec.Language.Syntax.Model.SyntaxSentence
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxSentence
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxSentence.html
+  name: SyntaxSentence
+  nameWithType: SyntaxSentence
+  fullName: Ubytec.Language.Syntax.Model.SyntaxSentence
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  commentId: T:Ubytec.Language.Syntax.Scopes.CompilationScopes
+  parent: Ubytec.Language.Syntax.Scopes
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  name: CompilationScopes
+  nameWithType: CompilationScopes
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes
+- uid: Ubytec.Language.Syntax.Scopes
+  commentId: N:Ubytec.Language.Syntax.Scopes
   href: Ubytec.html
-  name: Ubytec.Language.Syntax.Model
-  nameWithType: Ubytec.Language.Syntax.Model
-  fullName: Ubytec.Language.Syntax.Model
+  name: Ubytec.Language.Syntax.Scopes
+  nameWithType: Ubytec.Language.Syntax.Scopes
+  fullName: Ubytec.Language.Syntax.Scopes
   spec.csharp:
   - uid: Ubytec
     name: Ubytec
@@ -631,9 +1330,9 @@ references:
     name: Syntax
     href: Ubytec.Language.Syntax.html
   - name: .
-  - uid: Ubytec.Language.Syntax.Model
-    name: Model
-    href: Ubytec.Language.Syntax.Model.html
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
   spec.vb:
   - uid: Ubytec
     name: Ubytec
@@ -647,6 +1346,20 @@ references:
     name: Syntax
     href: Ubytec.Language.Syntax.html
   - name: .
-  - uid: Ubytec.Language.Syntax.Model
-    name: Model
-    href: Ubytec.Language.Syntax.Model.html
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+- uid: Ubytec.Language.AST.ASTCompiler.CompileBlockNode*
+  commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileBlockNode
+  href: Ubytec.Language.AST.ASTCompiler.CompileBlockNode.html#Ubytec_Language_AST_ASTCompiler_CompileBlockNode_Ubytec_Language_Syntax_Model_SyntaxSentence_Ubytec_Language_Syntax_Model_SyntaxNode_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  name: CompileBlockNode
+  nameWithType: ASTCompiler.CompileBlockNode
+  fullName: Ubytec.Language.AST.ASTCompiler.CompileBlockNode
+- uid: Ubytec.Language.Syntax.Model.SyntaxNode
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxNode
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxNode.html
+  name: SyntaxNode
+  nameWithType: SyntaxNode
+  fullName: Ubytec.Language.Syntax.Model.SyntaxNode
+memberLayout: SeparatePages

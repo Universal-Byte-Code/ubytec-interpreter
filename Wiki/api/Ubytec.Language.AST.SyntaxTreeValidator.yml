@@ -6,6 +6,9 @@ items:
   parent: Ubytec.Language.AST
   children:
   - Ubytec.Language.AST.SyntaxTreeValidator.CheckSyntaxTreeSchema(Ubytec.Language.Syntax.Model.SyntaxTree)
+  - Ubytec.Language.AST.SyntaxTreeValidator.FetchSchema(System.String)
+  - Ubytec.Language.AST.SyntaxTreeValidator._httpClient
+  - Ubytec.Language.AST.SyntaxTreeValidator._options
   langs:
   - csharp
   - vb
@@ -37,6 +40,60 @@ items:
   - System.Object.MemberwiseClone
   - System.Object.ReferenceEquals(System.Object,System.Object)
   - System.Object.ToString
+- uid: Ubytec.Language.AST.SyntaxTreeValidator._httpClient
+  commentId: F:Ubytec.Language.AST.SyntaxTreeValidator._httpClient
+  id: _httpClient
+  parent: Ubytec.Language.AST.SyntaxTreeValidator
+  langs:
+  - csharp
+  - vb
+  name: _httpClient
+  nameWithType: SyntaxTreeValidator._httpClient
+  fullName: Ubytec.Language.AST.SyntaxTreeValidator._httpClient
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/AST/SyntaxTreeValidator.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _httpClient
+    path: ../Ubytec/Language/AST/SyntaxTreeValidator.cs
+    startLine: 11
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static readonly HttpClient _httpClient
+    return:
+      type: System.Net.Http.HttpClient
+    content.vb: Private Shared ReadOnly _httpClient As HttpClient
+- uid: Ubytec.Language.AST.SyntaxTreeValidator._options
+  commentId: F:Ubytec.Language.AST.SyntaxTreeValidator._options
+  id: _options
+  parent: Ubytec.Language.AST.SyntaxTreeValidator
+  langs:
+  - csharp
+  - vb
+  name: _options
+  nameWithType: SyntaxTreeValidator._options
+  fullName: Ubytec.Language.AST.SyntaxTreeValidator._options
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/AST/SyntaxTreeValidator.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _options
+    path: ../Ubytec/Language/AST/SyntaxTreeValidator.cs
+    startLine: 12
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static readonly JsonSerializerOptions _options
+    return:
+      type: System.Text.Json.JsonSerializerOptions
+    content.vb: Private Shared ReadOnly _options As JsonSerializerOptions
 - uid: Ubytec.Language.AST.SyntaxTreeValidator.CheckSyntaxTreeSchema(Ubytec.Language.Syntax.Model.SyntaxTree)
   commentId: M:Ubytec.Language.AST.SyntaxTreeValidator.CheckSyntaxTreeSchema(Ubytec.Language.Syntax.Model.SyntaxTree)
   id: CheckSyntaxTreeSchema(Ubytec.Language.Syntax.Model.SyntaxTree)
@@ -68,6 +125,40 @@ items:
       type: System.Collections.Generic.ICollection{NJsonSchema.Validation.ValidationError}
     content.vb: Public Shared Function CheckSyntaxTreeSchema(tree As SyntaxTree) As ICollection(Of ValidationError)
   overload: Ubytec.Language.AST.SyntaxTreeValidator.CheckSyntaxTreeSchema*
+- uid: Ubytec.Language.AST.SyntaxTreeValidator.FetchSchema(System.String)
+  commentId: M:Ubytec.Language.AST.SyntaxTreeValidator.FetchSchema(System.String)
+  id: FetchSchema(System.String)
+  parent: Ubytec.Language.AST.SyntaxTreeValidator
+  langs:
+  - csharp
+  - vb
+  name: FetchSchema(string)
+  nameWithType: SyntaxTreeValidator.FetchSchema(string)
+  fullName: Ubytec.Language.AST.SyntaxTreeValidator.FetchSchema(string)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/SyntaxTreeValidator.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: FetchSchema
+    path: ../Ubytec/Language/AST/SyntaxTreeValidator.cs
+    startLine: 46
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static Task<string> FetchSchema(string schemaUrl)
+    parameters:
+    - id: schemaUrl
+      type: System.String
+    return:
+      type: System.Threading.Tasks.Task{System.String}
+    content.vb: Private Shared Function FetchSchema(schemaUrl As String) As Task(Of String)
+  overload: Ubytec.Language.AST.SyntaxTreeValidator.FetchSchema*
+  nameWithType.vb: SyntaxTreeValidator.FetchSchema(String)
+  fullName.vb: Ubytec.Language.AST.SyntaxTreeValidator.FetchSchema(String)
+  name.vb: FetchSchema(String)
 references:
 - uid: Ubytec.Language.AST
   commentId: N:Ubytec.Language.AST
@@ -336,9 +427,99 @@ references:
   name: System
   nameWithType: System
   fullName: System
+- uid: System.Net.Http.HttpClient
+  commentId: T:System.Net.Http.HttpClient
+  parent: System.Net.Http
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.net.http.httpclient
+  name: HttpClient
+  nameWithType: HttpClient
+  fullName: System.Net.Http.HttpClient
+- uid: System.Net.Http
+  commentId: N:System.Net.Http
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Net.Http
+  nameWithType: System.Net.Http
+  fullName: System.Net.Http
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Net
+    name: Net
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.net
+  - name: .
+  - uid: System.Net.Http
+    name: Http
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.net.http
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Net
+    name: Net
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.net
+  - name: .
+  - uid: System.Net.Http
+    name: Http
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.net.http
+- uid: System.Text.Json.JsonSerializerOptions
+  commentId: T:System.Text.Json.JsonSerializerOptions
+  parent: System.Text.Json
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions
+  name: JsonSerializerOptions
+  nameWithType: JsonSerializerOptions
+  fullName: System.Text.Json.JsonSerializerOptions
+- uid: System.Text.Json
+  commentId: N:System.Text.Json
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Text.Json
+  nameWithType: System.Text.Json
+  fullName: System.Text.Json
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+  - name: .
+  - uid: System.Text.Json
+    name: Json
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.json
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+  - name: .
+  - uid: System.Text.Json
+    name: Json
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.json
 - uid: Ubytec.Language.AST.SyntaxTreeValidator.CheckSyntaxTreeSchema*
   commentId: Overload:Ubytec.Language.AST.SyntaxTreeValidator.CheckSyntaxTreeSchema
-  href: Ubytec.Language.AST.SyntaxTreeValidator.html#Ubytec_Language_AST_SyntaxTreeValidator_CheckSyntaxTreeSchema_Ubytec_Language_Syntax_Model_SyntaxTree_
+  href: Ubytec.Language.AST.SyntaxTreeValidator.CheckSyntaxTreeSchema.html#Ubytec_Language_AST_SyntaxTreeValidator_CheckSyntaxTreeSchema_Ubytec_Language_Syntax_Model_SyntaxTree_
   name: CheckSyntaxTreeSchema
   nameWithType: SyntaxTreeValidator.CheckSyntaxTreeSchema
   fullName: Ubytec.Language.AST.SyntaxTreeValidator.CheckSyntaxTreeSchema
@@ -485,3 +666,121 @@ references:
     name: Generic
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Ubytec.Language.AST.SyntaxTreeValidator.FetchSchema*
+  commentId: Overload:Ubytec.Language.AST.SyntaxTreeValidator.FetchSchema
+  href: Ubytec.Language.AST.SyntaxTreeValidator.FetchSchema.html#Ubytec_Language_AST_SyntaxTreeValidator_FetchSchema_System_String_
+  name: FetchSchema
+  nameWithType: SyntaxTreeValidator.FetchSchema
+  fullName: Ubytec.Language.AST.SyntaxTreeValidator.FetchSchema
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Threading.Tasks.Task{System.String}
+  commentId: T:System.Threading.Tasks.Task{System.String}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<string>
+  nameWithType: Task<string>
+  fullName: System.Threading.Tasks.Task<string>
+  nameWithType.vb: Task(Of String)
+  fullName.vb: System.Threading.Tasks.Task(Of String)
+  name.vb: Task(Of String)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+memberLayout: SeparatePages

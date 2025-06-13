@@ -2,7 +2,8 @@
 items:
 - uid: Ubytec.Language.Syntax.Fast.Metadata
   commentId: N:Ubytec.Language.Syntax.Fast.Metadata
-  id: Ubytec.Language.Syntax.Fast.Metadata
+  id: Fast.Metadata
+  parent: Ubytec.Language.Syntax
   children:
   - Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
   - Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
@@ -83,3 +84,4 @@ references:
   - uid: Ubytec.Language.Syntax.Fast.Metadata
     name: Metadata
     href: Ubytec.Language.Syntax.Fast.Metadata.html
+memberLayout: SeparatePages

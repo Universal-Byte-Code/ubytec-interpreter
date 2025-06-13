@@ -2,7 +2,8 @@
 items:
 - uid: Ubytec.Language.AST
   commentId: N:Ubytec.Language.AST
-  id: Ubytec.Language.AST
+  id: AST
+  parent: Ubytec.Language
   children:
   - Ubytec.Language.AST.ASTCompiler
   - Ubytec.Language.AST.ASTCompiler.CompileSyntaxError
@@ -81,3 +82,4 @@ references:
   name: SyntaxTreeValidator
   nameWithType: SyntaxTreeValidator
   fullName: Ubytec.Language.AST.SyntaxTreeValidator
+memberLayout: SeparatePages

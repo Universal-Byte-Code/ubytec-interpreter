@@ -7,6 +7,10 @@ items:
   children:
   - Ubytec.Language.Grammar.LexicalAnalyst.InitializeGrammar
   - Ubytec.Language.Grammar.LexicalAnalyst.Tokenize(System.String)
+  - Ubytec.Language.Grammar.LexicalAnalyst.UBYTEC_SOURCE
+  - Ubytec.Language.Grammar.LexicalAnalyst._grammar
+  - Ubytec.Language.Grammar.LexicalAnalyst._options
+  - Ubytec.Language.Grammar.LexicalAnalyst._registry
   langs:
   - csharp
   - vb
@@ -40,6 +44,114 @@ items:
   - System.Object.MemberwiseClone
   - System.Object.ReferenceEquals(System.Object,System.Object)
   - System.Object.ToString
+- uid: Ubytec.Language.Grammar.LexicalAnalyst.UBYTEC_SOURCE
+  commentId: F:Ubytec.Language.Grammar.LexicalAnalyst.UBYTEC_SOURCE
+  id: UBYTEC_SOURCE
+  parent: Ubytec.Language.Grammar.LexicalAnalyst
+  langs:
+  - csharp
+  - vb
+  name: UBYTEC_SOURCE
+  nameWithType: LexicalAnalyst.UBYTEC_SOURCE
+  fullName: Ubytec.Language.Grammar.LexicalAnalyst.UBYTEC_SOURCE
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Grammar/LexicalAnalyst.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: UBYTEC_SOURCE
+    path: ../Ubytec/Language/Grammar/LexicalAnalyst.cs
+    startLine: 11
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Grammar
+  syntax:
+    content: private const string UBYTEC_SOURCE = "source.ubytec"
+    return:
+      type: System.String
+    content.vb: Private Const UBYTEC_SOURCE As String = "source.ubytec"
+- uid: Ubytec.Language.Grammar.LexicalAnalyst._grammar
+  commentId: F:Ubytec.Language.Grammar.LexicalAnalyst._grammar
+  id: _grammar
+  parent: Ubytec.Language.Grammar.LexicalAnalyst
+  langs:
+  - csharp
+  - vb
+  name: _grammar
+  nameWithType: LexicalAnalyst._grammar
+  fullName: Ubytec.Language.Grammar.LexicalAnalyst._grammar
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Grammar/LexicalAnalyst.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _grammar
+    path: ../Ubytec/Language/Grammar/LexicalAnalyst.cs
+    startLine: 12
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Grammar
+  syntax:
+    content: private static IGrammar? _grammar
+    return:
+      type: TextMateSharp.Grammars.IGrammar
+    content.vb: Private Shared _grammar As IGrammar
+- uid: Ubytec.Language.Grammar.LexicalAnalyst._registry
+  commentId: F:Ubytec.Language.Grammar.LexicalAnalyst._registry
+  id: _registry
+  parent: Ubytec.Language.Grammar.LexicalAnalyst
+  langs:
+  - csharp
+  - vb
+  name: _registry
+  nameWithType: LexicalAnalyst._registry
+  fullName: Ubytec.Language.Grammar.LexicalAnalyst._registry
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Grammar/LexicalAnalyst.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _registry
+    path: ../Ubytec/Language/Grammar/LexicalAnalyst.cs
+    startLine: 13
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Grammar
+  syntax:
+    content: private static Registry? _registry
+    return:
+      type: TextMateSharp.Registry.Registry
+    content.vb: Private Shared _registry As Registry
+- uid: Ubytec.Language.Grammar.LexicalAnalyst._options
+  commentId: F:Ubytec.Language.Grammar.LexicalAnalyst._options
+  id: _options
+  parent: Ubytec.Language.Grammar.LexicalAnalyst
+  langs:
+  - csharp
+  - vb
+  name: _options
+  nameWithType: LexicalAnalyst._options
+  fullName: Ubytec.Language.Grammar.LexicalAnalyst._options
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Grammar/LexicalAnalyst.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _options
+    path: ../Ubytec/Language/Grammar/LexicalAnalyst.cs
+    startLine: 14
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Grammar
+  syntax:
+    content: private static readonly UbytecRegistryOptions _options
+    return:
+      type: Ubytec.Language.Grammar.UbytecRegistryOptions
+    content.vb: Private Shared ReadOnly _options As UbytecRegistryOptions
 - uid: Ubytec.Language.Grammar.LexicalAnalyst.InitializeGrammar
   commentId: M:Ubytec.Language.Grammar.LexicalAnalyst.InitializeGrammar
   id: InitializeGrammar
@@ -385,14 +497,91 @@ references:
   name: System
   nameWithType: System
   fullName: System
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: TextMateSharp.Grammars.IGrammar
+  commentId: T:TextMateSharp.Grammars.IGrammar
+  parent: TextMateSharp.Grammars
+  isExternal: true
+  name: IGrammar
+  nameWithType: IGrammar
+  fullName: TextMateSharp.Grammars.IGrammar
+- uid: TextMateSharp.Grammars
+  commentId: N:TextMateSharp.Grammars
+  isExternal: true
+  name: TextMateSharp.Grammars
+  nameWithType: TextMateSharp.Grammars
+  fullName: TextMateSharp.Grammars
+  spec.csharp:
+  - uid: TextMateSharp
+    name: TextMateSharp
+    isExternal: true
+  - name: .
+  - uid: TextMateSharp.Grammars
+    name: Grammars
+    isExternal: true
+  spec.vb:
+  - uid: TextMateSharp
+    name: TextMateSharp
+    isExternal: true
+  - name: .
+  - uid: TextMateSharp.Grammars
+    name: Grammars
+    isExternal: true
+- uid: TextMateSharp.Registry.Registry
+  commentId: T:TextMateSharp.Registry.Registry
+  parent: TextMateSharp.Registry
+  isExternal: true
+  name: Registry
+  nameWithType: Registry
+  fullName: TextMateSharp.Registry.Registry
+- uid: TextMateSharp.Registry
+  commentId: N:TextMateSharp.Registry
+  isExternal: true
+  name: TextMateSharp.Registry
+  nameWithType: TextMateSharp.Registry
+  fullName: TextMateSharp.Registry
+  spec.csharp:
+  - uid: TextMateSharp
+    name: TextMateSharp
+    isExternal: true
+  - name: .
+  - uid: TextMateSharp.Registry
+    name: Registry
+    isExternal: true
+  spec.vb:
+  - uid: TextMateSharp
+    name: TextMateSharp
+    isExternal: true
+  - name: .
+  - uid: TextMateSharp.Registry
+    name: Registry
+    isExternal: true
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions
+  commentId: T:Ubytec.Language.Grammar.UbytecRegistryOptions
+  parent: Ubytec.Language.Grammar
+  href: Ubytec.Language.Grammar.UbytecRegistryOptions.html
+  name: UbytecRegistryOptions
+  nameWithType: UbytecRegistryOptions
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions
 - uid: Ubytec.Language.Exceptions.FetchLexiconException
   commentId: T:Ubytec.Language.Exceptions.FetchLexiconException
+  href: Ubytec.Language.Exceptions.FetchLexiconException.html
   name: FetchLexiconException
   nameWithType: FetchLexiconException
   fullName: Ubytec.Language.Exceptions.FetchLexiconException
 - uid: Ubytec.Language.Grammar.LexicalAnalyst.InitializeGrammar*
   commentId: Overload:Ubytec.Language.Grammar.LexicalAnalyst.InitializeGrammar
-  href: Ubytec.Language.Grammar.LexicalAnalyst.html#Ubytec_Language_Grammar_LexicalAnalyst_InitializeGrammar
+  href: Ubytec.Language.Grammar.LexicalAnalyst.InitializeGrammar.html#Ubytec_Language_Grammar_LexicalAnalyst_InitializeGrammar
   name: InitializeGrammar
   nameWithType: LexicalAnalyst.InitializeGrammar
   fullName: Ubytec.Language.Grammar.LexicalAnalyst.InitializeGrammar
@@ -411,21 +600,10 @@ references:
   fullName: System.AggregateException
 - uid: Ubytec.Language.Grammar.LexicalAnalyst.Tokenize*
   commentId: Overload:Ubytec.Language.Grammar.LexicalAnalyst.Tokenize
-  href: Ubytec.Language.Grammar.LexicalAnalyst.html#Ubytec_Language_Grammar_LexicalAnalyst_Tokenize_System_String_
+  href: Ubytec.Language.Grammar.LexicalAnalyst.Tokenize.html#Ubytec_Language_Grammar_LexicalAnalyst_Tokenize_System_String_
   name: Tokenize
   nameWithType: LexicalAnalyst.Tokenize
   fullName: Ubytec.Language.Grammar.LexicalAnalyst.Tokenize
-- uid: System.String
-  commentId: T:System.String
-  parent: System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.string
-  name: string
-  nameWithType: string
-  fullName: string
-  nameWithType.vb: String
-  fullName.vb: String
-  name.vb: String
 - uid: System.Collections.Generic.List{Ubytec.Language.Syntax.Model.SyntaxToken}
   commentId: T:System.Collections.Generic.List{Ubytec.Language.Syntax.Model.SyntaxToken}
   parent: System.Collections.Generic
@@ -524,3 +702,4 @@ references:
     name: Generic
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+memberLayout: SeparatePages

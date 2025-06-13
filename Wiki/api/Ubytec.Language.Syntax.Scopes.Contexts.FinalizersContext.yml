@@ -25,6 +25,10 @@ items:
   - Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.Push(Ubytec.Language.Operations.CoreOperations.RETURN)
   - Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ReturnCount
   - Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ReturnStack
+  - Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#BREAK}#GetEnumerator
+  - Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#CONTINUE}#GetEnumerator
+  - Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#RETURN}#GetEnumerator
+  - Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#IEnumerable#GetEnumerator
   - Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.TotalCount
   langs:
   - csharp
@@ -86,7 +90,7 @@ items:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
   syntax:
-    content: public Stack<CoreOperations.RETURN> ReturnStack { get; }
+    content: public Stack<CoreOperations.RETURN> ReturnStack { get; private init; }
     parameters: []
     return:
       type: System.Collections.Generic.Stack{Ubytec.Language.Operations.CoreOperations.RETURN}
@@ -115,7 +119,7 @@ items:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
   syntax:
-    content: public Stack<CoreOperations.BREAK> BreakStack { get; }
+    content: public Stack<CoreOperations.BREAK> BreakStack { get; private init; }
     parameters: []
     return:
       type: System.Collections.Generic.Stack{Ubytec.Language.Operations.CoreOperations.BREAK}
@@ -144,12 +148,49 @@ items:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
   syntax:
-    content: public Stack<CoreOperations.CONTINUE> ContinueStack { get; }
+    content: public Stack<CoreOperations.CONTINUE> ContinueStack { get; private init; }
     parameters: []
     return:
       type: System.Collections.Generic.Stack{Ubytec.Language.Operations.CoreOperations.CONTINUE}
     content.vb: Public Property ContinueStack As Stack(Of CoreOperations.CONTINUE)
   overload: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ContinueStack*
+- uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#IEnumerable#GetEnumerator
+  commentId: M:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#IEnumerable#GetEnumerator
+  id: System#Collections#IEnumerable#GetEnumerator
+  isEii: true
+  parent: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+  langs:
+  - csharp
+  - vb
+  name: IEnumerable.GetEnumerator()
+  nameWithType: FinalizersContext.IEnumerable.GetEnumerator()
+  fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System.Collections.IEnumerable.GetEnumerator()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: System.Collections.IEnumerable.GetEnumerator
+    path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
+    startLine: 13
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Returns an enumerator that iterates through a collection.
+  example: []
+  syntax:
+    content: IEnumerator IEnumerable.GetEnumerator()
+    return:
+      type: System.Collections.IEnumerator
+      description: An <xref href="System.Collections.IEnumerator" data-throw-if-not-resolved="false"></xref> object that can be used to iterate through the collection.
+    content.vb: ''
+  overload: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#IEnumerable#GetEnumerator*
+  implements:
+  - System.Collections.IEnumerable.GetEnumerator
+  nameWithType.vb: ''
+  fullName.vb: ''
+  name.vb: ''
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.GetEnumerator
   commentId: M:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.GetEnumerator
   id: GetEnumerator
@@ -183,6 +224,117 @@ items:
   overload: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.GetEnumerator*
   implements:
   - System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.IOpCode}.GetEnumerator
+- uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#RETURN}#GetEnumerator
+  commentId: M:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#RETURN}#GetEnumerator
+  id: System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#RETURN}#GetEnumerator
+  isEii: true
+  parent: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+  langs:
+  - csharp
+  - vb
+  name: IEnumerable<RETURN>.GetEnumerator()
+  nameWithType: FinalizersContext.IEnumerable<CoreOperations.RETURN>.GetEnumerator()
+  fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.CoreOperations.RETURN>.GetEnumerator()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.CoreOperations.RETURN>.GetEnumerator
+    path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
+    startLine: 23
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Returns an enumerator that iterates through the collection.
+  example: []
+  syntax:
+    content: IEnumerator<CoreOperations.RETURN> IEnumerable<CoreOperations.RETURN>.GetEnumerator()
+    return:
+      type: System.Collections.Generic.IEnumerator{Ubytec.Language.Operations.CoreOperations.RETURN}
+      description: An enumerator that can be used to iterate through the collection.
+    content.vb: ''
+  overload: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#RETURN}#GetEnumerator*
+  implements:
+  - System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.RETURN}.GetEnumerator
+  nameWithType.vb: ''
+  fullName.vb: ''
+  name.vb: ''
+- uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#CONTINUE}#GetEnumerator
+  commentId: M:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#CONTINUE}#GetEnumerator
+  id: System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#CONTINUE}#GetEnumerator
+  isEii: true
+  parent: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+  langs:
+  - csharp
+  - vb
+  name: IEnumerable<CONTINUE>.GetEnumerator()
+  nameWithType: FinalizersContext.IEnumerable<CoreOperations.CONTINUE>.GetEnumerator()
+  fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.CoreOperations.CONTINUE>.GetEnumerator()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.CoreOperations.CONTINUE>.GetEnumerator
+    path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
+    startLine: 24
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Returns an enumerator that iterates through the collection.
+  example: []
+  syntax:
+    content: IEnumerator<CoreOperations.CONTINUE> IEnumerable<CoreOperations.CONTINUE>.GetEnumerator()
+    return:
+      type: System.Collections.Generic.IEnumerator{Ubytec.Language.Operations.CoreOperations.CONTINUE}
+      description: An enumerator that can be used to iterate through the collection.
+    content.vb: ''
+  overload: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#CONTINUE}#GetEnumerator*
+  implements:
+  - System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.CONTINUE}.GetEnumerator
+  nameWithType.vb: ''
+  fullName.vb: ''
+  name.vb: ''
+- uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#BREAK}#GetEnumerator
+  commentId: M:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#BREAK}#GetEnumerator
+  id: System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#BREAK}#GetEnumerator
+  isEii: true
+  parent: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+  langs:
+  - csharp
+  - vb
+  name: IEnumerable<BREAK>.GetEnumerator()
+  nameWithType: FinalizersContext.IEnumerable<CoreOperations.BREAK>.GetEnumerator()
+  fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.CoreOperations.BREAK>.GetEnumerator()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.CoreOperations.BREAK>.GetEnumerator
+    path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
+    startLine: 25
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Returns an enumerator that iterates through the collection.
+  example: []
+  syntax:
+    content: IEnumerator<CoreOperations.BREAK> IEnumerable<CoreOperations.BREAK>.GetEnumerator()
+    return:
+      type: System.Collections.Generic.IEnumerator{Ubytec.Language.Operations.CoreOperations.BREAK}
+      description: An enumerator that can be used to iterate through the collection.
+    content.vb: ''
+  overload: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#BREAK}#GetEnumerator*
+  implements:
+  - System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.BREAK}.GetEnumerator
+  nameWithType.vb: ''
+  fullName.vb: ''
+  name.vb: ''
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.Push(Ubytec.Language.Operations.CoreOperations.RETURN)
   commentId: M:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.Push(Ubytec.Language.Operations.CoreOperations.RETURN)
   id: Push(Ubytec.Language.Operations.CoreOperations.RETURN)
@@ -1200,7 +1352,7 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.collections
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ReturnStack*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ReturnStack
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_ReturnStack
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ReturnStack.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_ReturnStack
   name: ReturnStack
   nameWithType: FinalizersContext.ReturnStack
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ReturnStack
@@ -1275,7 +1427,7 @@ references:
   - name: )
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.BreakStack*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.BreakStack
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_BreakStack
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.BreakStack.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_BreakStack
   name: BreakStack
   nameWithType: FinalizersContext.BreakStack
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.BreakStack
@@ -1322,7 +1474,7 @@ references:
   - name: )
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ContinueStack*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ContinueStack
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_ContinueStack
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ContinueStack.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_ContinueStack
   name: ContinueStack
   nameWithType: FinalizersContext.ContinueStack
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ContinueStack
@@ -1367,9 +1519,55 @@ references:
     name: CONTINUE
     href: Ubytec.Language.Operations.CoreOperations.CONTINUE.html
   - name: )
+- uid: System.Collections.IEnumerator
+  commentId: T:System.Collections.IEnumerator
+  parent: System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.ienumerator
+  name: IEnumerator
+  nameWithType: IEnumerator
+  fullName: System.Collections.IEnumerator
+- uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#IEnumerable#GetEnumerator*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#IEnumerable#GetEnumerator
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.ienumerable
+  name: IEnumerable.GetEnumerator
+  nameWithType: FinalizersContext.IEnumerable.GetEnumerator
+  fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System.Collections.IEnumerable.GetEnumerator
+  spec.csharp:
+  - uid: System.Collections.IEnumerable*
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.ienumerable
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#IEnumerable#GetEnumerator*
+    name: GetEnumerator
+    href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System-Collections-IEnumerable-GetEnumerator.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_System_Collections_IEnumerable_GetEnumerator
+- uid: System.Collections.IEnumerable.GetEnumerator
+  commentId: M:System.Collections.IEnumerable.GetEnumerator
+  parent: System.Collections.IEnumerable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.ienumerable.getenumerator
+  name: GetEnumerator()
+  nameWithType: IEnumerable.GetEnumerator()
+  fullName: System.Collections.IEnumerable.GetEnumerator()
+  spec.csharp:
+  - uid: System.Collections.IEnumerable.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.ienumerable.getenumerator
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.IEnumerable.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.ienumerable.getenumerator
+  - name: (
+  - name: )
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.GetEnumerator*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.GetEnumerator
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_GetEnumerator
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.GetEnumerator.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_GetEnumerator
   name: GetEnumerator
   nameWithType: FinalizersContext.GetEnumerator
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.GetEnumerator
@@ -1481,9 +1679,267 @@ references:
   - name: " "
   - name: T
   - name: )
+- uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#RETURN}#GetEnumerator*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#RETURN}#GetEnumerator
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<RETURN>.GetEnumerator
+  nameWithType: FinalizersContext.IEnumerable<CoreOperations.RETURN>.GetEnumerator
+  fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.CoreOperations.RETURN>.GetEnumerator
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1*
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Ubytec.Language.Operations.CoreOperations.RETURN*
+    name: RETURN
+    href: Ubytec.Language.Operations.CoreOperations.RETURN.html
+  - name: '>'
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#RETURN}#GetEnumerator*
+    name: GetEnumerator
+    href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System-Collections-Generic-IEnumerable{Ubytec-Language-Operations-CoreOperations-RETURN}-GetEnumerator.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_System_Collections_Generic_IEnumerable_Ubytec_Language_Operations_CoreOperations_RETURN__GetEnumerator
+- uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.RETURN}.GetEnumerator
+  commentId: M:System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.RETURN}.GetEnumerator
+  parent: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.RETURN}
+  definition: System.Collections.Generic.IEnumerable`1.GetEnumerator
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  name: GetEnumerator()
+  nameWithType: IEnumerable<CoreOperations.RETURN>.GetEnumerator()
+  fullName: System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.CoreOperations.RETURN>.GetEnumerator()
+  nameWithType.vb: IEnumerable(Of CoreOperations.RETURN).GetEnumerator()
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Ubytec.Language.Operations.CoreOperations.RETURN).GetEnumerator()
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.RETURN}.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.RETURN}.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  - name: (
+  - name: )
+- uid: System.Collections.Generic.IEnumerator{Ubytec.Language.Operations.CoreOperations.RETURN}
+  commentId: T:System.Collections.Generic.IEnumerator{Ubytec.Language.Operations.CoreOperations.RETURN}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerator`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  name: IEnumerator<CoreOperations.RETURN>
+  nameWithType: IEnumerator<CoreOperations.RETURN>
+  fullName: System.Collections.Generic.IEnumerator<Ubytec.Language.Operations.CoreOperations.RETURN>
+  nameWithType.vb: IEnumerator(Of CoreOperations.RETURN)
+  fullName.vb: System.Collections.Generic.IEnumerator(Of Ubytec.Language.Operations.CoreOperations.RETURN)
+  name.vb: IEnumerator(Of CoreOperations.RETURN)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: <
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.RETURN
+    name: RETURN
+    href: Ubytec.Language.Operations.CoreOperations.RETURN.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.RETURN
+    name: RETURN
+    href: Ubytec.Language.Operations.CoreOperations.RETURN.html
+  - name: )
+- uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#CONTINUE}#GetEnumerator*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#CONTINUE}#GetEnumerator
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<CONTINUE>.GetEnumerator
+  nameWithType: FinalizersContext.IEnumerable<CoreOperations.CONTINUE>.GetEnumerator
+  fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.CoreOperations.CONTINUE>.GetEnumerator
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1*
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Ubytec.Language.Operations.CoreOperations.CONTINUE*
+    name: CONTINUE
+    href: Ubytec.Language.Operations.CoreOperations.CONTINUE.html
+  - name: '>'
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#CONTINUE}#GetEnumerator*
+    name: GetEnumerator
+    href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System-Collections-Generic-IEnumerable{Ubytec-Language-Operations-CoreOperations-CONTINUE}-GetEnumerator.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_System_Collections_Generic_IEnumerable_Ubytec_Language_Operations_CoreOperations_CONTINUE__GetEnumerator
+- uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.CONTINUE}.GetEnumerator
+  commentId: M:System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.CONTINUE}.GetEnumerator
+  parent: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.CONTINUE}
+  definition: System.Collections.Generic.IEnumerable`1.GetEnumerator
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  name: GetEnumerator()
+  nameWithType: IEnumerable<CoreOperations.CONTINUE>.GetEnumerator()
+  fullName: System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.CoreOperations.CONTINUE>.GetEnumerator()
+  nameWithType.vb: IEnumerable(Of CoreOperations.CONTINUE).GetEnumerator()
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Ubytec.Language.Operations.CoreOperations.CONTINUE).GetEnumerator()
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.CONTINUE}.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.CONTINUE}.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  - name: (
+  - name: )
+- uid: System.Collections.Generic.IEnumerator{Ubytec.Language.Operations.CoreOperations.CONTINUE}
+  commentId: T:System.Collections.Generic.IEnumerator{Ubytec.Language.Operations.CoreOperations.CONTINUE}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerator`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  name: IEnumerator<CoreOperations.CONTINUE>
+  nameWithType: IEnumerator<CoreOperations.CONTINUE>
+  fullName: System.Collections.Generic.IEnumerator<Ubytec.Language.Operations.CoreOperations.CONTINUE>
+  nameWithType.vb: IEnumerator(Of CoreOperations.CONTINUE)
+  fullName.vb: System.Collections.Generic.IEnumerator(Of Ubytec.Language.Operations.CoreOperations.CONTINUE)
+  name.vb: IEnumerator(Of CoreOperations.CONTINUE)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: <
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.CONTINUE
+    name: CONTINUE
+    href: Ubytec.Language.Operations.CoreOperations.CONTINUE.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.CONTINUE
+    name: CONTINUE
+    href: Ubytec.Language.Operations.CoreOperations.CONTINUE.html
+  - name: )
+- uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#BREAK}#GetEnumerator*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#BREAK}#GetEnumerator
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<BREAK>.GetEnumerator
+  nameWithType: FinalizersContext.IEnumerable<CoreOperations.BREAK>.GetEnumerator
+  fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.CoreOperations.BREAK>.GetEnumerator
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1*
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Ubytec.Language.Operations.CoreOperations.BREAK*
+    name: BREAK
+    href: Ubytec.Language.Operations.CoreOperations.BREAK.html
+  - name: '>'
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#BREAK}#GetEnumerator*
+    name: GetEnumerator
+    href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System-Collections-Generic-IEnumerable{Ubytec-Language-Operations-CoreOperations-BREAK}-GetEnumerator.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_System_Collections_Generic_IEnumerable_Ubytec_Language_Operations_CoreOperations_BREAK__GetEnumerator
+- uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.BREAK}.GetEnumerator
+  commentId: M:System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.BREAK}.GetEnumerator
+  parent: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.BREAK}
+  definition: System.Collections.Generic.IEnumerable`1.GetEnumerator
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  name: GetEnumerator()
+  nameWithType: IEnumerable<CoreOperations.BREAK>.GetEnumerator()
+  fullName: System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.CoreOperations.BREAK>.GetEnumerator()
+  nameWithType.vb: IEnumerable(Of CoreOperations.BREAK).GetEnumerator()
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Ubytec.Language.Operations.CoreOperations.BREAK).GetEnumerator()
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.BREAK}.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.BREAK}.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  - name: (
+  - name: )
+- uid: System.Collections.Generic.IEnumerator{Ubytec.Language.Operations.CoreOperations.BREAK}
+  commentId: T:System.Collections.Generic.IEnumerator{Ubytec.Language.Operations.CoreOperations.BREAK}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerator`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  name: IEnumerator<CoreOperations.BREAK>
+  nameWithType: IEnumerator<CoreOperations.BREAK>
+  fullName: System.Collections.Generic.IEnumerator<Ubytec.Language.Operations.CoreOperations.BREAK>
+  nameWithType.vb: IEnumerator(Of CoreOperations.BREAK)
+  fullName.vb: System.Collections.Generic.IEnumerator(Of Ubytec.Language.Operations.CoreOperations.BREAK)
+  name.vb: IEnumerator(Of CoreOperations.BREAK)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: <
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.BREAK
+    name: BREAK
+    href: Ubytec.Language.Operations.CoreOperations.BREAK.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.BREAK
+    name: BREAK
+    href: Ubytec.Language.Operations.CoreOperations.BREAK.html
+  - name: )
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.Push*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.Push
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_Push_Ubytec_Language_Operations_CoreOperations_RETURN_
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.Push.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_Push_Ubytec_Language_Operations_CoreOperations_RETURN_
   name: Push
   nameWithType: FinalizersContext.Push
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.Push
@@ -1588,43 +2044,43 @@ references:
     href: Ubytec.Language.Operations.CoreOperations.CONTINUE.html
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PopReturn*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PopReturn
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_PopReturn
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PopReturn.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_PopReturn
   name: PopReturn
   nameWithType: FinalizersContext.PopReturn
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PopReturn
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PopBreak*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PopBreak
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_PopBreak
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PopBreak.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_PopBreak
   name: PopBreak
   nameWithType: FinalizersContext.PopBreak
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PopBreak
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PopContinue*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PopContinue
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_PopContinue
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PopContinue.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_PopContinue
   name: PopContinue
   nameWithType: FinalizersContext.PopContinue
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PopContinue
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PeekReturn*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PeekReturn
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_PeekReturn
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PeekReturn.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_PeekReturn
   name: PeekReturn
   nameWithType: FinalizersContext.PeekReturn
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PeekReturn
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PeekBreak*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PeekBreak
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_PeekBreak
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PeekBreak.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_PeekBreak
   name: PeekBreak
   nameWithType: FinalizersContext.PeekBreak
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PeekBreak
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PeekContinue*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PeekContinue
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_PeekContinue
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PeekContinue.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_PeekContinue
   name: PeekContinue
   nameWithType: FinalizersContext.PeekContinue
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PeekContinue
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ReturnCount*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ReturnCount
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_ReturnCount
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ReturnCount.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_ReturnCount
   name: ReturnCount
   nameWithType: FinalizersContext.ReturnCount
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ReturnCount
@@ -1641,43 +2097,44 @@ references:
   name.vb: Integer
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.BreakCount*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.BreakCount
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_BreakCount
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.BreakCount.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_BreakCount
   name: BreakCount
   nameWithType: FinalizersContext.BreakCount
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.BreakCount
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ContinueCount*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ContinueCount
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_ContinueCount
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ContinueCount.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_ContinueCount
   name: ContinueCount
   nameWithType: FinalizersContext.ContinueCount
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ContinueCount
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.TotalCount*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.TotalCount
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_TotalCount
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.TotalCount.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_TotalCount
   name: TotalCount
   nameWithType: FinalizersContext.TotalCount
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.TotalCount
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ClearReturns*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ClearReturns
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_ClearReturns
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ClearReturns.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_ClearReturns
   name: ClearReturns
   nameWithType: FinalizersContext.ClearReturns
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ClearReturns
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ClearBreaks*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ClearBreaks
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_ClearBreaks
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ClearBreaks.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_ClearBreaks
   name: ClearBreaks
   nameWithType: FinalizersContext.ClearBreaks
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ClearBreaks
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ClearContinues*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ClearContinues
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_ClearContinues
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ClearContinues.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_ClearContinues
   name: ClearContinues
   nameWithType: FinalizersContext.ClearContinues
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ClearContinues
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ClearAll*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ClearAll
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_ClearAll
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ClearAll.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_ClearAll
   name: ClearAll
   nameWithType: FinalizersContext.ClearAll
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ClearAll
+memberLayout: SeparatePages

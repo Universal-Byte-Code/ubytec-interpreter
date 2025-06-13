@@ -570,7 +570,7 @@ references:
   name.vb: Object
 - uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.#ctor*
   commentId: Overload:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.#ctor
-  href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html#Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment__ctor_Ubytec_Language_Syntax_TypeSystem_Types_UType_System_String_System_Object_
+  href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.-ctor.html#Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment__ctor_Ubytec_Language_Syntax_TypeSystem_Types_UType_System_String_System_Object_
   name: VariableExpressionFragment
   nameWithType: VariableExpressionFragment.VariableExpressionFragment
   fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.VariableExpressionFragment
@@ -651,32 +651,32 @@ references:
     href: Ubytec.Language.Syntax.TypeSystem.html
 - uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Type*
   commentId: Overload:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Type
-  href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html#Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment_Type
+  href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Type.html#Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment_Type
   name: Type
   nameWithType: VariableExpressionFragment.Type
   fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Type
 - uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Name*
   commentId: Overload:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Name
-  href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html#Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment_Name
+  href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Name.html#Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment_Name
   name: Name
   nameWithType: VariableExpressionFragment.Name
   fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Name
 - uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Value*
   commentId: Overload:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Value
-  href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html#Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment_Value
+  href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Value.html#Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment_Value
   name: Value
   nameWithType: VariableExpressionFragment.Value
   fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Value
 - uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Tokens*
   commentId: Overload:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Tokens
-  href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html#Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment_Tokens
+  href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Tokens.html#Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment_Tokens
   name: Tokens
   nameWithType: VariableExpressionFragment.Tokens
   fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Tokens
 - uid: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens
   commentId: P:Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens
   parent: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
-  href: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.html#Ubytec_Language_Syntax_Interfaces_IUbytecExpressionFragment_Tokens
+  href: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens.html#Ubytec_Language_Syntax_Interfaces_IUbytecExpressionFragment_Tokens
   name: Tokens
   nameWithType: IUbytecExpressionFragment.Tokens
   fullName: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens
@@ -701,3 +701,4 @@ references:
     href: Ubytec.Language.Syntax.Model.SyntaxToken.html
   - name: (
   - name: )
+memberLayout: SeparatePages

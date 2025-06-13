@@ -2,8 +2,11 @@
 items:
 - uid: Ubytec.Language.Exceptions
   commentId: N:Ubytec.Language.Exceptions
-  id: Ubytec.Language.Exceptions
+  id: Exceptions
+  parent: Ubytec.Language
   children:
+  - Ubytec.Language.Exceptions.FetchLexiconException
+  - Ubytec.Language.Exceptions.IlegalTokenException
   - Ubytec.Language.Exceptions.LanguageVersionException
   - Ubytec.Language.Exceptions.RegisterDataException
   - Ubytec.Language.Exceptions.SyntaxException
@@ -21,6 +24,18 @@ items:
   assemblies:
   - Ubytec
 references:
+- uid: Ubytec.Language.Exceptions.FetchLexiconException
+  commentId: T:Ubytec.Language.Exceptions.FetchLexiconException
+  href: Ubytec.Language.Exceptions.FetchLexiconException.html
+  name: FetchLexiconException
+  nameWithType: FetchLexiconException
+  fullName: Ubytec.Language.Exceptions.FetchLexiconException
+- uid: Ubytec.Language.Exceptions.IlegalTokenException
+  commentId: T:Ubytec.Language.Exceptions.IlegalTokenException
+  href: Ubytec.Language.Exceptions.IlegalTokenException.html
+  name: IlegalTokenException
+  nameWithType: IlegalTokenException
+  fullName: Ubytec.Language.Exceptions.IlegalTokenException
 - uid: Ubytec.Language.Exceptions.LanguageVersionException
   commentId: T:Ubytec.Language.Exceptions.LanguageVersionException
   href: Ubytec.Language.Exceptions.LanguageVersionException.html
@@ -94,3 +109,4 @@ references:
   - uid: Ubytec.Language.Exceptions
     name: Exceptions
     href: Ubytec.Language.Exceptions.html
+memberLayout: SeparatePages

@@ -136,7 +136,7 @@ references:
   fullName: System
 - uid: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata*
   commentId: Overload:Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
-  href: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.html#Ubytec_Language_Syntax_Interfaces_IUbytecSyntax_Metadata
+  href: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata.html#Ubytec_Language_Syntax_Interfaces_IUbytecSyntax_Metadata
   name: Metadata
   nameWithType: IUbytecSyntax.Metadata
   fullName: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
@@ -193,3 +193,4 @@ references:
   - uid: Ubytec.Language.Syntax.Fast.Metadata
     name: Metadata
     href: Ubytec.Language.Syntax.Fast.Metadata.html
+memberLayout: SeparatePages

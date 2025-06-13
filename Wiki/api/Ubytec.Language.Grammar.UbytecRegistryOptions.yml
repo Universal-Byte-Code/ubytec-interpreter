@@ -6,11 +6,15 @@ items:
   parent: Ubytec.Language.Grammar
   children:
   - Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl
+  - Ubytec.Language.Grammar.UbytecRegistryOptions.FetchLexicon(System.String)
+  - Ubytec.Language.Grammar.UbytecRegistryOptions.FetchTheme(System.String)
   - Ubytec.Language.Grammar.UbytecRegistryOptions.GetDefaultTheme
   - Ubytec.Language.Grammar.UbytecRegistryOptions.GetGrammar(System.String)
   - Ubytec.Language.Grammar.UbytecRegistryOptions.GetInjections(System.String)
+  - Ubytec.Language.Grammar.UbytecRegistryOptions.GetStreamWithStreamWriter(System.String,System.Text.Encoding)
   - Ubytec.Language.Grammar.UbytecRegistryOptions.GetTheme(System.String)
   - Ubytec.Language.Grammar.UbytecRegistryOptions.LexiconUrl
+  - Ubytec.Language.Grammar.UbytecRegistryOptions._httpClient
   langs:
   - csharp
   - vb
@@ -44,6 +48,33 @@ items:
   - System.Object.MemberwiseClone
   - System.Object.ReferenceEquals(System.Object,System.Object)
   - System.Object.ToString
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions._httpClient
+  commentId: F:Ubytec.Language.Grammar.UbytecRegistryOptions._httpClient
+  id: _httpClient
+  parent: Ubytec.Language.Grammar.UbytecRegistryOptions
+  langs:
+  - csharp
+  - vb
+  name: _httpClient
+  nameWithType: UbytecRegistryOptions._httpClient
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions._httpClient
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _httpClient
+    path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+    startLine: 12
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Grammar
+  syntax:
+    content: private static readonly HttpClient _httpClient
+    return:
+      type: System.Net.Http.HttpClient
+    content.vb: Private Shared ReadOnly _httpClient As HttpClient
 - uid: Ubytec.Language.Grammar.UbytecRegistryOptions.LexiconUrl
   commentId: P:Ubytec.Language.Grammar.UbytecRegistryOptions.LexiconUrl
   id: LexiconUrl
@@ -250,6 +281,110 @@ items:
     description: ''
   implements:
   - TextMateSharp.Registry.IRegistryOptions.GetDefaultTheme
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchLexicon(System.String)
+  commentId: M:Ubytec.Language.Grammar.UbytecRegistryOptions.FetchLexicon(System.String)
+  id: FetchLexicon(System.String)
+  parent: Ubytec.Language.Grammar.UbytecRegistryOptions
+  langs:
+  - csharp
+  - vb
+  name: FetchLexicon(string?)
+  nameWithType: UbytecRegistryOptions.FetchLexicon(string?)
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchLexicon(string?)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: FetchLexicon
+    path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+    startLine: 92
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Grammar
+  syntax:
+    content: private static Task<string> FetchLexicon(string? lexiconUrl)
+    parameters:
+    - id: lexiconUrl
+      type: System.String
+    return:
+      type: System.Threading.Tasks.Task{System.String}
+    content.vb: Private Shared Function FetchLexicon(lexiconUrl As String) As Task(Of String)
+  overload: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchLexicon*
+  nameWithType.vb: UbytecRegistryOptions.FetchLexicon(String)
+  fullName.vb: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchLexicon(String)
+  name.vb: FetchLexicon(String)
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchTheme(System.String)
+  commentId: M:Ubytec.Language.Grammar.UbytecRegistryOptions.FetchTheme(System.String)
+  id: FetchTheme(System.String)
+  parent: Ubytec.Language.Grammar.UbytecRegistryOptions
+  langs:
+  - csharp
+  - vb
+  name: FetchTheme(string?)
+  nameWithType: UbytecRegistryOptions.FetchTheme(string?)
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchTheme(string?)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: FetchTheme
+    path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+    startLine: 104
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Grammar
+  syntax:
+    content: private static Task<string> FetchTheme(string? themeUrl)
+    parameters:
+    - id: themeUrl
+      type: System.String
+    return:
+      type: System.Threading.Tasks.Task{System.String}
+    content.vb: Private Shared Function FetchTheme(themeUrl As String) As Task(Of String)
+  overload: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchTheme*
+  nameWithType.vb: UbytecRegistryOptions.FetchTheme(String)
+  fullName.vb: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchTheme(String)
+  name.vb: FetchTheme(String)
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions.GetStreamWithStreamWriter(System.String,System.Text.Encoding)
+  commentId: M:Ubytec.Language.Grammar.UbytecRegistryOptions.GetStreamWithStreamWriter(System.String,System.Text.Encoding)
+  id: GetStreamWithStreamWriter(System.String,System.Text.Encoding)
+  parent: Ubytec.Language.Grammar.UbytecRegistryOptions
+  langs:
+  - csharp
+  - vb
+  name: GetStreamWithStreamWriter(string, Encoding?)
+  nameWithType: UbytecRegistryOptions.GetStreamWithStreamWriter(string, Encoding?)
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.GetStreamWithStreamWriter(string, System.Text.Encoding?)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: GetStreamWithStreamWriter
+    path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
+    startLine: 116
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Grammar
+  syntax:
+    content: private static MemoryStream GetStreamWithStreamWriter(string sampleString, Encoding? encoding = null)
+    parameters:
+    - id: sampleString
+      type: System.String
+    - id: encoding
+      type: System.Text.Encoding
+    return:
+      type: System.IO.MemoryStream
+    content.vb: Private Shared Function GetStreamWithStreamWriter(sampleString As String, encoding As Encoding = Nothing) As MemoryStream
+  overload: Ubytec.Language.Grammar.UbytecRegistryOptions.GetStreamWithStreamWriter*
+  nameWithType.vb: UbytecRegistryOptions.GetStreamWithStreamWriter(String, Encoding)
+  fullName.vb: Ubytec.Language.Grammar.UbytecRegistryOptions.GetStreamWithStreamWriter(String, System.Text.Encoding)
+  name.vb: GetStreamWithStreamWriter(String, Encoding)
 references:
 - uid: Ubytec.Language.Grammar
   commentId: N:Ubytec.Language.Grammar
@@ -547,9 +682,54 @@ references:
   - uid: TextMateSharp.Registry
     name: Registry
     isExternal: true
+- uid: System.Net.Http.HttpClient
+  commentId: T:System.Net.Http.HttpClient
+  parent: System.Net.Http
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.net.http.httpclient
+  name: HttpClient
+  nameWithType: HttpClient
+  fullName: System.Net.Http.HttpClient
+- uid: System.Net.Http
+  commentId: N:System.Net.Http
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Net.Http
+  nameWithType: System.Net.Http
+  fullName: System.Net.Http
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Net
+    name: Net
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.net
+  - name: .
+  - uid: System.Net.Http
+    name: Http
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.net.http
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Net
+    name: Net
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.net
+  - name: .
+  - uid: System.Net.Http
+    name: Http
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.net.http
 - uid: Ubytec.Language.Grammar.UbytecRegistryOptions.LexiconUrl*
   commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.LexiconUrl
-  href: Ubytec.Language.Grammar.UbytecRegistryOptions.html#Ubytec_Language_Grammar_UbytecRegistryOptions_LexiconUrl
+  href: Ubytec.Language.Grammar.UbytecRegistryOptions.LexiconUrl.html#Ubytec_Language_Grammar_UbytecRegistryOptions_LexiconUrl
   name: LexiconUrl
   nameWithType: UbytecRegistryOptions.LexiconUrl
   fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.LexiconUrl
@@ -566,13 +746,13 @@ references:
   name.vb: String
 - uid: Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl*
   commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl
-  href: Ubytec.Language.Grammar.UbytecRegistryOptions.html#Ubytec_Language_Grammar_UbytecRegistryOptions_DefaultThemeUrl
+  href: Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl.html#Ubytec_Language_Grammar_UbytecRegistryOptions_DefaultThemeUrl
   name: DefaultThemeUrl
   nameWithType: UbytecRegistryOptions.DefaultThemeUrl
   fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl
 - uid: Ubytec.Language.Grammar.UbytecRegistryOptions.GetInjections*
   commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.GetInjections
-  href: Ubytec.Language.Grammar.UbytecRegistryOptions.html#Ubytec_Language_Grammar_UbytecRegistryOptions_GetInjections_System_String_
+  href: Ubytec.Language.Grammar.UbytecRegistryOptions.GetInjections.html#Ubytec_Language_Grammar_UbytecRegistryOptions_GetInjections_System_String_
   name: GetInjections
   nameWithType: UbytecRegistryOptions.GetInjections
   fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.GetInjections
@@ -709,7 +889,7 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic
 - uid: Ubytec.Language.Grammar.UbytecRegistryOptions.GetGrammar*
   commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.GetGrammar
-  href: Ubytec.Language.Grammar.UbytecRegistryOptions.html#Ubytec_Language_Grammar_UbytecRegistryOptions_GetGrammar_System_String_
+  href: Ubytec.Language.Grammar.UbytecRegistryOptions.GetGrammar.html#Ubytec_Language_Grammar_UbytecRegistryOptions_GetGrammar_System_String_
   name: GetGrammar
   nameWithType: UbytecRegistryOptions.GetGrammar
   fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.GetGrammar
@@ -783,7 +963,7 @@ references:
     isExternal: true
 - uid: Ubytec.Language.Grammar.UbytecRegistryOptions.GetTheme*
   commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.GetTheme
-  href: Ubytec.Language.Grammar.UbytecRegistryOptions.html#Ubytec_Language_Grammar_UbytecRegistryOptions_GetTheme_System_String_
+  href: Ubytec.Language.Grammar.UbytecRegistryOptions.GetTheme.html#Ubytec_Language_Grammar_UbytecRegistryOptions_GetTheme_System_String_
   name: GetTheme
   nameWithType: UbytecRegistryOptions.GetTheme
   fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.GetTheme
@@ -856,7 +1036,7 @@ references:
   fullName: System.Net.Http.HttpIOException
 - uid: Ubytec.Language.Grammar.UbytecRegistryOptions.GetDefaultTheme*
   commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.GetDefaultTheme
-  href: Ubytec.Language.Grammar.UbytecRegistryOptions.html#Ubytec_Language_Grammar_UbytecRegistryOptions_GetDefaultTheme
+  href: Ubytec.Language.Grammar.UbytecRegistryOptions.GetDefaultTheme.html#Ubytec_Language_Grammar_UbytecRegistryOptions_GetDefaultTheme
   name: GetDefaultTheme
   nameWithType: UbytecRegistryOptions.GetDefaultTheme
   fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.GetDefaultTheme
@@ -879,3 +1059,192 @@ references:
     isExternal: true
   - name: (
   - name: )
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchLexicon*
+  commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.FetchLexicon
+  href: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchLexicon.html#Ubytec_Language_Grammar_UbytecRegistryOptions_FetchLexicon_System_String_
+  name: FetchLexicon
+  nameWithType: UbytecRegistryOptions.FetchLexicon
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchLexicon
+- uid: System.Threading.Tasks.Task{System.String}
+  commentId: T:System.Threading.Tasks.Task{System.String}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<string>
+  nameWithType: Task<string>
+  fullName: System.Threading.Tasks.Task<string>
+  nameWithType.vb: Task(Of String)
+  fullName.vb: System.Threading.Tasks.Task(Of String)
+  name.vb: Task(Of String)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchTheme*
+  commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.FetchTheme
+  href: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchTheme.html#Ubytec_Language_Grammar_UbytecRegistryOptions_FetchTheme_System_String_
+  name: FetchTheme
+  nameWithType: UbytecRegistryOptions.FetchTheme
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchTheme
+- uid: Ubytec.Language.Grammar.UbytecRegistryOptions.GetStreamWithStreamWriter*
+  commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.GetStreamWithStreamWriter
+  href: Ubytec.Language.Grammar.UbytecRegistryOptions.GetStreamWithStreamWriter.html#Ubytec_Language_Grammar_UbytecRegistryOptions_GetStreamWithStreamWriter_System_String_System_Text_Encoding_
+  name: GetStreamWithStreamWriter
+  nameWithType: UbytecRegistryOptions.GetStreamWithStreamWriter
+  fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.GetStreamWithStreamWriter
+- uid: System.Text.Encoding
+  commentId: T:System.Text.Encoding
+  parent: System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.text.encoding
+  name: Encoding
+  nameWithType: Encoding
+  fullName: System.Text.Encoding
+- uid: System.IO.MemoryStream
+  commentId: T:System.IO.MemoryStream
+  parent: System.IO
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.io.memorystream
+  name: MemoryStream
+  nameWithType: MemoryStream
+  fullName: System.IO.MemoryStream
+- uid: System.Text
+  commentId: N:System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Text
+  nameWithType: System.Text
+  fullName: System.Text
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+- uid: System.IO
+  commentId: N:System.IO
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.IO
+  nameWithType: System.IO
+  fullName: System.IO
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.io
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.io
+memberLayout: SeparatePages

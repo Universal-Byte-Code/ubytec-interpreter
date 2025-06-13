@@ -9,6 +9,7 @@ items:
   - Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.ExtendedOpCode
   - Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.ExtensionGroup
   - Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.OpCode
+  - Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.Ubytec#Language#IUbytecEntity#Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   - Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.stackIndex
   langs:
   - csharp
@@ -200,6 +201,44 @@ items:
   overload: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.ExtendedOpCode*
   implements:
   - Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtendedOpCode
+- uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.Ubytec#Language#IUbytecEntity#Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  commentId: M:Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.Ubytec#Language#IUbytecEntity#Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  id: Ubytec#Language#IUbytecEntity#Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  isEii: true
+  parent: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16
+  langs:
+  - csharp
+  - vb
+  name: IUbytecEntity.Compile(CompilationScopes)
+  nameWithType: ExtendedStackOperations.PUSH16.IUbytecEntity.Compile(CompilationScopes)
+  fullName: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Operations/Extended/ExtendedStackOperations.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Ubytec.Language.IUbytecEntity.Compile
+    path: ../Ubytec/Language/Operations/Extended/ExtendedStackOperations.cs
+    startLine: 12
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations.Extended
+  example: []
+  syntax:
+    content: string IUbytecEntity.Compile(CompilationScopes scopes)
+    parameters:
+    - id: scopes
+      type: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    return:
+      type: System.String
+    content.vb: ''
+  overload: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.Ubytec#Language#IUbytecEntity#Compile*
+  implements:
+  - Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  nameWithType.vb: ''
+  fullName.vb: ''
+  name.vb: ''
 references:
 - uid: Ubytec.Language.Operations.Extended
   commentId: N:Ubytec.Language.Operations.Extended
@@ -600,7 +639,7 @@ references:
   name.vb: Object
 - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.#ctor*
   commentId: Overload:Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.#ctor
-  href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.html#Ubytec_Language_Operations_Extended_ExtendedStackOperations_PUSH16__ctor_System_UInt16_
+  href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.-ctor.html#Ubytec_Language_Operations_Extended_ExtendedStackOperations_PUSH16__ctor_System_UInt16_
   name: PUSH16
   nameWithType: ExtendedStackOperations.PUSH16.PUSH16
   fullName: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.PUSH16
@@ -620,20 +659,20 @@ references:
   name.vb: UShort
 - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.stackIndex*
   commentId: Overload:Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.stackIndex
-  href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.html#Ubytec_Language_Operations_Extended_ExtendedStackOperations_PUSH16_stackIndex
+  href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.stackIndex.html#Ubytec_Language_Operations_Extended_ExtendedStackOperations_PUSH16_stackIndex
   name: stackIndex
   nameWithType: ExtendedStackOperations.PUSH16.stackIndex
   fullName: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.stackIndex
 - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.OpCode*
   commentId: Overload:Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.OpCode
-  href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.html#Ubytec_Language_Operations_Extended_ExtendedStackOperations_PUSH16_OpCode
+  href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.OpCode.html#Ubytec_Language_Operations_Extended_ExtendedStackOperations_PUSH16_OpCode
   name: OpCode
   nameWithType: ExtendedStackOperations.PUSH16.OpCode
   fullName: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.OpCode
 - uid: Ubytec.Language.Operations.IOpCode.OpCode
   commentId: P:Ubytec.Language.Operations.IOpCode.OpCode
   parent: Ubytec.Language.Operations.IOpCode
-  href: Ubytec.Language.Operations.IOpCode.html#Ubytec_Language_Operations_IOpCode_OpCode
+  href: Ubytec.Language.Operations.IOpCode.OpCode.html#Ubytec_Language_Operations_IOpCode_OpCode
   name: OpCode
   nameWithType: IOpCode.OpCode
   fullName: Ubytec.Language.Operations.IOpCode.OpCode
@@ -650,27 +689,123 @@ references:
   name.vb: Byte
 - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.ExtensionGroup*
   commentId: Overload:Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.ExtensionGroup
-  href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.html#Ubytec_Language_Operations_Extended_ExtendedStackOperations_PUSH16_ExtensionGroup
+  href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.ExtensionGroup.html#Ubytec_Language_Operations_Extended_ExtendedStackOperations_PUSH16_ExtensionGroup
   name: ExtensionGroup
   nameWithType: ExtendedStackOperations.PUSH16.ExtensionGroup
   fullName: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.ExtensionGroup
 - uid: Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtensionGroup
   commentId: P:Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtensionGroup
   parent: Ubytec.Language.Operations.Extended.IExtendedOpCode
-  href: Ubytec.Language.Operations.Extended.IExtendedOpCode.html#Ubytec_Language_Operations_Extended_IExtendedOpCode_ExtensionGroup
+  href: Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtensionGroup.html#Ubytec_Language_Operations_Extended_IExtendedOpCode_ExtensionGroup
   name: ExtensionGroup
   nameWithType: IExtendedOpCode.ExtensionGroup
   fullName: Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtensionGroup
 - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.ExtendedOpCode*
   commentId: Overload:Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.ExtendedOpCode
-  href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.html#Ubytec_Language_Operations_Extended_ExtendedStackOperations_PUSH16_ExtendedOpCode
+  href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.ExtendedOpCode.html#Ubytec_Language_Operations_Extended_ExtendedStackOperations_PUSH16_ExtendedOpCode
   name: ExtendedOpCode
   nameWithType: ExtendedStackOperations.PUSH16.ExtendedOpCode
   fullName: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.ExtendedOpCode
 - uid: Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtendedOpCode
   commentId: P:Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtendedOpCode
   parent: Ubytec.Language.Operations.Extended.IExtendedOpCode
-  href: Ubytec.Language.Operations.Extended.IExtendedOpCode.html#Ubytec_Language_Operations_Extended_IExtendedOpCode_ExtendedOpCode
+  href: Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtendedOpCode.html#Ubytec_Language_Operations_Extended_IExtendedOpCode_ExtendedOpCode
   name: ExtendedOpCode
   nameWithType: IExtendedOpCode.ExtendedOpCode
   fullName: Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtendedOpCode
+- uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.Ubytec#Language#IUbytecEntity#Compile*
+  commentId: Overload:Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.Ubytec#Language#IUbytecEntity#Compile
+  href: Ubytec.Language.IUbytecEntity.html
+  name: IUbytecEntity.Compile
+  nameWithType: ExtendedStackOperations.PUSH16.IUbytecEntity.Compile
+  fullName: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.Ubytec.Language.IUbytecEntity.Compile
+  spec.csharp:
+  - uid: Ubytec.Language.IUbytecEntity*
+    name: IUbytecEntity
+    href: Ubytec.Language.IUbytecEntity.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.Ubytec#Language#IUbytecEntity#Compile*
+    name: Compile
+    href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.PUSH16.Ubytec-Language-IUbytecEntity-Compile.html#Ubytec_Language_Operations_Extended_ExtendedStackOperations_PUSH16_Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+- uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  commentId: M:Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  parent: Ubytec.Language.IUbytecEntity
+  href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  name: Compile(CompilationScopes)
+  nameWithType: IUbytecEntity.Compile(CompilationScopes)
+  fullName: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  spec.csharp:
+  - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+    name: Compile
+    href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+    name: Compile
+    href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  - name: )
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  commentId: T:Ubytec.Language.Syntax.Scopes.CompilationScopes
+  parent: Ubytec.Language.Syntax.Scopes
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  name: CompilationScopes
+  nameWithType: CompilationScopes
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubytec.Language.Syntax.Scopes
+  commentId: N:Ubytec.Language.Syntax.Scopes
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Scopes
+  nameWithType: Ubytec.Language.Syntax.Scopes
+  fullName: Ubytec.Language.Syntax.Scopes
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+memberLayout: SeparatePages

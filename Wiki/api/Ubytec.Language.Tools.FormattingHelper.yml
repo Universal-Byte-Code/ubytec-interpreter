@@ -380,7 +380,7 @@ references:
   fullName: System
 - uid: Ubytec.Language.Tools.FormattingHelper.GetDepth*
   commentId: Overload:Ubytec.Language.Tools.FormattingHelper.GetDepth
-  href: Ubytec.Language.Tools.FormattingHelper.html#Ubytec_Language_Tools_FormattingHelper_GetDepth_Ubytec_Language_Syntax_Scopes_CompilationScopes_System_Int32_
+  href: Ubytec.Language.Tools.FormattingHelper.GetDepth.html#Ubytec_Language_Tools_FormattingHelper_GetDepth_Ubytec_Language_Syntax_Scopes_CompilationScopes_System_Int32_
   name: GetDepth
   nameWithType: FormattingHelper.GetDepth
   fullName: Ubytec.Language.Tools.FormattingHelper.GetDepth
@@ -453,7 +453,8 @@ references:
     href: Ubytec.Language.Syntax.Scopes.html
 - uid: Ubytec.Language.Tools.FormattingHelper.FormatCompiledLines*
   commentId: Overload:Ubytec.Language.Tools.FormattingHelper.FormatCompiledLines
-  href: Ubytec.Language.Tools.FormattingHelper.html#Ubytec_Language_Tools_FormattingHelper_FormatCompiledLines_System_String_System_String_
+  href: Ubytec.Language.Tools.FormattingHelper.FormatCompiledLines.html#Ubytec_Language_Tools_FormattingHelper_FormatCompiledLines_System_String_System_String_
   name: FormatCompiledLines
   nameWithType: FormattingHelper.FormatCompiledLines
   fullName: Ubytec.Language.Tools.FormattingHelper.FormatCompiledLines
+memberLayout: SeparatePages

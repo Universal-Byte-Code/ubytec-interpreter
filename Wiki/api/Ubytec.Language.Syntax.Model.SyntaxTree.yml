@@ -10,6 +10,8 @@ items:
   - Ubytec.Language.Syntax.Model.SyntaxTree.Metadata
   - Ubytec.Language.Syntax.Model.SyntaxTree.RootSentence
   - Ubytec.Language.Syntax.Model.SyntaxTree.SerializableMetadata
+  - Ubytec.Language.Syntax.Model.SyntaxTree.TreeSentenceStack
+  - Ubytec.Language.Syntax.Model.SyntaxTree._metadata
   langs:
   - csharp
   - vb
@@ -82,6 +84,33 @@ items:
   - type: System.Text.Json.Serialization.JsonIncludeAttribute
     ctor: System.Text.Json.Serialization.JsonIncludeAttribute.#ctor
     arguments: []
+- uid: Ubytec.Language.Syntax.Model.SyntaxTree._metadata
+  commentId: F:Ubytec.Language.Syntax.Model.SyntaxTree._metadata
+  id: _metadata
+  parent: Ubytec.Language.Syntax.Model.SyntaxTree
+  langs:
+  - csharp
+  - vb
+  name: _metadata
+  nameWithType: SyntaxTree._metadata
+  fullName: Ubytec.Language.Syntax.Model.SyntaxTree._metadata
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxTree.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _metadata
+    path: ../Ubytec/Language/Syntax/Model/SyntaxTree.cs
+    startLine: 14
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  syntax:
+    content: private MetadataRegistry _metadata
+    return:
+      type: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+    content.vb: Private _metadata As MetadataRegistry
 - uid: Ubytec.Language.Syntax.Model.SyntaxTree.Metadata
   commentId: P:Ubytec.Language.Syntax.Model.SyntaxTree.Metadata
   id: Metadata
@@ -172,6 +201,35 @@ items:
     arguments:
     - type: System.String
       value: Metadata
+- uid: Ubytec.Language.Syntax.Model.SyntaxTree.TreeSentenceStack
+  commentId: P:Ubytec.Language.Syntax.Model.SyntaxTree.TreeSentenceStack
+  id: TreeSentenceStack
+  parent: Ubytec.Language.Syntax.Model.SyntaxTree
+  langs:
+  - csharp
+  - vb
+  name: TreeSentenceStack
+  nameWithType: SyntaxTree.TreeSentenceStack
+  fullName: Ubytec.Language.Syntax.Model.SyntaxTree.TreeSentenceStack
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxTree.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: TreeSentenceStack
+    path: ../Ubytec/Language/Syntax/Model/SyntaxTree.cs
+    startLine: 23
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  syntax:
+    content: internal Stack<SyntaxSentence> TreeSentenceStack { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.Stack{Ubytec.Language.Syntax.Model.SyntaxSentence}
+    content.vb: Friend Property TreeSentenceStack As Stack(Of SyntaxSentence)
+  overload: Ubytec.Language.Syntax.Model.SyntaxTree.TreeSentenceStack*
 - uid: Ubytec.Language.Syntax.Model.SyntaxTree.#ctor(Ubytec.Language.Syntax.Model.SyntaxSentence)
   commentId: M:Ubytec.Language.Syntax.Model.SyntaxTree.#ctor(Ubytec.Language.Syntax.Model.SyntaxSentence)
   id: '#ctor(Ubytec.Language.Syntax.Model.SyntaxSentence)'
@@ -541,7 +599,7 @@ references:
     href: Ubytec.Language.Syntax.Interfaces.html
 - uid: Ubytec.Language.Syntax.Model.SyntaxTree.RootSentence*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxTree.RootSentence
-  href: Ubytec.Language.Syntax.Model.SyntaxTree.html#Ubytec_Language_Syntax_Model_SyntaxTree_RootSentence
+  href: Ubytec.Language.Syntax.Model.SyntaxTree.RootSentence.html#Ubytec_Language_Syntax_Model_SyntaxTree_RootSentence
   name: RootSentence
   nameWithType: SyntaxTree.RootSentence
   fullName: Ubytec.Language.Syntax.Model.SyntaxTree.RootSentence
@@ -552,19 +610,6 @@ references:
   name: SyntaxSentence
   nameWithType: SyntaxSentence
   fullName: Ubytec.Language.Syntax.Model.SyntaxSentence
-- uid: Ubytec.Language.Syntax.Model.SyntaxTree.Metadata*
-  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxTree.Metadata
-  href: Ubytec.Language.Syntax.Model.SyntaxTree.html#Ubytec_Language_Syntax_Model_SyntaxTree_Metadata
-  name: Metadata
-  nameWithType: SyntaxTree.Metadata
-  fullName: Ubytec.Language.Syntax.Model.SyntaxTree.Metadata
-- uid: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
-  commentId: P:Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
-  parent: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
-  href: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.html#Ubytec_Language_Syntax_Interfaces_IUbytecSyntax_Metadata
-  name: Metadata
-  nameWithType: IUbytecSyntax.Metadata
-  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
   commentId: T:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
   parent: Ubytec.Language.Syntax.Fast.Metadata
@@ -618,9 +663,22 @@ references:
   - uid: Ubytec.Language.Syntax.Fast.Metadata
     name: Metadata
     href: Ubytec.Language.Syntax.Fast.Metadata.html
+- uid: Ubytec.Language.Syntax.Model.SyntaxTree.Metadata*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxTree.Metadata
+  href: Ubytec.Language.Syntax.Model.SyntaxTree.Metadata.html#Ubytec_Language_Syntax_Model_SyntaxTree_Metadata
+  name: Metadata
+  nameWithType: SyntaxTree.Metadata
+  fullName: Ubytec.Language.Syntax.Model.SyntaxTree.Metadata
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
+  commentId: P:Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
+  parent: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+  href: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata.html#Ubytec_Language_Syntax_Interfaces_IUbytecSyntax_Metadata
+  name: Metadata
+  nameWithType: IUbytecSyntax.Metadata
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
 - uid: Ubytec.Language.Syntax.Model.SyntaxTree.SerializableMetadata*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxTree.SerializableMetadata
-  href: Ubytec.Language.Syntax.Model.SyntaxTree.html#Ubytec_Language_Syntax_Model_SyntaxTree_SerializableMetadata
+  href: Ubytec.Language.Syntax.Model.SyntaxTree.SerializableMetadata.html#Ubytec_Language_Syntax_Model_SyntaxTree_SerializableMetadata
   name: SerializableMetadata
   nameWithType: SyntaxTree.SerializableMetadata
   fullName: Ubytec.Language.Syntax.Model.SyntaxTree.SerializableMetadata
@@ -742,9 +800,76 @@ references:
     name: Generic
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Ubytec.Language.Syntax.Model.SyntaxTree.TreeSentenceStack*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxTree.TreeSentenceStack
+  href: Ubytec.Language.Syntax.Model.SyntaxTree.TreeSentenceStack.html#Ubytec_Language_Syntax_Model_SyntaxTree_TreeSentenceStack
+  name: TreeSentenceStack
+  nameWithType: SyntaxTree.TreeSentenceStack
+  fullName: Ubytec.Language.Syntax.Model.SyntaxTree.TreeSentenceStack
+- uid: System.Collections.Generic.Stack{Ubytec.Language.Syntax.Model.SyntaxSentence}
+  commentId: T:System.Collections.Generic.Stack{Ubytec.Language.Syntax.Model.SyntaxSentence}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Stack`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.stack-1
+  name: Stack<SyntaxSentence>
+  nameWithType: Stack<SyntaxSentence>
+  fullName: System.Collections.Generic.Stack<Ubytec.Language.Syntax.Model.SyntaxSentence>
+  nameWithType.vb: Stack(Of SyntaxSentence)
+  fullName.vb: System.Collections.Generic.Stack(Of Ubytec.Language.Syntax.Model.SyntaxSentence)
+  name.vb: Stack(Of SyntaxSentence)
+  spec.csharp:
+  - uid: System.Collections.Generic.Stack`1
+    name: Stack
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.stack-1
+  - name: <
+  - uid: Ubytec.Language.Syntax.Model.SyntaxSentence
+    name: SyntaxSentence
+    href: Ubytec.Language.Syntax.Model.SyntaxSentence.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Stack`1
+    name: Stack
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.stack-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Model.SyntaxSentence
+    name: SyntaxSentence
+    href: Ubytec.Language.Syntax.Model.SyntaxSentence.html
+  - name: )
+- uid: System.Collections.Generic.Stack`1
+  commentId: T:System.Collections.Generic.Stack`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.stack-1
+  name: Stack<T>
+  nameWithType: Stack<T>
+  fullName: System.Collections.Generic.Stack<T>
+  nameWithType.vb: Stack(Of T)
+  fullName.vb: System.Collections.Generic.Stack(Of T)
+  name.vb: Stack(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.Stack`1
+    name: Stack
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.stack-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Stack`1
+    name: Stack
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.stack-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
 - uid: Ubytec.Language.Syntax.Model.SyntaxTree.#ctor*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxTree.#ctor
-  href: Ubytec.Language.Syntax.Model.SyntaxTree.html#Ubytec_Language_Syntax_Model_SyntaxTree__ctor_Ubytec_Language_Syntax_Model_SyntaxSentence_
+  href: Ubytec.Language.Syntax.Model.SyntaxTree.-ctor.html#Ubytec_Language_Syntax_Model_SyntaxTree__ctor_Ubytec_Language_Syntax_Model_SyntaxSentence_
   name: SyntaxTree
   nameWithType: SyntaxTree.SyntaxTree
   fullName: Ubytec.Language.Syntax.Model.SyntaxTree.SyntaxTree
@@ -753,7 +878,7 @@ references:
   name.vb: New
 - uid: Ubytec.Language.Syntax.Model.SyntaxTree.Dispose*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxTree.Dispose
-  href: Ubytec.Language.Syntax.Model.SyntaxTree.html#Ubytec_Language_Syntax_Model_SyntaxTree_Dispose
+  href: Ubytec.Language.Syntax.Model.SyntaxTree.Dispose.html#Ubytec_Language_Syntax_Model_SyntaxTree_Dispose
   name: Dispose
   nameWithType: SyntaxTree.Dispose
   fullName: Ubytec.Language.Syntax.Model.SyntaxTree.Dispose
@@ -779,3 +904,4 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
   - name: (
   - name: )
+memberLayout: SeparatePages

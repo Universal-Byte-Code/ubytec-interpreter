@@ -10,6 +10,7 @@ items:
   - Ubytec.Language.Operations.CoreOperations.BREAK.CreateInstruction(Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
   - Ubytec.Language.Operations.CoreOperations.BREAK.LabelIDx
   - Ubytec.Language.Operations.CoreOperations.BREAK.OpCode
+  - Ubytec.Language.Operations.CoreOperations.BREAK.Ubytec#Language#IUbytecEntity#Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   langs:
   - csharp
   - vb
@@ -204,6 +205,44 @@ items:
       type: System.String
     content.vb: Public Function Compile(scopes As CompilationScopes) As String
   overload: Ubytec.Language.Operations.CoreOperations.BREAK.Compile*
+- uid: Ubytec.Language.Operations.CoreOperations.BREAK.Ubytec#Language#IUbytecEntity#Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  commentId: M:Ubytec.Language.Operations.CoreOperations.BREAK.Ubytec#Language#IUbytecEntity#Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  id: Ubytec#Language#IUbytecEntity#Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  isEii: true
+  parent: Ubytec.Language.Operations.CoreOperations.BREAK
+  langs:
+  - csharp
+  - vb
+  name: IUbytecEntity.Compile(CompilationScopes)
+  nameWithType: CoreOperations.BREAK.IUbytecEntity.Compile(CompilationScopes)
+  fullName: Ubytec.Language.Operations.CoreOperations.BREAK.Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Operations/Core/Finalizers/CoreOperations.BREAK.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Ubytec.Language.IUbytecEntity.Compile
+    path: ../Ubytec/Language/Operations/Core/Finalizers/CoreOperations.BREAK.cs
+    startLine: 27
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations
+  example: []
+  syntax:
+    content: string IUbytecEntity.Compile(CompilationScopes scopes)
+    parameters:
+    - id: scopes
+      type: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    return:
+      type: System.String
+    content.vb: ''
+  overload: Ubytec.Language.Operations.CoreOperations.BREAK.Ubytec#Language#IUbytecEntity#Compile*
+  implements:
+  - Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  nameWithType.vb: ''
+  fullName.vb: ''
+  name.vb: ''
 references:
 - uid: Ubytec.Language.Operations
   commentId: N:Ubytec.Language.Operations
@@ -559,7 +598,7 @@ references:
   name.vb: Object
 - uid: Ubytec.Language.Operations.CoreOperations.BREAK.#ctor*
   commentId: Overload:Ubytec.Language.Operations.CoreOperations.BREAK.#ctor
-  href: Ubytec.Language.Operations.CoreOperations.BREAK.html#Ubytec_Language_Operations_CoreOperations_BREAK__ctor_System_Nullable_System_Int32__
+  href: Ubytec.Language.Operations.CoreOperations.BREAK.-ctor.html#Ubytec_Language_Operations_CoreOperations_BREAK__ctor_System_Nullable_System_Int32__
   name: BREAK
   nameWithType: CoreOperations.BREAK.BREAK
   fullName: Ubytec.Language.Operations.CoreOperations.BREAK.BREAK
@@ -619,20 +658,20 @@ references:
   - name: )
 - uid: Ubytec.Language.Operations.CoreOperations.BREAK.LabelIDx*
   commentId: Overload:Ubytec.Language.Operations.CoreOperations.BREAK.LabelIDx
-  href: Ubytec.Language.Operations.CoreOperations.BREAK.html#Ubytec_Language_Operations_CoreOperations_BREAK_LabelIDx
+  href: Ubytec.Language.Operations.CoreOperations.BREAK.LabelIDx.html#Ubytec_Language_Operations_CoreOperations_BREAK_LabelIDx
   name: LabelIDx
   nameWithType: CoreOperations.BREAK.LabelIDx
   fullName: Ubytec.Language.Operations.CoreOperations.BREAK.LabelIDx
 - uid: Ubytec.Language.Operations.CoreOperations.BREAK.OpCode*
   commentId: Overload:Ubytec.Language.Operations.CoreOperations.BREAK.OpCode
-  href: Ubytec.Language.Operations.CoreOperations.BREAK.html#Ubytec_Language_Operations_CoreOperations_BREAK_OpCode
+  href: Ubytec.Language.Operations.CoreOperations.BREAK.OpCode.html#Ubytec_Language_Operations_CoreOperations_BREAK_OpCode
   name: OpCode
   nameWithType: CoreOperations.BREAK.OpCode
   fullName: Ubytec.Language.Operations.CoreOperations.BREAK.OpCode
 - uid: Ubytec.Language.Operations.IOpCode.OpCode
   commentId: P:Ubytec.Language.Operations.IOpCode.OpCode
   parent: Ubytec.Language.Operations.IOpCode
-  href: Ubytec.Language.Operations.IOpCode.html#Ubytec_Language_Operations_IOpCode_OpCode
+  href: Ubytec.Language.Operations.IOpCode.OpCode.html#Ubytec_Language_Operations_IOpCode_OpCode
   name: OpCode
   nameWithType: IOpCode.OpCode
   fullName: Ubytec.Language.Operations.IOpCode.OpCode
@@ -649,7 +688,7 @@ references:
   name.vb: Byte
 - uid: Ubytec.Language.Operations.CoreOperations.BREAK.CreateInstruction*
   commentId: Overload:Ubytec.Language.Operations.CoreOperations.BREAK.CreateInstruction
-  href: Ubytec.Language.Operations.CoreOperations.BREAK.html#Ubytec_Language_Operations_CoreOperations_BREAK_CreateInstruction_Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment___Ubytec_Language_Syntax_Model_SyntaxToken___System_ValueType___
+  href: Ubytec.Language.Operations.CoreOperations.BREAK.CreateInstruction.html#Ubytec_Language_Operations_CoreOperations_BREAK_CreateInstruction_Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment___Ubytec_Language_Syntax_Model_SyntaxToken___System_ValueType___
   name: CreateInstruction
   nameWithType: CoreOperations.BREAK.CreateInstruction
   fullName: Ubytec.Language.Operations.CoreOperations.BREAK.CreateInstruction
@@ -743,7 +782,7 @@ references:
     href: Ubytec.Language.Operations.CoreOperations.BREAK.html
 - uid: Ubytec.Language.Operations.CoreOperations.BREAK.Compile*
   commentId: Overload:Ubytec.Language.Operations.CoreOperations.BREAK.Compile
-  href: Ubytec.Language.Operations.CoreOperations.BREAK.html#Ubytec_Language_Operations_CoreOperations_BREAK_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  href: Ubytec.Language.Operations.CoreOperations.BREAK.Compile.html#Ubytec_Language_Operations_CoreOperations_BREAK_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
   name: Compile
   nameWithType: CoreOperations.BREAK.Compile
   fullName: Ubytec.Language.Operations.CoreOperations.BREAK.Compile
@@ -803,3 +842,43 @@ references:
   - uid: Ubytec.Language.Syntax.Scopes
     name: Scopes
     href: Ubytec.Language.Syntax.Scopes.html
+- uid: Ubytec.Language.Operations.CoreOperations.BREAK.Ubytec#Language#IUbytecEntity#Compile*
+  commentId: Overload:Ubytec.Language.Operations.CoreOperations.BREAK.Ubytec#Language#IUbytecEntity#Compile
+  href: Ubytec.Language.IUbytecEntity.html
+  name: IUbytecEntity.Compile
+  nameWithType: CoreOperations.BREAK.IUbytecEntity.Compile
+  fullName: Ubytec.Language.Operations.CoreOperations.BREAK.Ubytec.Language.IUbytecEntity.Compile
+  spec.csharp:
+  - uid: Ubytec.Language.IUbytecEntity*
+    name: IUbytecEntity
+    href: Ubytec.Language.IUbytecEntity.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.BREAK.Ubytec#Language#IUbytecEntity#Compile*
+    name: Compile
+    href: Ubytec.Language.Operations.CoreOperations.BREAK.Ubytec-Language-IUbytecEntity-Compile.html#Ubytec_Language_Operations_CoreOperations_BREAK_Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+- uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  commentId: M:Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  parent: Ubytec.Language.IUbytecEntity
+  href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  name: Compile(CompilationScopes)
+  nameWithType: IUbytecEntity.Compile(CompilationScopes)
+  fullName: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  spec.csharp:
+  - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+    name: Compile
+    href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+    name: Compile
+    href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  - name: )
+memberLayout: SeparatePages

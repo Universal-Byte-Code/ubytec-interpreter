@@ -131,21 +131,21 @@ references:
 - uid: Ubytec.Language.Operations.IOpCode.OpCode
   commentId: P:Ubytec.Language.Operations.IOpCode.OpCode
   parent: Ubytec.Language.Operations.IOpCode
-  href: Ubytec.Language.Operations.IOpCode.html#Ubytec_Language_Operations_IOpCode_OpCode
+  href: Ubytec.Language.Operations.IOpCode.OpCode.html#Ubytec_Language_Operations_IOpCode_OpCode
   name: OpCode
   nameWithType: IOpCode.OpCode
   fullName: Ubytec.Language.Operations.IOpCode.OpCode
 - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   commentId: M:Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   parent: Ubytec.Language.IUbytecEntity
-  href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
   name: Compile(CompilationScopes)
   nameWithType: IUbytecEntity.Compile(CompilationScopes)
   fullName: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   spec.csharp:
   - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
     name: Compile
-    href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+    href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
   - name: (
   - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
     name: CompilationScopes
@@ -154,7 +154,7 @@ references:
   spec.vb:
   - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
     name: Compile
-    href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+    href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
   - name: (
   - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
     name: CompilationScopes
@@ -228,7 +228,7 @@ references:
     href: Ubytec.Language.html
 - uid: Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtensionGroup*
   commentId: Overload:Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtensionGroup
-  href: Ubytec.Language.Operations.Extended.IExtendedOpCode.html#Ubytec_Language_Operations_Extended_IExtendedOpCode_ExtensionGroup
+  href: Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtensionGroup.html#Ubytec_Language_Operations_Extended_IExtendedOpCode_ExtensionGroup
   name: ExtensionGroup
   nameWithType: IExtendedOpCode.ExtensionGroup
   fullName: Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtensionGroup
@@ -252,7 +252,8 @@ references:
   fullName: System
 - uid: Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtendedOpCode*
   commentId: Overload:Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtendedOpCode
-  href: Ubytec.Language.Operations.Extended.IExtendedOpCode.html#Ubytec_Language_Operations_Extended_IExtendedOpCode_ExtendedOpCode
+  href: Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtendedOpCode.html#Ubytec_Language_Operations_Extended_IExtendedOpCode_ExtendedOpCode
   name: ExtendedOpCode
   nameWithType: IExtendedOpCode.ExtendedOpCode
   fullName: Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtendedOpCode
+memberLayout: SeparatePages

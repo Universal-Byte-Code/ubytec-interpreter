@@ -83,7 +83,7 @@ references:
     href: Ubytec.Language.html
 - uid: Ubytec.Language.IUbytecEntity.Compile*
   commentId: Overload:Ubytec.Language.IUbytecEntity.Compile
-  href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
   name: Compile
   nameWithType: IUbytecEntity.Compile
   fullName: Ubytec.Language.IUbytecEntity.Compile
@@ -150,3 +150,4 @@ references:
   name: System
   nameWithType: System
   fullName: System
+memberLayout: SeparatePages

@@ -2,7 +2,8 @@
 items:
 - uid: Ubytec.Language.Syntax.TypeSystem
   commentId: N:Ubytec.Language.Syntax.TypeSystem
-  id: Ubytec.Language.Syntax.TypeSystem
+  id: TypeSystem
+  parent: Ubytec.Language.Syntax
   children:
   - Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions
   - Ubytec.Language.Syntax.TypeSystem.Types
@@ -140,3 +141,4 @@ references:
   - uid: Ubytec.Language.Syntax.TypeSystem
     name: TypeSystem
     href: Ubytec.Language.Syntax.TypeSystem.html
+memberLayout: SeparatePages

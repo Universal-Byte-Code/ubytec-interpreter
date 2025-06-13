@@ -1,0 +1,581 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Exceptions.IlegalTokenException
+  commentId: T:Ubytec.Language.Exceptions.IlegalTokenException
+  id: IlegalTokenException
+  parent: Ubytec.Language.Exceptions
+  children:
+  - Ubytec.Language.Exceptions.IlegalTokenException.#ctor(System.UInt64,System.String,System.String)
+  - Ubytec.Language.Exceptions.IlegalTokenException.ErrorCode
+  langs:
+  - csharp
+  - vb
+  name: IlegalTokenException
+  nameWithType: IlegalTokenException
+  fullName: Ubytec.Language.Exceptions.IlegalTokenException
+  type: Class
+  source:
+    remote:
+      path: Ubytec/Language/Exceptions/FetchLexiconException.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IlegalTokenException
+    path: ../Ubytec/Language/Exceptions/FetchLexiconException.cs
+    startLine: 7
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Exceptions
+  syntax:
+    content: 'internal class IlegalTokenException : UbytecException, ISerializable'
+    content.vb: Friend Class IlegalTokenException Inherits UbytecException Implements ISerializable
+  inheritance:
+  - System.Object
+  - System.Exception
+  - Ubytec.Language.Exceptions.UbytecException
+  implements:
+  - System.Runtime.Serialization.ISerializable
+  inheritedMembers:
+  - Ubytec.Language.Exceptions.UbytecException.Data
+  - Ubytec.Language.Exceptions.UbytecException.Message
+  - Ubytec.Language.Exceptions.UbytecException.HelpLink
+  - System.Exception.GetBaseException
+  - System.Exception.GetType
+  - System.Exception.ToString
+  - System.Exception.HResult
+  - System.Exception.InnerException
+  - System.Exception.Source
+  - System.Exception.StackTrace
+  - System.Exception.TargetSite
+  - System.Exception.SerializeObjectState
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubytec.Language.Exceptions.IlegalTokenException.#ctor(System.UInt64,System.String,System.String)
+  commentId: M:Ubytec.Language.Exceptions.IlegalTokenException.#ctor(System.UInt64,System.String,System.String)
+  id: '#ctor(System.UInt64,System.String,System.String)'
+  parent: Ubytec.Language.Exceptions.IlegalTokenException
+  langs:
+  - csharp
+  - vb
+  name: IlegalTokenException(ulong, string, string?)
+  nameWithType: IlegalTokenException.IlegalTokenException(ulong, string, string?)
+  fullName: Ubytec.Language.Exceptions.IlegalTokenException.IlegalTokenException(ulong, string, string?)
+  type: Constructor
+  source:
+    remote:
+      path: Ubytec/Language/Exceptions/FetchLexiconException.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: .ctor
+    path: ../Ubytec/Language/Exceptions/FetchLexiconException.cs
+    startLine: 7
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Exceptions
+  syntax:
+    content: public IlegalTokenException(ulong errorCode, string message, string? helpLink = null)
+    parameters:
+    - id: errorCode
+      type: System.UInt64
+    - id: message
+      type: System.String
+    - id: helpLink
+      type: System.String
+    content.vb: Public Sub New(errorCode As ULong, message As String, helpLink As String = Nothing)
+  overload: Ubytec.Language.Exceptions.IlegalTokenException.#ctor*
+  nameWithType.vb: IlegalTokenException.New(ULong, String, String)
+  fullName.vb: Ubytec.Language.Exceptions.IlegalTokenException.New(ULong, String, String)
+  name.vb: New(ULong, String, String)
+- uid: Ubytec.Language.Exceptions.IlegalTokenException.ErrorCode
+  commentId: P:Ubytec.Language.Exceptions.IlegalTokenException.ErrorCode
+  id: ErrorCode
+  parent: Ubytec.Language.Exceptions.IlegalTokenException
+  langs:
+  - csharp
+  - vb
+  name: ErrorCode
+  nameWithType: IlegalTokenException.ErrorCode
+  fullName: Ubytec.Language.Exceptions.IlegalTokenException.ErrorCode
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Exceptions/FetchLexiconException.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ErrorCode
+    path: ../Ubytec/Language/Exceptions/FetchLexiconException.cs
+    startLine: 9
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Exceptions
+  example: []
+  syntax:
+    content: public override ulong ErrorCode { get; }
+    parameters: []
+    return:
+      type: System.UInt64
+    content.vb: Public Overrides ReadOnly Property ErrorCode As ULong
+  overridden: Ubytec.Language.Exceptions.UbytecException.ErrorCode
+  overload: Ubytec.Language.Exceptions.IlegalTokenException.ErrorCode*
+references:
+- uid: Ubytec.Language.Exceptions
+  commentId: N:Ubytec.Language.Exceptions
+  href: Ubytec.html
+  name: Ubytec.Language.Exceptions
+  nameWithType: Ubytec.Language.Exceptions
+  fullName: Ubytec.Language.Exceptions
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Exceptions
+    name: Exceptions
+    href: Ubytec.Language.Exceptions.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Exceptions
+    name: Exceptions
+    href: Ubytec.Language.Exceptions.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Exception
+  commentId: T:System.Exception
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.exception
+  name: Exception
+  nameWithType: Exception
+  fullName: System.Exception
+- uid: Ubytec.Language.Exceptions.UbytecException
+  commentId: T:Ubytec.Language.Exceptions.UbytecException
+  parent: Ubytec.Language.Exceptions
+  href: Ubytec.Language.Exceptions.UbytecException.html
+  name: UbytecException
+  nameWithType: UbytecException
+  fullName: Ubytec.Language.Exceptions.UbytecException
+- uid: System.Runtime.Serialization.ISerializable
+  commentId: T:System.Runtime.Serialization.ISerializable
+  parent: System.Runtime.Serialization
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.runtime.serialization.iserializable
+  name: ISerializable
+  nameWithType: ISerializable
+  fullName: System.Runtime.Serialization.ISerializable
+- uid: Ubytec.Language.Exceptions.UbytecException.Data
+  commentId: P:Ubytec.Language.Exceptions.UbytecException.Data
+  parent: Ubytec.Language.Exceptions.UbytecException
+  href: Ubytec.Language.Exceptions.UbytecException.Data.html#Ubytec_Language_Exceptions_UbytecException_Data
+  name: Data
+  nameWithType: UbytecException.Data
+  fullName: Ubytec.Language.Exceptions.UbytecException.Data
+- uid: Ubytec.Language.Exceptions.UbytecException.Message
+  commentId: P:Ubytec.Language.Exceptions.UbytecException.Message
+  parent: Ubytec.Language.Exceptions.UbytecException
+  href: Ubytec.Language.Exceptions.UbytecException.Message.html#Ubytec_Language_Exceptions_UbytecException_Message
+  name: Message
+  nameWithType: UbytecException.Message
+  fullName: Ubytec.Language.Exceptions.UbytecException.Message
+- uid: Ubytec.Language.Exceptions.UbytecException.HelpLink
+  commentId: P:Ubytec.Language.Exceptions.UbytecException.HelpLink
+  parent: Ubytec.Language.Exceptions.UbytecException
+  href: Ubytec.Language.Exceptions.UbytecException.HelpLink.html#Ubytec_Language_Exceptions_UbytecException_HelpLink
+  name: HelpLink
+  nameWithType: UbytecException.HelpLink
+  fullName: Ubytec.Language.Exceptions.UbytecException.HelpLink
+- uid: System.Exception.GetBaseException
+  commentId: M:System.Exception.GetBaseException
+  parent: System.Exception
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.exception.getbaseexception
+  name: GetBaseException()
+  nameWithType: Exception.GetBaseException()
+  fullName: System.Exception.GetBaseException()
+  spec.csharp:
+  - uid: System.Exception.GetBaseException
+    name: GetBaseException
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.exception.getbaseexception
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Exception.GetBaseException
+    name: GetBaseException
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.exception.getbaseexception
+  - name: (
+  - name: )
+- uid: System.Exception.GetType
+  commentId: M:System.Exception.GetType
+  parent: System.Exception
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.exception.gettype
+  name: GetType()
+  nameWithType: Exception.GetType()
+  fullName: System.Exception.GetType()
+  spec.csharp:
+  - uid: System.Exception.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.exception.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Exception.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.exception.gettype
+  - name: (
+  - name: )
+- uid: System.Exception.ToString
+  commentId: M:System.Exception.ToString
+  parent: System.Exception
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.exception.tostring
+  name: ToString()
+  nameWithType: Exception.ToString()
+  fullName: System.Exception.ToString()
+  spec.csharp:
+  - uid: System.Exception.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.exception.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Exception.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.exception.tostring
+  - name: (
+  - name: )
+- uid: System.Exception.HResult
+  commentId: P:System.Exception.HResult
+  parent: System.Exception
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.exception.hresult
+  name: HResult
+  nameWithType: Exception.HResult
+  fullName: System.Exception.HResult
+- uid: System.Exception.InnerException
+  commentId: P:System.Exception.InnerException
+  parent: System.Exception
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.exception.innerexception
+  name: InnerException
+  nameWithType: Exception.InnerException
+  fullName: System.Exception.InnerException
+- uid: System.Exception.Source
+  commentId: P:System.Exception.Source
+  parent: System.Exception
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.exception.source
+  name: Source
+  nameWithType: Exception.Source
+  fullName: System.Exception.Source
+- uid: System.Exception.StackTrace
+  commentId: P:System.Exception.StackTrace
+  parent: System.Exception
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.exception.stacktrace
+  name: StackTrace
+  nameWithType: Exception.StackTrace
+  fullName: System.Exception.StackTrace
+- uid: System.Exception.TargetSite
+  commentId: P:System.Exception.TargetSite
+  parent: System.Exception
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.exception.targetsite
+  name: TargetSite
+  nameWithType: Exception.TargetSite
+  fullName: System.Exception.TargetSite
+- uid: System.Exception.SerializeObjectState
+  commentId: E:System.Exception.SerializeObjectState
+  parent: System.Exception
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.exception.serializeobjectstate
+  name: SerializeObjectState
+  nameWithType: Exception.SerializeObjectState
+  fullName: System.Exception.SerializeObjectState
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Runtime.Serialization
+  commentId: N:System.Runtime.Serialization
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Runtime.Serialization
+  nameWithType: System.Runtime.Serialization
+  fullName: System.Runtime.Serialization
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Runtime
+    name: Runtime
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.runtime
+  - name: .
+  - uid: System.Runtime.Serialization
+    name: Serialization
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.runtime.serialization
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Runtime
+    name: Runtime
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.runtime
+  - name: .
+  - uid: System.Runtime.Serialization
+    name: Serialization
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.runtime.serialization
+- uid: Ubytec.Language.Exceptions.IlegalTokenException.#ctor*
+  commentId: Overload:Ubytec.Language.Exceptions.IlegalTokenException.#ctor
+  href: Ubytec.Language.Exceptions.IlegalTokenException.-ctor.html#Ubytec_Language_Exceptions_IlegalTokenException__ctor_System_UInt64_System_String_System_String_
+  name: IlegalTokenException
+  nameWithType: IlegalTokenException.IlegalTokenException
+  fullName: Ubytec.Language.Exceptions.IlegalTokenException.IlegalTokenException
+  nameWithType.vb: IlegalTokenException.New
+  fullName.vb: Ubytec.Language.Exceptions.IlegalTokenException.New
+  name.vb: New
+- uid: System.UInt64
+  commentId: T:System.UInt64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uint64
+  name: ulong
+  nameWithType: ulong
+  fullName: ulong
+  nameWithType.vb: ULong
+  fullName.vb: ULong
+  name.vb: ULong
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubytec.Language.Exceptions.UbytecException.ErrorCode
+  commentId: P:Ubytec.Language.Exceptions.UbytecException.ErrorCode
+  parent: Ubytec.Language.Exceptions.UbytecException
+  href: Ubytec.Language.Exceptions.UbytecException.ErrorCode.html#Ubytec_Language_Exceptions_UbytecException_ErrorCode
+  name: ErrorCode
+  nameWithType: UbytecException.ErrorCode
+  fullName: Ubytec.Language.Exceptions.UbytecException.ErrorCode
+- uid: Ubytec.Language.Exceptions.IlegalTokenException.ErrorCode*
+  commentId: Overload:Ubytec.Language.Exceptions.IlegalTokenException.ErrorCode
+  href: Ubytec.Language.Exceptions.IlegalTokenException.ErrorCode.html#Ubytec_Language_Exceptions_IlegalTokenException_ErrorCode
+  name: ErrorCode
+  nameWithType: IlegalTokenException.ErrorCode
+  fullName: Ubytec.Language.Exceptions.IlegalTokenException.ErrorCode
+memberLayout: SeparatePages

@@ -1,0 +1,675 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Tools.DeprecatedCompiler
+  commentId: T:Ubytec.Language.Tools.DeprecatedCompiler
+  id: DeprecatedCompiler
+  parent: Ubytec.Language.Tools
+  children:
+  - Ubytec.Language.Tools.DeprecatedCompiler.CompileToX86(System.Byte[])
+  - Ubytec.Language.Tools.DeprecatedCompiler.GeneratePushInstruction(System.Byte,System.Byte[])
+  - Ubytec.Language.Tools.DeprecatedCompiler.GetTypeName(System.Byte)
+  - Ubytec.Language.Tools.DeprecatedCompiler.GetTypeSize(System.Byte)
+  - Ubytec.Language.Tools.DeprecatedCompiler.OpcodeMap
+  langs:
+  - csharp
+  - vb
+  name: DeprecatedCompiler
+  nameWithType: DeprecatedCompiler
+  fullName: Ubytec.Language.Tools.DeprecatedCompiler
+  type: Class
+  source:
+    remote:
+      path: Ubytec/Language/Tools/DeprecatedCompiler.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: DeprecatedCompiler
+    path: ../Ubytec/Language/Tools/DeprecatedCompiler.cs
+    startLine: 2
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Tools
+  syntax:
+    content: internal static class DeprecatedCompiler
+    content.vb: Friend Module DeprecatedCompiler
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Ubytec.Language.Tools.DeprecatedCompiler.OpcodeMap
+  commentId: F:Ubytec.Language.Tools.DeprecatedCompiler.OpcodeMap
+  id: OpcodeMap
+  parent: Ubytec.Language.Tools.DeprecatedCompiler
+  langs:
+  - csharp
+  - vb
+  name: OpcodeMap
+  nameWithType: DeprecatedCompiler.OpcodeMap
+  fullName: Ubytec.Language.Tools.DeprecatedCompiler.OpcodeMap
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Tools/DeprecatedCompiler.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: OpcodeMap
+    path: ../Ubytec/Language/Tools/DeprecatedCompiler.cs
+    startLine: 4
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Tools
+  syntax:
+    content: private static readonly Dictionary<string, byte> OpcodeMap
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,System.Byte}
+    content.vb: Private Shared ReadOnly OpcodeMap As Dictionary(Of String, Byte)
+- uid: Ubytec.Language.Tools.DeprecatedCompiler.CompileToX86(System.Byte[])
+  commentId: M:Ubytec.Language.Tools.DeprecatedCompiler.CompileToX86(System.Byte[])
+  id: CompileToX86(System.Byte[])
+  parent: Ubytec.Language.Tools.DeprecatedCompiler
+  langs:
+  - csharp
+  - vb
+  name: CompileToX86(byte[])
+  nameWithType: DeprecatedCompiler.CompileToX86(byte[])
+  fullName: Ubytec.Language.Tools.DeprecatedCompiler.CompileToX86(byte[])
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Tools/DeprecatedCompiler.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: CompileToX86
+    path: ../Ubytec/Language/Tools/DeprecatedCompiler.cs
+    startLine: 87
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Tools
+  syntax:
+    content: public static string CompileToX86(byte[] bytecode)
+    parameters:
+    - id: bytecode
+      type: System.Byte[]
+    return:
+      type: System.String
+    content.vb: Public Shared Function CompileToX86(bytecode As Byte()) As String
+  overload: Ubytec.Language.Tools.DeprecatedCompiler.CompileToX86*
+  nameWithType.vb: DeprecatedCompiler.CompileToX86(Byte())
+  fullName.vb: Ubytec.Language.Tools.DeprecatedCompiler.CompileToX86(Byte())
+  name.vb: CompileToX86(Byte())
+- uid: Ubytec.Language.Tools.DeprecatedCompiler.GetTypeSize(System.Byte)
+  commentId: M:Ubytec.Language.Tools.DeprecatedCompiler.GetTypeSize(System.Byte)
+  id: GetTypeSize(System.Byte)
+  parent: Ubytec.Language.Tools.DeprecatedCompiler
+  langs:
+  - csharp
+  - vb
+  name: GetTypeSize(byte)
+  nameWithType: DeprecatedCompiler.GetTypeSize(byte)
+  fullName: Ubytec.Language.Tools.DeprecatedCompiler.GetTypeSize(byte)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Tools/DeprecatedCompiler.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: GetTypeSize
+    path: ../Ubytec/Language/Tools/DeprecatedCompiler.cs
+    startLine: 564
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Tools
+  syntax:
+    content: private static int GetTypeSize(byte valueType)
+    parameters:
+    - id: valueType
+      type: System.Byte
+    return:
+      type: System.Int32
+    content.vb: Private Shared Function GetTypeSize(valueType As Byte) As Integer
+  overload: Ubytec.Language.Tools.DeprecatedCompiler.GetTypeSize*
+  nameWithType.vb: DeprecatedCompiler.GetTypeSize(Byte)
+  fullName.vb: Ubytec.Language.Tools.DeprecatedCompiler.GetTypeSize(Byte)
+  name.vb: GetTypeSize(Byte)
+- uid: Ubytec.Language.Tools.DeprecatedCompiler.GeneratePushInstruction(System.Byte,System.Byte[])
+  commentId: M:Ubytec.Language.Tools.DeprecatedCompiler.GeneratePushInstruction(System.Byte,System.Byte[])
+  id: GeneratePushInstruction(System.Byte,System.Byte[])
+  parent: Ubytec.Language.Tools.DeprecatedCompiler
+  langs:
+  - csharp
+  - vb
+  name: GeneratePushInstruction(byte, byte[])
+  nameWithType: DeprecatedCompiler.GeneratePushInstruction(byte, byte[])
+  fullName: Ubytec.Language.Tools.DeprecatedCompiler.GeneratePushInstruction(byte, byte[])
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Tools/DeprecatedCompiler.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: GeneratePushInstruction
+    path: ../Ubytec/Language/Tools/DeprecatedCompiler.cs
+    startLine: 578
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Tools
+  syntax:
+    content: private static string GeneratePushInstruction(byte valueType, byte[] valueBytes)
+    parameters:
+    - id: valueType
+      type: System.Byte
+    - id: valueBytes
+      type: System.Byte[]
+    return:
+      type: System.String
+    content.vb: Private Shared Function GeneratePushInstruction(valueType As Byte, valueBytes As Byte()) As String
+  overload: Ubytec.Language.Tools.DeprecatedCompiler.GeneratePushInstruction*
+  nameWithType.vb: DeprecatedCompiler.GeneratePushInstruction(Byte, Byte())
+  fullName.vb: Ubytec.Language.Tools.DeprecatedCompiler.GeneratePushInstruction(Byte, Byte())
+  name.vb: GeneratePushInstruction(Byte, Byte())
+- uid: Ubytec.Language.Tools.DeprecatedCompiler.GetTypeName(System.Byte)
+  commentId: M:Ubytec.Language.Tools.DeprecatedCompiler.GetTypeName(System.Byte)
+  id: GetTypeName(System.Byte)
+  parent: Ubytec.Language.Tools.DeprecatedCompiler
+  langs:
+  - csharp
+  - vb
+  name: GetTypeName(byte)
+  nameWithType: DeprecatedCompiler.GetTypeName(byte)
+  fullName: Ubytec.Language.Tools.DeprecatedCompiler.GetTypeName(byte)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Tools/DeprecatedCompiler.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: GetTypeName
+    path: ../Ubytec/Language/Tools/DeprecatedCompiler.cs
+    startLine: 591
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Tools
+  syntax:
+    content: private static string GetTypeName(byte valueType)
+    parameters:
+    - id: valueType
+      type: System.Byte
+    return:
+      type: System.String
+    content.vb: Private Shared Function GetTypeName(valueType As Byte) As String
+  overload: Ubytec.Language.Tools.DeprecatedCompiler.GetTypeName*
+  nameWithType.vb: DeprecatedCompiler.GetTypeName(Byte)
+  fullName.vb: Ubytec.Language.Tools.DeprecatedCompiler.GetTypeName(Byte)
+  name.vb: GetTypeName(Byte)
+references:
+- uid: Ubytec.Language.Tools
+  commentId: N:Ubytec.Language.Tools
+  href: Ubytec.html
+  name: Ubytec.Language.Tools
+  nameWithType: Ubytec.Language.Tools
+  fullName: Ubytec.Language.Tools
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Tools
+    name: Tools
+    href: Ubytec.Language.Tools.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Tools
+    name: Tools
+    href: Ubytec.Language.Tools.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Collections.Generic.Dictionary{System.String,System.Byte}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,System.Byte}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<string, byte>
+  nameWithType: Dictionary<string, byte>
+  fullName: System.Collections.Generic.Dictionary<string, byte>
+  nameWithType.vb: Dictionary(Of String, Byte)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, Byte)
+  name.vb: Dictionary(Of String, Byte)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Ubytec.Language.Tools.DeprecatedCompiler.CompileToX86*
+  commentId: Overload:Ubytec.Language.Tools.DeprecatedCompiler.CompileToX86
+  href: Ubytec.Language.Tools.DeprecatedCompiler.CompileToX86.html#Ubytec_Language_Tools_DeprecatedCompiler_CompileToX86_System_Byte___
+  name: CompileToX86
+  nameWithType: DeprecatedCompiler.CompileToX86
+  fullName: Ubytec.Language.Tools.DeprecatedCompiler.CompileToX86
+- uid: System.Byte[]
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.byte
+  name: byte[]
+  nameWithType: byte[]
+  fullName: byte[]
+  nameWithType.vb: Byte()
+  fullName.vb: Byte()
+  name.vb: Byte()
+  spec.csharp:
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: (
+  - name: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubytec.Language.Tools.DeprecatedCompiler.GetTypeSize*
+  commentId: Overload:Ubytec.Language.Tools.DeprecatedCompiler.GetTypeSize
+  href: Ubytec.Language.Tools.DeprecatedCompiler.GetTypeSize.html#Ubytec_Language_Tools_DeprecatedCompiler_GetTypeSize_System_Byte_
+  name: GetTypeSize
+  nameWithType: DeprecatedCompiler.GetTypeSize
+  fullName: Ubytec.Language.Tools.DeprecatedCompiler.GetTypeSize
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.byte
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Ubytec.Language.Tools.DeprecatedCompiler.GeneratePushInstruction*
+  commentId: Overload:Ubytec.Language.Tools.DeprecatedCompiler.GeneratePushInstruction
+  href: Ubytec.Language.Tools.DeprecatedCompiler.GeneratePushInstruction.html#Ubytec_Language_Tools_DeprecatedCompiler_GeneratePushInstruction_System_Byte_System_Byte___
+  name: GeneratePushInstruction
+  nameWithType: DeprecatedCompiler.GeneratePushInstruction
+  fullName: Ubytec.Language.Tools.DeprecatedCompiler.GeneratePushInstruction
+- uid: Ubytec.Language.Tools.DeprecatedCompiler.GetTypeName*
+  commentId: Overload:Ubytec.Language.Tools.DeprecatedCompiler.GetTypeName
+  href: Ubytec.Language.Tools.DeprecatedCompiler.GetTypeName.html#Ubytec_Language_Tools_DeprecatedCompiler_GetTypeName_System_Byte_
+  name: GetTypeName
+  nameWithType: DeprecatedCompiler.GetTypeName
+  fullName: Ubytec.Language.Tools.DeprecatedCompiler.GetTypeName
+memberLayout: SeparatePages

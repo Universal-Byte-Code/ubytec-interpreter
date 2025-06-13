@@ -2,7 +2,8 @@
 items:
 - uid: Ubytec.Language.HighLevel
   commentId: N:Ubytec.Language.HighLevel
-  id: Ubytec.Language.HighLevel
+  id: HighLevel
+  parent: Ubytec.Language
   children:
   - Ubytec.Language.HighLevel.AccessorContext
   - Ubytec.Language.HighLevel.Action
@@ -13,6 +14,7 @@ items:
   - Ubytec.Language.HighLevel.Func
   - Ubytec.Language.HighLevel.GlobalContext
   - Ubytec.Language.HighLevel.Interface
+  - Ubytec.Language.HighLevel.Interfaces
   - Ubytec.Language.HighLevel.LocalContext
   - Ubytec.Language.HighLevel.Module
   - Ubytec.Language.HighLevel.Property
@@ -29,6 +31,44 @@ items:
   assemblies:
   - Ubytec
 references:
+- uid: Ubytec.Language.HighLevel.Interfaces
+  commentId: N:Ubytec.Language.HighLevel.Interfaces
+  href: Ubytec.html
+  name: Ubytec.Language.HighLevel.Interfaces
+  nameWithType: Ubytec.Language.HighLevel.Interfaces
+  fullName: Ubytec.Language.HighLevel.Interfaces
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.HighLevel.Interfaces.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.HighLevel.Interfaces.html
 - uid: Ubytec.Language.HighLevel.AccessorContext
   commentId: T:Ubytec.Language.HighLevel.AccessorContext
   parent: Ubytec.Language.HighLevel
@@ -38,6 +78,7 @@ references:
   fullName: Ubytec.Language.HighLevel.AccessorContext
 - uid: Ubytec.Language.HighLevel.Action
   commentId: T:Ubytec.Language.HighLevel.Action
+  parent: Ubytec.Language.HighLevel
   href: Ubytec.Language.HighLevel.Action.html
   name: Action
   nameWithType: Action
@@ -50,42 +91,49 @@ references:
   fullName: Ubytec.Language.HighLevel.Argument
 - uid: Ubytec.Language.HighLevel.Class
   commentId: T:Ubytec.Language.HighLevel.Class
+  parent: Ubytec.Language.HighLevel
   href: Ubytec.Language.HighLevel.Class.html
   name: Class
   nameWithType: Class
   fullName: Ubytec.Language.HighLevel.Class
 - uid: Ubytec.Language.HighLevel.Enum
   commentId: T:Ubytec.Language.HighLevel.Enum
+  parent: Ubytec.Language.HighLevel
   href: Ubytec.Language.HighLevel.Enum.html
   name: Enum
   nameWithType: Enum
   fullName: Ubytec.Language.HighLevel.Enum
 - uid: Ubytec.Language.HighLevel.Field
   commentId: T:Ubytec.Language.HighLevel.Field
+  parent: Ubytec.Language.HighLevel
   href: Ubytec.Language.HighLevel.Field.html
   name: Field
   nameWithType: Field
   fullName: Ubytec.Language.HighLevel.Field
 - uid: Ubytec.Language.HighLevel.Func
   commentId: T:Ubytec.Language.HighLevel.Func
+  parent: Ubytec.Language.HighLevel
   href: Ubytec.Language.HighLevel.Func.html
   name: Func
   nameWithType: Func
   fullName: Ubytec.Language.HighLevel.Func
 - uid: Ubytec.Language.HighLevel.GlobalContext
   commentId: T:Ubytec.Language.HighLevel.GlobalContext
+  parent: Ubytec.Language.HighLevel
   href: Ubytec.Language.HighLevel.GlobalContext.html
   name: GlobalContext
   nameWithType: GlobalContext
   fullName: Ubytec.Language.HighLevel.GlobalContext
 - uid: Ubytec.Language.HighLevel.Interface
   commentId: T:Ubytec.Language.HighLevel.Interface
+  parent: Ubytec.Language.HighLevel
   href: Ubytec.Language.HighLevel.Interface.html
   name: Interface
   nameWithType: Interface
   fullName: Ubytec.Language.HighLevel.Interface
 - uid: Ubytec.Language.HighLevel.LocalContext
   commentId: T:Ubytec.Language.HighLevel.LocalContext
+  parent: Ubytec.Language.HighLevel
   href: Ubytec.Language.HighLevel.LocalContext.html
   name: LocalContext
   nameWithType: LocalContext
@@ -99,24 +147,28 @@ references:
   fullName: Ubytec.Language.HighLevel.Module
 - uid: Ubytec.Language.HighLevel.Property
   commentId: T:Ubytec.Language.HighLevel.Property
+  parent: Ubytec.Language.HighLevel
   href: Ubytec.Language.HighLevel.Property.html
   name: Property
   nameWithType: Property
   fullName: Ubytec.Language.HighLevel.Property
 - uid: Ubytec.Language.HighLevel.Record
   commentId: T:Ubytec.Language.HighLevel.Record
+  parent: Ubytec.Language.HighLevel
   href: Ubytec.Language.HighLevel.Record.html
   name: Record
   nameWithType: Record
   fullName: Ubytec.Language.HighLevel.Record
 - uid: Ubytec.Language.HighLevel.Struct
   commentId: T:Ubytec.Language.HighLevel.Struct
+  parent: Ubytec.Language.HighLevel
   href: Ubytec.Language.HighLevel.Struct.html
   name: Struct
   nameWithType: Struct
   fullName: Ubytec.Language.HighLevel.Struct
 - uid: Ubytec.Language.HighLevel.Variable
   commentId: T:Ubytec.Language.HighLevel.Variable
+  parent: Ubytec.Language.HighLevel
   href: Ubytec.Language.HighLevel.Variable.html
   name: Variable
   nameWithType: Variable
@@ -151,3 +203,4 @@ references:
   - uid: Ubytec.Language.HighLevel
     name: HighLevel
     href: Ubytec.Language.HighLevel.html
+memberLayout: SeparatePages

@@ -2,7 +2,8 @@
 items:
 - uid: Ubytec.Language.Syntax.Memory
   commentId: N:Ubytec.Language.Syntax.Memory
-  id: Ubytec.Language.Syntax.Memory
+  id: Memory
+  parent: Ubytec.Language.Syntax
   children:
   - Ubytec.Language.Syntax.Memory.MemoryRegionTemplate
   - Ubytec.Language.Syntax.Memory.MemoryTemplates
@@ -28,3 +29,4 @@ references:
   name: MemoryTemplates
   nameWithType: MemoryTemplates
   fullName: Ubytec.Language.Syntax.Memory.MemoryTemplates
+memberLayout: SeparatePages

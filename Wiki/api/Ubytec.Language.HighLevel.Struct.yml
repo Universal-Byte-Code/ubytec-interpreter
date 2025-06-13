@@ -761,14 +761,14 @@ references:
   fullName: System
 - uid: Ubytec.Language.HighLevel.Struct.Name*
   commentId: Overload:Ubytec.Language.HighLevel.Struct.Name
-  href: Ubytec.Language.HighLevel.Struct.html#Ubytec_Language_HighLevel_Struct_Name
+  href: Ubytec.Language.HighLevel.Struct.Name.html#Ubytec_Language_HighLevel_Struct_Name
   name: Name
   nameWithType: Struct.Name
   fullName: Ubytec.Language.HighLevel.Struct.Name
 - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Name
   commentId: P:Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Name
   parent: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
-  href: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecContextEntity_Name
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Name.html#Ubytec_Language_HighLevel_Interfaces_IUbytecContextEntity_Name
   name: Name
   nameWithType: IUbytecContextEntity.Name
   fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Name
@@ -785,14 +785,14 @@ references:
   name.vb: String
 - uid: Ubytec.Language.HighLevel.Struct.ID*
   commentId: Overload:Ubytec.Language.HighLevel.Struct.ID
-  href: Ubytec.Language.HighLevel.Struct.html#Ubytec_Language_HighLevel_Struct_ID
+  href: Ubytec.Language.HighLevel.Struct.ID.html#Ubytec_Language_HighLevel_Struct_ID
   name: ID
   nameWithType: Struct.ID
   fullName: Ubytec.Language.HighLevel.Struct.ID
 - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
   commentId: P:Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
   parent: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
-  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_ID
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_ID
   name: ID
   nameWithType: IUbytecHighLevelEntity.ID
   fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
@@ -806,14 +806,14 @@ references:
   fullName: System.Guid
 - uid: Ubytec.Language.HighLevel.Struct.Modifiers*
   commentId: Overload:Ubytec.Language.HighLevel.Struct.Modifiers
-  href: Ubytec.Language.HighLevel.Struct.html#Ubytec_Language_HighLevel_Struct_Modifiers
+  href: Ubytec.Language.HighLevel.Struct.Modifiers.html#Ubytec_Language_HighLevel_Struct_Modifiers
   name: Modifiers
   nameWithType: Struct.Modifiers
   fullName: Ubytec.Language.HighLevel.Struct.Modifiers
 - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Modifiers
   commentId: P:Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Modifiers
   parent: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
-  href: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecContextEntity_Modifiers
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Modifiers.html#Ubytec_Language_HighLevel_Interfaces_IUbytecContextEntity_Modifiers
   name: Modifiers
   nameWithType: IUbytecContextEntity.Modifiers
   fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.Modifiers
@@ -880,7 +880,7 @@ references:
     href: Ubytec.Language.Syntax.TypeSystem.html
 - uid: Ubytec.Language.HighLevel.Struct.Fields*
   commentId: Overload:Ubytec.Language.HighLevel.Struct.Fields
-  href: Ubytec.Language.HighLevel.Struct.html#Ubytec_Language_HighLevel_Struct_Fields
+  href: Ubytec.Language.HighLevel.Struct.Fields.html#Ubytec_Language_HighLevel_Struct_Fields
   name: Fields
   nameWithType: Struct.Fields
   fullName: Ubytec.Language.HighLevel.Struct.Fields
@@ -907,7 +907,7 @@ references:
   - name: )
 - uid: Ubytec.Language.HighLevel.Struct.Properties*
   commentId: Overload:Ubytec.Language.HighLevel.Struct.Properties
-  href: Ubytec.Language.HighLevel.Struct.html#Ubytec_Language_HighLevel_Struct_Properties
+  href: Ubytec.Language.HighLevel.Struct.Properties.html#Ubytec_Language_HighLevel_Struct_Properties
   name: Properties
   nameWithType: Struct.Properties
   fullName: Ubytec.Language.HighLevel.Struct.Properties
@@ -934,7 +934,7 @@ references:
   - name: )
 - uid: Ubytec.Language.HighLevel.Struct.Functions*
   commentId: Overload:Ubytec.Language.HighLevel.Struct.Functions
-  href: Ubytec.Language.HighLevel.Struct.html#Ubytec_Language_HighLevel_Struct_Functions
+  href: Ubytec.Language.HighLevel.Struct.Functions.html#Ubytec_Language_HighLevel_Struct_Functions
   name: Functions
   nameWithType: Struct.Functions
   fullName: Ubytec.Language.HighLevel.Struct.Functions
@@ -961,7 +961,7 @@ references:
   - name: )
 - uid: Ubytec.Language.HighLevel.Struct.Actions*
   commentId: Overload:Ubytec.Language.HighLevel.Struct.Actions
-  href: Ubytec.Language.HighLevel.Struct.html#Ubytec_Language_HighLevel_Struct_Actions
+  href: Ubytec.Language.HighLevel.Struct.Actions.html#Ubytec_Language_HighLevel_Struct_Actions
   name: Actions
   nameWithType: Struct.Actions
   fullName: Ubytec.Language.HighLevel.Struct.Actions
@@ -988,7 +988,7 @@ references:
   - name: )
 - uid: Ubytec.Language.HighLevel.Struct.Locals*
   commentId: Overload:Ubytec.Language.HighLevel.Struct.Locals
-  href: Ubytec.Language.HighLevel.Struct.html#Ubytec_Language_HighLevel_Struct_Locals
+  href: Ubytec.Language.HighLevel.Struct.Locals.html#Ubytec_Language_HighLevel_Struct_Locals
   name: Locals
   nameWithType: Struct.Locals
   fullName: Ubytec.Language.HighLevel.Struct.Locals
@@ -1040,7 +1040,7 @@ references:
   - name: )
 - uid: Ubytec.Language.HighLevel.Struct.Globals*
   commentId: Overload:Ubytec.Language.HighLevel.Struct.Globals
-  href: Ubytec.Language.HighLevel.Struct.html#Ubytec_Language_HighLevel_Struct_Globals
+  href: Ubytec.Language.HighLevel.Struct.Globals.html#Ubytec_Language_HighLevel_Struct_Globals
   name: Globals
   nameWithType: Struct.Globals
   fullName: Ubytec.Language.HighLevel.Struct.Globals
@@ -1064,7 +1064,7 @@ references:
   - name: '?'
 - uid: Ubytec.Language.HighLevel.Struct.#ctor*
   commentId: Overload:Ubytec.Language.HighLevel.Struct.#ctor
-  href: Ubytec.Language.HighLevel.Struct.html#Ubytec_Language_HighLevel_Struct__ctor_System_String_Ubytec_Language_HighLevel_Field___Ubytec_Language_HighLevel_Property___Ubytec_Language_HighLevel_Func___Ubytec_Language_HighLevel_Action___System_Guid_System_Nullable_Ubytec_Language_HighLevel_LocalContext__System_Nullable_Ubytec_Language_HighLevel_GlobalContext__Ubytec_Language_Syntax_TypeSystem_Types_TypeModifiers_
+  href: Ubytec.Language.HighLevel.Struct.-ctor.html#Ubytec_Language_HighLevel_Struct__ctor_System_String_Ubytec_Language_HighLevel_Field___Ubytec_Language_HighLevel_Property___Ubytec_Language_HighLevel_Func___Ubytec_Language_HighLevel_Action___System_Guid_System_Nullable_Ubytec_Language_HighLevel_LocalContext__System_Nullable_Ubytec_Language_HighLevel_GlobalContext__Ubytec_Language_Syntax_TypeSystem_Types_TypeModifiers_
   name: Struct
   nameWithType: Struct.Struct
   fullName: Ubytec.Language.HighLevel.Struct.Struct
@@ -1073,46 +1073,46 @@ references:
   name.vb: New
 - uid: Ubytec.Language.HighLevel.Struct.Validate*
   commentId: Overload:Ubytec.Language.HighLevel.Struct.Validate
-  href: Ubytec.Language.HighLevel.Struct.html#Ubytec_Language_HighLevel_Struct_Validate
+  href: Ubytec.Language.HighLevel.Struct.Validate.html#Ubytec_Language_HighLevel_Struct_Validate
   name: Validate
   nameWithType: Struct.Validate
   fullName: Ubytec.Language.HighLevel.Struct.Validate
 - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
   commentId: M:Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
   parent: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
-  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
   name: Validate()
   nameWithType: IUbytecHighLevelEntity.Validate()
   fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate()
   spec.csharp:
   - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
     name: Validate
-    href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
+    href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
   - name: (
   - name: )
   spec.vb:
   - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
     name: Validate
-    href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
+    href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
   - name: (
   - name: )
 - uid: Ubytec.Language.HighLevel.Struct.Compile*
   commentId: Overload:Ubytec.Language.HighLevel.Struct.Compile
-  href: Ubytec.Language.HighLevel.Struct.html#Ubytec_Language_HighLevel_Struct_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  href: Ubytec.Language.HighLevel.Struct.Compile.html#Ubytec_Language_HighLevel_Struct_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
   name: Compile
   nameWithType: Struct.Compile
   fullName: Ubytec.Language.HighLevel.Struct.Compile
 - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   commentId: M:Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   parent: Ubytec.Language.IUbytecEntity
-  href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
   name: Compile(CompilationScopes)
   nameWithType: IUbytecEntity.Compile(CompilationScopes)
   fullName: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   spec.csharp:
   - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
     name: Compile
-    href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+    href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
   - name: (
   - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
     name: CompilationScopes
@@ -1121,7 +1121,7 @@ references:
   spec.vb:
   - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
     name: Compile
-    href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+    href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
   - name: (
   - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
     name: CompilationScopes
@@ -1172,3 +1172,4 @@ references:
   - uid: Ubytec.Language.Syntax.Scopes
     name: Scopes
     href: Ubytec.Language.Syntax.Scopes.html
+memberLayout: SeparatePages

@@ -35,6 +35,8 @@ items:
   - System.Object
   - System.Exception
   derivedClasses:
+  - Ubytec.Language.Exceptions.FetchLexiconException
+  - Ubytec.Language.Exceptions.IlegalTokenException
   - Ubytec.Language.Exceptions.LanguageVersionException
   - Ubytec.Language.Exceptions.RegisterDataException
   - Ubytec.Language.Exceptions.SyntaxException
@@ -609,7 +611,7 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.runtime.serialization
 - uid: Ubytec.Language.Exceptions.UbytecException.#ctor*
   commentId: Overload:Ubytec.Language.Exceptions.UbytecException.#ctor
-  href: Ubytec.Language.Exceptions.UbytecException.html#Ubytec_Language_Exceptions_UbytecException__ctor_System_String_System_String_
+  href: Ubytec.Language.Exceptions.UbytecException.-ctor.html#Ubytec_Language_Exceptions_UbytecException__ctor_System_String_System_String_
   name: UbytecException
   nameWithType: UbytecException.UbytecException
   fullName: Ubytec.Language.Exceptions.UbytecException.UbytecException
@@ -629,7 +631,7 @@ references:
   name.vb: String
 - uid: Ubytec.Language.Exceptions.UbytecException.ErrorCode*
   commentId: Overload:Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  href: Ubytec.Language.Exceptions.UbytecException.html#Ubytec_Language_Exceptions_UbytecException_ErrorCode
+  href: Ubytec.Language.Exceptions.UbytecException.ErrorCode.html#Ubytec_Language_Exceptions_UbytecException_ErrorCode
   name: ErrorCode
   nameWithType: UbytecException.ErrorCode
   fullName: Ubytec.Language.Exceptions.UbytecException.ErrorCode
@@ -662,7 +664,7 @@ references:
   fullName: System.Exception.Data
 - uid: Ubytec.Language.Exceptions.UbytecException.Data*
   commentId: Overload:Ubytec.Language.Exceptions.UbytecException.Data
-  href: Ubytec.Language.Exceptions.UbytecException.html#Ubytec_Language_Exceptions_UbytecException_Data
+  href: Ubytec.Language.Exceptions.UbytecException.Data.html#Ubytec_Language_Exceptions_UbytecException_Data
   name: Data
   nameWithType: UbytecException.Data
   fullName: Ubytec.Language.Exceptions.UbytecException.Data
@@ -703,7 +705,7 @@ references:
   fullName: System.Exception.Message
 - uid: Ubytec.Language.Exceptions.UbytecException.Message*
   commentId: Overload:Ubytec.Language.Exceptions.UbytecException.Message
-  href: Ubytec.Language.Exceptions.UbytecException.html#Ubytec_Language_Exceptions_UbytecException_Message
+  href: Ubytec.Language.Exceptions.UbytecException.Message.html#Ubytec_Language_Exceptions_UbytecException_Message
   name: Message
   nameWithType: UbytecException.Message
   fullName: Ubytec.Language.Exceptions.UbytecException.Message
@@ -717,7 +719,8 @@ references:
   fullName: System.Exception.HelpLink
 - uid: Ubytec.Language.Exceptions.UbytecException.HelpLink*
   commentId: Overload:Ubytec.Language.Exceptions.UbytecException.HelpLink
-  href: Ubytec.Language.Exceptions.UbytecException.html#Ubytec_Language_Exceptions_UbytecException_HelpLink
+  href: Ubytec.Language.Exceptions.UbytecException.HelpLink.html#Ubytec_Language_Exceptions_UbytecException_HelpLink
   name: HelpLink
   nameWithType: UbytecException.HelpLink
   fullName: Ubytec.Language.Exceptions.UbytecException.HelpLink
+memberLayout: SeparatePages

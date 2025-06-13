@@ -1,0 +1,25 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Tools.Optimization
+  commentId: N:Ubytec.Language.Tools.Optimization
+  id: Optimization
+  parent: Ubytec.Language.Tools
+  children:
+  - Ubytec.Language.Tools.Optimization.Optimizer
+  langs:
+  - csharp
+  - vb
+  name: Ubytec.Language.Tools.Optimization
+  nameWithType: Ubytec.Language.Tools.Optimization
+  fullName: Ubytec.Language.Tools.Optimization
+  type: Namespace
+  assemblies:
+  - Ubytec
+references:
+- uid: Ubytec.Language.Tools.Optimization.Optimizer
+  commentId: T:Ubytec.Language.Tools.Optimization.Optimizer
+  href: Ubytec.Language.Tools.Optimization.Optimizer.html
+  name: Optimizer
+  nameWithType: Optimizer
+  fullName: Ubytec.Language.Tools.Optimization.Optimizer
+memberLayout: SeparatePages

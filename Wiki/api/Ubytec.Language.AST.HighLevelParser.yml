@@ -5,8 +5,37 @@ items:
   id: HighLevelParser
   parent: Ubytec.Language.AST
   children:
+  - Ubytec.Language.AST.HighLevelParser.Consume(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.Func{System.String,System.Boolean},System.String)
+  - Ubytec.Language.AST.HighLevelParser.Consume(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.String,System.String)
+  - Ubytec.Language.AST.HighLevelParser.ConsumeSymbol(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.String)
+  - Ubytec.Language.AST.HighLevelParser.ConsumeType(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,Ubytec.Language.Syntax.TypeSystem.Types.UType@)
+  - Ubytec.Language.AST.HighLevelParser.IsKeyword(Ubytec.Language.Syntax.Model.SyntaxToken,System.String)
+  - Ubytec.Language.AST.HighLevelParser.IsStorageType(Ubytec.Language.Syntax.Model.SyntaxToken)
+  - Ubytec.Language.AST.HighLevelParser.LookAhead(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32,System.String,System.String)
+  - Ubytec.Language.AST.HighLevelParser.ParseAction(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  - Ubytec.Language.AST.HighLevelParser.ParseClass(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  - Ubytec.Language.AST.HighLevelParser.ParseEnum(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  - Ubytec.Language.AST.HighLevelParser.ParseEnumConstant(Ubytec.Language.Syntax.Model.SyntaxToken)
+  - Ubytec.Language.AST.HighLevelParser.ParseField(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  - Ubytec.Language.AST.HighLevelParser.ParseFunc(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  - Ubytec.Language.AST.HighLevelParser.ParseGlobal(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  - Ubytec.Language.AST.HighLevelParser.ParseHeaderArguments(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  - Ubytec.Language.AST.HighLevelParser.ParseInterface(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  - Ubytec.Language.AST.HighLevelParser.ParseLocal(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  - Ubytec.Language.AST.HighLevelParser.ParseModifierFlags(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
   - Ubytec.Language.AST.HighLevelParser.ParseModule(Ubytec.Language.Syntax.Model.SyntaxToken[])
+  - Ubytec.Language.AST.HighLevelParser.ParseModuleInternal(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
   - Ubytec.Language.AST.HighLevelParser.ParseModuleWithErrors(Ubytec.Language.Syntax.Model.SyntaxToken[])
+  - Ubytec.Language.AST.HighLevelParser.ParseOptionalBody(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.Nullable{Ubytec.Language.HighLevel.LocalContext}@)
+  - Ubytec.Language.AST.HighLevelParser.ParseParamList(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.Collections.Generic.List{Ubytec.Language.HighLevel.Argument}@)
+  - Ubytec.Language.AST.HighLevelParser.ParseProperty(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  - Ubytec.Language.AST.HighLevelParser.ParseRecord(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  - Ubytec.Language.AST.HighLevelParser.ParseStruct(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  - Ubytec.Language.AST.HighLevelParser.ParseUType(Ubytec.Language.Syntax.Model.SyntaxToken)
+  - Ubytec.Language.AST.HighLevelParser.ParseVariable(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  - Ubytec.Language.AST.HighLevelParser.SkipTrivia(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  - Ubytec.Language.AST.HighLevelParser._errors
+  - Ubytec.Language.AST.HighLevelParser._modMap
   langs:
   - csharp
   - vb
@@ -38,6 +67,33 @@ items:
   - System.Object.MemberwiseClone
   - System.Object.ReferenceEquals(System.Object,System.Object)
   - System.Object.ToString
+- uid: Ubytec.Language.AST.HighLevelParser._errors
+  commentId: F:Ubytec.Language.AST.HighLevelParser._errors
+  id: _errors
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: _errors
+  nameWithType: HighLevelParser._errors
+  fullName: Ubytec.Language.AST.HighLevelParser._errors
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _errors
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 11
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static List<HighLevelParser.ParseError> _errors
+    return:
+      type: System.Collections.Generic.List{Ubytec.Language.AST.HighLevelParser.ParseError}
+    content.vb: Private Shared _errors As List(Of HighLevelParser.ParseError)
 - uid: Ubytec.Language.AST.HighLevelParser.ParseModule(Ubytec.Language.Syntax.Model.SyntaxToken[])
   commentId: M:Ubytec.Language.AST.HighLevelParser.ParseModule(Ubytec.Language.Syntax.Model.SyntaxToken[])
   id: ParseModule(Ubytec.Language.Syntax.Model.SyntaxToken[])
@@ -106,6 +162,1013 @@ items:
   nameWithType.vb: HighLevelParser.ParseModuleWithErrors(SyntaxToken())
   fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseModuleWithErrors(Ubytec.Language.Syntax.Model.SyntaxToken())
   name.vb: ParseModuleWithErrors(SyntaxToken())
+- uid: Ubytec.Language.AST.HighLevelParser.ParseModuleInternal(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseModuleInternal(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  id: ParseModuleInternal(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseModuleInternal(SyntaxToken[], ref int)
+  nameWithType: HighLevelParser.ParseModuleInternal(SyntaxToken[], ref int)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseModuleInternal(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseModuleInternal
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 31
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static Module ParseModuleInternal(SyntaxToken[] toks, ref int i)
+    parameters:
+    - id: toks
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    return:
+      type: Ubytec.Language.HighLevel.Module
+    content.vb: Private Shared Function ParseModuleInternal(toks As SyntaxToken(), i As Integer) As [Module]
+  overload: Ubytec.Language.AST.HighLevelParser.ParseModuleInternal*
+  nameWithType.vb: HighLevelParser.ParseModuleInternal(SyntaxToken(), Integer)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseModuleInternal(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer)
+  name.vb: ParseModuleInternal(SyntaxToken(), Integer)
+- uid: Ubytec.Language.AST.HighLevelParser.ParseGlobal(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseGlobal(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  id: ParseGlobal(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseGlobal(SyntaxToken[], ref int)
+  nameWithType: HighLevelParser.ParseGlobal(SyntaxToken[], ref int)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseGlobal(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseGlobal
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 143
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static GlobalContext ParseGlobal(SyntaxToken[] t, ref int i)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    return:
+      type: Ubytec.Language.HighLevel.GlobalContext
+    content.vb: Private Shared Function ParseGlobal(t As SyntaxToken(), i As Integer) As GlobalContext
+  overload: Ubytec.Language.AST.HighLevelParser.ParseGlobal*
+  nameWithType.vb: HighLevelParser.ParseGlobal(SyntaxToken(), Integer)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseGlobal(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer)
+  name.vb: ParseGlobal(SyntaxToken(), Integer)
+- uid: Ubytec.Language.AST.HighLevelParser.ParseLocal(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseLocal(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  id: ParseLocal(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseLocal(SyntaxToken[], ref int)
+  nameWithType: HighLevelParser.ParseLocal(SyntaxToken[], ref int)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseLocal(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseLocal
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 165
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static LocalContext ParseLocal(SyntaxToken[] t, ref int i)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    return:
+      type: Ubytec.Language.HighLevel.LocalContext
+    content.vb: Private Shared Function ParseLocal(t As SyntaxToken(), i As Integer) As LocalContext
+  overload: Ubytec.Language.AST.HighLevelParser.ParseLocal*
+  nameWithType.vb: HighLevelParser.ParseLocal(SyntaxToken(), Integer)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseLocal(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer)
+  name.vb: ParseLocal(SyntaxToken(), Integer)
+- uid: Ubytec.Language.AST.HighLevelParser.ParseField(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseField(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  id: ParseField(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseField(SyntaxToken[], ref int)
+  nameWithType: HighLevelParser.ParseField(SyntaxToken[], ref int)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseField(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseField
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 187
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static Field ParseField(SyntaxToken[] t, ref int i)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    return:
+      type: Ubytec.Language.HighLevel.Field
+    content.vb: Private Shared Function ParseField(t As SyntaxToken(), i As Integer) As Field
+  overload: Ubytec.Language.AST.HighLevelParser.ParseField*
+  nameWithType.vb: HighLevelParser.ParseField(SyntaxToken(), Integer)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseField(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer)
+  name.vb: ParseField(SyntaxToken(), Integer)
+- uid: Ubytec.Language.AST.HighLevelParser.ParseVariable(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseVariable(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  id: ParseVariable(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseVariable(SyntaxToken[], ref int)
+  nameWithType: HighLevelParser.ParseVariable(SyntaxToken[], ref int)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseVariable(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseVariable
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 202
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static Variable ParseVariable(SyntaxToken[] t, ref int i)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    return:
+      type: Ubytec.Language.HighLevel.Variable
+    content.vb: Private Shared Function ParseVariable(t As SyntaxToken(), i As Integer) As Variable
+  overload: Ubytec.Language.AST.HighLevelParser.ParseVariable*
+  nameWithType.vb: HighLevelParser.ParseVariable(SyntaxToken(), Integer)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseVariable(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer)
+  name.vb: ParseVariable(SyntaxToken(), Integer)
+- uid: Ubytec.Language.AST.HighLevelParser.ParseProperty(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseProperty(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  id: ParseProperty(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseProperty(SyntaxToken[], ref int)
+  nameWithType: HighLevelParser.ParseProperty(SyntaxToken[], ref int)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseProperty(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseProperty
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 214
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static Property ParseProperty(SyntaxToken[] t, ref int i)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    return:
+      type: Ubytec.Language.HighLevel.Property
+    content.vb: Private Shared Function ParseProperty(t As SyntaxToken(), i As Integer) As [Property]
+  overload: Ubytec.Language.AST.HighLevelParser.ParseProperty*
+  nameWithType.vb: HighLevelParser.ParseProperty(SyntaxToken(), Integer)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseProperty(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer)
+  name.vb: ParseProperty(SyntaxToken(), Integer)
+- uid: Ubytec.Language.AST.HighLevelParser.ParseFunc(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseFunc(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  id: ParseFunc(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseFunc(SyntaxToken[], ref int)
+  nameWithType: HighLevelParser.ParseFunc(SyntaxToken[], ref int)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseFunc(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseFunc
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 271
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static Func ParseFunc(SyntaxToken[] t, ref int i)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    return:
+      type: Ubytec.Language.HighLevel.Func
+    content.vb: Private Shared Function ParseFunc(t As SyntaxToken(), i As Integer) As Func
+  overload: Ubytec.Language.AST.HighLevelParser.ParseFunc*
+  nameWithType.vb: HighLevelParser.ParseFunc(SyntaxToken(), Integer)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseFunc(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer)
+  name.vb: ParseFunc(SyntaxToken(), Integer)
+- uid: Ubytec.Language.AST.HighLevelParser.ParseAction(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseAction(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  id: ParseAction(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseAction(SyntaxToken[], ref int)
+  nameWithType: HighLevelParser.ParseAction(SyntaxToken[], ref int)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseAction(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseAction
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 299
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static Action ParseAction(SyntaxToken[] t, ref int i)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    return:
+      type: Ubytec.Language.HighLevel.Action
+    content.vb: Private Shared Function ParseAction(t As SyntaxToken(), i As Integer) As Action
+  overload: Ubytec.Language.AST.HighLevelParser.ParseAction*
+  nameWithType.vb: HighLevelParser.ParseAction(SyntaxToken(), Integer)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseAction(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer)
+  name.vb: ParseAction(SyntaxToken(), Integer)
+- uid: Ubytec.Language.AST.HighLevelParser.ParseClass(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseClass(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  id: ParseClass(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseClass(SyntaxToken[], ref int)
+  nameWithType: HighLevelParser.ParseClass(SyntaxToken[], ref int)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseClass(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseClass
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 317
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static Class ParseClass(SyntaxToken[] t, ref int i)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    return:
+      type: Ubytec.Language.HighLevel.Class
+    content.vb: Private Shared Function ParseClass(t As SyntaxToken(), i As Integer) As [Class]
+  overload: Ubytec.Language.AST.HighLevelParser.ParseClass*
+  nameWithType.vb: HighLevelParser.ParseClass(SyntaxToken(), Integer)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseClass(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer)
+  name.vb: ParseClass(SyntaxToken(), Integer)
+- uid: Ubytec.Language.AST.HighLevelParser.ParseEnum(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseEnum(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  id: ParseEnum(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseEnum(SyntaxToken[], ref int)
+  nameWithType: HighLevelParser.ParseEnum(SyntaxToken[], ref int)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseEnum(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseEnum
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 379
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static Enum ParseEnum(SyntaxToken[] t, ref int i)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    return:
+      type: Ubytec.Language.HighLevel.Enum
+    content.vb: Private Shared Function ParseEnum(t As SyntaxToken(), i As Integer) As [Enum]
+  overload: Ubytec.Language.AST.HighLevelParser.ParseEnum*
+  nameWithType.vb: HighLevelParser.ParseEnum(SyntaxToken(), Integer)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseEnum(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer)
+  name.vb: ParseEnum(SyntaxToken(), Integer)
+- uid: Ubytec.Language.AST.HighLevelParser.ParseStruct(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseStruct(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  id: ParseStruct(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseStruct(SyntaxToken[], ref int)
+  nameWithType: HighLevelParser.ParseStruct(SyntaxToken[], ref int)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseStruct(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseStruct
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 450
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static Struct ParseStruct(SyntaxToken[] t, ref int i)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    return:
+      type: Ubytec.Language.HighLevel.Struct
+    content.vb: Private Shared Function ParseStruct(t As SyntaxToken(), i As Integer) As Struct
+  overload: Ubytec.Language.AST.HighLevelParser.ParseStruct*
+  nameWithType.vb: HighLevelParser.ParseStruct(SyntaxToken(), Integer)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseStruct(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer)
+  name.vb: ParseStruct(SyntaxToken(), Integer)
+- uid: Ubytec.Language.AST.HighLevelParser.ParseInterface(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseInterface(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  id: ParseInterface(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseInterface(SyntaxToken[], ref int)
+  nameWithType: HighLevelParser.ParseInterface(SyntaxToken[], ref int)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseInterface(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseInterface
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 509
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static Interface ParseInterface(SyntaxToken[] t, ref int i)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    return:
+      type: Ubytec.Language.HighLevel.Interface
+    content.vb: Private Shared Function ParseInterface(t As SyntaxToken(), i As Integer) As [Interface]
+  overload: Ubytec.Language.AST.HighLevelParser.ParseInterface*
+  nameWithType.vb: HighLevelParser.ParseInterface(SyntaxToken(), Integer)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseInterface(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer)
+  name.vb: ParseInterface(SyntaxToken(), Integer)
+- uid: Ubytec.Language.AST.HighLevelParser.ParseRecord(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseRecord(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  id: ParseRecord(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseRecord(SyntaxToken[], ref int)
+  nameWithType: HighLevelParser.ParseRecord(SyntaxToken[], ref int)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseRecord(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseRecord
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 577
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static Record ParseRecord(SyntaxToken[] t, ref int i)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    return:
+      type: Ubytec.Language.HighLevel.Record
+    content.vb: Private Shared Function ParseRecord(t As SyntaxToken(), i As Integer) As Record
+  overload: Ubytec.Language.AST.HighLevelParser.ParseRecord*
+  nameWithType.vb: HighLevelParser.ParseRecord(SyntaxToken(), Integer)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseRecord(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer)
+  name.vb: ParseRecord(SyntaxToken(), Integer)
+- uid: Ubytec.Language.AST.HighLevelParser.ParseEnumConstant(Ubytec.Language.Syntax.Model.SyntaxToken)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseEnumConstant(Ubytec.Language.Syntax.Model.SyntaxToken)
+  id: ParseEnumConstant(Ubytec.Language.Syntax.Model.SyntaxToken)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseEnumConstant(SyntaxToken)
+  nameWithType: HighLevelParser.ParseEnumConstant(SyntaxToken)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseEnumConstant(Ubytec.Language.Syntax.Model.SyntaxToken)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseEnumConstant
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 666
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static long ParseEnumConstant(SyntaxToken tok)
+    parameters:
+    - id: tok
+      type: Ubytec.Language.Syntax.Model.SyntaxToken
+    return:
+      type: System.Int64
+    content.vb: Private Shared Function ParseEnumConstant(tok As SyntaxToken) As Long
+  overload: Ubytec.Language.AST.HighLevelParser.ParseEnumConstant*
+- uid: Ubytec.Language.AST.HighLevelParser.ParseOptionalBody(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.Nullable{Ubytec.Language.HighLevel.LocalContext}@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseOptionalBody(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.Nullable{Ubytec.Language.HighLevel.LocalContext}@)
+  id: ParseOptionalBody(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.Nullable{Ubytec.Language.HighLevel.LocalContext}@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseOptionalBody(SyntaxToken[], ref int, out LocalContext?)
+  nameWithType: HighLevelParser.ParseOptionalBody(SyntaxToken[], ref int, out LocalContext?)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseOptionalBody(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int, out Ubytec.Language.HighLevel.LocalContext?)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseOptionalBody
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 678
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static SyntaxSentence? ParseOptionalBody(SyntaxToken[] t, ref int i, out LocalContext? extractedLocals)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    - id: extractedLocals
+      type: System.Nullable{Ubytec.Language.HighLevel.LocalContext}
+    return:
+      type: Ubytec.Language.Syntax.Model.SyntaxSentence
+    content.vb: Private Shared Function ParseOptionalBody(t As SyntaxToken(), i As Integer, extractedLocals As LocalContext?) As SyntaxSentence
+  overload: Ubytec.Language.AST.HighLevelParser.ParseOptionalBody*
+  nameWithType.vb: HighLevelParser.ParseOptionalBody(SyntaxToken(), Integer, LocalContext?)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseOptionalBody(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer, Ubytec.Language.HighLevel.LocalContext?)
+  name.vb: ParseOptionalBody(SyntaxToken(), Integer, LocalContext?)
+- uid: Ubytec.Language.AST.HighLevelParser.SkipTrivia(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.SkipTrivia(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  id: SkipTrivia(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: SkipTrivia(SyntaxToken[], ref int)
+  nameWithType: HighLevelParser.SkipTrivia(SyntaxToken[], ref int)
+  fullName: Ubytec.Language.AST.HighLevelParser.SkipTrivia(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: SkipTrivia
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 729
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static void SkipTrivia(SyntaxToken[] t, ref int i)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    content.vb: Private Shared Sub SkipTrivia(t As SyntaxToken(), i As Integer)
+  overload: Ubytec.Language.AST.HighLevelParser.SkipTrivia*
+  nameWithType.vb: HighLevelParser.SkipTrivia(SyntaxToken(), Integer)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.SkipTrivia(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer)
+  name.vb: SkipTrivia(SyntaxToken(), Integer)
+- uid: Ubytec.Language.AST.HighLevelParser.ConsumeSymbol(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.String)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ConsumeSymbol(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.String)
+  id: ConsumeSymbol(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.String)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ConsumeSymbol(SyntaxToken[], ref int, string?)
+  nameWithType: HighLevelParser.ConsumeSymbol(SyntaxToken[], ref int, string?)
+  fullName: Ubytec.Language.AST.HighLevelParser.ConsumeSymbol(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int, string?)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ConsumeSymbol
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 738
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static SyntaxToken ConsumeSymbol(SyntaxToken[] t, ref int i, string? src = null)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    - id: src
+      type: System.String
+    return:
+      type: Ubytec.Language.Syntax.Model.SyntaxToken
+    content.vb: Private Shared Function ConsumeSymbol(t As SyntaxToken(), i As Integer, src As String = Nothing) As SyntaxToken
+  overload: Ubytec.Language.AST.HighLevelParser.ConsumeSymbol*
+  nameWithType.vb: HighLevelParser.ConsumeSymbol(SyntaxToken(), Integer, String)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ConsumeSymbol(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer, String)
+  name.vb: ConsumeSymbol(SyntaxToken(), Integer, String)
+- uid: Ubytec.Language.AST.HighLevelParser.ConsumeType(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,Ubytec.Language.Syntax.TypeSystem.Types.UType@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ConsumeType(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,Ubytec.Language.Syntax.TypeSystem.Types.UType@)
+  id: ConsumeType(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,Ubytec.Language.Syntax.TypeSystem.Types.UType@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ConsumeType(SyntaxToken[], ref int, out UType)
+  nameWithType: HighLevelParser.ConsumeType(SyntaxToken[], ref int, out Types.UType)
+  fullName: Ubytec.Language.AST.HighLevelParser.ConsumeType(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int, out Ubytec.Language.Syntax.TypeSystem.Types.UType)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ConsumeType
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 744
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static SyntaxToken ConsumeType(SyntaxToken[] t, ref int i, out Types.UType ut)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    - id: ut
+      type: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    return:
+      type: Ubytec.Language.Syntax.Model.SyntaxToken
+    content.vb: Private Shared Function ConsumeType(t As SyntaxToken(), i As Integer, ut As Types.UType) As SyntaxToken
+  overload: Ubytec.Language.AST.HighLevelParser.ConsumeType*
+  nameWithType.vb: HighLevelParser.ConsumeType(SyntaxToken(), Integer, Types.UType)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ConsumeType(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer, Ubytec.Language.Syntax.TypeSystem.Types.UType)
+  name.vb: ConsumeType(SyntaxToken(), Integer, UType)
+- uid: Ubytec.Language.AST.HighLevelParser.Consume(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.String,System.String)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.Consume(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.String,System.String)
+  id: Consume(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.String,System.String)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: Consume(SyntaxToken[], ref int, string, string?)
+  nameWithType: HighLevelParser.Consume(SyntaxToken[], ref int, string, string?)
+  fullName: Ubytec.Language.AST.HighLevelParser.Consume(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int, string, string?)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Consume
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 753
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static SyntaxToken Consume(SyntaxToken[] t, ref int i, string scope, string? src = null)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    - id: scope
+      type: System.String
+    - id: src
+      type: System.String
+    return:
+      type: Ubytec.Language.Syntax.Model.SyntaxToken
+    content.vb: Private Shared Function Consume(t As SyntaxToken(), i As Integer, scope As String, src As String = Nothing) As SyntaxToken
+  overload: Ubytec.Language.AST.HighLevelParser.Consume*
+  nameWithType.vb: HighLevelParser.Consume(SyntaxToken(), Integer, String, String)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.Consume(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer, String, String)
+  name.vb: Consume(SyntaxToken(), Integer, String, String)
+- uid: Ubytec.Language.AST.HighLevelParser.Consume(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.Func{System.String,System.Boolean},System.String)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.Consume(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.Func{System.String,System.Boolean},System.String)
+  id: Consume(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.Func{System.String,System.Boolean},System.String)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: Consume(SyntaxToken[], ref int, Func<string, bool>, string?)
+  nameWithType: HighLevelParser.Consume(SyntaxToken[], ref int, Func<string, bool>, string?)
+  fullName: Ubytec.Language.AST.HighLevelParser.Consume(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int, System.Func<string, bool>, string?)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Consume
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 757
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static SyntaxToken Consume(SyntaxToken[] t, ref int i, Func<string, bool> scopePred, string? src = null)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    - id: scopePred
+      type: System.Func{System.String,System.Boolean}
+    - id: src
+      type: System.String
+    return:
+      type: Ubytec.Language.Syntax.Model.SyntaxToken
+    content.vb: Private Shared Function Consume(t As SyntaxToken(), i As Integer, scopePred As Func(Of String, Boolean), src As String = Nothing) As SyntaxToken
+  overload: Ubytec.Language.AST.HighLevelParser.Consume*
+  nameWithType.vb: HighLevelParser.Consume(SyntaxToken(), Integer, Func(Of String, Boolean), String)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.Consume(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer, System.Func(Of String, Boolean), String)
+  name.vb: Consume(SyntaxToken(), Integer, Func(Of String, Boolean), String)
+- uid: Ubytec.Language.AST.HighLevelParser.LookAhead(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32,System.String,System.String)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.LookAhead(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32,System.String,System.String)
+  id: LookAhead(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32,System.String,System.String)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: LookAhead(SyntaxToken[], int, string, string)
+  nameWithType: HighLevelParser.LookAhead(SyntaxToken[], int, string, string)
+  fullName: Ubytec.Language.AST.HighLevelParser.LookAhead(Ubytec.Language.Syntax.Model.SyntaxToken[], int, string, string)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: LookAhead
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 772
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static bool LookAhead(SyntaxToken[] t, int i, string scope, string src)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    - id: scope
+      type: System.String
+    - id: src
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Private Shared Function LookAhead(t As SyntaxToken(), i As Integer, scope As String, src As String) As Boolean
+  overload: Ubytec.Language.AST.HighLevelParser.LookAhead*
+  nameWithType.vb: HighLevelParser.LookAhead(SyntaxToken(), Integer, String, String)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.LookAhead(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer, String, String)
+  name.vb: LookAhead(SyntaxToken(), Integer, String, String)
+- uid: Ubytec.Language.AST.HighLevelParser.IsKeyword(Ubytec.Language.Syntax.Model.SyntaxToken,System.String)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.IsKeyword(Ubytec.Language.Syntax.Model.SyntaxToken,System.String)
+  id: IsKeyword(Ubytec.Language.Syntax.Model.SyntaxToken,System.String)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: IsKeyword(SyntaxToken, string)
+  nameWithType: HighLevelParser.IsKeyword(SyntaxToken, string)
+  fullName: Ubytec.Language.AST.HighLevelParser.IsKeyword(Ubytec.Language.Syntax.Model.SyntaxToken, string)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IsKeyword
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 781
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static bool IsKeyword(SyntaxToken tk, string kw)
+    parameters:
+    - id: tk
+      type: Ubytec.Language.Syntax.Model.SyntaxToken
+    - id: kw
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Private Shared Function IsKeyword(tk As SyntaxToken, kw As String) As Boolean
+  overload: Ubytec.Language.AST.HighLevelParser.IsKeyword*
+  nameWithType.vb: HighLevelParser.IsKeyword(SyntaxToken, String)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.IsKeyword(Ubytec.Language.Syntax.Model.SyntaxToken, String)
+  name.vb: IsKeyword(SyntaxToken, String)
+- uid: Ubytec.Language.AST.HighLevelParser.IsStorageType(Ubytec.Language.Syntax.Model.SyntaxToken)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.IsStorageType(Ubytec.Language.Syntax.Model.SyntaxToken)
+  id: IsStorageType(Ubytec.Language.Syntax.Model.SyntaxToken)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: IsStorageType(SyntaxToken)
+  nameWithType: HighLevelParser.IsStorageType(SyntaxToken)
+  fullName: Ubytec.Language.AST.HighLevelParser.IsStorageType(Ubytec.Language.Syntax.Model.SyntaxToken)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IsStorageType
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 785
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static bool IsStorageType(SyntaxToken tk)
+    parameters:
+    - id: tk
+      type: Ubytec.Language.Syntax.Model.SyntaxToken
+    return:
+      type: System.Boolean
+    content.vb: Private Shared Function IsStorageType(tk As SyntaxToken) As Boolean
+  overload: Ubytec.Language.AST.HighLevelParser.IsStorageType*
+- uid: Ubytec.Language.AST.HighLevelParser.ParseHeaderArguments(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseHeaderArguments(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  id: ParseHeaderArguments(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseHeaderArguments(SyntaxToken[], ref int)
+  nameWithType: HighLevelParser.ParseHeaderArguments(SyntaxToken[], ref int)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseHeaderArguments(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseHeaderArguments
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 788
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static Dictionary<string, string> ParseHeaderArguments(SyntaxToken[] t, ref int i)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,System.String}
+    content.vb: Private Shared Function ParseHeaderArguments(t As SyntaxToken(), i As Integer) As Dictionary(Of String, String)
+  overload: Ubytec.Language.AST.HighLevelParser.ParseHeaderArguments*
+  nameWithType.vb: HighLevelParser.ParseHeaderArguments(SyntaxToken(), Integer)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseHeaderArguments(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer)
+  name.vb: ParseHeaderArguments(SyntaxToken(), Integer)
+- uid: Ubytec.Language.AST.HighLevelParser.ParseParamList(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.Collections.Generic.List{Ubytec.Language.HighLevel.Argument}@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseParamList(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.Collections.Generic.List{Ubytec.Language.HighLevel.Argument}@)
+  id: ParseParamList(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.Collections.Generic.List{Ubytec.Language.HighLevel.Argument}@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseParamList(SyntaxToken[], ref int, out List<Argument>)
+  nameWithType: HighLevelParser.ParseParamList(SyntaxToken[], ref int, out List<Argument>)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseParamList(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int, out System.Collections.Generic.List<Ubytec.Language.HighLevel.Argument>)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseParamList
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 805
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static SyntaxToken[] ParseParamList(SyntaxToken[] t, ref int i, out List<Argument> argObjs)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    - id: argObjs
+      type: System.Collections.Generic.List{Ubytec.Language.HighLevel.Argument}
+    return:
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    content.vb: Private Shared Function ParseParamList(t As SyntaxToken(), i As Integer, argObjs As List(Of Argument)) As SyntaxToken()
+  overload: Ubytec.Language.AST.HighLevelParser.ParseParamList*
+  nameWithType.vb: HighLevelParser.ParseParamList(SyntaxToken(), Integer, List(Of Argument))
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseParamList(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer, System.Collections.Generic.List(Of Ubytec.Language.HighLevel.Argument))
+  name.vb: ParseParamList(SyntaxToken(), Integer, List(Of Argument))
+- uid: Ubytec.Language.AST.HighLevelParser.ParseUType(Ubytec.Language.Syntax.Model.SyntaxToken)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseUType(Ubytec.Language.Syntax.Model.SyntaxToken)
+  id: ParseUType(Ubytec.Language.Syntax.Model.SyntaxToken)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseUType(SyntaxToken)
+  nameWithType: HighLevelParser.ParseUType(SyntaxToken)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseUType(Ubytec.Language.Syntax.Model.SyntaxToken)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseUType
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 825
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static Types.UType ParseUType(SyntaxToken tk)
+    parameters:
+    - id: tk
+      type: Ubytec.Language.Syntax.Model.SyntaxToken
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    content.vb: Private Shared Function ParseUType(tk As SyntaxToken) As Types.UType
+  overload: Ubytec.Language.AST.HighLevelParser.ParseUType*
+- uid: Ubytec.Language.AST.HighLevelParser._modMap
+  commentId: F:Ubytec.Language.AST.HighLevelParser._modMap
+  id: _modMap
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: _modMap
+  nameWithType: HighLevelParser._modMap
+  fullName: Ubytec.Language.AST.HighLevelParser._modMap
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _modMap
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 865
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  syntax:
+    content: private static readonly Dictionary<string, Types.TypeModifiers> _modMap
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers}
+    content.vb: Private Shared ReadOnly _modMap As Dictionary(Of String, Types.TypeModifiers)
+- uid: Ubytec.Language.AST.HighLevelParser.ParseModifierFlags(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseModifierFlags(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  id: ParseModifierFlags(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
+  parent: Ubytec.Language.AST.HighLevelParser
+  langs:
+  - csharp
+  - vb
+  name: ParseModifierFlags(SyntaxToken[], ref int)
+  nameWithType: HighLevelParser.ParseModifierFlags(SyntaxToken[], ref int)
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseModifierFlags(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/AST/HighLevelParser.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ParseModifierFlags
+    path: ../Ubytec/Language/AST/HighLevelParser.cs
+    startLine: 889
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.AST
+  summary: >-
+    Reads every consecutive <code>storage.modifier.ubytec</code> token that starts at
+
+    <code class="paramref">i</code> and converts them to flags.
+  example: []
+  syntax:
+    content: private static Types.TypeModifiers ParseModifierFlags(SyntaxToken[] t, ref int i)
+    parameters:
+    - id: t
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: i
+      type: System.Int32
+    return:
+      type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    content.vb: Private Shared Function ParseModifierFlags(t As SyntaxToken(), i As Integer) As Types.TypeModifiers
+  overload: Ubytec.Language.AST.HighLevelParser.ParseModifierFlags*
+  nameWithType.vb: HighLevelParser.ParseModifierFlags(SyntaxToken(), Integer)
+  fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseModifierFlags(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer)
+  name.vb: ParseModifierFlags(SyntaxToken(), Integer)
 references:
 - uid: Ubytec.Language.AST
   commentId: N:Ubytec.Language.AST
@@ -374,9 +1437,115 @@ references:
   name: System
   nameWithType: System
   fullName: System
+- uid: System.Collections.Generic.List{Ubytec.Language.AST.HighLevelParser.ParseError}
+  commentId: T:System.Collections.Generic.List{Ubytec.Language.AST.HighLevelParser.ParseError}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<HighLevelParser.ParseError>
+  nameWithType: List<HighLevelParser.ParseError>
+  fullName: System.Collections.Generic.List<Ubytec.Language.AST.HighLevelParser.ParseError>
+  nameWithType.vb: List(Of HighLevelParser.ParseError)
+  fullName.vb: System.Collections.Generic.List(Of Ubytec.Language.AST.HighLevelParser.ParseError)
+  name.vb: List(Of HighLevelParser.ParseError)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: Ubytec.Language.AST.HighLevelParser
+    name: HighLevelParser
+    href: Ubytec.Language.AST.HighLevelParser.html
+  - name: .
+  - uid: Ubytec.Language.AST.HighLevelParser.ParseError
+    name: ParseError
+    href: Ubytec.Language.AST.HighLevelParser.ParseError.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.AST.HighLevelParser
+    name: HighLevelParser
+    href: Ubytec.Language.AST.HighLevelParser.html
+  - name: .
+  - uid: Ubytec.Language.AST.HighLevelParser.ParseError
+    name: ParseError
+    href: Ubytec.Language.AST.HighLevelParser.ParseError.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
 - uid: Ubytec.Language.AST.HighLevelParser.ParseModule*
   commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseModule
-  href: Ubytec.Language.AST.HighLevelParser.html#Ubytec_Language_AST_HighLevelParser_ParseModule_Ubytec_Language_Syntax_Model_SyntaxToken___
+  href: Ubytec.Language.AST.HighLevelParser.ParseModule.html#Ubytec_Language_AST_HighLevelParser_ParseModule_Ubytec_Language_Syntax_Model_SyntaxToken___
   name: ParseModule
   nameWithType: HighLevelParser.ParseModule
   fullName: Ubytec.Language.AST.HighLevelParser.ParseModule
@@ -440,7 +1609,7 @@ references:
     href: Ubytec.Language.HighLevel.html
 - uid: Ubytec.Language.AST.HighLevelParser.ParseModuleWithErrors*
   commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseModuleWithErrors
-  href: Ubytec.Language.AST.HighLevelParser.html#Ubytec_Language_AST_HighLevelParser_ParseModuleWithErrors_Ubytec_Language_Syntax_Model_SyntaxToken___
+  href: Ubytec.Language.AST.HighLevelParser.ParseModuleWithErrors.html#Ubytec_Language_AST_HighLevelParser_ParseModuleWithErrors_Ubytec_Language_Syntax_Model_SyntaxToken___
   name: ParseModuleWithErrors
   nameWithType: HighLevelParser.ParseModuleWithErrors
   fullName: Ubytec.Language.AST.HighLevelParser.ParseModuleWithErrors
@@ -528,3 +1697,718 @@ references:
   - name: " "
   - name: T2
   - name: )
+- uid: Ubytec.Language.AST.HighLevelParser.ParseModuleInternal*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseModuleInternal
+  href: Ubytec.Language.AST.HighLevelParser.ParseModuleInternal.html#Ubytec_Language_AST_HighLevelParser_ParseModuleInternal_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__
+  name: ParseModuleInternal
+  nameWithType: HighLevelParser.ParseModuleInternal
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseModuleInternal
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Ubytec.Language.AST.HighLevelParser.ParseGlobal*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseGlobal
+  href: Ubytec.Language.AST.HighLevelParser.ParseGlobal.html#Ubytec_Language_AST_HighLevelParser_ParseGlobal_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__
+  name: ParseGlobal
+  nameWithType: HighLevelParser.ParseGlobal
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseGlobal
+- uid: Ubytec.Language.HighLevel.GlobalContext
+  commentId: T:Ubytec.Language.HighLevel.GlobalContext
+  parent: Ubytec.Language.HighLevel
+  href: Ubytec.Language.HighLevel.GlobalContext.html
+  name: GlobalContext
+  nameWithType: GlobalContext
+  fullName: Ubytec.Language.HighLevel.GlobalContext
+- uid: Ubytec.Language.AST.HighLevelParser.ParseLocal*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseLocal
+  href: Ubytec.Language.AST.HighLevelParser.ParseLocal.html#Ubytec_Language_AST_HighLevelParser_ParseLocal_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__
+  name: ParseLocal
+  nameWithType: HighLevelParser.ParseLocal
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseLocal
+- uid: Ubytec.Language.HighLevel.LocalContext
+  commentId: T:Ubytec.Language.HighLevel.LocalContext
+  parent: Ubytec.Language.HighLevel
+  href: Ubytec.Language.HighLevel.LocalContext.html
+  name: LocalContext
+  nameWithType: LocalContext
+  fullName: Ubytec.Language.HighLevel.LocalContext
+- uid: Ubytec.Language.AST.HighLevelParser.ParseField*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseField
+  href: Ubytec.Language.AST.HighLevelParser.ParseField.html#Ubytec_Language_AST_HighLevelParser_ParseField_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__
+  name: ParseField
+  nameWithType: HighLevelParser.ParseField
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseField
+- uid: Ubytec.Language.HighLevel.Field
+  commentId: T:Ubytec.Language.HighLevel.Field
+  parent: Ubytec.Language.HighLevel
+  href: Ubytec.Language.HighLevel.Field.html
+  name: Field
+  nameWithType: Field
+  fullName: Ubytec.Language.HighLevel.Field
+- uid: Ubytec.Language.AST.HighLevelParser.ParseVariable*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseVariable
+  href: Ubytec.Language.AST.HighLevelParser.ParseVariable.html#Ubytec_Language_AST_HighLevelParser_ParseVariable_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__
+  name: ParseVariable
+  nameWithType: HighLevelParser.ParseVariable
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseVariable
+- uid: Ubytec.Language.HighLevel.Variable
+  commentId: T:Ubytec.Language.HighLevel.Variable
+  parent: Ubytec.Language.HighLevel
+  href: Ubytec.Language.HighLevel.Variable.html
+  name: Variable
+  nameWithType: Variable
+  fullName: Ubytec.Language.HighLevel.Variable
+- uid: Ubytec.Language.AST.HighLevelParser.ParseProperty*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseProperty
+  href: Ubytec.Language.AST.HighLevelParser.ParseProperty.html#Ubytec_Language_AST_HighLevelParser_ParseProperty_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__
+  name: ParseProperty
+  nameWithType: HighLevelParser.ParseProperty
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseProperty
+- uid: Ubytec.Language.HighLevel.Property
+  commentId: T:Ubytec.Language.HighLevel.Property
+  parent: Ubytec.Language.HighLevel
+  href: Ubytec.Language.HighLevel.Property.html
+  name: Property
+  nameWithType: Property
+  fullName: Ubytec.Language.HighLevel.Property
+- uid: Ubytec.Language.AST.HighLevelParser.ParseFunc*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseFunc
+  href: Ubytec.Language.AST.HighLevelParser.ParseFunc.html#Ubytec_Language_AST_HighLevelParser_ParseFunc_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__
+  name: ParseFunc
+  nameWithType: HighLevelParser.ParseFunc
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseFunc
+- uid: Ubytec.Language.HighLevel.Func
+  commentId: T:Ubytec.Language.HighLevel.Func
+  parent: Ubytec.Language.HighLevel
+  href: Ubytec.Language.HighLevel.Func.html
+  name: Func
+  nameWithType: Func
+  fullName: Ubytec.Language.HighLevel.Func
+- uid: Ubytec.Language.AST.HighLevelParser.ParseAction*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseAction
+  href: Ubytec.Language.AST.HighLevelParser.ParseAction.html#Ubytec_Language_AST_HighLevelParser_ParseAction_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__
+  name: ParseAction
+  nameWithType: HighLevelParser.ParseAction
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseAction
+- uid: Ubytec.Language.HighLevel.Action
+  commentId: T:Ubytec.Language.HighLevel.Action
+  parent: Ubytec.Language.HighLevel
+  href: Ubytec.Language.HighLevel.Action.html
+  name: Action
+  nameWithType: Action
+  fullName: Ubytec.Language.HighLevel.Action
+- uid: Ubytec.Language.AST.HighLevelParser.ParseClass*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseClass
+  href: Ubytec.Language.AST.HighLevelParser.ParseClass.html#Ubytec_Language_AST_HighLevelParser_ParseClass_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__
+  name: ParseClass
+  nameWithType: HighLevelParser.ParseClass
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseClass
+- uid: Ubytec.Language.HighLevel.Class
+  commentId: T:Ubytec.Language.HighLevel.Class
+  parent: Ubytec.Language.HighLevel
+  href: Ubytec.Language.HighLevel.Class.html
+  name: Class
+  nameWithType: Class
+  fullName: Ubytec.Language.HighLevel.Class
+- uid: Ubytec.Language.AST.HighLevelParser.ParseEnum*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseEnum
+  href: Ubytec.Language.AST.HighLevelParser.ParseEnum.html#Ubytec_Language_AST_HighLevelParser_ParseEnum_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__
+  name: ParseEnum
+  nameWithType: HighLevelParser.ParseEnum
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseEnum
+- uid: Ubytec.Language.HighLevel.Enum
+  commentId: T:Ubytec.Language.HighLevel.Enum
+  parent: Ubytec.Language.HighLevel
+  href: Ubytec.Language.HighLevel.Enum.html
+  name: Enum
+  nameWithType: Enum
+  fullName: Ubytec.Language.HighLevel.Enum
+- uid: Ubytec.Language.AST.HighLevelParser.ParseStruct*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseStruct
+  href: Ubytec.Language.AST.HighLevelParser.ParseStruct.html#Ubytec_Language_AST_HighLevelParser_ParseStruct_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__
+  name: ParseStruct
+  nameWithType: HighLevelParser.ParseStruct
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseStruct
+- uid: Ubytec.Language.HighLevel.Struct
+  commentId: T:Ubytec.Language.HighLevel.Struct
+  parent: Ubytec.Language.HighLevel
+  href: Ubytec.Language.HighLevel.Struct.html
+  name: Struct
+  nameWithType: Struct
+  fullName: Ubytec.Language.HighLevel.Struct
+- uid: Ubytec.Language.AST.HighLevelParser.ParseInterface*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseInterface
+  href: Ubytec.Language.AST.HighLevelParser.ParseInterface.html#Ubytec_Language_AST_HighLevelParser_ParseInterface_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__
+  name: ParseInterface
+  nameWithType: HighLevelParser.ParseInterface
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseInterface
+- uid: Ubytec.Language.HighLevel.Interface
+  commentId: T:Ubytec.Language.HighLevel.Interface
+  parent: Ubytec.Language.HighLevel
+  href: Ubytec.Language.HighLevel.Interface.html
+  name: Interface
+  nameWithType: Interface
+  fullName: Ubytec.Language.HighLevel.Interface
+- uid: Ubytec.Language.AST.HighLevelParser.ParseRecord*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseRecord
+  href: Ubytec.Language.AST.HighLevelParser.ParseRecord.html#Ubytec_Language_AST_HighLevelParser_ParseRecord_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__
+  name: ParseRecord
+  nameWithType: HighLevelParser.ParseRecord
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseRecord
+- uid: Ubytec.Language.HighLevel.Record
+  commentId: T:Ubytec.Language.HighLevel.Record
+  parent: Ubytec.Language.HighLevel
+  href: Ubytec.Language.HighLevel.Record.html
+  name: Record
+  nameWithType: Record
+  fullName: Ubytec.Language.HighLevel.Record
+- uid: Ubytec.Language.AST.HighLevelParser.ParseEnumConstant*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseEnumConstant
+  href: Ubytec.Language.AST.HighLevelParser.ParseEnumConstant.html#Ubytec_Language_AST_HighLevelParser_ParseEnumConstant_Ubytec_Language_Syntax_Model_SyntaxToken_
+  name: ParseEnumConstant
+  nameWithType: HighLevelParser.ParseEnumConstant
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseEnumConstant
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxToken
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  name: SyntaxToken
+  nameWithType: SyntaxToken
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: Ubytec.Language.Syntax.Model
+  commentId: N:Ubytec.Language.Syntax.Model
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Model
+  nameWithType: Ubytec.Language.Syntax.Model
+  fullName: Ubytec.Language.Syntax.Model
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
+- uid: Ubytec.Language.AST.HighLevelParser.ParseOptionalBody*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseOptionalBody
+  href: Ubytec.Language.AST.HighLevelParser.ParseOptionalBody.html#Ubytec_Language_AST_HighLevelParser_ParseOptionalBody_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__System_Nullable_Ubytec_Language_HighLevel_LocalContext___
+  name: ParseOptionalBody
+  nameWithType: HighLevelParser.ParseOptionalBody
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseOptionalBody
+- uid: System.Nullable{Ubytec.Language.HighLevel.LocalContext}
+  commentId: T:System.Nullable{Ubytec.Language.HighLevel.LocalContext}
+  parent: System
+  definition: System.Nullable`1
+  href: Ubytec.Language.HighLevel.LocalContext.html
+  name: LocalContext?
+  nameWithType: LocalContext?
+  fullName: Ubytec.Language.HighLevel.LocalContext?
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.LocalContext
+    name: LocalContext
+    href: Ubytec.Language.HighLevel.LocalContext.html
+  - name: '?'
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.LocalContext
+    name: LocalContext
+    href: Ubytec.Language.HighLevel.LocalContext.html
+  - name: '?'
+- uid: Ubytec.Language.Syntax.Model.SyntaxSentence
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxSentence
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxSentence.html
+  name: SyntaxSentence
+  nameWithType: SyntaxSentence
+  fullName: Ubytec.Language.Syntax.Model.SyntaxSentence
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubytec.Language.AST.HighLevelParser.SkipTrivia*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.SkipTrivia
+  href: Ubytec.Language.AST.HighLevelParser.SkipTrivia.html#Ubytec_Language_AST_HighLevelParser_SkipTrivia_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__
+  name: SkipTrivia
+  nameWithType: HighLevelParser.SkipTrivia
+  fullName: Ubytec.Language.AST.HighLevelParser.SkipTrivia
+- uid: Ubytec.Language.AST.HighLevelParser.ConsumeSymbol*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ConsumeSymbol
+  href: Ubytec.Language.AST.HighLevelParser.ConsumeSymbol.html#Ubytec_Language_AST_HighLevelParser_ConsumeSymbol_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__System_String_
+  name: ConsumeSymbol
+  nameWithType: HighLevelParser.ConsumeSymbol
+  fullName: Ubytec.Language.AST.HighLevelParser.ConsumeSymbol
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubytec.Language.AST.HighLevelParser.ConsumeType*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ConsumeType
+  href: Ubytec.Language.AST.HighLevelParser.ConsumeType.html#Ubytec_Language_AST_HighLevelParser_ConsumeType_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__Ubytec_Language_Syntax_TypeSystem_Types_UType__
+  name: ConsumeType
+  nameWithType: HighLevelParser.ConsumeType
+  fullName: Ubytec.Language.AST.HighLevelParser.ConsumeType
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.UType
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  name: Types.UType
+  nameWithType: Types.UType
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    name: UType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    name: UType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html
+- uid: Ubytec.Language.Syntax.TypeSystem
+  commentId: N:Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.TypeSystem
+  nameWithType: Ubytec.Language.Syntax.TypeSystem
+  fullName: Ubytec.Language.Syntax.TypeSystem
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
+- uid: Ubytec.Language.AST.HighLevelParser.Consume*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.Consume
+  href: Ubytec.Language.AST.HighLevelParser.Consume.html#Ubytec_Language_AST_HighLevelParser_Consume_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__System_String_System_String_
+  name: Consume
+  nameWithType: HighLevelParser.Consume
+  fullName: Ubytec.Language.AST.HighLevelParser.Consume
+- uid: System.Func{System.String,System.Boolean}
+  commentId: T:System.Func{System.String,System.Boolean}
+  parent: System
+  definition: System.Func`2
+  href: https://learn.microsoft.com/dotnet/api/system.func-2
+  name: Func<string, bool>
+  nameWithType: Func<string, bool>
+  fullName: System.Func<string, bool>
+  nameWithType.vb: Func(Of String, Boolean)
+  fullName.vb: System.Func(Of String, Boolean)
+  name.vb: Func(Of String, Boolean)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: System.Func`2
+  commentId: T:System.Func`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.func-2
+  name: Func<T, TResult>
+  nameWithType: Func<T, TResult>
+  fullName: System.Func<T, TResult>
+  nameWithType.vb: Func(Of T, TResult)
+  fullName.vb: System.Func(Of T, TResult)
+  name.vb: Func(Of T, TResult)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: Ubytec.Language.AST.HighLevelParser.LookAhead*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.LookAhead
+  href: Ubytec.Language.AST.HighLevelParser.LookAhead.html#Ubytec_Language_AST_HighLevelParser_LookAhead_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32_System_String_System_String_
+  name: LookAhead
+  nameWithType: HighLevelParser.LookAhead
+  fullName: Ubytec.Language.AST.HighLevelParser.LookAhead
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Ubytec.Language.AST.HighLevelParser.IsKeyword*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.IsKeyword
+  href: Ubytec.Language.AST.HighLevelParser.IsKeyword.html#Ubytec_Language_AST_HighLevelParser_IsKeyword_Ubytec_Language_Syntax_Model_SyntaxToken_System_String_
+  name: IsKeyword
+  nameWithType: HighLevelParser.IsKeyword
+  fullName: Ubytec.Language.AST.HighLevelParser.IsKeyword
+- uid: Ubytec.Language.AST.HighLevelParser.IsStorageType*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.IsStorageType
+  href: Ubytec.Language.AST.HighLevelParser.IsStorageType.html#Ubytec_Language_AST_HighLevelParser_IsStorageType_Ubytec_Language_Syntax_Model_SyntaxToken_
+  name: IsStorageType
+  nameWithType: HighLevelParser.IsStorageType
+  fullName: Ubytec.Language.AST.HighLevelParser.IsStorageType
+- uid: Ubytec.Language.AST.HighLevelParser.ParseHeaderArguments*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseHeaderArguments
+  href: Ubytec.Language.AST.HighLevelParser.ParseHeaderArguments.html#Ubytec_Language_AST_HighLevelParser_ParseHeaderArguments_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__
+  name: ParseHeaderArguments
+  nameWithType: HighLevelParser.ParseHeaderArguments
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseHeaderArguments
+- uid: System.Collections.Generic.Dictionary{System.String,System.String}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<string, string>
+  nameWithType: Dictionary<string, string>
+  fullName: System.Collections.Generic.Dictionary<string, string>
+  nameWithType.vb: Dictionary(Of String, String)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, String)
+  name.vb: Dictionary(Of String, String)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Ubytec.Language.AST.HighLevelParser.ParseParamList*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseParamList
+  href: Ubytec.Language.AST.HighLevelParser.ParseParamList.html#Ubytec_Language_AST_HighLevelParser_ParseParamList_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__System_Collections_Generic_List_Ubytec_Language_HighLevel_Argument___
+  name: ParseParamList
+  nameWithType: HighLevelParser.ParseParamList
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseParamList
+- uid: System.Collections.Generic.List{Ubytec.Language.HighLevel.Argument}
+  commentId: T:System.Collections.Generic.List{Ubytec.Language.HighLevel.Argument}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<Argument>
+  nameWithType: List<Argument>
+  fullName: System.Collections.Generic.List<Ubytec.Language.HighLevel.Argument>
+  nameWithType.vb: List(Of Argument)
+  fullName.vb: System.Collections.Generic.List(Of Ubytec.Language.HighLevel.Argument)
+  name.vb: List(Of Argument)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: Ubytec.Language.HighLevel.Argument
+    name: Argument
+    href: Ubytec.Language.HighLevel.Argument.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.HighLevel.Argument
+    name: Argument
+    href: Ubytec.Language.HighLevel.Argument.html
+  - name: )
+- uid: Ubytec.Language.AST.HighLevelParser.ParseUType*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseUType
+  href: Ubytec.Language.AST.HighLevelParser.ParseUType.html#Ubytec_Language_AST_HighLevelParser_ParseUType_Ubytec_Language_Syntax_Model_SyntaxToken_
+  name: ParseUType
+  nameWithType: HighLevelParser.ParseUType
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseUType
+- uid: System.Collections.Generic.Dictionary{System.String,Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<string, Types.TypeModifiers>
+  nameWithType: Dictionary<string, Types.TypeModifiers>
+  fullName: System.Collections.Generic.Dictionary<string, Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers>
+  nameWithType.vb: Dictionary(Of String, Types.TypeModifiers)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers)
+  name.vb: Dictionary(Of String, Types.TypeModifiers)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
+  - name: )
+- uid: Ubytec.Language.AST.HighLevelParser.ParseModifierFlags*
+  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseModifierFlags
+  href: Ubytec.Language.AST.HighLevelParser.ParseModifierFlags.html#Ubytec_Language_AST_HighLevelParser_ParseModifierFlags_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__
+  name: ParseModifierFlags
+  nameWithType: HighLevelParser.ParseModifierFlags
+  fullName: Ubytec.Language.AST.HighLevelParser.ParseModifierFlags
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  name: Types.TypeModifiers
+  nameWithType: Types.TypeModifiers
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
+memberLayout: SeparatePages

@@ -7,6 +7,7 @@ items:
   children:
   - Ubytec.Language.Syntax.TypeSystem.Types.Bool
   - Ubytec.Language.Syntax.TypeSystem.Types.Byte
+  - Ubytec.Language.Syntax.TypeSystem.Types.CanConvert(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,System.Boolean)
   - Ubytec.Language.Syntax.TypeSystem.Types.Char16
   - Ubytec.Language.Syntax.TypeSystem.Types.Char8
   - Ubytec.Language.Syntax.TypeSystem.Types.CustomType
@@ -96,10 +97,16 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: NumericTypeInfo
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
-    startLine: 15
+    startLine: 21
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: >-
+    Read-only mapping of numeric <xref href="Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType" data-throw-if-not-resolved="false"></xref> values to their metadata:
+
+    rank (widening order), signedness, and whether they represent floating-point types.
+  remarks: (rank ↑  ⇒  size ↑)
+  example: []
   syntax:
     content: public static readonly ReadOnlyDictionary<Types.PrimitiveType, (int rank, bool signed, bool floating)> NumericTypeInfo
     return:
@@ -124,10 +131,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsASCII
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
-    startLine: 41
+    startLine: 43
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Returns true if the type represents a single-byte ASCII character.
+  example: []
   syntax:
     content: public static bool IsASCII(this Types.PrimitiveType pt)
     parameters:
@@ -156,10 +165,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsUTF
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
-    startLine: 42
+    startLine: 48
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Returns true if the type represents a 16-bit Unicode character.
+  example: []
   syntax:
     content: public static bool IsUTF(this Types.PrimitiveType pt)
     parameters:
@@ -188,10 +199,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsVoid
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
-    startLine: 43
+    startLine: 53
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Returns true if the type is <code>Void</code> (no value).
+  example: []
   syntax:
     content: public static bool IsVoid(this Types.PrimitiveType pt)
     parameters:
@@ -220,10 +233,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsBool
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
-    startLine: 44
+    startLine: 58
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Returns true if the type is <code>Bool</code>.
+  example: []
   syntax:
     content: public static bool IsBool(this Types.PrimitiveType pt)
     parameters:
@@ -252,10 +267,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsNumeric
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
-    startLine: 46
+    startLine: 63
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Determines if the type is numeric (integer or floating-point).
+  example: []
   syntax:
     content: public static bool IsNumeric(this Types.PrimitiveType pt)
     parameters:
@@ -284,10 +301,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsFloat
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
-    startLine: 47
+    startLine: 68
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Determines if the numeric type is floating-point.
+  example: []
   syntax:
     content: public static bool IsFloat(this Types.PrimitiveType pt)
     parameters:
@@ -316,10 +335,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsSigned
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
-    startLine: 48
+    startLine: 73
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Determines if the numeric type is signed (including floating-point).
+  example: []
   syntax:
     content: public static bool IsSigned(this Types.PrimitiveType pt)
     parameters:
@@ -348,10 +369,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsUnsigned
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
-    startLine: 49
+    startLine: 78
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Determines if the numeric type is unsigned integer (non-floating).
+  example: []
   syntax:
     content: public static bool IsUnsigned(this Types.PrimitiveType pt)
     parameters:
@@ -380,10 +403,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Rank
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
-    startLine: 51
+    startLine: 83
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Retrieves the widening rank of the numeric type, or -1 if not numeric.
+  example: []
   syntax:
     content: public static int Rank(this Types.PrimitiveType pt)
     parameters:
@@ -393,6 +418,53 @@ items:
       type: System.Int32
     content.vb: Public Shared Function Rank(pt As Types.PrimitiveType) As Integer
   overload: Ubytec.Language.Syntax.TypeSystem.Types.Rank*
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.CanConvert(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,System.Boolean)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.CanConvert(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,System.Boolean)
+  id: CanConvert(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,System.Boolean)
+  parent: Ubytec.Language.Syntax.TypeSystem.Types
+  langs:
+  - csharp
+  - vb
+  name: CanConvert(PrimitiveType, PrimitiveType, bool)
+  nameWithType: Types.CanConvert(Types.PrimitiveType, Types.PrimitiveType, bool)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.CanConvert(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType, Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType, bool)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/TypeSystem/Types.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: CanConvert
+    path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
+    startLine: 95
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: >-
+    Validates whether a conversion between two primitive types is allowed,
+
+    enforcing implicit or explicit rules similar to C# (plus bool⇄numeric by design).
+  example: []
+  syntax:
+    content: private static bool CanConvert(Types.PrimitiveType from, Types.PrimitiveType to, bool explicitAllowed)
+    parameters:
+    - id: from
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+      description: Source type.
+    - id: to
+      type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+      description: Target type.
+    - id: explicitAllowed
+      type: System.Boolean
+      description: If true, allows explicit (potentially lossy) conversions; otherwise only implicit.
+    return:
+      type: System.Boolean
+      description: True if conversion is valid under the given mode; otherwise false.
+    content.vb: Private Shared Function CanConvert(from As Types.PrimitiveType, [to] As Types.PrimitiveType, explicitAllowed As Boolean) As Boolean
+  overload: Ubytec.Language.Syntax.TypeSystem.Types.CanConvert*
+  nameWithType.vb: Types.CanConvert(Types.PrimitiveType, Types.PrimitiveType, Boolean)
+  fullName.vb: Ubytec.Language.Syntax.TypeSystem.Types.CanConvert(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType, Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType, Boolean)
+  name.vb: CanConvert(PrimitiveType, PrimitiveType, Boolean)
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.ValidateImplicitCast(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
   commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.ValidateImplicitCast(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
   id: ValidateImplicitCast(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType)
@@ -411,10 +483,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ValidateImplicitCast
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
-    startLine: 88
+    startLine: 130
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Determines if an implicit cast from the source to target type is valid.
+  example: []
   syntax:
     content: public static bool ValidateImplicitCast(Types.PrimitiveType from, Types.PrimitiveType to)
     parameters:
@@ -444,10 +518,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ValidateExplicitCast
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
-    startLine: 91
+    startLine: 136
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Determines if an explicit (C#-style) cast from source to target type is valid.
+  example: []
   syntax:
     content: public static bool ValidateExplicitCast(Types.PrimitiveType from, Types.PrimitiveType to)
     parameters:
@@ -477,21 +553,33 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ValidateCasts
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.cs
-    startLine: 97
+    startLine: 148
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
-  summary: Throw if <code class="paramref">actual</code> cannot be assigned to <code class="paramref">expected</code>.
+  summary: >-
+    Throws an <xref href="System.Exception" data-throw-if-not-resolved="false"></xref> if the byte-coded <code class="paramref">actual</code>
+
+    cannot be assigned to the <code class="paramref">expected</code> type under implicit or explicit rules.
   example: []
   syntax:
     content: public static void ValidateCasts(byte expected, byte actual)
     parameters:
     - id: expected
       type: System.Byte
+      description: Byte representing the expected <xref href="Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType" data-throw-if-not-resolved="false"></xref>.
     - id: actual
       type: System.Byte
+      description: Byte representing the actual <xref href="Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType" data-throw-if-not-resolved="false"></xref>.
     content.vb: Public Shared Sub ValidateCasts(expected As Byte, actual As Byte)
   overload: Ubytec.Language.Syntax.TypeSystem.Types.ValidateCasts*
+  exceptions:
+  - type: System.Exception
+    commentId: T:System.Exception
+    description: >-
+      Throws <code>Exception</code> indicating whether an explicit cast is required
+
+      or the conversion is invalid.
   nameWithType.vb: Types.ValidateCasts(Byte, Byte)
   fullName.vb: Ubytec.Language.Syntax.TypeSystem.Types.ValidateCasts(Byte, Byte)
   name.vb: ValidateCasts(Byte, Byte)
@@ -513,10 +601,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Void
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 50
+    startLine: 54
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>Void</code> primitive.
+  example: []
   syntax:
     content: public static readonly Guid Void
     return:
@@ -540,10 +630,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Bool
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 51
+    startLine: 56
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>Bool</code> primitive.
+  example: []
   syntax:
     content: public static readonly Guid Bool
     return:
@@ -567,10 +659,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Char8
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 52
+    startLine: 58
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>Char8</code> primitive.
+  example: []
   syntax:
     content: public static readonly Guid Char8
     return:
@@ -594,10 +688,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Char16
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 53
+    startLine: 60
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>Char16</code> primitive.
+  example: []
   syntax:
     content: public static readonly Guid Char16
     return:
@@ -621,10 +717,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Byte
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 54
+    startLine: 62
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>Byte</code> primitive.
+  example: []
   syntax:
     content: public static readonly Guid Byte
     return:
@@ -648,10 +746,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: SByte
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 55
+    startLine: 64
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>SByte</code> primitive.
+  example: []
   syntax:
     content: public static readonly Guid SByte
     return:
@@ -675,10 +775,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: UInt16
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 56
+    startLine: 66
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>UInt16</code> primitive.
+  example: []
   syntax:
     content: public static readonly Guid UInt16
     return:
@@ -702,10 +804,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Int16
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 57
+    startLine: 68
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>Int16</code> primitive.
+  example: []
   syntax:
     content: public static readonly Guid Int16
     return:
@@ -729,10 +833,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: UInt32
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 58
+    startLine: 70
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>UInt32</code> primitive.
+  example: []
   syntax:
     content: public static readonly Guid UInt32
     return:
@@ -756,10 +862,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Int32
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 59
+    startLine: 72
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>Int32</code> primitive.
+  example: []
   syntax:
     content: public static readonly Guid Int32
     return:
@@ -783,10 +891,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: UInt64
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 60
+    startLine: 74
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>UInt64</code> primitive.
+  example: []
   syntax:
     content: public static readonly Guid UInt64
     return:
@@ -810,10 +920,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Int64
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 61
+    startLine: 76
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>Int64</code> primitive.
+  example: []
   syntax:
     content: public static readonly Guid Int64
     return:
@@ -837,10 +949,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: UInt128
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 62
+    startLine: 78
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>UInt128</code> primitive.
+  example: []
   syntax:
     content: public static readonly Guid UInt128
     return:
@@ -864,10 +978,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Int128
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 63
+    startLine: 80
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>Int128</code> primitive.
+  example: []
   syntax:
     content: public static readonly Guid Int128
     return:
@@ -891,10 +1007,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Half
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 64
+    startLine: 82
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>Half</code> primitive.
+  example: []
   syntax:
     content: public static readonly Guid Half
     return:
@@ -918,10 +1036,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Float32
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 65
+    startLine: 84
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>Float32</code> primitive.
+  example: []
   syntax:
     content: public static readonly Guid Float32
     return:
@@ -945,10 +1065,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Float64
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 66
+    startLine: 86
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>Float64</code> primitive.
+  example: []
   syntax:
     content: public static readonly Guid Float64
     return:
@@ -972,10 +1094,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Float128
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 67
+    startLine: 88
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>Float128</code> primitive.
+  example: []
   syntax:
     content: public static readonly Guid Float128
     return:
@@ -999,10 +1123,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Default
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 69
+    startLine: 91
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for the <code>Default</code> placeholder type.
+  example: []
   syntax:
     content: public static readonly Guid Default
     return:
@@ -1026,10 +1152,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: CustomType
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 70
+    startLine: 93
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for custom types resolved by name.
+  example: []
   syntax:
     content: public static readonly Guid CustomType
     return:
@@ -1053,10 +1181,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Unknown
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 71
+    startLine: 95
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: GUID for unknown or uninitialized types.
+  example: []
   syntax:
     content: public static readonly Guid Unknown
     return:
@@ -1080,19 +1210,21 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: FromPrimitive
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.PrimitiveType.cs
-    startLine: 74
+    startLine: 104
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
-  summary: 'Fast lookup: <code>PrimitiveType</code> → Guid.'
+  summary: Maps a <xref href="Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType" data-throw-if-not-resolved="false"></xref> to its corresponding GUID constant.
   example: []
   syntax:
     content: public static Guid FromPrimitive(Types.PrimitiveType pt)
     parameters:
     - id: pt
       type: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
+      description: The primitive type to look up.
     return:
       type: System.Guid
+      description: The <xref href="System.Guid" data-throw-if-not-resolved="false"></xref> associated with <code class="paramref">pt</code>, or the <code>Unknown</code> GUID if unrecognized.
     content.vb: Public Shared Function FromPrimitive(pt As Types.PrimitiveType) As Guid
   overload: Ubytec.Language.Syntax.TypeSystem.Types.FromPrimitive*
 references:
@@ -1601,7 +1733,7 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsASCII*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.IsASCII
-  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsASCII_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  href: Ubytec.Language.Syntax.TypeSystem.Types.IsASCII.html#Ubytec_Language_Syntax_TypeSystem_Types_IsASCII_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
   name: IsASCII
   nameWithType: Types.IsASCII
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsASCII
@@ -1618,49 +1750,49 @@ references:
   name.vb: Boolean
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsUTF*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.IsUTF
-  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsUTF_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  href: Ubytec.Language.Syntax.TypeSystem.Types.IsUTF.html#Ubytec_Language_Syntax_TypeSystem_Types_IsUTF_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
   name: IsUTF
   nameWithType: Types.IsUTF
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsUTF
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsVoid*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.IsVoid
-  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsVoid_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  href: Ubytec.Language.Syntax.TypeSystem.Types.IsVoid.html#Ubytec_Language_Syntax_TypeSystem_Types_IsVoid_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
   name: IsVoid
   nameWithType: Types.IsVoid
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsVoid
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsBool*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.IsBool
-  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsBool_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  href: Ubytec.Language.Syntax.TypeSystem.Types.IsBool.html#Ubytec_Language_Syntax_TypeSystem_Types_IsBool_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
   name: IsBool
   nameWithType: Types.IsBool
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsBool
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric
-  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsNumeric_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  href: Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric.html#Ubytec_Language_Syntax_TypeSystem_Types_IsNumeric_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
   name: IsNumeric
   nameWithType: Types.IsNumeric
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsNumeric
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsFloat*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.IsFloat
-  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsFloat_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  href: Ubytec.Language.Syntax.TypeSystem.Types.IsFloat.html#Ubytec_Language_Syntax_TypeSystem_Types_IsFloat_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
   name: IsFloat
   nameWithType: Types.IsFloat
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsFloat
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsSigned*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.IsSigned
-  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsSigned_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  href: Ubytec.Language.Syntax.TypeSystem.Types.IsSigned.html#Ubytec_Language_Syntax_TypeSystem_Types_IsSigned_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
   name: IsSigned
   nameWithType: Types.IsSigned
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsSigned
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned
-  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_IsUnsigned_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  href: Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned.html#Ubytec_Language_Syntax_TypeSystem_Types_IsUnsigned_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
   name: IsUnsigned
   nameWithType: Types.IsUnsigned
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.IsUnsigned
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.Rank*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.Rank
-  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_Rank_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  href: Ubytec.Language.Syntax.TypeSystem.Types.Rank.html#Ubytec_Language_Syntax_TypeSystem_Types_Rank_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
   name: Rank
   nameWithType: Types.Rank
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.Rank
@@ -1675,21 +1807,35 @@ references:
   nameWithType.vb: Integer
   fullName.vb: Integer
   name.vb: Integer
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.CanConvert*
+  commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.CanConvert
+  href: Ubytec.Language.Syntax.TypeSystem.Types.CanConvert.html#Ubytec_Language_Syntax_TypeSystem_Types_CanConvert_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_System_Boolean_
+  name: CanConvert
+  nameWithType: Types.CanConvert
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.CanConvert
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.ValidateImplicitCast*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.ValidateImplicitCast
-  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_ValidateImplicitCast_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  href: Ubytec.Language.Syntax.TypeSystem.Types.ValidateImplicitCast.html#Ubytec_Language_Syntax_TypeSystem_Types_ValidateImplicitCast_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
   name: ValidateImplicitCast
   nameWithType: Types.ValidateImplicitCast
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.ValidateImplicitCast
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.ValidateExplicitCast*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.ValidateExplicitCast
-  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_ValidateExplicitCast_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  href: Ubytec.Language.Syntax.TypeSystem.Types.ValidateExplicitCast.html#Ubytec_Language_Syntax_TypeSystem_Types_ValidateExplicitCast_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
   name: ValidateExplicitCast
   nameWithType: Types.ValidateExplicitCast
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.ValidateExplicitCast
+- uid: System.Exception
+  commentId: T:System.Exception
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.exception
+  name: Exception
+  nameWithType: Exception
+  fullName: System.Exception
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.ValidateCasts*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.ValidateCasts
-  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_ValidateCasts_System_Byte_System_Byte_
+  href: Ubytec.Language.Syntax.TypeSystem.Types.ValidateCasts.html#Ubytec_Language_Syntax_TypeSystem_Types_ValidateCasts_System_Byte_System_Byte_
   name: ValidateCasts
   nameWithType: Types.ValidateCasts
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.ValidateCasts
@@ -1714,7 +1860,8 @@ references:
   fullName: System.Guid
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.FromPrimitive*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.FromPrimitive
-  href: Ubytec.Language.Syntax.TypeSystem.Types.html#Ubytec_Language_Syntax_TypeSystem_Types_FromPrimitive_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
+  href: Ubytec.Language.Syntax.TypeSystem.Types.FromPrimitive.html#Ubytec_Language_Syntax_TypeSystem_Types_FromPrimitive_Ubytec_Language_Syntax_TypeSystem_Types_PrimitiveType_
   name: FromPrimitive
   nameWithType: Types.FromPrimitive
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.FromPrimitive
+memberLayout: SeparatePages

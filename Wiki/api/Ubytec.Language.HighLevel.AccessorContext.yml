@@ -14,6 +14,7 @@ items:
   - Ubytec.Language.HighLevel.AccessorContext.Set
   - Ubytec.Language.HighLevel.AccessorContext.ToArray
   - Ubytec.Language.HighLevel.AccessorContext.Validate
+  - Ubytec.Language.HighLevel.AccessorContext.ValidateInternal(Ubytec.Language.HighLevel.Func[],Ubytec.Language.Syntax.TypeSystem.Types.UType,System.Nullable{Ubytec.Language.HighLevel.Func}@,System.Nullable{Ubytec.Language.HighLevel.Func}@,System.Nullable{Ubytec.Language.HighLevel.Func}@)
   langs:
   - csharp
   - vb
@@ -286,6 +287,46 @@ items:
   overload: Ubytec.Language.HighLevel.AccessorContext.Validate*
   implements:
   - Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
+- uid: Ubytec.Language.HighLevel.AccessorContext.ValidateInternal(Ubytec.Language.HighLevel.Func[],Ubytec.Language.Syntax.TypeSystem.Types.UType,System.Nullable{Ubytec.Language.HighLevel.Func}@,System.Nullable{Ubytec.Language.HighLevel.Func}@,System.Nullable{Ubytec.Language.HighLevel.Func}@)
+  commentId: M:Ubytec.Language.HighLevel.AccessorContext.ValidateInternal(Ubytec.Language.HighLevel.Func[],Ubytec.Language.Syntax.TypeSystem.Types.UType,System.Nullable{Ubytec.Language.HighLevel.Func}@,System.Nullable{Ubytec.Language.HighLevel.Func}@,System.Nullable{Ubytec.Language.HighLevel.Func}@)
+  id: ValidateInternal(Ubytec.Language.HighLevel.Func[],Ubytec.Language.Syntax.TypeSystem.Types.UType,System.Nullable{Ubytec.Language.HighLevel.Func}@,System.Nullable{Ubytec.Language.HighLevel.Func}@,System.Nullable{Ubytec.Language.HighLevel.Func}@)
+  parent: Ubytec.Language.HighLevel.AccessorContext
+  langs:
+  - csharp
+  - vb
+  name: ValidateInternal(Func[], UType, out Func?, out Func?, out Func?)
+  nameWithType: AccessorContext.ValidateInternal(Func[], Types.UType, out Func?, out Func?, out Func?)
+  fullName: Ubytec.Language.HighLevel.AccessorContext.ValidateInternal(Ubytec.Language.HighLevel.Func[], Ubytec.Language.Syntax.TypeSystem.Types.UType, out Ubytec.Language.HighLevel.Func?, out Ubytec.Language.HighLevel.Func?, out Ubytec.Language.HighLevel.Func?)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/AccessorContext.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ValidateInternal
+    path: ../Ubytec/Language/HighLevel/AccessorContext.cs
+    startLine: 39
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel
+  syntax:
+    content: private static void ValidateInternal(Func[] accessors, Types.UType propertyType, out Func? get, out Func? set, out Func? init)
+    parameters:
+    - id: accessors
+      type: Ubytec.Language.HighLevel.Func[]
+    - id: propertyType
+      type: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    - id: get
+      type: System.Nullable{Ubytec.Language.HighLevel.Func}
+    - id: set
+      type: System.Nullable{Ubytec.Language.HighLevel.Func}
+    - id: init
+      type: System.Nullable{Ubytec.Language.HighLevel.Func}
+    content.vb: Private Shared Sub ValidateInternal(accessors As Func(), propertyType As Types.UType, [get] As Func?, [set] As Func?, init As Func?)
+  overload: Ubytec.Language.HighLevel.AccessorContext.ValidateInternal*
+  nameWithType.vb: AccessorContext.ValidateInternal(Func(), Types.UType, Func?, Func?, Func?)
+  fullName.vb: Ubytec.Language.HighLevel.AccessorContext.ValidateInternal(Ubytec.Language.HighLevel.Func(), Ubytec.Language.Syntax.TypeSystem.Types.UType, Ubytec.Language.HighLevel.Func?, Ubytec.Language.HighLevel.Func?, Ubytec.Language.HighLevel.Func?)
+  name.vb: ValidateInternal(Func(), UType, Func?, Func?, Func?)
 - uid: Ubytec.Language.HighLevel.AccessorContext.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   commentId: M:Ubytec.Language.HighLevel.AccessorContext.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   id: Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
@@ -644,7 +685,7 @@ references:
   fullName: System
 - uid: Ubytec.Language.HighLevel.AccessorContext.Get*
   commentId: Overload:Ubytec.Language.HighLevel.AccessorContext.Get
-  href: Ubytec.Language.HighLevel.AccessorContext.html#Ubytec_Language_HighLevel_AccessorContext_Get
+  href: Ubytec.Language.HighLevel.AccessorContext.Get.html#Ubytec_Language_HighLevel_AccessorContext_Get
   name: Get
   nameWithType: AccessorContext.Get
   fullName: Ubytec.Language.HighLevel.AccessorContext.Get
@@ -696,19 +737,19 @@ references:
   - name: )
 - uid: Ubytec.Language.HighLevel.AccessorContext.Set*
   commentId: Overload:Ubytec.Language.HighLevel.AccessorContext.Set
-  href: Ubytec.Language.HighLevel.AccessorContext.html#Ubytec_Language_HighLevel_AccessorContext_Set
+  href: Ubytec.Language.HighLevel.AccessorContext.Set.html#Ubytec_Language_HighLevel_AccessorContext_Set
   name: Set
   nameWithType: AccessorContext.Set
   fullName: Ubytec.Language.HighLevel.AccessorContext.Set
 - uid: Ubytec.Language.HighLevel.AccessorContext.Init*
   commentId: Overload:Ubytec.Language.HighLevel.AccessorContext.Init
-  href: Ubytec.Language.HighLevel.AccessorContext.html#Ubytec_Language_HighLevel_AccessorContext_Init
+  href: Ubytec.Language.HighLevel.AccessorContext.Init.html#Ubytec_Language_HighLevel_AccessorContext_Init
   name: Init
   nameWithType: AccessorContext.Init
   fullName: Ubytec.Language.HighLevel.AccessorContext.Init
 - uid: Ubytec.Language.HighLevel.AccessorContext.PropertyType*
   commentId: Overload:Ubytec.Language.HighLevel.AccessorContext.PropertyType
-  href: Ubytec.Language.HighLevel.AccessorContext.html#Ubytec_Language_HighLevel_AccessorContext_PropertyType
+  href: Ubytec.Language.HighLevel.AccessorContext.PropertyType.html#Ubytec_Language_HighLevel_AccessorContext_PropertyType
   name: PropertyType
   nameWithType: AccessorContext.PropertyType
   fullName: Ubytec.Language.HighLevel.AccessorContext.PropertyType
@@ -775,14 +816,14 @@ references:
     href: Ubytec.Language.Syntax.TypeSystem.html
 - uid: Ubytec.Language.HighLevel.AccessorContext.ID*
   commentId: Overload:Ubytec.Language.HighLevel.AccessorContext.ID
-  href: Ubytec.Language.HighLevel.AccessorContext.html#Ubytec_Language_HighLevel_AccessorContext_ID
+  href: Ubytec.Language.HighLevel.AccessorContext.ID.html#Ubytec_Language_HighLevel_AccessorContext_ID
   name: ID
   nameWithType: AccessorContext.ID
   fullName: Ubytec.Language.HighLevel.AccessorContext.ID
 - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
   commentId: P:Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
   parent: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
-  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_ID
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_ID
   name: ID
   nameWithType: IUbytecHighLevelEntity.ID
   fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.ID
@@ -796,7 +837,7 @@ references:
   fullName: System.Guid
 - uid: Ubytec.Language.HighLevel.AccessorContext.#ctor*
   commentId: Overload:Ubytec.Language.HighLevel.AccessorContext.#ctor
-  href: Ubytec.Language.HighLevel.AccessorContext.html#Ubytec_Language_HighLevel_AccessorContext__ctor_Ubytec_Language_HighLevel_Func___System_Guid_Ubytec_Language_Syntax_TypeSystem_Types_UType_
+  href: Ubytec.Language.HighLevel.AccessorContext.-ctor.html#Ubytec_Language_HighLevel_AccessorContext__ctor_Ubytec_Language_HighLevel_Func___System_Guid_Ubytec_Language_Syntax_TypeSystem_Types_UType_
   name: AccessorContext
   nameWithType: AccessorContext.AccessorContext
   fullName: Ubytec.Language.HighLevel.AccessorContext.AccessorContext
@@ -826,52 +867,58 @@ references:
   - name: )
 - uid: Ubytec.Language.HighLevel.AccessorContext.ToArray*
   commentId: Overload:Ubytec.Language.HighLevel.AccessorContext.ToArray
-  href: Ubytec.Language.HighLevel.AccessorContext.html#Ubytec_Language_HighLevel_AccessorContext_ToArray
+  href: Ubytec.Language.HighLevel.AccessorContext.ToArray.html#Ubytec_Language_HighLevel_AccessorContext_ToArray
   name: ToArray
   nameWithType: AccessorContext.ToArray
   fullName: Ubytec.Language.HighLevel.AccessorContext.ToArray
 - uid: Ubytec.Language.HighLevel.AccessorContext.Validate*
   commentId: Overload:Ubytec.Language.HighLevel.AccessorContext.Validate
-  href: Ubytec.Language.HighLevel.AccessorContext.html#Ubytec_Language_HighLevel_AccessorContext_Validate
+  href: Ubytec.Language.HighLevel.AccessorContext.Validate.html#Ubytec_Language_HighLevel_AccessorContext_Validate
   name: Validate
   nameWithType: AccessorContext.Validate
   fullName: Ubytec.Language.HighLevel.AccessorContext.Validate
 - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
   commentId: M:Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
   parent: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
-  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
   name: Validate()
   nameWithType: IUbytecHighLevelEntity.Validate()
   fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate()
   spec.csharp:
   - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
     name: Validate
-    href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
+    href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
   - name: (
   - name: )
   spec.vb:
   - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
     name: Validate
-    href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
+    href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
   - name: (
   - name: )
+- uid: Ubytec.Language.HighLevel.AccessorContext.ValidateInternal*
+  commentId: Overload:Ubytec.Language.HighLevel.AccessorContext.ValidateInternal
+  href: Ubytec.Language.HighLevel.AccessorContext.ValidateInternal.html#Ubytec_Language_HighLevel_AccessorContext_ValidateInternal_Ubytec_Language_HighLevel_Func___Ubytec_Language_Syntax_TypeSystem_Types_UType_System_Nullable_Ubytec_Language_HighLevel_Func___System_Nullable_Ubytec_Language_HighLevel_Func___System_Nullable_Ubytec_Language_HighLevel_Func___
+  name: ValidateInternal
+  nameWithType: AccessorContext.ValidateInternal
+  fullName: Ubytec.Language.HighLevel.AccessorContext.ValidateInternal
 - uid: Ubytec.Language.HighLevel.AccessorContext.Compile*
   commentId: Overload:Ubytec.Language.HighLevel.AccessorContext.Compile
-  href: Ubytec.Language.HighLevel.AccessorContext.html#Ubytec_Language_HighLevel_AccessorContext_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  href: Ubytec.Language.HighLevel.AccessorContext.Compile.html#Ubytec_Language_HighLevel_AccessorContext_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
   name: Compile
   nameWithType: AccessorContext.Compile
   fullName: Ubytec.Language.HighLevel.AccessorContext.Compile
 - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   commentId: M:Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   parent: Ubytec.Language.IUbytecEntity
-  href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
   name: Compile(CompilationScopes)
   nameWithType: IUbytecEntity.Compile(CompilationScopes)
   fullName: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   spec.csharp:
   - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
     name: Compile
-    href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+    href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
   - name: (
   - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
     name: CompilationScopes
@@ -880,7 +927,7 @@ references:
   spec.vb:
   - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
     name: Compile
-    href: Ubytec.Language.IUbytecEntity.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+    href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
   - name: (
   - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
     name: CompilationScopes
@@ -942,3 +989,4 @@ references:
   - uid: Ubytec.Language.Syntax.Scopes
     name: Scopes
     href: Ubytec.Language.Syntax.Scopes.html
+memberLayout: SeparatePages

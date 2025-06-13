@@ -187,21 +187,21 @@ references:
 - uid: Ubytec.Language.Exceptions.UbytecException.Data
   commentId: P:Ubytec.Language.Exceptions.UbytecException.Data
   parent: Ubytec.Language.Exceptions.UbytecException
-  href: Ubytec.Language.Exceptions.UbytecException.html#Ubytec_Language_Exceptions_UbytecException_Data
+  href: Ubytec.Language.Exceptions.UbytecException.Data.html#Ubytec_Language_Exceptions_UbytecException_Data
   name: Data
   nameWithType: UbytecException.Data
   fullName: Ubytec.Language.Exceptions.UbytecException.Data
 - uid: Ubytec.Language.Exceptions.UbytecException.Message
   commentId: P:Ubytec.Language.Exceptions.UbytecException.Message
   parent: Ubytec.Language.Exceptions.UbytecException
-  href: Ubytec.Language.Exceptions.UbytecException.html#Ubytec_Language_Exceptions_UbytecException_Message
+  href: Ubytec.Language.Exceptions.UbytecException.Message.html#Ubytec_Language_Exceptions_UbytecException_Message
   name: Message
   nameWithType: UbytecException.Message
   fullName: Ubytec.Language.Exceptions.UbytecException.Message
 - uid: Ubytec.Language.Exceptions.UbytecException.HelpLink
   commentId: P:Ubytec.Language.Exceptions.UbytecException.HelpLink
   parent: Ubytec.Language.Exceptions.UbytecException
-  href: Ubytec.Language.Exceptions.UbytecException.html#Ubytec_Language_Exceptions_UbytecException_HelpLink
+  href: Ubytec.Language.Exceptions.UbytecException.HelpLink.html#Ubytec_Language_Exceptions_UbytecException_HelpLink
   name: HelpLink
   nameWithType: UbytecException.HelpLink
   fullName: Ubytec.Language.Exceptions.UbytecException.HelpLink
@@ -536,7 +536,7 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.runtime.serialization
 - uid: Ubytec.Language.Exceptions.SyntaxStackException.#ctor*
   commentId: Overload:Ubytec.Language.Exceptions.SyntaxStackException.#ctor
-  href: Ubytec.Language.Exceptions.SyntaxStackException.html#Ubytec_Language_Exceptions_SyntaxStackException__ctor_System_UInt64_System_String_System_String_
+  href: Ubytec.Language.Exceptions.SyntaxStackException.-ctor.html#Ubytec_Language_Exceptions_SyntaxStackException__ctor_System_UInt64_System_String_System_String_
   name: SyntaxStackException
   nameWithType: SyntaxStackException.SyntaxStackException
   fullName: Ubytec.Language.Exceptions.SyntaxStackException.SyntaxStackException
@@ -568,13 +568,14 @@ references:
 - uid: Ubytec.Language.Exceptions.UbytecException.ErrorCode
   commentId: P:Ubytec.Language.Exceptions.UbytecException.ErrorCode
   parent: Ubytec.Language.Exceptions.UbytecException
-  href: Ubytec.Language.Exceptions.UbytecException.html#Ubytec_Language_Exceptions_UbytecException_ErrorCode
+  href: Ubytec.Language.Exceptions.UbytecException.ErrorCode.html#Ubytec_Language_Exceptions_UbytecException_ErrorCode
   name: ErrorCode
   nameWithType: UbytecException.ErrorCode
   fullName: Ubytec.Language.Exceptions.UbytecException.ErrorCode
 - uid: Ubytec.Language.Exceptions.SyntaxStackException.ErrorCode*
   commentId: Overload:Ubytec.Language.Exceptions.SyntaxStackException.ErrorCode
-  href: Ubytec.Language.Exceptions.SyntaxStackException.html#Ubytec_Language_Exceptions_SyntaxStackException_ErrorCode
+  href: Ubytec.Language.Exceptions.SyntaxStackException.ErrorCode.html#Ubytec_Language_Exceptions_SyntaxStackException_ErrorCode
   name: ErrorCode
   nameWithType: SyntaxStackException.ErrorCode
   fullName: Ubytec.Language.Exceptions.SyntaxStackException.ErrorCode
+memberLayout: SeparatePages

@@ -481,7 +481,7 @@ references:
   name.vb: Object
 - uid: Ubytec.Language.AST.HighLevelParser.ParseError.#ctor*
   commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseError.#ctor
-  href: Ubytec.Language.AST.HighLevelParser.ParseError.html#Ubytec_Language_AST_HighLevelParser_ParseError__ctor_System_Int32_System_String_System_String_
+  href: Ubytec.Language.AST.HighLevelParser.ParseError.-ctor.html#Ubytec_Language_AST_HighLevelParser_ParseError__ctor_System_Int32_System_String_System_String_
   name: ParseError
   nameWithType: HighLevelParser.ParseError.ParseError
   fullName: Ubytec.Language.AST.HighLevelParser.ParseError.ParseError
@@ -512,19 +512,20 @@ references:
   name.vb: String
 - uid: Ubytec.Language.AST.HighLevelParser.ParseError.Line*
   commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseError.Line
-  href: Ubytec.Language.AST.HighLevelParser.ParseError.html#Ubytec_Language_AST_HighLevelParser_ParseError_Line
+  href: Ubytec.Language.AST.HighLevelParser.ParseError.Line.html#Ubytec_Language_AST_HighLevelParser_ParseError_Line
   name: Line
   nameWithType: HighLevelParser.ParseError.Line
   fullName: Ubytec.Language.AST.HighLevelParser.ParseError.Line
 - uid: Ubytec.Language.AST.HighLevelParser.ParseError.Where*
   commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseError.Where
-  href: Ubytec.Language.AST.HighLevelParser.ParseError.html#Ubytec_Language_AST_HighLevelParser_ParseError_Where
+  href: Ubytec.Language.AST.HighLevelParser.ParseError.Where.html#Ubytec_Language_AST_HighLevelParser_ParseError_Where
   name: Where
   nameWithType: HighLevelParser.ParseError.Where
   fullName: Ubytec.Language.AST.HighLevelParser.ParseError.Where
 - uid: Ubytec.Language.AST.HighLevelParser.ParseError.Message*
   commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseError.Message
-  href: Ubytec.Language.AST.HighLevelParser.ParseError.html#Ubytec_Language_AST_HighLevelParser_ParseError_Message
+  href: Ubytec.Language.AST.HighLevelParser.ParseError.Message.html#Ubytec_Language_AST_HighLevelParser_ParseError_Message
   name: Message
   nameWithType: HighLevelParser.ParseError.Message
   fullName: Ubytec.Language.AST.HighLevelParser.ParseError.Message
+memberLayout: SeparatePages

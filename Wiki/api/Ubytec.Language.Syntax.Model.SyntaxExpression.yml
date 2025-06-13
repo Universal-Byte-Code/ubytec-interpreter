@@ -10,6 +10,7 @@ items:
   - Ubytec.Language.Syntax.Model.SyntaxExpression.Metadata
   - Ubytec.Language.Syntax.Model.SyntaxExpression.SerializableMetadata
   - Ubytec.Language.Syntax.Model.SyntaxExpression.Syntaxes
+  - Ubytec.Language.Syntax.Model.SyntaxExpression._metadata
   langs:
   - csharp
   - vb
@@ -72,6 +73,33 @@ items:
       type: System.Collections.Generic.List{Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment}
     content.vb: Public ReadOnly Property Syntaxes As List(Of IUbytecExpressionFragment)
   overload: Ubytec.Language.Syntax.Model.SyntaxExpression.Syntaxes*
+- uid: Ubytec.Language.Syntax.Model.SyntaxExpression._metadata
+  commentId: F:Ubytec.Language.Syntax.Model.SyntaxExpression._metadata
+  id: _metadata
+  parent: Ubytec.Language.Syntax.Model.SyntaxExpression
+  langs:
+  - csharp
+  - vb
+  name: _metadata
+  nameWithType: SyntaxExpression._metadata
+  fullName: Ubytec.Language.Syntax.Model.SyntaxExpression._metadata
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxExpression.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _metadata
+    path: ../Ubytec/Language/Syntax/Model/SyntaxExpression.cs
+    startLine: 10
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  syntax:
+    content: private MetadataRegistry _metadata
+    return:
+      type: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+    content.vb: Private _metadata As MetadataRegistry
 - uid: Ubytec.Language.Syntax.Model.SyntaxExpression.Metadata
   commentId: P:Ubytec.Language.Syntax.Model.SyntaxExpression.Metadata
   id: Metadata
@@ -531,7 +559,7 @@ references:
     href: Ubytec.Language.Syntax.Interfaces.html
 - uid: Ubytec.Language.Syntax.Model.SyntaxExpression.Syntaxes*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxExpression.Syntaxes
-  href: Ubytec.Language.Syntax.Model.SyntaxExpression.html#Ubytec_Language_Syntax_Model_SyntaxExpression_Syntaxes
+  href: Ubytec.Language.Syntax.Model.SyntaxExpression.Syntaxes.html#Ubytec_Language_Syntax_Model_SyntaxExpression_Syntaxes
   name: Syntaxes
   nameWithType: SyntaxExpression.Syntaxes
   fullName: Ubytec.Language.Syntax.Model.SyntaxExpression.Syntaxes
@@ -633,19 +661,6 @@ references:
     name: Generic
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic
-- uid: Ubytec.Language.Syntax.Model.SyntaxExpression.Metadata*
-  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxExpression.Metadata
-  href: Ubytec.Language.Syntax.Model.SyntaxExpression.html#Ubytec_Language_Syntax_Model_SyntaxExpression_Metadata
-  name: Metadata
-  nameWithType: SyntaxExpression.Metadata
-  fullName: Ubytec.Language.Syntax.Model.SyntaxExpression.Metadata
-- uid: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
-  commentId: P:Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
-  parent: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
-  href: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.html#Ubytec_Language_Syntax_Interfaces_IUbytecSyntax_Metadata
-  name: Metadata
-  nameWithType: IUbytecSyntax.Metadata
-  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
   commentId: T:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
   parent: Ubytec.Language.Syntax.Fast.Metadata
@@ -699,9 +714,22 @@ references:
   - uid: Ubytec.Language.Syntax.Fast.Metadata
     name: Metadata
     href: Ubytec.Language.Syntax.Fast.Metadata.html
+- uid: Ubytec.Language.Syntax.Model.SyntaxExpression.Metadata*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxExpression.Metadata
+  href: Ubytec.Language.Syntax.Model.SyntaxExpression.Metadata.html#Ubytec_Language_Syntax_Model_SyntaxExpression_Metadata
+  name: Metadata
+  nameWithType: SyntaxExpression.Metadata
+  fullName: Ubytec.Language.Syntax.Model.SyntaxExpression.Metadata
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
+  commentId: P:Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
+  parent: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+  href: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata.html#Ubytec_Language_Syntax_Interfaces_IUbytecSyntax_Metadata
+  name: Metadata
+  nameWithType: IUbytecSyntax.Metadata
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
 - uid: Ubytec.Language.Syntax.Model.SyntaxExpression.SerializableMetadata*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxExpression.SerializableMetadata
-  href: Ubytec.Language.Syntax.Model.SyntaxExpression.html#Ubytec_Language_Syntax_Model_SyntaxExpression_SerializableMetadata
+  href: Ubytec.Language.Syntax.Model.SyntaxExpression.SerializableMetadata.html#Ubytec_Language_Syntax_Model_SyntaxExpression_SerializableMetadata
   name: SerializableMetadata
   nameWithType: SyntaxExpression.SerializableMetadata
   fullName: Ubytec.Language.Syntax.Model.SyntaxExpression.SerializableMetadata
@@ -788,7 +816,7 @@ references:
   - name: )
 - uid: Ubytec.Language.Syntax.Model.SyntaxExpression.#ctor*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxExpression.#ctor
-  href: Ubytec.Language.Syntax.Model.SyntaxExpression.html#Ubytec_Language_Syntax_Model_SyntaxExpression__ctor_Ubytec_Language_Syntax_Interfaces_IUbytecExpressionFragment___
+  href: Ubytec.Language.Syntax.Model.SyntaxExpression.-ctor.html#Ubytec_Language_Syntax_Model_SyntaxExpression__ctor_Ubytec_Language_Syntax_Interfaces_IUbytecExpressionFragment___
   name: SyntaxExpression
   nameWithType: SyntaxExpression.SyntaxExpression
   fullName: Ubytec.Language.Syntax.Model.SyntaxExpression.SyntaxExpression
@@ -818,7 +846,7 @@ references:
   - name: )
 - uid: Ubytec.Language.Syntax.Model.SyntaxExpression.Dispose*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxExpression.Dispose
-  href: Ubytec.Language.Syntax.Model.SyntaxExpression.html#Ubytec_Language_Syntax_Model_SyntaxExpression_Dispose
+  href: Ubytec.Language.Syntax.Model.SyntaxExpression.Dispose.html#Ubytec_Language_Syntax_Model_SyntaxExpression_Dispose
   name: Dispose
   nameWithType: SyntaxExpression.Dispose
   fullName: Ubytec.Language.Syntax.Model.SyntaxExpression.Dispose
@@ -844,3 +872,4 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
   - name: (
   - name: )
+memberLayout: SeparatePages

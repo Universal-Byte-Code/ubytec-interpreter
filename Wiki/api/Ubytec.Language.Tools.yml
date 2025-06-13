@@ -2,9 +2,13 @@
 items:
 - uid: Ubytec.Language.Tools
   commentId: N:Ubytec.Language.Tools
-  id: Ubytec.Language.Tools
+  id: Tools
+  parent: Ubytec.Language
   children:
+  - Ubytec.Language.Tools.DeprecatedCompiler
   - Ubytec.Language.Tools.FormattingHelper
+  - Ubytec.Language.Tools.Optimization
+  - Ubytec.Language.Tools.Serialization
   - Ubytec.Language.Tools.Utf64Codec
   langs:
   - csharp
@@ -16,6 +20,88 @@ items:
   assemblies:
   - Ubytec
 references:
+- uid: Ubytec.Language.Tools.Optimization
+  commentId: N:Ubytec.Language.Tools.Optimization
+  href: Ubytec.html
+  name: Ubytec.Language.Tools.Optimization
+  nameWithType: Ubytec.Language.Tools.Optimization
+  fullName: Ubytec.Language.Tools.Optimization
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Tools
+    name: Tools
+    href: Ubytec.Language.Tools.html
+  - name: .
+  - uid: Ubytec.Language.Tools.Optimization
+    name: Optimization
+    href: Ubytec.Language.Tools.Optimization.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Tools
+    name: Tools
+    href: Ubytec.Language.Tools.html
+  - name: .
+  - uid: Ubytec.Language.Tools.Optimization
+    name: Optimization
+    href: Ubytec.Language.Tools.Optimization.html
+- uid: Ubytec.Language.Tools.Serialization
+  commentId: N:Ubytec.Language.Tools.Serialization
+  href: Ubytec.html
+  name: Ubytec.Language.Tools.Serialization
+  nameWithType: Ubytec.Language.Tools.Serialization
+  fullName: Ubytec.Language.Tools.Serialization
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Tools
+    name: Tools
+    href: Ubytec.Language.Tools.html
+  - name: .
+  - uid: Ubytec.Language.Tools.Serialization
+    name: Serialization
+    href: Ubytec.Language.Tools.Serialization.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Tools
+    name: Tools
+    href: Ubytec.Language.Tools.html
+  - name: .
+  - uid: Ubytec.Language.Tools.Serialization
+    name: Serialization
+    href: Ubytec.Language.Tools.Serialization.html
+- uid: Ubytec.Language.Tools.DeprecatedCompiler
+  commentId: T:Ubytec.Language.Tools.DeprecatedCompiler
+  href: Ubytec.Language.Tools.DeprecatedCompiler.html
+  name: DeprecatedCompiler
+  nameWithType: DeprecatedCompiler
+  fullName: Ubytec.Language.Tools.DeprecatedCompiler
 - uid: Ubytec.Language.Tools.FormattingHelper
   commentId: T:Ubytec.Language.Tools.FormattingHelper
   href: Ubytec.Language.Tools.FormattingHelper.html
@@ -28,3 +114,4 @@ references:
   name: Utf64Codec
   nameWithType: Utf64Codec
   fullName: Ubytec.Language.Tools.Utf64Codec
+memberLayout: SeparatePages

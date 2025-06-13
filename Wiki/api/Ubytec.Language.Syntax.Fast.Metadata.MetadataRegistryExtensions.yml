@@ -397,7 +397,7 @@ references:
   fullName: System
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable*
   commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_ToImmutable_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_ToImmutable_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_
   name: ToImmutable
   nameWithType: MetadataRegistryExtensions.ToImmutable
   fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable
@@ -528,7 +528,7 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.collections.immutable
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex*
   commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_TryGetByIndex_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_System_UInt32_System_String__System_Object__
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_TryGetByIndex_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_System_UInt32_System_String__System_Object__
   name: TryGetByIndex
   nameWithType: MetadataRegistryExtensions.TryGetByIndex
   fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex
@@ -565,3 +565,4 @@ references:
   nameWithType.vb: Boolean
   fullName.vb: Boolean
   name.vb: Boolean
+memberLayout: SeparatePages

@@ -2,7 +2,8 @@
 items:
 - uid: Ubytec.Language.HighLevel.Interfaces
   commentId: N:Ubytec.Language.HighLevel.Interfaces
-  id: Ubytec.Language.HighLevel.Interfaces
+  id: Interfaces
+  parent: Ubytec.Language.HighLevel
   children:
   - Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
   - Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
@@ -68,3 +69,4 @@ references:
   - uid: Ubytec.Language.HighLevel.Interfaces
     name: Interfaces
     href: Ubytec.Language.HighLevel.Interfaces.html
+memberLayout: SeparatePages

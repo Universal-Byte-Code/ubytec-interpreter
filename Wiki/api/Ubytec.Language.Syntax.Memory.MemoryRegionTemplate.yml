@@ -545,7 +545,7 @@ references:
   name.vb: Object
 - uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.#ctor*
   commentId: Overload:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.#ctor
-  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.html#Ubytec_Language_Syntax_Memory_MemoryRegionTemplate__ctor_System_String_System_UIntPtr_System_UIntPtr_System_Int64_System_Boolean_
+  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.-ctor.html#Ubytec_Language_Syntax_Memory_MemoryRegionTemplate__ctor_System_String_System_UIntPtr_System_UIntPtr_System_Int64_System_Boolean_
   name: MemoryRegionTemplate
   nameWithType: MemoryRegionTemplate.MemoryRegionTemplate
   fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.MemoryRegionTemplate
@@ -598,31 +598,32 @@ references:
   name.vb: Boolean
 - uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.SectionName*
   commentId: Overload:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.SectionName
-  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.html#Ubytec_Language_Syntax_Memory_MemoryRegionTemplate_SectionName
+  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.SectionName.html#Ubytec_Language_Syntax_Memory_MemoryRegionTemplate_SectionName
   name: SectionName
   nameWithType: MemoryRegionTemplate.SectionName
   fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.SectionName
 - uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Alignment*
   commentId: Overload:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Alignment
-  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.html#Ubytec_Language_Syntax_Memory_MemoryRegionTemplate_Alignment
+  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Alignment.html#Ubytec_Language_Syntax_Memory_MemoryRegionTemplate_Alignment
   name: Alignment
   nameWithType: MemoryRegionTemplate.Alignment
   fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Alignment
 - uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Size*
   commentId: Overload:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Size
-  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.html#Ubytec_Language_Syntax_Memory_MemoryRegionTemplate_Size
+  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Size.html#Ubytec_Language_Syntax_Memory_MemoryRegionTemplate_Size
   name: Size
   nameWithType: MemoryRegionTemplate.Size
   fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.Size
 - uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.DefaultValue*
   commentId: Overload:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.DefaultValue
-  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.html#Ubytec_Language_Syntax_Memory_MemoryRegionTemplate_DefaultValue
+  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.DefaultValue.html#Ubytec_Language_Syntax_Memory_MemoryRegionTemplate_DefaultValue
   name: DefaultValue
   nameWithType: MemoryRegionTemplate.DefaultValue
   fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.DefaultValue
 - uid: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.EmitZeroDirective*
   commentId: Overload:Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.EmitZeroDirective
-  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.html#Ubytec_Language_Syntax_Memory_MemoryRegionTemplate_EmitZeroDirective
+  href: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.EmitZeroDirective.html#Ubytec_Language_Syntax_Memory_MemoryRegionTemplate_EmitZeroDirective
   name: EmitZeroDirective
   nameWithType: MemoryRegionTemplate.EmitZeroDirective
   fullName: Ubytec.Language.Syntax.Memory.MemoryRegionTemplate.EmitZeroDirective
+memberLayout: SeparatePages

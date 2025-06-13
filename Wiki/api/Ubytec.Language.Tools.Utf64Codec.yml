@@ -5,8 +5,11 @@ items:
   id: Utf64Codec
   parent: Ubytec.Language.Tools
   children:
+  - Ubytec.Language.Tools.Utf64Codec.Base64Map
   - Ubytec.Language.Tools.Utf64Codec.Decode(System.String)
   - Ubytec.Language.Tools.Utf64Codec.Encode(System.String)
+  - Ubytec.Language.Tools.Utf64Codec.EncodeExtended(System.Text.StringBuilder,System.Int32)
+  - Ubytec.Language.Tools.Utf64Codec.SpecialChars
   langs:
   - csharp
   - vb
@@ -48,6 +51,60 @@ items:
   - System.Object.MemberwiseClone
   - System.Object.ReferenceEquals(System.Object,System.Object)
   - System.Object.ToString
+- uid: Ubytec.Language.Tools.Utf64Codec.Base64Map
+  commentId: F:Ubytec.Language.Tools.Utf64Codec.Base64Map
+  id: Base64Map
+  parent: Ubytec.Language.Tools.Utf64Codec
+  langs:
+  - csharp
+  - vb
+  name: Base64Map
+  nameWithType: Utf64Codec.Base64Map
+  fullName: Ubytec.Language.Tools.Utf64Codec.Base64Map
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Tools/Utf64Codec.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Base64Map
+    path: ../Ubytec/Language/Tools/Utf64Codec.cs
+    startLine: 15
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Tools
+  syntax:
+    content: private const string Base64Map = "_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-"
+    return:
+      type: System.String
+    content.vb: Private Const Base64Map As String = "_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-"
+- uid: Ubytec.Language.Tools.Utf64Codec.SpecialChars
+  commentId: F:Ubytec.Language.Tools.Utf64Codec.SpecialChars
+  id: SpecialChars
+  parent: Ubytec.Language.Tools.Utf64Codec
+  langs:
+  - csharp
+  - vb
+  name: SpecialChars
+  nameWithType: Utf64Codec.SpecialChars
+  fullName: Ubytec.Language.Tools.Utf64Codec.SpecialChars
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Tools/Utf64Codec.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: SpecialChars
+    path: ../Ubytec/Language/Tools/Utf64Codec.cs
+    startLine: 18
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Tools
+  syntax:
+    content: private const string SpecialChars = "_\"',.;:!?()[]{}#=+-*/\\\n "
+    return:
+      type: System.String
+    content.vb: Private Const SpecialChars As String = "_""',.;:!?()[]{}#=+-*/\" & vbLf & " "
 - uid: Ubytec.Language.Tools.Utf64Codec.Encode(System.String)
   commentId: M:Ubytec.Language.Tools.Utf64Codec.Encode(System.String)
   id: Encode(System.String)
@@ -132,6 +189,51 @@ items:
   nameWithType.vb: Utf64Codec.Decode(String)
   fullName.vb: Ubytec.Language.Tools.Utf64Codec.Decode(String)
   name.vb: Decode(String)
+- uid: Ubytec.Language.Tools.Utf64Codec.EncodeExtended(System.Text.StringBuilder,System.Int32)
+  commentId: M:Ubytec.Language.Tools.Utf64Codec.EncodeExtended(System.Text.StringBuilder,System.Int32)
+  id: EncodeExtended(System.Text.StringBuilder,System.Int32)
+  parent: Ubytec.Language.Tools.Utf64Codec
+  langs:
+  - csharp
+  - vb
+  name: EncodeExtended(StringBuilder, int)
+  nameWithType: Utf64Codec.EncodeExtended(StringBuilder, int)
+  fullName: Ubytec.Language.Tools.Utf64Codec.EncodeExtended(System.Text.StringBuilder, int)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Tools/Utf64Codec.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: EncodeExtended
+    path: ../Ubytec/Language/Tools/Utf64Codec.cs
+    startLine: 221
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Tools
+  summary: >-
+    Encodes code points &gt;= 128 using the 'Z' pattern:
+
+    - up to 0x7FF =&gt; 2 "bytes"
+
+    - up to 0xFFFF =&gt; 3 "bytes"
+
+    - up to 0x10FFFF =&gt; 4 "bytes"
+
+    Each "byte" is 6 bits from the code point.
+  example: []
+  syntax:
+    content: private static void EncodeExtended(StringBuilder sb, int codePoint)
+    parameters:
+    - id: sb
+      type: System.Text.StringBuilder
+    - id: codePoint
+      type: System.Int32
+    content.vb: Private Shared Sub EncodeExtended(sb As StringBuilder, codePoint As Integer)
+  overload: Ubytec.Language.Tools.Utf64Codec.EncodeExtended*
+  nameWithType.vb: Utf64Codec.EncodeExtended(StringBuilder, Integer)
+  fullName.vb: Ubytec.Language.Tools.Utf64Codec.EncodeExtended(System.Text.StringBuilder, Integer)
+  name.vb: EncodeExtended(StringBuilder, Integer)
 references:
 - uid: Ubytec.Language.Tools
   commentId: N:Ubytec.Language.Tools
@@ -400,12 +502,6 @@ references:
   name: System
   nameWithType: System
   fullName: System
-- uid: Ubytec.Language.Tools.Utf64Codec.Encode*
-  commentId: Overload:Ubytec.Language.Tools.Utf64Codec.Encode
-  href: Ubytec.Language.Tools.Utf64Codec.html#Ubytec_Language_Tools_Utf64Codec_Encode_System_String_
-  name: Encode
-  nameWithType: Utf64Codec.Encode
-  fullName: Ubytec.Language.Tools.Utf64Codec.Encode
 - uid: System.String
   commentId: T:System.String
   parent: System
@@ -417,9 +513,68 @@ references:
   nameWithType.vb: String
   fullName.vb: String
   name.vb: String
+- uid: Ubytec.Language.Tools.Utf64Codec.Encode*
+  commentId: Overload:Ubytec.Language.Tools.Utf64Codec.Encode
+  href: Ubytec.Language.Tools.Utf64Codec.Encode.html#Ubytec_Language_Tools_Utf64Codec_Encode_System_String_
+  name: Encode
+  nameWithType: Utf64Codec.Encode
+  fullName: Ubytec.Language.Tools.Utf64Codec.Encode
 - uid: Ubytec.Language.Tools.Utf64Codec.Decode*
   commentId: Overload:Ubytec.Language.Tools.Utf64Codec.Decode
-  href: Ubytec.Language.Tools.Utf64Codec.html#Ubytec_Language_Tools_Utf64Codec_Decode_System_String_
+  href: Ubytec.Language.Tools.Utf64Codec.Decode.html#Ubytec_Language_Tools_Utf64Codec_Decode_System_String_
   name: Decode
   nameWithType: Utf64Codec.Decode
   fullName: Ubytec.Language.Tools.Utf64Codec.Decode
+- uid: Ubytec.Language.Tools.Utf64Codec.EncodeExtended*
+  commentId: Overload:Ubytec.Language.Tools.Utf64Codec.EncodeExtended
+  href: Ubytec.Language.Tools.Utf64Codec.EncodeExtended.html#Ubytec_Language_Tools_Utf64Codec_EncodeExtended_System_Text_StringBuilder_System_Int32_
+  name: EncodeExtended
+  nameWithType: Utf64Codec.EncodeExtended
+  fullName: Ubytec.Language.Tools.Utf64Codec.EncodeExtended
+- uid: System.Text.StringBuilder
+  commentId: T:System.Text.StringBuilder
+  parent: System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.text.stringbuilder
+  name: StringBuilder
+  nameWithType: StringBuilder
+  fullName: System.Text.StringBuilder
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Text
+  commentId: N:System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Text
+  nameWithType: System.Text
+  fullName: System.Text
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+memberLayout: SeparatePages

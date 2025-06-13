@@ -10,7 +10,13 @@
           ]
         }
       ],
-      "dest": "api"
+      "dest": "api",
+      "namespaceLayout": "nested",
+      "categoryLayout": "nested",
+      "enumSortOrder": "declaringOrder",
+      "includePrivateMembers": true,
+      "includeExplicitInterfaceImplementations": true,
+      "memberLayout": "separatePages"
     }
   ],
   "build": {
@@ -40,7 +46,11 @@
       "_appName": "Ubytec",
       "_appTitle": "Ubytec Language Wiki",
       "_enableSearch": true,
+      "_appLogoPath": "images/favicon-32x32.png",
+      "_appFaviconPath": "images/favicon.ico",
+      "_enableNewTab": true,
       "pdf": true
-    }
+    },
+    "xref": [ "https://xref.docs.microsoft.com/query?uid={uid}" ]
   }
 }

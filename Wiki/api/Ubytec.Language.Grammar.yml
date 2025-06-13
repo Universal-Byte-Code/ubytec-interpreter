@@ -2,7 +2,8 @@
 items:
 - uid: Ubytec.Language.Grammar
   commentId: N:Ubytec.Language.Grammar
-  id: Ubytec.Language.Grammar
+  id: Grammar
+  parent: Ubytec.Language
   children:
   - Ubytec.Language.Grammar.LexicalAnalyst
   - Ubytec.Language.Grammar.UbytecRegistryOptions
@@ -24,7 +25,39 @@ references:
   fullName: Ubytec.Language.Grammar.LexicalAnalyst
 - uid: Ubytec.Language.Grammar.UbytecRegistryOptions
   commentId: T:Ubytec.Language.Grammar.UbytecRegistryOptions
+  parent: Ubytec.Language.Grammar
   href: Ubytec.Language.Grammar.UbytecRegistryOptions.html
   name: UbytecRegistryOptions
   nameWithType: UbytecRegistryOptions
   fullName: Ubytec.Language.Grammar.UbytecRegistryOptions
+- uid: Ubytec.Language.Grammar
+  commentId: N:Ubytec.Language.Grammar
+  href: Ubytec.html
+  name: Ubytec.Language.Grammar
+  nameWithType: Ubytec.Language.Grammar
+  fullName: Ubytec.Language.Grammar
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Grammar
+    name: Grammar
+    href: Ubytec.Language.Grammar.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Grammar
+    name: Grammar
+    href: Ubytec.Language.Grammar.html
+memberLayout: SeparatePages

@@ -2,7 +2,8 @@
 items:
 - uid: Ubytec.Language.Tools.Serialization
   commentId: N:Ubytec.Language.Tools.Serialization
-  id: Ubytec.Language.Tools.Serialization
+  id: Serialization
+  parent: Ubytec.Language.Tools
   children:
   - Ubytec.Language.Tools.Serialization.IOpCodeConverter
   - Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter
@@ -35,3 +36,4 @@ references:
   name: IUbytecExpressionFragmentConverter
   nameWithType: IUbytecExpressionFragmentConverter
   fullName: Ubytec.Language.Tools.Serialization.IUbytecExpressionFragmentConverter
+memberLayout: SeparatePages

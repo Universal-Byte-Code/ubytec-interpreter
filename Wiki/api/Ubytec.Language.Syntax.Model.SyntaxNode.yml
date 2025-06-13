@@ -17,6 +17,7 @@ items:
   - Ubytec.Language.Syntax.Model.SyntaxNode.ScopeTokens
   - Ubytec.Language.Syntax.Model.SyntaxNode.SerializableMetadata
   - Ubytec.Language.Syntax.Model.SyntaxNode.Tokens
+  - Ubytec.Language.Syntax.Model.SyntaxNode._metadata
   langs:
   - csharp
   - vb
@@ -167,6 +168,33 @@ items:
   - type: System.Text.Json.Serialization.JsonIncludeAttribute
     ctor: System.Text.Json.Serialization.JsonIncludeAttribute.#ctor
     arguments: []
+- uid: Ubytec.Language.Syntax.Model.SyntaxNode._metadata
+  commentId: F:Ubytec.Language.Syntax.Model.SyntaxNode._metadata
+  id: _metadata
+  parent: Ubytec.Language.Syntax.Model.SyntaxNode
+  langs:
+  - csharp
+  - vb
+  name: _metadata
+  nameWithType: SyntaxNode._metadata
+  fullName: Ubytec.Language.Syntax.Model.SyntaxNode._metadata
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Model/SyntaxNode.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _metadata
+    path: ../Ubytec/Language/Syntax/Model/SyntaxNode.cs
+    startLine: 19
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Model
+  syntax:
+    content: private MetadataRegistry _metadata
+    return:
+      type: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+    content.vb: Private _metadata As MetadataRegistry
 - uid: Ubytec.Language.Syntax.Model.SyntaxNode.Metadata
   commentId: P:Ubytec.Language.Syntax.Model.SyntaxNode.Metadata
   id: Metadata
@@ -772,7 +800,7 @@ references:
     href: Ubytec.Language.Syntax.Interfaces.html
 - uid: Ubytec.Language.Syntax.Model.SyntaxNode.Entity*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxNode.Entity
-  href: Ubytec.Language.Syntax.Model.SyntaxNode.html#Ubytec_Language_Syntax_Model_SyntaxNode_Entity
+  href: Ubytec.Language.Syntax.Model.SyntaxNode.Entity.html#Ubytec_Language_Syntax_Model_SyntaxNode_Entity
   name: Entity
   nameWithType: SyntaxNode.Entity
   fullName: Ubytec.Language.Syntax.Model.SyntaxNode.Entity
@@ -807,7 +835,7 @@ references:
     href: Ubytec.Language.html
 - uid: Ubytec.Language.Syntax.Model.SyntaxNode.Children*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxNode.Children
-  href: Ubytec.Language.Syntax.Model.SyntaxNode.html#Ubytec_Language_Syntax_Model_SyntaxNode_Children
+  href: Ubytec.Language.Syntax.Model.SyntaxNode.Children.html#Ubytec_Language_Syntax_Model_SyntaxNode_Children
   name: Children
   nameWithType: SyntaxNode.Children
   fullName: Ubytec.Language.Syntax.Model.SyntaxNode.Children
@@ -911,7 +939,7 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic
 - uid: Ubytec.Language.Syntax.Model.SyntaxNode.Tokens*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxNode.Tokens
-  href: Ubytec.Language.Syntax.Model.SyntaxNode.html#Ubytec_Language_Syntax_Model_SyntaxNode_Tokens
+  href: Ubytec.Language.Syntax.Model.SyntaxNode.Tokens.html#Ubytec_Language_Syntax_Model_SyntaxNode_Tokens
   name: Tokens
   nameWithType: SyntaxNode.Tokens
   fullName: Ubytec.Language.Syntax.Model.SyntaxNode.Tokens
@@ -948,19 +976,6 @@ references:
     name: SyntaxToken
     href: Ubytec.Language.Syntax.Model.SyntaxToken.html
   - name: )
-- uid: Ubytec.Language.Syntax.Model.SyntaxNode.Metadata*
-  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxNode.Metadata
-  href: Ubytec.Language.Syntax.Model.SyntaxNode.html#Ubytec_Language_Syntax_Model_SyntaxNode_Metadata
-  name: Metadata
-  nameWithType: SyntaxNode.Metadata
-  fullName: Ubytec.Language.Syntax.Model.SyntaxNode.Metadata
-- uid: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
-  commentId: P:Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
-  parent: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
-  href: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.html#Ubytec_Language_Syntax_Interfaces_IUbytecSyntax_Metadata
-  name: Metadata
-  nameWithType: IUbytecSyntax.Metadata
-  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
   commentId: T:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
   parent: Ubytec.Language.Syntax.Fast.Metadata
@@ -1014,9 +1029,22 @@ references:
   - uid: Ubytec.Language.Syntax.Fast.Metadata
     name: Metadata
     href: Ubytec.Language.Syntax.Fast.Metadata.html
+- uid: Ubytec.Language.Syntax.Model.SyntaxNode.Metadata*
+  commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxNode.Metadata
+  href: Ubytec.Language.Syntax.Model.SyntaxNode.Metadata.html#Ubytec_Language_Syntax_Model_SyntaxNode_Metadata
+  name: Metadata
+  nameWithType: SyntaxNode.Metadata
+  fullName: Ubytec.Language.Syntax.Model.SyntaxNode.Metadata
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
+  commentId: P:Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
+  parent: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax
+  href: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata.html#Ubytec_Language_Syntax_Interfaces_IUbytecSyntax_Metadata
+  name: Metadata
+  nameWithType: IUbytecSyntax.Metadata
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
 - uid: Ubytec.Language.Syntax.Model.SyntaxNode.SerializableMetadata*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxNode.SerializableMetadata
-  href: Ubytec.Language.Syntax.Model.SyntaxNode.html#Ubytec_Language_Syntax_Model_SyntaxNode_SerializableMetadata
+  href: Ubytec.Language.Syntax.Model.SyntaxNode.SerializableMetadata.html#Ubytec_Language_Syntax_Model_SyntaxNode_SerializableMetadata
   name: SerializableMetadata
   nameWithType: SyntaxNode.SerializableMetadata
   fullName: Ubytec.Language.Syntax.Model.SyntaxNode.SerializableMetadata
@@ -1103,7 +1131,7 @@ references:
   - name: )
 - uid: Ubytec.Language.Syntax.Model.SyntaxNode.#ctor*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxNode.#ctor
-  href: Ubytec.Language.Syntax.Model.SyntaxNode.html#Ubytec_Language_Syntax_Model_SyntaxNode__ctor_Ubytec_Language_Operations_IOpCode_
+  href: Ubytec.Language.Syntax.Model.SyntaxNode.-ctor.html#Ubytec_Language_Syntax_Model_SyntaxNode__ctor_Ubytec_Language_Operations_IOpCode_
   name: SyntaxNode
   nameWithType: SyntaxNode.SyntaxNode
   fullName: Ubytec.Language.Syntax.Model.SyntaxNode.SyntaxNode
@@ -1194,7 +1222,7 @@ references:
     href: Ubytec.Language.HighLevel.Interfaces.html
 - uid: Ubytec.Language.Syntax.Model.SyntaxNode.ScopeOpCodes*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxNode.ScopeOpCodes
-  href: Ubytec.Language.Syntax.Model.SyntaxNode.html#Ubytec_Language_Syntax_Model_SyntaxNode_ScopeOpCodes
+  href: Ubytec.Language.Syntax.Model.SyntaxNode.ScopeOpCodes.html#Ubytec_Language_Syntax_Model_SyntaxNode_ScopeOpCodes
   name: ScopeOpCodes
   nameWithType: SyntaxNode.ScopeOpCodes
   fullName: Ubytec.Language.Syntax.Model.SyntaxNode.ScopeOpCodes
@@ -1221,7 +1249,7 @@ references:
   - name: )
 - uid: Ubytec.Language.Syntax.Model.SyntaxNode.ScopeTokens*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxNode.ScopeTokens
-  href: Ubytec.Language.Syntax.Model.SyntaxNode.html#Ubytec_Language_Syntax_Model_SyntaxNode_ScopeTokens
+  href: Ubytec.Language.Syntax.Model.SyntaxNode.ScopeTokens.html#Ubytec_Language_Syntax_Model_SyntaxNode_ScopeTokens
   name: ScopeTokens
   nameWithType: SyntaxNode.ScopeTokens
   fullName: Ubytec.Language.Syntax.Model.SyntaxNode.ScopeTokens
@@ -1248,7 +1276,7 @@ references:
   - name: )
 - uid: Ubytec.Language.Syntax.Model.SyntaxNode.IsHighLevel*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxNode.IsHighLevel
-  href: Ubytec.Language.Syntax.Model.SyntaxNode.html#Ubytec_Language_Syntax_Model_SyntaxNode_IsHighLevel
+  href: Ubytec.Language.Syntax.Model.SyntaxNode.IsHighLevel.html#Ubytec_Language_Syntax_Model_SyntaxNode_IsHighLevel
   name: IsHighLevel
   nameWithType: SyntaxNode.IsHighLevel
   fullName: Ubytec.Language.Syntax.Model.SyntaxNode.IsHighLevel
@@ -1265,13 +1293,13 @@ references:
   name.vb: Boolean
 - uid: Ubytec.Language.Syntax.Model.SyntaxNode.IsOpCode*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxNode.IsOpCode
-  href: Ubytec.Language.Syntax.Model.SyntaxNode.html#Ubytec_Language_Syntax_Model_SyntaxNode_IsOpCode
+  href: Ubytec.Language.Syntax.Model.SyntaxNode.IsOpCode.html#Ubytec_Language_Syntax_Model_SyntaxNode_IsOpCode
   name: IsOpCode
   nameWithType: SyntaxNode.IsOpCode
   fullName: Ubytec.Language.Syntax.Model.SyntaxNode.IsOpCode
 - uid: Ubytec.Language.Syntax.Model.SyntaxNode.Dispose*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxNode.Dispose
-  href: Ubytec.Language.Syntax.Model.SyntaxNode.html#Ubytec_Language_Syntax_Model_SyntaxNode_Dispose
+  href: Ubytec.Language.Syntax.Model.SyntaxNode.Dispose.html#Ubytec_Language_Syntax_Model_SyntaxNode_Dispose
   name: Dispose
   nameWithType: SyntaxNode.Dispose
   fullName: Ubytec.Language.Syntax.Model.SyntaxNode.Dispose
@@ -1297,3 +1325,4 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
   - name: (
   - name: )
+memberLayout: SeparatePages
