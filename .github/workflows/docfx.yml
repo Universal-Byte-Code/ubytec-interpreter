@@ -43,7 +43,7 @@ jobs:
           curl -sSL "https://learn.microsoft.com/api/xref/query?uid=all" -o xrefmap.yml
 
       - name: Restore DocFX site
-        run: docfx restore Wiki/docfx.json
+        run: docfx metadata Wiki/docfx.json
       - name: Build DocFX site
         run: docfx build Wiki/docfx.json --output Wiki/_site
 
