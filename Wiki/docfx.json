@@ -52,8 +52,8 @@
       "pdf": false
     },
     "xref": [
-      "xrefmap.yml",
-      "https://learn.microsoft.com/api/xref/query?uid={uid}"
+      "../xrefmap.yml",
+      "https://github.com/dotnet/docfx/raw/main/.xrefmap.json"
     ]
   }
 }
