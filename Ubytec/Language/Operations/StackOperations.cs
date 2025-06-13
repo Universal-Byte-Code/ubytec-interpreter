@@ -2,7 +2,7 @@
 
 namespace Ubytec.Language.Operations
 {
-    public static class StackOperarions
+    public static class StackOperations
     {
         public readonly record struct PUSH(byte[] operands) : IOpCode
         {

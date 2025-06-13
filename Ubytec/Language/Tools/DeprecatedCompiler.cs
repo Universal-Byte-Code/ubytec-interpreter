@@ -1,5 +1,6 @@
 ﻿namespace Ubytec.Language.Tools
 {
+    [Obsolete]
     internal static partial class DeprecatedCompiler
     {
         private static readonly Dictionary<string, byte> OpcodeMap = new()

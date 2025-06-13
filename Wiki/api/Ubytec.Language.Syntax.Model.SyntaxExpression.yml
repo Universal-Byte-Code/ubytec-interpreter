@@ -25,10 +25,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: SyntaxExpression
     path: ../Ubytec/Language/Syntax/Model/SyntaxExpression.cs
-    startLine: 6
+    startLine: 11
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: >-
+    Represents a composed Ubytec expression, built from one or more
+
+    <xref href="Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment" data-throw-if-not-resolved="false"></xref> instances (e.g. variable or condition fragments).
+  example: []
   syntax:
     content: 'public sealed class SyntaxExpression : IUbytecSyntax, IDisposable'
     content.vb: Public NotInheritable Class SyntaxExpression Implements IUbytecSyntax, IDisposable
@@ -62,17 +67,29 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Syntaxes
     path: ../Ubytec/Language/Syntax/Model/SyntaxExpression.cs
-    startLine: 8
+    startLine: 16
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: Gets the ordered list of expression fragments that form this expression.
+  example: []
   syntax:
-    content: public List<IUbytecExpressionFragment> Syntaxes { get; }
+    content: >-
+      [JsonInclude]
+
+      public List<IUbytecExpressionFragment> Syntaxes { get; }
     parameters: []
     return:
       type: System.Collections.Generic.List{Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment}
-    content.vb: Public ReadOnly Property Syntaxes As List(Of IUbytecExpressionFragment)
+    content.vb: >-
+      <JsonInclude>
+
+      Public ReadOnly Property Syntaxes As List(Of IUbytecExpressionFragment)
   overload: Ubytec.Language.Syntax.Model.SyntaxExpression.Syntaxes*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonIncludeAttribute
+    ctor: System.Text.Json.Serialization.JsonIncludeAttribute.#ctor
+    arguments: []
 - uid: Ubytec.Language.Syntax.Model.SyntaxExpression._metadata
   commentId: F:Ubytec.Language.Syntax.Model.SyntaxExpression._metadata
   id: _metadata
@@ -91,7 +108,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _metadata
     path: ../Ubytec/Language/Syntax/Model/SyntaxExpression.cs
-    startLine: 10
+    startLine: 19
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -118,10 +135,14 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Metadata
     path: ../Ubytec/Language/Syntax/Model/SyntaxExpression.cs
-    startLine: 12
+    startLine: 22
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: >-
+    Gets a reference to the <xref href="Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry" data-throw-if-not-resolved="false"></xref> for this syntax element,
+
+    allowing addition and retrieval of metadata entries.
   example: []
   syntax:
     content: >-
@@ -160,10 +181,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: SerializableMetadata
     path: ../Ubytec/Language/Syntax/Model/SyntaxExpression.cs
-    startLine: 15
+    startLine: 29
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: >-
+    Gets a JSON‐serializable snapshot of this expression's metadata,
+
+    including the automatically generated GUID.
+  example: []
   syntax:
     content: >-
       [JsonInclude]
@@ -208,15 +234,24 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
     path: ../Ubytec/Language/Syntax/Model/SyntaxExpression.cs
-    startLine: 19
+    startLine: 43
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: >-
+    Initializes a new instance of the <xref href="Ubytec.Language.Syntax.Model.SyntaxExpression" data-throw-if-not-resolved="false"></xref> class
+
+    from the provided fragments, and assigns it a unique GUID.
+  example: []
   syntax:
     content: public SyntaxExpression(params IUbytecExpressionFragment[] syntaxes)
     parameters:
     - id: syntaxes
       type: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment[]
+      description: >-
+        One or more <xref href="Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment" data-throw-if-not-resolved="false"></xref> items (e.g.
+
+        <xref href="Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment" data-throw-if-not-resolved="false"></xref>, <xref href="Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment" data-throw-if-not-resolved="false"></xref>).
     content.vb: Public Sub New(ParamArray syntaxes As IUbytecExpressionFragment())
   overload: Ubytec.Language.Syntax.Model.SyntaxExpression.#ctor*
   nameWithType.vb: SyntaxExpression.New(ParamArray IUbytecExpressionFragment())
@@ -240,11 +275,11 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Dispose
     path: ../Ubytec/Language/Syntax/Model/SyntaxExpression.cs
-    startLine: 25
+    startLine: 52
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
-  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  summary: Releases resources used by this expression, disposing its metadata registry.
   example: []
   syntax:
     content: public void Dispose()
@@ -253,6 +288,13 @@ items:
   implements:
   - System.IDisposable.Dispose
 references:
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+  commentId: T:Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
+  parent: Ubytec.Language.Syntax.Interfaces
+  href: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.html
+  name: IUbytecExpressionFragment
+  nameWithType: IUbytecExpressionFragment
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment
 - uid: Ubytec.Language.Syntax.Model
   commentId: N:Ubytec.Language.Syntax.Model
   href: Ubytec.html
@@ -512,13 +554,6 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.object.tostring
   - name: (
   - name: )
-- uid: System
-  commentId: N:System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system
-  name: System
-  nameWithType: System
-  fullName: System
 - uid: Ubytec.Language.Syntax.Interfaces
   commentId: N:Ubytec.Language.Syntax.Interfaces
   href: Ubytec.html
@@ -557,6 +592,13 @@ references:
   - uid: Ubytec.Language.Syntax.Interfaces
     name: Interfaces
     href: Ubytec.Language.Syntax.Interfaces.html
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
 - uid: Ubytec.Language.Syntax.Model.SyntaxExpression.Syntaxes*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxExpression.Syntaxes
   href: Ubytec.Language.Syntax.Model.SyntaxExpression.Syntaxes.html#Ubytec_Language_Syntax_Model_SyntaxExpression_Syntaxes
@@ -814,6 +856,27 @@ references:
   - name: " "
   - name: TValue
   - name: )
+- uid: Ubytec.Language.Syntax.Model.SyntaxExpression
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxExpression
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxExpression.html
+  name: SyntaxExpression
+  nameWithType: SyntaxExpression
+  fullName: Ubytec.Language.Syntax.Model.SyntaxExpression
+- uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+  commentId: T:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+  parent: Ubytec.Language.Syntax.ExpressionFragments
+  href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html
+  name: VariableExpressionFragment
+  nameWithType: VariableExpressionFragment
+  fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+- uid: Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment
+  commentId: T:Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment
+  parent: Ubytec.Language.Syntax.ExpressionFragments
+  href: Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment.html
+  name: ConditionExpressionFragment
+  nameWithType: ConditionExpressionFragment
+  fullName: Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment
 - uid: Ubytec.Language.Syntax.Model.SyntaxExpression.#ctor*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxExpression.#ctor
   href: Ubytec.Language.Syntax.Model.SyntaxExpression.-ctor.html#Ubytec_Language_Syntax_Model_SyntaxExpression__ctor_Ubytec_Language_Syntax_Interfaces_IUbytecExpressionFragment___
@@ -844,6 +907,44 @@ references:
     href: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.html
   - name: (
   - name: )
+- uid: Ubytec.Language.Syntax.ExpressionFragments
+  commentId: N:Ubytec.Language.Syntax.ExpressionFragments
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.ExpressionFragments
+  nameWithType: Ubytec.Language.Syntax.ExpressionFragments
+  fullName: Ubytec.Language.Syntax.ExpressionFragments
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.ExpressionFragments
+    name: ExpressionFragments
+    href: Ubytec.Language.Syntax.ExpressionFragments.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.ExpressionFragments
+    name: ExpressionFragments
+    href: Ubytec.Language.Syntax.ExpressionFragments.html
 - uid: Ubytec.Language.Syntax.Model.SyntaxExpression.Dispose*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxExpression.Dispose
   href: Ubytec.Language.Syntax.Model.SyntaxExpression.Dispose.html#Ubytec_Language_Syntax_Model_SyntaxExpression_Dispose

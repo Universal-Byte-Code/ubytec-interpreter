@@ -29,14 +29,13 @@ items:
   - Ubytec
   namespace: Ubytec.Language.Tools
   summary: >-
-    Encoder/decoder for UTF-64, a URL-safe encoding for JSONish strings.
+    Encoder/decoder for UTF-64, a URL-safe, JSONish string encoding with full
 
-    Full Surrogate Pair Support version (handles code points above 0xFFFF).
+    surrogate pair support (handles code points above 0xFFFF).
 
-    Original concept by Iain Merrick on https://github.com/more-please/more-stuff/tree/main/utf64
+    Original concept by Iain Merrick (https://github.com/more-please/more-stuff/tree/main/utf64).
 
-
-    Version: 1.0.4 (C# port, with advanced Unicode)
+    C# port Version: 1.0.4.
   example: []
   syntax:
     content: public static class Utf64Codec
@@ -123,30 +122,27 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Encode
     path: ../Ubytec/Language/Tools/Utf64Codec.cs
-    startLine: 27
+    startLine: 28
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Tools
-  summary: >-
-    Encode a .NET string into UTF-64.
-
-    - Merges surrogate pairs to produce correct code points.
-
-    - Produces "a-z", "0-9", "-" as themselves.
-
-    - Maps chars in SpecialChars to Base64Map by index.
-
-    - Otherwise uses 'X', 'Y' or 'Z' expansions based on code point range.
+  summary: Encodes the specified .NET UTF-16 string into UTF-64.
   example: []
   syntax:
     content: public static string Encode(string input)
     parameters:
     - id: input
       type: System.String
+      description: The input string to encode.
     return:
       type: System.String
+      description: The UTF-64–encoded representation of <code class="paramref">input</code>.
     content.vb: Public Shared Function Encode(input As String) As String
   overload: Ubytec.Language.Tools.Utf64Codec.Encode*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: Thrown if <code class="paramref">input</code> is <code>null</code>.
   nameWithType.vb: Utf64Codec.Encode(String)
   fullName.vb: Ubytec.Language.Tools.Utf64Codec.Encode(String)
   name.vb: Encode(String)
@@ -168,24 +164,33 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Decode
     path: ../Ubytec/Language/Tools/Utf64Codec.cs
-    startLine: 87
+    startLine: 94
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Tools
   summary: >-
-    Decode a UTF-64 string back to a normal .NET string (UTF-16),
+    Decodes the specified UTF-64 string back into a .NET UTF-16 string,
 
-    including surrogate pairs for code points above 0xFFFF.
+    reconstructing surrogate pairs for code points above 0xFFFF.
   example: []
   syntax:
     content: public static string Decode(string input)
     parameters:
     - id: input
       type: System.String
+      description: The UTF-64–encoded string to decode.
     return:
       type: System.String
+      description: The decoded .NET string.
     content.vb: Public Shared Function Decode(input As String) As String
   overload: Ubytec.Language.Tools.Utf64Codec.Decode*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: Thrown if <code class="paramref">input</code> is <code>null</code>.
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: Thrown if the input contains invalid UTF-64 sequences.
   nameWithType.vb: Utf64Codec.Decode(String)
   fullName.vb: Ubytec.Language.Tools.Utf64Codec.Decode(String)
   name.vb: Decode(String)
@@ -207,30 +212,30 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: EncodeExtended
     path: ../Ubytec/Language/Tools/Utf64Codec.cs
-    startLine: 221
+    startLine: 214
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Tools
   summary: >-
-    Encodes code points &gt;= 128 using the 'Z' pattern:
+    Appends the extended UTF-64 encoding for code points ≥ 128,
 
-    - up to 0x7FF =&gt; 2 "bytes"
-
-    - up to 0xFFFF =&gt; 3 "bytes"
-
-    - up to 0x10FFFF =&gt; 4 "bytes"
-
-    Each "byte" is 6 bits from the code point.
+    producing 2–4 “bytes” (6-bit groups) as needed.
   example: []
   syntax:
     content: private static void EncodeExtended(StringBuilder sb, int codePoint)
     parameters:
     - id: sb
       type: System.Text.StringBuilder
+      description: The <xref href="System.Text.StringBuilder" data-throw-if-not-resolved="false"></xref> to append to.
     - id: codePoint
       type: System.Int32
+      description: The Unicode code point to encode (must be between 128 and 0x10FFFF).
     content.vb: Private Shared Sub EncodeExtended(sb As StringBuilder, codePoint As Integer)
   overload: Ubytec.Language.Tools.Utf64Codec.EncodeExtended*
+  exceptions:
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: Thrown if <code class="paramref">codePoint</code> is outside the valid Unicode range.
   nameWithType.vb: Utf64Codec.EncodeExtended(StringBuilder, Integer)
   fullName.vb: Ubytec.Language.Tools.Utf64Codec.EncodeExtended(System.Text.StringBuilder, Integer)
   name.vb: EncodeExtended(StringBuilder, Integer)
@@ -513,24 +518,32 @@ references:
   nameWithType.vb: String
   fullName.vb: String
   name.vb: String
+- uid: System.ArgumentNullException
+  commentId: T:System.ArgumentNullException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentnullexception
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
 - uid: Ubytec.Language.Tools.Utf64Codec.Encode*
   commentId: Overload:Ubytec.Language.Tools.Utf64Codec.Encode
   href: Ubytec.Language.Tools.Utf64Codec.Encode.html#Ubytec_Language_Tools_Utf64Codec_Encode_System_String_
   name: Encode
   nameWithType: Utf64Codec.Encode
   fullName: Ubytec.Language.Tools.Utf64Codec.Encode
+- uid: System.FormatException
+  commentId: T:System.FormatException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.formatexception
+  name: FormatException
+  nameWithType: FormatException
+  fullName: System.FormatException
 - uid: Ubytec.Language.Tools.Utf64Codec.Decode*
   commentId: Overload:Ubytec.Language.Tools.Utf64Codec.Decode
   href: Ubytec.Language.Tools.Utf64Codec.Decode.html#Ubytec_Language_Tools_Utf64Codec_Decode_System_String_
   name: Decode
   nameWithType: Utf64Codec.Decode
   fullName: Ubytec.Language.Tools.Utf64Codec.Decode
-- uid: Ubytec.Language.Tools.Utf64Codec.EncodeExtended*
-  commentId: Overload:Ubytec.Language.Tools.Utf64Codec.EncodeExtended
-  href: Ubytec.Language.Tools.Utf64Codec.EncodeExtended.html#Ubytec_Language_Tools_Utf64Codec_EncodeExtended_System_Text_StringBuilder_System_Int32_
-  name: EncodeExtended
-  nameWithType: Utf64Codec.EncodeExtended
-  fullName: Ubytec.Language.Tools.Utf64Codec.EncodeExtended
 - uid: System.Text.StringBuilder
   commentId: T:System.Text.StringBuilder
   parent: System.Text
@@ -539,6 +552,12 @@ references:
   name: StringBuilder
   nameWithType: StringBuilder
   fullName: System.Text.StringBuilder
+- uid: Ubytec.Language.Tools.Utf64Codec.EncodeExtended*
+  commentId: Overload:Ubytec.Language.Tools.Utf64Codec.EncodeExtended
+  href: Ubytec.Language.Tools.Utf64Codec.EncodeExtended.html#Ubytec_Language_Tools_Utf64Codec_EncodeExtended_System_Text_StringBuilder_System_Int32_
+  name: EncodeExtended
+  nameWithType: Utf64Codec.EncodeExtended
+  fullName: Ubytec.Language.Tools.Utf64Codec.EncodeExtended
 - uid: System.Int32
   commentId: T:System.Int32
   parent: System

@@ -20,10 +20,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IUbytecEntity
     path: ../Ubytec/Language/IUbytecEntity.cs
-    startLine: 4
+    startLine: 8
   assemblies:
   - Ubytec
   namespace: Ubytec.Language
+  summary: >-
+    Defines an element of the Ubytec language that can be compiled
+
+    into its textual or bytecode representation within the given compilation context.
+  example: []
   syntax:
     content: public interface IUbytecEntity
     content.vb: Public Interface IUbytecEntity
@@ -45,17 +50,27 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Compile
     path: ../Ubytec/Language/IUbytecEntity.cs
-    startLine: 6
+    startLine: 21
   assemblies:
   - Ubytec
   namespace: Ubytec.Language
+  summary: Compiles this entity, emitting its code into the current compilation scopes.
+  example: []
   syntax:
     content: string Compile(CompilationScopes scopes)
     parameters:
     - id: scopes
       type: Ubytec.Language.Syntax.Scopes.CompilationScopes
+      description: >-
+        The <xref href="Ubytec.Language.Syntax.Scopes.CompilationScopes" data-throw-if-not-resolved="false"></xref> used to track nested blocks,
+
+        finalizers, and control-flow during compilation.
     return:
       type: System.String
+      description: >-
+        A string containing the compiled representation of this entity
+
+        (e.g., opcode mnemonics, labels, directives).
     content.vb: Function Compile(scopes As CompilationScopes) As String
   overload: Ubytec.Language.IUbytecEntity.Compile*
 references:
@@ -81,12 +96,6 @@ references:
   - uid: Ubytec.Language
     name: Language
     href: Ubytec.Language.html
-- uid: Ubytec.Language.IUbytecEntity.Compile*
-  commentId: Overload:Ubytec.Language.IUbytecEntity.Compile
-  href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
-  name: Compile
-  nameWithType: IUbytecEntity.Compile
-  fullName: Ubytec.Language.IUbytecEntity.Compile
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
   commentId: T:Ubytec.Language.Syntax.Scopes.CompilationScopes
   parent: Ubytec.Language.Syntax.Scopes
@@ -94,6 +103,12 @@ references:
   name: CompilationScopes
   nameWithType: CompilationScopes
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes
+- uid: Ubytec.Language.IUbytecEntity.Compile*
+  commentId: Overload:Ubytec.Language.IUbytecEntity.Compile
+  href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  name: Compile
+  nameWithType: IUbytecEntity.Compile
+  fullName: Ubytec.Language.IUbytecEntity.Compile
 - uid: System.String
   commentId: T:System.String
   parent: System

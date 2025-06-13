@@ -28,10 +28,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: MetadataEntry
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
-    startLine: 7
+    startLine: 10
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: A fixed-size metadata entry storing a UTF-8 key/value pair inline in unmanaged memory.
+  example: []
   syntax:
     content: public struct MetadataEntry
     content.vb: Public Structure MetadataEntry
@@ -60,10 +62,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: KEY_SIZE
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
-    startLine: 11
+    startLine: 17
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: Number of bytes reserved for the key buffer.
+  example: []
   syntax:
     content: public const int KEY_SIZE = 64
     return:
@@ -87,10 +91,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: VALUE_SIZE
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
-    startLine: 12
+    startLine: 22
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: Number of bytes reserved for the value buffer.
+  example: []
   syntax:
     content: public const int VALUE_SIZE = 256
     return:
@@ -114,10 +120,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Key
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
-    startLine: 16
+    startLine: 27
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: Inline UTF-8 key buffer (fixed <xref href="Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KEY_SIZE" data-throw-if-not-resolved="false"></xref> bytes).
+  example: []
   syntax:
     content: public byte* Key
     return:
@@ -141,10 +149,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Value
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
-    startLine: 19
+    startLine: 32
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: Inline UTF-8 value buffer (fixed <xref href="Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.VALUE_SIZE" data-throw-if-not-resolved="false"></xref> bytes).
+  example: []
   syntax:
     content: public byte* Value
     return:
@@ -168,10 +178,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
-    startLine: 21
+    startLine: 38
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: >-
+    Initializes a new instance of <xref href="Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry" data-throw-if-not-resolved="false"></xref>,
+
+    zeroing out both key and value buffers.
+  example: []
   syntax:
     content: public MetadataEntry()
     content.vb: Public Sub New()
@@ -197,17 +212,21 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: TrySetKey
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
-    startLine: 27
+    startLine: 51
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: Attempts to encode and store the specified string into the key buffer.
+  example: []
   syntax:
     content: public readonly bool TrySetKey(string key)
     parameters:
     - id: key
       type: System.String
+      description: The string to encode as UTF-8.
     return:
       type: System.Boolean
+      description: <code>true</code> if the UTF-8 bytes fit within <xref href="Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KEY_SIZE" data-throw-if-not-resolved="false"></xref>; otherwise <code>false</code>.
     content.vb: Public Function TrySetKey(key As String) As Boolean
   overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetKey*
   nameWithType.vb: MetadataEntry.TrySetKey(String)
@@ -231,17 +250,21 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: TrySetValue
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
-    startLine: 43
+    startLine: 74
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: Attempts to encode and store the specified string into the value buffer.
+  example: []
   syntax:
     content: public readonly bool TrySetValue(string str)
     parameters:
     - id: str
       type: System.String
+      description: The string to encode as UTF-8.
     return:
       type: System.Boolean
+      description: <code>true</code> if the UTF-8 bytes fit within <xref href="Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.VALUE_SIZE" data-throw-if-not-resolved="false"></xref>; otherwise <code>false</code>.
     content.vb: Public Function TrySetValue(str As String) As Boolean
   overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.TrySetValue*
   nameWithType.vb: MetadataEntry.TrySetValue(String)
@@ -265,19 +288,24 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: KeyEquals
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
-    startLine: 59
+    startLine: 98
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: Compares the stored key against the provided string for exact match.
+  example: []
   syntax:
     content: public static bool KeyEquals(MetadataEntry* entry, string key)
     parameters:
     - id: entry
       type: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*
+      description: Pointer to the entry to inspect.
     - id: key
       type: System.String
+      description: The string to compare.
     return:
       type: System.Boolean
+      description: <code>true</code> if the stored key bytes equal the UTF-8 encoding of <code class="paramref">key</code>; otherwise <code>false</code>.
     content.vb: Public Shared Function KeyEquals(entry As MetadataEntry*, key As String) As Boolean
   overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KeyEquals*
   nameWithType.vb: MetadataEntry.KeyEquals(MetadataEntry*, String)
@@ -301,17 +329,21 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: GetValuePointer
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataEntry.cs
-    startLine: 75
+    startLine: 119
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: Gets a pointer to the start of the value buffer within the entry.
+  example: []
   syntax:
     content: public static byte* GetValuePointer(MetadataEntry* entry)
     parameters:
     - id: entry
       type: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*
+      description: Pointer to the entry.
     return:
       type: System.Byte*
+      description: Pointer to the first byte of the value buffer.
     content.vb: Public Shared Function GetValuePointer(entry As MetadataEntry*) As Byte*
   overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.GetValuePointer*
 references:
@@ -589,6 +621,12 @@ references:
   nameWithType.vb: Integer
   fullName.vb: Integer
   name.vb: Integer
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KEY_SIZE
+  commentId: F:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KEY_SIZE
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KEY_SIZE.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry_KEY_SIZE
+  name: KEY_SIZE
+  nameWithType: MetadataEntry.KEY_SIZE
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KEY_SIZE
 - uid: System.Byte*
   isExternal: true
   href: https://learn.microsoft.com/dotnet/api/system.byte
@@ -610,6 +648,18 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.byte
   - name: '*'
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.VALUE_SIZE
+  commentId: F:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.VALUE_SIZE
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.VALUE_SIZE.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry_VALUE_SIZE
+  name: VALUE_SIZE
+  nameWithType: MetadataEntry.VALUE_SIZE
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.VALUE_SIZE
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  commentId: T:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.html
+  name: MetadataEntry
+  nameWithType: MetadataEntry
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.#ctor*
   commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.#ctor
   href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.-ctor.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry__ctor

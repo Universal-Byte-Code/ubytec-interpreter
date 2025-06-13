@@ -22,10 +22,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ISyntaxTreeConverter
     path: ../Ubytec/Language/Tools/Serialization/ISyntaxTreeConverter.cs
-    startLine: 8
+    startLine: 11
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Tools.Serialization
+  summary: >-
+    JSON converter for <xref href="Ubytec.Language.Syntax.Model.SyntaxTree" data-throw-if-not-resolved="false"></xref>, handling polymorphic serialization
+
+    and deserialization based on a fixed <code>$schema</code> discriminator URL.
+  example: []
   syntax:
     content: 'public class ISyntaxTreeConverter : JsonConverter<SyntaxTree>'
     content.vb: Public Class ISyntaxTreeConverter Inherits JsonConverter(Of SyntaxTree)
@@ -64,10 +69,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: SCHEMA_URL
     path: ../Ubytec/Language/Tools/Serialization/ISyntaxTreeConverter.cs
-    startLine: 10
+    startLine: 17
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Tools.Serialization
+  summary: >-
+    The URL of the JSON schema used to validate and discriminate
+
+    <xref href="Ubytec.Language.Syntax.Model.SyntaxTree" data-throw-if-not-resolved="false"></xref> instances.
+  example: []
   syntax:
     content: private const string SCHEMA_URL = "https://raw.githubusercontent.com/Universal-Byte-Code/schema/refs/heads/main/.ubc.ast.json"
     return:
@@ -91,30 +101,40 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Read
     path: ../Ubytec/Language/Tools/Serialization/ISyntaxTreeConverter.cs
-    startLine: 12
+    startLine: 34
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Tools.Serialization
-  summary: Reads and converts the JSON to type <xref href="Ubytec.Language.Syntax.Model.SyntaxTree" data-throw-if-not-resolved="false"></xref>.
+  summary: >-
+    Reads and converts the JSON to a <xref href="Ubytec.Language.Syntax.Model.SyntaxTree" data-throw-if-not-resolved="false"></xref> instance,
+
+    ensuring the <code>$schema</code> property matches the expected schema URL.
   example: []
   syntax:
     content: public override SyntaxTree Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     parameters:
     - id: reader
       type: System.Text.Json.Utf8JsonReader
-      description: The reader.
+      description: The <xref href="System.Text.Json.Utf8JsonReader" data-throw-if-not-resolved="false"></xref> to read JSON from.
     - id: typeToConvert
       type: System.Type
-      description: The type to convert.
+      description: The target type to convert (should be <xref href="Ubytec.Language.Syntax.Model.SyntaxTree" data-throw-if-not-resolved="false"></xref>).
     - id: options
       type: System.Text.Json.JsonSerializerOptions
-      description: An object that specifies serialization options to use.
+      description: Serialization options for reading JSON.
     return:
       type: Ubytec.Language.Syntax.Model.SyntaxTree
-      description: The converted value.
+      description: A deserialized <xref href="Ubytec.Language.Syntax.Model.SyntaxTree" data-throw-if-not-resolved="false"></xref>, never <code>null</code>.
     content.vb: Public Overrides Function Read(reader As Utf8JsonReader, typeToConvert As Type, options As JsonSerializerOptions) As SyntaxTree
   overridden: System.Text.Json.Serialization.JsonConverter{Ubytec.Language.Syntax.Model.SyntaxTree}.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)
   overload: Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter.Read*
+  exceptions:
+  - type: System.Text.Json.JsonException
+    commentId: T:System.Text.Json.JsonException
+    description: Thrown if the <code>$schema</code> property is missing or does not match <xref href="Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter.SCHEMA_URL" data-throw-if-not-resolved="false"></xref>.
+  - type: Ubytec.Language.Exceptions.SyntaxTreeDeserializationException
+    commentId: T:Ubytec.Language.Exceptions.SyntaxTreeDeserializationException
+    description: Thrown if the JSON deserializes to <code>null</code> unexpectedly.
   nameWithType.vb: ISyntaxTreeConverter.Read(Utf8JsonReader, Type, JsonSerializerOptions)
   fullName.vb: Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter.Read(System.Text.Json.Utf8JsonReader, System.Type, System.Text.Json.JsonSerializerOptions)
   name.vb: Read(Utf8JsonReader, Type, JsonSerializerOptions)
@@ -136,28 +156,40 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Write
     path: ../Ubytec/Language/Tools/Serialization/ISyntaxTreeConverter.cs
-    startLine: 32
+    startLine: 61
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Tools.Serialization
-  summary: Writes a specified value as JSON.
+  summary: >-
+    Writes a <xref href="Ubytec.Language.Syntax.Model.SyntaxTree" data-throw-if-not-resolved="false"></xref> instance to JSON,
+
+    emitting the <code>$schema</code> discriminator followed by the
+
+    <code>RootSentence</code> and <code>Metadata</code> properties.
   example: []
   syntax:
     content: public override void Write(Utf8JsonWriter writer, SyntaxTree value, JsonSerializerOptions options)
     parameters:
     - id: writer
       type: System.Text.Json.Utf8JsonWriter
-      description: The writer to write to.
+      description: The <xref href="System.Text.Json.Utf8JsonWriter" data-throw-if-not-resolved="false"></xref> to write JSON to.
     - id: value
       type: Ubytec.Language.Syntax.Model.SyntaxTree
-      description: The value to convert to JSON.
+      description: The <xref href="Ubytec.Language.Syntax.Model.SyntaxTree" data-throw-if-not-resolved="false"></xref> instance to serialize.
     - id: options
       type: System.Text.Json.JsonSerializerOptions
-      description: An object that specifies serialization options to use.
+      description: Serialization options for writing JSON.
     content.vb: Public Overrides Sub Write(writer As Utf8JsonWriter, value As SyntaxTree, options As JsonSerializerOptions)
   overridden: System.Text.Json.Serialization.JsonConverter{Ubytec.Language.Syntax.Model.SyntaxTree}.Write(System.Text.Json.Utf8JsonWriter,Ubytec.Language.Syntax.Model.SyntaxTree,System.Text.Json.JsonSerializerOptions)
   overload: Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter.Write*
 references:
+- uid: Ubytec.Language.Syntax.Model.SyntaxTree
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxTree
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxTree.html
+  name: SyntaxTree
+  nameWithType: SyntaxTree
+  fullName: Ubytec.Language.Syntax.Model.SyntaxTree
 - uid: Ubytec.Language.Tools.Serialization
   commentId: N:Ubytec.Language.Tools.Serialization
   href: Ubytec.html
@@ -632,6 +664,44 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.object.tostring
   - name: (
   - name: )
+- uid: Ubytec.Language.Syntax.Model
+  commentId: N:Ubytec.Language.Syntax.Model
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Model
+  nameWithType: Ubytec.Language.Syntax.Model
+  fullName: Ubytec.Language.Syntax.Model
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
 - uid: System
   commentId: N:System
   isExternal: true
@@ -881,13 +951,33 @@ references:
   nameWithType.vb: String
   fullName.vb: String
   name.vb: String
-- uid: Ubytec.Language.Syntax.Model.SyntaxTree
-  commentId: T:Ubytec.Language.Syntax.Model.SyntaxTree
-  parent: Ubytec.Language.Syntax.Model
-  href: Ubytec.Language.Syntax.Model.SyntaxTree.html
-  name: SyntaxTree
-  nameWithType: SyntaxTree
-  fullName: Ubytec.Language.Syntax.Model.SyntaxTree
+- uid: System.Text.Json.Utf8JsonReader
+  commentId: T:System.Text.Json.Utf8JsonReader
+  parent: System.Text.Json
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.text.json.utf8jsonreader
+  name: Utf8JsonReader
+  nameWithType: Utf8JsonReader
+  fullName: System.Text.Json.Utf8JsonReader
+- uid: Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter.SCHEMA_URL
+  commentId: F:Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter.SCHEMA_URL
+  href: Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter.SCHEMA_URL.html#Ubytec_Language_Tools_Serialization_ISyntaxTreeConverter_SCHEMA_URL
+  name: SCHEMA_URL
+  nameWithType: ISyntaxTreeConverter.SCHEMA_URL
+  fullName: Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter.SCHEMA_URL
+- uid: System.Text.Json.JsonException
+  commentId: T:System.Text.Json.JsonException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.text.json.jsonexception
+  name: JsonException
+  nameWithType: JsonException
+  fullName: System.Text.Json.JsonException
+- uid: Ubytec.Language.Exceptions.SyntaxTreeDeserializationException
+  commentId: T:Ubytec.Language.Exceptions.SyntaxTreeDeserializationException
+  href: Ubytec.Language.Exceptions.SyntaxTreeDeserializationException.html
+  name: SyntaxTreeDeserializationException
+  nameWithType: SyntaxTreeDeserializationException
+  fullName: Ubytec.Language.Exceptions.SyntaxTreeDeserializationException
 - uid: System.Text.Json.Serialization.JsonConverter{Ubytec.Language.Syntax.Model.SyntaxTree}.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)
   commentId: M:System.Text.Json.Serialization.JsonConverter{Ubytec.Language.Syntax.Model.SyntaxTree}.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)
   parent: System.Text.Json.Serialization.JsonConverter{Ubytec.Language.Syntax.Model.SyntaxTree}
@@ -953,14 +1043,6 @@ references:
   name: Read
   nameWithType: ISyntaxTreeConverter.Read
   fullName: Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter.Read
-- uid: System.Text.Json.Utf8JsonReader
-  commentId: T:System.Text.Json.Utf8JsonReader
-  parent: System.Text.Json
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.text.json.utf8jsonreader
-  name: Utf8JsonReader
-  nameWithType: Utf8JsonReader
-  fullName: System.Text.Json.Utf8JsonReader
 - uid: System.Type
   commentId: T:System.Type
   parent: System
@@ -977,44 +1059,43 @@ references:
   name: JsonSerializerOptions
   nameWithType: JsonSerializerOptions
   fullName: System.Text.Json.JsonSerializerOptions
-- uid: Ubytec.Language.Syntax.Model
-  commentId: N:Ubytec.Language.Syntax.Model
-  href: Ubytec.html
-  name: Ubytec.Language.Syntax.Model
-  nameWithType: Ubytec.Language.Syntax.Model
-  fullName: Ubytec.Language.Syntax.Model
+- uid: System.Text.Json
+  commentId: N:System.Text.Json
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Text.Json
+  nameWithType: System.Text.Json
+  fullName: System.Text.Json
   spec.csharp:
-  - uid: Ubytec
-    name: Ubytec
-    href: Ubytec.html
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
   - name: .
-  - uid: Ubytec.Language
-    name: Language
-    href: Ubytec.Language.html
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
   - name: .
-  - uid: Ubytec.Language.Syntax
-    name: Syntax
-    href: Ubytec.Language.Syntax.html
-  - name: .
-  - uid: Ubytec.Language.Syntax.Model
-    name: Model
-    href: Ubytec.Language.Syntax.Model.html
+  - uid: System.Text.Json
+    name: Json
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.json
   spec.vb:
-  - uid: Ubytec
-    name: Ubytec
-    href: Ubytec.html
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
   - name: .
-  - uid: Ubytec.Language
-    name: Language
-    href: Ubytec.Language.html
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
   - name: .
-  - uid: Ubytec.Language.Syntax
-    name: Syntax
-    href: Ubytec.Language.Syntax.html
-  - name: .
-  - uid: Ubytec.Language.Syntax.Model
-    name: Model
-    href: Ubytec.Language.Syntax.Model.html
+  - uid: System.Text.Json
+    name: Json
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.json
 - uid: System.Text.Json.Serialization.JsonConverter`1.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)
   commentId: M:System.Text.Json.Serialization.JsonConverter`1.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)
   isExternal: true
@@ -1073,43 +1154,14 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions
   - name: )
-- uid: System.Text.Json
-  commentId: N:System.Text.Json
+- uid: System.Text.Json.Utf8JsonWriter
+  commentId: T:System.Text.Json.Utf8JsonWriter
+  parent: System.Text.Json
   isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system
-  name: System.Text.Json
-  nameWithType: System.Text.Json
-  fullName: System.Text.Json
-  spec.csharp:
-  - uid: System
-    name: System
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system
-  - name: .
-  - uid: System.Text
-    name: Text
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.text
-  - name: .
-  - uid: System.Text.Json
-    name: Json
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.text.json
-  spec.vb:
-  - uid: System
-    name: System
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system
-  - name: .
-  - uid: System.Text
-    name: Text
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.text
-  - name: .
-  - uid: System.Text.Json
-    name: Json
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.text.json
+  href: https://learn.microsoft.com/dotnet/api/system.text.json.utf8jsonwriter
+  name: Utf8JsonWriter
+  nameWithType: Utf8JsonWriter
+  fullName: System.Text.Json.Utf8JsonWriter
 - uid: System.Text.Json.Serialization.JsonConverter{Ubytec.Language.Syntax.Model.SyntaxTree}.Write(System.Text.Json.Utf8JsonWriter,Ubytec.Language.Syntax.Model.SyntaxTree,System.Text.Json.JsonSerializerOptions)
   commentId: M:System.Text.Json.Serialization.JsonConverter{Ubytec.Language.Syntax.Model.SyntaxTree}.Write(System.Text.Json.Utf8JsonWriter,Ubytec.Language.Syntax.Model.SyntaxTree,System.Text.Json.JsonSerializerOptions)
   parent: System.Text.Json.Serialization.JsonConverter{Ubytec.Language.Syntax.Model.SyntaxTree}
@@ -1170,14 +1222,6 @@ references:
   name: Write
   nameWithType: ISyntaxTreeConverter.Write
   fullName: Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter.Write
-- uid: System.Text.Json.Utf8JsonWriter
-  commentId: T:System.Text.Json.Utf8JsonWriter
-  parent: System.Text.Json
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.text.json.utf8jsonwriter
-  name: Utf8JsonWriter
-  nameWithType: Utf8JsonWriter
-  fullName: System.Text.Json.Utf8JsonWriter
 - uid: System.Text.Json.Serialization.JsonConverter`1.Write(System.Text.Json.Utf8JsonWriter,`0,System.Text.Json.JsonSerializerOptions)
   commentId: M:System.Text.Json.Serialization.JsonConverter`1.Write(System.Text.Json.Utf8JsonWriter,`0,System.Text.Json.JsonSerializerOptions)
   isExternal: true

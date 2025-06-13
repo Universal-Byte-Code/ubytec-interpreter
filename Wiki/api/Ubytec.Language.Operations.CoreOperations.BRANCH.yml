@@ -333,14 +333,23 @@ items:
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations
+  summary: Compiles this entity, emitting its code into the current compilation scopes.
   example: []
   syntax:
     content: string IUbytecEntity.Compile(CompilationScopes scopes)
     parameters:
     - id: scopes
       type: Ubytec.Language.Syntax.Scopes.CompilationScopes
+      description: >-
+        The <xref href="Ubytec.Language.Syntax.Scopes.CompilationScopes" data-throw-if-not-resolved="false"></xref> used to track nested blocks,
+
+        finalizers, and control-flow during compilation.
     return:
       type: System.String
+      description: >-
+        A string containing the compiled representation of this entity
+
+        (e.g., opcode mnemonics, labels, directives).
     content.vb: ''
   overload: Ubytec.Language.Operations.CoreOperations.BRANCH.Ubytec#Language#IUbytecEntity#Compile*
   implements:

@@ -266,50 +266,50 @@ items:
     - uid: Ubytec.Language.Operations.OpcodeFactory
       name: OpcodeFactory
       type: Class
-    - uid: Ubytec.Language.Operations.StackOperarions
-      name: StackOperarions
+    - uid: Ubytec.Language.Operations.StackOperations
+      name: StackOperations
       type: Class
-    - uid: Ubytec.Language.Operations.StackOperarions.DROP
-      name: StackOperarions.DROP
+    - uid: Ubytec.Language.Operations.StackOperations.DROP
+      name: StackOperations.DROP
       type: Struct
-    - uid: Ubytec.Language.Operations.StackOperarions.DUP
-      name: StackOperarions.DUP
+    - uid: Ubytec.Language.Operations.StackOperations.DUP
+      name: StackOperations.DUP
       type: Struct
-    - uid: Ubytec.Language.Operations.StackOperarions.NIP
-      name: StackOperarions.NIP
+    - uid: Ubytec.Language.Operations.StackOperations.NIP
+      name: StackOperations.NIP
       type: Struct
-    - uid: Ubytec.Language.Operations.StackOperarions.OVER
-      name: StackOperarions.OVER
+    - uid: Ubytec.Language.Operations.StackOperations.OVER
+      name: StackOperations.OVER
       type: Struct
-    - uid: Ubytec.Language.Operations.StackOperarions.PICK
-      name: StackOperarions.PICK
+    - uid: Ubytec.Language.Operations.StackOperations.PICK
+      name: StackOperations.PICK
       type: Struct
-    - uid: Ubytec.Language.Operations.StackOperarions.POP
-      name: StackOperarions.POP
+    - uid: Ubytec.Language.Operations.StackOperations.POP
+      name: StackOperations.POP
       type: Struct
-    - uid: Ubytec.Language.Operations.StackOperarions.PUSH
-      name: StackOperarions.PUSH
+    - uid: Ubytec.Language.Operations.StackOperations.PUSH
+      name: StackOperations.PUSH
       type: Struct
-    - uid: Ubytec.Language.Operations.StackOperarions.ROLL
-      name: StackOperarions.ROLL
+    - uid: Ubytec.Language.Operations.StackOperations.ROLL
+      name: StackOperations.ROLL
       type: Struct
-    - uid: Ubytec.Language.Operations.StackOperarions.ROT
-      name: StackOperarions.ROT
+    - uid: Ubytec.Language.Operations.StackOperations.ROT
+      name: StackOperations.ROT
       type: Struct
-    - uid: Ubytec.Language.Operations.StackOperarions.SWAP
-      name: StackOperarions.SWAP
+    - uid: Ubytec.Language.Operations.StackOperations.SWAP
+      name: StackOperations.SWAP
       type: Struct
-    - uid: Ubytec.Language.Operations.StackOperarions.TwoDUP
-      name: StackOperarions.TwoDUP
+    - uid: Ubytec.Language.Operations.StackOperations.TwoDUP
+      name: StackOperations.TwoDUP
       type: Struct
-    - uid: Ubytec.Language.Operations.StackOperarions.TwoOVER
-      name: StackOperarions.TwoOVER
+    - uid: Ubytec.Language.Operations.StackOperations.TwoOVER
+      name: StackOperations.TwoOVER
       type: Struct
-    - uid: Ubytec.Language.Operations.StackOperarions.TwoROT
-      name: StackOperarions.TwoROT
+    - uid: Ubytec.Language.Operations.StackOperations.TwoROT
+      name: StackOperations.TwoROT
       type: Struct
-    - uid: Ubytec.Language.Operations.StackOperarions.TwoSWAP
-      name: StackOperarions.TwoSWAP
+    - uid: Ubytec.Language.Operations.StackOperations.TwoSWAP
+      name: StackOperations.TwoSWAP
       type: Struct
   - uid: Ubytec.Language.Syntax
     name: Syntax

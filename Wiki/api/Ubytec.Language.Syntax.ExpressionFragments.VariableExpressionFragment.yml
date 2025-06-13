@@ -24,10 +24,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: VariableExpressionFragment
     path: ../Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
-    startLine: 7
+    startLine: 17
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.ExpressionFragments
+  summary: >-
+    A fragment representing a variable declaration or reference in a Ubytec expression.
+
+    Carries the variable's type, its identifier name, and an optional initial value.
+  example: []
   syntax:
     content: 'public readonly record struct VariableExpressionFragment : IUbytecExpressionFragment, IEquatable<VariableExpressionFragment>'
     content.vb: Public Structure VariableExpressionFragment Implements IUbytecExpressionFragment, IEquatable(Of VariableExpressionFragment)
@@ -59,19 +64,30 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
     path: ../Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
-    startLine: 7
+    startLine: 17
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.ExpressionFragments
+  summary: >-
+    A fragment representing a variable declaration or reference in a Ubytec expression.
+
+    Carries the variable's type, its identifier name, and an optional initial value.
+  example: []
   syntax:
     content: public VariableExpressionFragment(Types.UType Type, string Name, object? Value)
     parameters:
     - id: Type
       type: Ubytec.Language.Syntax.TypeSystem.Types.UType
+      description: The <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType" data-throw-if-not-resolved="false"></xref> of the variable.
     - id: Name
       type: System.String
+      description: The identifier name of the variable.
     - id: Value
       type: System.Object
+      description: >-
+        The initial value assigned to the variable; 
+
+        may be <code>null</code> if no explicit initializer is present.
     content.vb: Public Sub New(Type As Types.UType, Name As String, Value As Object)
   overload: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.#ctor*
   nameWithType.vb: VariableExpressionFragment.New(Types.UType, String, Object)
@@ -95,10 +111,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Type
     path: ../Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
-    startLine: 7
+    startLine: 17
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.ExpressionFragments
+  summary: The <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType" data-throw-if-not-resolved="false"></xref> of the variable.
+  example: []
   syntax:
     content: public Types.UType Type { get; init; }
     parameters: []
@@ -124,10 +142,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Name
     path: ../Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
-    startLine: 7
+    startLine: 17
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.ExpressionFragments
+  summary: The identifier name of the variable.
+  example: []
   syntax:
     content: public string Name { get; init; }
     parameters: []
@@ -153,10 +173,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Value
     path: ../Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
-    startLine: 7
+    startLine: 17
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.ExpressionFragments
+  summary: >-
+    The initial value assigned to the variable; 
+
+    may be <code>null</code> if no explicit initializer is present.
+  example: []
   syntax:
     content: public object? Value { get; init; }
     parameters: []
@@ -182,10 +207,11 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Tokens
     path: ../Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
-    startLine: 9
+    startLine: 23
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.ExpressionFragments
+  summary: Gets the lexical <xref href="Ubytec.Language.Syntax.Model.SyntaxToken" data-throw-if-not-resolved="false"></xref> sequence that produced this fragment.
   example: []
   syntax:
     content: >-
@@ -207,6 +233,29 @@ items:
     ctor: System.Text.Json.Serialization.JsonIncludeAttribute.#ctor
     arguments: []
 references:
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.UType
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  name: Types.UType
+  nameWithType: Types.UType
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    name: UType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
+    name: UType
+    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html
 - uid: Ubytec.Language.Syntax.ExpressionFragments
   commentId: N:Ubytec.Language.Syntax.ExpressionFragments
   href: Ubytec.html
@@ -476,6 +525,44 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.object
   - name: )
+- uid: Ubytec.Language.Syntax.TypeSystem
+  commentId: N:Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.TypeSystem
+  nameWithType: Ubytec.Language.Syntax.TypeSystem
+  fullName: Ubytec.Language.Syntax.TypeSystem
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem
+    name: TypeSystem
+    href: Ubytec.Language.Syntax.TypeSystem.html
 - uid: Ubytec.Language.Syntax.Interfaces
   commentId: N:Ubytec.Language.Syntax.Interfaces
   href: Ubytec.html
@@ -577,29 +664,6 @@ references:
   nameWithType.vb: VariableExpressionFragment.New
   fullName.vb: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.New
   name.vb: New
-- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
-  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.UType
-  parent: Ubytec.Language.Syntax.TypeSystem
-  href: Ubytec.Language.Syntax.TypeSystem.Types.html
-  name: Types.UType
-  nameWithType: Types.UType
-  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType
-  spec.csharp:
-  - uid: Ubytec.Language.Syntax.TypeSystem.Types
-    name: Types
-    href: Ubytec.Language.Syntax.TypeSystem.Types.html
-  - name: .
-  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
-    name: UType
-    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html
-  spec.vb:
-  - uid: Ubytec.Language.Syntax.TypeSystem.Types
-    name: Types
-    href: Ubytec.Language.Syntax.TypeSystem.Types.html
-  - name: .
-  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
-    name: UType
-    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.html
 - uid: System.String
   commentId: T:System.String
   parent: System
@@ -611,44 +675,6 @@ references:
   nameWithType.vb: String
   fullName.vb: String
   name.vb: String
-- uid: Ubytec.Language.Syntax.TypeSystem
-  commentId: N:Ubytec.Language.Syntax.TypeSystem
-  href: Ubytec.html
-  name: Ubytec.Language.Syntax.TypeSystem
-  nameWithType: Ubytec.Language.Syntax.TypeSystem
-  fullName: Ubytec.Language.Syntax.TypeSystem
-  spec.csharp:
-  - uid: Ubytec
-    name: Ubytec
-    href: Ubytec.html
-  - name: .
-  - uid: Ubytec.Language
-    name: Language
-    href: Ubytec.Language.html
-  - name: .
-  - uid: Ubytec.Language.Syntax
-    name: Syntax
-    href: Ubytec.Language.Syntax.html
-  - name: .
-  - uid: Ubytec.Language.Syntax.TypeSystem
-    name: TypeSystem
-    href: Ubytec.Language.Syntax.TypeSystem.html
-  spec.vb:
-  - uid: Ubytec
-    name: Ubytec
-    href: Ubytec.html
-  - name: .
-  - uid: Ubytec.Language
-    name: Language
-    href: Ubytec.Language.html
-  - name: .
-  - uid: Ubytec.Language.Syntax
-    name: Syntax
-    href: Ubytec.Language.Syntax.html
-  - name: .
-  - uid: Ubytec.Language.Syntax.TypeSystem
-    name: TypeSystem
-    href: Ubytec.Language.Syntax.TypeSystem.html
 - uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Type*
   commentId: Overload:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Type
   href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Type.html#Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment_Type
@@ -667,6 +693,13 @@ references:
   name: Value
   nameWithType: VariableExpressionFragment.Value
   fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Value
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxToken
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  name: SyntaxToken
+  nameWithType: SyntaxToken
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken
 - uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Tokens*
   commentId: Overload:Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Tokens
   href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.Tokens.html#Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment_Tokens
@@ -701,4 +734,42 @@ references:
     href: Ubytec.Language.Syntax.Model.SyntaxToken.html
   - name: (
   - name: )
+- uid: Ubytec.Language.Syntax.Model
+  commentId: N:Ubytec.Language.Syntax.Model
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Model
+  nameWithType: Ubytec.Language.Syntax.Model
+  fullName: Ubytec.Language.Syntax.Model
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
 memberLayout: SeparatePages

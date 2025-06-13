@@ -35,10 +35,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ScopeContext
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs
-    startLine: 4
+    startLine: 8
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: >-
+    Represents a lexical scope or block context during compilation,
+
+    tracking labels, expected return types, control-flow flags, and modifiers.
+  example: []
   syntax:
     content: public class ScopeContext
     content.vb: Public Class ScopeContext
@@ -69,10 +74,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: StartLabel
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs
-    startLine: 6
+    startLine: 13
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets or sets the unique label marking the start of this scope.
+  example: []
   syntax:
     content: public string StartLabel { get; set; }
     parameters: []
@@ -98,10 +105,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: EndLabel
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs
-    startLine: 7
+    startLine: 18
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets or sets the unique label marking the end of this scope.
+  example: []
   syntax:
     content: public string EndLabel { get; set; }
     parameters: []
@@ -127,10 +136,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ExpectedReturnType
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs
-    startLine: 8
+    startLine: 23
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets or sets the expected return type for this scope, if it represents a function or returnable block.
+  example: []
   syntax:
     content: public Types.UType? ExpectedReturnType { get; set; }
     parameters: []
@@ -156,10 +167,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: HasReturn
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs
-    startLine: 10
+    startLine: 28
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets or sets a value indicating whether a <code>return</code> has been encountered in this scope.
+  example: []
   syntax:
     content: public bool HasReturn { get; set; }
     parameters: []
@@ -185,10 +198,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: HasBreak
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs
-    startLine: 11
+    startLine: 33
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets or sets a value indicating whether a <code>break</code> has been encountered in this scope.
+  example: []
   syntax:
     content: public bool HasBreak { get; set; }
     parameters: []
@@ -214,10 +229,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: HasContinue
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs
-    startLine: 12
+    startLine: 38
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets or sets a value indicating whether a <code>continue</code> has been encountered in this scope.
+  example: []
   syntax:
     content: public bool HasContinue { get; set; }
     parameters: []
@@ -243,10 +260,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsAsync
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs
-    startLine: 14
+    startLine: 43
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets or sets a value indicating whether this scope is marked <code>async</code>.
+  example: []
   syntax:
     content: public bool IsAsync { get; set; }
     parameters: []
@@ -272,10 +291,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsAtomic
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs
-    startLine: 15
+    startLine: 48
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets or sets a value indicating whether this scope is marked <code>atomic</code>.
+  example: []
   syntax:
     content: public bool IsAtomic { get; set; }
     parameters: []
@@ -301,10 +322,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsThreaded
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs
-    startLine: 16
+    startLine: 53
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets or sets a value indicating whether this scope is marked <code>threaded</code>.
+  example: []
   syntax:
     content: public bool IsThreaded { get; set; }
     parameters: []
@@ -330,10 +353,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsMLRelated
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs
-    startLine: 17
+    startLine: 58
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets or sets a value indicating whether this scope is related to machine learning constructs.
+  example: []
   syntax:
     content: public bool IsMLRelated { get; set; }
     parameters: []
@@ -359,10 +384,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsQuantum
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs
-    startLine: 18
+    startLine: 63
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets or sets a value indicating whether this scope is marked for quantum execution.
+  example: []
   syntax:
     content: public bool IsQuantum { get; set; }
     parameters: []
@@ -388,10 +415,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: DeclaredByKeyword
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs
-    startLine: 20
+    startLine: 68
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets or sets the keyword that declared this scope block, if any (e.g., "if", "while").
+  example: []
   syntax:
     content: public string? DeclaredByKeyword { get; set; }
     parameters: []
@@ -417,10 +446,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsLoop
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs
-    startLine: 22
+    startLine: 73
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets a value indicating whether this scope represents a loop construct.
+  example: []
   syntax:
     content: public bool IsLoop { get; }
     parameters: []
@@ -446,10 +477,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsBranch
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs
-    startLine: 23
+    startLine: 79
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets a value indicating whether this scope represents a branch construct.
+  example: []
   syntax:
     content: public bool IsBranch { get; }
     parameters: []
@@ -475,10 +508,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsReturnable
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs
-    startLine: 24
+    startLine: 84
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets a value indicating whether this scope expects a return (function or generic block).
+  example: []
   syntax:
     content: public bool IsReturnable { get; }
     parameters: []
@@ -504,17 +539,20 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ToString
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs
-    startLine: 26
+    startLine: 94
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
-  summary: Returns a string that represents the current object.
+  summary: Returns a human-readable description of this scope context, including labels and flags.
   example: []
   syntax:
     content: public override string ToString()
     return:
       type: System.String
-      description: A string that represents the current object.
+      description: >-
+        A string in the format:
+
+        "StartLabel → EndLabel | Return: {HasReturn}, Break: {HasBreak}, Flags: [async={IsAsync}, atomic={IsAtomic}, thread={IsThreaded}, ml={IsMLRelated}, q={IsQuantum}]"
     content.vb: Public Overrides Function ToString() As String
   overridden: System.Object.ToString
   overload: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.ToString*

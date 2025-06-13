@@ -254,14 +254,23 @@ items:
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations.Extended
+  summary: Compiles this entity, emitting its code into the current compilation scopes.
   example: []
   syntax:
     content: string IUbytecEntity.Compile(CompilationScopes scopes)
     parameters:
     - id: scopes
       type: Ubytec.Language.Syntax.Scopes.CompilationScopes
+      description: >-
+        The <xref href="Ubytec.Language.Syntax.Scopes.CompilationScopes" data-throw-if-not-resolved="false"></xref> used to track nested blocks,
+
+        finalizers, and control-flow during compilation.
     return:
       type: System.String
+      description: >-
+        A string containing the compiled representation of this entity
+
+        (e.g., opcode mnemonics, labels, directives).
     content.vb: ''
   overload: Ubytec.Language.Operations.Extended.ExtendedStackOperations.DROP16.Ubytec#Language#IUbytecEntity#Compile*
   implements:
@@ -760,6 +769,13 @@ references:
   name: ExtendedOpCode
   nameWithType: IExtendedOpCode.ExtendedOpCode
   fullName: Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtendedOpCode
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  commentId: T:Ubytec.Language.Syntax.Scopes.CompilationScopes
+  parent: Ubytec.Language.Syntax.Scopes
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  name: CompilationScopes
+  nameWithType: CompilationScopes
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes
 - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations.DROP16.Ubytec#Language#IUbytecEntity#Compile*
   commentId: Overload:Ubytec.Language.Operations.Extended.ExtendedStackOperations.DROP16.Ubytec#Language#IUbytecEntity#Compile
   href: Ubytec.Language.IUbytecEntity.html
@@ -799,13 +815,6 @@ references:
     name: CompilationScopes
     href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
   - name: )
-- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
-  commentId: T:Ubytec.Language.Syntax.Scopes.CompilationScopes
-  parent: Ubytec.Language.Syntax.Scopes
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
-  name: CompilationScopes
-  nameWithType: CompilationScopes
-  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes
 - uid: Ubytec.Language.Syntax.Scopes
   commentId: N:Ubytec.Language.Syntax.Scopes
   href: Ubytec.html

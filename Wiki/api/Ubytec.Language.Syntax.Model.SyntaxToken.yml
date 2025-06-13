@@ -35,14 +35,14 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: SyntaxToken
     path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
-    startLine: 18
+    startLine: 13
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
   summary: >-
     Represents a lexical token identified during Ubytec source code analysis.
 
-    Contains information about its source content, position, semantic scopes, and metadata.
+    Contains information about its text, position, semantic scopes, and metadata.
   example: []
   syntax:
     content: 'public sealed class SyntaxToken : IEquatable<SyntaxToken>, IUbytecSyntax, IDisposable'
@@ -75,7 +75,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Source
     path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
-    startLine: 26
+    startLine: 20
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -106,7 +106,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Line
     path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
-    startLine: 31
+    startLine: 25
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -137,7 +137,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: StartColumn
     path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
-    startLine: 36
+    startLine: 30
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -168,7 +168,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: EndColumn
     path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
-    startLine: 41
+    startLine: 35
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -199,7 +199,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Scopes
     path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
-    startLine: 46
+    startLine: 40
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -230,7 +230,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _metadata
     path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
-    startLine: 48
+    startLine: 42
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -258,11 +258,11 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
     path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
-    startLine: 53
+    startLine: 47
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
-  summary: Optional metadata associated with the token. By default, includes a GUID (version 7).
+  summary: Provides access to the metadata registry by reference for performance.
   example: []
   syntax:
     content: >-
@@ -303,10 +303,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: SerializableMetadata
     path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
-    startLine: 56
+    startLine: 53
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: Gets a serializable dictionary representation of this token's metadata.
+  example: []
   syntax:
     content: >-
       [JsonInclude]
@@ -351,23 +353,30 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
     path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
-    startLine: 61
+    startLine: 66
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: Initializes a new instance of the <xref href="Ubytec.Language.Syntax.Model.SyntaxToken" data-throw-if-not-resolved="false"></xref> class with the specified properties.
+  example: []
   syntax:
     content: public SyntaxToken(string source, int line, int startColumn, int endColumn, ImmutableArray<string> scopes)
     parameters:
     - id: source
       type: System.String
+      description: The text content of the token.
     - id: line
       type: System.Int32
+      description: The line number where the token was found.
     - id: startColumn
       type: System.Int32
+      description: The starting column index of the token.
     - id: endColumn
       type: System.Int32
+      description: The ending column index of the token.
     - id: scopes
       type: System.Collections.Immutable.ImmutableArray{System.String}
+      description: The semantic scopes assigned to the token.
     content.vb: Public Sub New(source As String, line As Integer, startColumn As Integer, endColumn As Integer, scopes As ImmutableArray(Of String))
   overload: Ubytec.Language.Syntax.Model.SyntaxToken.#ctor*
   nameWithType.vb: SyntaxToken.New(String, Integer, Integer, Integer, ImmutableArray(Of String))
@@ -391,17 +400,17 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ToString
     path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
-    startLine: 77
+    startLine: 82
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
-  summary: Returns a human-readable representation of the token.
+  summary: Returns a human-readable representation of the token, including position and scopes.
   example: []
   syntax:
     content: public override string ToString()
     return:
       type: System.String
-      description: A string describing the token content, line, column range, and scopes.
+      description: A string in the format "Source (line:start-end) [scope1, scope2,...]".
     content.vb: Public Overrides Function ToString() As String
   overridden: System.Object.ToString
   overload: Ubytec.Language.Syntax.Model.SyntaxToken.ToString*
@@ -423,14 +432,14 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Equals
     path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
-    startLine: 87
+    startLine: 92
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
   summary: >-
-    Checks whether the current token is equal to another <xref href="Ubytec.Language.Syntax.Model.SyntaxToken" data-throw-if-not-resolved="false"></xref>, including scopes.
+    Determines whether this token is equal to another <xref href="Ubytec.Language.Syntax.Model.SyntaxToken" data-throw-if-not-resolved="false"></xref>,
 
-    Uses unsafe access for performance.
+    comparing source, position, and all scopes using unsafe access for speed.
   example: []
   syntax:
     content: public bool Equals(SyntaxToken? other)
@@ -440,7 +449,7 @@ items:
       description: The token to compare with.
     return:
       type: System.Boolean
-      description: <code>true</code> if tokens are equal; otherwise, <code>false</code>.
+      description: <code>true</code> if both tokens are equal; otherwise, <code>false</code>.
     content.vb: Public Function Equals(other As SyntaxToken) As Boolean
   overload: Ubytec.Language.Syntax.Model.SyntaxToken.Equals*
   implements:
@@ -466,7 +475,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Equals
     path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
-    startLine: 114
+    startLine: 124
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -477,10 +486,10 @@ items:
     parameters:
     - id: obj
       type: System.Object
-      description: The object to compare.
+      description: The object to compare with.
     return:
       type: System.Boolean
-      description: <code>true</code> if equal; otherwise, <code>false</code>.
+      description: <code>true</code> if the specified object is a <xref href="Ubytec.Language.Syntax.Model.SyntaxToken" data-throw-if-not-resolved="false"></xref> equal to this one; otherwise, <code>false</code>.
     content.vb: Public Overrides Function Equals(obj As Object) As Boolean
   overridden: System.Object.Equals(System.Object)
   overload: Ubytec.Language.Syntax.Model.SyntaxToken.Equals*
@@ -505,20 +514,17 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: GetHashCode
     path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
-    startLine: 123
+    startLine: 132
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
-  summary: >-
-    Returns a hash code for this token, combining source, position and a subset of scopes.
-
-    Uses <code>Unsafe.Add</code> for fast scope access.
+  summary: Returns a hash code for this token, combining source, position, and scopes using fast scope access.
   example: []
   syntax:
     content: public override int GetHashCode()
     return:
       type: System.Int32
-      description: The hash code of the token.
+      description: An integer hash code for this instance.
     content.vb: Public Overrides Function GetHashCode() As Integer
   overridden: System.Object.GetHashCode
   overload: Ubytec.Language.Syntax.Model.SyntaxToken.GetHashCode*
@@ -540,11 +546,11 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Dispose
     path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
-    startLine: 138
+    startLine: 150
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
-  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  summary: Releases resources used by this token, disposing its metadata registry.
   example: []
   syntax:
     content: public void Dispose()
@@ -570,21 +576,24 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: op_Equality
     path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
-    startLine: 147
+    startLine: 162
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
-  summary: Determines whether two tokens are equal.
+  summary: Determines whether two <xref href="Ubytec.Language.Syntax.Model.SyntaxToken" data-throw-if-not-resolved="false"></xref> instances are equal.
   example: []
   syntax:
     content: public static bool operator ==(SyntaxToken left, SyntaxToken right)
     parameters:
     - id: left
       type: Ubytec.Language.Syntax.Model.SyntaxToken
+      description: The left-hand token.
     - id: right
       type: Ubytec.Language.Syntax.Model.SyntaxToken
+      description: The right-hand token.
     return:
       type: System.Boolean
+      description: <code>true</code> if both tokens are equal; otherwise, <code>false</code>.
     content.vb: Public Shared Operator =(left As SyntaxToken, right As SyntaxToken) As Boolean
   overload: Ubytec.Language.Syntax.Model.SyntaxToken.op_Equality*
   nameWithType.vb: SyntaxToken.=(SyntaxToken, SyntaxToken)
@@ -608,21 +617,24 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: op_Inequality
     path: ../Ubytec/Language/Syntax/Model/SyntaxToken.cs
-    startLine: 152
+    startLine: 170
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
-  summary: Determines whether two tokens are not equal.
+  summary: Determines whether two <xref href="Ubytec.Language.Syntax.Model.SyntaxToken" data-throw-if-not-resolved="false"></xref> instances are not equal.
   example: []
   syntax:
     content: public static bool operator !=(SyntaxToken left, SyntaxToken right)
     parameters:
     - id: left
       type: Ubytec.Language.Syntax.Model.SyntaxToken
+      description: The left-hand token.
     - id: right
       type: Ubytec.Language.Syntax.Model.SyntaxToken
+      description: The right-hand token.
     return:
       type: System.Boolean
+      description: <code>true</code> if the tokens differ; otherwise, <code>false</code>.
     content.vb: Public Shared Operator <>(left As SyntaxToken, right As SyntaxToken) As Boolean
   overload: Ubytec.Language.Syntax.Model.SyntaxToken.op_Inequality*
   nameWithType.vb: SyntaxToken.<>(SyntaxToken, SyntaxToken)
@@ -1265,6 +1277,13 @@ references:
     name: Generic
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxToken
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  name: SyntaxToken
+  nameWithType: SyntaxToken
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken
 - uid: Ubytec.Language.Syntax.Model.SyntaxToken.#ctor*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxToken.#ctor
   href: Ubytec.Language.Syntax.Model.SyntaxToken.-ctor.html#Ubytec_Language_Syntax_Model_SyntaxToken__ctor_System_String_System_Int32_System_Int32_System_Int32_System_Collections_Immutable_ImmutableArray_System_String__
@@ -1304,13 +1323,6 @@ references:
   name: ToString
   nameWithType: SyntaxToken.ToString
   fullName: Ubytec.Language.Syntax.Model.SyntaxToken.ToString
-- uid: Ubytec.Language.Syntax.Model.SyntaxToken
-  commentId: T:Ubytec.Language.Syntax.Model.SyntaxToken
-  parent: Ubytec.Language.Syntax.Model
-  href: Ubytec.Language.Syntax.Model.SyntaxToken.html
-  name: SyntaxToken
-  nameWithType: SyntaxToken
-  fullName: Ubytec.Language.Syntax.Model.SyntaxToken
 - uid: Ubytec.Language.Syntax.Model.SyntaxToken.Equals*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxToken.Equals
   href: Ubytec.Language.Syntax.Model.SyntaxToken.Equals.html#Ubytec_Language_Syntax_Model_SyntaxToken_Equals_Ubytec_Language_Syntax_Model_SyntaxToken_

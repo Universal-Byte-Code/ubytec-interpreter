@@ -33,10 +33,17 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: FinalizersTracker
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/FinalizersTracker.cs
-    startLine: 7
+    startLine: 12
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: >-
+    Tracks nested finalizer contexts during compilation, allowing
+
+    propagation of control-flow operations (RETURN, BREAK, CONTINUE)
+
+    into the appropriate finalizer scopes.
+  example: []
   syntax:
     content: 'public class FinalizersTracker : IEnumerable<FinalizersContext>, IEnumerable'
     content.vb: Public Class FinalizersTracker Implements IEnumerable(Of FinalizersContext), IEnumerable
@@ -71,7 +78,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _stack
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/FinalizersTracker.cs
-    startLine: 9
+    startLine: 14
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
@@ -98,15 +105,18 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Push
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/FinalizersTracker.cs
-    startLine: 11
+    startLine: 20
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: Pushes a new <xref href="Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext" data-throw-if-not-resolved="false"></xref> onto the tracker stack.
+  example: []
   syntax:
     content: public void Push(FinalizersContext context)
     parameters:
     - id: context
       type: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+      description: The finalizer context to begin tracking.
     content.vb: Public Sub Push(context As FinalizersContext)
   overload: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Push*
 - uid: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Pop
@@ -127,16 +137,23 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Pop
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/FinalizersTracker.cs
-    startLine: 13
+    startLine: 29
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: Pops and returns the topmost <xref href="Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext" data-throw-if-not-resolved="false"></xref>.
+  example: []
   syntax:
     content: public FinalizersContext Pop()
     return:
       type: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+      description: The most recently pushed finalizer context.
     content.vb: Public Function Pop() As FinalizersContext
   overload: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Pop*
+  exceptions:
+  - type: Ubytec.Language.Exceptions.SyntaxStackException
+    commentId: T:Ubytec.Language.Exceptions.SyntaxStackException
+    description: Thrown if no context remains on the stack.
 - uid: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Peek
   commentId: M:Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Peek
   id: Peek
@@ -155,16 +172,23 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Peek
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/FinalizersTracker.cs
-    startLine: 21
+    startLine: 44
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: Peeks at the topmost <xref href="Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext" data-throw-if-not-resolved="false"></xref> without removing it.
+  example: []
   syntax:
     content: public FinalizersContext Peek()
     return:
       type: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+      description: The current finalizer context.
     content.vb: Public Function Peek() As FinalizersContext
   overload: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Peek*
+  exceptions:
+  - type: Ubytec.Language.Exceptions.SyntaxStackException
+    commentId: T:Ubytec.Language.Exceptions.SyntaxStackException
+    description: Thrown if no context is available.
 - uid: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.PeekOrDefault
   commentId: M:Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.PeekOrDefault
   id: PeekOrDefault
@@ -183,14 +207,20 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PeekOrDefault
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/FinalizersTracker.cs
-    startLine: 29
+    startLine: 57
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: >-
+    Peeks at the topmost <xref href="Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext" data-throw-if-not-resolved="false"></xref> without removing it,
+
+    or returns <code>null</code> if the stack is empty.
+  example: []
   syntax:
     content: public FinalizersContext? PeekOrDefault()
     return:
       type: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+      description: The current finalizer context, or <code>null</code>.
     content.vb: Public Function PeekOrDefault() As FinalizersContext
   overload: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.PeekOrDefault*
 - uid: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Count
@@ -211,10 +241,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Count
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/FinalizersTracker.cs
-    startLine: 31
+    startLine: 62
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: Gets the number of finalizer contexts currently being tracked.
+  example: []
   syntax:
     content: public int Count { get; }
     parameters: []
@@ -240,17 +272,24 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PushReturn
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/FinalizersTracker.cs
-    startLine: 34
+    startLine: 71
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: Propagates a <code>RETURN</code> opcode into the current finalizer context.
+  example: []
   syntax:
     content: public void PushReturn(CoreOperations.RETURN op)
     parameters:
     - id: op
       type: Ubytec.Language.Operations.CoreOperations.RETURN
+      description: The <code>RETURN</code> opcode to register.
     content.vb: Public Sub PushReturn(op As CoreOperations.RETURN)
   overload: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.PushReturn*
+  exceptions:
+  - type: Ubytec.Language.Exceptions.SyntaxStackException
+    commentId: T:Ubytec.Language.Exceptions.SyntaxStackException
+    description: Thrown if no finalizer context is active.
 - uid: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.PushBreak(Ubytec.Language.Operations.CoreOperations.BREAK)
   commentId: M:Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.PushBreak(Ubytec.Language.Operations.CoreOperations.BREAK)
   id: PushBreak(Ubytec.Language.Operations.CoreOperations.BREAK)
@@ -269,17 +308,24 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PushBreak
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/FinalizersTracker.cs
-    startLine: 43
+    startLine: 86
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: Propagates a <code>BREAK</code> opcode into the first valid finalizer context (LIFO order).
+  example: []
   syntax:
     content: public void PushBreak(CoreOperations.BREAK op)
     parameters:
     - id: op
       type: Ubytec.Language.Operations.CoreOperations.BREAK
+      description: The <code>BREAK</code> opcode to register.
     content.vb: Public Sub PushBreak(op As CoreOperations.BREAK)
   overload: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.PushBreak*
+  exceptions:
+  - type: Ubytec.Language.Exceptions.SyntaxStackException
+    commentId: T:Ubytec.Language.Exceptions.SyntaxStackException
+    description: Thrown if no valid finalizer context is found.
 - uid: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.PushContinue(Ubytec.Language.Operations.CoreOperations.CONTINUE)
   commentId: M:Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.PushContinue(Ubytec.Language.Operations.CoreOperations.CONTINUE)
   id: PushContinue(Ubytec.Language.Operations.CoreOperations.CONTINUE)
@@ -298,17 +344,24 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PushContinue
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/FinalizersTracker.cs
-    startLine: 55
+    startLine: 104
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: Propagates a <code>CONTINUE</code> opcode into the first valid finalizer context (LIFO order).
+  example: []
   syntax:
     content: public void PushContinue(CoreOperations.CONTINUE op)
     parameters:
     - id: op
       type: Ubytec.Language.Operations.CoreOperations.CONTINUE
+      description: The <code>CONTINUE</code> opcode to register.
     content.vb: Public Sub PushContinue(op As CoreOperations.CONTINUE)
   overload: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.PushContinue*
+  exceptions:
+  - type: Ubytec.Language.Exceptions.SyntaxStackException
+    commentId: T:Ubytec.Language.Exceptions.SyntaxStackException
+    description: Thrown if no valid finalizer context is found.
 - uid: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.GetEnumerator
   commentId: M:Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.GetEnumerator
   id: GetEnumerator
@@ -327,17 +380,17 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: GetEnumerator
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/FinalizersTracker.cs
-    startLine: 66
+    startLine: 119
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
-  summary: Returns an enumerator that iterates through the collection.
+  summary: Returns an enumerator that iterates through the tracked finalizer contexts.
   example: []
   syntax:
     content: public IEnumerator<FinalizersContext> GetEnumerator()
     return:
       type: System.Collections.Generic.IEnumerator{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext}
-      description: An enumerator that can be used to iterate through the collection.
+      description: An <xref href="System.Collections.Generic.IEnumerator%601" data-throw-if-not-resolved="false"></xref>.
     content.vb: Public Function GetEnumerator() As IEnumerator(Of FinalizersContext)
   overload: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.GetEnumerator*
   implements:
@@ -361,7 +414,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: System.Collections.IEnumerable.GetEnumerator
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/FinalizersTracker.cs
-    startLine: 67
+    startLine: 121
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
@@ -397,17 +450,24 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Find
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/FinalizersTracker.cs
-    startLine: 69
+    startLine: 131
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: >-
+    Finds the first <xref href="Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext" data-throw-if-not-resolved="false"></xref> matching the given predicate,
+
+    without permanently modifying the stack.
+  example: []
   syntax:
     content: public FinalizersContext? Find(Func<FinalizersContext, bool> predicate)
     parameters:
     - id: predicate
       type: System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean}
+      description: A function to test each context.
     return:
       type: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+      description: The first matching context, or <code>null</code> if none match.
     content.vb: Public Function Find(predicate As Func(Of FinalizersContext, Boolean)) As FinalizersContext
   overload: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Find*
   nameWithType.vb: FinalizersTracker.Find(Func(Of FinalizersContext, Boolean))
@@ -431,17 +491,24 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: TryPopUntil
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/FinalizersTracker.cs
-    startLine: 92
+    startLine: 161
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: >-
+    Pops contexts until one matching the predicate is found (inclusive),
+
+    then restores any intervening contexts.
+  example: []
   syntax:
     content: public FinalizersContext? TryPopUntil(Func<FinalizersContext, bool> predicate)
     parameters:
     - id: predicate
       type: System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean}
+      description: A function to test each context.
     return:
       type: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+      description: The matching context if found; otherwise, <code>null</code>.
     content.vb: Public Function TryPopUntil(predicate As Func(Of FinalizersContext, Boolean)) As FinalizersContext
   overload: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.TryPopUntil*
   nameWithType.vb: FinalizersTracker.TryPopUntil(Func(Of FinalizersContext, Boolean))
@@ -465,10 +532,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ClearAll
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/FinalizersTracker.cs
-    startLine: 117
+    startLine: 186
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: Clears all tracked finalizer contexts.
+  example: []
   syntax:
     content: public void ClearAll()
     content.vb: Public Sub ClearAll()
@@ -951,12 +1020,6 @@ references:
   - name: " "
   - name: T
   - name: )
-- uid: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Push*
-  commentId: Overload:Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Push
-  href: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Push.html#Ubytec_Language_Syntax_Scopes_Trackers_FinalizersTracker_Push_Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_
-  name: Push
-  nameWithType: FinalizersTracker.Push
-  fullName: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Push
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
   commentId: T:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
   parent: Ubytec.Language.Syntax.Scopes.Contexts
@@ -964,6 +1027,12 @@ references:
   name: FinalizersContext
   nameWithType: FinalizersContext
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+- uid: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Push*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Push
+  href: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Push.html#Ubytec_Language_Syntax_Scopes_Trackers_FinalizersTracker_Push_Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_
+  name: Push
+  nameWithType: FinalizersTracker.Push
+  fullName: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Push
 - uid: Ubytec.Language.Syntax.Scopes.Contexts
   commentId: N:Ubytec.Language.Syntax.Scopes.Contexts
   href: Ubytec.html
@@ -1010,6 +1079,12 @@ references:
   - uid: Ubytec.Language.Syntax.Scopes.Contexts
     name: Contexts
     href: Ubytec.Language.Syntax.Scopes.Contexts.html
+- uid: Ubytec.Language.Exceptions.SyntaxStackException
+  commentId: T:Ubytec.Language.Exceptions.SyntaxStackException
+  href: Ubytec.Language.Exceptions.SyntaxStackException.html
+  name: SyntaxStackException
+  nameWithType: SyntaxStackException
+  fullName: Ubytec.Language.Exceptions.SyntaxStackException
 - uid: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Pop*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Pop
   href: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.Pop.html#Ubytec_Language_Syntax_Scopes_Trackers_FinalizersTracker_Pop
@@ -1162,6 +1237,34 @@ references:
   - uid: Ubytec.Language.Operations.CoreOperations.CONTINUE
     name: CONTINUE
     href: Ubytec.Language.Operations.CoreOperations.CONTINUE.html
+- uid: System.Collections.Generic.IEnumerator`1
+  commentId: T:System.Collections.Generic.IEnumerator`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  name: IEnumerator<T>
+  nameWithType: IEnumerator<T>
+  fullName: System.Collections.Generic.IEnumerator<T>
+  nameWithType.vb: IEnumerator(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerator(Of T)
+  name.vb: IEnumerator(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
 - uid: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.GetEnumerator*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.GetEnumerator
   href: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker.GetEnumerator.html#Ubytec_Language_Syntax_Scopes_Trackers_FinalizersTracker_GetEnumerator
@@ -1247,34 +1350,6 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
   - name: (
-  - name: )
-- uid: System.Collections.Generic.IEnumerator`1
-  commentId: T:System.Collections.Generic.IEnumerator`1
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
-  name: IEnumerator<T>
-  nameWithType: IEnumerator<T>
-  fullName: System.Collections.Generic.IEnumerator<T>
-  nameWithType.vb: IEnumerator(Of T)
-  fullName.vb: System.Collections.Generic.IEnumerator(Of T)
-  name.vb: IEnumerator(Of T)
-  spec.csharp:
-  - uid: System.Collections.Generic.IEnumerator`1
-    name: IEnumerator
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
-  - name: <
-  - name: T
-  - name: '>'
-  spec.vb:
-  - uid: System.Collections.Generic.IEnumerator`1
-    name: IEnumerator
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
-  - name: (
-  - name: Of
-  - name: " "
-  - name: T
   - name: )
 - uid: System.Collections.IEnumerator
   commentId: T:System.Collections.IEnumerator

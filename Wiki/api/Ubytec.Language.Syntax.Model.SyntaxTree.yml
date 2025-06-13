@@ -26,10 +26,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: SyntaxTree
     path: ../Ubytec/Language/Syntax/Model/SyntaxTree.cs
-    startLine: 9
+    startLine: 13
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: >-
+    Represents the root of a Ubytec abstract syntax tree (AST),
+
+    holding the top-level sentence and associated metadata.
+  example: []
   syntax:
     content: 'public sealed class SyntaxTree : IUbytecSyntax, IDisposable'
     content.vb: Public NotInheritable Class SyntaxTree Implements IUbytecSyntax, IDisposable
@@ -63,10 +68,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: RootSentence
     path: ../Ubytec/Language/Syntax/Model/SyntaxTree.cs
-    startLine: 11
+    startLine: 18
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: Gets or sets the root sentence of this syntax tree.
+  example: []
   syntax:
     content: >-
       [JsonInclude]
@@ -102,7 +109,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _metadata
     path: ../Ubytec/Language/Syntax/Model/SyntaxTree.cs
-    startLine: 14
+    startLine: 21
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -129,10 +136,14 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Metadata
     path: ../Ubytec/Language/Syntax/Model/SyntaxTree.cs
-    startLine: 16
+    startLine: 27
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: >-
+    Provides access to the underlying <xref href="Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry" data-throw-if-not-resolved="false"></xref> by reference
+
+    for efficient metadata operations.
   example: []
   syntax:
     content: >-
@@ -171,10 +182,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: SerializableMetadata
     path: ../Ubytec/Language/Syntax/Model/SyntaxTree.cs
-    startLine: 19
+    startLine: 33
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: Gets a JSON-serializable dictionary representation of the tree's metadata.
+  example: []
   syntax:
     content: >-
       [JsonInclude]
@@ -219,10 +232,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: TreeSentenceStack
     path: ../Ubytec/Language/Syntax/Model/SyntaxTree.cs
-    startLine: 23
+    startLine: 43
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: Internal stack used during tree traversal or construction.
+  example: []
   syntax:
     content: internal Stack<SyntaxSentence> TreeSentenceStack { get; set; }
     parameters: []
@@ -248,17 +263,27 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
     path: ../Ubytec/Language/Syntax/Model/SyntaxTree.cs
-    startLine: 25
+    startLine: 55
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: >-
+    Initializes a new instance of the <xref href="Ubytec.Language.Syntax.Model.SyntaxTree" data-throw-if-not-resolved="false"></xref> class
+
+    with the specified root sentence, setting up metadata and traversal stack.
+  example: []
   syntax:
     content: public SyntaxTree(SyntaxSentence root)
     parameters:
     - id: root
       type: Ubytec.Language.Syntax.Model.SyntaxSentence
+      description: The root <xref href="Ubytec.Language.Syntax.Model.SyntaxSentence" data-throw-if-not-resolved="false"></xref> to start this syntax tree.
     content.vb: Public Sub New(root As SyntaxSentence)
   overload: Ubytec.Language.Syntax.Model.SyntaxTree.#ctor*
+  exceptions:
+  - type: Ubytec.Language.Exceptions.LanguageVersionException
+    commentId: T:Ubytec.Language.Exceptions.LanguageVersionException
+    description: Thrown if the assembly metadata cannot be retrieved.
   nameWithType.vb: SyntaxTree.New(SyntaxSentence)
   fullName.vb: Ubytec.Language.Syntax.Model.SyntaxTree.New(Ubytec.Language.Syntax.Model.SyntaxSentence)
   name.vb: New(SyntaxSentence)
@@ -280,11 +305,11 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Dispose
     path: ../Ubytec/Language/Syntax/Model/SyntaxTree.cs
-    startLine: 41
+    startLine: 78
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
-  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  summary: Releases all resources used by the syntax tree, including metadata registry and sentences.
   example: []
   syntax:
     content: public void Dispose()
@@ -867,6 +892,19 @@ references:
   - name: " "
   - name: T
   - name: )
+- uid: Ubytec.Language.Syntax.Model.SyntaxTree
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxTree
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxTree.html
+  name: SyntaxTree
+  nameWithType: SyntaxTree
+  fullName: Ubytec.Language.Syntax.Model.SyntaxTree
+- uid: Ubytec.Language.Exceptions.LanguageVersionException
+  commentId: T:Ubytec.Language.Exceptions.LanguageVersionException
+  href: Ubytec.Language.Exceptions.LanguageVersionException.html
+  name: LanguageVersionException
+  nameWithType: LanguageVersionException
+  fullName: Ubytec.Language.Exceptions.LanguageVersionException
 - uid: Ubytec.Language.Syntax.Model.SyntaxTree.#ctor*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxTree.#ctor
   href: Ubytec.Language.Syntax.Model.SyntaxTree.-ctor.html#Ubytec_Language_Syntax_Model_SyntaxTree__ctor_Ubytec_Language_Syntax_Model_SyntaxSentence_

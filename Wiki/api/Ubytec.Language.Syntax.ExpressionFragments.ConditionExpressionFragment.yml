@@ -24,10 +24,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ConditionExpressionFragment
     path: ../Ubytec/Language/Syntax/ExpressionFragments/ConditionExpressionFragment.cs
-    startLine: 6
+    startLine: 20
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.ExpressionFragments
+  summary: >-
+    A fragment representing a conditional expression in Ubytec syntax,
+
+    consisting of a left operand, an operator, and a right operand.
+  example: []
   syntax:
     content: 'public readonly record struct ConditionExpressionFragment : IUbytecExpressionFragment, IEquatable<ConditionExpressionFragment>'
     content.vb: Public Structure ConditionExpressionFragment Implements IUbytecExpressionFragment, IEquatable(Of ConditionExpressionFragment)
@@ -59,19 +64,30 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
     path: ../Ubytec/Language/Syntax/ExpressionFragments/ConditionExpressionFragment.cs
-    startLine: 6
+    startLine: 20
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.ExpressionFragments
+  summary: >-
+    A fragment representing a conditional expression in Ubytec syntax,
+
+    consisting of a left operand, an operator, and a right operand.
+  example: []
   syntax:
     content: public ConditionExpressionFragment(object? Left, string? Operand, object? Right)
     parameters:
     - id: Left
       type: System.Object
+      description: The left-hand side of the condition; can be any supported literal or expression result.
     - id: Operand
       type: System.String
+      description: >-
+        The operator string (e.g., "==", "&lt;", "&gt;=") used in the condition;
+
+        may be <code>null</code> if the operator is implicit or not yet determined.
     - id: Right
       type: System.Object
+      description: The right-hand side of the condition; can be any supported literal or expression result.
     content.vb: Public Sub New(Left As Object, Operand As String, Right As Object)
   overload: Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment.#ctor*
   nameWithType.vb: ConditionExpressionFragment.New(Object, String, Object)
@@ -95,10 +111,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Left
     path: ../Ubytec/Language/Syntax/ExpressionFragments/ConditionExpressionFragment.cs
-    startLine: 6
+    startLine: 20
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.ExpressionFragments
+  summary: The left-hand side of the condition; can be any supported literal or expression result.
+  example: []
   syntax:
     content: public object? Left { get; init; }
     parameters: []
@@ -124,10 +142,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Operand
     path: ../Ubytec/Language/Syntax/ExpressionFragments/ConditionExpressionFragment.cs
-    startLine: 6
+    startLine: 20
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.ExpressionFragments
+  summary: >-
+    The operator string (e.g., "==", "&lt;", "&gt;=") used in the condition;
+
+    may be <code>null</code> if the operator is implicit or not yet determined.
+  example: []
   syntax:
     content: public string? Operand { get; init; }
     parameters: []
@@ -153,10 +176,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Right
     path: ../Ubytec/Language/Syntax/ExpressionFragments/ConditionExpressionFragment.cs
-    startLine: 6
+    startLine: 20
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.ExpressionFragments
+  summary: The right-hand side of the condition; can be any supported literal or expression result.
+  example: []
   syntax:
     content: public object? Right { get; init; }
     parameters: []
@@ -182,10 +207,11 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Tokens
     path: ../Ubytec/Language/Syntax/ExpressionFragments/ConditionExpressionFragment.cs
-    startLine: 8
+    startLine: 26
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.ExpressionFragments
+  summary: Gets the lexical <xref href="Ubytec.Language.Syntax.Model.SyntaxToken" data-throw-if-not-resolved="false"></xref> sequence that produced this condition fragment.
   example: []
   syntax:
     content: >-
@@ -606,6 +632,13 @@ references:
   name: Right
   nameWithType: ConditionExpressionFragment.Right
   fullName: Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment.Right
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxToken
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  name: SyntaxToken
+  nameWithType: SyntaxToken
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken
 - uid: Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment.Tokens*
   commentId: Overload:Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment.Tokens
   href: Ubytec.Language.Syntax.ExpressionFragments.ConditionExpressionFragment.Tokens.html#Ubytec_Language_Syntax_ExpressionFragments_ConditionExpressionFragment_Tokens
@@ -640,4 +673,42 @@ references:
     href: Ubytec.Language.Syntax.Model.SyntaxToken.html
   - name: (
   - name: )
+- uid: Ubytec.Language.Syntax.Model
+  commentId: N:Ubytec.Language.Syntax.Model
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Model
+  nameWithType: Ubytec.Language.Syntax.Model
+  fullName: Ubytec.Language.Syntax.Model
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
 memberLayout: SeparatePages

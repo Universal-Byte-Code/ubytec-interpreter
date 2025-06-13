@@ -29,10 +29,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: MetadataRegistry
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
-    startLine: 8
+    startLine: 11
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: >-
+    A high-performance registry of metadata entries, stored in unmanaged memory.
+
+    Each entry is a fixed-size key/value pair, serialized to UTF-8.
+  example: []
   syntax:
     content: 'public struct MetadataRegistry : IDisposable'
     content.vb: Public Structure MetadataRegistry Implements IDisposable
@@ -66,7 +71,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _entries
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
-    startLine: 12
+    startLine: 15
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
@@ -93,7 +98,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _count
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
-    startLine: 13
+    startLine: 16
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
@@ -120,7 +125,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _capacity
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
-    startLine: 14
+    startLine: 17
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
@@ -129,38 +134,6 @@ items:
     return:
       type: System.UInt32
     content.vb: Private _capacity As UInteger
-- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.#ctor(System.UInt32)
-  commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.#ctor(System.UInt32)
-  id: '#ctor(System.UInt32)'
-  parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
-  langs:
-  - csharp
-  - vb
-  name: MetadataRegistry(uint)
-  nameWithType: MetadataRegistry.MetadataRegistry(uint)
-  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.MetadataRegistry(uint)
-  type: Constructor
-  source:
-    remote:
-      path: Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
-      branch: main
-      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
-    id: .ctor
-    path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
-    startLine: 16
-  assemblies:
-  - Ubytec
-  namespace: Ubytec.Language.Syntax.Fast.Metadata
-  syntax:
-    content: public MetadataRegistry(uint capacity)
-    parameters:
-    - id: capacity
-      type: System.UInt32
-    content.vb: Public Sub New(capacity As UInteger)
-  overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.#ctor*
-  nameWithType.vb: MetadataRegistry.New(UInteger)
-  fullName.vb: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.New(UInteger)
-  name.vb: New(UInteger)
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count
   commentId: P:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count
   id: Count
@@ -179,10 +152,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Count
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
-    startLine: 29
+    startLine: 22
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: Gets the number of metadata entries currently stored.
+  example: []
   syntax:
     content: public readonly uint Count { get; }
     parameters: []
@@ -190,6 +165,44 @@ items:
       type: System.UInt32
     content.vb: Public ReadOnly Property Count As UInteger
   overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count*
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.#ctor(System.UInt32)
+  commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.#ctor(System.UInt32)
+  id: '#ctor(System.UInt32)'
+  parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+  langs:
+  - csharp
+  - vb
+  name: MetadataRegistry(uint)
+  nameWithType: MetadataRegistry.MetadataRegistry(uint)
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.MetadataRegistry(uint)
+  type: Constructor
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: .ctor
+    path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
+    startLine: 31
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: Initializes a new <xref href="Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry" data-throw-if-not-resolved="false"></xref> with the specified initial capacity.
+  example: []
+  syntax:
+    content: public MetadataRegistry(uint capacity)
+    parameters:
+    - id: capacity
+      type: System.UInt32
+      description: >-
+        The initial number of entries to allocate space for. 
+
+        If less than 1, it will be rounded up to 1.
+    content.vb: Public Sub New(capacity As UInteger)
+  overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.#ctor*
+  nameWithType.vb: MetadataRegistry.New(UInteger)
+  fullName.vb: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.New(UInteger)
+  name.vb: New(UInteger)
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Add(System.String,System.Object)
   commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Add(System.String,System.Object)
   id: Add(System.String,System.Object)
@@ -208,19 +221,33 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Add
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
-    startLine: 31
+    startLine: 54
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: Adds a new metadata entry with the given key and value.
+  example: []
   syntax:
     content: public void Add(string key, object value)
     parameters:
     - id: key
       type: System.String
+      description: The metadata key (string).
     - id: value
       type: System.Object
+      description: The metadata value (object); will be converted to string.
     content.vb: Public Sub Add(key As String, value As Object)
   overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Add*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: Thrown if the <code class="paramref">value</code> cannot be serialized to JSON.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: >-
+      Thrown if the <code class="paramref">key</code> or the stringified <code class="paramref">value</code> exceed
+
+      the fixed buffer size (<xref href="Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KEY_SIZE" data-throw-if-not-resolved="false"></xref> or <xref href="Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.VALUE_SIZE" data-throw-if-not-resolved="false"></xref>).
   nameWithType.vb: MetadataRegistry.Add(String, Object)
   fullName.vb: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Add(String, Object)
   name.vb: Add(String, Object)
@@ -242,56 +269,29 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: TryGetValue
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
-    startLine: 55
+    startLine: 87
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: Attempts to retrieve the string value associated with the given key.
+  example: []
   syntax:
     content: public readonly bool TryGetValue(string key, out string? value)
     parameters:
     - id: key
       type: System.String
+      description: The metadata key to look up.
     - id: value
       type: System.String
+      description: When this method returns, contains the metadata value if found; otherwise, <code>null</code>.
     return:
       type: System.Boolean
+      description: <code>true</code> if an entry with the specified key was found; otherwise, <code>false</code>.
     content.vb: Public Function TryGetValue(key As String, value As String) As Boolean
   overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.TryGetValue*
   nameWithType.vb: MetadataRegistry.TryGetValue(String, String)
   fullName.vb: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.TryGetValue(String, String)
   name.vb: TryGetValue(String, String)
-- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand(System.UInt32)
-  commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand(System.UInt32)
-  id: Expand(System.UInt32)
-  parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
-  langs:
-  - csharp
-  - vb
-  name: Expand(uint)
-  nameWithType: MetadataRegistry.Expand(uint)
-  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand(uint)
-  type: Method
-  source:
-    remote:
-      path: Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
-      branch: main
-      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
-    id: Expand
-    path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
-    startLine: 74
-  assemblies:
-  - Ubytec
-  namespace: Ubytec.Language.Syntax.Fast.Metadata
-  syntax:
-    content: private void Expand(uint newCap)
-    parameters:
-    - id: newCap
-      type: System.UInt32
-    content.vb: Private Sub Expand(newCap As UInteger)
-  overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand*
-  nameWithType.vb: MetadataRegistry.Expand(UInteger)
-  fullName.vb: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand(UInteger)
-  name.vb: Expand(UInteger)
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.GetEntryPointer(System.UInt32)
   commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.GetEntryPointer(System.UInt32)
   id: GetEntryPointer(System.UInt32)
@@ -310,19 +310,27 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: GetEntryPointer
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
-    startLine: 93
+    startLine: 115
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: Gets a pointer to the <xref href="Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry" data-throw-if-not-resolved="false"></xref> at the specified index.
+  example: []
   syntax:
     content: public readonly MetadataEntry* GetEntryPointer(uint index)
     parameters:
     - id: index
       type: System.UInt32
+      description: The zero-based index of the entry.
     return:
       type: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry*
+      description: A pointer to the entry.
     content.vb: Public Function GetEntryPointer(index As UInteger) As MetadataEntry*
   overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.GetEntryPointer*
+  exceptions:
+  - type: System.IndexOutOfRangeException
+    commentId: T:System.IndexOutOfRangeException
+    description: Thrown if <code class="paramref">index</code> is outside the range of stored entries (0..Count-1).
   nameWithType.vb: MetadataRegistry.GetEntryPointer(UInteger)
   fullName.vb: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.GetEntryPointer(UInteger)
   name.vb: GetEntryPointer(UInteger)
@@ -344,11 +352,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Dispose
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
-    startLine: 100
+    startLine: 128
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
-  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  summary: Releases all unmanaged memory held by this registry.
+  remarks: After calling <xref href="Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Dispose" data-throw-if-not-resolved="false"></xref>, this instance must not be used again.
   example: []
   syntax:
     content: public void Dispose()
@@ -356,6 +365,48 @@ items:
   overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Dispose*
   implements:
   - System.IDisposable.Dispose
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand(System.UInt32)
+  commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand(System.UInt32)
+  id: Expand(System.UInt32)
+  parent: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+  langs:
+  - csharp
+  - vb
+  name: Expand(uint)
+  nameWithType: MetadataRegistry.Expand(uint)
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand(uint)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Expand
+    path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistry.cs
+    startLine: 147
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: >-
+    Doubles (or sets) the internal capacity and re-allocates the unmanaged buffer,
+
+    copying existing entries into the new block.
+  example: []
+  syntax:
+    content: private void Expand(uint newCap)
+    parameters:
+    - id: newCap
+      type: System.UInt32
+      description: The new capacity; must be strictly greater than the current capacity.
+    content.vb: Private Sub Expand(newCap As UInteger)
+  overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: Thrown if <code class="paramref">newCap</code> is not larger than the existing capacity.
+  nameWithType.vb: MetadataRegistry.Expand(UInteger)
+  fullName.vb: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand(UInteger)
+  name.vb: Expand(UInteger)
 references:
 - uid: Ubytec.Language.Syntax.Fast.Metadata
   commentId: N:Ubytec.Language.Syntax.Fast.Metadata
@@ -849,6 +900,19 @@ references:
   nameWithType.vb: UInteger
   fullName.vb: UInteger
   name.vb: UInteger
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count*
+  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_Count
+  name: Count
+  nameWithType: MetadataRegistry.Count
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+  commentId: T:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+  parent: Ubytec.Language.Syntax.Fast.Metadata
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.html
+  name: MetadataRegistry
+  nameWithType: MetadataRegistry
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.#ctor*
   commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.#ctor
   href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.-ctor.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry__ctor_System_UInt32_
@@ -858,12 +922,32 @@ references:
   nameWithType.vb: MetadataRegistry.New
   fullName.vb: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.New
   name.vb: New
-- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count*
-  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_Count
-  name: Count
-  nameWithType: MetadataRegistry.Count
-  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Count
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KEY_SIZE
+  commentId: F:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KEY_SIZE
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KEY_SIZE.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry_KEY_SIZE
+  name: KEY_SIZE
+  nameWithType: MetadataEntry.KEY_SIZE
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.KEY_SIZE
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.VALUE_SIZE
+  commentId: F:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.VALUE_SIZE
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.VALUE_SIZE.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataEntry_VALUE_SIZE
+  name: VALUE_SIZE
+  nameWithType: MetadataEntry.VALUE_SIZE
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.VALUE_SIZE
+- uid: System.InvalidOperationException
+  commentId: T:System.InvalidOperationException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.invalidoperationexception
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.ArgumentException
+  commentId: T:System.ArgumentException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentexception
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Add*
   commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Add
   href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Add.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_Add_System_String_System_Object_
@@ -898,18 +982,43 @@ references:
   nameWithType.vb: Boolean
   fullName.vb: Boolean
   name.vb: Boolean
-- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand*
-  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_Expand_System_UInt32_
-  name: Expand
-  nameWithType: MetadataRegistry.Expand
-  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  commentId: T:Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry.html
+  name: MetadataEntry
+  nameWithType: MetadataEntry
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataEntry
+- uid: System.IndexOutOfRangeException
+  commentId: T:System.IndexOutOfRangeException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.indexoutofrangeexception
+  name: IndexOutOfRangeException
+  nameWithType: IndexOutOfRangeException
+  fullName: System.IndexOutOfRangeException
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.GetEntryPointer*
   commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.GetEntryPointer
   href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.GetEntryPointer.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_GetEntryPointer_System_UInt32_
   name: GetEntryPointer
   nameWithType: MetadataRegistry.GetEntryPointer
   fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.GetEntryPointer
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Dispose
+  commentId: M:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Dispose
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Dispose.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_Dispose
+  name: Dispose()
+  nameWithType: MetadataRegistry.Dispose()
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Dispose()
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Dispose
+    name: Dispose
+    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Dispose.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_Dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Dispose
+    name: Dispose
+    href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Dispose.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_Dispose
+  - name: (
+  - name: )
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Dispose*
   commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Dispose
   href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Dispose.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_Dispose
@@ -938,4 +1047,10 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
   - name: (
   - name: )
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand*
+  commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_Expand_System_UInt32_
+  name: Expand
+  nameWithType: MetadataRegistry.Expand
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.Expand
 memberLayout: SeparatePages

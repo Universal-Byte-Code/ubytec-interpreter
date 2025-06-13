@@ -20,10 +20,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: TypeModifiersExtensions
     path: ../Ubytec/Language/Syntax/TypeSystem/TypeModifiersExtensions.cs
-    startLine: 4
+    startLine: 8
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: >-
+    Provides extension methods for the <xref href="Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers" data-throw-if-not-resolved="false"></xref> enum,
+
+    allowing bitwise operations and analyses on modifier flags.
+  example: []
   syntax:
     content: public static class TypeModifiersExtensions
     content.vb: Public Module TypeModifiersExtensions
@@ -56,20 +61,47 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: CountSetBits
     path: ../Ubytec/Language/Syntax/TypeSystem/TypeModifiersExtensions.cs
-    startLine: 6
+    startLine: 17
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
+  summary: Counts the number of individual flags set in the given <xref href="Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers" data-throw-if-not-resolved="false"></xref> value.
+  example: []
   syntax:
     content: public static int CountSetBits(this Types.TypeModifiers modifiers)
     parameters:
     - id: modifiers
       type: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+      description: The combined <xref href="Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers" data-throw-if-not-resolved="false"></xref> flags to inspect.
     return:
       type: System.Int32
+      description: The number of bits set to 1 in the integer representation of <code class="paramref">modifiers</code>.
     content.vb: Public Shared Function CountSetBits(modifiers As Types.TypeModifiers) As Integer
   overload: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.CountSetBits*
 references:
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  parent: Ubytec.Language.Syntax.TypeSystem
+  href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  name: Types.TypeModifiers
+  nameWithType: Types.TypeModifiers
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types
+    name: Types
+    href: Ubytec.Language.Syntax.TypeSystem.Types.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
+    name: TypeModifiers
+    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
 - uid: Ubytec.Language.Syntax.TypeSystem
   commentId: N:Ubytec.Language.Syntax.TypeSystem
   href: Ubytec.html
@@ -351,29 +383,6 @@ references:
   name: CountSetBits
   nameWithType: TypeModifiersExtensions.CountSetBits
   fullName: Ubytec.Language.Syntax.TypeSystem.TypeModifiersExtensions.CountSetBits
-- uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
-  commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
-  parent: Ubytec.Language.Syntax.TypeSystem
-  href: Ubytec.Language.Syntax.TypeSystem.Types.html
-  name: Types.TypeModifiers
-  nameWithType: Types.TypeModifiers
-  fullName: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
-  spec.csharp:
-  - uid: Ubytec.Language.Syntax.TypeSystem.Types
-    name: Types
-    href: Ubytec.Language.Syntax.TypeSystem.Types.html
-  - name: .
-  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
-    name: TypeModifiers
-    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
-  spec.vb:
-  - uid: Ubytec.Language.Syntax.TypeSystem.Types
-    name: Types
-    href: Ubytec.Language.Syntax.TypeSystem.Types.html
-  - name: .
-  - uid: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers
-    name: TypeModifiers
-    href: Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers.html
 - uid: System.Int32
   commentId: T:System.Int32
   parent: System

@@ -20,10 +20,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IUbytecSyntax
     path: ../Ubytec/Language/Syntax/Interfaces/IUbytecSyntax.cs
-    startLine: 4
+    startLine: 8
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Interfaces
+  summary: >-
+    Defines a Ubytec syntax element that holds and exposes metadata,
+
+    and supports cleanup of resources.
+  example: []
   syntax:
     content: 'public interface IUbytecSyntax : IDisposable'
     content.vb: Public Interface IUbytecSyntax Inherits IDisposable
@@ -47,10 +52,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Metadata
     path: ../Ubytec/Language/Syntax/Interfaces/IUbytecSyntax.cs
-    startLine: 6
+    startLine: 14
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Interfaces
+  summary: >-
+    Gets a reference to the <xref href="Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry" data-throw-if-not-resolved="false"></xref> for this syntax element,
+
+    allowing addition and retrieval of metadata entries.
+  example: []
   syntax:
     content: ref MetadataRegistry Metadata { get; }
     parameters: []
@@ -134,12 +144,6 @@ references:
   name: System
   nameWithType: System
   fullName: System
-- uid: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata*
-  commentId: Overload:Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
-  href: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata.html#Ubytec_Language_Syntax_Interfaces_IUbytecSyntax_Metadata
-  name: Metadata
-  nameWithType: IUbytecSyntax.Metadata
-  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
   commentId: T:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
   parent: Ubytec.Language.Syntax.Fast.Metadata
@@ -147,6 +151,12 @@ references:
   name: MetadataRegistry
   nameWithType: MetadataRegistry
   fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+- uid: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata*
+  commentId: Overload:Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
+  href: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata.html#Ubytec_Language_Syntax_Interfaces_IUbytecSyntax_Metadata
+  name: Metadata
+  nameWithType: IUbytecSyntax.Metadata
+  fullName: Ubytec.Language.Syntax.Interfaces.IUbytecSyntax.Metadata
 - uid: Ubytec.Language.Syntax.Fast.Metadata
   commentId: N:Ubytec.Language.Syntax.Fast.Metadata
   href: Ubytec.html

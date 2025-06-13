@@ -44,10 +44,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: FinalizersContext
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 6
+    startLine: 10
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: >-
+    Holds stacks of control-flow opcodes (RETURN, BREAK, CONTINUE) to be executed
+
+    when finalizing a scope. Supports enumeration over each category and collectively.
+  example: []
   syntax:
     content: 'public class FinalizersContext : IEnumerable<CoreOperations.RETURN>, IEnumerable<CoreOperations.CONTINUE>, IEnumerable<CoreOperations.BREAK>, IEnumerable<IOpCode>, IEnumerable'
     content.vb: Public Class FinalizersContext Implements IEnumerable(Of CoreOperations.RETURN), IEnumerable(Of CoreOperations.CONTINUE), IEnumerable(Of CoreOperations.BREAK), IEnumerable(Of IOpCode), IEnumerable
@@ -85,10 +90,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ReturnStack
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 8
+    startLine: 19
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets the stack of <xref href="Ubytec.Language.Operations.CoreOperations.RETURN" data-throw-if-not-resolved="false"></xref> opcodes to finalize.
+  example: []
   syntax:
     content: public Stack<CoreOperations.RETURN> ReturnStack { get; private init; }
     parameters: []
@@ -114,10 +121,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: BreakStack
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 9
+    startLine: 24
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets the stack of <xref href="Ubytec.Language.Operations.CoreOperations.BREAK" data-throw-if-not-resolved="false"></xref> opcodes to finalize.
+  example: []
   syntax:
     content: public Stack<CoreOperations.BREAK> BreakStack { get; private init; }
     parameters: []
@@ -143,10 +152,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ContinueStack
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 10
+    startLine: 29
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets the stack of <xref href="Ubytec.Language.Operations.CoreOperations.CONTINUE" data-throw-if-not-resolved="false"></xref> opcodes to finalize.
+  example: []
   syntax:
     content: public Stack<CoreOperations.CONTINUE> ContinueStack { get; private init; }
     parameters: []
@@ -173,7 +184,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: System.Collections.IEnumerable.GetEnumerator
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 13
+    startLine: 33
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -209,17 +220,20 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: GetEnumerator
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 15
+    startLine: 40
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
-  summary: Returns an enumerator that iterates through the collection.
+  summary: >-
+    Enumerates all opcodes in this context in the order:
+
+    all returns, then breaks, then continues.
   example: []
   syntax:
     content: public IEnumerator<IOpCode> GetEnumerator()
     return:
       type: System.Collections.Generic.IEnumerator{Ubytec.Language.Operations.IOpCode}
-      description: An enumerator that can be used to iterate through the collection.
+      description: An <xref href="System.Collections.Generic.IEnumerator%601" data-throw-if-not-resolved="false"></xref> over all opcodes.
     content.vb: Public Function GetEnumerator() As IEnumerator(Of IOpCode)
   overload: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.GetEnumerator*
   implements:
@@ -243,7 +257,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.CoreOperations.RETURN>.GetEnumerator
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 23
+    startLine: 48
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -280,7 +294,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.CoreOperations.CONTINUE>.GetEnumerator
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 24
+    startLine: 49
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -317,7 +331,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.CoreOperations.BREAK>.GetEnumerator
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 25
+    startLine: 50
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -353,10 +367,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Push
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 28
+    startLine: 59
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Adds a <xref href="Ubytec.Language.Operations.CoreOperations.RETURN" data-throw-if-not-resolved="false"></xref> opcode to the finalizers.
+  example: []
   syntax:
     content: public void Push(CoreOperations.RETURN op)
     parameters:
@@ -382,10 +398,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Push
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 29
+    startLine: 64
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Adds a <xref href="Ubytec.Language.Operations.CoreOperations.BREAK" data-throw-if-not-resolved="false"></xref> opcode to the finalizers.
+  example: []
   syntax:
     content: public void Push(CoreOperations.BREAK op)
     parameters:
@@ -411,10 +429,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Push
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 30
+    startLine: 69
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Adds a <xref href="Ubytec.Language.Operations.CoreOperations.CONTINUE" data-throw-if-not-resolved="false"></xref> opcode to the finalizers.
+  example: []
   syntax:
     content: public void Push(CoreOperations.CONTINUE op)
     parameters:
@@ -440,10 +460,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PopReturn
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 33
+    startLine: 78
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Removes and returns the most recent <xref href="Ubytec.Language.Operations.CoreOperations.RETURN" data-throw-if-not-resolved="false"></xref> opcode.
+  example: []
   syntax:
     content: public CoreOperations.RETURN PopReturn()
     return:
@@ -468,10 +490,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PopBreak
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 34
+    startLine: 83
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Removes and returns the most recent <xref href="Ubytec.Language.Operations.CoreOperations.BREAK" data-throw-if-not-resolved="false"></xref> opcode.
+  example: []
   syntax:
     content: public CoreOperations.BREAK PopBreak()
     return:
@@ -496,10 +520,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PopContinue
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 35
+    startLine: 88
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Removes and returns the most recent <xref href="Ubytec.Language.Operations.CoreOperations.CONTINUE" data-throw-if-not-resolved="false"></xref> opcode.
+  example: []
   syntax:
     content: public CoreOperations.CONTINUE PopContinue()
     return:
@@ -524,10 +550,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PeekReturn
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 38
+    startLine: 97
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Returns the most recent <xref href="Ubytec.Language.Operations.CoreOperations.RETURN" data-throw-if-not-resolved="false"></xref> opcode without removing it.
+  example: []
   syntax:
     content: public CoreOperations.RETURN PeekReturn()
     return:
@@ -552,10 +580,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PeekBreak
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 39
+    startLine: 102
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Returns the most recent <xref href="Ubytec.Language.Operations.CoreOperations.BREAK" data-throw-if-not-resolved="false"></xref> opcode without removing it.
+  example: []
   syntax:
     content: public CoreOperations.BREAK PeekBreak()
     return:
@@ -580,10 +610,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PeekContinue
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 40
+    startLine: 107
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Returns the most recent <xref href="Ubytec.Language.Operations.CoreOperations.CONTINUE" data-throw-if-not-resolved="false"></xref> opcode without removing it.
+  example: []
   syntax:
     content: public CoreOperations.CONTINUE PeekContinue()
     return:
@@ -608,10 +640,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ReturnCount
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 43
+    startLine: 116
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets the number of pending <xref href="Ubytec.Language.Operations.CoreOperations.RETURN" data-throw-if-not-resolved="false"></xref> opcodes.
+  example: []
   syntax:
     content: public int ReturnCount { get; }
     parameters: []
@@ -637,10 +671,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: BreakCount
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 44
+    startLine: 121
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets the number of pending <xref href="Ubytec.Language.Operations.CoreOperations.BREAK" data-throw-if-not-resolved="false"></xref> opcodes.
+  example: []
   syntax:
     content: public int BreakCount { get; }
     parameters: []
@@ -666,10 +702,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ContinueCount
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 45
+    startLine: 126
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets the number of pending <xref href="Ubytec.Language.Operations.CoreOperations.CONTINUE" data-throw-if-not-resolved="false"></xref> opcodes.
+  example: []
   syntax:
     content: public int ContinueCount { get; }
     parameters: []
@@ -695,10 +733,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: TotalCount
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 46
+    startLine: 131
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Gets the total number of pending opcodes across all categories.
+  example: []
   syntax:
     content: public int TotalCount { get; }
     parameters: []
@@ -724,10 +764,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ClearReturns
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 49
+    startLine: 140
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Removes all <xref href="Ubytec.Language.Operations.CoreOperations.RETURN" data-throw-if-not-resolved="false"></xref> opcodes.
+  example: []
   syntax:
     content: public void ClearReturns()
     content.vb: Public Sub ClearReturns()
@@ -750,10 +792,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ClearBreaks
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 50
+    startLine: 145
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Removes all <xref href="Ubytec.Language.Operations.CoreOperations.BREAK" data-throw-if-not-resolved="false"></xref> opcodes.
+  example: []
   syntax:
     content: public void ClearBreaks()
     content.vb: Public Sub ClearBreaks()
@@ -776,10 +820,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ClearContinues
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 51
+    startLine: 150
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Removes all <xref href="Ubytec.Language.Operations.CoreOperations.CONTINUE" data-throw-if-not-resolved="false"></xref> opcodes.
+  example: []
   syntax:
     content: public void ClearContinues()
     content.vb: Public Sub ClearContinues()
@@ -802,10 +848,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ClearAll
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 52
+    startLine: 155
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
+  summary: Removes all opcodes from all categories.
+  example: []
   syntax:
     content: public void ClearAll()
     content.vb: Public Sub ClearAll()
@@ -1350,6 +1398,29 @@ references:
     name: Collections
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections
+- uid: Ubytec.Language.Operations.CoreOperations.RETURN
+  commentId: T:Ubytec.Language.Operations.CoreOperations.RETURN
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.RETURN
+  nameWithType: CoreOperations.RETURN
+  fullName: Ubytec.Language.Operations.CoreOperations.RETURN
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.RETURN
+    name: RETURN
+    href: Ubytec.Language.Operations.CoreOperations.RETURN.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.RETURN
+    name: RETURN
+    href: Ubytec.Language.Operations.CoreOperations.RETURN.html
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ReturnStack*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ReturnStack
   href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ReturnStack.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_ReturnStack
@@ -1397,6 +1468,36 @@ references:
     name: RETURN
     href: Ubytec.Language.Operations.CoreOperations.RETURN.html
   - name: )
+- uid: Ubytec.Language.Operations
+  commentId: N:Ubytec.Language.Operations
+  href: Ubytec.html
+  name: Ubytec.Language.Operations
+  nameWithType: Ubytec.Language.Operations
+  fullName: Ubytec.Language.Operations
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
 - uid: System.Collections.Generic.Stack`1
   commentId: T:System.Collections.Generic.Stack`1
   isExternal: true
@@ -1425,6 +1526,29 @@ references:
   - name: " "
   - name: T
   - name: )
+- uid: Ubytec.Language.Operations.CoreOperations.BREAK
+  commentId: T:Ubytec.Language.Operations.CoreOperations.BREAK
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.BREAK
+  nameWithType: CoreOperations.BREAK
+  fullName: Ubytec.Language.Operations.CoreOperations.BREAK
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.BREAK
+    name: BREAK
+    href: Ubytec.Language.Operations.CoreOperations.BREAK.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.BREAK
+    name: BREAK
+    href: Ubytec.Language.Operations.CoreOperations.BREAK.html
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.BreakStack*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.BreakStack
   href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.BreakStack.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_BreakStack
@@ -1472,6 +1596,29 @@ references:
     name: BREAK
     href: Ubytec.Language.Operations.CoreOperations.BREAK.html
   - name: )
+- uid: Ubytec.Language.Operations.CoreOperations.CONTINUE
+  commentId: T:Ubytec.Language.Operations.CoreOperations.CONTINUE
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.CoreOperations.html
+  name: CoreOperations.CONTINUE
+  nameWithType: CoreOperations.CONTINUE
+  fullName: Ubytec.Language.Operations.CoreOperations.CONTINUE
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.CONTINUE
+    name: CONTINUE
+    href: Ubytec.Language.Operations.CoreOperations.CONTINUE.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.CoreOperations
+    name: CoreOperations
+    href: Ubytec.Language.Operations.CoreOperations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.CoreOperations.CONTINUE
+    name: CONTINUE
+    href: Ubytec.Language.Operations.CoreOperations.CONTINUE.html
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ContinueStack*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ContinueStack
   href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.ContinueStack.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_ContinueStack
@@ -1565,6 +1712,34 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.collections.ienumerable.getenumerator
   - name: (
   - name: )
+- uid: System.Collections.Generic.IEnumerator`1
+  commentId: T:System.Collections.Generic.IEnumerator`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  name: IEnumerator<T>
+  nameWithType: IEnumerator<T>
+  fullName: System.Collections.Generic.IEnumerator<T>
+  nameWithType.vb: IEnumerator(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerator(Of T)
+  name.vb: IEnumerator(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.GetEnumerator*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.GetEnumerator
   href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.GetEnumerator.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_GetEnumerator
@@ -1650,34 +1825,6 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
   - name: (
-  - name: )
-- uid: System.Collections.Generic.IEnumerator`1
-  commentId: T:System.Collections.Generic.IEnumerator`1
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
-  name: IEnumerator<T>
-  nameWithType: IEnumerator<T>
-  fullName: System.Collections.Generic.IEnumerator<T>
-  nameWithType.vb: IEnumerator(Of T)
-  fullName.vb: System.Collections.Generic.IEnumerator(Of T)
-  name.vb: IEnumerator(Of T)
-  spec.csharp:
-  - uid: System.Collections.Generic.IEnumerator`1
-    name: IEnumerator
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
-  - name: <
-  - name: T
-  - name: '>'
-  spec.vb:
-  - uid: System.Collections.Generic.IEnumerator`1
-    name: IEnumerator
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
-  - name: (
-  - name: Of
-  - name: " "
-  - name: T
   - name: )
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#RETURN}#GetEnumerator*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#RETURN}#GetEnumerator
@@ -1943,105 +2090,6 @@ references:
   name: Push
   nameWithType: FinalizersContext.Push
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.Push
-- uid: Ubytec.Language.Operations.CoreOperations.RETURN
-  commentId: T:Ubytec.Language.Operations.CoreOperations.RETURN
-  parent: Ubytec.Language.Operations
-  href: Ubytec.Language.Operations.CoreOperations.html
-  name: CoreOperations.RETURN
-  nameWithType: CoreOperations.RETURN
-  fullName: Ubytec.Language.Operations.CoreOperations.RETURN
-  spec.csharp:
-  - uid: Ubytec.Language.Operations.CoreOperations
-    name: CoreOperations
-    href: Ubytec.Language.Operations.CoreOperations.html
-  - name: .
-  - uid: Ubytec.Language.Operations.CoreOperations.RETURN
-    name: RETURN
-    href: Ubytec.Language.Operations.CoreOperations.RETURN.html
-  spec.vb:
-  - uid: Ubytec.Language.Operations.CoreOperations
-    name: CoreOperations
-    href: Ubytec.Language.Operations.CoreOperations.html
-  - name: .
-  - uid: Ubytec.Language.Operations.CoreOperations.RETURN
-    name: RETURN
-    href: Ubytec.Language.Operations.CoreOperations.RETURN.html
-- uid: Ubytec.Language.Operations
-  commentId: N:Ubytec.Language.Operations
-  href: Ubytec.html
-  name: Ubytec.Language.Operations
-  nameWithType: Ubytec.Language.Operations
-  fullName: Ubytec.Language.Operations
-  spec.csharp:
-  - uid: Ubytec
-    name: Ubytec
-    href: Ubytec.html
-  - name: .
-  - uid: Ubytec.Language
-    name: Language
-    href: Ubytec.Language.html
-  - name: .
-  - uid: Ubytec.Language.Operations
-    name: Operations
-    href: Ubytec.Language.Operations.html
-  spec.vb:
-  - uid: Ubytec
-    name: Ubytec
-    href: Ubytec.html
-  - name: .
-  - uid: Ubytec.Language
-    name: Language
-    href: Ubytec.Language.html
-  - name: .
-  - uid: Ubytec.Language.Operations
-    name: Operations
-    href: Ubytec.Language.Operations.html
-- uid: Ubytec.Language.Operations.CoreOperations.BREAK
-  commentId: T:Ubytec.Language.Operations.CoreOperations.BREAK
-  parent: Ubytec.Language.Operations
-  href: Ubytec.Language.Operations.CoreOperations.html
-  name: CoreOperations.BREAK
-  nameWithType: CoreOperations.BREAK
-  fullName: Ubytec.Language.Operations.CoreOperations.BREAK
-  spec.csharp:
-  - uid: Ubytec.Language.Operations.CoreOperations
-    name: CoreOperations
-    href: Ubytec.Language.Operations.CoreOperations.html
-  - name: .
-  - uid: Ubytec.Language.Operations.CoreOperations.BREAK
-    name: BREAK
-    href: Ubytec.Language.Operations.CoreOperations.BREAK.html
-  spec.vb:
-  - uid: Ubytec.Language.Operations.CoreOperations
-    name: CoreOperations
-    href: Ubytec.Language.Operations.CoreOperations.html
-  - name: .
-  - uid: Ubytec.Language.Operations.CoreOperations.BREAK
-    name: BREAK
-    href: Ubytec.Language.Operations.CoreOperations.BREAK.html
-- uid: Ubytec.Language.Operations.CoreOperations.CONTINUE
-  commentId: T:Ubytec.Language.Operations.CoreOperations.CONTINUE
-  parent: Ubytec.Language.Operations
-  href: Ubytec.Language.Operations.CoreOperations.html
-  name: CoreOperations.CONTINUE
-  nameWithType: CoreOperations.CONTINUE
-  fullName: Ubytec.Language.Operations.CoreOperations.CONTINUE
-  spec.csharp:
-  - uid: Ubytec.Language.Operations.CoreOperations
-    name: CoreOperations
-    href: Ubytec.Language.Operations.CoreOperations.html
-  - name: .
-  - uid: Ubytec.Language.Operations.CoreOperations.CONTINUE
-    name: CONTINUE
-    href: Ubytec.Language.Operations.CoreOperations.CONTINUE.html
-  spec.vb:
-  - uid: Ubytec.Language.Operations.CoreOperations
-    name: CoreOperations
-    href: Ubytec.Language.Operations.CoreOperations.html
-  - name: .
-  - uid: Ubytec.Language.Operations.CoreOperations.CONTINUE
-    name: CONTINUE
-    href: Ubytec.Language.Operations.CoreOperations.CONTINUE.html
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PopReturn*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PopReturn
   href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.PopReturn.html#Ubytec_Language_Syntax_Scopes_Contexts_FinalizersContext_PopReturn

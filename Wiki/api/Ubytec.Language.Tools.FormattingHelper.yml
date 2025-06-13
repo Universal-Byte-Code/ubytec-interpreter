@@ -21,10 +21,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: FormattingHelper
     path: ../Ubytec/Language/Tools/FormattingHelper.cs
-    startLine: 4
+    startLine: 8
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Tools
+  summary: >-
+    Provides helper methods for formatting compiled output
+
+    with proper indentation based on the current compilation scopes.
+  example: []
   syntax:
     content: public static class FormattingHelper
     content.vb: Public Module FormattingHelper
@@ -56,19 +61,30 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: GetDepth
     path: ../Ubytec/Language/Tools/FormattingHelper.cs
-    startLine: 7
+    startLine: 22
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Tools
+  summary: Calculates the indentation string for the current depth of nested scopes.
+  example: []
   syntax:
     content: public static string GetDepth(CompilationScopes scopes, int basis = 0)
     parameters:
     - id: scopes
       type: Ubytec.Language.Syntax.Scopes.CompilationScopes
+      description: The <xref href="Ubytec.Language.Syntax.Scopes.CompilationScopes" data-throw-if-not-resolved="false"></xref> whose depth to use.
     - id: basis
       type: System.Int32
+      description: >-
+        An optional additional indentation level to apply on top of the scope count.
+
+        Defaults to <code>0</code>.
     return:
       type: System.String
+      description: >-
+        A string consisting of two spaces per indentation level,
+
+        where level = <code class="paramref">scopes</code>.Count + <code class="paramref">basis</code>.
     content.vb: Public Shared Function GetDepth(scopes As CompilationScopes, basis As Integer = 0) As String
   overload: Ubytec.Language.Tools.FormattingHelper.GetDepth*
   nameWithType.vb: FormattingHelper.GetDepth(CompilationScopes, Integer)
@@ -92,19 +108,31 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: FormatCompiledLines
     path: ../Ubytec/Language/Tools/FormattingHelper.cs
-    startLine: 17
+    startLine: 46
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Tools
+  summary: Prefixes each non-empty line of the input with the specified indentation string.
+  example: []
   syntax:
     content: public static string FormatCompiledLines(string? lines, string depth)
     parameters:
     - id: lines
       type: System.String
+      description: The multi-line string to format. May be <code>null</code> or empty.
     - id: depth
       type: System.String
+      description: The indentation string to prepend to each line.
     return:
       type: System.String
+      description: >-
+        A new string where each non-empty line from <code class="paramref">lines</code>
+
+        is prefixed with <code class="paramref">depth</code>, followed by a newline.
+
+        If <code class="paramref">lines</code> is <code>null</code> or contains no non-empty lines,
+
+        returns an empty string.
     content.vb: Public Shared Function FormatCompiledLines(lines As String, depth As String) As String
   overload: Ubytec.Language.Tools.FormattingHelper.FormatCompiledLines*
   nameWithType.vb: FormattingHelper.FormatCompiledLines(String, String)
@@ -378,12 +406,6 @@ references:
   name: System
   nameWithType: System
   fullName: System
-- uid: Ubytec.Language.Tools.FormattingHelper.GetDepth*
-  commentId: Overload:Ubytec.Language.Tools.FormattingHelper.GetDepth
-  href: Ubytec.Language.Tools.FormattingHelper.GetDepth.html#Ubytec_Language_Tools_FormattingHelper_GetDepth_Ubytec_Language_Syntax_Scopes_CompilationScopes_System_Int32_
-  name: GetDepth
-  nameWithType: FormattingHelper.GetDepth
-  fullName: Ubytec.Language.Tools.FormattingHelper.GetDepth
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
   commentId: T:Ubytec.Language.Syntax.Scopes.CompilationScopes
   parent: Ubytec.Language.Syntax.Scopes
@@ -391,6 +413,12 @@ references:
   name: CompilationScopes
   nameWithType: CompilationScopes
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes
+- uid: Ubytec.Language.Tools.FormattingHelper.GetDepth*
+  commentId: Overload:Ubytec.Language.Tools.FormattingHelper.GetDepth
+  href: Ubytec.Language.Tools.FormattingHelper.GetDepth.html#Ubytec_Language_Tools_FormattingHelper_GetDepth_Ubytec_Language_Syntax_Scopes_CompilationScopes_System_Int32_
+  name: GetDepth
+  nameWithType: FormattingHelper.GetDepth
+  fullName: Ubytec.Language.Tools.FormattingHelper.GetDepth
 - uid: System.Int32
   commentId: T:System.Int32
   parent: System

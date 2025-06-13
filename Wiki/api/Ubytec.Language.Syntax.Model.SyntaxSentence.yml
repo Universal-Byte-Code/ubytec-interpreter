@@ -27,10 +27,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: SyntaxSentence
     path: ../Ubytec/Language/Syntax/Model/SyntaxSentence.cs
-    startLine: 8
+    startLine: 12
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: >-
+    Represents a sentence (a sequence of syntax nodes) in the Ubytec AST,
+
+    along with nested sentences and associated metadata.
+  example: []
   syntax:
     content: 'public sealed class SyntaxSentence : IUbytecSyntax, IDisposable'
     content.vb: Public NotInheritable Class SyntaxSentence Implements IUbytecSyntax, IDisposable
@@ -64,10 +69,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Nodes
     path: ../Ubytec/Language/Syntax/Model/SyntaxSentence.cs
-    startLine: 10
+    startLine: 17
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: Gets or sets the stack of <xref href="Ubytec.Language.Syntax.Model.SyntaxNode" data-throw-if-not-resolved="false"></xref> instances that make up this sentence.
+  example: []
   syntax:
     content: >-
       [JsonInclude]
@@ -103,10 +110,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Sentences
     path: ../Ubytec/Language/Syntax/Model/SyntaxSentence.cs
-    startLine: 13
+    startLine: 23
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: Gets or sets any nested <xref href="Ubytec.Language.Syntax.Model.SyntaxSentence" data-throw-if-not-resolved="false"></xref> instances within this sentence.
+  example: []
   syntax:
     content: >-
       [JsonInclude]
@@ -142,7 +151,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _metadata
     path: ../Ubytec/Language/Syntax/Model/SyntaxSentence.cs
-    startLine: 16
+    startLine: 26
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -169,10 +178,11 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Metadata
     path: ../Ubytec/Language/Syntax/Model/SyntaxSentence.cs
-    startLine: 17
+    startLine: 31
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: Provides access to the metadata registry for this sentence.
   example: []
   syntax:
     content: >-
@@ -211,10 +221,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: SerializableMetadata
     path: ../Ubytec/Language/Syntax/Model/SyntaxSentence.cs
-    startLine: 20
+    startLine: 37
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: Gets a JSON-serializable dictionary representation of this sentence's metadata.
+  example: []
   syntax:
     content: >-
       [JsonInclude]
@@ -259,10 +271,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
     path: ../Ubytec/Language/Syntax/Model/SyntaxSentence.cs
-    startLine: 24
+    startLine: 46
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: >-
+    Initializes a new instance of the <xref href="Ubytec.Language.Syntax.Model.SyntaxSentence" data-throw-if-not-resolved="false"></xref> class
+
+    and assigns it a unique GUID in its metadata.
+  example: []
   syntax:
     content: public SyntaxSentence()
     content.vb: Public Sub New()
@@ -288,14 +305,20 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ScopeOpCodes
     path: ../Ubytec/Language/Syntax/Model/SyntaxSentence.cs
-    startLine: 27
+    startLine: 59
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
+  summary: Extracts all operation codes (<xref href="Ubytec.Language.Operations.IOpCode" data-throw-if-not-resolved="false"></xref>) from the current sentence's nodes.
+  example: []
   syntax:
     content: public IOpCode[] ScopeOpCodes()
     return:
       type: Ubytec.Language.Operations.IOpCode[]
+      description: >-
+        An array of <xref href="Ubytec.Language.Operations.IOpCode" data-throw-if-not-resolved="false"></xref> instances found in <xref href="Ubytec.Language.Syntax.Model.SyntaxSentence.Nodes" data-throw-if-not-resolved="false"></xref>.
+
+        If no <xref href="Ubytec.Language.Operations.IOpCode" data-throw-if-not-resolved="false"></xref> is present in a node, it is skipped.
     content.vb: Public Function ScopeOpCodes() As IOpCode()
   overload: Ubytec.Language.Syntax.Model.SyntaxSentence.ScopeOpCodes*
 - uid: Ubytec.Language.Syntax.Model.SyntaxSentence.Dispose
@@ -316,11 +339,11 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Dispose
     path: ../Ubytec/Language/Syntax/Model/SyntaxSentence.cs
-    startLine: 36
+    startLine: 73
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
-  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  summary: Releases resources used by this sentence, including its metadata registry.
   example: []
   syntax:
     content: public void Dispose()
@@ -633,6 +656,13 @@ references:
   - uid: Ubytec.Language.Syntax.Interfaces
     name: Interfaces
     href: Ubytec.Language.Syntax.Interfaces.html
+- uid: Ubytec.Language.Syntax.Model.SyntaxNode
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxNode
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxNode.html
+  name: SyntaxNode
+  nameWithType: SyntaxNode
+  fullName: Ubytec.Language.Syntax.Model.SyntaxNode
 - uid: Ubytec.Language.Syntax.Model.SyntaxSentence.Nodes*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxSentence.Nodes
   href: Ubytec.Language.Syntax.Model.SyntaxSentence.Nodes.html#Ubytec_Language_Syntax_Model_SyntaxSentence_Nodes
@@ -737,6 +767,13 @@ references:
     name: Generic
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Ubytec.Language.Syntax.Model.SyntaxSentence
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxSentence
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxSentence.html
+  name: SyntaxSentence
+  nameWithType: SyntaxSentence
+  fullName: Ubytec.Language.Syntax.Model.SyntaxSentence
 - uid: Ubytec.Language.Syntax.Model.SyntaxSentence.Sentences*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxSentence.Sentences
   href: Ubytec.Language.Syntax.Model.SyntaxSentence.Sentences.html#Ubytec_Language_Syntax_Model_SyntaxSentence_Sentences
@@ -966,6 +1003,19 @@ references:
   nameWithType.vb: SyntaxSentence.New
   fullName.vb: Ubytec.Language.Syntax.Model.SyntaxSentence.New
   name.vb: New
+- uid: Ubytec.Language.Operations.IOpCode
+  commentId: T:Ubytec.Language.Operations.IOpCode
+  parent: Ubytec.Language.Operations
+  href: Ubytec.Language.Operations.IOpCode.html
+  name: IOpCode
+  nameWithType: IOpCode
+  fullName: Ubytec.Language.Operations.IOpCode
+- uid: Ubytec.Language.Syntax.Model.SyntaxSentence.Nodes
+  commentId: P:Ubytec.Language.Syntax.Model.SyntaxSentence.Nodes
+  href: Ubytec.Language.Syntax.Model.SyntaxSentence.Nodes.html#Ubytec_Language_Syntax_Model_SyntaxSentence_Nodes
+  name: Nodes
+  nameWithType: SyntaxSentence.Nodes
+  fullName: Ubytec.Language.Syntax.Model.SyntaxSentence.Nodes
 - uid: Ubytec.Language.Syntax.Model.SyntaxSentence.ScopeOpCodes*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxSentence.ScopeOpCodes
   href: Ubytec.Language.Syntax.Model.SyntaxSentence.ScopeOpCodes.html#Ubytec_Language_Syntax_Model_SyntaxSentence_ScopeOpCodes
@@ -993,6 +1043,36 @@ references:
     href: Ubytec.Language.Operations.IOpCode.html
   - name: (
   - name: )
+- uid: Ubytec.Language.Operations
+  commentId: N:Ubytec.Language.Operations
+  href: Ubytec.html
+  name: Ubytec.Language.Operations
+  nameWithType: Ubytec.Language.Operations
+  fullName: Ubytec.Language.Operations
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
 - uid: Ubytec.Language.Syntax.Model.SyntaxSentence.Dispose*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxSentence.Dispose
   href: Ubytec.Language.Syntax.Model.SyntaxSentence.Dispose.html#Ubytec_Language_Syntax_Model_SyntaxSentence_Dispose

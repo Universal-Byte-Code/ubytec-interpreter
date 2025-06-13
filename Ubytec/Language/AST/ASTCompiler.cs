@@ -8,93 +8,114 @@ using Ubytec.Language.Syntax.Scopes;
 using static Ubytec.Language.Operations.ArithmeticOperations;
 using static Ubytec.Language.Operations.BitwiseOperations;
 using static Ubytec.Language.Operations.CoreOperations;
-using static Ubytec.Language.Operations.StackOperarions;
+using static Ubytec.Language.Operations.StackOperations;
 using static Ubytec.Language.Syntax.TypeSystem.Types;
 
 namespace Ubytec.Language.AST
 {
-    public static class ASTCompiler
+    /// <summary>
+    /// Provides methods to parse Ubytec source tokens into low-level opcodes,
+    /// build a hierarchical abstract syntax tree (<see cref="SyntaxTree"/>),
+    /// and emit NASM assembly code from that tree.
+    /// </summary>
+    /// <remarks>
+    /// The <see cref="ASTCompiler"/> is split across partial definitions:
+    /// - Parsing and opcode generation (<see cref="Parse"/>).
+    /// - Syntax tree construction (<see cref="CompileSyntax"/> and <see cref="BuildSyntaxTree"/>).
+    /// - Assembly code emission (<see cref="CompileAST"/>, <see cref="CompileSentence"/>, <see cref="CompileBlockNode"/>).
+    /// Errors encountered during tree construction are captured in <see cref="CompileSyntaxError"/> records.
+    /// </remarks>
+    public static partial class ASTCompiler
     {
+        /// <summary>
+        /// Maps each opcode name to its corresponding byte value for instruction encoding.
+        /// </summary>
+        /// <remarks>
+        /// The keys are the string names of the operations (e.g., <c>nameof(TRAP)</c>, <c>"EQ"</c>),
+        /// and the values are the byte codes used in the Ubytec instruction set.
+        /// </remarks>
         private static readonly Dictionary<string, byte> OpcodeMap = new()
         {
             // Control Flow
-            { nameof(TRAP), 0x00 },
-            { nameof(NOP), 0x01 },
-            { nameof(BLOCK), 0x02 },
-            { nameof(LOOP), 0x03 },
-            { nameof(IF), 0x04 },
-            { nameof(ELSE), 0x05 },
-            { nameof(END), 0x06 },
-            { nameof(BREAK), 0x07 },
-            { nameof(CONTINUE), 0x08 },
-            { nameof(RETURN), 0x09 },
-            { nameof(BRANCH), 0x0A },
-            { nameof(SWITCH), 0x0B },
-            { nameof(WHILE), 0x0C },
-            { nameof(CLEAR), 0x0D },
+            { nameof(TRAP),    0x00 },
+            { nameof(NOP),     0x01 },
+            { nameof(BLOCK),   0x02 },
+            { nameof(LOOP),    0x03 },
+            { nameof(IF),      0x04 },
+            { nameof(ELSE),    0x05 },
+            { nameof(END),     0x06 },
+            { nameof(BREAK),   0x07 },
+            { nameof(CONTINUE),0x08 },
+            { nameof(RETURN),  0x09 },
+            { nameof(BRANCH),  0x0A },
+            { nameof(SWITCH),  0x0B },
+            { nameof(WHILE),   0x0C },
+            { nameof(CLEAR),   0x0D },
             { nameof(DEFAULT), 0x0E },
-            { nameof(NULL), 0x0F },
-
+            { nameof(NULL),    0x0F },
+        
             // Inline var
-            { nameof(VAR), 0x10 },
+            { nameof(VAR),     0x10 },
         
             // Stack Manipulation
-            { nameof(PUSH), 0x11 },
-            { nameof(POP), 0x12 },
-            { nameof(DUP), 0x13 },
-            { nameof(SWAP), 0x14 },
-            { nameof(ROT), 0x15 },
-            { nameof(OVER), 0x16 },
-            { nameof(NIP), 0x17 },
-            { nameof(DROP), 0x18 },
-            { nameof(TwoDUP), 0x19 },
+            { nameof(PUSH),    0x11 },
+            { nameof(POP),     0x12 },
+            { nameof(DUP),     0x13 },
+            { nameof(SWAP),    0x14 },
+            { nameof(ROT),     0x15 },
+            { nameof(OVER),    0x16 },
+            { nameof(NIP),     0x17 },
+            { nameof(DROP),    0x18 },
+            { nameof(TwoDUP),  0x19 },
             { nameof(TwoSWAP), 0x1A },
-            { nameof(TwoROT), 0x1B },
+            { nameof(TwoROT),  0x1B },
             { nameof(TwoOVER), 0x1C },
-            { nameof(PICK), 0x1D },
-            { nameof(ROLL), 0x1E },
+            { nameof(PICK),    0x1D },
+            { nameof(ROLL),    0x1E },
         
             // Arithmetic Operations
-            { nameof(ADD), 0x20 },
-            { nameof(SUB), 0x21 },
-            { nameof(MUL), 0x22 },
-            { nameof(DIV), 0x23 },
-            { nameof(MOD), 0x24 },
-            { nameof(INC), 0x25 },
-            { nameof(DEC), 0x26 },
-            { nameof(NEG), 0x27 },
-            { nameof(ABS), 0x28 },
+            { nameof(ADD),     0x20 },
+            { nameof(SUB),     0x21 },
+            { nameof(MUL),     0x22 },
+            { nameof(DIV),     0x23 },
+            { nameof(MOD),     0x24 },
+            { nameof(INC),     0x25 },
+            { nameof(DEC),     0x26 },
+            { nameof(NEG),     0x27 },
+            { nameof(ABS),     0x28 },
         
             // Logical Operations
-            { nameof(AND), 0x30 },
-            { nameof(OR), 0x31 },
-            { nameof(XOR), 0x32 },
-            { nameof(NOT), 0x33 },
-            { nameof(SHL), 0x34 },
-            { nameof(SHR), 0x35 },
+            { nameof(AND),     0x30 },
+            { nameof(OR),      0x31 },
+            { nameof(XOR),     0x32 },
+            { nameof(NOT),     0x33 },
+            { nameof(SHL),     0x34 },
+            { nameof(SHR),     0x35 },
         
             // Comparisons
-            { "EQ", 0x40 },
-            { "NEQ", 0x41 },
-            { "LT", 0x42 },
-            { "LE", 0x43 },
-            { "GT", 0x44 },
-            { "GE", 0x45 },
+            { "EQ",            0x40 },
+            { "NEQ",           0x41 },
+            { "LT",            0x42 },
+            { "LE",            0x43 },
+            { "GT",            0x44 },
+            { "GE",            0x45 },
         
             // Memory Operations (Optional)
-            { "LOAD", 0x50 },
-            { "STORE", 0x51 }
+            { "LOAD",          0x50 },
+            { "STORE",         0x51 }
         };
 
         /// <summary>
-        /// Parses the source code line by line, tokenizes each line, builds opCodes,
-        /// and handles opening/closing of blocks (BLOCK, IF, ELSE, LOOP, WHILE, etc.)
-        /// using a stack-based approach.
+        /// Parses a sequence of <see cref="SyntaxToken"/> instances into low-level <see cref="IOpCode"/> instructions.
+        /// <para>Tokenizes each source line, builds opcodes, and manages nested block structures
+        /// (e.g., BLOCK, IF, ELSE, LOOP, WHILE, SWITCH) using a stack-based approach.</para>
         /// </summary>
-        /// <param name="code">A string representing the source code to parse.</param>
+        /// <param name="code">
+        /// An array of <see cref="SyntaxToken"/> objects containing the lexical tokens for each source line.
+        /// </param>
         /// <returns>
-        /// A tuple containing an array of generated opCodes and an array of SyntaxToken 
-        /// representing the tokens for each instruction.
+        /// An array of <see cref="IOpCode"/> representing the parsed instructions,
+        /// with block contexts correctly nested.
         /// </returns>
         public static IOpCode[] Parse(SyntaxToken[] code)
         {
@@ -202,18 +223,16 @@ namespace Ubytec.Language.AST
                         var currLineToken = currLine[i];
                         if (string.IsNullOrWhiteSpace(currLineToken.Source) || currLineToken.Scopes.Length == 0 || currLineToken.Scopes.Length == 1 && currLineToken.Scopes[0] == "source.ubytec") continue;
 
-
-                        ///if (currLineToken.Source.StartsWith("@", StringComparison.OrdinalIgnoreCase))
-                        ///{
-                        ///    var trimmed = currLineToken.Source.Remove(0, 1);
-                        ///    foreach (VAR variableOp in opCodes.Where(t => t.OpCode == OpcodeMap[nameof(VAR)]).Select(v => (VAR)v))
-                        ///        if (variableOp.Variable.Name == trimmed)
-                        ///            ProcessOperand(
-                        ///                new SyntaxToken(variableOp.Variable.Value?.ToString() ?? string.Empty, currLineToken.Line, currLineToken.StartColumn + 1, currLineToken.EndColumn, [.. currLineToken.Scopes, "entity.name.var.reference.ubytec"]),
-                        ///                instructionAndOperands);
-                        ///}
-                        ///else
-                        ///
+                        //if (currLineToken.Source.StartsWith("@", StringComparison.OrdinalIgnoreCase))
+                        //{
+                        //    var trimmed = currLineToken.Source.Remove(0, 1);
+                        //    foreach (VAR variableOp in opCodes.Where(t => t.OpCode == OpcodeMap[nameof(VAR)]).Select(v => (VAR)v))
+                        //        if (variableOp.Variable.Name == trimmed)
+                        //            ProcessOperand(
+                        //                new SyntaxToken(variableOp.Variable.Value?.ToString() ?? string.Empty, currLineToken.Line, currLineToken.StartColumn + 1, currLineToken.EndColumn, [.. currLineToken.Scopes, "entity.name.var.reference.ubytec"]),
+                        //                instructionAndOperands);
+                        //}
+                        //else
 
                         try
                         {
@@ -304,11 +323,23 @@ namespace Ubytec.Language.AST
         }
 
         /// <summary>
-        /// 
+        /// Processes a single operand token, classifying it (numeric literal, type token, operator, etc.)
+        /// and enqueues the corresponding value(s) into the instruction operand queue.
         /// </summary>
-        /// <param name="currLineToken"></param>
-        /// <param name="instructionAndOperands"></param>
-        /// <exception cref="Exception"></exception>
+        /// <param name="currLineToken">
+        /// The <see cref="SyntaxToken"/> representing the operand to process
+        /// (with source text and scope metadata).
+        /// </param>
+        /// <param name="instructionAndOperands">
+        /// A <see cref="Queue{ValueType}"/> into which parsed operand values are enqueued
+        /// for subsequent opcode creation.
+        /// </param>
+        /// <exception cref="IlegalTokenException">
+        /// Thrown if the token is recognized as an illegal or invalid operand (e.g., unsupported symbol).
+        /// </exception>
+        /// <exception cref="SyntaxException">
+        /// Thrown if an error occurs during parsing of a valid token scope (e.g., invalid numeric format).
+        /// </exception>
         private static void ProcessOperand(SyntaxToken currLineToken, Queue<ValueType> instructionAndOperands)
         {
             // Storage Types
@@ -578,16 +609,23 @@ namespace Ubytec.Language.AST
         }
 
         /// <summary>
-        /// Builds a SyntaxTree from the provided opCodes and tokens. 
-        /// Assumes each row of tokens corresponds to one instruction, 
-        /// inserting nodes into the tree based on the structure of blocks (BLOCK, IF, ELSE, LOOP, WHILE, etc.).
+        /// Builds a <see cref="SyntaxTree"/> from the provided opCodes and tokens.
+        /// <para>Assumes each row of tokens corresponds to one instruction and groups tokens by their line number.</para>
+        /// <para>Inserts nodes into the tree based on the structure of block-level opCodes
+        /// (e.g., BLOCK, IF, ELSE, LOOP, WHILE, SWITCH).</para>
         /// </summary>
-        /// <param name="opCodes">An array of IOpCode objects representing program logic.</param>
-        /// <param name="tokens">
-        /// An array of SyntaxToken objects containing lexical info (operands, symbols, etc.).
-        /// May have more tokens than opCodes due to additional operands.
+        /// <param name="opCodes">
+        /// An array of <see cref="IOpCode"/> instances representing the parsed instructions.
         /// </param>
-        /// <returns>A SyntaxTree that represents the hierarchical arrangement of statements and nodes.</returns>
+        /// <param name="tokens">
+        /// An array of <see cref="SyntaxToken"/> objects containing lexical details
+        /// (operands, symbols, etc.). May include more tokens than opCodes due to extra operands.
+        /// </param>
+        /// <returns>
+        /// A tuple of:
+        /// - <see cref="SyntaxTree"/>: the root of the constructed abstract syntax tree.
+        /// - <see cref="List{CompileSyntaxError}"/>: a list of errors encountered during tree building.
+        /// </returns>
         public static (SyntaxTree tree, List<CompileSyntaxError> errors) CompileSyntax(IOpCode[] opCodes, SyntaxToken[] tokens)
         {
             // Se crea el árbol raíz con una oración inicial.
@@ -629,37 +667,33 @@ namespace Ubytec.Language.AST
             return (lastRoot, errors);
         }
 
-        public record class CompileSyntaxError
-        {
-            public int Row { get; init; }
-            public IOpCode OpCode { get; init; }
-            public string Message { get; init; }
-            public Exception? InnerException { get; init; }
-
-            public CompileSyntaxError(int row, IOpCode opCode, string message, Exception? innerException = null)
-            {
-                Row = row;
-                OpCode = opCode;
-                Message = message;
-                InnerException = innerException;
-            }
-
-            public override string ToString()
-            {
-                return $"[CompileSyntaxError] Row: {Row}, OpCode: {OpCode}, Message: {Message}" +
-                       (InnerException != null ? $", InnerException: {InnerException.Message}" : "");
-            }
-        }
-
-
         /// <summary>
-        /// Adds a node (opCode) and its associated tokens to the SyntaxTree under construction.
-        /// Handles the creation of new sentences (SyntaxSentence) for scopes like BLOCK or IF, 
-        /// and places closing nodes (END, RETURN) accordingly.
+        /// Adds a node for the given <paramref name="opCode"/> and its associated <paramref name="tokens"/>
+        /// to the <see cref="SyntaxTree"/> under construction.
+        /// <para>Handles entering new block scopes (BLOCK, IF, ELSE, LOOP, WHILE, SWITCH) by creating
+        /// new <see cref="SyntaxSentence"/> instances, and closes scopes (END, BREAK, RETURN) by
+        /// popping sentences and attaching end nodes.</para>
         /// </summary>
-        /// <param name="tree">The SyntaxTree under construction.</param>
-        /// <param name="opCode">The current IOpCode instruction to insert.</param>
-        /// <param name="tokens">The list of tokens associated with this instruction (usually by row).</param>
+        /// <param name="tree">
+        /// The <see cref="SyntaxTree"/> currently being built; its <see cref="SyntaxTree.TreeSentenceStack"/>
+        /// must contain at least one active <see cref="SyntaxSentence"/>.
+        /// </param>
+        /// <param name="opCode">
+        /// The <see cref="IOpCode"/> instruction to insert into the tree.
+        /// May open a new scope, close an existing scope, or be added as a child of the current node.
+        /// </param>
+        /// <param name="tokens">
+        /// The list of <see cref="SyntaxToken"/> instances associated with this instruction,
+        /// typically grouped by their source-line number.
+        /// </param>
+        /// <exception cref="Exception">
+        /// Thrown if <paramref name="tree"/> has no active sentence to attach to,
+        /// or if a BRANCH appears without a surrounding SWITCH, or if an unsupported scope type is encountered.
+        /// </exception>
+        /// <exception cref="NotImplementedException">
+        /// Thrown if a scope-opening <paramref name="opCode"/> other than BLOCK, LOOP, IF, SWITCH, or WHILE
+        /// is encountered when determining the sentence type.
+        /// </exception>
         static void BuildSyntaxTree(SyntaxTree tree, IOpCode opCode, List<SyntaxToken> tokens)
         {
             // Se asegura que haya una oración activa.
@@ -797,19 +831,31 @@ namespace Ubytec.Language.AST
         }
 
         /// <summary>
-        /// Compiles a SyntaxTree into NASM assembly code. 
-        /// Starts by processing the root sentence and recurses through all nested nodes.
+        /// Compiles the given <see cref="SyntaxTree"/> into NASM assembly code.
+        /// <para>Begins with the first sentence under the root and recursively processes
+        /// all nested sentences and nodes.</para>
         /// </summary>
-        /// <param name="tree">The full SyntaxTree to compile.</param>
-        /// <returns>A string containing the generated NASM assembly code.</returns>
+        /// <param name="tree">
+        /// The fully constructed <see cref="SyntaxTree"/> whose root sentence will be compiled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="string"/> containing the resulting NASM assembly code.
+        /// </returns>
         public static string CompileAST(SyntaxTree tree) => CompileSentence(tree.RootSentence.Sentences.First(), new CompilationScopes());
+
         /// <summary>
-        /// Compiles a specific SyntaxSentence into NASM assembly, 
-        /// handling nested statements recursively.
+        /// Recursively compiles a <see cref="SyntaxSentence"/> into NASM assembly code,
+        /// processing any nested sentences and nodes within it.
         /// </summary>
-        /// <param name="sentence">The SyntaxSentence to compile.</param>
-        /// <param name="stacks">Auxiliary stacks used for scope control or type checking, if applicable.</param>
-        /// <returns>A string fragment with the NASM code for that sentence.</returns>
+        /// <param name="sentence">
+        /// The <see cref="SyntaxSentence"/> to compile.
+        /// </param>
+        /// <param name="scopes">
+        /// The <see cref="CompilationScopes"/> used to manage indentation and control-flow context.
+        /// </param>
+        /// <returns>
+        /// A <see cref="string"/> fragment containing the NASM assembly code for the given sentence.
+        /// </returns>
         private static string CompileSentence(SyntaxSentence sentence, CompilationScopes scopes)
         {
             var output = new StringBuilder();
@@ -839,14 +885,27 @@ namespace Ubytec.Language.AST
             return cleaned;
 
         }
+
         /// <summary>
-        /// Compiles a block node (e.g., IF with an END, a BLOCK with its END) and 
-        /// its children into NASM format, respecting indentation and any generated labels.
+        /// Compiles a block-level <see cref="SyntaxNode"/> (e.g., BLOCK, IF, ELSE, LOOP, WHILE)
+        /// along with its opening, nested sentences, and closing operations into NASM assembly,
+        /// applying proper indentation and handling generated labels.
         /// </summary>
-        /// <param name="sentence">The SyntaxSentence containing this node.</param>
-        /// <param name="node">The SyntaxNode holding the operation (BLOCK, IF, ELSE, etc.).</param>
-        /// <param name="stacks">Environment stacks used for scope control or validation.</param>
-        /// <returns>The resulting NASM code for opening, populating, and closing this block.</returns>
+        /// <param name="sentence">
+        /// The <see cref="SyntaxSentence"/> containing the block’s child sentences to compile.
+        /// </param>
+        /// <param name="node">
+        /// The <see cref="SyntaxNode"/> representing the block opcode to compile
+        /// (including its metadata and any pre-collected children nodes).
+        /// </param>
+        /// <param name="scopes">
+        /// The <see cref="CompilationScopes"/> instance used to manage indentation levels
+        /// and control-flow context during code generation.
+        /// </param>
+        /// <returns>
+        /// A <see cref="string"/> containing the NASM assembly code for the block’s opening opcode,
+        /// its nested content, and the closing opcode.
+        /// </returns>
         private static string CompileBlockNode(SyntaxSentence sentence, SyntaxNode node, CompilationScopes scopes)
         {
             var code = new StringBuilder();

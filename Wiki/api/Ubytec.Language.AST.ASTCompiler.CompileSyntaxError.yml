@@ -20,15 +20,20 @@ items:
   type: Class
   source:
     remote:
-      path: Ubytec/Language/AST/ASTCompiler.cs
+      path: Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
       branch: main
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: CompileSyntaxError
-    path: ../Ubytec/Language/AST/ASTCompiler.cs
-    startLine: 631
+    path: ../Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
+    startLine: 10
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
+  summary: >-
+    Encapsulates information about a syntax error during compilation,
+
+    including its location, the offending opcode, and an optional inner exception.
+  example: []
   syntax:
     content: 'public record ASTCompiler.CompileSyntaxError : IEquatable<ASTCompiler.CompileSyntaxError>'
     content.vb: Public Class ASTCompiler.CompileSyntaxError Implements IEquatable(Of ASTCompiler.CompileSyntaxError)
@@ -56,15 +61,17 @@ items:
   type: Property
   source:
     remote:
-      path: Ubytec/Language/AST/ASTCompiler.cs
+      path: Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
       branch: main
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Row
-    path: ../Ubytec/Language/AST/ASTCompiler.cs
-    startLine: 633
+    path: ../Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
+    startLine: 15
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
+  summary: Gets the 1-based row number in the source where the error occurred.
+  example: []
   syntax:
     content: public int Row { get; init; }
     parameters: []
@@ -85,15 +92,17 @@ items:
   type: Property
   source:
     remote:
-      path: Ubytec/Language/AST/ASTCompiler.cs
+      path: Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
       branch: main
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: OpCode
-    path: ../Ubytec/Language/AST/ASTCompiler.cs
-    startLine: 634
+    path: ../Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
+    startLine: 20
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
+  summary: Gets the <xref href="Ubytec.Language.Operations.IOpCode" data-throw-if-not-resolved="false"></xref> instance that triggered this error.
+  example: []
   syntax:
     content: public IOpCode OpCode { get; init; }
     parameters: []
@@ -114,15 +123,17 @@ items:
   type: Property
   source:
     remote:
-      path: Ubytec/Language/AST/ASTCompiler.cs
+      path: Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
       branch: main
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Message
-    path: ../Ubytec/Language/AST/ASTCompiler.cs
-    startLine: 635
+    path: ../Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
+    startLine: 25
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
+  summary: Gets a descriptive error message.
+  example: []
   syntax:
     content: public string Message { get; init; }
     parameters: []
@@ -143,15 +154,17 @@ items:
   type: Property
   source:
     remote:
-      path: Ubytec/Language/AST/ASTCompiler.cs
+      path: Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
       branch: main
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: InnerException
-    path: ../Ubytec/Language/AST/ASTCompiler.cs
-    startLine: 636
+    path: ../Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
+    startLine: 30
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
+  summary: Gets the underlying exception, if any, that caused this syntax error.
+  example: []
   syntax:
     content: public Exception? InnerException { get; init; }
     parameters: []
@@ -172,26 +185,32 @@ items:
   type: Constructor
   source:
     remote:
-      path: Ubytec/Language/AST/ASTCompiler.cs
+      path: Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
       branch: main
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
-    path: ../Ubytec/Language/AST/ASTCompiler.cs
-    startLine: 638
+    path: ../Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
+    startLine: 41
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
+  summary: Initializes a new instance of the <xref href="Ubytec.Language.AST.ASTCompiler.CompileSyntaxError" data-throw-if-not-resolved="false"></xref> class.
+  example: []
   syntax:
     content: public CompileSyntaxError(int row, IOpCode opCode, string message, Exception? innerException = null)
     parameters:
     - id: row
       type: System.Int32
+      description: The 1-based row number where the error occurred.
     - id: opCode
       type: Ubytec.Language.Operations.IOpCode
+      description: The opcode that was being processed.
     - id: message
       type: System.String
+      description: A descriptive message for the error.
     - id: innerException
       type: System.Exception
+      description: An optional inner <xref href="System.Exception" data-throw-if-not-resolved="false"></xref> that caused the error.
     content.vb: Public Sub New(row As Integer, opCode As IOpCode, message As String, innerException As Exception = Nothing)
   overload: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.#ctor*
   nameWithType.vb: ASTCompiler.CompileSyntaxError.New(Integer, IOpCode, String, Exception)
@@ -210,22 +229,25 @@ items:
   type: Method
   source:
     remote:
-      path: Ubytec/Language/AST/ASTCompiler.cs
+      path: Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
       branch: main
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ToString
-    path: ../Ubytec/Language/AST/ASTCompiler.cs
-    startLine: 646
+    path: ../Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
+    startLine: 54
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
-  summary: Returns a string that represents the current object.
+  summary: >-
+    Returns a formatted string representation of this syntax error,
+
+    including row, opcode, message, and inner exception if present.
   example: []
   syntax:
     content: public override string ToString()
     return:
       type: System.String
-      description: A string that represents the current object.
+      description: A human-readable summary of the error.
     content.vb: Public Overrides Function ToString() As String
   overridden: System.Object.ToString
   overload: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.ToString*
@@ -559,12 +581,6 @@ references:
   nameWithType.vb: Integer
   fullName.vb: Integer
   name.vb: Integer
-- uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.OpCode*
-  commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.OpCode
-  href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.OpCode.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError_OpCode
-  name: OpCode
-  nameWithType: ASTCompiler.CompileSyntaxError.OpCode
-  fullName: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.OpCode
 - uid: Ubytec.Language.Operations.IOpCode
   commentId: T:Ubytec.Language.Operations.IOpCode
   parent: Ubytec.Language.Operations
@@ -572,6 +588,12 @@ references:
   name: IOpCode
   nameWithType: IOpCode
   fullName: Ubytec.Language.Operations.IOpCode
+- uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.OpCode*
+  commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.OpCode
+  href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.OpCode.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError_OpCode
+  name: OpCode
+  nameWithType: ASTCompiler.CompileSyntaxError.OpCode
+  fullName: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.OpCode
 - uid: Ubytec.Language.Operations
   commentId: N:Ubytec.Language.Operations
   href: Ubytec.html
@@ -633,6 +655,28 @@ references:
   name: Exception
   nameWithType: Exception
   fullName: System.Exception
+- uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError
+  commentId: T:Ubytec.Language.AST.ASTCompiler.CompileSyntaxError
+  href: Ubytec.Language.AST.ASTCompiler.html
+  name: ASTCompiler.CompileSyntaxError
+  nameWithType: ASTCompiler.CompileSyntaxError
+  fullName: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError
+  spec.csharp:
+  - uid: Ubytec.Language.AST.ASTCompiler
+    name: ASTCompiler
+    href: Ubytec.Language.AST.ASTCompiler.html
+  - name: .
+  - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError
+    name: CompileSyntaxError
+    href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.html
+  spec.vb:
+  - uid: Ubytec.Language.AST.ASTCompiler
+    name: ASTCompiler
+    href: Ubytec.Language.AST.ASTCompiler.html
+  - name: .
+  - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError
+    name: CompileSyntaxError
+    href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.html
 - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.#ctor*
   commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.#ctor
   href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.-ctor.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError__ctor_System_Int32_Ubytec_Language_Operations_IOpCode_System_String_System_Exception_

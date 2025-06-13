@@ -21,10 +21,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: MetadataRegistryExtensions
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistryExtensions.cs
-    startLine: 6
+    startLine: 11
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: >-
+    Provides extension methods for <xref href="Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry" data-throw-if-not-resolved="false"></xref>, 
+
+    enabling enumeration and retrieval of entries by index.
+  example: []
   syntax:
     content: public static class MetadataRegistryExtensions
     content.vb: Public Module MetadataRegistryExtensions
@@ -57,17 +62,24 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ToImmutable
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistryExtensions.cs
-    startLine: 8
+    startLine: 21
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: Converts the contents of the <xref href="Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry" data-throw-if-not-resolved="false"></xref> into an immutable dictionary.
+  example: []
   syntax:
     content: public static ImmutableDictionary<string, object> ToImmutable(this MetadataRegistry registry)
     parameters:
     - id: registry
       type: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+      description: The metadata registry to enumerate.
     return:
       type: System.Collections.Immutable.ImmutableDictionary{System.String,System.Object}
+      description: >-
+        An <xref href="System.Collections.Immutable.ImmutableDictionary%602" data-throw-if-not-resolved="false"></xref> containing all key/value pairs 
+
+        present in <code class="paramref">registry</code> in insertion order.
     content.vb: Public Shared Function ToImmutable(registry As MetadataRegistry) As ImmutableDictionary(Of String, Object)
   overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable*
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry,System.UInt32,System.String@,System.Object@)
@@ -89,29 +101,52 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: TryGetByIndex
     path: ../Ubytec/Language/Syntax/Fast/Metadata/MetadataRegistryExtensions.cs
-    startLine: 21
+    startLine: 51
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Fast.Metadata
+  summary: Attempts to retrieve the metadata entry at the specified index.
+  example: []
   syntax:
     content: public static bool TryGetByIndex(this MetadataRegistry registry, uint index, out string key, out object? value)
     parameters:
     - id: registry
       type: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+      description: The metadata registry to query.
     - id: index
       type: System.UInt32
+      description: The zero-based index of the entry to retrieve.
     - id: key
       type: System.String
+      description: >-
+        When this method returns, contains the UTF-8 decoded key of the entry 
+
+        if found; otherwise, an empty string.
     - id: value
       type: System.Object
+      description: >-
+        When this method returns, contains the UTF-8 decoded value of the entry 
+
+        if found; otherwise, <code>null</code>.
     return:
       type: System.Boolean
+      description: >-
+        <code>true</code> if an entry at the specified <code class="paramref">index</code> exists; 
+
+        otherwise, <code>false</code>.
     content.vb: Public Shared Function TryGetByIndex(registry As MetadataRegistry, index As UInteger, key As String, value As Object) As Boolean
   overload: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex*
   nameWithType.vb: MetadataRegistryExtensions.TryGetByIndex(MetadataRegistry, UInteger, String, Object)
   fullName.vb: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.TryGetByIndex(Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry, UInteger, String, Object)
   name.vb: TryGetByIndex(MetadataRegistry, UInteger, String, Object)
 references:
+- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+  commentId: T:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
+  parent: Ubytec.Language.Syntax.Fast.Metadata
+  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.html
+  name: MetadataRegistry
+  nameWithType: MetadataRegistry
+  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
 - uid: Ubytec.Language.Syntax.Fast.Metadata
   commentId: N:Ubytec.Language.Syntax.Fast.Metadata
   href: Ubytec.html
@@ -395,19 +430,46 @@ references:
   name: System
   nameWithType: System
   fullName: System
+- uid: System.Collections.Immutable.ImmutableDictionary`2
+  commentId: T:System.Collections.Immutable.ImmutableDictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutabledictionary-2
+  name: ImmutableDictionary<TKey, TValue>
+  nameWithType: ImmutableDictionary<TKey, TValue>
+  fullName: System.Collections.Immutable.ImmutableDictionary<TKey, TValue>
+  nameWithType.vb: ImmutableDictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Immutable.ImmutableDictionary(Of TKey, TValue)
+  name.vb: ImmutableDictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Immutable.ImmutableDictionary`2
+    name: ImmutableDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutabledictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Immutable.ImmutableDictionary`2
+    name: ImmutableDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutabledictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
 - uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable*
   commentId: Overload:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable
   href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable.html#Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistryExtensions_ToImmutable_Ubytec_Language_Syntax_Fast_Metadata_MetadataRegistry_
   name: ToImmutable
   nameWithType: MetadataRegistryExtensions.ToImmutable
   fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistryExtensions.ToImmutable
-- uid: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
-  commentId: T:Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
-  parent: Ubytec.Language.Syntax.Fast.Metadata
-  href: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry.html
-  name: MetadataRegistry
-  nameWithType: MetadataRegistry
-  fullName: Ubytec.Language.Syntax.Fast.Metadata.MetadataRegistry
 - uid: System.Collections.Immutable.ImmutableDictionary{System.String,System.Object}
   commentId: T:System.Collections.Immutable.ImmutableDictionary{System.String,System.Object}
   parent: System.Collections.Immutable
@@ -454,40 +516,6 @@ references:
     name: Object
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: )
-- uid: System.Collections.Immutable.ImmutableDictionary`2
-  commentId: T:System.Collections.Immutable.ImmutableDictionary`2
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutabledictionary-2
-  name: ImmutableDictionary<TKey, TValue>
-  nameWithType: ImmutableDictionary<TKey, TValue>
-  fullName: System.Collections.Immutable.ImmutableDictionary<TKey, TValue>
-  nameWithType.vb: ImmutableDictionary(Of TKey, TValue)
-  fullName.vb: System.Collections.Immutable.ImmutableDictionary(Of TKey, TValue)
-  name.vb: ImmutableDictionary(Of TKey, TValue)
-  spec.csharp:
-  - uid: System.Collections.Immutable.ImmutableDictionary`2
-    name: ImmutableDictionary
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutabledictionary-2
-  - name: <
-  - name: TKey
-  - name: ','
-  - name: " "
-  - name: TValue
-  - name: '>'
-  spec.vb:
-  - uid: System.Collections.Immutable.ImmutableDictionary`2
-    name: ImmutableDictionary
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutabledictionary-2
-  - name: (
-  - name: Of
-  - name: " "
-  - name: TKey
-  - name: ','
-  - name: " "
-  - name: TValue
   - name: )
 - uid: System.Collections.Immutable
   commentId: N:System.Collections.Immutable

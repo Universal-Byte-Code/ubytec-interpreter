@@ -38,11 +38,14 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: CompilationScopes
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 9
+    startLine: 10
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
-  summary: Mantiene contextos de alcance, rastrea finalizadores y acumula definiciones de datos.
+  summary: >-
+    Manages nested scope contexts and finalizer contexts during compilation,
+
+    tracking active scopes, finalizers, and data definitions.
   example: []
   syntax:
     content: public class CompilationScopes
@@ -75,7 +78,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _scopeTracker
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 11
+    startLine: 12
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -102,7 +105,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _finalizersTracker
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 12
+    startLine: 13
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -129,11 +132,11 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Count
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 17
+    startLine: 18
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
-  summary: Número de contextos activos.
+  summary: Gets the number of currently active scope contexts.
   example: []
   syntax:
     content: public int Count { get; }
@@ -160,11 +163,11 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: FinalizersCount
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 21
+    startLine: 23
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
-  summary: Número de contextos de finalizadores activos.
+  summary: Gets the number of currently active finalizer contexts.
   example: []
   syntax:
     content: public int FinalizersCount { get; }
@@ -191,15 +194,18 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Push
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 23
+    startLine: 29
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
+  summary: Pushes a new scope context onto the stack, and initializes a corresponding finalizers context.
+  example: []
   syntax:
     content: public void Push(ScopeContext context)
     parameters:
     - id: context
       type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+      description: The <xref href="Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext" data-throw-if-not-resolved="false"></xref> to push.
     content.vb: Public Sub Push(context As ScopeContext)
   overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.Push*
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Pop
@@ -220,14 +226,17 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Pop
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 29
+    startLine: 41
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
+  summary: Pops the top scope and its finalizers context from their respective stacks.
+  example: []
   syntax:
     content: public (ScopeContext scope, FinalizersContext finalizers) Pop()
     return:
       type: System.ValueTuple{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext}
+      description: A tuple containing the popped <xref href="Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext" data-throw-if-not-resolved="false"></xref> and its associated <xref href="Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext" data-throw-if-not-resolved="false"></xref>.
     content.vb: Public Function Pop() As (scope As ScopeContext, finalizers As FinalizersContext)
   overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.Pop*
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Peek
@@ -248,14 +257,17 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Peek
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 32
+    startLine: 48
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
+  summary: Peeks at the top <xref href="Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext" data-throw-if-not-resolved="false"></xref> without removing it.
+  example: []
   syntax:
     content: public ScopeContext Peek()
     return:
       type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+      description: The topmost scope context.
     content.vb: Public Function Peek() As ScopeContext
   overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.Peek*
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekOrDefault
@@ -276,14 +288,17 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PeekOrDefault
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 33
+    startLine: 54
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
+  summary: Peeks at the top <xref href="Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext" data-throw-if-not-resolved="false"></xref> without removing it, or returns <code>null</code> if none.
+  example: []
   syntax:
     content: public ScopeContext? PeekOrDefault()
     return:
       type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+      description: The topmost scope context, or <code>null</code> if the stack is empty.
     content.vb: Public Function PeekOrDefault() As ScopeContext
   overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekOrDefault*
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Find(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
@@ -304,17 +319,21 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Find
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 34
+    startLine: 63
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
+  summary: Searches for a scope context matching the given predicate without modifying the stack.
+  example: []
   syntax:
     content: public ScopeContext? Find(Func<ScopeContext, bool> predicate)
     parameters:
     - id: predicate
       type: System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean}
+      description: A function to test each <xref href="Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext" data-throw-if-not-resolved="false"></xref>.
     return:
       type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+      description: The first matching <xref href="Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext" data-throw-if-not-resolved="false"></xref>, or <code>null</code> if none match.
     content.vb: Public Function Find(predicate As Func(Of ScopeContext, Boolean)) As ScopeContext
   overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.Find*
   nameWithType.vb: CompilationScopes.Find(Func(Of ScopeContext, Boolean))
@@ -338,17 +357,21 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: TryPopUntil
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 35
+    startLine: 72
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
+  summary: Pops scope contexts until one matching the predicate is found (inclusive), or the stack is empty.
+  example: []
   syntax:
     content: public ScopeContext? TryPopUntil(Func<ScopeContext, bool> predicate)
     parameters:
     - id: predicate
       type: System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean}
+      description: A function to test each <xref href="Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext" data-throw-if-not-resolved="false"></xref>.
     return:
       type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+      description: The matching <xref href="Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext" data-throw-if-not-resolved="false"></xref> if found; otherwise, <code>null</code>.
     content.vb: Public Function TryPopUntil(predicate As Func(Of ScopeContext, Boolean)) As ScopeContext
   overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopUntil*
   nameWithType.vb: CompilationScopes.TryPopUntil(Func(Of ScopeContext, Boolean))
@@ -372,10 +395,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ValidateFinalScope
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 36
+    startLine: 77
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
+  summary: Validates that the current scope stack ends in a properly closed final block.
+  example: []
   syntax:
     content: public void ValidateFinalScope()
     content.vb: Public Sub ValidateFinalScope()
@@ -398,15 +423,18 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PushReturn
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 38
+    startLine: 83
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
+  summary: Records a <code>RETURN</code> operation in the current scope and pushes it to the finalizers tracker.
+  example: []
   syntax:
     content: public void PushReturn(CoreOperations.RETURN op)
     parameters:
     - id: op
       type: Ubytec.Language.Operations.CoreOperations.RETURN
+      description: The <code>RETURN</code> opcode to register.
     content.vb: Public Sub PushReturn(op As CoreOperations.RETURN)
   overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushReturn*
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushBreak(Ubytec.Language.Operations.CoreOperations.BREAK)
@@ -427,15 +455,18 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PushBreak
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 44
+    startLine: 93
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
+  summary: Records a <code>BREAK</code> operation in the current scope and pushes it to the finalizers tracker.
+  example: []
   syntax:
     content: public void PushBreak(CoreOperations.BREAK op)
     parameters:
     - id: op
       type: Ubytec.Language.Operations.CoreOperations.BREAK
+      description: The <code>BREAK</code> opcode to register.
     content.vb: Public Sub PushBreak(op As CoreOperations.BREAK)
   overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushBreak*
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushContinue(Ubytec.Language.Operations.CoreOperations.CONTINUE)
@@ -456,15 +487,18 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PushContinue
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 50
+    startLine: 103
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
+  summary: Records a <code>CONTINUE</code> operation in the current scope and pushes it to the finalizers tracker.
+  example: []
   syntax:
     content: public void PushContinue(CoreOperations.CONTINUE op)
     parameters:
     - id: op
       type: Ubytec.Language.Operations.CoreOperations.CONTINUE
+      description: The <code>CONTINUE</code> opcode to register.
     content.vb: Public Sub PushContinue(op As CoreOperations.CONTINUE)
   overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.PushContinue*
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizers
@@ -485,14 +519,17 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PeekFinalizers
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 56
+    startLine: 113
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
+  summary: Peeks at the top <xref href="Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext" data-throw-if-not-resolved="false"></xref> without removing it.
+  example: []
   syntax:
     content: public FinalizersContext PeekFinalizers()
     return:
       type: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+      description: The topmost finalizers context.
     content.vb: Public Function PeekFinalizers() As FinalizersContext
   overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizers*
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizersOrDefault
@@ -513,14 +550,17 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PeekFinalizersOrDefault
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 57
+    startLine: 119
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
+  summary: Peeks at the top <xref href="Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext" data-throw-if-not-resolved="false"></xref> without removing it, or returns <code>null</code> if none.
+  example: []
   syntax:
     content: public FinalizersContext? PeekFinalizersOrDefault()
     return:
       type: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+      description: The topmost finalizers context, or <code>null</code> if the stack is empty.
     content.vb: Public Function PeekFinalizersOrDefault() As FinalizersContext
   overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizersOrDefault*
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.FindFinalizers(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean})
@@ -541,17 +581,21 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: FindFinalizers
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 58
+    startLine: 128
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
+  summary: Searches for a finalizers context matching the given predicate without modifying the stack.
+  example: []
   syntax:
     content: public FinalizersContext? FindFinalizers(Func<FinalizersContext, bool> predicate)
     parameters:
     - id: predicate
       type: System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean}
+      description: A function to test each <xref href="Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext" data-throw-if-not-resolved="false"></xref>.
     return:
       type: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+      description: The first matching <xref href="Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext" data-throw-if-not-resolved="false"></xref>, or <code>null</code> if none match.
     content.vb: Public Function FindFinalizers(predicate As Func(Of FinalizersContext, Boolean)) As FinalizersContext
   overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.FindFinalizers*
   nameWithType.vb: CompilationScopes.FindFinalizers(Func(Of FinalizersContext, Boolean))
@@ -575,17 +619,21 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: TryPopFinalizersUntil
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 59
+    startLine: 138
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
+  summary: Pops finalizers contexts until one matching the predicate is found (inclusive), or the stack is empty.
+  example: []
   syntax:
     content: public FinalizersContext? TryPopFinalizersUntil(Func<FinalizersContext, bool> predicate)
     parameters:
     - id: predicate
       type: System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean}
+      description: A function to test each <xref href="Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext" data-throw-if-not-resolved="false"></xref>.
     return:
       type: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+      description: The matching <xref href="Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext" data-throw-if-not-resolved="false"></xref> if found; otherwise, <code>null</code>.
     content.vb: Public Function TryPopFinalizersUntil(predicate As Func(Of FinalizersContext, Boolean)) As FinalizersContext
   overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.TryPopFinalizersUntil*
   nameWithType.vb: CompilationScopes.TryPopFinalizersUntil(Func(Of FinalizersContext, Boolean))
@@ -609,11 +657,11 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Reset
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 64
+    startLine: 144
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
-  summary: Limpia todos los contextos y definiciones de datos.
+  summary: Clears all scope and finalizer contexts, resetting this instance to its initial state.
   example: []
   syntax:
     content: public void Reset()
@@ -978,12 +1026,6 @@ references:
   name: FinalizersCount
   nameWithType: CompilationScopes.FinalizersCount
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.FinalizersCount
-- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Push*
-  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.Push
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.Push.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Push_Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_
-  name: Push
-  nameWithType: CompilationScopes.Push
-  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Push
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
   commentId: T:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
   parent: Ubytec.Language.Syntax.Scopes.Contexts
@@ -991,6 +1033,12 @@ references:
   name: ScopeContext
   nameWithType: ScopeContext
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Push*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.Push
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.Push.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Push_Ubytec_Language_Syntax_Scopes_Contexts_ScopeContext_
+  name: Push
+  nameWithType: CompilationScopes.Push
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Push
 - uid: Ubytec.Language.Syntax.Scopes.Contexts
   commentId: N:Ubytec.Language.Syntax.Scopes.Contexts
   href: Ubytec.html
@@ -1037,6 +1085,13 @@ references:
   - uid: Ubytec.Language.Syntax.Scopes.Contexts
     name: Contexts
     href: Ubytec.Language.Syntax.Scopes.Contexts.html
+- uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+  commentId: T:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
+  parent: Ubytec.Language.Syntax.Scopes.Contexts
+  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html
+  name: FinalizersContext
+  nameWithType: FinalizersContext
+  fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Pop*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.Pop
   href: Ubytec.Language.Syntax.Scopes.CompilationScopes.Pop.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Pop
@@ -1347,13 +1402,6 @@ references:
   name: PeekFinalizers
   nameWithType: CompilationScopes.PeekFinalizers
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizers
-- uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
-  commentId: T:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
-  parent: Ubytec.Language.Syntax.Scopes.Contexts
-  href: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.html
-  name: FinalizersContext
-  nameWithType: FinalizersContext
-  fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizersOrDefault*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizersOrDefault
   href: Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizersOrDefault.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_PeekFinalizersOrDefault

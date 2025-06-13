@@ -29,8 +29,14 @@ items:
   - Ubytec
   namespace: Ubytec.Language.Tools
   syntax:
-    content: internal static class DeprecatedCompiler
-    content.vb: Friend Module DeprecatedCompiler
+    content: >-
+      [Obsolete]
+
+      internal static class DeprecatedCompiler
+    content.vb: >-
+      <Obsolete>
+
+      Friend Module DeprecatedCompiler
   inheritance:
   - System.Object
   inheritedMembers:
@@ -41,6 +47,10 @@ items:
   - System.Object.MemberwiseClone
   - System.Object.ReferenceEquals(System.Object,System.Object)
   - System.Object.ToString
+  attributes:
+  - type: System.ObsoleteAttribute
+    ctor: System.ObsoleteAttribute.#ctor
+    arguments: []
 - uid: Ubytec.Language.Tools.DeprecatedCompiler.OpcodeMap
   commentId: F:Ubytec.Language.Tools.DeprecatedCompiler.OpcodeMap
   id: OpcodeMap
@@ -59,7 +69,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: OpcodeMap
     path: ../Ubytec/Language/Tools/DeprecatedCompiler.cs
-    startLine: 4
+    startLine: 5
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Tools
@@ -86,7 +96,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: CompileToX86
     path: ../Ubytec/Language/Tools/DeprecatedCompiler.cs
-    startLine: 87
+    startLine: 88
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Tools
@@ -120,7 +130,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: GetTypeSize
     path: ../Ubytec/Language/Tools/DeprecatedCompiler.cs
-    startLine: 564
+    startLine: 565
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Tools
@@ -154,7 +164,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: GeneratePushInstruction
     path: ../Ubytec/Language/Tools/DeprecatedCompiler.cs
-    startLine: 578
+    startLine: 579
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Tools
@@ -190,7 +200,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: GetTypeName
     path: ../Ubytec/Language/Tools/DeprecatedCompiler.cs
-    startLine: 591
+    startLine: 592
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Tools

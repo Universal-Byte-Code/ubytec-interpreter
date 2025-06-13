@@ -20,10 +20,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IUbytecExpressionFragment
     path: ../Ubytec/Language/Syntax/Interfaces/IUbytecExpressionFragment.cs
-    startLine: 4
+    startLine: 8
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Interfaces
+  summary: >-
+    Defines a fragment of a high-level Ubytec expression.
+
+    Each fragment carries the lexical tokens that compose it.
+  example: []
   syntax:
     content: public interface IUbytecExpressionFragment
     content.vb: Public Interface IUbytecExpressionFragment
@@ -45,10 +50,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Tokens
     path: ../Ubytec/Language/Syntax/Interfaces/IUbytecExpressionFragment.cs
-    startLine: 6
+    startLine: 14
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Interfaces
+  summary: >-
+    Gets the sequence of <xref href="Ubytec.Language.Syntax.Model.SyntaxToken" data-throw-if-not-resolved="false"></xref> instances
+
+    that represent this expression fragment.
+  example: []
   syntax:
     content: SyntaxToken[] Tokens { get; init; }
     parameters: []
@@ -95,6 +105,13 @@ references:
   - uid: Ubytec.Language.Syntax.Interfaces
     name: Interfaces
     href: Ubytec.Language.Syntax.Interfaces.html
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxToken
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  name: SyntaxToken
+  nameWithType: SyntaxToken
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken
 - uid: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens*
   commentId: Overload:Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens
   href: Ubytec.Language.Syntax.Interfaces.IUbytecExpressionFragment.Tokens.html#Ubytec_Language_Syntax_Interfaces_IUbytecExpressionFragment_Tokens
@@ -122,4 +139,42 @@ references:
     href: Ubytec.Language.Syntax.Model.SyntaxToken.html
   - name: (
   - name: )
+- uid: Ubytec.Language.Syntax.Model
+  commentId: N:Ubytec.Language.Syntax.Model
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Model
+  nameWithType: Ubytec.Language.Syntax.Model
+  fullName: Ubytec.Language.Syntax.Model
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
 memberLayout: SeparatePages

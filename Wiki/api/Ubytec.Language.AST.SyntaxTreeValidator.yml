@@ -23,10 +23,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: SyntaxTreeValidator
     path: ../Ubytec/Language/AST/SyntaxTreeValidator.cs
-    startLine: 9
+    startLine: 12
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
+  summary: Provides functionality to validate a <xref href="Ubytec.Language.Syntax.Model.SyntaxTree" data-throw-if-not-resolved="false"></xref> against its JSON schema.
+  example: []
   syntax:
     content: public static class SyntaxTreeValidator
     content.vb: Public Module SyntaxTreeValidator
@@ -58,10 +60,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _httpClient
     path: ../Ubytec/Language/AST/SyntaxTreeValidator.cs
-    startLine: 11
+    startLine: 17
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
+  summary: Shared <xref href="System.Net.Http.HttpClient" data-throw-if-not-resolved="false"></xref> instance used to download JSON schemas.
+  example: []
   syntax:
     content: private static readonly HttpClient _httpClient
     return:
@@ -85,10 +89,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _options
     path: ../Ubytec/Language/AST/SyntaxTreeValidator.cs
-    startLine: 12
+    startLine: 22
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
+  summary: <xref href="System.Text.Json.JsonSerializerOptions" data-throw-if-not-resolved="false"></xref> configured for serializing a <xref href="Ubytec.Language.Syntax.Model.SyntaxTree" data-throw-if-not-resolved="false"></xref>.
+  example: []
   syntax:
     content: private static readonly JsonSerializerOptions _options
     return:
@@ -112,19 +118,36 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: CheckSyntaxTreeSchema
     path: ../Ubytec/Language/AST/SyntaxTreeValidator.cs
-    startLine: 25
+    startLine: 52
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
+  summary: >-
+    Validates that the provided syntax tree matches the JSON schema specified
+
+    in its <code>$schema</code> property.
+  example: []
   syntax:
     content: public static ICollection<ValidationError> CheckSyntaxTreeSchema(SyntaxTree tree)
     parameters:
     - id: tree
       type: Ubytec.Language.Syntax.Model.SyntaxTree
+      description: The <xref href="Ubytec.Language.Syntax.Model.SyntaxTree" data-throw-if-not-resolved="false"></xref> to validate.
     return:
       type: System.Collections.Generic.ICollection{NJsonSchema.Validation.ValidationError}
+      description: >-
+        A collection of <xref href="NJsonSchema.Validation.ValidationError" data-throw-if-not-resolved="false"></xref> objects describing any schema violations.
+
+        Empty if the tree is valid.
     content.vb: Public Shared Function CheckSyntaxTreeSchema(tree As SyntaxTree) As ICollection(Of ValidationError)
   overload: Ubytec.Language.AST.SyntaxTreeValidator.CheckSyntaxTreeSchema*
+  exceptions:
+  - type: System.Exception
+    commentId: T:System.Exception
+    description: >-
+      Thrown if the tree’s JSON does not contain a valid <code>$schema</code> URL,
+
+      or if downloading the schema fails.
 - uid: Ubytec.Language.AST.SyntaxTreeValidator.FetchSchema(System.String)
   commentId: M:Ubytec.Language.AST.SyntaxTreeValidator.FetchSchema(System.String)
   id: FetchSchema(System.String)
@@ -143,23 +166,38 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: FetchSchema
     path: ../Ubytec/Language/AST/SyntaxTreeValidator.cs
-    startLine: 46
+    startLine: 84
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
+  summary: Downloads the JSON schema from the specified URL.
+  example: []
   syntax:
     content: private static Task<string> FetchSchema(string schemaUrl)
     parameters:
     - id: schemaUrl
       type: System.String
+      description: The URL of the JSON schema to fetch.
     return:
       type: System.Threading.Tasks.Task{System.String}
+      description: A <xref href="System.Threading.Tasks.Task%601" data-throw-if-not-resolved="false"></xref> that produces the raw JSON schema text.
     content.vb: Private Shared Function FetchSchema(schemaUrl As String) As Task(Of String)
   overload: Ubytec.Language.AST.SyntaxTreeValidator.FetchSchema*
+  exceptions:
+  - type: System.Exception
+    commentId: T:System.Exception
+    description: Thrown if the HTTP request fails.
   nameWithType.vb: SyntaxTreeValidator.FetchSchema(String)
   fullName.vb: Ubytec.Language.AST.SyntaxTreeValidator.FetchSchema(String)
   name.vb: FetchSchema(String)
 references:
+- uid: Ubytec.Language.Syntax.Model.SyntaxTree
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxTree
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxTree.html
+  name: SyntaxTree
+  nameWithType: SyntaxTree
+  fullName: Ubytec.Language.Syntax.Model.SyntaxTree
 - uid: Ubytec.Language.AST
   commentId: N:Ubytec.Language.AST
   href: Ubytec.html
@@ -420,6 +458,44 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.object.tostring
   - name: (
   - name: )
+- uid: Ubytec.Language.Syntax.Model
+  commentId: N:Ubytec.Language.Syntax.Model
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Model
+  nameWithType: Ubytec.Language.Syntax.Model
+  fullName: Ubytec.Language.Syntax.Model
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
 - uid: System
   commentId: N:System
   isExternal: true
@@ -517,19 +593,26 @@ references:
     name: Json
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.text.json
+- uid: NJsonSchema.Validation.ValidationError
+  commentId: T:NJsonSchema.Validation.ValidationError
+  isExternal: true
+  name: ValidationError
+  nameWithType: ValidationError
+  fullName: NJsonSchema.Validation.ValidationError
+- uid: System.Exception
+  commentId: T:System.Exception
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.exception
+  name: Exception
+  nameWithType: Exception
+  fullName: System.Exception
 - uid: Ubytec.Language.AST.SyntaxTreeValidator.CheckSyntaxTreeSchema*
   commentId: Overload:Ubytec.Language.AST.SyntaxTreeValidator.CheckSyntaxTreeSchema
   href: Ubytec.Language.AST.SyntaxTreeValidator.CheckSyntaxTreeSchema.html#Ubytec_Language_AST_SyntaxTreeValidator_CheckSyntaxTreeSchema_Ubytec_Language_Syntax_Model_SyntaxTree_
   name: CheckSyntaxTreeSchema
   nameWithType: SyntaxTreeValidator.CheckSyntaxTreeSchema
   fullName: Ubytec.Language.AST.SyntaxTreeValidator.CheckSyntaxTreeSchema
-- uid: Ubytec.Language.Syntax.Model.SyntaxTree
-  commentId: T:Ubytec.Language.Syntax.Model.SyntaxTree
-  parent: Ubytec.Language.Syntax.Model
-  href: Ubytec.Language.Syntax.Model.SyntaxTree.html
-  name: SyntaxTree
-  nameWithType: SyntaxTree
-  fullName: Ubytec.Language.Syntax.Model.SyntaxTree
 - uid: System.Collections.Generic.ICollection{NJsonSchema.Validation.ValidationError}
   commentId: T:System.Collections.Generic.ICollection{NJsonSchema.Validation.ValidationError}
   parent: System.Collections.Generic
@@ -563,44 +646,6 @@ references:
     name: ValidationError
     isExternal: true
   - name: )
-- uid: Ubytec.Language.Syntax.Model
-  commentId: N:Ubytec.Language.Syntax.Model
-  href: Ubytec.html
-  name: Ubytec.Language.Syntax.Model
-  nameWithType: Ubytec.Language.Syntax.Model
-  fullName: Ubytec.Language.Syntax.Model
-  spec.csharp:
-  - uid: Ubytec
-    name: Ubytec
-    href: Ubytec.html
-  - name: .
-  - uid: Ubytec.Language
-    name: Language
-    href: Ubytec.Language.html
-  - name: .
-  - uid: Ubytec.Language.Syntax
-    name: Syntax
-    href: Ubytec.Language.Syntax.html
-  - name: .
-  - uid: Ubytec.Language.Syntax.Model
-    name: Model
-    href: Ubytec.Language.Syntax.Model.html
-  spec.vb:
-  - uid: Ubytec
-    name: Ubytec
-    href: Ubytec.html
-  - name: .
-  - uid: Ubytec.Language
-    name: Language
-    href: Ubytec.Language.html
-  - name: .
-  - uid: Ubytec.Language.Syntax
-    name: Syntax
-    href: Ubytec.Language.Syntax.html
-  - name: .
-  - uid: Ubytec.Language.Syntax.Model
-    name: Model
-    href: Ubytec.Language.Syntax.Model.html
 - uid: System.Collections.Generic.ICollection`1
   commentId: T:System.Collections.Generic.ICollection`1
   isExternal: true
@@ -666,6 +711,34 @@ references:
     name: Generic
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
 - uid: Ubytec.Language.AST.SyntaxTreeValidator.FetchSchema*
   commentId: Overload:Ubytec.Language.AST.SyntaxTreeValidator.FetchSchema
   href: Ubytec.Language.AST.SyntaxTreeValidator.FetchSchema.html#Ubytec_Language_AST_SyntaxTreeValidator_FetchSchema_System_String_
@@ -717,34 +790,6 @@ references:
     name: String
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: )
-- uid: System.Threading.Tasks.Task`1
-  commentId: T:System.Threading.Tasks.Task`1
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
-  name: Task<TResult>
-  nameWithType: Task<TResult>
-  fullName: System.Threading.Tasks.Task<TResult>
-  nameWithType.vb: Task(Of TResult)
-  fullName.vb: System.Threading.Tasks.Task(Of TResult)
-  name.vb: Task(Of TResult)
-  spec.csharp:
-  - uid: System.Threading.Tasks.Task`1
-    name: Task
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
-  - name: <
-  - name: TResult
-  - name: '>'
-  spec.vb:
-  - uid: System.Threading.Tasks.Task`1
-    name: Task
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
-  - name: (
-  - name: Of
-  - name: " "
-  - name: TResult
   - name: )
 - uid: System.Threading.Tasks
   commentId: N:System.Threading.Tasks

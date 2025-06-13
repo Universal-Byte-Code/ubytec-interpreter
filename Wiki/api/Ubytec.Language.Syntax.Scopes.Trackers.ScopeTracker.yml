@@ -33,10 +33,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ScopeTracker
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 7
+    startLine: 11
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: >-
+    Tracks nested <xref href="Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext" data-throw-if-not-resolved="false"></xref> instances during compilation,
+
+    managing loop, branch, and function-return semantics.
+  example: []
   syntax:
     content: 'public class ScopeTracker : IEnumerable<ScopeContext>, IEnumerable'
     content.vb: Public Class ScopeTracker Implements IEnumerable(Of ScopeContext), IEnumerable
@@ -71,7 +76,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _stack
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 9
+    startLine: 13
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
@@ -98,15 +103,18 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Push
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 11
+    startLine: 19
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: Pushes a new scope context onto the tracker.
+  example: []
   syntax:
     content: public void Push(ScopeContext context)
     parameters:
     - id: context
       type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+      description: The <xref href="Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext" data-throw-if-not-resolved="false"></xref> to push.
     content.vb: Public Sub Push(context As ScopeContext)
   overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Push*
 - uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Pop
@@ -127,16 +135,23 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Pop
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 13
+    startLine: 28
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: Pops and returns the topmost scope context.
+  example: []
   syntax:
     content: public ScopeContext Pop()
     return:
       type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+      description: The most recently pushed <xref href="Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext" data-throw-if-not-resolved="false"></xref>.
     content.vb: Public Function Pop() As ScopeContext
   overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Pop*
+  exceptions:
+  - type: Ubytec.Language.Exceptions.SyntaxStackException
+    commentId: T:Ubytec.Language.Exceptions.SyntaxStackException
+    description: Thrown if no scope context remains on the stack.
 - uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Count
   commentId: P:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Count
   id: Count
@@ -155,10 +170,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Count
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 21
+    startLine: 39
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: Gets the number of scope contexts currently being tracked.
+  example: []
   syntax:
     content: public int Count { get; }
     parameters: []
@@ -184,16 +201,23 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Peek
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 23
+    startLine: 48
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: Peeks at the topmost scope context without removing it.
+  example: []
   syntax:
     content: public ScopeContext Peek()
     return:
       type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+      description: The current <xref href="Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext" data-throw-if-not-resolved="false"></xref>.
     content.vb: Public Function Peek() As ScopeContext
   overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Peek*
+  exceptions:
+  - type: Ubytec.Language.Exceptions.SyntaxStackException
+    commentId: T:Ubytec.Language.Exceptions.SyntaxStackException
+    description: Thrown if the stack is empty.
 - uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkReturn
   commentId: M:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.MarkReturn
   id: MarkReturn
@@ -212,10 +236,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: MarkReturn
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 31
+    startLine: 59
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: Marks that a <code>return</code> has occurred in the current scope.
+  example: []
   syntax:
     content: public void MarkReturn()
     content.vb: Public Sub MarkReturn()
@@ -238,10 +264,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: MarkBreak
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 37
+    startLine: 68
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: Marks that a <code>break</code> has occurred in the first enclosing loop or branch scope.
+  example: []
   syntax:
     content: public void MarkBreak()
     content.vb: Public Sub MarkBreak()
@@ -264,10 +292,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: MarkContinue
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 49
+    startLine: 83
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: Marks that a <code>continue</code> has occurred in the first enclosing loop scope.
+  example: []
   syntax:
     content: public void MarkContinue()
     content.vb: Public Sub MarkContinue()
@@ -290,14 +320,23 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ValidateFinalBlock
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 61
+    startLine: 102
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
+  summary: >-
+    Validates that the current function or returnable scope ends with a return,
+
+    if an explicit return is required.
+  example: []
   syntax:
     content: public void ValidateFinalBlock()
     content.vb: Public Sub ValidateFinalBlock()
   overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.ValidateFinalBlock*
+  exceptions:
+  - type: Ubytec.Language.Exceptions.SyntaxStackException
+    commentId: T:Ubytec.Language.Exceptions.SyntaxStackException
+    description: Thrown if a returnable scope expects a non-void return but none was marked.
 - uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.GetEnumerator
   commentId: M:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.GetEnumerator
   id: GetEnumerator
@@ -316,17 +355,17 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: GetEnumerator
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 69
+    startLine: 121
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
-  summary: Returns an enumerator that iterates through the collection.
+  summary: Returns an enumerator that iterates through the tracked scope contexts (LIFO order).
   example: []
   syntax:
     content: public IEnumerator<ScopeContext> GetEnumerator()
     return:
       type: System.Collections.Generic.IEnumerator{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext}
-      description: An enumerator that can be used to iterate through the collection.
+      description: An <xref href="System.Collections.Generic.IEnumerator%601" data-throw-if-not-resolved="false"></xref> over the stack.
     content.vb: Public Function GetEnumerator() As IEnumerator(Of ScopeContext)
   overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.GetEnumerator*
   implements:
@@ -350,7 +389,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: System.Collections.IEnumerable.GetEnumerator
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 74
+    startLine: 123
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
@@ -386,22 +425,24 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Find
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 83
+    startLine: 133
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
   summary: >-
-    Busca el primer bloque desde el top del stack que cumpla una condición.
+    Searches for the first <xref href="Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext" data-throw-if-not-resolved="false"></xref> matching the given predicate,
 
-    Devuelve un resultado y mantiene el stack intacto.
+    without permanently modifying the stack.
   example: []
   syntax:
     content: public ScopeContext? Find(Func<ScopeContext, bool> predicate)
     parameters:
     - id: predicate
       type: System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean}
+      description: A function to test each context.
     return:
       type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+      description: The first matching context, or <code>null</code> if none match.
     content.vb: Public Function Find(predicate As Func(Of ScopeContext, Boolean)) As ScopeContext
   overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Find*
   nameWithType.vb: ScopeTracker.Find(Func(Of ScopeContext, Boolean))
@@ -425,22 +466,24 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: TryPopUntil
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 111
+    startLine: 163
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
   summary: >-
-    Intenta desapilar bloques hasta encontrar uno que cumpla la condición.
+    Pops contexts until one matching the predicate is found (inclusive),
 
-    Devuelve el bloque encontrado, o null si no hay ninguno. El resto del stack se conserva.
+    restoring any contexts popped after it.
   example: []
   syntax:
     content: public ScopeContext? TryPopUntil(Func<ScopeContext, bool> predicate)
     parameters:
     - id: predicate
       type: System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean}
+      description: A function to test each context.
     return:
       type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+      description: The matching context if found; otherwise, <code>null</code>.
     content.vb: Public Function TryPopUntil(predicate As Func(Of ScopeContext, Boolean)) As ScopeContext
   overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.TryPopUntil*
   nameWithType.vb: ScopeTracker.TryPopUntil(Func(Of ScopeContext, Boolean))
@@ -464,19 +507,30 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PeekOrDefault
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 141
+    startLine: 192
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
-  summary: Devuelve el bloque del tope si existe, o null si el stack está vacío.
+  summary: >-
+    Peeks at the topmost scope context without removing it,
+
+    or returns <code>null</code> if the stack is empty.
   example: []
   syntax:
     content: public ScopeContext? PeekOrDefault()
     return:
       type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+      description: The current <xref href="Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext" data-throw-if-not-resolved="false"></xref>, or <code>null</code> if none exist.
     content.vb: Public Function PeekOrDefault() As ScopeContext
   overload: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.PeekOrDefault*
 references:
+- uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+  commentId: T:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+  parent: Ubytec.Language.Syntax.Scopes.Contexts
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html
+  name: ScopeContext
+  nameWithType: ScopeContext
+  fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
 - uid: Ubytec.Language.Syntax.Scopes.Trackers
   commentId: N:Ubytec.Language.Syntax.Scopes.Trackers
   href: Ubytec.html
@@ -794,6 +848,52 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.object.tostring
   - name: (
   - name: )
+- uid: Ubytec.Language.Syntax.Scopes.Contexts
+  commentId: N:Ubytec.Language.Syntax.Scopes.Contexts
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Scopes.Contexts
+  nameWithType: Ubytec.Language.Syntax.Scopes.Contexts
+  fullName: Ubytec.Language.Syntax.Scopes.Contexts
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts
+    name: Contexts
+    href: Ubytec.Language.Syntax.Scopes.Contexts.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts
+    name: Contexts
+    href: Ubytec.Language.Syntax.Scopes.Contexts.html
 - uid: System
   commentId: N:System
   isExternal: true
@@ -960,59 +1060,12 @@ references:
   name: Push
   nameWithType: ScopeTracker.Push
   fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Push
-- uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
-  commentId: T:Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
-  parent: Ubytec.Language.Syntax.Scopes.Contexts
-  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html
-  name: ScopeContext
-  nameWithType: ScopeContext
-  fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
-- uid: Ubytec.Language.Syntax.Scopes.Contexts
-  commentId: N:Ubytec.Language.Syntax.Scopes.Contexts
-  href: Ubytec.html
-  name: Ubytec.Language.Syntax.Scopes.Contexts
-  nameWithType: Ubytec.Language.Syntax.Scopes.Contexts
-  fullName: Ubytec.Language.Syntax.Scopes.Contexts
-  spec.csharp:
-  - uid: Ubytec
-    name: Ubytec
-    href: Ubytec.html
-  - name: .
-  - uid: Ubytec.Language
-    name: Language
-    href: Ubytec.Language.html
-  - name: .
-  - uid: Ubytec.Language.Syntax
-    name: Syntax
-    href: Ubytec.Language.Syntax.html
-  - name: .
-  - uid: Ubytec.Language.Syntax.Scopes
-    name: Scopes
-    href: Ubytec.Language.Syntax.Scopes.html
-  - name: .
-  - uid: Ubytec.Language.Syntax.Scopes.Contexts
-    name: Contexts
-    href: Ubytec.Language.Syntax.Scopes.Contexts.html
-  spec.vb:
-  - uid: Ubytec
-    name: Ubytec
-    href: Ubytec.html
-  - name: .
-  - uid: Ubytec.Language
-    name: Language
-    href: Ubytec.Language.html
-  - name: .
-  - uid: Ubytec.Language.Syntax
-    name: Syntax
-    href: Ubytec.Language.Syntax.html
-  - name: .
-  - uid: Ubytec.Language.Syntax.Scopes
-    name: Scopes
-    href: Ubytec.Language.Syntax.Scopes.html
-  - name: .
-  - uid: Ubytec.Language.Syntax.Scopes.Contexts
-    name: Contexts
-    href: Ubytec.Language.Syntax.Scopes.Contexts.html
+- uid: Ubytec.Language.Exceptions.SyntaxStackException
+  commentId: T:Ubytec.Language.Exceptions.SyntaxStackException
+  href: Ubytec.Language.Exceptions.SyntaxStackException.html
+  name: SyntaxStackException
+  nameWithType: SyntaxStackException
+  fullName: Ubytec.Language.Exceptions.SyntaxStackException
 - uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Pop*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Pop
   href: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.Pop.html#Ubytec_Language_Syntax_Scopes_Trackers_ScopeTracker_Pop
@@ -1066,6 +1119,34 @@ references:
   name: ValidateFinalBlock
   nameWithType: ScopeTracker.ValidateFinalBlock
   fullName: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.ValidateFinalBlock
+- uid: System.Collections.Generic.IEnumerator`1
+  commentId: T:System.Collections.Generic.IEnumerator`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  name: IEnumerator<T>
+  nameWithType: IEnumerator<T>
+  fullName: System.Collections.Generic.IEnumerator<T>
+  nameWithType.vb: IEnumerator(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerator(Of T)
+  name.vb: IEnumerator(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
 - uid: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.GetEnumerator*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.GetEnumerator
   href: Ubytec.Language.Syntax.Scopes.Trackers.ScopeTracker.GetEnumerator.html#Ubytec_Language_Syntax_Scopes_Trackers_ScopeTracker_GetEnumerator
@@ -1151,34 +1232,6 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
   - name: (
-  - name: )
-- uid: System.Collections.Generic.IEnumerator`1
-  commentId: T:System.Collections.Generic.IEnumerator`1
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
-  name: IEnumerator<T>
-  nameWithType: IEnumerator<T>
-  fullName: System.Collections.Generic.IEnumerator<T>
-  nameWithType.vb: IEnumerator(Of T)
-  fullName.vb: System.Collections.Generic.IEnumerator(Of T)
-  name.vb: IEnumerator(Of T)
-  spec.csharp:
-  - uid: System.Collections.Generic.IEnumerator`1
-    name: IEnumerator
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
-  - name: <
-  - name: T
-  - name: '>'
-  spec.vb:
-  - uid: System.Collections.Generic.IEnumerator`1
-    name: IEnumerator
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
-  - name: (
-  - name: Of
-  - name: " "
-  - name: T
   - name: )
 - uid: System.Collections.IEnumerator
   commentId: T:System.Collections.IEnumerator
