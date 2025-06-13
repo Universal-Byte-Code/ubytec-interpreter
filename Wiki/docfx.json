@@ -49,8 +49,11 @@
       "_appLogoPath": "images/favicon-32x32.png",
       "_appFaviconPath": "images/favicon.ico",
       "_enableNewTab": true,
-      "pdf": true
+      "pdf": false
     },
-    "xref": [ "https://xref.docs.microsoft.com/query?uid={uid}" ]
+    "xref": [
+      "xrefmap.yml",
+      "https://learn.microsoft.com/api/xref/query?uid={uid}"
+    ]
   }
 }
