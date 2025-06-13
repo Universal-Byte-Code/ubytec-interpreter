@@ -29,6 +29,21 @@ jobs:
       - name: Add DocFX tool to PATH
         run: echo "${{ runner.toolsDirectory }}/dotnet/tools" >> $GITHUB_PATH
 
+      # 2) Download & cache Microsoft xref map
+      - name: Cache xref map
+        id: cache-xref
+        uses: actions/cache@v3
+        with:
+          path: xrefmap.yml
+          key: microsoft-xrefmap
+
+      - name: Download Microsoft xref map
+        if: steps.cache-xref.outputs.cache-hit != 'true'
+        run: |
+          curl -sSL "https://xref.docs.microsoft.com/query?uid=all" -o xrefmap.yml
+
+      - name: Restore DocFX site
+        run: docfx restore Wiki/docfx.json
       - name: Build DocFX site
         run: docfx build Wiki/docfx.json --output Wiki/_site
 
