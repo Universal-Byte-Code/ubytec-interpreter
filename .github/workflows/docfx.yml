@@ -40,7 +40,7 @@ jobs:
       - name: Download Microsoft xref map
         if: steps.cache-xref.outputs.cache-hit != 'true'
         run: |
-          curl -sSL "https://xref.docs.microsoft.com/query?uid=all" -o xrefmap.yml
+          curl -sSL "https://learn.microsoft.com/api/xref/query?uid=all" -o xrefmap.yml
 
       - name: Restore DocFX site
         run: docfx restore Wiki/docfx.json
