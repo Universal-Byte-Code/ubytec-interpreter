@@ -16,6 +16,9 @@ using Ubytec.Language.Syntax.Scopes;
 using Ubytec.Language.Tools;
 using Ubytec.Language.Tools.Serialization;
 
+[assembly: CLSCompliant(true)]
+[assembly: System.Runtime.InteropServices.ComVisible(false)]
+
 var source = """
 module (name:"demo", version:"0.1", author:"papifuckingshushi")
 {
@@ -41,7 +44,7 @@ module (name:"demo", version:"0.1", author:"papifuckingshushi")
                     nop
                 end
             end
-
+        end
     }
 }
 """;
