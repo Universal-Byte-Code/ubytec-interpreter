@@ -24,25 +24,6 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
 
-      - name: Test with coverage
+      - name: Test
         run: |
-          dotnet test --no-build \
-            --collect:"XPlat Code Coverage" \
-            --results-directory TestResults
-
-      - name: Find coverage report
-        id: findcov
-        run: |
-          REPORT=$(find TestResults -type f -name 'coverage.cobertura.xml' | head -n1)
-          if [ -z "$REPORT" ]; then
-            echo "❌ coverage.cobertura.xml no encontrado"
-            exit 1
-          fi
-          echo "REPORT_PATH=$REPORT" >> $GITHUB_ENV
-
-      - name: Install and execute Codacy Coverage Reporter
-        env:
-          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        run: |
-          bash <(curl -Ls https://coverage.codacy.com/get.sh) report \
-            -r "$REPORT_PATH"
+          dotnet test --no-build 
