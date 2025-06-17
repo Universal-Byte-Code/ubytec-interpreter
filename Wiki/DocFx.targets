@@ -29,14 +29,14 @@
       Condition="!Exists('$(DocFxExePath)')"
       Command="dotnet tool install -g docfx" />
 
-    <!-- Background server -->
+    <!-- Background server only on Windows, vms run on other distros usually, could cause deadlocks. Try manually building the Wiki. -->
 	  <Exec
 		WorkingDirectory="$(DocFxRoot)"
 		Condition=" '$(OS)' == 'Windows_NT' "
 		Command="powershell -NoProfile -Command Start-Process powershell -ArgumentList '-Command','docfx metadata; if ($LastExitCode -ne 0) { exit $LastExitCode }; docfx build; if ($LastExitCode -ne 0) { exit $LastExitCode }; docfx serve _site -p 8256 --open-browser --open-file api/Ubytec.Language.html'" />
-	  <Exec
-		WorkingDirectory="$(DocFxRoot)"
-		Condition=" '$(OS)' != 'Windows_NT' "
-		Command="bash -c 'docfx metadata &amp;&amp; docfx build &amp;&amp; docfx serve _site -p 8256 --open-browser --open-file api/Ubytec.Language.html; exec bash'" />
+	  <!--Exec
+	    WorkingDirectory="$(DocFxRoot)"
+	    Condition=" '$(OS)' != 'Windows_NT' "
+	    Command="bash -c 'docfx metadata &amp;&amp; docfx build &amp;&amp; docfx serve _site -p 8256 -/-open-browser -/-open-file api/Ubytec.Language.html; exec bash'" /-->
   </Target>
 </Project>
