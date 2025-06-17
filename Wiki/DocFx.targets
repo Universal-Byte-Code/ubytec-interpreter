@@ -37,6 +37,6 @@
 	  <Exec
 		WorkingDirectory="$(DocFxRoot)"
 		Condition=" '$(OS)' != 'Windows_NT' "
-		Command="gnome-terminal -- bash -c 'docfx metadata &amp;&amp; docfx build &amp;&amp; docfx serve _site -p 8256 --open-browser --open-file api/Ubytec.Language.html; exec bash'" />
+		Command="bash -c 'docfx metadata &amp;&amp; docfx build &amp;&amp; docfx serve _site -p 8256 --open-browser --open-file api/Ubytec.Language.html; exec bash'" />
   </Target>
 </Project>
