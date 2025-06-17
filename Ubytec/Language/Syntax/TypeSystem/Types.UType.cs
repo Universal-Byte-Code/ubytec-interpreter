@@ -2,6 +2,7 @@
 
 namespace Ubytec.Language.Syntax.TypeSystem
 {
+    
     public static partial class Types
     {
         /// <summary>

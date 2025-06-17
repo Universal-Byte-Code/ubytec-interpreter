@@ -26,17 +26,17 @@ namespace Ubytec.Language.Syntax.Scopes.Contexts
         /// <summary>
         /// Gets or sets a value indicating whether a <c>return</c> has been encountered in this scope.
         /// </summary>
-        public bool HasReturn { get; set; } = false;
+        public bool HasReturn { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether a <c>break</c> has been encountered in this scope.
         /// </summary>
-        public bool HasBreak { get; set; } = false;
+        public bool HasBreak { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether a <c>continue</c> has been encountered in this scope.
         /// </summary>
-        public bool HasContinue { get; set; } = false;
+        public bool HasContinue { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this scope is marked <c>async</c>.

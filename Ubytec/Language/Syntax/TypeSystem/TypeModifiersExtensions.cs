@@ -6,6 +6,7 @@ namespace Ubytec.Language.Syntax.TypeSystem
     /// Provides extension methods for the <see cref="TypeModifiers"/> enum,
     /// allowing bitwise operations and analyses on modifier flags.
     /// </summary>
+    
     public static class TypeModifiersExtensions
     {
         /// <summary>

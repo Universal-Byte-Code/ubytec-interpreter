@@ -6,124 +6,155 @@ using TextMateSharp.Registry;
 using TextMateSharp.Themes;
 using Ubytec.Language.Exceptions;
 
-namespace Ubytec.Language.Grammar;
-
-public class UbytecRegistryOptions : IRegistryOptions
+namespace Ubytec.Language.Grammar
 {
-    private static readonly HttpClient _httpClient = new();
+    /// <summary>
+    /// Provides configuration options and retrieval methods for TextMate grammars and themes
+    /// used by the Ubytec language support in editors.
+    /// </summary>
+    public class UbytecRegistryOptions : IRegistryOptions
+    {
+        private static readonly HttpClient _httpClient = new();
 
-    public string? LexiconUrl { get; set; } = @"https://raw.githubusercontent.com/Universal-Byte-Code/vscode-ubytec/refs/heads/master/syntaxes/ubytec.tmLanguage.json";
-    public string? DefaultThemeUrl { get; set; } = @"https://raw.githubusercontent.com/Universal-Byte-Code/vscode-ubytec/refs/heads/master/themes/ubytec-future-thunder-theme.json";
+        /// <summary>
+        /// URL of the TextMate grammar (lexicon) JSON file defining Ubytec syntax.
+        /// </summary>
+        public Uri? LexiconUrl { get; set; } = new Uri(
+            "https://raw.githubusercontent.com/Universal-Byte-Code/vscode-ubytec/refs/heads/master/syntaxes/ubytec.tmLanguage.json");
+
+        /// <summary>
+        /// URL of the default TextMate theme JSON file for Ubytec syntax highlighting.
+        /// </summary>
+        public Uri? DefaultThemeUrl { get; set; } = new Uri(
+            "https://raw.githubusercontent.com/Universal-Byte-Code/vscode-ubytec/refs/heads/master/themes/ubytec-future-thunder-theme.json");
 
 #nullable disable
-    public ICollection<string> GetInjections(string scopeName) => null;
+        /// <summary>
+        /// Returns a collection of scope names that should be injected into the given scope.
+        /// </summary>
+        /// <param name="scopeName">The name of the scope for which to retrieve injections.</param>
+        /// <returns>A collection of scope names to inject, or null if none.</returns>
+        public ICollection<string> GetInjections(string scopeName) => null;
 
-    public IRawGrammar GetGrammar(string scopeName)
-    {
-        var lexiconFetchTask = FetchLexicon(LexiconUrl);
-        var lexiconReadTask = lexiconFetchTask.ContinueWith(task =>
+        /// <summary>
+        /// Retrieves and parses the TextMate grammar for the specified scope.
+        /// </summary>
+        /// <param name="scopeName">The grammar scope name to load (e.g., "source.ubytec").</param>
+        /// <returns>An <see cref="IRawGrammar"/> representing the parsed grammar, or null on failure.</returns>
+#nullable enable
+        public IRawGrammar? GetGrammar(string scopeName)
+#nullable disable
         {
-            if (task.IsFaulted)
-                return null;
-            else if (task.IsCanceled)
+            var lexiconFetchTask = FetchLexicon(LexiconUrl?.AbsoluteUri);
+            var lexiconReadTask = lexiconFetchTask.ContinueWith(task =>
             {
-                return null;
-            }
+                if (task.IsFaulted || task.IsCanceled)
+                    return null;
 
-            var stream = GetStreamWithStreamWriter(task.Result);
-            var reader = new StreamReader(stream);
-            var grammar = GrammarReader.ReadGrammarSync(reader);
-            stream.Flush();
-            stream.Dispose();
-            return grammar;
-        });
+                using var stream = GetStreamWithStreamWriter(task.Result);
+                using var reader = new StreamReader(stream);
+                return GrammarReader.ReadGrammarSync(reader);
+            });
 
-        lexiconReadTask.Wait();
-
-        if (lexiconReadTask.IsFaulted)
-            return null;
-        else if (lexiconReadTask.IsCanceled)
-        {
-            return null;
+            lexiconReadTask.Wait();
+            return lexiconReadTask.Result;
         }
 
-        return lexiconReadTask.Result;
-    }
+        /// <summary>
+        /// Retrieves a TextMate theme for the specified scope.
+        /// </summary>
+        /// <param name="scopeName">The theme scope name to load.</param>
+        /// <returns>An <see cref="IRawTheme"/> representing the theme, or null if not available.</returns>
+        public IRawTheme GetTheme(string scopeName) => null;
 
-    public IRawTheme GetTheme(string scopeName) => null;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    /// <exception cref="HttpIOException"></exception>
-    public IRawTheme GetDefaultTheme()
-    {
-        var themeFetchTask = FetchTheme(DefaultThemeUrl);
-        var themeReadTask = themeFetchTask.ContinueWith(task =>
+        /// <summary>
+        /// Retrieves and parses the default TextMate theme for Ubytec syntax highlighting.
+        /// </summary>
+        /// <returns>An <see cref="IRawTheme"/> representing the default theme.</returns>
+        /// <exception cref="HttpIOException">Thrown if the theme cannot be fetched or parsed.</exception>
+#nullable enable
+        public IRawTheme? GetDefaultTheme()
+#nullable disable
         {
-            if (task.IsFaulted)
-                return null;
-            else if (task.IsCanceled)
+            var themeFetchTask = FetchTheme(DefaultThemeUrl?.AbsoluteUri);
+            var themeReadTask = themeFetchTask.ContinueWith(task =>
             {
-                return null;
-            }
+                if (task.IsFaulted || task.IsCanceled)
+                    return null;
 
-            var stream = GetStreamWithStreamWriter(task.Result);
-            var reader = new StreamReader(stream);
-            var rawTheme = ThemeReader.ReadThemeSync(reader);
-            stream.Flush();
-            stream.Dispose();
-            return rawTheme;
-        });
+                using var stream = GetStreamWithStreamWriter(task.Result);
+                using var reader = new StreamReader(stream);
+                return ThemeReader.ReadThemeSync(reader);
+            });
 
-        themeReadTask.Wait();
-
-        if (themeReadTask.IsFaulted)
-            return null;
-        else if (themeReadTask.IsCanceled)
-        {
-            return null;
+            themeReadTask.Wait();
+            return themeReadTask.Result
+                ?? throw new HttpIOException(HttpRequestError.ConnectionError);
         }
-
-        return themeReadTask.Result ?? throw new HttpIOException(HttpRequestError.ConnectionError);
-    }
 #nullable restore
 
-    private static async Task<string> FetchLexicon(string? lexiconUrl)
-    {
-        try
+        /// <summary>
+        /// Asynchronously fetches the lexicon (grammar) content from the specified URL.
+        /// </summary>
+        /// <param name="lexiconUrl">The absolute URI of the lexicon JSON file.</param>
+        /// <returns>A <see cref="Task{String}"/> producing the JSON content.</returns>
+        /// <exception cref="FetchLexiconException">Thrown if the HTTP request fails.</exception>
+        private static async Task<string> FetchLexicon(string? lexiconUrl)
         {
-            return await _httpClient.GetStringAsync(lexiconUrl);
+            try
+            {
+                return await _httpClient.GetStringAsync(lexiconUrl!).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                throw new FetchLexiconException(
+                    0xEE462C77F1DB7F64,
+                    $"Failed to fetch lexicon from {lexiconUrl}: {ex.Message}");
+            }
         }
-        catch (Exception ex)
+
+        /// <summary>
+        /// Asynchronously fetches the theme content from the specified URL.
+        /// </summary>
+        /// <param name="themeUrl">The absolute URI of the theme JSON file.</param>
+        /// <returns>A <see cref="Task{String}"/> producing the JSON content.</returns>
+        /// <exception cref="FetchLexiconException">Thrown if the HTTP request fails.</exception>
+        private static async Task<string> FetchTheme(string? themeUrl)
         {
-            throw new FetchLexiconException(0xEE462C77F1DB7F64, $"Failed to fetch lexicon from {lexiconUrl}: {ex.Message}");
+            try
+            {
+                return await _httpClient.GetStringAsync(themeUrl!).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                throw new FetchLexiconException(
+                    0xF5D3670DF469370E,
+                    $"Failed to fetch theme from {themeUrl}: {ex.Message}");
+            }
         }
-    }
 
-    private static async Task<string> FetchTheme(string? themeUrl)
-    {
-        try
+        /// <summary>
+        /// Creates a <see cref="MemoryStream"/> containing the specified string encoded using the given encoding.
+        /// </summary>
+        /// <param name="sampleString">The string to write into the stream.</param>
+        /// <param name="encoding">The text encoding to apply. Defaults to <see cref="Encoding.Default"/> if null.</param>
+        /// <returns>A <see cref="MemoryStream"/> positioned at the beginning containing the encoded text.</returns>
+        private static MemoryStream GetStreamWithStreamWriter(
+            string sampleString,
+            Encoding? encoding = null)
         {
-            return await _httpClient.GetStringAsync(themeUrl);
+            encoding ??= Encoding.Default;
+            var byteCount = encoding.GetByteCount(sampleString);
+            var stream = new MemoryStream(byteCount);
+
+            using (var writer = new StreamWriter(stream, encoding, leaveOpen: true))
+            {
+                writer.Write(sampleString);
+                writer.Flush();
+            }
+
+            stream.Position = 0;
+            return stream;
         }
-        catch (Exception ex)
-        {
-            throw new FetchLexiconException(0xF5D3670DF469370E, $"Failed to fetch theme from {themeUrl}: {ex.Message}");
-        }
-    }
-
-    private static MemoryStream GetStreamWithStreamWriter(string sampleString, Encoding? encoding = null)
-    {
-        encoding ??= Encoding.Default;
-
-        var stream = new MemoryStream(encoding.GetByteCount(sampleString));
-        using var writer = new StreamWriter(stream, encoding, -1, true);
-        writer.Write(sampleString);
-        writer.Flush();
-        stream.Position = 0;
-
-        return stream;
     }
 }

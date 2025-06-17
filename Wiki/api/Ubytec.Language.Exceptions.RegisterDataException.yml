@@ -6,7 +6,6 @@ items:
   parent: Ubytec.Language.Exceptions
   children:
   - Ubytec.Language.Exceptions.RegisterDataException.#ctor(System.UInt64,System.String,System.String)
-  - Ubytec.Language.Exceptions.RegisterDataException.ErrorCode
   langs:
   - csharp
   - vb
@@ -88,37 +87,6 @@ items:
   nameWithType.vb: RegisterDataException.New(ULong, String, String)
   fullName.vb: Ubytec.Language.Exceptions.RegisterDataException.New(ULong, String, String)
   name.vb: New(ULong, String, String)
-- uid: Ubytec.Language.Exceptions.RegisterDataException.ErrorCode
-  commentId: P:Ubytec.Language.Exceptions.RegisterDataException.ErrorCode
-  id: ErrorCode
-  parent: Ubytec.Language.Exceptions.RegisterDataException
-  langs:
-  - csharp
-  - vb
-  name: ErrorCode
-  nameWithType: RegisterDataException.ErrorCode
-  fullName: Ubytec.Language.Exceptions.RegisterDataException.ErrorCode
-  type: Property
-  source:
-    remote:
-      path: Ubytec/Language/Exceptions/RegisterDataException.cs
-      branch: main
-      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
-    id: ErrorCode
-    path: ../Ubytec/Language/Exceptions/RegisterDataException.cs
-    startLine: 4
-  assemblies:
-  - Ubytec
-  namespace: Ubytec.Language.Exceptions
-  example: []
-  syntax:
-    content: public override ulong ErrorCode { get; }
-    parameters: []
-    return:
-      type: System.UInt64
-    content.vb: Public Overrides ReadOnly Property ErrorCode As ULong
-  overridden: Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  overload: Ubytec.Language.Exceptions.RegisterDataException.ErrorCode*
 references:
 - uid: Ubytec.Language.Exceptions
   commentId: N:Ubytec.Language.Exceptions
@@ -565,17 +533,4 @@ references:
   nameWithType.vb: String
   fullName.vb: String
   name.vb: String
-- uid: Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  commentId: P:Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  parent: Ubytec.Language.Exceptions.UbytecException
-  href: Ubytec.Language.Exceptions.UbytecException.ErrorCode.html#Ubytec_Language_Exceptions_UbytecException_ErrorCode
-  name: ErrorCode
-  nameWithType: UbytecException.ErrorCode
-  fullName: Ubytec.Language.Exceptions.UbytecException.ErrorCode
-- uid: Ubytec.Language.Exceptions.RegisterDataException.ErrorCode*
-  commentId: Overload:Ubytec.Language.Exceptions.RegisterDataException.ErrorCode
-  href: Ubytec.Language.Exceptions.RegisterDataException.ErrorCode.html#Ubytec_Language_Exceptions_RegisterDataException_ErrorCode
-  name: ErrorCode
-  nameWithType: RegisterDataException.ErrorCode
-  fullName: Ubytec.Language.Exceptions.RegisterDataException.ErrorCode
 memberLayout: SeparatePages

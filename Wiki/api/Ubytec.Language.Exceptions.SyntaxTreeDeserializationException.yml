@@ -6,7 +6,6 @@ items:
   parent: Ubytec.Language.Exceptions
   children:
   - Ubytec.Language.Exceptions.SyntaxTreeDeserializationException.#ctor(System.UInt64,System.String,System.String)
-  - Ubytec.Language.Exceptions.SyntaxTreeDeserializationException.ErrorCode
   langs:
   - csharp
   - vb
@@ -21,10 +20,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: SyntaxTreeDeserializationException
     path: ../Ubytec/Language/Exceptions/SyntaxTreeDeserializationException.cs
-    startLine: 2
+    startLine: 8
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Exceptions
+  summary: An exception ocurred during syntax tree deserialization
+  example: []
   syntax:
     content: 'public class SyntaxTreeDeserializationException : UbytecException, ISerializable'
     content.vb: Public Class SyntaxTreeDeserializationException Inherits UbytecException Implements ISerializable
@@ -70,55 +71,29 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
     path: ../Ubytec/Language/Exceptions/SyntaxTreeDeserializationException.cs
-    startLine: 2
+    startLine: 8
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Exceptions
+  summary: An exception ocurred during syntax tree deserialization
+  example: []
   syntax:
     content: public SyntaxTreeDeserializationException(ulong errorCode, string message, string? helpLink = null)
     parameters:
     - id: errorCode
       type: System.UInt64
+      description: ''
     - id: message
       type: System.String
+      description: ''
     - id: helpLink
       type: System.String
+      description: ''
     content.vb: Public Sub New(errorCode As ULong, message As String, helpLink As String = Nothing)
   overload: Ubytec.Language.Exceptions.SyntaxTreeDeserializationException.#ctor*
   nameWithType.vb: SyntaxTreeDeserializationException.New(ULong, String, String)
   fullName.vb: Ubytec.Language.Exceptions.SyntaxTreeDeserializationException.New(ULong, String, String)
   name.vb: New(ULong, String, String)
-- uid: Ubytec.Language.Exceptions.SyntaxTreeDeserializationException.ErrorCode
-  commentId: P:Ubytec.Language.Exceptions.SyntaxTreeDeserializationException.ErrorCode
-  id: ErrorCode
-  parent: Ubytec.Language.Exceptions.SyntaxTreeDeserializationException
-  langs:
-  - csharp
-  - vb
-  name: ErrorCode
-  nameWithType: SyntaxTreeDeserializationException.ErrorCode
-  fullName: Ubytec.Language.Exceptions.SyntaxTreeDeserializationException.ErrorCode
-  type: Property
-  source:
-    remote:
-      path: Ubytec/Language/Exceptions/SyntaxTreeDeserializationException.cs
-      branch: main
-      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
-    id: ErrorCode
-    path: ../Ubytec/Language/Exceptions/SyntaxTreeDeserializationException.cs
-    startLine: 4
-  assemblies:
-  - Ubytec
-  namespace: Ubytec.Language.Exceptions
-  example: []
-  syntax:
-    content: public override ulong ErrorCode { get; }
-    parameters: []
-    return:
-      type: System.UInt64
-    content.vb: Public Overrides ReadOnly Property ErrorCode As ULong
-  overridden: Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  overload: Ubytec.Language.Exceptions.SyntaxTreeDeserializationException.ErrorCode*
 references:
 - uid: Ubytec.Language.Exceptions
   commentId: N:Ubytec.Language.Exceptions
@@ -565,17 +540,4 @@ references:
   nameWithType.vb: String
   fullName.vb: String
   name.vb: String
-- uid: Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  commentId: P:Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  parent: Ubytec.Language.Exceptions.UbytecException
-  href: Ubytec.Language.Exceptions.UbytecException.ErrorCode.html#Ubytec_Language_Exceptions_UbytecException_ErrorCode
-  name: ErrorCode
-  nameWithType: UbytecException.ErrorCode
-  fullName: Ubytec.Language.Exceptions.UbytecException.ErrorCode
-- uid: Ubytec.Language.Exceptions.SyntaxTreeDeserializationException.ErrorCode*
-  commentId: Overload:Ubytec.Language.Exceptions.SyntaxTreeDeserializationException.ErrorCode
-  href: Ubytec.Language.Exceptions.SyntaxTreeDeserializationException.ErrorCode.html#Ubytec_Language_Exceptions_SyntaxTreeDeserializationException_ErrorCode
-  name: ErrorCode
-  nameWithType: SyntaxTreeDeserializationException.ErrorCode
-  fullName: Ubytec.Language.Exceptions.SyntaxTreeDeserializationException.ErrorCode
 memberLayout: SeparatePages

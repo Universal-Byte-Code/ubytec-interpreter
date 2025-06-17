@@ -5,9 +5,8 @@ items:
   id: UbytecException
   parent: Ubytec.Language.Exceptions
   children:
-  - Ubytec.Language.Exceptions.UbytecException.#ctor(System.String,System.String)
+  - Ubytec.Language.Exceptions.UbytecException.#ctor(System.UInt64,System.String,System.String)
   - Ubytec.Language.Exceptions.UbytecException.Data
-  - Ubytec.Language.Exceptions.UbytecException.ErrorCode
   - Ubytec.Language.Exceptions.UbytecException.HelpLink
   - Ubytec.Language.Exceptions.UbytecException.Message
   langs:
@@ -24,10 +23,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: UbytecException
     path: ../Ubytec/Language/Exceptions/UbytecException.cs
-    startLine: 4
+    startLine: 8
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Exceptions
+  summary: >-
+    Represents the base class for all custom exceptions in the Ubytec language infrastructure.
+
+    Encapsulates an error code and optional help link.
+  example: []
   syntax:
     content: 'public abstract class UbytecException : Exception, ISerializable'
     content.vb: Public MustInherit Class UbytecException Inherits Exception Implements ISerializable
@@ -60,16 +64,16 @@ items:
   - System.Object.GetHashCode
   - System.Object.MemberwiseClone
   - System.Object.ReferenceEquals(System.Object,System.Object)
-- uid: Ubytec.Language.Exceptions.UbytecException.#ctor(System.String,System.String)
-  commentId: M:Ubytec.Language.Exceptions.UbytecException.#ctor(System.String,System.String)
-  id: '#ctor(System.String,System.String)'
+- uid: Ubytec.Language.Exceptions.UbytecException.#ctor(System.UInt64,System.String,System.String)
+  commentId: M:Ubytec.Language.Exceptions.UbytecException.#ctor(System.UInt64,System.String,System.String)
+  id: '#ctor(System.UInt64,System.String,System.String)'
   parent: Ubytec.Language.Exceptions.UbytecException
   langs:
   - csharp
   - vb
-  name: UbytecException(string, string?)
-  nameWithType: UbytecException.UbytecException(string, string?)
-  fullName: Ubytec.Language.Exceptions.UbytecException.UbytecException(string, string?)
+  name: UbytecException(ulong, string, string?)
+  nameWithType: UbytecException.UbytecException(ulong, string, string?)
+  fullName: Ubytec.Language.Exceptions.UbytecException.UbytecException(ulong, string, string?)
   type: Constructor
   source:
     remote:
@@ -78,51 +82,29 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
     path: ../Ubytec/Language/Exceptions/UbytecException.cs
-    startLine: 4
+    startLine: 8
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Exceptions
+  summary: >-
+    Represents the base class for all custom exceptions in the Ubytec language infrastructure.
+
+    Encapsulates an error code and optional help link.
+  example: []
   syntax:
-    content: protected UbytecException(string message, string? helpLink = null)
+    content: protected UbytecException(ulong errorCode, string message, string? helpLink = null)
     parameters:
+    - id: errorCode
+      type: System.UInt64
     - id: message
       type: System.String
     - id: helpLink
       type: System.String
-    content.vb: Protected Sub New(message As String, helpLink As String = Nothing)
+    content.vb: Protected Sub New(errorCode As ULong, message As String, helpLink As String = Nothing)
   overload: Ubytec.Language.Exceptions.UbytecException.#ctor*
-  nameWithType.vb: UbytecException.New(String, String)
-  fullName.vb: Ubytec.Language.Exceptions.UbytecException.New(String, String)
-  name.vb: New(String, String)
-- uid: Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  commentId: P:Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  id: ErrorCode
-  parent: Ubytec.Language.Exceptions.UbytecException
-  langs:
-  - csharp
-  - vb
-  name: ErrorCode
-  nameWithType: UbytecException.ErrorCode
-  fullName: Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  type: Property
-  source:
-    remote:
-      path: Ubytec/Language/Exceptions/UbytecException.cs
-      branch: main
-      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
-    id: ErrorCode
-    path: ../Ubytec/Language/Exceptions/UbytecException.cs
-    startLine: 6
-  assemblies:
-  - Ubytec
-  namespace: Ubytec.Language.Exceptions
-  syntax:
-    content: public abstract ulong ErrorCode { get; }
-    parameters: []
-    return:
-      type: System.UInt64
-    content.vb: Public MustOverride ReadOnly Property ErrorCode As ULong
-  overload: Ubytec.Language.Exceptions.UbytecException.ErrorCode*
+  nameWithType.vb: UbytecException.New(ULong, String, String)
+  fullName.vb: Ubytec.Language.Exceptions.UbytecException.New(ULong, String, String)
+  name.vb: New(ULong, String, String)
 - uid: Ubytec.Language.Exceptions.UbytecException.Data
   commentId: P:Ubytec.Language.Exceptions.UbytecException.Data
   id: Data
@@ -141,18 +123,17 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Data
     path: ../Ubytec/Language/Exceptions/UbytecException.cs
-    startLine: 8
+    startLine: 13
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Exceptions
-  summary: Gets a collection of key/value pairs that provide additional user-defined information about the exception.
+  summary: Provides structured data for the exception, including a generated GUID and a hexadecimal error code.
   example: []
   syntax:
     content: public override IDictionary Data { get; }
     parameters: []
     return:
       type: System.Collections.IDictionary
-      description: An object that implements the <xref href="System.Collections.IDictionary" data-throw-if-not-resolved="false"></xref> interface and contains a collection of user-defined key/value pairs. The default is an empty collection.
     content.vb: Public Overrides ReadOnly Property Data As IDictionary
   overridden: System.Exception.Data
   overload: Ubytec.Language.Exceptions.UbytecException.Data*
@@ -174,18 +155,17 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Message
     path: ../Ubytec/Language/Exceptions/UbytecException.cs
-    startLine: 13
+    startLine: 22
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Exceptions
-  summary: Gets a message that describes the current exception.
+  summary: Gets the message that describes the current exception.
   example: []
   syntax:
     content: public override string Message { get; }
     parameters: []
     return:
       type: System.String
-      description: The error message that explains the reason for the exception, or an empty string ("").
     content.vb: Public Overrides ReadOnly Property Message As String
   overridden: System.Exception.Message
   overload: Ubytec.Language.Exceptions.UbytecException.Message*
@@ -207,7 +187,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: HelpLink
     path: ../Ubytec/Language/Exceptions/UbytecException.cs
-    startLine: 14
+    startLine: 27
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Exceptions
@@ -218,7 +198,6 @@ items:
     parameters: []
     return:
       type: System.String
-      description: The Uniform Resource Name (URN) or Uniform Resource Locator (URL).
     content.vb: Public Overrides Property HelpLink As String
   overridden: System.Exception.HelpLink
   overload: Ubytec.Language.Exceptions.UbytecException.HelpLink*
@@ -611,30 +590,13 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.runtime.serialization
 - uid: Ubytec.Language.Exceptions.UbytecException.#ctor*
   commentId: Overload:Ubytec.Language.Exceptions.UbytecException.#ctor
-  href: Ubytec.Language.Exceptions.UbytecException.-ctor.html#Ubytec_Language_Exceptions_UbytecException__ctor_System_String_System_String_
+  href: Ubytec.Language.Exceptions.UbytecException.-ctor.html#Ubytec_Language_Exceptions_UbytecException__ctor_System_UInt64_System_String_System_String_
   name: UbytecException
   nameWithType: UbytecException.UbytecException
   fullName: Ubytec.Language.Exceptions.UbytecException.UbytecException
   nameWithType.vb: UbytecException.New
   fullName.vb: Ubytec.Language.Exceptions.UbytecException.New
   name.vb: New
-- uid: System.String
-  commentId: T:System.String
-  parent: System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.string
-  name: string
-  nameWithType: string
-  fullName: string
-  nameWithType.vb: String
-  fullName.vb: String
-  name.vb: String
-- uid: Ubytec.Language.Exceptions.UbytecException.ErrorCode*
-  commentId: Overload:Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  href: Ubytec.Language.Exceptions.UbytecException.ErrorCode.html#Ubytec_Language_Exceptions_UbytecException_ErrorCode
-  name: ErrorCode
-  nameWithType: UbytecException.ErrorCode
-  fullName: Ubytec.Language.Exceptions.UbytecException.ErrorCode
 - uid: System.UInt64
   commentId: T:System.UInt64
   parent: System
@@ -646,14 +608,17 @@ references:
   nameWithType.vb: ULong
   fullName.vb: ULong
   name.vb: ULong
-- uid: System.Collections.IDictionary
-  commentId: T:System.Collections.IDictionary
-  parent: System.Collections
+- uid: System.String
+  commentId: T:System.String
+  parent: System
   isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.collections.idictionary
-  name: IDictionary
-  nameWithType: IDictionary
-  fullName: System.Collections.IDictionary
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
 - uid: System.Exception.Data
   commentId: P:System.Exception.Data
   parent: System.Exception
@@ -668,6 +633,14 @@ references:
   name: Data
   nameWithType: UbytecException.Data
   fullName: Ubytec.Language.Exceptions.UbytecException.Data
+- uid: System.Collections.IDictionary
+  commentId: T:System.Collections.IDictionary
+  parent: System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.idictionary
+  name: IDictionary
+  nameWithType: IDictionary
+  fullName: System.Collections.IDictionary
 - uid: System.Collections
   commentId: N:System.Collections
   isExternal: true

@@ -7,18 +7,60 @@ using static Ubytec.Language.Syntax.TypeSystem.Types;
 
 namespace Ubytec.Language.HighLevel
 {
+    /// <summary>
+    /// Represents a Ubytec structured type (struct) which contains fields, properties,
+    /// functions, actions, and optional local/global contexts.
+    /// </summary>
     public readonly struct Struct : IUbytecContextEntity
     {
+        /// <summary>
+        /// Gets the name of the struct.
+        /// </summary>
         public string Name { get; }
+
+        /// <summary>
+        /// Gets the unique identifier for the struct.
+        /// </summary>
         public Guid ID { get; }
+
+        /// <summary>
+        /// Gets the type modifiers associated with the struct.
+        /// </summary>
         public TypeModifiers Modifiers { get; }
+
+        /// <summary>
+        /// Gets the fields declared in the struct.
+        /// </summary>
         public Field[] Fields { get; }
+
+        /// <summary>
+        /// Gets the properties declared in the struct.
+        /// </summary>
         public Property[] Properties { get; }
+
+        /// <summary>
+        /// Gets the functions declared in the struct.
+        /// </summary>
         public Func[] Functions { get; }
+
+        /// <summary>
+        /// Gets the actions declared in the struct.
+        /// </summary>
         public Action[] Actions { get; }
+
+        /// <summary>
+        /// Gets the optional local context of the struct.
+        /// </summary>
         public LocalContext? Locals { get; }
+
+        /// <summary>
+        /// Gets the optional global context of the struct.
+        /// </summary>
         public GlobalContext? Globals { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Struct"/> struct.
+        /// </summary>
         public Struct(string name, Field[] fields, Property[] properties, Func[] funcs, Action[] actions, Guid id,
                       LocalContext? locals = null, GlobalContext? globals = null,
                       TypeModifiers modifiers = TypeModifiers.None)
@@ -36,6 +78,10 @@ namespace Ubytec.Language.HighLevel
             Validate();
         }
 
+        /// <summary>
+        /// Validates the structure's definition, modifiers, and its members for consistency and correctness.
+        /// </summary>
+        /// <exception cref="Exception">Thrown when a validation rule is violated.</exception>
         public void Validate()
         {
             var memberNames = new HashSet<string>();
@@ -108,7 +154,6 @@ namespace Ubytec.Language.HighLevel
                     throw new Exception($"Member '{name}' cannot be both global and local.");
             }
 
-            // Validación recursiva
             foreach (var f in Fields) f.Validate();
             foreach (var p in Properties) p.Validate();
             foreach (var fn in Functions) fn.Validate();
@@ -118,6 +163,11 @@ namespace Ubytec.Language.HighLevel
             Globals?.Validate();
         }
 
+        /// <summary>
+        /// Compiles the struct and its members into assembly-like text based on the current scope context.
+        /// </summary>
+        /// <param name="scopes">The compilation scope stack to manage entry and exit contexts.</param>
+        /// <returns>A string containing the compiled representation of the struct.</returns>
         public string Compile(CompilationScopes scopes)
         {
             scopes.Push(new ScopeContext
@@ -134,23 +184,18 @@ namespace Ubytec.Language.HighLevel
                 sb.AppendLine($"{scopes.Peek().StartLabel}:");
                 sb.AppendLine($"; Struct: {Name} (ID: {ID})");
 
-                // Compile fields
                 foreach (var field in Fields)
                     sb.AppendLine(field.Compile(scopes));
 
-                // Compile properties
                 foreach (var prop in Properties)
                     sb.Append(prop.Compile(scopes)).AppendLine();
 
-                // Compile functions
                 foreach (var func in Functions)
                     sb.Append(func.Compile(scopes)).AppendLine();
 
-                // Compile actions
                 foreach (var action in Actions)
                     sb.Append(action.Compile(scopes)).AppendLine();
 
-                // Compile contexts
                 sb.Append(Locals?.Compile(scopes));
                 sb.Append(Globals?.Compile(scopes));
 

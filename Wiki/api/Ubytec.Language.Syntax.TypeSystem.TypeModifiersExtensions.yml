@@ -20,7 +20,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: TypeModifiersExtensions
     path: ../Ubytec/Language/Syntax/TypeSystem/TypeModifiersExtensions.cs
-    startLine: 8
+    startLine: 9
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
@@ -61,7 +61,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: CountSetBits
     path: ../Ubytec/Language/Syntax/TypeSystem/TypeModifiersExtensions.cs
-    startLine: 17
+    startLine: 18
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem

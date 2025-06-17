@@ -29,10 +29,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: UbytecRegistryOptions
     path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
-    startLine: 10
+    startLine: 14
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Grammar
+  summary: >-
+    Provides configuration options and retrieval methods for TextMate grammars and themes
+
+    used by the Ubytec language support in editors.
+  example: []
   syntax:
     content: 'public class UbytecRegistryOptions : IRegistryOptions'
     content.vb: Public Class UbytecRegistryOptions Implements IRegistryOptions
@@ -66,7 +71,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _httpClient
     path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
-    startLine: 12
+    startLine: 16
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Grammar
@@ -93,16 +98,18 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: LexiconUrl
     path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
-    startLine: 14
+    startLine: 21
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Grammar
+  summary: URL of the TextMate grammar (lexicon) JSON file defining Ubytec syntax.
+  example: []
   syntax:
-    content: public string? LexiconUrl { get; set; }
+    content: public Uri? LexiconUrl { get; set; }
     parameters: []
     return:
-      type: System.String
-    content.vb: Public Property LexiconUrl As String
+      type: System.Uri
+    content.vb: Public Property LexiconUrl As Uri
   overload: Ubytec.Language.Grammar.UbytecRegistryOptions.LexiconUrl*
 - uid: Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl
   commentId: P:Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl
@@ -122,16 +129,18 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: DefaultThemeUrl
     path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
-    startLine: 15
+    startLine: 27
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Grammar
+  summary: URL of the default TextMate theme JSON file for Ubytec syntax highlighting.
+  example: []
   syntax:
-    content: public string? DefaultThemeUrl { get; set; }
+    content: public Uri? DefaultThemeUrl { get; set; }
     parameters: []
     return:
-      type: System.String
-    content.vb: Public Property DefaultThemeUrl As String
+      type: System.Uri
+    content.vb: Public Property DefaultThemeUrl As Uri
   overload: Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl*
 - uid: Ubytec.Language.Grammar.UbytecRegistryOptions.GetInjections(System.String)
   commentId: M:Ubytec.Language.Grammar.UbytecRegistryOptions.GetInjections(System.String)
@@ -151,18 +160,21 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: GetInjections
     path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
-    startLine: 18
+    startLine: 36
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Grammar
+  summary: Returns a collection of scope names that should be injected into the given scope.
   example: []
   syntax:
     content: public ICollection<string> GetInjections(string scopeName)
     parameters:
     - id: scopeName
       type: System.String
+      description: The name of the scope for which to retrieve injections.
     return:
       type: System.Collections.Generic.ICollection{System.String}
+      description: A collection of scope names to inject, or null if none.
     content.vb: Public Function GetInjections(scopeName As String) As ICollection(Of String)
   overload: Ubytec.Language.Grammar.UbytecRegistryOptions.GetInjections*
   implements:
@@ -188,18 +200,21 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: GetGrammar
     path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
-    startLine: 20
+    startLine: 44
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Grammar
+  summary: Retrieves and parses the TextMate grammar for the specified scope.
   example: []
   syntax:
-    content: public IRawGrammar GetGrammar(string scopeName)
+    content: public IRawGrammar? GetGrammar(string scopeName)
     parameters:
     - id: scopeName
       type: System.String
+      description: The grammar scope name to load (e.g., "source.ubytec").
     return:
       type: TextMateSharp.Internal.Types.IRawGrammar
+      description: An <xref href="TextMateSharp.Internal.Types.IRawGrammar" data-throw-if-not-resolved="false"></xref> representing the parsed grammar, or null on failure.
     content.vb: Public Function GetGrammar(scopeName As String) As IRawGrammar
   overload: Ubytec.Language.Grammar.UbytecRegistryOptions.GetGrammar*
   implements:
@@ -225,18 +240,21 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: GetTheme
     path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
-    startLine: 52
+    startLine: 67
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Grammar
+  summary: Retrieves a TextMate theme for the specified scope.
   example: []
   syntax:
     content: public IRawTheme GetTheme(string scopeName)
     parameters:
     - id: scopeName
       type: System.String
+      description: The theme scope name to load.
     return:
       type: TextMateSharp.Themes.IRawTheme
+      description: An <xref href="TextMateSharp.Themes.IRawTheme" data-throw-if-not-resolved="false"></xref> representing the theme, or null if not available.
     content.vb: Public Function GetTheme(scopeName As String) As IRawTheme
   overload: Ubytec.Language.Grammar.UbytecRegistryOptions.GetTheme*
   implements:
@@ -262,23 +280,23 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: GetDefaultTheme
     path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
-    startLine: 59
+    startLine: 75
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Grammar
-  summary: ''
+  summary: Retrieves and parses the default TextMate theme for Ubytec syntax highlighting.
   example: []
   syntax:
-    content: public IRawTheme GetDefaultTheme()
+    content: public IRawTheme? GetDefaultTheme()
     return:
       type: TextMateSharp.Themes.IRawTheme
-      description: ''
+      description: An <xref href="TextMateSharp.Themes.IRawTheme" data-throw-if-not-resolved="false"></xref> representing the default theme.
     content.vb: Public Function GetDefaultTheme() As IRawTheme
   overload: Ubytec.Language.Grammar.UbytecRegistryOptions.GetDefaultTheme*
   exceptions:
   - type: System.Net.Http.HttpIOException
     commentId: T:System.Net.Http.HttpIOException
-    description: ''
+    description: Thrown if the theme cannot be fetched or parsed.
   implements:
   - TextMateSharp.Registry.IRegistryOptions.GetDefaultTheme
 - uid: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchLexicon(System.String)
@@ -299,19 +317,27 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: FetchLexicon
     path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
-    startLine: 92
+    startLine: 101
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Grammar
+  summary: Asynchronously fetches the lexicon (grammar) content from the specified URL.
+  example: []
   syntax:
     content: private static Task<string> FetchLexicon(string? lexiconUrl)
     parameters:
     - id: lexiconUrl
       type: System.String
+      description: The absolute URI of the lexicon JSON file.
     return:
       type: System.Threading.Tasks.Task{System.String}
+      description: A <xref href="System.Threading.Tasks.Task%601" data-throw-if-not-resolved="false"></xref> producing the JSON content.
     content.vb: Private Shared Function FetchLexicon(lexiconUrl As String) As Task(Of String)
   overload: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchLexicon*
+  exceptions:
+  - type: Ubytec.Language.Exceptions.FetchLexiconException
+    commentId: T:Ubytec.Language.Exceptions.FetchLexiconException
+    description: Thrown if the HTTP request fails.
   nameWithType.vb: UbytecRegistryOptions.FetchLexicon(String)
   fullName.vb: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchLexicon(String)
   name.vb: FetchLexicon(String)
@@ -333,19 +359,27 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: FetchTheme
     path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
-    startLine: 104
+    startLine: 121
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Grammar
+  summary: Asynchronously fetches the theme content from the specified URL.
+  example: []
   syntax:
     content: private static Task<string> FetchTheme(string? themeUrl)
     parameters:
     - id: themeUrl
       type: System.String
+      description: The absolute URI of the theme JSON file.
     return:
       type: System.Threading.Tasks.Task{System.String}
+      description: A <xref href="System.Threading.Tasks.Task%601" data-throw-if-not-resolved="false"></xref> producing the JSON content.
     content.vb: Private Shared Function FetchTheme(themeUrl As String) As Task(Of String)
   overload: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchTheme*
+  exceptions:
+  - type: Ubytec.Language.Exceptions.FetchLexiconException
+    commentId: T:Ubytec.Language.Exceptions.FetchLexiconException
+    description: Thrown if the HTTP request fails.
   nameWithType.vb: UbytecRegistryOptions.FetchTheme(String)
   fullName.vb: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchTheme(String)
   name.vb: FetchTheme(String)
@@ -367,19 +401,24 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: GetStreamWithStreamWriter
     path: ../Ubytec/Language/Grammar/UbytecRegistryOptions.cs
-    startLine: 116
+    startLine: 141
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Grammar
+  summary: Creates a <xref href="System.IO.MemoryStream" data-throw-if-not-resolved="false"></xref> containing the specified string encoded using the given encoding.
+  example: []
   syntax:
     content: private static MemoryStream GetStreamWithStreamWriter(string sampleString, Encoding? encoding = null)
     parameters:
     - id: sampleString
       type: System.String
+      description: The string to write into the stream.
     - id: encoding
       type: System.Text.Encoding
+      description: The text encoding to apply. Defaults to <xref href="System.Text.Encoding.Default" data-throw-if-not-resolved="false"></xref> if null.
     return:
       type: System.IO.MemoryStream
+      description: A <xref href="System.IO.MemoryStream" data-throw-if-not-resolved="false"></xref> positioned at the beginning containing the encoded text.
     content.vb: Private Shared Function GetStreamWithStreamWriter(sampleString As String, encoding As Encoding = Nothing) As MemoryStream
   overload: Ubytec.Language.Grammar.UbytecRegistryOptions.GetStreamWithStreamWriter*
   nameWithType.vb: UbytecRegistryOptions.GetStreamWithStreamWriter(String, Encoding)
@@ -733,17 +772,14 @@ references:
   name: LexiconUrl
   nameWithType: UbytecRegistryOptions.LexiconUrl
   fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.LexiconUrl
-- uid: System.String
-  commentId: T:System.String
+- uid: System.Uri
+  commentId: T:System.Uri
   parent: System
   isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.string
-  name: string
-  nameWithType: string
-  fullName: string
-  nameWithType.vb: String
-  fullName.vb: String
-  name.vb: String
+  href: https://learn.microsoft.com/dotnet/api/system.uri
+  name: Uri
+  nameWithType: Uri
+  fullName: System.Uri
 - uid: Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl*
   commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl
   href: Ubytec.Language.Grammar.UbytecRegistryOptions.DefaultThemeUrl.html#Ubytec_Language_Grammar_UbytecRegistryOptions_DefaultThemeUrl
@@ -787,6 +823,17 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
   - name: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
 - uid: System.Collections.Generic.ICollection{System.String}
   commentId: T:System.Collections.Generic.ICollection{System.String}
   parent: System.Collections.Generic
@@ -887,6 +934,13 @@ references:
     name: Generic
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: TextMateSharp.Internal.Types.IRawGrammar
+  commentId: T:TextMateSharp.Internal.Types.IRawGrammar
+  parent: TextMateSharp.Internal.Types
+  isExternal: true
+  name: IRawGrammar
+  nameWithType: IRawGrammar
+  fullName: TextMateSharp.Internal.Types.IRawGrammar
 - uid: Ubytec.Language.Grammar.UbytecRegistryOptions.GetGrammar*
   commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.GetGrammar
   href: Ubytec.Language.Grammar.UbytecRegistryOptions.GetGrammar.html#Ubytec_Language_Grammar_UbytecRegistryOptions_GetGrammar_System_String_
@@ -924,13 +978,6 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
   - name: )
-- uid: TextMateSharp.Internal.Types.IRawGrammar
-  commentId: T:TextMateSharp.Internal.Types.IRawGrammar
-  parent: TextMateSharp.Internal.Types
-  isExternal: true
-  name: IRawGrammar
-  nameWithType: IRawGrammar
-  fullName: TextMateSharp.Internal.Types.IRawGrammar
 - uid: TextMateSharp.Internal.Types
   commentId: N:TextMateSharp.Internal.Types
   isExternal: true
@@ -961,6 +1008,13 @@ references:
   - uid: TextMateSharp.Internal.Types
     name: Types
     isExternal: true
+- uid: TextMateSharp.Themes.IRawTheme
+  commentId: T:TextMateSharp.Themes.IRawTheme
+  parent: TextMateSharp.Themes
+  isExternal: true
+  name: IRawTheme
+  nameWithType: IRawTheme
+  fullName: TextMateSharp.Themes.IRawTheme
 - uid: Ubytec.Language.Grammar.UbytecRegistryOptions.GetTheme*
   commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.GetTheme
   href: Ubytec.Language.Grammar.UbytecRegistryOptions.GetTheme.html#Ubytec_Language_Grammar_UbytecRegistryOptions_GetTheme_System_String_
@@ -998,13 +1052,6 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
   - name: )
-- uid: TextMateSharp.Themes.IRawTheme
-  commentId: T:TextMateSharp.Themes.IRawTheme
-  parent: TextMateSharp.Themes
-  isExternal: true
-  name: IRawTheme
-  nameWithType: IRawTheme
-  fullName: TextMateSharp.Themes.IRawTheme
 - uid: TextMateSharp.Themes
   commentId: N:TextMateSharp.Themes
   isExternal: true
@@ -1059,6 +1106,40 @@ references:
     isExternal: true
   - name: (
   - name: )
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: Ubytec.Language.Exceptions.FetchLexiconException
+  commentId: T:Ubytec.Language.Exceptions.FetchLexiconException
+  href: Ubytec.Language.Exceptions.FetchLexiconException.html
+  name: FetchLexiconException
+  nameWithType: FetchLexiconException
+  fullName: Ubytec.Language.Exceptions.FetchLexiconException
 - uid: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchLexicon*
   commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.FetchLexicon
   href: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchLexicon.html#Ubytec_Language_Grammar_UbytecRegistryOptions_FetchLexicon_System_String_
@@ -1099,34 +1180,6 @@ references:
     name: String
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: )
-- uid: System.Threading.Tasks.Task`1
-  commentId: T:System.Threading.Tasks.Task`1
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
-  name: Task<TResult>
-  nameWithType: Task<TResult>
-  fullName: System.Threading.Tasks.Task<TResult>
-  nameWithType.vb: Task(Of TResult)
-  fullName.vb: System.Threading.Tasks.Task(Of TResult)
-  name.vb: Task(Of TResult)
-  spec.csharp:
-  - uid: System.Threading.Tasks.Task`1
-    name: Task
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
-  - name: <
-  - name: TResult
-  - name: '>'
-  spec.vb:
-  - uid: System.Threading.Tasks.Task`1
-    name: Task
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
-  - name: (
-  - name: Of
-  - name: " "
-  - name: TResult
   - name: )
 - uid: System.Threading.Tasks
   commentId: N:System.Threading.Tasks
@@ -1171,6 +1224,21 @@ references:
   name: FetchTheme
   nameWithType: UbytecRegistryOptions.FetchTheme
   fullName: Ubytec.Language.Grammar.UbytecRegistryOptions.FetchTheme
+- uid: System.IO.MemoryStream
+  commentId: T:System.IO.MemoryStream
+  parent: System.IO
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.io.memorystream
+  name: MemoryStream
+  nameWithType: MemoryStream
+  fullName: System.IO.MemoryStream
+- uid: System.Text.Encoding.Default
+  commentId: P:System.Text.Encoding.Default
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.text.encoding.default
+  name: Default
+  nameWithType: Encoding.Default
+  fullName: System.Text.Encoding.Default
 - uid: Ubytec.Language.Grammar.UbytecRegistryOptions.GetStreamWithStreamWriter*
   commentId: Overload:Ubytec.Language.Grammar.UbytecRegistryOptions.GetStreamWithStreamWriter
   href: Ubytec.Language.Grammar.UbytecRegistryOptions.GetStreamWithStreamWriter.html#Ubytec_Language_Grammar_UbytecRegistryOptions_GetStreamWithStreamWriter_System_String_System_Text_Encoding_
@@ -1185,41 +1253,6 @@ references:
   name: Encoding
   nameWithType: Encoding
   fullName: System.Text.Encoding
-- uid: System.IO.MemoryStream
-  commentId: T:System.IO.MemoryStream
-  parent: System.IO
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.io.memorystream
-  name: MemoryStream
-  nameWithType: MemoryStream
-  fullName: System.IO.MemoryStream
-- uid: System.Text
-  commentId: N:System.Text
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system
-  name: System.Text
-  nameWithType: System.Text
-  fullName: System.Text
-  spec.csharp:
-  - uid: System
-    name: System
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system
-  - name: .
-  - uid: System.Text
-    name: Text
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.text
-  spec.vb:
-  - uid: System
-    name: System
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system
-  - name: .
-  - uid: System.Text
-    name: Text
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.text
 - uid: System.IO
   commentId: N:System.IO
   isExternal: true
@@ -1247,4 +1280,31 @@ references:
     name: IO
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.io
+- uid: System.Text
+  commentId: N:System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Text
+  nameWithType: System.Text
+  fullName: System.Text
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
 memberLayout: SeparatePages

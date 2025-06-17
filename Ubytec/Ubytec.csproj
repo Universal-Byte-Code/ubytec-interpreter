@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <AssemblyVersion>1.0.9296.24924</AssemblyVersion>
-    <FileVersion>1.0.9296.24924</FileVersion>
+    <AssemblyVersion>1.0.9296.41402</AssemblyVersion>
+    <FileVersion>1.0.9296.41402</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -31,10 +31,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Struct
     path: ../Ubytec/Language/HighLevel/Struct.cs
-    startLine: 9
+    startLine: 13
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
+  summary: >-
+    Represents a Ubytec structured type (struct) which contains fields, properties,
+
+    functions, actions, and optional local/global contexts.
+  example: []
   syntax:
     content: 'public readonly struct Struct : IUbytecContextEntity, IUbytecHighLevelEntity, IUbytecEntity'
     content.vb: Public Structure Struct Implements IUbytecContextEntity, IUbytecHighLevelEntity, IUbytecEntity
@@ -67,10 +72,11 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Name
     path: ../Ubytec/Language/HighLevel/Struct.cs
-    startLine: 11
+    startLine: 18
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
+  summary: Gets the name of the struct.
   example: []
   syntax:
     content: public string Name { get; }
@@ -99,10 +105,11 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ID
     path: ../Ubytec/Language/HighLevel/Struct.cs
-    startLine: 12
+    startLine: 23
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
+  summary: Gets the unique identifier for the struct.
   example: []
   syntax:
     content: public Guid ID { get; }
@@ -131,10 +138,11 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Modifiers
     path: ../Ubytec/Language/HighLevel/Struct.cs
-    startLine: 13
+    startLine: 28
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
+  summary: Gets the type modifiers associated with the struct.
   example: []
   syntax:
     content: public Types.TypeModifiers Modifiers { get; }
@@ -163,10 +171,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Fields
     path: ../Ubytec/Language/HighLevel/Struct.cs
-    startLine: 14
+    startLine: 33
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
+  summary: Gets the fields declared in the struct.
+  example: []
   syntax:
     content: public Field[] Fields { get; }
     parameters: []
@@ -192,10 +202,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Properties
     path: ../Ubytec/Language/HighLevel/Struct.cs
-    startLine: 15
+    startLine: 38
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
+  summary: Gets the properties declared in the struct.
+  example: []
   syntax:
     content: public Property[] Properties { get; }
     parameters: []
@@ -221,10 +233,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Functions
     path: ../Ubytec/Language/HighLevel/Struct.cs
-    startLine: 16
+    startLine: 43
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
+  summary: Gets the functions declared in the struct.
+  example: []
   syntax:
     content: public Func[] Functions { get; }
     parameters: []
@@ -250,10 +264,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Actions
     path: ../Ubytec/Language/HighLevel/Struct.cs
-    startLine: 17
+    startLine: 48
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
+  summary: Gets the actions declared in the struct.
+  example: []
   syntax:
     content: public Action[] Actions { get; }
     parameters: []
@@ -279,10 +295,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Locals
     path: ../Ubytec/Language/HighLevel/Struct.cs
-    startLine: 18
+    startLine: 53
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
+  summary: Gets the optional local context of the struct.
+  example: []
   syntax:
     content: public LocalContext? Locals { get; }
     parameters: []
@@ -308,10 +326,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Globals
     path: ../Ubytec/Language/HighLevel/Struct.cs
-    startLine: 19
+    startLine: 58
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
+  summary: Gets the optional global context of the struct.
+  example: []
   syntax:
     content: public GlobalContext? Globals { get; }
     parameters: []
@@ -337,10 +357,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
     path: ../Ubytec/Language/HighLevel/Struct.cs
-    startLine: 21
+    startLine: 63
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
+  summary: Initializes a new instance of the <xref href="Ubytec.Language.HighLevel.Struct" data-throw-if-not-resolved="false"></xref> struct.
+  example: []
   syntax:
     content: public Struct(string name, Field[] fields, Property[] properties, Func[] funcs, Action[] actions, Guid id, LocalContext? locals = null, GlobalContext? globals = null, Types.TypeModifiers modifiers = TypeModifiers.None)
     parameters:
@@ -385,15 +407,20 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Validate
     path: ../Ubytec/Language/HighLevel/Struct.cs
-    startLine: 38
+    startLine: 84
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
+  summary: Validates the structure's definition, modifiers, and its members for consistency and correctness.
   example: []
   syntax:
     content: public void Validate()
     content.vb: Public Sub Validate()
   overload: Ubytec.Language.HighLevel.Struct.Validate*
+  exceptions:
+  - type: System.Exception
+    commentId: T:System.Exception
+    description: Thrown when a validation rule is violated.
   implements:
   - Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate
 - uid: Ubytec.Language.HighLevel.Struct.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
@@ -414,27 +441,21 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Compile
     path: ../Ubytec/Language/HighLevel/Struct.cs
-    startLine: 120
+    startLine: 170
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
-  summary: Compiles this entity, emitting its code into the current compilation scopes.
+  summary: Compiles the struct and its members into assembly-like text based on the current scope context.
   example: []
   syntax:
     content: public string Compile(CompilationScopes scopes)
     parameters:
     - id: scopes
       type: Ubytec.Language.Syntax.Scopes.CompilationScopes
-      description: >-
-        The <xref href="Ubytec.Language.Syntax.Scopes.CompilationScopes" data-throw-if-not-resolved="false"></xref> used to track nested blocks,
-
-        finalizers, and control-flow during compilation.
+      description: The compilation scope stack to manage entry and exit contexts.
     return:
       type: System.String
-      description: >-
-        A string containing the compiled representation of this entity
-
-        (e.g., opcode mnemonics, labels, directives).
+      description: A string containing the compiled representation of the struct.
     content.vb: Public Function Compile(scopes As CompilationScopes) As String
   overload: Ubytec.Language.HighLevel.Struct.Compile*
   implements:
@@ -1071,6 +1092,13 @@ references:
     name: GlobalContext
     href: Ubytec.Language.HighLevel.GlobalContext.html
   - name: '?'
+- uid: Ubytec.Language.HighLevel.Struct
+  commentId: T:Ubytec.Language.HighLevel.Struct
+  parent: Ubytec.Language.HighLevel
+  href: Ubytec.Language.HighLevel.Struct.html
+  name: Struct
+  nameWithType: Struct
+  fullName: Ubytec.Language.HighLevel.Struct
 - uid: Ubytec.Language.HighLevel.Struct.#ctor*
   commentId: Overload:Ubytec.Language.HighLevel.Struct.#ctor
   href: Ubytec.Language.HighLevel.Struct.-ctor.html#Ubytec_Language_HighLevel_Struct__ctor_System_String_Ubytec_Language_HighLevel_Field___Ubytec_Language_HighLevel_Property___Ubytec_Language_HighLevel_Func___Ubytec_Language_HighLevel_Action___System_Guid_System_Nullable_Ubytec_Language_HighLevel_LocalContext__System_Nullable_Ubytec_Language_HighLevel_GlobalContext__Ubytec_Language_Syntax_TypeSystem_Types_TypeModifiers_
@@ -1080,6 +1108,14 @@ references:
   nameWithType.vb: Struct.New
   fullName.vb: Ubytec.Language.HighLevel.Struct.New
   name.vb: New
+- uid: System.Exception
+  commentId: T:System.Exception
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.exception
+  name: Exception
+  nameWithType: Exception
+  fullName: System.Exception
 - uid: Ubytec.Language.HighLevel.Struct.Validate*
   commentId: Overload:Ubytec.Language.HighLevel.Struct.Validate
   href: Ubytec.Language.HighLevel.Struct.Validate.html#Ubytec_Language_HighLevel_Struct_Validate
@@ -1105,13 +1141,6 @@ references:
     href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.Validate.html#Ubytec_Language_HighLevel_Interfaces_IUbytecHighLevelEntity_Validate
   - name: (
   - name: )
-- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
-  commentId: T:Ubytec.Language.Syntax.Scopes.CompilationScopes
-  parent: Ubytec.Language.Syntax.Scopes
-  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
-  name: CompilationScopes
-  nameWithType: CompilationScopes
-  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes
 - uid: Ubytec.Language.HighLevel.Struct.Compile*
   commentId: Overload:Ubytec.Language.HighLevel.Struct.Compile
   href: Ubytec.Language.HighLevel.Struct.Compile.html#Ubytec_Language_HighLevel_Struct_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
@@ -1143,6 +1172,13 @@ references:
     name: CompilationScopes
     href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
   - name: )
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  commentId: T:Ubytec.Language.Syntax.Scopes.CompilationScopes
+  parent: Ubytec.Language.Syntax.Scopes
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  name: CompilationScopes
+  nameWithType: CompilationScopes
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes
 - uid: Ubytec.Language.Syntax.Scopes
   commentId: N:Ubytec.Language.Syntax.Scopes
   href: Ubytec.html

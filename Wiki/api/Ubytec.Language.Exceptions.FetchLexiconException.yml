@@ -6,7 +6,6 @@ items:
   parent: Ubytec.Language.Exceptions
   children:
   - Ubytec.Language.Exceptions.FetchLexiconException.#ctor(System.UInt64,System.String,System.String)
-  - Ubytec.Language.Exceptions.FetchLexiconException.ErrorCode
   langs:
   - csharp
   - vb
@@ -88,37 +87,6 @@ items:
   nameWithType.vb: FetchLexiconException.New(ULong, String, String)
   fullName.vb: Ubytec.Language.Exceptions.FetchLexiconException.New(ULong, String, String)
   name.vb: New(ULong, String, String)
-- uid: Ubytec.Language.Exceptions.FetchLexiconException.ErrorCode
-  commentId: P:Ubytec.Language.Exceptions.FetchLexiconException.ErrorCode
-  id: ErrorCode
-  parent: Ubytec.Language.Exceptions.FetchLexiconException
-  langs:
-  - csharp
-  - vb
-  name: ErrorCode
-  nameWithType: FetchLexiconException.ErrorCode
-  fullName: Ubytec.Language.Exceptions.FetchLexiconException.ErrorCode
-  type: Property
-  source:
-    remote:
-      path: Ubytec/Language/Exceptions/FetchLexiconException.cs
-      branch: main
-      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
-    id: ErrorCode
-    path: ../Ubytec/Language/Exceptions/FetchLexiconException.cs
-    startLine: 4
-  assemblies:
-  - Ubytec
-  namespace: Ubytec.Language.Exceptions
-  example: []
-  syntax:
-    content: public override ulong ErrorCode { get; }
-    parameters: []
-    return:
-      type: System.UInt64
-    content.vb: Public Overrides ReadOnly Property ErrorCode As ULong
-  overridden: Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  overload: Ubytec.Language.Exceptions.FetchLexiconException.ErrorCode*
 references:
 - uid: Ubytec.Language.Exceptions
   commentId: N:Ubytec.Language.Exceptions
@@ -565,17 +533,4 @@ references:
   nameWithType.vb: String
   fullName.vb: String
   name.vb: String
-- uid: Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  commentId: P:Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  parent: Ubytec.Language.Exceptions.UbytecException
-  href: Ubytec.Language.Exceptions.UbytecException.ErrorCode.html#Ubytec_Language_Exceptions_UbytecException_ErrorCode
-  name: ErrorCode
-  nameWithType: UbytecException.ErrorCode
-  fullName: Ubytec.Language.Exceptions.UbytecException.ErrorCode
-- uid: Ubytec.Language.Exceptions.FetchLexiconException.ErrorCode*
-  commentId: Overload:Ubytec.Language.Exceptions.FetchLexiconException.ErrorCode
-  href: Ubytec.Language.Exceptions.FetchLexiconException.ErrorCode.html#Ubytec_Language_Exceptions_FetchLexiconException_ErrorCode
-  name: ErrorCode
-  nameWithType: FetchLexiconException.ErrorCode
-  fullName: Ubytec.Language.Exceptions.FetchLexiconException.ErrorCode
 memberLayout: SeparatePages

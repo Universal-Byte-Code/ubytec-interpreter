@@ -15,6 +15,7 @@ namespace Ubytec.Language.Syntax.ExpressionFragments
     /// The initial value assigned to the variable; 
     /// may be <c>null</c> if no explicit initializer is present.
     /// </param>
+    
     public readonly record struct VariableExpressionFragment(UType Type, string Name, object? Value)
         : IUbytecExpressionFragment
     {

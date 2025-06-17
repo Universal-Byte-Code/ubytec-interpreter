@@ -6,7 +6,6 @@ items:
   parent: Ubytec.Language.Exceptions
   children:
   - Ubytec.Language.Exceptions.TokenizationOperationException.#ctor(System.UInt64,System.String,System.String)
-  - Ubytec.Language.Exceptions.TokenizationOperationException.ErrorCode
   langs:
   - csharp
   - vb
@@ -21,10 +20,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: TokenizationOperationException
     path: ../Ubytec/Language/Exceptions/TokenizationOperationException.cs
-    startLine: 2
+    startLine: 8
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Exceptions
+  summary: An exception occurred during tokenization
+  example: []
   syntax:
     content: 'public class TokenizationOperationException : UbytecException, ISerializable'
     content.vb: Public Class TokenizationOperationException Inherits UbytecException Implements ISerializable
@@ -70,55 +71,29 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
     path: ../Ubytec/Language/Exceptions/TokenizationOperationException.cs
-    startLine: 2
+    startLine: 8
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Exceptions
+  summary: An exception occurred during tokenization
+  example: []
   syntax:
     content: public TokenizationOperationException(ulong errorCode, string message, string? helpLink = null)
     parameters:
     - id: errorCode
       type: System.UInt64
+      description: ''
     - id: message
       type: System.String
+      description: ''
     - id: helpLink
       type: System.String
+      description: ''
     content.vb: Public Sub New(errorCode As ULong, message As String, helpLink As String = Nothing)
   overload: Ubytec.Language.Exceptions.TokenizationOperationException.#ctor*
   nameWithType.vb: TokenizationOperationException.New(ULong, String, String)
   fullName.vb: Ubytec.Language.Exceptions.TokenizationOperationException.New(ULong, String, String)
   name.vb: New(ULong, String, String)
-- uid: Ubytec.Language.Exceptions.TokenizationOperationException.ErrorCode
-  commentId: P:Ubytec.Language.Exceptions.TokenizationOperationException.ErrorCode
-  id: ErrorCode
-  parent: Ubytec.Language.Exceptions.TokenizationOperationException
-  langs:
-  - csharp
-  - vb
-  name: ErrorCode
-  nameWithType: TokenizationOperationException.ErrorCode
-  fullName: Ubytec.Language.Exceptions.TokenizationOperationException.ErrorCode
-  type: Property
-  source:
-    remote:
-      path: Ubytec/Language/Exceptions/TokenizationOperationException.cs
-      branch: main
-      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
-    id: ErrorCode
-    path: ../Ubytec/Language/Exceptions/TokenizationOperationException.cs
-    startLine: 4
-  assemblies:
-  - Ubytec
-  namespace: Ubytec.Language.Exceptions
-  example: []
-  syntax:
-    content: public override ulong ErrorCode { get; }
-    parameters: []
-    return:
-      type: System.UInt64
-    content.vb: Public Overrides ReadOnly Property ErrorCode As ULong
-  overridden: Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  overload: Ubytec.Language.Exceptions.TokenizationOperationException.ErrorCode*
 references:
 - uid: Ubytec.Language.Exceptions
   commentId: N:Ubytec.Language.Exceptions
@@ -565,17 +540,4 @@ references:
   nameWithType.vb: String
   fullName.vb: String
   name.vb: String
-- uid: Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  commentId: P:Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  parent: Ubytec.Language.Exceptions.UbytecException
-  href: Ubytec.Language.Exceptions.UbytecException.ErrorCode.html#Ubytec_Language_Exceptions_UbytecException_ErrorCode
-  name: ErrorCode
-  nameWithType: UbytecException.ErrorCode
-  fullName: Ubytec.Language.Exceptions.UbytecException.ErrorCode
-- uid: Ubytec.Language.Exceptions.TokenizationOperationException.ErrorCode*
-  commentId: Overload:Ubytec.Language.Exceptions.TokenizationOperationException.ErrorCode
-  href: Ubytec.Language.Exceptions.TokenizationOperationException.ErrorCode.html#Ubytec_Language_Exceptions_TokenizationOperationException_ErrorCode
-  name: ErrorCode
-  nameWithType: TokenizationOperationException.ErrorCode
-  fullName: Ubytec.Language.Exceptions.TokenizationOperationException.ErrorCode
 memberLayout: SeparatePages

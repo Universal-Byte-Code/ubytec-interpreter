@@ -27,7 +27,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Variable
     path: ../Ubytec/Language/HighLevel/Variable.cs
-    startLine: 28
+    startLine: 29
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
@@ -90,7 +90,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Name
     path: ../Ubytec/Language/HighLevel/Variable.cs
-    startLine: 33
+    startLine: 34
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
@@ -121,7 +121,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Type
     path: ../Ubytec/Language/HighLevel/Variable.cs
-    startLine: 38
+    startLine: 39
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
@@ -152,7 +152,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Modifiers
     path: ../Ubytec/Language/HighLevel/Variable.cs
-    startLine: 43
+    startLine: 44
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
@@ -183,7 +183,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Value
     path: ../Ubytec/Language/HighLevel/Variable.cs
-    startLine: 48
+    startLine: 49
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
@@ -214,7 +214,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ID
     path: ../Ubytec/Language/HighLevel/Variable.cs
-    startLine: 53
+    startLine: 54
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
@@ -247,7 +247,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
     path: ../Ubytec/Language/HighLevel/Variable.cs
-    startLine: 72
+    startLine: 73
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
@@ -304,7 +304,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Validate
     path: ../Ubytec/Language/HighLevel/Variable.cs
-    startLine: 95
+    startLine: 96
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel
@@ -341,7 +341,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Compile
     path: ../Ubytec/Language/HighLevel/Variable.cs
-    startLine: 132
+    startLine: 133
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.HighLevel

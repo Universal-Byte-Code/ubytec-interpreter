@@ -6,7 +6,6 @@ items:
   parent: Ubytec.Language.Exceptions
   children:
   - Ubytec.Language.Exceptions.IlegalTokenException.#ctor(System.UInt64,System.String,System.String)
-  - Ubytec.Language.Exceptions.IlegalTokenException.ErrorCode
   langs:
   - csharp
   - vb
@@ -16,12 +15,12 @@ items:
   type: Class
   source:
     remote:
-      path: Ubytec/Language/Exceptions/FetchLexiconException.cs
+      path: Ubytec/Language/Exceptions/IlegalTokenException.cs
       branch: main
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IlegalTokenException
-    path: ../Ubytec/Language/Exceptions/FetchLexiconException.cs
-    startLine: 7
+    path: ../Ubytec/Language/Exceptions/IlegalTokenException.cs
+    startLine: 2
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Exceptions
@@ -65,12 +64,12 @@ items:
   type: Constructor
   source:
     remote:
-      path: Ubytec/Language/Exceptions/FetchLexiconException.cs
+      path: Ubytec/Language/Exceptions/IlegalTokenException.cs
       branch: main
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
-    path: ../Ubytec/Language/Exceptions/FetchLexiconException.cs
-    startLine: 7
+    path: ../Ubytec/Language/Exceptions/IlegalTokenException.cs
+    startLine: 2
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Exceptions
@@ -88,37 +87,6 @@ items:
   nameWithType.vb: IlegalTokenException.New(ULong, String, String)
   fullName.vb: Ubytec.Language.Exceptions.IlegalTokenException.New(ULong, String, String)
   name.vb: New(ULong, String, String)
-- uid: Ubytec.Language.Exceptions.IlegalTokenException.ErrorCode
-  commentId: P:Ubytec.Language.Exceptions.IlegalTokenException.ErrorCode
-  id: ErrorCode
-  parent: Ubytec.Language.Exceptions.IlegalTokenException
-  langs:
-  - csharp
-  - vb
-  name: ErrorCode
-  nameWithType: IlegalTokenException.ErrorCode
-  fullName: Ubytec.Language.Exceptions.IlegalTokenException.ErrorCode
-  type: Property
-  source:
-    remote:
-      path: Ubytec/Language/Exceptions/FetchLexiconException.cs
-      branch: main
-      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
-    id: ErrorCode
-    path: ../Ubytec/Language/Exceptions/FetchLexiconException.cs
-    startLine: 9
-  assemblies:
-  - Ubytec
-  namespace: Ubytec.Language.Exceptions
-  example: []
-  syntax:
-    content: public override ulong ErrorCode { get; }
-    parameters: []
-    return:
-      type: System.UInt64
-    content.vb: Public Overrides ReadOnly Property ErrorCode As ULong
-  overridden: Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  overload: Ubytec.Language.Exceptions.IlegalTokenException.ErrorCode*
 references:
 - uid: Ubytec.Language.Exceptions
   commentId: N:Ubytec.Language.Exceptions
@@ -565,17 +533,4 @@ references:
   nameWithType.vb: String
   fullName.vb: String
   name.vb: String
-- uid: Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  commentId: P:Ubytec.Language.Exceptions.UbytecException.ErrorCode
-  parent: Ubytec.Language.Exceptions.UbytecException
-  href: Ubytec.Language.Exceptions.UbytecException.ErrorCode.html#Ubytec_Language_Exceptions_UbytecException_ErrorCode
-  name: ErrorCode
-  nameWithType: UbytecException.ErrorCode
-  fullName: Ubytec.Language.Exceptions.UbytecException.ErrorCode
-- uid: Ubytec.Language.Exceptions.IlegalTokenException.ErrorCode*
-  commentId: Overload:Ubytec.Language.Exceptions.IlegalTokenException.ErrorCode
-  href: Ubytec.Language.Exceptions.IlegalTokenException.ErrorCode.html#Ubytec_Language_Exceptions_IlegalTokenException_ErrorCode
-  name: ErrorCode
-  nameWithType: IlegalTokenException.ErrorCode
-  fullName: Ubytec.Language.Exceptions.IlegalTokenException.ErrorCode
 memberLayout: SeparatePages

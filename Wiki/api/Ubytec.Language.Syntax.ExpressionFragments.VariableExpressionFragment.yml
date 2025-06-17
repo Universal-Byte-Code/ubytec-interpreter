@@ -24,7 +24,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: VariableExpressionFragment
     path: ../Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
-    startLine: 17
+    startLine: 18
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.ExpressionFragments
@@ -64,7 +64,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
     path: ../Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
-    startLine: 17
+    startLine: 18
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.ExpressionFragments
@@ -111,7 +111,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Type
     path: ../Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
-    startLine: 17
+    startLine: 18
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.ExpressionFragments
@@ -142,7 +142,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Name
     path: ../Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
-    startLine: 17
+    startLine: 18
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.ExpressionFragments
@@ -173,7 +173,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Value
     path: ../Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
-    startLine: 17
+    startLine: 18
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.ExpressionFragments
@@ -207,7 +207,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Tokens
     path: ../Ubytec/Language/Syntax/ExpressionFragments/VariableExpressionFragment.cs
-    startLine: 23
+    startLine: 24
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.ExpressionFragments

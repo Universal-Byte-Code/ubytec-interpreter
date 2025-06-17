@@ -29,18 +29,14 @@
       Condition="!Exists('$(DocFxExePath)')"
       Command="dotnet tool install -g docfx" />
 
-    <!-- Build metadata -->
-    <Exec WorkingDirectory="$(DocFxRoot)" Command="docfx metadata" />
-    <Exec WorkingDirectory="$(DocFxRoot)" Command="docfx build" />
-
     <!-- Background server -->
-    <Exec
-      WorkingDirectory="$(DocFxRoot)"
-      Condition=" '$(OS)' == 'Windows_NT' "
-      Command="powershell -NoProfile -Command Start-Process docfx -ArgumentList 'serve','_site','-p','8256','--open-browser','--open-file','api/Ubytec.Language.html'" />
-    <Exec
-      WorkingDirectory="$(DocFxRoot)"
-      Condition=" '$(OS)' != 'Windows_NT' "
-      Command="bash -lc &quot;setsid docfx serve _site -p 8256 --open-browser --open-file api/Ubytec.Language.html &gt;/dev/null 2&gt;&amp;1&lt;/dev/null &amp;&quot;" />
+	  <Exec
+		WorkingDirectory="$(DocFxRoot)"
+		Condition=" '$(OS)' == 'Windows_NT' "
+		Command="powershell -NoProfile -Command Start-Process powershell -ArgumentList '-Command','docfx metadata; if ($LastExitCode -ne 0) { exit $LastExitCode }; docfx build; if ($LastExitCode -ne 0) { exit $LastExitCode }; docfx serve _site -p 8256 --open-browser --open-file api/Ubytec.Language.html'" />
+	  <Exec
+		WorkingDirectory="$(DocFxRoot)"
+		Condition=" '$(OS)' != 'Windows_NT' "
+		Command="gnome-terminal -- bash -c 'docfx metadata &amp;&amp; docfx build &amp;&amp; docfx serve _site -p 8256 --open-browser --open-file api/Ubytec.Language.html; exec bash'" />
   </Target>
 </Project>

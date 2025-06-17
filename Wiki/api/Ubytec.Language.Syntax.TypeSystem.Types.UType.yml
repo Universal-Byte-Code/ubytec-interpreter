@@ -33,7 +33,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: UType
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
-    startLine: 40
+    startLine: 41
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
@@ -102,7 +102,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
-    startLine: 40
+    startLine: 41
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
@@ -187,7 +187,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: TypeIDLUT
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
-    startLine: 51
+    startLine: 52
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
@@ -216,7 +216,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Type
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
-    startLine: 56
+    startLine: 57
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
@@ -247,7 +247,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ID
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
-    startLine: 61
+    startLine: 62
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
@@ -278,7 +278,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Name
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
-    startLine: 67
+    startLine: 68
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
@@ -312,7 +312,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Modifiers
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
-    startLine: 72
+    startLine: 73
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
@@ -343,7 +343,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: FixedArraySize
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
-    startLine: 77
+    startLine: 78
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
@@ -374,7 +374,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsArray
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
-    startLine: 80
+    startLine: 81
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
@@ -405,7 +405,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsNullableArray
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
-    startLine: 82
+    startLine: 83
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
@@ -436,7 +436,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsNullableItems
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
-    startLine: 84
+    startLine: 85
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
@@ -467,7 +467,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsFullyNullableArray
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
-    startLine: 86
+    startLine: 87
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
@@ -498,7 +498,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsSingleNullable
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
-    startLine: 88
+    startLine: 89
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
@@ -529,7 +529,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: FromOperands
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
-    startLine: 97
+    startLine: 98
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem
@@ -573,7 +573,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ToString
     path: ../Ubytec/Language/Syntax/TypeSystem/Types.UType.cs
-    startLine: 108
+    startLine: 109
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.TypeSystem

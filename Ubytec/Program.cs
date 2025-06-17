@@ -16,7 +16,7 @@ using Ubytec.Language.Syntax.Scopes;
 using Ubytec.Language.Tools;
 using Ubytec.Language.Tools.Serialization;
 
-[assembly: CLSCompliant(true)]
+[assembly: CLSCompliant(false)]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
 var source = """

@@ -26,6 +26,7 @@ namespace Ubytec.Language.HighLevel
     /// </code>
     /// </example>
     /// </summary>
+    
     public readonly struct Variable : IUbytecHighLevelEntity
     {
         /// <summary>
