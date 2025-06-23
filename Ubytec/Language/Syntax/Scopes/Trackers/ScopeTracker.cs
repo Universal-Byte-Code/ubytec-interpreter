@@ -13,6 +13,7 @@ namespace Ubytec.Language.Syntax.Scopes.Trackers
     {
         private readonly Stack<ScopeContext> _stack = new();
 
+
         /// <summary>
         /// Pushes a new scope context onto the tracker.
         /// </summary>

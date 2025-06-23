@@ -25,7 +25,6 @@ items:
   - Ubytec.Language.AST.HighLevelParser.ParseModifierFlags(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
   - Ubytec.Language.AST.HighLevelParser.ParseModule(Ubytec.Language.Syntax.Model.SyntaxToken[])
   - Ubytec.Language.AST.HighLevelParser.ParseModuleInternal(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
-  - Ubytec.Language.AST.HighLevelParser.ParseModuleWithErrors(Ubytec.Language.Syntax.Model.SyntaxToken[])
   - Ubytec.Language.AST.HighLevelParser.ParseOptionalBody(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.Nullable{Ubytec.Language.HighLevel.LocalContext}@)
   - Ubytec.Language.AST.HighLevelParser.ParseParamList(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.Collections.Generic.List{Ubytec.Language.HighLevel.Argument}@)
   - Ubytec.Language.AST.HighLevelParser.ParseProperty(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
@@ -45,12 +44,12 @@ items:
   type: Class
   source:
     remote:
-      path: Ubytec/Language/AST/HighLevelParser.cs
+      path: Ubytec/Language/AST/HighLevelParser.ParseError.cs
       branch: main
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: HighLevelParser
-    path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 8
+    path: ../Ubytec/Language/AST/HighLevelParser.ParseError.cs
+    startLine: 2
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -112,56 +111,26 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseModule
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 15
+    startLine: 19
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
+  summary: ''
+  example: []
   syntax:
-    content: public static Module ParseModule(SyntaxToken[] tokens)
+    content: public static (Module module, HighLevelParser.ParseError[] errors) ParseModule(SyntaxToken[] tokens)
     parameters:
     - id: tokens
       type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+      description: ''
     return:
-      type: Ubytec.Language.HighLevel.Module
-    content.vb: Public Shared Function ParseModule(tokens As SyntaxToken()) As [Module]
+      type: System.ValueTuple{Ubytec.Language.HighLevel.Module,Ubytec.Language.AST.HighLevelParser.ParseError[]}
+      description: ''
+    content.vb: Public Shared Function ParseModule(tokens As SyntaxToken()) As ([module] As [Module], errors As HighLevelParser.ParseError())
   overload: Ubytec.Language.AST.HighLevelParser.ParseModule*
   nameWithType.vb: HighLevelParser.ParseModule(SyntaxToken())
   fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseModule(Ubytec.Language.Syntax.Model.SyntaxToken())
   name.vb: ParseModule(SyntaxToken())
-- uid: Ubytec.Language.AST.HighLevelParser.ParseModuleWithErrors(Ubytec.Language.Syntax.Model.SyntaxToken[])
-  commentId: M:Ubytec.Language.AST.HighLevelParser.ParseModuleWithErrors(Ubytec.Language.Syntax.Model.SyntaxToken[])
-  id: ParseModuleWithErrors(Ubytec.Language.Syntax.Model.SyntaxToken[])
-  parent: Ubytec.Language.AST.HighLevelParser
-  langs:
-  - csharp
-  - vb
-  name: ParseModuleWithErrors(SyntaxToken[])
-  nameWithType: HighLevelParser.ParseModuleWithErrors(SyntaxToken[])
-  fullName: Ubytec.Language.AST.HighLevelParser.ParseModuleWithErrors(Ubytec.Language.Syntax.Model.SyntaxToken[])
-  type: Method
-  source:
-    remote:
-      path: Ubytec/Language/AST/HighLevelParser.cs
-      branch: main
-      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
-    id: ParseModuleWithErrors
-    path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 21
-  assemblies:
-  - Ubytec
-  namespace: Ubytec.Language.AST
-  syntax:
-    content: public static (Module module, HighLevelParser.ParseError[] errors) ParseModuleWithErrors(SyntaxToken[] tokens)
-    parameters:
-    - id: tokens
-      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
-    return:
-      type: System.ValueTuple{Ubytec.Language.HighLevel.Module,Ubytec.Language.AST.HighLevelParser.ParseError[]}
-    content.vb: Public Shared Function ParseModuleWithErrors(tokens As SyntaxToken()) As ([module] As [Module], errors As HighLevelParser.ParseError())
-  overload: Ubytec.Language.AST.HighLevelParser.ParseModuleWithErrors*
-  nameWithType.vb: HighLevelParser.ParseModuleWithErrors(SyntaxToken())
-  fullName.vb: Ubytec.Language.AST.HighLevelParser.ParseModuleWithErrors(Ubytec.Language.Syntax.Model.SyntaxToken())
-  name.vb: ParseModuleWithErrors(SyntaxToken())
 - uid: Ubytec.Language.AST.HighLevelParser.ParseModuleInternal(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
   commentId: M:Ubytec.Language.AST.HighLevelParser.ParseModuleInternal(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
   id: ParseModuleInternal(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
@@ -180,7 +149,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseModuleInternal
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 31
+    startLine: 27
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -216,7 +185,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseGlobal
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 143
+    startLine: 139
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -252,7 +221,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseLocal
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 165
+    startLine: 161
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -288,7 +257,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseField
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 187
+    startLine: 183
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -324,7 +293,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseVariable
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 202
+    startLine: 198
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -360,7 +329,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseProperty
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 214
+    startLine: 210
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -396,7 +365,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseFunc
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 271
+    startLine: 267
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -432,7 +401,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseAction
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 299
+    startLine: 295
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -468,7 +437,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseClass
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 317
+    startLine: 313
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -504,7 +473,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseEnum
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 379
+    startLine: 375
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -540,7 +509,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseStruct
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 450
+    startLine: 446
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -576,7 +545,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseInterface
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 509
+    startLine: 505
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -612,7 +581,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseRecord
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 577
+    startLine: 573
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -648,7 +617,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseEnumConstant
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 666
+    startLine: 662
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -679,7 +648,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseOptionalBody
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 678
+    startLine: 674
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -717,7 +686,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: SkipTrivia
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 729
+    startLine: 725
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -751,7 +720,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ConsumeSymbol
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 738
+    startLine: 734
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -789,7 +758,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ConsumeType
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 744
+    startLine: 740
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -827,7 +796,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Consume
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 753
+    startLine: 749
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -867,7 +836,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Consume
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 757
+    startLine: 753
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -907,7 +876,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: LookAhead
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 772
+    startLine: 768
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -947,7 +916,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsKeyword
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 781
+    startLine: 777
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -983,7 +952,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsStorageType
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 785
+    startLine: 781
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -1014,7 +983,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseHeaderArguments
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 788
+    startLine: 784
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -1050,7 +1019,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseParamList
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 805
+    startLine: 801
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -1088,7 +1057,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseUType
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 825
+    startLine: 821
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -1119,7 +1088,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _modMap
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 865
+    startLine: 861
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -1146,7 +1115,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseModifierFlags
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 889
+    startLine: 885
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -1570,49 +1539,6 @@ references:
     href: Ubytec.Language.Syntax.Model.SyntaxToken.html
   - name: (
   - name: )
-- uid: Ubytec.Language.HighLevel.Module
-  commentId: T:Ubytec.Language.HighLevel.Module
-  parent: Ubytec.Language.HighLevel
-  href: Ubytec.Language.HighLevel.Module.html
-  name: Module
-  nameWithType: Module
-  fullName: Ubytec.Language.HighLevel.Module
-- uid: Ubytec.Language.HighLevel
-  commentId: N:Ubytec.Language.HighLevel
-  href: Ubytec.html
-  name: Ubytec.Language.HighLevel
-  nameWithType: Ubytec.Language.HighLevel
-  fullName: Ubytec.Language.HighLevel
-  spec.csharp:
-  - uid: Ubytec
-    name: Ubytec
-    href: Ubytec.html
-  - name: .
-  - uid: Ubytec.Language
-    name: Language
-    href: Ubytec.Language.html
-  - name: .
-  - uid: Ubytec.Language.HighLevel
-    name: HighLevel
-    href: Ubytec.Language.HighLevel.html
-  spec.vb:
-  - uid: Ubytec
-    name: Ubytec
-    href: Ubytec.html
-  - name: .
-  - uid: Ubytec.Language
-    name: Language
-    href: Ubytec.Language.html
-  - name: .
-  - uid: Ubytec.Language.HighLevel
-    name: HighLevel
-    href: Ubytec.Language.HighLevel.html
-- uid: Ubytec.Language.AST.HighLevelParser.ParseModuleWithErrors*
-  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseModuleWithErrors
-  href: Ubytec.Language.AST.HighLevelParser.ParseModuleWithErrors.html#Ubytec_Language_AST_HighLevelParser_ParseModuleWithErrors_Ubytec_Language_Syntax_Model_SyntaxToken___
-  name: ParseModuleWithErrors
-  nameWithType: HighLevelParser.ParseModuleWithErrors
-  fullName: Ubytec.Language.AST.HighLevelParser.ParseModuleWithErrors
 - uid: System.ValueTuple{Ubytec.Language.HighLevel.Module,Ubytec.Language.AST.HighLevelParser.ParseError[]}
   commentId: T:System.ValueTuple{Ubytec.Language.HighLevel.Module,Ubytec.Language.AST.HighLevelParser.ParseError[]}
   parent: System
@@ -1714,6 +1640,43 @@ references:
   nameWithType.vb: Integer
   fullName.vb: Integer
   name.vb: Integer
+- uid: Ubytec.Language.HighLevel.Module
+  commentId: T:Ubytec.Language.HighLevel.Module
+  parent: Ubytec.Language.HighLevel
+  href: Ubytec.Language.HighLevel.Module.html
+  name: Module
+  nameWithType: Module
+  fullName: Ubytec.Language.HighLevel.Module
+- uid: Ubytec.Language.HighLevel
+  commentId: N:Ubytec.Language.HighLevel
+  href: Ubytec.html
+  name: Ubytec.Language.HighLevel
+  nameWithType: Ubytec.Language.HighLevel
+  fullName: Ubytec.Language.HighLevel
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
 - uid: Ubytec.Language.AST.HighLevelParser.ParseGlobal*
   commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseGlobal
   href: Ubytec.Language.AST.HighLevelParser.ParseGlobal.html#Ubytec_Language_AST_HighLevelParser_ParseGlobal_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__

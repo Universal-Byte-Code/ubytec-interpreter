@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<AssemblyVersion>1.0.9299.38369</AssemblyVersion>
-		<FileVersion>1.0.9299.38369</FileVersion>
+		<AssemblyVersion>1.0.9300.36965</AssemblyVersion>
+		<FileVersion>1.0.9300.36965</FileVersion>
 		<Configurations>Wiki</Configurations>
 	</PropertyGroup>
 

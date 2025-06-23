@@ -25,8 +25,8 @@ items:
   - Ubytec
   namespace: Ubytec.Language.Exceptions
   syntax:
-    content: 'internal class IlegalTokenException : UbytecException, ISerializable'
-    content.vb: Friend Class IlegalTokenException Inherits UbytecException Implements ISerializable
+    content: 'public class IlegalTokenException : UbytecException, ISerializable'
+    content.vb: Public Class IlegalTokenException Inherits UbytecException Implements ISerializable
   inheritance:
   - System.Object
   - System.Exception

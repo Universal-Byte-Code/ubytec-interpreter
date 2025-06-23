@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <AssemblyVersion>1.0.9299.38175</AssemblyVersion>
-    <FileVersion>1.0.9299.38175</FileVersion>
+    <AssemblyVersion>1.0.9305.37823</AssemblyVersion>
+    <FileVersion>1.0.9305.37823</FileVersion>
     <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 

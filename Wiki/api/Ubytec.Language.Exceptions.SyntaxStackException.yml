@@ -20,10 +20,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: SyntaxStackException
     path: ../Ubytec/Language/Exceptions/SyntaxStackException.cs
-    startLine: 2
+    startLine: 5
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Exceptions
+  summary: This exception is thrown when an error in the syntax stack is detected.
+  example: []
   syntax:
     content: 'public class SyntaxStackException : UbytecException, ISerializable'
     content.vb: Public Class SyntaxStackException Inherits UbytecException Implements ISerializable
@@ -69,10 +71,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
     path: ../Ubytec/Language/Exceptions/SyntaxStackException.cs
-    startLine: 2
+    startLine: 5
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Exceptions
+  summary: This exception is thrown when an error in the syntax stack is detected.
+  example: []
   syntax:
     content: public SyntaxStackException(ulong errorCode, string message, string? helpLink = null)
     parameters:

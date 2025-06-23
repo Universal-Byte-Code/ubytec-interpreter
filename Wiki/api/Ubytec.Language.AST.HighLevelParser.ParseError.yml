@@ -18,15 +18,17 @@ items:
   type: Struct
   source:
     remote:
-      path: Ubytec/Language/AST/HighLevelParser.cs
+      path: Ubytec/Language/AST/HighLevelParser.ParseError.cs
       branch: main
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseError
-    path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 29
+    path: ../Ubytec/Language/AST/HighLevelParser.ParseError.cs
+    startLine: 10
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
+  summary: ''
+  example: []
   syntax:
     content: 'public readonly record struct HighLevelParser.ParseError : IEquatable<HighLevelParser.ParseError>'
     content.vb: Public Structure HighLevelParser.ParseError Implements IEquatable(Of HighLevelParser.ParseError)
@@ -52,24 +54,29 @@ items:
   type: Constructor
   source:
     remote:
-      path: Ubytec/Language/AST/HighLevelParser.cs
+      path: Ubytec/Language/AST/HighLevelParser.ParseError.cs
       branch: main
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
-    path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 29
+    path: ../Ubytec/Language/AST/HighLevelParser.ParseError.cs
+    startLine: 10
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
+  summary: ''
+  example: []
   syntax:
     content: public ParseError(int Line, string Where, string Message)
     parameters:
     - id: Line
       type: System.Int32
+      description: ''
     - id: Where
       type: System.String
+      description: ''
     - id: Message
       type: System.String
+      description: ''
     content.vb: Public Sub New(Line As Integer, Where As String, Message As String)
   overload: Ubytec.Language.AST.HighLevelParser.ParseError.#ctor*
   nameWithType.vb: HighLevelParser.ParseError.New(Integer, String, String)
@@ -88,15 +95,17 @@ items:
   type: Property
   source:
     remote:
-      path: Ubytec/Language/AST/HighLevelParser.cs
+      path: Ubytec/Language/AST/HighLevelParser.ParseError.cs
       branch: main
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Line
-    path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 29
+    path: ../Ubytec/Language/AST/HighLevelParser.ParseError.cs
+    startLine: 10
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
+  summary: ''
+  example: []
   syntax:
     content: public int Line { get; init; }
     parameters: []
@@ -117,15 +126,17 @@ items:
   type: Property
   source:
     remote:
-      path: Ubytec/Language/AST/HighLevelParser.cs
+      path: Ubytec/Language/AST/HighLevelParser.ParseError.cs
       branch: main
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Where
-    path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 29
+    path: ../Ubytec/Language/AST/HighLevelParser.ParseError.cs
+    startLine: 10
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
+  summary: ''
+  example: []
   syntax:
     content: public string Where { get; init; }
     parameters: []
@@ -146,15 +157,17 @@ items:
   type: Property
   source:
     remote:
-      path: Ubytec/Language/AST/HighLevelParser.cs
+      path: Ubytec/Language/AST/HighLevelParser.ParseError.cs
       branch: main
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Message
-    path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 29
+    path: ../Ubytec/Language/AST/HighLevelParser.ParseError.cs
+    startLine: 10
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
+  summary: ''
+  example: []
   syntax:
     content: public string Message { get; init; }
     parameters: []

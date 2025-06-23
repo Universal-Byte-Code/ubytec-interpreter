@@ -6,28 +6,24 @@ using Enum = Ubytec.Language.HighLevel.Enum;
 
 namespace Ubytec.Language.AST;
 
-public static class HighLevelParser
+public static partial class HighLevelParser
 {
     // ──────────────────────────  private state  ──────────────────────────
     private static List<ParseError> _errors = [];
 
     /*──────────────────────────  PUBLIC  ──────────────────────────*/
-
-    public static Module ParseModule(SyntaxToken[] tokens)
-    {
-
-        var idx = 0;
-        return ParseModuleInternal(tokens, ref idx);
-    }
-    public static (Module module, ParseError[] errors) ParseModuleWithErrors(SyntaxToken[] tokens)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="tokens"></param>
+    /// <returns></returns>
+    public static (Module module, ParseError[] errors) ParseModule(SyntaxToken[] tokens)
     {
         _errors = [];
         var idx = 0;
         var mod = ParseModuleInternal(tokens, ref idx);
         return (mod, [.. _errors]);
     }
-
-    public readonly record struct ParseError(int Line, string Where, string Message);
 
     private static Module ParseModuleInternal(SyntaxToken[] toks, ref int i)
     {
@@ -600,7 +596,7 @@ public static class HighLevelParser
 
                 positionalProps.Add(
                     new Property(idTok.Source, ut,
-                                 new AccessorContext(Array.Empty<Func>(), Guid.NewGuid(), ut),
+                                 new AccessorContext([], Guid.NewGuid(), ut),
                                  Guid.NewGuid(), TypeModifiers.None));
 
                 if (LookAhead(t, i, "punctuation.comma.ubytec", ",")) i++;

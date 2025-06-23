@@ -25,8 +25,8 @@ items:
   - Ubytec
   namespace: Ubytec.Language.Exceptions
   syntax:
-    content: 'internal class FetchLexiconException : UbytecException, ISerializable'
-    content.vb: Friend Class FetchLexiconException Inherits UbytecException Implements ISerializable
+    content: 'public class FetchLexiconException : UbytecException, ISerializable'
+    content.vb: Public Class FetchLexiconException Inherits UbytecException Implements ISerializable
   inheritance:
   - System.Object
   - System.Exception

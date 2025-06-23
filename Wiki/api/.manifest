@@ -45,7 +45,6 @@
   "Ubytec.Language.AST.HighLevelParser.ParseModifierFlags(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)": "Ubytec.Language.AST.HighLevelParser.yml",
   "Ubytec.Language.AST.HighLevelParser.ParseModule(Ubytec.Language.Syntax.Model.SyntaxToken[])": "Ubytec.Language.AST.HighLevelParser.yml",
   "Ubytec.Language.AST.HighLevelParser.ParseModuleInternal(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)": "Ubytec.Language.AST.HighLevelParser.yml",
-  "Ubytec.Language.AST.HighLevelParser.ParseModuleWithErrors(Ubytec.Language.Syntax.Model.SyntaxToken[])": "Ubytec.Language.AST.HighLevelParser.yml",
   "Ubytec.Language.AST.HighLevelParser.ParseOptionalBody(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.Nullable{Ubytec.Language.HighLevel.LocalContext}@)": "Ubytec.Language.AST.HighLevelParser.yml",
   "Ubytec.Language.AST.HighLevelParser.ParseParamList(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.Collections.Generic.List{Ubytec.Language.HighLevel.Argument}@)": "Ubytec.Language.AST.HighLevelParser.yml",
   "Ubytec.Language.AST.HighLevelParser.ParseProperty(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)": "Ubytec.Language.AST.HighLevelParser.yml",

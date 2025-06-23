@@ -54,7 +54,7 @@ LexicalAnalyst.InitializeGrammar();
 var tokens = LexicalAnalyst.Tokenize(source);
 
 // 2.  high-level parse (with graceful error collection) ----------------------..
-var (rootModule, parseErrors) = HighLevelParser.ParseModuleWithErrors([.. tokens]);
+var (rootModule, parseErrors) = HighLevelParser.ParseModule([.. tokens]);
 
 if (parseErrors.Length > 0)
 {

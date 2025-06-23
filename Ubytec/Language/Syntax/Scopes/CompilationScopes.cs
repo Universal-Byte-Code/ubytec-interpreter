@@ -13,6 +13,8 @@ namespace Ubytec.Language.Syntax.Scopes
         private readonly ScopeTracker _scopeTracker = new();
         private readonly FinalizersTracker _finalizersTracker = new();
 
+        public ScopeContext[] All => [.. _scopeTracker];
+
         /// <summary>
         /// Gets the number of currently active scope contexts.
         /// </summary>
@@ -148,6 +150,26 @@ namespace Ubytec.Language.Syntax.Scopes
                 _scopeTracker.Pop();
 
             _finalizersTracker.ClearAll();
+        }
+
+        /// <summary>
+        /// Calculates the indentation string for the current depth of nested scopes.
+        /// </summary>
+        /// <param name="basis">
+        /// An optional additional indentation level to apply on top of the scope count.
+        /// Defaults to <c>0</c>.
+        /// </param>
+        /// <returns>
+        /// A string consisting of two spaces per indentation level,
+        /// where level = Count + <paramref name="basis"/>.
+        /// </returns>
+        public string GetDepth(int basis = 0)
+        {
+            var indent = string.Empty;
+            var depth = Count + basis;
+            for (int i = 0; i < depth; i++)
+                indent += "  ";
+            return indent;
         }
     }
 }

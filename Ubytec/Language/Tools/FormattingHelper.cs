@@ -9,27 +9,6 @@ namespace Ubytec.Language.Tools
     public static class FormattingHelper
     {
         /// <summary>
-        /// Calculates the indentation string for the current depth of nested scopes.
-        /// </summary>
-        /// <param name="scopes">The <see cref="CompilationScopes"/> whose depth to use.</param>
-        /// <param name="basis">
-        /// An optional additional indentation level to apply on top of the scope count.
-        /// Defaults to <c>0</c>.
-        /// </param>
-        /// <returns>
-        /// A string consisting of two spaces per indentation level,
-        /// where level = <paramref name="scopes"/>.Count + <paramref name="basis"/>.
-        /// </returns>
-        public static string GetDepth(CompilationScopes scopes, int basis = 0)
-        {
-            var indent = string.Empty;
-            var depth = scopes.Count + basis;
-            for (int i = 0; i < depth; i++)
-                indent += "  ";
-            return indent;
-        }
-
-        /// <summary>
         /// Prefixes each non-empty line of the input with the specified indentation string.
         /// </summary>
         /// <param name="lines">
