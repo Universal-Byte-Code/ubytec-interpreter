@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Text;
-using Ubytec.Language.Exceptions;
+﻿using System.Text;
 using Ubytec.Language.Syntax.ExpressionFragments;
 using static Ubytec.Language.Syntax.TypeSystem.Types;
 
@@ -32,7 +30,7 @@ namespace Ubytec.Language.Operations
             // Se asume que Condition.Value.left y Condition.Value.right se pueden convertir a una representación
             // adecuada para el ensamblador (por ejemplo, literales, registros o direcciones de memoria).
             var raxHandling = $"  mov rax, {fragment.Left}  ; Evalúa la parte izquierda\n" +
-                          $"  cmp rax, {fragment.Right}  ; Compara con la parte derecha";
+                              $"  cmp rax, {fragment.Right}  ; Compara con la parte derecha";
 
             // Determinamos la instrucción de salto inverso según el operador.
             // La idea es: si la comparación NO cumple lo esperado, se salta al final del IF.

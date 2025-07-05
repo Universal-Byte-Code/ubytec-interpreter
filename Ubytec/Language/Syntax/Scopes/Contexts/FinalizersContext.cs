@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Ubytec.Language.Operations;
+using Ubytec.Language.Operations.Interfaces;
 using static Ubytec.Language.Operations.CoreOperations;
 
 namespace Ubytec.Language.Syntax.Scopes.Contexts

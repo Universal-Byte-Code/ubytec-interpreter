@@ -1,5 +1,5 @@
-﻿
-using Ubytec.Language.Exceptions;
+﻿using Ubytec.Language.Exceptions;
+using Ubytec.Language.Operations.Interfaces;
 using Ubytec.Language.Syntax.ExpressionFragments;
 using Ubytec.Language.Syntax.Model;
 using Ubytec.Language.Syntax.Scopes;
@@ -8,11 +8,12 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct DEFAULT : IOpCode
+        public readonly record struct DEFAULT : IOpCode, IOpCodeFactory
         {
-            public readonly byte OpCode => 0x0E;
+            public const byte OP = 0x0E;
+            public readonly byte OpCode => OP;
 
-            public static DEFAULT CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
+            public static IOpCode CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
             {
                 // DEFAULT no acepta operandos
                 if (operands.Length > 0)

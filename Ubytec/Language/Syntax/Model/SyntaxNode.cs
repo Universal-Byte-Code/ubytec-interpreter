@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Ubytec.Language.HighLevel.Interfaces;
 using Ubytec.Language.Operations;
+using Ubytec.Language.Operations.Interfaces;
 using Ubytec.Language.Syntax.Fast.Metadata;
 using Ubytec.Language.Syntax.Interfaces;
 
@@ -14,7 +15,7 @@ namespace Ubytec.Language.Syntax.Model
     {
         /// <summary>
         /// Gets the Ubytec entity associated with this node.
-        /// May be an <see cref="IOpCode"/> or a <see cref="IUbytecContextEntity"/>.
+        /// May be an <see cref="IOpCode"/> or a <see cref="IUbytecHighLevelEntity"/>.
         /// </summary>
         [JsonInclude]
         public IUbytecEntity? Entity { get; init; }

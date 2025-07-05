@@ -1,0 +1,446 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.HighLevel.NASM.NASM_Text`1
+  commentId: T:Ubytec.Language.HighLevel.NASM.NASM_Text`1
+  id: NASM_Text`1
+  parent: Ubytec.Language.HighLevel.NASM
+  children:
+  - Ubytec.Language.HighLevel.NASM.NASM_Text`1.#ctor(Ubytec.Language.Syntax.Scopes.CompilationScopes,System.Text.StringBuilder,`0,System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: NASM_Text<T>
+  nameWithType: NASM_Text<T>
+  fullName: Ubytec.Language.HighLevel.NASM.NASM_Text<T>
+  type: Struct
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/NASM/NASM_Text.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: NASM_Text
+    path: ../Ubytec/Language/HighLevel/NASM/NASM_Text.cs
+    startLine: 7
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel.NASM
+  syntax:
+    content: 'public struct NASM_Text<T> where T : IUbytecHighLevelEntity'
+    typeParameters:
+    - id: T
+    content.vb: Public Structure NASM_Text(Of T As IUbytecHighLevelEntity)
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  nameWithType.vb: NASM_Text(Of T)
+  fullName.vb: Ubytec.Language.HighLevel.NASM.NASM_Text(Of T)
+  name.vb: NASM_Text(Of T)
+- uid: Ubytec.Language.HighLevel.NASM.NASM_Text`1.#ctor(Ubytec.Language.Syntax.Scopes.CompilationScopes,System.Text.StringBuilder,`0,System.Boolean)
+  commentId: M:Ubytec.Language.HighLevel.NASM.NASM_Text`1.#ctor(Ubytec.Language.Syntax.Scopes.CompilationScopes,System.Text.StringBuilder,`0,System.Boolean)
+  id: '#ctor(Ubytec.Language.Syntax.Scopes.CompilationScopes,System.Text.StringBuilder,`0,System.Boolean)'
+  parent: Ubytec.Language.HighLevel.NASM.NASM_Text`1
+  langs:
+  - csharp
+  - vb
+  name: NASM_Text(CompilationScopes, StringBuilder, T, bool)
+  nameWithType: NASM_Text<T>.NASM_Text(CompilationScopes, StringBuilder, T, bool)
+  fullName: Ubytec.Language.HighLevel.NASM.NASM_Text<T>.NASM_Text(Ubytec.Language.Syntax.Scopes.CompilationScopes, System.Text.StringBuilder, T, bool)
+  type: Constructor
+  source:
+    remote:
+      path: Ubytec/Language/HighLevel/NASM/NASM_Text.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: .ctor
+    path: ../Ubytec/Language/HighLevel/NASM/NASM_Text.cs
+    startLine: 9
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.HighLevel.NASM
+  syntax:
+    content: public NASM_Text(CompilationScopes scopes, StringBuilder sb, T contextEntity, bool nullable = false)
+    parameters:
+    - id: scopes
+      type: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    - id: sb
+      type: System.Text.StringBuilder
+    - id: contextEntity
+      type: '{T}'
+    - id: nullable
+      type: System.Boolean
+    content.vb: Public Sub New(scopes As CompilationScopes, sb As StringBuilder, contextEntity As T, nullable As Boolean = False)
+  overload: Ubytec.Language.HighLevel.NASM.NASM_Text`1.#ctor*
+  nameWithType.vb: NASM_Text(Of T).New(CompilationScopes, StringBuilder, T, Boolean)
+  fullName.vb: Ubytec.Language.HighLevel.NASM.NASM_Text(Of T).New(Ubytec.Language.Syntax.Scopes.CompilationScopes, System.Text.StringBuilder, T, Boolean)
+  name.vb: New(CompilationScopes, StringBuilder, T, Boolean)
+references:
+- uid: Ubytec.Language.HighLevel.NASM
+  commentId: N:Ubytec.Language.HighLevel.NASM
+  href: Ubytec.html
+  name: Ubytec.Language.HighLevel.NASM
+  nameWithType: Ubytec.Language.HighLevel.NASM
+  fullName: Ubytec.Language.HighLevel.NASM
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel.NASM
+    name: NASM
+    href: Ubytec.Language.HighLevel.NASM.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel.NASM
+    name: NASM
+    href: Ubytec.Language.HighLevel.NASM.html
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubytec.Language.HighLevel.NASM.NASM_Text`1.#ctor*
+  commentId: Overload:Ubytec.Language.HighLevel.NASM.NASM_Text`1.#ctor
+  href: Ubytec.Language.HighLevel.NASM.NASM_Text-1.-ctor.html#Ubytec_Language_HighLevel_NASM_NASM_Text_1__ctor_Ubytec_Language_Syntax_Scopes_CompilationScopes_System_Text_StringBuilder__0_System_Boolean_
+  name: NASM_Text
+  nameWithType: NASM_Text<T>.NASM_Text
+  fullName: Ubytec.Language.HighLevel.NASM.NASM_Text<T>.NASM_Text
+  nameWithType.vb: NASM_Text(Of T).New
+  fullName.vb: Ubytec.Language.HighLevel.NASM.NASM_Text(Of T).New
+  name.vb: New
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  commentId: T:Ubytec.Language.Syntax.Scopes.CompilationScopes
+  parent: Ubytec.Language.Syntax.Scopes
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  name: CompilationScopes
+  nameWithType: CompilationScopes
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes
+- uid: System.Text.StringBuilder
+  commentId: T:System.Text.StringBuilder
+  parent: System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.text.stringbuilder
+  name: StringBuilder
+  nameWithType: StringBuilder
+  fullName: System.Text.StringBuilder
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Ubytec.Language.Syntax.Scopes
+  commentId: N:Ubytec.Language.Syntax.Scopes
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Scopes
+  nameWithType: Ubytec.Language.Syntax.Scopes
+  fullName: Ubytec.Language.Syntax.Scopes
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Scopes
+    name: Scopes
+    href: Ubytec.Language.Syntax.Scopes.html
+- uid: System.Text
+  commentId: N:System.Text
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Text
+  nameWithType: System.Text
+  fullName: System.Text
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+memberLayout: SeparatePages

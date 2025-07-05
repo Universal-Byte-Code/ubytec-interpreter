@@ -6,7 +6,7 @@ items:
   parent: Ubytec.Language.Syntax.Model
   children:
   - Ubytec.Language.Syntax.Model.SyntaxNode.#ctor(Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity)
-  - Ubytec.Language.Syntax.Model.SyntaxNode.#ctor(Ubytec.Language.Operations.IOpCode)
+  - Ubytec.Language.Syntax.Model.SyntaxNode.#ctor(Ubytec.Language.Operations.Interfaces.IOpCode)
   - Ubytec.Language.Syntax.Model.SyntaxNode.Children
   - Ubytec.Language.Syntax.Model.SyntaxNode.Dispose
   - Ubytec.Language.Syntax.Model.SyntaxNode.Entity
@@ -32,7 +32,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: SyntaxNode
     path: ../Ubytec/Language/Syntax/Model/SyntaxNode.cs
-    startLine: 12
+    startLine: 13
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -74,14 +74,14 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Entity
     path: ../Ubytec/Language/Syntax/Model/SyntaxNode.cs
-    startLine: 18
+    startLine: 19
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
   summary: >-
     Gets the Ubytec entity associated with this node.
 
-    May be an <xref href="Ubytec.Language.Operations.IOpCode" data-throw-if-not-resolved="false"></xref> or a <xref href="Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity" data-throw-if-not-resolved="false"></xref>.
+    May be an <xref href="Ubytec.Language.Operations.Interfaces.IOpCode" data-throw-if-not-resolved="false"></xref> or a <xref href="Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity" data-throw-if-not-resolved="false"></xref>.
   example: []
   syntax:
     content: >-
@@ -118,7 +118,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Children
     path: ../Ubytec/Language/Syntax/Model/SyntaxNode.cs
-    startLine: 24
+    startLine: 25
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -159,7 +159,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Tokens
     path: ../Ubytec/Language/Syntax/Model/SyntaxNode.cs
-    startLine: 30
+    startLine: 31
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -200,7 +200,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _metadata
     path: ../Ubytec/Language/Syntax/Model/SyntaxNode.cs
-    startLine: 33
+    startLine: 34
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -227,7 +227,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Metadata
     path: ../Ubytec/Language/Syntax/Model/SyntaxNode.cs
-    startLine: 36
+    startLine: 37
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -273,7 +273,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: SerializableMetadata
     path: ../Ubytec/Language/Syntax/Model/SyntaxNode.cs
-    startLine: 42
+    startLine: 43
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -305,16 +305,16 @@ items:
     arguments:
     - type: System.String
       value: Metadata
-- uid: Ubytec.Language.Syntax.Model.SyntaxNode.#ctor(Ubytec.Language.Operations.IOpCode)
-  commentId: M:Ubytec.Language.Syntax.Model.SyntaxNode.#ctor(Ubytec.Language.Operations.IOpCode)
-  id: '#ctor(Ubytec.Language.Operations.IOpCode)'
+- uid: Ubytec.Language.Syntax.Model.SyntaxNode.#ctor(Ubytec.Language.Operations.Interfaces.IOpCode)
+  commentId: M:Ubytec.Language.Syntax.Model.SyntaxNode.#ctor(Ubytec.Language.Operations.Interfaces.IOpCode)
+  id: '#ctor(Ubytec.Language.Operations.Interfaces.IOpCode)'
   parent: Ubytec.Language.Syntax.Model.SyntaxNode
   langs:
   - csharp
   - vb
   name: SyntaxNode(IOpCode?)
   nameWithType: SyntaxNode.SyntaxNode(IOpCode?)
-  fullName: Ubytec.Language.Syntax.Model.SyntaxNode.SyntaxNode(Ubytec.Language.Operations.IOpCode?)
+  fullName: Ubytec.Language.Syntax.Model.SyntaxNode.SyntaxNode(Ubytec.Language.Operations.Interfaces.IOpCode?)
   type: Constructor
   source:
     remote:
@@ -323,7 +323,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
     path: ../Ubytec/Language/Syntax/Model/SyntaxNode.cs
-    startLine: 52
+    startLine: 53
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -333,12 +333,12 @@ items:
     content: public SyntaxNode(IOpCode? operation)
     parameters:
     - id: operation
-      type: Ubytec.Language.Operations.IOpCode
-      description: The <xref href="Ubytec.Language.Operations.IOpCode" data-throw-if-not-resolved="false"></xref> to assign to this node.
+      type: Ubytec.Language.Operations.Interfaces.IOpCode
+      description: The <xref href="Ubytec.Language.Operations.Interfaces.IOpCode" data-throw-if-not-resolved="false"></xref> to assign to this node.
     content.vb: Public Sub New(operation As IOpCode)
   overload: Ubytec.Language.Syntax.Model.SyntaxNode.#ctor*
   nameWithType.vb: SyntaxNode.New(IOpCode)
-  fullName.vb: Ubytec.Language.Syntax.Model.SyntaxNode.New(Ubytec.Language.Operations.IOpCode)
+  fullName.vb: Ubytec.Language.Syntax.Model.SyntaxNode.New(Ubytec.Language.Operations.Interfaces.IOpCode)
   name.vb: New(IOpCode)
 - uid: Ubytec.Language.Syntax.Model.SyntaxNode.#ctor(Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity)
   commentId: M:Ubytec.Language.Syntax.Model.SyntaxNode.#ctor(Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity)
@@ -358,7 +358,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
     path: ../Ubytec/Language/Syntax/Model/SyntaxNode.cs
-    startLine: 64
+    startLine: 65
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -393,18 +393,18 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ScopeOpCodes
     path: ../Ubytec/Language/Syntax/Model/SyntaxNode.cs
-    startLine: 79
+    startLine: 80
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
-  summary: Extracts all <xref href="Ubytec.Language.Operations.IOpCode" data-throw-if-not-resolved="false"></xref> instances from this node’s children.
+  summary: Extracts all <xref href="Ubytec.Language.Operations.Interfaces.IOpCode" data-throw-if-not-resolved="false"></xref> instances from this node’s children.
   example: []
   syntax:
     content: public IOpCode[] ScopeOpCodes()
     return:
-      type: Ubytec.Language.Operations.IOpCode[]
+      type: Ubytec.Language.Operations.Interfaces.IOpCode[]
       description: >-
-        An array of <xref href="Ubytec.Language.Operations.IOpCode" data-throw-if-not-resolved="false"></xref> found in <xref href="Ubytec.Language.Syntax.Model.SyntaxNode.Children" data-throw-if-not-resolved="false"></xref>,
+        An array of <xref href="Ubytec.Language.Operations.Interfaces.IOpCode" data-throw-if-not-resolved="false"></xref> found in <xref href="Ubytec.Language.Syntax.Model.SyntaxNode.Children" data-throw-if-not-resolved="false"></xref>,
 
         or an empty array if there are none.
     content.vb: Public Function ScopeOpCodes() As IOpCode()
@@ -427,7 +427,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ScopeTokens
     path: ../Ubytec/Language/Syntax/Model/SyntaxNode.cs
-    startLine: 95
+    startLine: 96
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -461,7 +461,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsHighLevel
     path: ../Ubytec/Language/Syntax/Model/SyntaxNode.cs
-    startLine: 106
+    startLine: 107
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -492,7 +492,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IsOpCode
     path: ../Ubytec/Language/Syntax/Model/SyntaxNode.cs
-    startLine: 111
+    startLine: 112
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -523,7 +523,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Dispose
     path: ../Ubytec/Language/Syntax/Model/SyntaxNode.cs
-    startLine: 116
+    startLine: 117
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
@@ -840,20 +840,20 @@ references:
   - uid: Ubytec.Language.Syntax.Interfaces
     name: Interfaces
     href: Ubytec.Language.Syntax.Interfaces.html
-- uid: Ubytec.Language.Operations.IOpCode
-  commentId: T:Ubytec.Language.Operations.IOpCode
-  parent: Ubytec.Language.Operations
-  href: Ubytec.Language.Operations.IOpCode.html
+- uid: Ubytec.Language.Operations.Interfaces.IOpCode
+  commentId: T:Ubytec.Language.Operations.Interfaces.IOpCode
+  parent: Ubytec.Language.Operations.Interfaces
+  href: Ubytec.Language.Operations.Interfaces.IOpCode.html
   name: IOpCode
   nameWithType: IOpCode
-  fullName: Ubytec.Language.Operations.IOpCode
-- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
-  commentId: T:Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCode
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
+  commentId: T:Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
   parent: Ubytec.Language.HighLevel.Interfaces
-  href: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.html
-  name: IUbytecContextEntity
-  nameWithType: IUbytecContextEntity
-  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity.html
+  name: IUbytecHighLevelEntity
+  nameWithType: IUbytecHighLevelEntity
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
 - uid: Ubytec.Language.Syntax.Model.SyntaxNode.Entity*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxNode.Entity
   href: Ubytec.Language.Syntax.Model.SyntaxNode.Entity.html#Ubytec_Language_Syntax_Model_SyntaxNode_Entity
@@ -867,12 +867,12 @@ references:
   name: IUbytecEntity
   nameWithType: IUbytecEntity
   fullName: Ubytec.Language.IUbytecEntity
-- uid: Ubytec.Language.Operations
-  commentId: N:Ubytec.Language.Operations
+- uid: Ubytec.Language.Operations.Interfaces
+  commentId: N:Ubytec.Language.Operations.Interfaces
   href: Ubytec.html
-  name: Ubytec.Language.Operations
-  nameWithType: Ubytec.Language.Operations
-  fullName: Ubytec.Language.Operations
+  name: Ubytec.Language.Operations.Interfaces
+  nameWithType: Ubytec.Language.Operations.Interfaces
+  fullName: Ubytec.Language.Operations.Interfaces
   spec.csharp:
   - uid: Ubytec
     name: Ubytec
@@ -885,6 +885,10 @@ references:
   - uid: Ubytec.Language.Operations
     name: Operations
     href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
   spec.vb:
   - uid: Ubytec
     name: Ubytec
@@ -897,6 +901,10 @@ references:
   - uid: Ubytec.Language.Operations
     name: Operations
     href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
 - uid: Ubytec.Language.HighLevel.Interfaces
   commentId: N:Ubytec.Language.HighLevel.Interfaces
   href: Ubytec.html
@@ -1269,13 +1277,20 @@ references:
   - name: )
 - uid: Ubytec.Language.Syntax.Model.SyntaxNode.#ctor*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxNode.#ctor
-  href: Ubytec.Language.Syntax.Model.SyntaxNode.-ctor.html#Ubytec_Language_Syntax_Model_SyntaxNode__ctor_Ubytec_Language_Operations_IOpCode_
+  href: Ubytec.Language.Syntax.Model.SyntaxNode.-ctor.html#Ubytec_Language_Syntax_Model_SyntaxNode__ctor_Ubytec_Language_Operations_Interfaces_IOpCode_
   name: SyntaxNode
   nameWithType: SyntaxNode.SyntaxNode
   fullName: Ubytec.Language.Syntax.Model.SyntaxNode.SyntaxNode
   nameWithType.vb: SyntaxNode.New
   fullName.vb: Ubytec.Language.Syntax.Model.SyntaxNode.New
   name.vb: New
+- uid: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
+  commentId: T:Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
+  parent: Ubytec.Language.HighLevel.Interfaces
+  href: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity.html
+  name: IUbytecContextEntity
+  nameWithType: IUbytecContextEntity
+  fullName: Ubytec.Language.HighLevel.Interfaces.IUbytecContextEntity
 - uid: Ubytec.Language.Syntax.Model.SyntaxNode.Children
   commentId: P:Ubytec.Language.Syntax.Model.SyntaxNode.Children
   href: Ubytec.Language.Syntax.Model.SyntaxNode.Children.html#Ubytec_Language_Syntax_Model_SyntaxNode_Children
@@ -1288,25 +1303,25 @@ references:
   name: ScopeOpCodes
   nameWithType: SyntaxNode.ScopeOpCodes
   fullName: Ubytec.Language.Syntax.Model.SyntaxNode.ScopeOpCodes
-- uid: Ubytec.Language.Operations.IOpCode[]
+- uid: Ubytec.Language.Operations.Interfaces.IOpCode[]
   isExternal: true
-  href: Ubytec.Language.Operations.IOpCode.html
+  href: Ubytec.Language.Operations.Interfaces.IOpCode.html
   name: IOpCode[]
   nameWithType: IOpCode[]
-  fullName: Ubytec.Language.Operations.IOpCode[]
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCode[]
   nameWithType.vb: IOpCode()
-  fullName.vb: Ubytec.Language.Operations.IOpCode()
+  fullName.vb: Ubytec.Language.Operations.Interfaces.IOpCode()
   name.vb: IOpCode()
   spec.csharp:
-  - uid: Ubytec.Language.Operations.IOpCode
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCode
     name: IOpCode
-    href: Ubytec.Language.Operations.IOpCode.html
+    href: Ubytec.Language.Operations.Interfaces.IOpCode.html
   - name: '['
   - name: ']'
   spec.vb:
-  - uid: Ubytec.Language.Operations.IOpCode
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCode
     name: IOpCode
-    href: Ubytec.Language.Operations.IOpCode.html
+    href: Ubytec.Language.Operations.Interfaces.IOpCode.html
   - name: (
   - name: )
 - uid: Ubytec.Language.Syntax.Model.SyntaxNode.Tokens

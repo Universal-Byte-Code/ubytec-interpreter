@@ -19,7 +19,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: StackOperations
     path: ../Ubytec/Language/Operations/StackOperations.cs
-    startLine: 4
+    startLine: 5
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations

@@ -1,9 +1,8 @@
-﻿using Ubytec.Language.Syntax.Scopes;
-
-namespace Ubytec.Language.Operations
+﻿namespace Ubytec.Language.Operations.Interfaces
 {
     public interface IOpCode : IUbytecEntity
     {
         byte OpCode { get; }
     }
+
 }

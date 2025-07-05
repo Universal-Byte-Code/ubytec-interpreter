@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Ubytec.Language.Exceptions;
+using Ubytec.Language.Operations.Interfaces;
 using Ubytec.Language.Syntax.ExpressionFragments;
 using Ubytec.Language.Syntax.Model;
 using Ubytec.Language.Syntax.Scopes;
@@ -9,14 +10,15 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct IF() : IBlockOpCode, IOpInheritance
+        public readonly record struct IF() : IBlockOpCode, IOpVariableScope, IOpCodeFactory
         {
             public readonly UType? BlockType { get; init; } = null;
             public readonly SyntaxExpression? Condition { get; init; } = null;
             public readonly SyntaxExpression? Variables { get; init; } = null;
-            public readonly byte OpCode => 0x04;
+            public const byte OP = 0x04;
+            public readonly byte OpCode => OP;
 
-            public static IF CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
+            public static IOpCode CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
             {
                 // IF sin condición ni tipo explícito
                 if (operands.Length == 0)

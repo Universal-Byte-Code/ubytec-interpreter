@@ -1,7 +1,9 @@
 ﻿using NJsonSchema;
+using System.Numerics;
 using System.Text;
 using Ubytec.Language.Exceptions;
 using Ubytec.Language.Operations;
+using Ubytec.Language.Operations.Interfaces;
 using Ubytec.Language.Syntax.ExpressionFragments;
 using Ubytec.Language.Syntax.Model;
 using Ubytec.Language.Syntax.Scopes;
@@ -37,22 +39,22 @@ namespace Ubytec.Language.AST
         private static readonly Dictionary<string, byte> OpcodeMap = new()
         {
             // Control Flow
-            { nameof(TRAP),    0x00 },
-            { nameof(NOP),     0x01 },
-            { nameof(BLOCK),   0x02 },
-            { nameof(LOOP),    0x03 },
-            { nameof(IF),      0x04 },
-            { nameof(ELSE),    0x05 },
-            { nameof(END),     0x06 },
-            { nameof(BREAK),   0x07 },
-            { nameof(CONTINUE),0x08 },
-            { nameof(RETURN),  0x09 },
-            { nameof(BRANCH),  0x0A },
-            { nameof(SWITCH),  0x0B },
-            { nameof(WHILE),   0x0C },
-            { nameof(CLEAR),   0x0D },
-            { nameof(DEFAULT), 0x0E },
-            { nameof(NULL),    0x0F },
+            { nameof(TRAP),    TRAP.OP },
+            { nameof(NOP),     NOP.OP },
+            { nameof(BLOCK),   BLOCK.OP },
+            { nameof(LOOP),    LOOP.OP },
+            { nameof(IF),      IF.OP },
+            { nameof(ELSE),    ELSE.OP },
+            { nameof(END),     END.OP },
+            { nameof(BREAK),   BREAK.OP },
+            { nameof(CONTINUE),CONTINUE.OP },
+            { nameof(RETURN),  RETURN.OP },
+            { nameof(BRANCH),  BRANCH.OP },
+            { nameof(SWITCH),  SWITCH.OP },
+            { nameof(WHILE),   WHILE.OP },
+            { nameof(CLEAR),   CLEAR.OP },
+            { nameof(DEFAULT), DEFAULT.OP },
+            { nameof(NULL),    NULL.OP },
         
             // Inline var
             { nameof(VAR),     0x10 },
@@ -129,7 +131,7 @@ namespace Ubytec.Language.AST
                 var currToken = code[y];
                 IBlockOpCode? currentBlock = blockStack.Count > 0 ? blockStack.Peek() : null;
 
-                if (string.IsNullOrWhiteSpace(currToken.Source) || currToken.Scopes.Length == 0 || currToken.Scopes.Length == 1 && currToken.Scopes[0] == "source.ubytec") continue;
+                if (string.IsNullOrWhiteSpace(currToken.Source) || currToken.Scopes.Length == 0 || currToken.Scopes.Length == 1 && currToken.Scopes.Helper.IsSource) continue;
 
                 var currLineIndex = currToken.Line;
                 var currLine = new List<SyntaxToken>();
@@ -142,7 +144,7 @@ namespace Ubytec.Language.AST
                     if (i != y && currLine.Count > 0) y++;
                 }
 
-                if (currToken.Scopes.FirstOrDefault(x => x.StartsWith("storage.type.")) is string typeScope)
+                if (currToken.Scopes.Helper.IsStorageType)
                 {
                     var labelToken = currLine[1];
                     var valueToken = currLine[2];
@@ -150,22 +152,22 @@ namespace Ubytec.Language.AST
                     var typeModifiers = TypeModifiers.None;
 
                     // Determinar si es array y/o nullable según scope
-                    if (typeScope.Contains("nullable-both"))
-                        typeModifiers |= TypeModifiers.Nullable | TypeModifiers.IsArray;
-                    else if (typeScope.Contains("nullable-array"))
-                        typeModifiers |= TypeModifiers.IsArray | TypeModifiers.Nullable;
-                    else if (typeScope.Contains("nullable-items"))
-                        typeModifiers |= TypeModifiers.IsArray;
-                    else if (typeScope.Contains("single.nullable"))
+                    if (currToken.Scopes.Helper.IsArrayNullableBoth)
+                        typeModifiers |= TypeModifiers.Nullable | TypeModifiers.IsArray | TypeModifiers.NullableItems | TypeModifiers.NullableArray;
+                    else if (currToken.Scopes.Helper.IsArrayNullableArray)
+                        typeModifiers |= TypeModifiers.IsArray | TypeModifiers.NullableArray;
+                    else if (currToken.Scopes.Helper.IsArrayNullableItems)
+                        typeModifiers |= TypeModifiers.IsArray | TypeModifiers.NullableItems;
+                    else if (currToken.Scopes.Helper.IsSingleNullable)
                         typeModifiers |= TypeModifiers.Nullable;
-                    else if (typeScope.Contains("array"))
+                    else if (currToken.Scopes.Helper.IsArray)
                         typeModifiers |= TypeModifiers.IsArray;
 
                     // Determinar modificadores adicionales desde scopes
-                    foreach (var scope in currLine.SelectMany(t => t.Scopes))
+                    foreach (var scope in currLine.SelectMany(t => t.Scopes.DataSource))
                     {
                         if (!scope.StartsWith("storage.modifier.")) continue;
-                        var keyword = currLine.First(t => t.Scopes.Contains(scope)).Source.ToLowerInvariant();
+                        var keyword = currLine.First(t => t.Scopes.DataSource.Contains(scope)).Source.ToLowerInvariant();
 
                         typeModifiers |= keyword switch
                         {
@@ -221,7 +223,7 @@ namespace Ubytec.Language.AST
                     for (int i = 1; i < currLine.Count; i++)
                     {
                         var currLineToken = currLine[i];
-                        if (string.IsNullOrWhiteSpace(currLineToken.Source) || currLineToken.Scopes.Length == 0 || currLineToken.Scopes.Length == 1 && currLineToken.Scopes[0] == "source.ubytec") continue;
+                        if (string.IsNullOrWhiteSpace(currLineToken.Source) || currLineToken.Scopes.Length == 0 || currLineToken.Scopes.Length == 1 && currLineToken.Scopes.Helper.IsSource) continue;
 
                         //if (currLineToken.Source.StartsWith("@", StringComparison.OrdinalIgnoreCase))
                         //{
@@ -247,7 +249,7 @@ namespace Ubytec.Language.AST
                     var dequedByteCode = instructionAndOperands.Dequeue();
 
                     // Actually create the IOpCode
-                    IOpCode op = OpcodeFactory.Create((byte)dequedByteCode, [], [.. currLine], [.. instructionAndOperands]);
+                    IOpCode op = OpcodeFactory.Create(dequedByteCode, [], [.. currLine], [.. instructionAndOperands]);
                     // Now handle special constructs:
                     switch (op)
                     {
@@ -257,8 +259,9 @@ namespace Ubytec.Language.AST
                         case WHILE:
                         case SWITCH:
                             {
-                                InheritVariables(currentBlock, (IOpInheritance)op);
-                                blockStack.Push((IBlockOpCode)op);
+                                var blockOp = (IBlockOpCode)op;
+                                InheritVariables(currentBlock, blockOp);
+                                blockStack.Push(blockOp);
                                 break;
                             }
                         case ELSE:
@@ -269,8 +272,9 @@ namespace Ubytec.Language.AST
                                     currentBlock = blockStack.Count > 0 ? blockStack.Peek() : null;
                                 }
 
-                                InheritVariables(currentBlock, (IOpInheritance)op);
-                                blockStack.Push((IBlockOpCode)op);
+                                var elseOp = (ELSE)op;
+                                InheritVariables(currentBlock, elseOp);
+                                blockStack.Push(elseOp);
                                 break;
                             }
                         case END:
@@ -304,8 +308,9 @@ namespace Ubytec.Language.AST
                         // Casos especiales con saltos condicionados
                         case BRANCH:
                             {
-                                InheritVariables(currentBlock, (IOpInheritance)op);
-                                blockStack.Push((IBlockOpCode)op);
+                                var branchOp = (BRANCH)op;
+                                InheritVariables(currentBlock, branchOp);
+                                blockStack.Push(branchOp);
                                 break;
                             }
 
@@ -326,7 +331,7 @@ namespace Ubytec.Language.AST
         /// Processes a single operand token, classifying it (numeric literal, type token, operator, etc.)
         /// and enqueues the corresponding value(s) into the instruction operand queue.
         /// </summary>
-        /// <param name="currLineToken">
+        /// <param name="token">
         /// The <see cref="SyntaxToken"/> representing the operand to process
         /// (with source text and scope metadata).
         /// </param>
@@ -340,241 +345,207 @@ namespace Ubytec.Language.AST
         /// <exception cref="SyntaxException">
         /// Thrown if an error occurs during parsing of a valid token scope (e.g., invalid numeric format).
         /// </exception>
-        private static void ProcessOperand(SyntaxToken currLineToken, Queue<ValueType> instructionAndOperands)
+        private static void ProcessOperand(SyntaxToken token, Queue<ValueType> instructionAndOperands)
         {
-            // Storage Types
-            var isArrayNullableBoth = currLineToken.Scopes.Contains("storage.type.array.nullable-both.ubytec");
-            var isArrayNullableArray = currLineToken.Scopes.Contains("storage.type.array.nullable-array.ubytec");
-            var isArrayNullableItems = currLineToken.Scopes.Contains("storage.type.array.nullable-items.ubytec");
-            var isSingleNullable = currLineToken.Scopes.Contains("storage.type.single.nullable.ubytec");
-            var isSingle = currLineToken.Scopes.Contains("storage.type.single.ubytec");
-            var isArray = currLineToken.Scopes.Contains("storage.type.array.ubytec");
+            if (token.Scopes.Helper.IsInvalid) throw new IlegalTokenException(0x484834053EA2B37C, $"Invalid token used as operand: {token.Source}");
+            if (token.Scopes.Helper.IsComma || token.Scopes.Helper.IsArrow || token.Scopes.Helper.IsSemicolon || token.Scopes.Helper.IsParentChildSeparator || token.Scopes.Helper.IsScopeSeparator || token.Scopes.Helper.IsKeyValueSeparator) return;
+            if (token.Scopes.Helper.IsModifier) return;
+            if (token.Scopes.Helper.IsClassLabel || token.Scopes.Helper.IsRecordLabel || token.Scopes.Helper.IsStructLabel || token.Scopes.Helper.IsEnumLabel || token.Scopes.Helper.IsInterfaceLabel || token.Scopes.Helper.IsActionLabel || token.Scopes.Helper.IsFuncLabel || token.Scopes.Helper.IsImplicitVarLabel || token.Scopes.Helper.IsFieldLabel || token.Scopes.Helper.IsExplicitVarLabel) return;
+            if (token.Scopes.Helper.IsCommentLineDoubleSlash || token.Scopes.Helper.IsCommentBlock) return;
 
-            // Comments
-            var isCommentLineDoubleSlash = currLineToken.Scopes.Contains("comment.line.double-slash.ubytec");
-            var isCommentBlock = currLineToken.Scopes.Contains("comment.block.ubytec");
+            else if (token.Scopes.Helper.IsDoubleQuotedString)
+            {
+                // Doble comilla → cadena normal.
+                string rawValue = token.Source;
 
-            // Modifiers
-            var isModifier = currLineToken.Scopes.Contains("storage.modifier.ubytec");
+                // Quita comillas si las incluye el token
+                if (rawValue.StartsWith('\"') && rawValue.EndsWith('\"'))
+                    rawValue = rawValue[1..^1];
 
-            // Constants
-            var isBooleanConstant = currLineToken.Scopes.Contains("constant.boolean.ubytec");
-            var isNumericFloat = currLineToken.Scopes.Contains("constant.numeric.float.ubytec");
-            var isNumericDouble = currLineToken.Scopes.Contains("constant.numeric.double.ubytec");
-            var isNumericInt = currLineToken.Scopes.Contains("constant.numeric.int.ubytec");
-            var isNumericHex = currLineToken.Scopes.Contains("constant.numeric.hex.ubytec");
-            var isNumericBinary = currLineToken.Scopes.Contains("constant.numeric.binary.ubytec");
+                byte[] stringBytes = Encoding.UTF8.GetBytes(rawValue);
 
-            // Code Structures
-            var isArrayStructure = currLineToken.Scopes.Contains("meta.array.ubytec");
-            var isGroupingStructure = currLineToken.Scopes.Contains("meta.grouping.ubytec");
-            var isBlockStructure = currLineToken.Scopes.Contains("meta.block.ubytec");
-            var isAngleGrouping = currLineToken.Scopes.Contains("meta.angle.grouping.ubytec");
+                // Encola longitud como un byte (útil para lectura posterior)
+                instructionAndOperands.Enqueue((byte)stringBytes.Length);
 
-            // Strings
-            var isDoubleQuotedString = currLineToken.Scopes.Contains("string.quoted.double.ubytec");
-            var isSingleQuotedString = currLineToken.Scopes.Contains("string.quoted.single.ubytec");
+                // Encola cada byte del contenido de la cadena
+                foreach (var b in stringBytes)
+                    instructionAndOperands.Enqueue(b);
 
-            // Keywords
-            var isDeclarationKeyword = currLineToken.Scopes.Contains("keyword.control.declaration.ubytec");
-            var isControlKeyword = currLineToken.Scopes.Contains("keyword.control.ubytec");
-            var isFlowKeyword = currLineToken.Scopes.Contains("keyword.control.flow.ubytec");
-            var isVarKeyword = currLineToken.Scopes.Contains("keyword.storage.var.ubytec");
-            var isStackKeyword = currLineToken.Scopes.Contains("keyword.stack.ubytec");
-            var isArithmeticKeyword = currLineToken.Scopes.Contains("keyword.operator.arithmetic.ubytec");
-            var isBitwiseKeyword = currLineToken.Scopes.Contains("keyword.operator.bitwise.ubytec");
-            var isComparisonKeyword = currLineToken.Scopes.Contains("keyword.operator.comparison.ubytec");
-            var isMemoryKeyword = currLineToken.Scopes.Contains("keyword.memory.ubytec");
-            var isJumpKeyword = currLineToken.Scopes.Contains("keyword.control.jump.ubytec");
-            var isFuncCallKeyword = currLineToken.Scopes.Contains("keyword.function.call.ubytec");
-            var isSyscallKeyword = currLineToken.Scopes.Contains("keyword.syscall.ubytec");
-            var isThreadingKeyword = currLineToken.Scopes.Contains("keyword.threading.ubytec");
-            var isSecurityKeyword = currLineToken.Scopes.Contains("keyword.security.ubytec");
-            var isExceptionKeyword = currLineToken.Scopes.Contains("keyword.exception.ubytec");
-            var isVectorKeyword = currLineToken.Scopes.Contains("keyword.vector.ubytec");
-            var isAudioKeyword = currLineToken.Scopes.Contains("keyword.audio.ubytec");
-            var isSystemKeyword = currLineToken.Scopes.Contains("keyword.system.ubytec");
-            var isMLKeyword = currLineToken.Scopes.Contains("keyword.ml.ubytec");
-            var isPowerKeyword = currLineToken.Scopes.Contains("keyword.power.ubytec");
-            var isQuantumKeyword = currLineToken.Scopes.Contains("keyword.quantum.ubytec");
+                Console.WriteLine($"Double-quoted string processed: \"{rawValue}\" → {stringBytes.Length} bytes");
+            }
+            else if (token.Scopes.Helper.IsSingleQuotedString)
+            {
+                // Comilla simple → un solo carácter.
+                string rawValue = token.Source;
 
-            // Operators
-            var isEqualityOperator = currLineToken.Scopes.Contains("operator.equality.ubytec");
-            var isInequalityOperator = currLineToken.Scopes.Contains("operator.inequality.ubytec");
-            var isLessThanEqualsOperator = currLineToken.Scopes.Contains("operator.less-than-equals.ubytec");
-            var isGreaterThanEqualsOperator = currLineToken.Scopes.Contains("operator.greater-than-equals.ubytec");
-            var isLessThanOperator = currLineToken.Scopes.Contains("operator.less-than.ubytec");
-            var isGreaterThanOperator = currLineToken.Scopes.Contains("operator.greater-than.ubytec");
-            var isNegationOperator = currLineToken.Scopes.Contains("operator.negation.ubytec");
-            var isUnsignedRightShift = currLineToken.Scopes.Contains("operator.unsigned-right-shift.ubytec");
-            var isUnsignedLeftShift = currLineToken.Scopes.Contains("operator.unsigned-left-shift.ubytec");
-            var isLeftShift = currLineToken.Scopes.Contains("operator.left-shift.ubytec");
-            var isRightShift = currLineToken.Scopes.Contains("operator.right-shift.ubytec");
-            var isAdditionOperator = currLineToken.Scopes.Contains("operator.addition.ubytec");
-            var isSubtractionOperator = currLineToken.Scopes.Contains("operator.subtraction.ubytec");
-            var isDivisionOperator = currLineToken.Scopes.Contains("operator.division.ubytec");
-            var isMultiplicationOperator = currLineToken.Scopes.Contains("operator.multiplication.ubytec");
-            var isExponentiationOperator = currLineToken.Scopes.Contains("operator.exponentiation.ubytec");
-            var isModuloOperator = currLineToken.Scopes.Contains("operator.modulo.ubytec");
-            var isBitwiseAndOperator = currLineToken.Scopes.Contains("operator.bitwise-and.ubytec");
-            var isHashOperator = currLineToken.Scopes.Contains("operator.hash.ubytec");
-            var isIncrementOperator = currLineToken.Scopes.Contains("operator.increment.ubytec");
-            var isDecrementOperator = currLineToken.Scopes.Contains("operator.decrement.ubytec");
-            var isLogicalAndOperator = currLineToken.Scopes.Contains("operator.logical-and.ubytec");
-            var isLogicalOrOperator = currLineToken.Scopes.Contains("operator.logical-or.ubytec");
-            var isOptionalChaining = currLineToken.Scopes.Contains("operator.optional-chaining.ubytec");
-            var isPipeOperator = currLineToken.Scopes.Contains("operator.pipe.ubytec");
-            var isPipeInOperator = currLineToken.Scopes.Contains("operator.pipe-in.ubytec");
-            var isPipeOutOperator = currLineToken.Scopes.Contains("operator.pipe-out.ubytec");
-            var isNullableCoalescence = currLineToken.Scopes.Contains("operator.nullable-coalescence.ubytec");
-            var isSpreadOperator = currLineToken.Scopes.Contains("operator.spread.ubytec");
-            var isSchematizeOperator = currLineToken.Scopes.Contains("operator.schematize.ubytec");
-            var isAssignOperator = currLineToken.Scopes.Contains("operator.assign.ubytec");
+                if (rawValue.StartsWith('\'') && rawValue.EndsWith('\''))
+                    rawValue = rawValue[1..^1];
 
-            // Punctuation
-            var isComma = currLineToken.Scopes.Contains("punctuation.comma.ubytec");
-            var isKeyValueSeparator = currLineToken.Scopes.Contains("punctuation.separator.key-value.ubytec");
-            var isScopeSeparator = currLineToken.Scopes.Contains("punctuation.scope.ubytec");
-            var isParentChildSeparator = currLineToken.Scopes.Contains("punctuation.separator.parent-child.ubytec");
-            var isSemicolon = currLineToken.Scopes.Contains("punctuation.semicolon.ubytec");
-            var isArrow = currLineToken.Scopes.Contains("punctuation.arrow.ubytec");
+                if (rawValue.Length != 1)
+                    throw new IlegalTokenException(0xA13C42D9FF10A93D,
+                        $"Single-quoted literal should contain exactly one character, got \"{rawValue}\"");
 
-            // Arguments
-            var isArgumentName = currLineToken.Scopes.Contains("entity.name.argument.ubytec");
+                // Convertimos el único carácter a byte UTF-8
+                byte charByte = Encoding.UTF8.GetBytes(rawValue)[0];
+                instructionAndOperands.Enqueue(charByte);
 
-            // Labels
-            var isClassLabel = currLineToken.Scopes.Contains("entity.name.type.class.ubytec");
-            var isRecordLabel = currLineToken.Scopes.Contains("entity.name.type.record.ubytec");
-            var isStructLabel = currLineToken.Scopes.Contains("entity.name.type.struct.ubytec");
-            var isEnumLabel = currLineToken.Scopes.Contains("entity.name.type.enum.ubytec");
-            var isInterfaceLabel = currLineToken.Scopes.Contains("entity.name.type.interface.ubytec");
-            var isActionLabel = currLineToken.Scopes.Contains("entity.name.type.action.ubytec");
-            var isFuncLabel = currLineToken.Scopes.Contains("entity.name.type.func.ubytec");
-            var isImplicitVarLabel = currLineToken.Scopes.Contains("entity.name.var.implicit.ubytec");
-            var isFieldLabel = currLineToken.Scopes.Contains("entity.name.field.ubytec");
-            var isExplicitVarLabel = currLineToken.Scopes.Contains("entity.name.var.explicit.ubytec");
+                Console.WriteLine($"Single-quoted char processed: '{rawValue}' → 0x{charByte:X2}");
+            }
+            else if (token.Scopes.Helper.IsBooleanConstant)
+            {
+                byte boolByte = 0;
 
-            // Invalid tokens
-            var isInvalid = currLineToken.Scopes.Contains("invalid.illegal.ubytec");
+                boolByte |= token.Source.Equals("true", StringComparison.OrdinalIgnoreCase) ? (byte)1 : (byte)0;
 
-            if (isInvalid) throw new IlegalTokenException(0x484834053EA2B37C, $"Invalid token used as operand: {currLineToken.Source}");
-            if (isComma) return;
-            if (isSemicolon) return;
-
+                // Boolean literal detected (true/false)
+                instructionAndOperands.Enqueue(boolByte);
+            }
             // Process numeric, type, comment, and operator tokens using boolean checks
-            else if (isNumericBinary)
+            else if (token.Scopes.Helper.IsNumericBinary)
             {
                 // Hexadecimal literal detected (e.g. 0x1A3F)
-                var a = Convert.ToInt32(currLineToken.Source, 2);
+                var a = Convert.ToByte(token.Source, 2);
                 instructionAndOperands.Enqueue(a);
             }
-            else if (isNumericHex)
+            else if (token.Scopes.Helper.IsNumericHex)
             {
                 // Hexadecimal literal detected (e.g. 0x1A3F)
-                var a = Convert.ToInt32(currLineToken.Source, 16);
+                var a = Convert.ToInt32(token.Source, 16);
                 instructionAndOperands.Enqueue(a);
             }
-            else if (isNumericFloat || isNumericDouble)
+            else if (token.Scopes.Helper.IsNumericFloat)
             {
                 // Floating-point literal (with a decimal point) detected
-                var a = Convert.ToSingle(currLineToken.Source);
+                var a = Convert.ToSingle(token.Source);
                 instructionAndOperands.Enqueue(a);
             }
-            else if (currLineToken.Source.StartsWith("t_", StringComparison.OrdinalIgnoreCase))
+            else if (token.Scopes.Helper.IsNumericDouble)
+            {
+                var a = Convert.ToDouble(token.Source);
+                instructionAndOperands.Enqueue(a);
+            }
+            else if (token.Scopes.Helper.IsNumericInt)
+            {
+                if (short.TryParse(token.Source, out short shortValue))
+                {
+                    instructionAndOperands.Enqueue(shortValue);
+                }
+                else if (int.TryParse(token.Source, out int intValue))
+                {
+                    instructionAndOperands.Enqueue(intValue);
+                }
+                else if (long.TryParse(token.Source, out long longValue))
+                {
+                    instructionAndOperands.Enqueue(longValue);
+                }
+                else if (BigInteger.TryParse(token.Source, out BigInteger bigIntValue))
+                {
+                    instructionAndOperands.Enqueue(bigIntValue);
+                }
+                else
+                {
+                    throw new SyntaxException(0xD7D2BB3DFE8411EA, $"Invalid integer format: {token.Source}");
+                }
+            }
+            else if (token.Source.StartsWith("t_", StringComparison.OrdinalIgnoreCase))
             {
                 // Removemos el prefijo "t_" para obtener el nombre del tipo.
-                string typeToken = currLineToken.Source[2..];
+                string typeToken = token.Source[2..];
 
-                // Usamos las flags definidas en el token para determinar si es nullable y/o array.
-                // Las condiciones se basan en los scopes ya asignados:
-                //   - isSingleNullable, isArrayNullableBoth, isArrayNullableItems indican nullabilidad.
-                //   - isArray, isArrayNullableBoth, isArrayNullableArray, isArrayNullableItems indican un array.
-                bool isNullable = isSingleNullable || isArrayNullableBoth || isArrayNullableItems;
-                bool isArrayType = isArray || isArrayNullableBoth || isArrayNullableArray || isArrayNullableItems;
-
-                // Si por alguna razón el token termina con '?' (y no lo refleja el scope), lo eliminamos.
+                // Si por alguna razón el token termina con '?' (y no lo refleja el scope)
                 if (typeToken.EndsWith('?'))
                     throw new IlegalTokenException(0x6A9283F9FB0248A1,
                         "There was an error processing the type a '?' token was detected, and it does not correspond to a nullable. Did you misspell something?");
 
+                TypeModifiers flags = TypeModifiers.None;
+
+                // Bit 0 (0x0001): nullable simple  (int?)
+                if (token.Scopes.Helper.IsSingleNullable) flags |= TypeModifiers.Nullable;       // 00000001
+
+                // Bit 1 (0x0002) + Bit 2 (0x0004): array nullable completo ( [T]? )
+                if (token.Scopes.Helper.IsArrayNullableBoth) flags |= TypeModifiers.NullableArray | TypeModifiers.NullableItems;    // 00000010
+
+                // Bit 2 (0x0004): array nullable ( [T]? )
+                if (token.Scopes.Helper.IsArrayNullableArray) flags |= TypeModifiers.NullableArray;   // 00000100
+
+                // Bit 3 (0x0008): ítems nullables ( [T?] )
+                if (token.Scopes.Helper.IsArrayNullableItems) flags |= TypeModifiers.NullableItems;   // 00001000
+
+                // Bit 1 (0x0002) *solo* para “es array” sin nullabilidad adicional
+                if (token.Scopes.Helper.IsArray) flags |= TypeModifiers.IsArray;                // 00010000
+
+                if (token.Scopes.Helper.IsModifier)
+                {
+                    switch (token.Source.ToLowerInvariant())
+                    {
+                        // Access
+                        case "public": flags |= TypeModifiers.Public; break;
+                        case "private": flags |= TypeModifiers.Private; break; // Bit 5  (0x0020)
+                        case "protected": flags |= TypeModifiers.Protected; break; // Bit 6  (0x0040)
+                        case "internal": flags |= TypeModifiers.Internal; break; // Bit 7  (0x0080)
+                        case "secret": flags |= TypeModifiers.Secret; break; // Bit 8  (0x0100)
+
+                        // Mutabilidad
+                        case "const": flags |= TypeModifiers.Const; break; // Bit 9  (0x0200)
+                        case "readonly": flags |= TypeModifiers.ReadOnly; break; // Bit 10 (0x0400)
+
+                        // Comportamiento
+                        case "abstract": flags |= TypeModifiers.Abstract; break; // Bit 11 (0x0800)
+                        case "virtual": flags |= TypeModifiers.Virtual; break; // Bit 12 (0x1000)
+                        case "override": flags |= TypeModifiers.Override; break; // Bit 13 (0x2000)
+                        case "sealed": flags |= TypeModifiers.Sealed; break; // Bit 14 (0x4000)
+
+                        // Ámbito
+                        case "local": flags |= TypeModifiers.Local; break; // Bit 15 (0x8000)
+                        case "global": flags |= TypeModifiers.Global; break; // Bit 16 (0x10000)
+                    }
+                }
+
                 // Intentamos convertir el tipo a un enum de PrimitiveType.
                 if (Enum.TryParse(typeToken, true, out PrimitiveType parsedType))
-                {
-                    // Codificamos la nullabilidad y la condición array en un byte (primer bit para nullable, segundo para array).
-                    byte flags = 0;
-                    if (isNullable) flags |= 0x01;
-                    if (isArrayType) flags |= 0x02;
-
-                    instructionAndOperands.Enqueue((byte)parsedType);
-                    instructionAndOperands.Enqueue(flags);
-                }
-                else
-                {
-                    // Para tipos personalizados, convertimos cada carácter en un byte.
+                    instructionAndOperands.Enqueue(parsedType);
+                else // Para tipos personalizados, convertimos cada carácter en un byte.
                     foreach (char c in typeToken)
-                        instructionAndOperands.Enqueue((byte)c);
-
-                    // Añadimos el byte de flags al final.
-                    byte flags = 0;
-                    if (isNullable) flags |= 0x01;
-                    if (isArrayType) flags |= 0x02;
-                    instructionAndOperands.Enqueue(flags);
-                }
+                        instructionAndOperands.Enqueue(c);
+                instructionAndOperands.Enqueue(flags);
             }
-            else if (isNumericInt)
-            {
-                // Integer literal detected
-                if (int.TryParse(currLineToken.Source, out int intValue))
-                    instructionAndOperands.Enqueue(intValue);
-                else if (byte.TryParse(currLineToken.Source, out byte byteValue))
-                    instructionAndOperands.Enqueue(byteValue);
-                else
-                    throw new IlegalTokenException(0xA47A4945647CBC9D, $"Invalid integer constant: {currLineToken.Source}");
-            }
-            else if (isCommentLineDoubleSlash || isCommentBlock)
-            {
-                // Skip comments
-                return;
-            }
-            else if (isEqualityOperator || isInequalityOperator ||
-                     isLessThanEqualsOperator || isGreaterThanEqualsOperator ||
-                     isLessThanOperator || isGreaterThanOperator ||
-                     isAdditionOperator || isSubtractionOperator ||
-                     isDivisionOperator || isMultiplicationOperator ||
-                     isExponentiationOperator || isModuloOperator ||
-                     isBitwiseAndOperator || isHashOperator ||
-                     isIncrementOperator || isDecrementOperator ||
-                     isLogicalAndOperator || isLogicalOrOperator ||
-                     isOptionalChaining || isPipeOperator ||
-                     isPipeInOperator || isPipeOutOperator ||
-                     isNullableCoalescence || isSpreadOperator ||
-                     isSchematizeOperator || isAssignOperator)
+            else if (token.Scopes.Helper.IsEqualityOperator || token.Scopes.Helper.IsInequalityOperator ||
+                     token.Scopes.Helper.IsLessThanEqualsOperator || token.Scopes.Helper.IsGreaterThanEqualsOperator ||
+                     token.Scopes.Helper.IsLessThanOperator || token.Scopes.Helper.IsGreaterThanOperator ||
+                     token.Scopes.Helper.IsAdditionOperator || token.Scopes.Helper.IsSubtractionOperator ||
+                     token.Scopes.Helper.IsDivisionOperator || token.Scopes.Helper.IsMultiplicationOperator ||
+                     token.Scopes.Helper.IsExponentiationOperator || token.Scopes.Helper.IsModuloOperator ||
+                     token.Scopes.Helper.IsBitwiseAndOperator || token.Scopes.Helper.IsHashOperator ||
+                     token.Scopes.Helper.IsIncrementOperator || token.Scopes.Helper.IsDecrementOperator ||
+                     token.Scopes.Helper.IsLogicalAndOperator || token.Scopes.Helper.IsLogicalOrOperator ||
+                     token.Scopes.Helper.IsOptionalChaining || token.Scopes.Helper.IsPipeOperator ||
+                     token.Scopes.Helper.IsPipeInOperator || token.Scopes.Helper.IsPipeOutOperator ||
+                     token.Scopes.Helper.IsNullableCoalescence || token.Scopes.Helper.IsSpreadOperator ||
+                     token.Scopes.Helper.IsSchematizeOperator || token.Scopes.Helper.IsAssignOperator)
             {
                 // Here we process all other operators.
                 // If the operator token is a single character, we enqueue it and pad with 0.
                 // If it’s two characters long, we enqueue both characters.
                 // For longer operators (if any emerge in the future), we iterate through each character.
-                if (currLineToken.Source.Length == 1)
+                if (token.Source.Length == 1)
                 {
-                    instructionAndOperands.Enqueue((byte)currLineToken.Source[0]);
+                    instructionAndOperands.Enqueue(token.Source[0]);
                     instructionAndOperands.Enqueue(0); // Padding for expected two-byte format
                 }
-                else if (currLineToken.Source.Length == 2)
+                else if (token.Source.Length == 2)
                 {
-                    instructionAndOperands.Enqueue((byte)currLineToken.Source[0]);
-                    instructionAndOperands.Enqueue((byte)currLineToken.Source[1]);
+                    instructionAndOperands.Enqueue(token.Source[0]);
+                    instructionAndOperands.Enqueue(token.Source[1]);
                 }
                 else
                 {
-                    foreach (char c in currLineToken.Source)
-                    {
-                        instructionAndOperands.Enqueue((byte)c);
-                    }
+                    foreach (char c in token.Source)
+                        instructionAndOperands.Enqueue(c);
                 }
             }
             else
             {
-                throw new IlegalTokenException(0xFDDEFC54BA8E0600, $"Invalid operand: {currLineToken}");
+                throw new IlegalTokenException(0xFDDEFC54BA8E0600, $"Invalid operand: {token}");
             }
 
         }
@@ -585,7 +556,7 @@ namespace Ubytec.Language.AST
         /// </summary>
         /// <param name="parent">The parent opCode holding the variable list.</param>
         /// <param name="child">The child opCode to which the variables will be added.</param>
-        private static void InheritVariables(IBlockOpCode? parent, IOpInheritance child)
+        private static void InheritVariables(IOpVariableScope? parent, IOpVariableScope child)
         {
             if (parent is null || parent!.Variables is null) return;
 
@@ -636,7 +607,7 @@ namespace Ubytec.Language.AST
 
             foreach (var token in tokens)
             {
-                if (string.IsNullOrWhiteSpace(token.Source) || token.Scopes.Length == 0 || token.Scopes.Length == 1 && token.Scopes[0] == "source.ubytec") continue;
+                if (string.IsNullOrWhiteSpace(token.Source) || token.Scopes.Length == 0 || token.Scopes.Length == 1 && token.Scopes.Helper.IsSource) continue;
                 validTokens.Add(token);
             }
 

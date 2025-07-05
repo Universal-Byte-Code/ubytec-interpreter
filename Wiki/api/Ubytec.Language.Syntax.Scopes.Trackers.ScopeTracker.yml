@@ -103,7 +103,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Push
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 19
+    startLine: 20
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
@@ -135,7 +135,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Pop
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 28
+    startLine: 29
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
@@ -170,7 +170,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Count
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 39
+    startLine: 40
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
@@ -201,7 +201,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Peek
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 48
+    startLine: 49
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
@@ -236,7 +236,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: MarkReturn
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 59
+    startLine: 60
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
@@ -264,7 +264,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: MarkBreak
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 68
+    startLine: 69
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
@@ -292,7 +292,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: MarkContinue
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 83
+    startLine: 84
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
@@ -320,7 +320,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ValidateFinalBlock
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 102
+    startLine: 103
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
@@ -355,7 +355,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: GetEnumerator
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 121
+    startLine: 122
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
@@ -389,7 +389,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: System.Collections.IEnumerable.GetEnumerator
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 123
+    startLine: 124
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
@@ -425,7 +425,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Find
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 133
+    startLine: 134
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
@@ -466,7 +466,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: TryPopUntil
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 163
+    startLine: 164
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers
@@ -507,7 +507,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PeekOrDefault
     path: ../Ubytec/Language/Syntax/Scopes/Trackers/ScopeTracker.cs
-    startLine: 192
+    startLine: 193
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Trackers

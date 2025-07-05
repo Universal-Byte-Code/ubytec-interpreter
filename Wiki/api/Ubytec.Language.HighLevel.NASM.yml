@@ -1,0 +1,330 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.HighLevel.NASM
+  commentId: N:Ubytec.Language.HighLevel.NASM
+  id: NASM
+  parent: Ubytec.Language.HighLevel
+  children:
+  - Ubytec.Language.HighLevel.NASM.NASM_BSS`1
+  - Ubytec.Language.HighLevel.NASM.NASM_Data`1
+  - Ubytec.Language.HighLevel.NASM.NASM_EntryPoint`1
+  - Ubytec.Language.HighLevel.NASM.NASM_Exports`1
+  - Ubytec.Language.HighLevel.NASM.NASM_FunctionsAndActions`1
+  - Ubytec.Language.HighLevel.NASM.NASM_Header`1
+  - Ubytec.Language.HighLevel.NASM.NASM_Interfaces`1
+  - Ubytec.Language.HighLevel.NASM.NASM_LocalContext`1
+  - Ubytec.Language.HighLevel.NASM.NASM_Metadata`1
+  - Ubytec.Language.HighLevel.NASM.NASM_SubModules`1
+  - Ubytec.Language.HighLevel.NASM.NASM_Text`1
+  - Ubytec.Language.HighLevel.NASM.NASM_Types`1
+  langs:
+  - csharp
+  - vb
+  name: Ubytec.Language.HighLevel.NASM
+  nameWithType: Ubytec.Language.HighLevel.NASM
+  fullName: Ubytec.Language.HighLevel.NASM
+  type: Namespace
+  assemblies:
+  - Ubytec
+references:
+- uid: Ubytec.Language.HighLevel.NASM.NASM_BSS`1
+  commentId: T:Ubytec.Language.HighLevel.NASM.NASM_BSS`1
+  href: Ubytec.Language.HighLevel.NASM.NASM_BSS-1.html
+  name: NASM_BSS<T>
+  nameWithType: NASM_BSS<T>
+  fullName: Ubytec.Language.HighLevel.NASM.NASM_BSS<T>
+  nameWithType.vb: NASM_BSS(Of T)
+  fullName.vb: Ubytec.Language.HighLevel.NASM.NASM_BSS(Of T)
+  name.vb: NASM_BSS(Of T)
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_BSS`1
+    name: NASM_BSS
+    href: Ubytec.Language.HighLevel.NASM.NASM_BSS-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_BSS`1
+    name: NASM_BSS
+    href: Ubytec.Language.HighLevel.NASM.NASM_BSS-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubytec.Language.HighLevel.NASM.NASM_Data`1
+  commentId: T:Ubytec.Language.HighLevel.NASM.NASM_Data`1
+  href: Ubytec.Language.HighLevel.NASM.NASM_Data-1.html
+  name: NASM_Data<T>
+  nameWithType: NASM_Data<T>
+  fullName: Ubytec.Language.HighLevel.NASM.NASM_Data<T>
+  nameWithType.vb: NASM_Data(Of T)
+  fullName.vb: Ubytec.Language.HighLevel.NASM.NASM_Data(Of T)
+  name.vb: NASM_Data(Of T)
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_Data`1
+    name: NASM_Data
+    href: Ubytec.Language.HighLevel.NASM.NASM_Data-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_Data`1
+    name: NASM_Data
+    href: Ubytec.Language.HighLevel.NASM.NASM_Data-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubytec.Language.HighLevel.NASM.NASM_EntryPoint`1
+  commentId: T:Ubytec.Language.HighLevel.NASM.NASM_EntryPoint`1
+  href: Ubytec.Language.HighLevel.NASM.NASM_EntryPoint-1.html
+  name: NASM_EntryPoint<T>
+  nameWithType: NASM_EntryPoint<T>
+  fullName: Ubytec.Language.HighLevel.NASM.NASM_EntryPoint<T>
+  nameWithType.vb: NASM_EntryPoint(Of T)
+  fullName.vb: Ubytec.Language.HighLevel.NASM.NASM_EntryPoint(Of T)
+  name.vb: NASM_EntryPoint(Of T)
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_EntryPoint`1
+    name: NASM_EntryPoint
+    href: Ubytec.Language.HighLevel.NASM.NASM_EntryPoint-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_EntryPoint`1
+    name: NASM_EntryPoint
+    href: Ubytec.Language.HighLevel.NASM.NASM_EntryPoint-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubytec.Language.HighLevel.NASM.NASM_Exports`1
+  commentId: T:Ubytec.Language.HighLevel.NASM.NASM_Exports`1
+  href: Ubytec.Language.HighLevel.NASM.NASM_Exports-1.html
+  name: NASM_Exports<T>
+  nameWithType: NASM_Exports<T>
+  fullName: Ubytec.Language.HighLevel.NASM.NASM_Exports<T>
+  nameWithType.vb: NASM_Exports(Of T)
+  fullName.vb: Ubytec.Language.HighLevel.NASM.NASM_Exports(Of T)
+  name.vb: NASM_Exports(Of T)
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_Exports`1
+    name: NASM_Exports
+    href: Ubytec.Language.HighLevel.NASM.NASM_Exports-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_Exports`1
+    name: NASM_Exports
+    href: Ubytec.Language.HighLevel.NASM.NASM_Exports-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubytec.Language.HighLevel.NASM.NASM_FunctionsAndActions`1
+  commentId: T:Ubytec.Language.HighLevel.NASM.NASM_FunctionsAndActions`1
+  href: Ubytec.Language.HighLevel.NASM.NASM_FunctionsAndActions-1.html
+  name: NASM_FunctionsAndActions<T>
+  nameWithType: NASM_FunctionsAndActions<T>
+  fullName: Ubytec.Language.HighLevel.NASM.NASM_FunctionsAndActions<T>
+  nameWithType.vb: NASM_FunctionsAndActions(Of T)
+  fullName.vb: Ubytec.Language.HighLevel.NASM.NASM_FunctionsAndActions(Of T)
+  name.vb: NASM_FunctionsAndActions(Of T)
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_FunctionsAndActions`1
+    name: NASM_FunctionsAndActions
+    href: Ubytec.Language.HighLevel.NASM.NASM_FunctionsAndActions-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_FunctionsAndActions`1
+    name: NASM_FunctionsAndActions
+    href: Ubytec.Language.HighLevel.NASM.NASM_FunctionsAndActions-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubytec.Language.HighLevel.NASM.NASM_Header`1
+  commentId: T:Ubytec.Language.HighLevel.NASM.NASM_Header`1
+  href: Ubytec.Language.HighLevel.NASM.NASM_Header-1.html
+  name: NASM_Header<T>
+  nameWithType: NASM_Header<T>
+  fullName: Ubytec.Language.HighLevel.NASM.NASM_Header<T>
+  nameWithType.vb: NASM_Header(Of T)
+  fullName.vb: Ubytec.Language.HighLevel.NASM.NASM_Header(Of T)
+  name.vb: NASM_Header(Of T)
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_Header`1
+    name: NASM_Header
+    href: Ubytec.Language.HighLevel.NASM.NASM_Header-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_Header`1
+    name: NASM_Header
+    href: Ubytec.Language.HighLevel.NASM.NASM_Header-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubytec.Language.HighLevel.NASM.NASM_Interfaces`1
+  commentId: T:Ubytec.Language.HighLevel.NASM.NASM_Interfaces`1
+  href: Ubytec.Language.HighLevel.NASM.NASM_Interfaces-1.html
+  name: NASM_Interfaces<T>
+  nameWithType: NASM_Interfaces<T>
+  fullName: Ubytec.Language.HighLevel.NASM.NASM_Interfaces<T>
+  nameWithType.vb: NASM_Interfaces(Of T)
+  fullName.vb: Ubytec.Language.HighLevel.NASM.NASM_Interfaces(Of T)
+  name.vb: NASM_Interfaces(Of T)
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_Interfaces`1
+    name: NASM_Interfaces
+    href: Ubytec.Language.HighLevel.NASM.NASM_Interfaces-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_Interfaces`1
+    name: NASM_Interfaces
+    href: Ubytec.Language.HighLevel.NASM.NASM_Interfaces-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubytec.Language.HighLevel.NASM.NASM_LocalContext`1
+  commentId: T:Ubytec.Language.HighLevel.NASM.NASM_LocalContext`1
+  href: Ubytec.Language.HighLevel.NASM.NASM_LocalContext-1.html
+  name: NASM_LocalContext<T>
+  nameWithType: NASM_LocalContext<T>
+  fullName: Ubytec.Language.HighLevel.NASM.NASM_LocalContext<T>
+  nameWithType.vb: NASM_LocalContext(Of T)
+  fullName.vb: Ubytec.Language.HighLevel.NASM.NASM_LocalContext(Of T)
+  name.vb: NASM_LocalContext(Of T)
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_LocalContext`1
+    name: NASM_LocalContext
+    href: Ubytec.Language.HighLevel.NASM.NASM_LocalContext-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_LocalContext`1
+    name: NASM_LocalContext
+    href: Ubytec.Language.HighLevel.NASM.NASM_LocalContext-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubytec.Language.HighLevel.NASM.NASM_Metadata`1
+  commentId: T:Ubytec.Language.HighLevel.NASM.NASM_Metadata`1
+  href: Ubytec.Language.HighLevel.NASM.NASM_Metadata-1.html
+  name: NASM_Metadata<T>
+  nameWithType: NASM_Metadata<T>
+  fullName: Ubytec.Language.HighLevel.NASM.NASM_Metadata<T>
+  nameWithType.vb: NASM_Metadata(Of T)
+  fullName.vb: Ubytec.Language.HighLevel.NASM.NASM_Metadata(Of T)
+  name.vb: NASM_Metadata(Of T)
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_Metadata`1
+    name: NASM_Metadata
+    href: Ubytec.Language.HighLevel.NASM.NASM_Metadata-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_Metadata`1
+    name: NASM_Metadata
+    href: Ubytec.Language.HighLevel.NASM.NASM_Metadata-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubytec.Language.HighLevel.NASM.NASM_SubModules`1
+  commentId: T:Ubytec.Language.HighLevel.NASM.NASM_SubModules`1
+  href: Ubytec.Language.HighLevel.NASM.NASM_SubModules-1.html
+  name: NASM_SubModules<T>
+  nameWithType: NASM_SubModules<T>
+  fullName: Ubytec.Language.HighLevel.NASM.NASM_SubModules<T>
+  nameWithType.vb: NASM_SubModules(Of T)
+  fullName.vb: Ubytec.Language.HighLevel.NASM.NASM_SubModules(Of T)
+  name.vb: NASM_SubModules(Of T)
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_SubModules`1
+    name: NASM_SubModules
+    href: Ubytec.Language.HighLevel.NASM.NASM_SubModules-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_SubModules`1
+    name: NASM_SubModules
+    href: Ubytec.Language.HighLevel.NASM.NASM_SubModules-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubytec.Language.HighLevel.NASM.NASM_Text`1
+  commentId: T:Ubytec.Language.HighLevel.NASM.NASM_Text`1
+  href: Ubytec.Language.HighLevel.NASM.NASM_Text-1.html
+  name: NASM_Text<T>
+  nameWithType: NASM_Text<T>
+  fullName: Ubytec.Language.HighLevel.NASM.NASM_Text<T>
+  nameWithType.vb: NASM_Text(Of T)
+  fullName.vb: Ubytec.Language.HighLevel.NASM.NASM_Text(Of T)
+  name.vb: NASM_Text(Of T)
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_Text`1
+    name: NASM_Text
+    href: Ubytec.Language.HighLevel.NASM.NASM_Text-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_Text`1
+    name: NASM_Text
+    href: Ubytec.Language.HighLevel.NASM.NASM_Text-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubytec.Language.HighLevel.NASM.NASM_Types`1
+  commentId: T:Ubytec.Language.HighLevel.NASM.NASM_Types`1
+  href: Ubytec.Language.HighLevel.NASM.NASM_Types-1.html
+  name: NASM_Types<T>
+  nameWithType: NASM_Types<T>
+  fullName: Ubytec.Language.HighLevel.NASM.NASM_Types<T>
+  nameWithType.vb: NASM_Types(Of T)
+  fullName.vb: Ubytec.Language.HighLevel.NASM.NASM_Types(Of T)
+  name.vb: NASM_Types(Of T)
+  spec.csharp:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_Types`1
+    name: NASM_Types
+    href: Ubytec.Language.HighLevel.NASM.NASM_Types-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Ubytec.Language.HighLevel.NASM.NASM_Types`1
+    name: NASM_Types
+    href: Ubytec.Language.HighLevel.NASM.NASM_Types-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+memberLayout: SeparatePages

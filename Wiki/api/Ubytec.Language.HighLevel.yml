@@ -17,6 +17,7 @@ items:
   - Ubytec.Language.HighLevel.Interfaces
   - Ubytec.Language.HighLevel.LocalContext
   - Ubytec.Language.HighLevel.Module
+  - Ubytec.Language.HighLevel.NASM
   - Ubytec.Language.HighLevel.Property
   - Ubytec.Language.HighLevel.Record
   - Ubytec.Language.HighLevel.Struct
@@ -69,6 +70,44 @@ references:
   - uid: Ubytec.Language.HighLevel.Interfaces
     name: Interfaces
     href: Ubytec.Language.HighLevel.Interfaces.html
+- uid: Ubytec.Language.HighLevel.NASM
+  commentId: N:Ubytec.Language.HighLevel.NASM
+  href: Ubytec.html
+  name: Ubytec.Language.HighLevel.NASM
+  nameWithType: Ubytec.Language.HighLevel.NASM
+  fullName: Ubytec.Language.HighLevel.NASM
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel.NASM
+    name: NASM
+    href: Ubytec.Language.HighLevel.NASM.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel
+    name: HighLevel
+    href: Ubytec.Language.HighLevel.html
+  - name: .
+  - uid: Ubytec.Language.HighLevel.NASM
+    name: NASM
+    href: Ubytec.Language.HighLevel.NASM.html
 - uid: Ubytec.Language.HighLevel.AccessorContext
   commentId: T:Ubytec.Language.HighLevel.AccessorContext
   parent: Ubytec.Language.HighLevel

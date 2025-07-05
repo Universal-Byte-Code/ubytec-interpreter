@@ -1,0 +1,716 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory
+  commentId: T:Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory
+  id: ExtendedOpcodeFactory
+  parent: Ubytec.Language.Operations.Extended
+  children:
+  - Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Create(System.Byte,System.Byte,Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
+  - Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Register(System.Byte,System.Byte,Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate)
+  - Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory._table
+  langs:
+  - csharp
+  - vb
+  name: ExtendedOpcodeFactory
+  nameWithType: ExtendedOpcodeFactory
+  fullName: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory
+  type: Class
+  source:
+    remote:
+      path: Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ExtendedOpcodeFactory
+    path: ../Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
+    startLine: 25
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations.Extended
+  summary: Thread-safe factory for extended (<code>0xFF</code>) opcodes.
+  example: []
+  syntax:
+    content: public static class ExtendedOpcodeFactory
+    content.vb: Public Module ExtendedOpcodeFactory
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory._table
+  commentId: F:Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory._table
+  id: _table
+  parent: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory
+  langs:
+  - csharp
+  - vb
+  name: _table
+  nameWithType: ExtendedOpcodeFactory._table
+  fullName: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory._table
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _table
+    path: ../Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
+    startLine: 35
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations.Extended
+  remarks: >-
+    <p>
+
+    * ConcurrentDictionary keeps look-ups lock-free.<br />
+
+    * Value = same delegate shape used by standard opcodes.
+
+    </p>
+  example: []
+  syntax:
+    content: private static readonly ConcurrentDictionary<ExtKey, IOpCodeFactory.OpCodeFactoryDelegate> _table
+    return:
+      type: System.Collections.Concurrent.ConcurrentDictionary{Ubytec.Language.Operations.Extended.ExtKey,Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate}
+    content.vb: Private Shared ReadOnly _table As ConcurrentDictionary(Of ExtKey, IOpCodeFactory.OpCodeFactoryDelegate)
+- uid: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Register(System.Byte,System.Byte,Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate)
+  commentId: M:Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Register(System.Byte,System.Byte,Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate)
+  id: Register(System.Byte,System.Byte,Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate)
+  parent: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory
+  langs:
+  - csharp
+  - vb
+  name: Register(byte, byte, OpCodeFactoryDelegate)
+  nameWithType: ExtendedOpcodeFactory.Register(byte, byte, IOpCodeFactory.OpCodeFactoryDelegate)
+  fullName: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Register(byte, byte, Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Register
+    path: ../Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
+    startLine: 38
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations.Extended
+  summary: Registers (or overwrites) an extended opcode.
+  example: []
+  syntax:
+    content: public static void Register(byte extensionGroup, byte extendedOp, IOpCodeFactory.OpCodeFactoryDelegate ctor)
+    parameters:
+    - id: extensionGroup
+      type: System.Byte
+    - id: extendedOp
+      type: System.Byte
+    - id: ctor
+      type: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate
+    content.vb: Public Shared Sub Register(extensionGroup As Byte, extendedOp As Byte, ctor As IOpCodeFactory.OpCodeFactoryDelegate)
+  overload: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Register*
+  nameWithType.vb: ExtendedOpcodeFactory.Register(Byte, Byte, IOpCodeFactory.OpCodeFactoryDelegate)
+  fullName.vb: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Register(Byte, Byte, Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate)
+  name.vb: Register(Byte, Byte, OpCodeFactoryDelegate)
+- uid: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Create(System.Byte,System.Byte,Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
+  commentId: M:Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Create(System.Byte,System.Byte,Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
+  id: Create(System.Byte,System.Byte,Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
+  parent: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory
+  langs:
+  - csharp
+  - vb
+  name: Create(byte, byte, VariableExpressionFragment[], SyntaxToken[], ValueType[])
+  nameWithType: ExtendedOpcodeFactory.Create(byte, byte, VariableExpressionFragment[], SyntaxToken[], ValueType[])
+  fullName: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Create(byte, byte, Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[], Ubytec.Language.Syntax.Model.SyntaxToken[], System.ValueType[])
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Create
+    path: ../Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
+    startLine: 48
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations.Extended
+  summary: Creates an extended opcode instance.
+  example: []
+  syntax:
+    content: public static IOpCode Create(byte extensionGroup, byte extendedOp, VariableExpressionFragment[] vars, SyntaxToken[] tokens, ValueType[] operands)
+    parameters:
+    - id: extensionGroup
+      type: System.Byte
+    - id: extendedOp
+      type: System.Byte
+    - id: vars
+      type: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[]
+    - id: tokens
+      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+    - id: operands
+      type: System.ValueType[]
+    return:
+      type: Ubytec.Language.Operations.Interfaces.IOpCode
+    content.vb: Public Shared Function Create(extensionGroup As Byte, extendedOp As Byte, vars As VariableExpressionFragment(), tokens As SyntaxToken(), operands As ValueType()) As IOpCode
+  overload: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Create*
+  nameWithType.vb: ExtendedOpcodeFactory.Create(Byte, Byte, VariableExpressionFragment(), SyntaxToken(), ValueType())
+  fullName.vb: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Create(Byte, Byte, Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment(), Ubytec.Language.Syntax.Model.SyntaxToken(), System.ValueType())
+  name.vb: Create(Byte, Byte, VariableExpressionFragment(), SyntaxToken(), ValueType())
+references:
+- uid: Ubytec.Language.Operations.Extended
+  commentId: N:Ubytec.Language.Operations.Extended
+  href: Ubytec.html
+  name: Ubytec.Language.Operations.Extended
+  nameWithType: Ubytec.Language.Operations.Extended
+  fullName: Ubytec.Language.Operations.Extended
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Extended
+    name: Extended
+    href: Ubytec.Language.Operations.Extended.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Extended
+    name: Extended
+    href: Ubytec.Language.Operations.Extended.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Collections.Concurrent.ConcurrentDictionary{Ubytec.Language.Operations.Extended.ExtKey,Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate}
+  commentId: T:System.Collections.Concurrent.ConcurrentDictionary{Ubytec.Language.Operations.Extended.ExtKey,Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate}
+  parent: System.Collections.Concurrent
+  definition: System.Collections.Concurrent.ConcurrentDictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentdictionary-2
+  name: ConcurrentDictionary<ExtKey, IOpCodeFactory.OpCodeFactoryDelegate>
+  nameWithType: ConcurrentDictionary<ExtKey, IOpCodeFactory.OpCodeFactoryDelegate>
+  fullName: System.Collections.Concurrent.ConcurrentDictionary<Ubytec.Language.Operations.Extended.ExtKey, Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate>
+  nameWithType.vb: ConcurrentDictionary(Of ExtKey, IOpCodeFactory.OpCodeFactoryDelegate)
+  fullName.vb: System.Collections.Concurrent.ConcurrentDictionary(Of Ubytec.Language.Operations.Extended.ExtKey, Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate)
+  name.vb: ConcurrentDictionary(Of ExtKey, IOpCodeFactory.OpCodeFactoryDelegate)
+  spec.csharp:
+  - uid: System.Collections.Concurrent.ConcurrentDictionary`2
+    name: ConcurrentDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentdictionary-2
+  - name: <
+  - uid: Ubytec.Language.Operations.Extended.ExtKey
+    name: ExtKey
+    href: Ubytec.Language.Operations.Extended.ExtKey.html
+  - name: ','
+  - name: " "
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory
+    name: IOpCodeFactory
+    href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate
+    name: OpCodeFactoryDelegate
+    href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Concurrent.ConcurrentDictionary`2
+    name: ConcurrentDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentdictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Operations.Extended.ExtKey
+    name: ExtKey
+    href: Ubytec.Language.Operations.Extended.ExtKey.html
+  - name: ','
+  - name: " "
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory
+    name: IOpCodeFactory
+    href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate
+    name: OpCodeFactoryDelegate
+    href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate.html
+  - name: )
+- uid: System.Collections.Concurrent.ConcurrentDictionary`2
+  commentId: T:System.Collections.Concurrent.ConcurrentDictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentdictionary-2
+  name: ConcurrentDictionary<TKey, TValue>
+  nameWithType: ConcurrentDictionary<TKey, TValue>
+  fullName: System.Collections.Concurrent.ConcurrentDictionary<TKey, TValue>
+  nameWithType.vb: ConcurrentDictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Concurrent.ConcurrentDictionary(Of TKey, TValue)
+  name.vb: ConcurrentDictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Concurrent.ConcurrentDictionary`2
+    name: ConcurrentDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentdictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Concurrent.ConcurrentDictionary`2
+    name: ConcurrentDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentdictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Concurrent
+  commentId: N:System.Collections.Concurrent
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Concurrent
+  nameWithType: System.Collections.Concurrent
+  fullName: System.Collections.Concurrent
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Concurrent
+    name: Concurrent
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Concurrent
+    name: Concurrent
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent
+- uid: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Register*
+  commentId: Overload:Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Register
+  href: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Register.html#Ubytec_Language_Operations_Extended_ExtendedOpcodeFactory_Register_System_Byte_System_Byte_Ubytec_Language_Operations_Interfaces_IOpCodeFactory_OpCodeFactoryDelegate_
+  name: Register
+  nameWithType: ExtendedOpcodeFactory.Register
+  fullName: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Register
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.byte
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate
+  commentId: T:Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate
+  parent: Ubytec.Language.Operations.Interfaces
+  href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.html
+  name: IOpCodeFactory.OpCodeFactoryDelegate
+  nameWithType: IOpCodeFactory.OpCodeFactoryDelegate
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory
+    name: IOpCodeFactory
+    href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate
+    name: OpCodeFactoryDelegate
+    href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory
+    name: IOpCodeFactory
+    href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate
+    name: OpCodeFactoryDelegate
+    href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate.html
+- uid: Ubytec.Language.Operations.Interfaces
+  commentId: N:Ubytec.Language.Operations.Interfaces
+  href: Ubytec.html
+  name: Ubytec.Language.Operations.Interfaces
+  nameWithType: Ubytec.Language.Operations.Interfaces
+  fullName: Ubytec.Language.Operations.Interfaces
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
+- uid: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Create*
+  commentId: Overload:Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Create
+  href: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Create.html#Ubytec_Language_Operations_Extended_ExtendedOpcodeFactory_Create_System_Byte_System_Byte_Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment___Ubytec_Language_Syntax_Model_SyntaxToken___System_ValueType___
+  name: Create
+  nameWithType: ExtendedOpcodeFactory.Create
+  fullName: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.Create
+- uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[]
+  isExternal: true
+  href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html
+  name: VariableExpressionFragment[]
+  nameWithType: VariableExpressionFragment[]
+  fullName: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[]
+  nameWithType.vb: VariableExpressionFragment()
+  fullName.vb: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment()
+  name.vb: VariableExpressionFragment()
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+    name: VariableExpressionFragment
+    href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+    name: VariableExpressionFragment
+    href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html
+  - name: (
+  - name: )
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken[]
+  isExternal: true
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  name: SyntaxToken[]
+  nameWithType: SyntaxToken[]
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken[]
+  nameWithType.vb: SyntaxToken()
+  fullName.vb: Ubytec.Language.Syntax.Model.SyntaxToken()
+  name.vb: SyntaxToken()
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
+    name: SyntaxToken
+    href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
+    name: SyntaxToken
+    href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  - name: (
+  - name: )
+- uid: System.ValueType[]
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType[]
+  nameWithType: ValueType[]
+  fullName: System.ValueType[]
+  nameWithType.vb: ValueType()
+  fullName.vb: System.ValueType()
+  name.vb: ValueType()
+  spec.csharp:
+  - uid: System.ValueType
+    name: ValueType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.ValueType
+    name: ValueType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  - name: (
+  - name: )
+- uid: Ubytec.Language.Operations.Interfaces.IOpCode
+  commentId: T:Ubytec.Language.Operations.Interfaces.IOpCode
+  parent: Ubytec.Language.Operations.Interfaces
+  href: Ubytec.Language.Operations.Interfaces.IOpCode.html
+  name: IOpCode
+  nameWithType: IOpCode
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCode
+memberLayout: SeparatePages

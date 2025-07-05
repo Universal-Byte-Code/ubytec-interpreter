@@ -1,4 +1,5 @@
 ﻿using Ubytec.Language.Exceptions;
+using Ubytec.Language.Operations.Interfaces;
 using Ubytec.Language.Syntax.ExpressionFragments;
 using Ubytec.Language.Syntax.Model;
 using Ubytec.Language.Syntax.Scopes;
@@ -9,11 +10,12 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct SWITCH(int? TableIDx, UType? BlockType = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpInheritance
+        public readonly record struct SWITCH(int? TableIDx, UType? BlockType = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpVariableScope, IOpCodeFactory
         {
-            public readonly byte OpCode => 0x0B;
+            public const byte OP = 0x0B;
+            public readonly byte OpCode => OP;
 
-            public static SWITCH CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
+            public static IOpCode CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
             {
                 // Caso 1: SWITCH sin operands → no hay TableIDx ni tipo
                 if (operands.Length == 0)

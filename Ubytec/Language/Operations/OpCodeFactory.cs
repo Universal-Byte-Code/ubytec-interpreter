@@ -1,37 +1,58 @@
-﻿using Ubytec.Language.Syntax.ExpressionFragments;
+﻿using Ubytec.Language.Operations.Extended;
+using Ubytec.Language.Operations.Interfaces;
+using Ubytec.Language.Syntax.ExpressionFragments;
 using Ubytec.Language.Syntax.Model;
+using static Ubytec.Language.Operations.CoreOperations;
 
 namespace Ubytec.Language.Operations
 {
     public static class OpcodeFactory
     {
-        private static readonly Dictionary<byte, Func<VariableExpressionFragment[], SyntaxToken[], ValueType[], IOpCode>> _factory =
+        private static readonly Dictionary<ValueType, IOpCodeFactory.OpCodeFactoryDelegate> _factory =
             new()
             {
-                { 0x00, (vars, tokens, ops) => CoreOperations.TRAP.CreateInstruction(vars, tokens, ops) },
-                { 0x01, (vars, tokens, ops) => CoreOperations.NOP.CreateInstruction(vars, tokens, ops) },
-                { 0x02, (vars, tokens, ops) => CoreOperations.BLOCK.CreateInstruction(vars, tokens, ops) },
-                { 0x03, (vars, tokens, ops) => CoreOperations.LOOP.CreateInstruction(vars, tokens, ops) },
-                { 0x04, (vars, tokens, ops) => CoreOperations.IF.CreateInstruction(vars, tokens, ops) },
-                { 0x05, (vars, tokens, ops) => CoreOperations.ELSE.CreateInstruction(vars, tokens, ops) },
-                { 0x06, (vars, tokens, ops) => CoreOperations.END.CreateInstruction(vars, tokens, ops) },
-                { 0x07, (vars, tokens, ops) => CoreOperations.BREAK.CreateInstruction(vars, tokens, ops) },
-                { 0x08, (vars, tokens, ops) => CoreOperations.CONTINUE.CreateInstruction(vars, tokens, ops) },
-                { 0x09, (vars, tokens, ops) => CoreOperations.RETURN.CreateInstruction(vars, tokens, ops) },
-                { 0x0A, (vars, tokens, ops) => CoreOperations.BRANCH.CreateInstruction(vars, tokens, ops) },
-                { 0x0B, (vars, tokens, ops) => CoreOperations.SWITCH.CreateInstruction(vars, tokens, ops) },
-                { 0x0C, (vars, tokens, ops) => CoreOperations.WHILE.CreateInstruction(vars, tokens, ops) },
-                { 0x0D, (vars, tokens, ops) => CoreOperations.CLEAR.CreateInstruction(vars, tokens, ops) },
-                { 0x0E, (vars, tokens, ops) => CoreOperations.DEFAULT.CreateInstruction(vars, tokens, ops) },
-                { 0x0F, (vars, tokens, ops) => CoreOperations.NULL.CreateInstruction(vars, tokens, ops) }
+                { TRAP.OP, TRAP.CreateInstruction },
+                { NOP.OP, NOP.CreateInstruction },
+                { BLOCK.OP, BLOCK.CreateInstruction },
+                { LOOP.OP, LOOP.CreateInstruction },
+                { IF.OP, IF.CreateInstruction },
+                { ELSE.OP, ELSE.CreateInstruction },
+                { END.OP, END.CreateInstruction },
+                { BREAK.OP, BREAK.CreateInstruction },
+                { CONTINUE.OP, CONTINUE.CreateInstruction },
+                { RETURN.OP, RETURN.CreateInstruction },
+                { BRANCH.OP, BRANCH.CreateInstruction },
+                { SWITCH.OP, SWITCH.CreateInstruction },
+                { WHILE.OP, WHILE.CreateInstruction },
+                { CLEAR.OP, CLEAR.CreateInstruction },
+                { DEFAULT.OP, DEFAULT.CreateInstruction },
+                { NULL.OP, NULL.CreateInstruction }
             };
 
-        public static IOpCode Create(byte opcode, VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
+        public static IOpCode Create(
+            ValueType opcode,
+            VariableExpressionFragment[] variables,
+            SyntaxToken[] tokens,
+            params ValueType[] operands)
         {
-            if (_factory.TryGetValue(opcode, out var constructor))
-                return constructor(variables, tokens, operands);
+            // Fast path: standard opcode (≠ 0xFF)
+            if ((byte)opcode != 0xFF)
+            {
+                if (_factory.TryGetValue(opcode, out var ctor))
+                    return ctor(variables, tokens, operands);
 
-            throw new NotSupportedException($"Opcode 0x{opcode:X2} is not supported.");
+                throw new NotSupportedException($"Opcode 0x{opcode:X2} is not supported.");
+            }
+
+            // Extended path: need at least 2 extra bytes
+            if (operands.Length < 2)
+                throw new NotSupportedException("Extended opcode requires ExtensionGroup + ExtendedOpCode bytes.");
+
+            var extGroup = (byte)operands[0];
+            var extOpCode = (byte)operands[1];
+            var tail = operands.Length > 2 ? operands[2..] : Array.Empty<ValueType>();
+
+            return ExtendedOpcodeFactory.Create(extGroup, extOpCode, variables, tokens, tail);
         }
     }
 }

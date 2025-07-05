@@ -5,10 +5,12 @@ items:
   id: CompilationScopes
   parent: Ubytec.Language.Syntax.Scopes
   children:
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.All
   - Ubytec.Language.Syntax.Scopes.CompilationScopes.Count
   - Ubytec.Language.Syntax.Scopes.CompilationScopes.FinalizersCount
   - Ubytec.Language.Syntax.Scopes.CompilationScopes.Find(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext,System.Boolean})
   - Ubytec.Language.Syntax.Scopes.CompilationScopes.FindFinalizers(System.Func{Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext,System.Boolean})
+  - Ubytec.Language.Syntax.Scopes.CompilationScopes.GetDepth(System.Int32)
   - Ubytec.Language.Syntax.Scopes.CompilationScopes.Peek
   - Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizers
   - Ubytec.Language.Syntax.Scopes.CompilationScopes.PeekFinalizersOrDefault
@@ -114,6 +116,35 @@ items:
     return:
       type: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker
     content.vb: Private ReadOnly _finalizersTracker As FinalizersTracker
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.All
+  commentId: P:Ubytec.Language.Syntax.Scopes.CompilationScopes.All
+  id: All
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: All
+  nameWithType: CompilationScopes.All
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.All
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: All
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 15
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  syntax:
+    content: public ScopeContext[] All { get; }
+    parameters: []
+    return:
+      type: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext[]
+    content.vb: Public ReadOnly Property All As ScopeContext()
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.All*
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Count
   commentId: P:Ubytec.Language.Syntax.Scopes.CompilationScopes.Count
   id: Count
@@ -132,7 +163,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Count
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 18
+    startLine: 20
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -163,7 +194,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: FinalizersCount
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 23
+    startLine: 25
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -194,7 +225,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Push
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 29
+    startLine: 31
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -226,7 +257,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Pop
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 41
+    startLine: 43
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -257,7 +288,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Peek
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 48
+    startLine: 50
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -288,7 +319,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PeekOrDefault
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 54
+    startLine: 56
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -319,7 +350,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Find
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 63
+    startLine: 65
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -357,7 +388,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: TryPopUntil
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 72
+    startLine: 74
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -395,7 +426,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ValidateFinalScope
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 77
+    startLine: 79
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -423,7 +454,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PushReturn
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 83
+    startLine: 85
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -455,7 +486,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PushBreak
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 93
+    startLine: 95
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -487,7 +518,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PushContinue
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 103
+    startLine: 105
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -519,7 +550,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PeekFinalizers
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 113
+    startLine: 115
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -550,7 +581,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PeekFinalizersOrDefault
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 119
+    startLine: 121
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -581,7 +612,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: FindFinalizers
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 128
+    startLine: 130
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -619,7 +650,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: TryPopFinalizersUntil
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 138
+    startLine: 140
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -657,7 +688,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Reset
     path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
-    startLine: 144
+    startLine: 146
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes
@@ -667,6 +698,50 @@ items:
     content: public void Reset()
     content.vb: Public Sub Reset()
   overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.Reset*
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.GetDepth(System.Int32)
+  commentId: M:Ubytec.Language.Syntax.Scopes.CompilationScopes.GetDepth(System.Int32)
+  id: GetDepth(System.Int32)
+  parent: Ubytec.Language.Syntax.Scopes.CompilationScopes
+  langs:
+  - csharp
+  - vb
+  name: GetDepth(int)
+  nameWithType: CompilationScopes.GetDepth(int)
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.GetDepth(int)
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: GetDepth
+    path: ../Ubytec/Language/Syntax/Scopes/CompilationScopes.cs
+    startLine: 165
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Syntax.Scopes
+  summary: Calculates the indentation string for the current depth of nested scopes.
+  example: []
+  syntax:
+    content: public string GetDepth(int basis = 0)
+    parameters:
+    - id: basis
+      type: System.Int32
+      description: >-
+        An optional additional indentation level to apply on top of the scope count.
+
+        Defaults to <code>0</code>.
+    return:
+      type: System.String
+      description: >-
+        A string consisting of two spaces per indentation level,
+
+        where level = Count + <code class="paramref">basis</code>.
+    content.vb: Public Function GetDepth(basis As Integer = 0) As String
+  overload: Ubytec.Language.Syntax.Scopes.CompilationScopes.GetDepth*
+  nameWithType.vb: CompilationScopes.GetDepth(Integer)
+  fullName.vb: Ubytec.Language.Syntax.Scopes.CompilationScopes.GetDepth(Integer)
+  name.vb: GetDepth(Integer)
 references:
 - uid: Ubytec.Language.Syntax.Scopes
   commentId: N:Ubytec.Language.Syntax.Scopes
@@ -1003,6 +1078,33 @@ references:
   name: FinalizersTracker
   nameWithType: FinalizersTracker
   fullName: Ubytec.Language.Syntax.Scopes.Trackers.FinalizersTracker
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.All*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.All
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.All.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_All
+  name: All
+  nameWithType: CompilationScopes.All
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.All
+- uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext[]
+  isExternal: true
+  href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html
+  name: ScopeContext[]
+  nameWithType: ScopeContext[]
+  fullName: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext[]
+  nameWithType.vb: ScopeContext()
+  fullName.vb: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext()
+  name.vb: ScopeContext()
+  spec.csharp:
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    name: ScopeContext
+    href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext
+    name: ScopeContext
+    href: Ubytec.Language.Syntax.Scopes.Contexts.ScopeContext.html
+  - name: (
+  - name: )
 - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.Count*
   commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.Count
   href: Ubytec.Language.Syntax.Scopes.CompilationScopes.Count.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_Count
@@ -1471,4 +1573,21 @@ references:
   name: Reset
   nameWithType: CompilationScopes.Reset
   fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.Reset
+- uid: Ubytec.Language.Syntax.Scopes.CompilationScopes.GetDepth*
+  commentId: Overload:Ubytec.Language.Syntax.Scopes.CompilationScopes.GetDepth
+  href: Ubytec.Language.Syntax.Scopes.CompilationScopes.GetDepth.html#Ubytec_Language_Syntax_Scopes_CompilationScopes_GetDepth_System_Int32_
+  name: GetDepth
+  nameWithType: CompilationScopes.GetDepth
+  fullName: Ubytec.Language.Syntax.Scopes.CompilationScopes.GetDepth
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
 memberLayout: SeparatePages

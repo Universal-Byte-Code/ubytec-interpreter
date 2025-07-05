@@ -7,7 +7,7 @@ items:
   children:
   - Ubytec.Language.Syntax.TypeSystem.Types.UType.#ctor(Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType,Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers,System.Nullable{System.Guid},System.String,System.UIntPtr)
   - Ubytec.Language.Syntax.TypeSystem.Types.UType.FixedArraySize
-  - Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Byte)
+  - Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Int32)
   - Ubytec.Language.Syntax.TypeSystem.Types.UType.ID
   - Ubytec.Language.Syntax.TypeSystem.Types.UType.IsArray
   - Ubytec.Language.Syntax.TypeSystem.Types.UType.IsFullyNullableArray
@@ -44,7 +44,7 @@ items:
   remarks: >-
     <p>
 
-    Use <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte%2cSystem.Byte)" data-throw-if-not-resolved="false"></xref> to reconstruct a <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType" data-throw-if-not-resolved="false"></xref> from
+    Use FromOperands(byte, byte) to reconstruct a <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType" data-throw-if-not-resolved="false"></xref> from
 
     low-level operand bytes.</p>
   example:
@@ -113,7 +113,7 @@ items:
   remarks: >-
     <p>
 
-    Use <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte%2cSystem.Byte)" data-throw-if-not-resolved="false"></xref> to reconstruct a <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType" data-throw-if-not-resolved="false"></xref> from
+    Use FromOperands(byte, byte) to reconstruct a <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType" data-throw-if-not-resolved="false"></xref> from
 
     low-level operand bytes.</p>
   example:
@@ -511,16 +511,16 @@ items:
       type: System.Boolean
     content.vb: Public ReadOnly Property IsSingleNullable As Boolean
   overload: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsSingleNullable*
-- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Byte)
-  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Byte)
-  id: FromOperands(System.Byte,System.Byte)
+- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Int32)
+  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Int32)
+  id: FromOperands(System.Byte,System.Int32)
   parent: Ubytec.Language.Syntax.TypeSystem.Types.UType
   langs:
   - csharp
   - vb
-  name: FromOperands(byte, byte)
-  nameWithType: Types.UType.FromOperands(byte, byte)
-  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(byte, byte)
+  name: FromOperands(byte, int)
+  nameWithType: Types.UType.FromOperands(byte, int)
+  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(byte, int)
   type: Method
   source:
     remote:
@@ -539,22 +539,22 @@ items:
     <xref href="Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType" data-throw-if-not-resolved="false"></xref> and <xref href="Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers" data-throw-if-not-resolved="false"></xref> flags.
   example: []
   syntax:
-    content: public static Types.UType FromOperands(byte typeByte, byte flagsByte)
+    content: public static Types.UType FromOperands(byte typeByte, int flagsInt)
     parameters:
     - id: typeByte
       type: System.Byte
       description: Underlying byte value for <xref href="Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType" data-throw-if-not-resolved="false"></xref>.
-    - id: flagsByte
-      type: System.Byte
+    - id: flagsInt
+      type: System.Int32
       description: Underlying byte value for <xref href="Ubytec.Language.Syntax.TypeSystem.Types.TypeModifiers" data-throw-if-not-resolved="false"></xref>.
     return:
       type: Ubytec.Language.Syntax.TypeSystem.Types.UType
       description: A new <xref href="Ubytec.Language.Syntax.TypeSystem.Types.UType" data-throw-if-not-resolved="false"></xref> instance.
-    content.vb: Public Shared Function FromOperands(typeByte As Byte, flagsByte As Byte) As Types.UType
+    content.vb: Public Shared Function FromOperands(typeByte As Byte, flagsInt As Integer) As Types.UType
   overload: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands*
-  nameWithType.vb: Types.UType.FromOperands(Byte, Byte)
-  fullName.vb: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(Byte, Byte)
-  name.vb: FromOperands(Byte, Byte)
+  nameWithType.vb: Types.UType.FromOperands(Byte, Integer)
+  fullName.vb: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(Byte, Integer)
+  name.vb: FromOperands(Byte, Integer)
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.ToString
   commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.UType.ToString
   id: ToString
@@ -611,48 +611,6 @@ references:
   - uid: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType
     name: PrimitiveType
     href: Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.html
-- uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Byte)
-  commentId: M:Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Byte)
-  isExternal: true
-  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FromOperands_System_Byte_System_Byte_
-  name: FromOperands(byte, byte)
-  nameWithType: Types.UType.FromOperands(byte, byte)
-  fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(byte, byte)
-  nameWithType.vb: Types.UType.FromOperands(Byte, Byte)
-  fullName.vb: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(Byte, Byte)
-  name.vb: FromOperands(Byte, Byte)
-  spec.csharp:
-  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Byte)
-    name: FromOperands
-    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FromOperands_System_Byte_System_Byte_
-  - name: (
-  - uid: System.Byte
-    name: byte
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.byte
-  - name: ','
-  - name: " "
-  - uid: System.Byte
-    name: byte
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.byte
-  - name: )
-  spec.vb:
-  - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands(System.Byte,System.Byte)
-    name: FromOperands
-    href: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FromOperands_System_Byte_System_Byte_
-  - name: (
-  - uid: System.Byte
-    name: Byte
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.byte
-  - name: ','
-  - name: " "
-  - uid: System.Byte
-    name: Byte
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.byte
-  - name: )
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType
   commentId: T:Ubytec.Language.Syntax.TypeSystem.Types.UType
   parent: Ubytec.Language.Syntax.TypeSystem
@@ -1219,7 +1177,7 @@ references:
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.IsSingleNullable
 - uid: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands*
   commentId: Overload:Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands
-  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FromOperands_System_Byte_System_Byte_
+  href: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands.html#Ubytec_Language_Syntax_TypeSystem_Types_UType_FromOperands_System_Byte_System_Int32_
   name: FromOperands
   nameWithType: Types.UType.FromOperands
   fullName: Ubytec.Language.Syntax.TypeSystem.Types.UType.FromOperands
@@ -1234,6 +1192,17 @@ references:
   nameWithType.vb: Byte
   fullName.vb: Byte
   name.vb: Byte
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
 - uid: System.ValueType.ToString
   commentId: M:System.ValueType.ToString
   parent: System.ValueType

@@ -1,4 +1,5 @@
 ﻿using Ubytec.Language.Exceptions;
+using Ubytec.Language.Operations.Interfaces;
 using Ubytec.Language.Syntax.ExpressionFragments;
 using Ubytec.Language.Syntax.Model;
 using Ubytec.Language.Syntax.Scopes;
@@ -8,11 +9,12 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct RETURN(UType? BlockType = null, SyntaxExpression? Variables = null) : IOpInheritance
+        public readonly record struct RETURN(UType? BlockType = null, SyntaxExpression? Variables = null) : IOpVariableScope, IOpCodeFactory
         {
-            public readonly byte OpCode => 0x09;
+            public const byte OP = 0x09;
+            public readonly byte OpCode => OP;
 
-            public static RETURN CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
+            public static IOpCode CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
             {
                 // Caso 1: sin operandos, solo variables
                 if (operands.Length == 0)

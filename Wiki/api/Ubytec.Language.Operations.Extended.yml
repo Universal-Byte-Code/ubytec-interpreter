@@ -5,6 +5,8 @@ items:
   id: Extended
   parent: Ubytec.Language.Operations
   children:
+  - Ubytec.Language.Operations.Extended.ExtKey
+  - Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory
   - Ubytec.Language.Operations.Extended.ExtendedStackOperations
   - Ubytec.Language.Operations.Extended.ExtendedStackOperations.DROP16
   - Ubytec.Language.Operations.Extended.ExtendedStackOperations.PICK16
@@ -21,6 +23,18 @@ items:
   assemblies:
   - Ubytec
 references:
+- uid: Ubytec.Language.Operations.Extended.ExtKey
+  commentId: T:Ubytec.Language.Operations.Extended.ExtKey
+  href: Ubytec.Language.Operations.Extended.ExtKey.html
+  name: ExtKey
+  nameWithType: ExtKey
+  fullName: Ubytec.Language.Operations.Extended.ExtKey
+- uid: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory
+  commentId: T:Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory
+  href: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory.html
+  name: ExtendedOpcodeFactory
+  nameWithType: ExtendedOpcodeFactory
+  fullName: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory
 - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations
   commentId: T:Ubytec.Language.Operations.Extended.ExtendedStackOperations
   href: Ubytec.Language.Operations.Extended.ExtendedStackOperations.html

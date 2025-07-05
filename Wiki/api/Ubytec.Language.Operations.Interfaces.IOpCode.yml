@@ -1,0 +1,178 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Operations.Interfaces.IOpCode
+  commentId: T:Ubytec.Language.Operations.Interfaces.IOpCode
+  id: IOpCode
+  parent: Ubytec.Language.Operations.Interfaces
+  children:
+  - Ubytec.Language.Operations.Interfaces.IOpCode.OpCode
+  langs:
+  - csharp
+  - vb
+  name: IOpCode
+  nameWithType: IOpCode
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCode
+  type: Interface
+  source:
+    remote:
+      path: Ubytec/Language/Operations/Interfaces/IOpCode.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: IOpCode
+    path: ../Ubytec/Language/Operations/Interfaces/IOpCode.cs
+    startLine: 2
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations.Interfaces
+  syntax:
+    content: 'public interface IOpCode : IUbytecEntity'
+    content.vb: Public Interface IOpCode Inherits IUbytecEntity
+  inheritedMembers:
+  - Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+- uid: Ubytec.Language.Operations.Interfaces.IOpCode.OpCode
+  commentId: P:Ubytec.Language.Operations.Interfaces.IOpCode.OpCode
+  id: OpCode
+  parent: Ubytec.Language.Operations.Interfaces.IOpCode
+  langs:
+  - csharp
+  - vb
+  name: OpCode
+  nameWithType: IOpCode.OpCode
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCode.OpCode
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Operations/Interfaces/IOpCode.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: OpCode
+    path: ../Ubytec/Language/Operations/Interfaces/IOpCode.cs
+    startLine: 4
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations.Interfaces
+  syntax:
+    content: byte OpCode { get; }
+    parameters: []
+    return:
+      type: System.Byte
+    content.vb: ReadOnly Property OpCode As Byte
+  overload: Ubytec.Language.Operations.Interfaces.IOpCode.OpCode*
+references:
+- uid: Ubytec.Language.Operations.Interfaces
+  commentId: N:Ubytec.Language.Operations.Interfaces
+  href: Ubytec.html
+  name: Ubytec.Language.Operations.Interfaces
+  nameWithType: Ubytec.Language.Operations.Interfaces
+  fullName: Ubytec.Language.Operations.Interfaces
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
+- uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  commentId: M:Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  parent: Ubytec.Language.IUbytecEntity
+  href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  name: Compile(CompilationScopes)
+  nameWithType: IUbytecEntity.Compile(CompilationScopes)
+  fullName: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+  spec.csharp:
+  - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+    name: Compile
+    href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
+    name: Compile
+    href: Ubytec.Language.IUbytecEntity.Compile.html#Ubytec_Language_IUbytecEntity_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_
+  - name: (
+  - uid: Ubytec.Language.Syntax.Scopes.CompilationScopes
+    name: CompilationScopes
+    href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
+  - name: )
+- uid: Ubytec.Language.IUbytecEntity
+  commentId: T:Ubytec.Language.IUbytecEntity
+  parent: Ubytec.Language
+  href: Ubytec.Language.IUbytecEntity.html
+  name: IUbytecEntity
+  nameWithType: IUbytecEntity
+  fullName: Ubytec.Language.IUbytecEntity
+- uid: Ubytec.Language
+  commentId: N:Ubytec.Language
+  href: Ubytec.html
+  name: Ubytec.Language
+  nameWithType: Ubytec.Language
+  fullName: Ubytec.Language
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+- uid: Ubytec.Language.Operations.Interfaces.IOpCode.OpCode*
+  commentId: Overload:Ubytec.Language.Operations.Interfaces.IOpCode.OpCode
+  href: Ubytec.Language.Operations.Interfaces.IOpCode.OpCode.html#Ubytec_Language_Operations_Interfaces_IOpCode_OpCode
+  name: OpCode
+  nameWithType: IOpCode.OpCode
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCode.OpCode
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.byte
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+memberLayout: SeparatePages

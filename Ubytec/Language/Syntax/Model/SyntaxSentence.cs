@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
-using Ubytec.Language.Operations;
+using Ubytec.Language.Operations.Interfaces;
 using Ubytec.Language.Syntax.Fast.Metadata;
 using Ubytec.Language.Syntax.Interfaces;
 

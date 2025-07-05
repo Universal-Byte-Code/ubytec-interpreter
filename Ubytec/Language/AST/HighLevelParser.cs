@@ -5,6 +5,7 @@ using Action = Ubytec.Language.HighLevel.Action;
 using Enum = Ubytec.Language.HighLevel.Enum;
 
 namespace Ubytec.Language.AST;
+using static Ubytec.Language.Tools.SyntaxTokenScopeHelper;
 
 public static partial class HighLevelParser
 {
@@ -34,7 +35,7 @@ public static partial class HighLevelParser
                 "Only the 'global' modifier is allowed on a module."));
 
         /* 1 .  keyword “module” + header */
-        Consume(toks, ref i, "keyword.control.ubytec", "module");
+        Consume(toks, ref i, KeywordControl, "module");
         var header = ParseHeaderArguments(toks, ref i);
 
         var name = header["name"];
@@ -45,7 +46,7 @@ public static partial class HighLevelParser
                          .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
                      : [];
 
-        Consume(toks, ref i, "meta.block.ubytec", "{");
+        Consume(toks, ref i, MetaBlock, "{");
 
         /* containers */
         var fields = new List<Field>();
@@ -67,7 +68,7 @@ public static partial class HighLevelParser
         bool seenGlobal = false;
 
         /* scan until matching '}' */
-        while (!LookAhead(toks, i, "meta.block.ubytec", "}"))
+        while (!LookAhead(toks, i, MetaBlock, "}"))
         {
             if (toks.Length <= i) return new Module(
                 name, version, requires, author,
@@ -80,7 +81,7 @@ public static partial class HighLevelParser
                 modifiers: mods
             );
             /* global { … } (max 1) */
-            if (IsKeyword(toks[i], "global"))
+            if (toks[i].Scopes.Helper.IsControl("global"))
             {
                 if (seenGlobal)
                     _errors.Add(new ParseError(toks[i].Line, "global",
@@ -91,7 +92,7 @@ public static partial class HighLevelParser
             }
 
             /* local { … } (max 1) */
-            if (IsKeyword(toks[i], "local"))
+            if (toks[i].Scopes.Helper.IsControl("local"))
             {
                 if (seenLocal)
                     _errors.Add(new ParseError(toks[i].Line, "local",
@@ -104,22 +105,22 @@ public static partial class HighLevelParser
             var tok = toks[i];
 
             /* regular members (unchanged) */
-            if (IsKeyword(tok, "class")) { classes.Add(ParseClass(toks, ref i)); continue; }
-            if (IsKeyword(tok, "struct")) { structs.Add(ParseStruct(toks, ref i)); continue; }
-            if (IsKeyword(tok, "record")) { records.Add(ParseRecord(toks, ref i)); continue; }
-            if (IsKeyword(tok, "interface")) { ifaces.Add(ParseInterface(toks, ref i)); continue; }
-            if (IsKeyword(tok, "enum")) { enums.Add(ParseEnum(toks, ref i)); continue; }
+            if (tok.Scopes.Helper.IsClassLabel) { classes.Add(ParseClass(toks, ref i)); continue; }
+            if (tok.Scopes.Helper.IsStructLabel) { structs.Add(ParseStruct(toks, ref i)); continue; }
+            if (tok.Scopes.Helper.IsRecordLabel) { records.Add(ParseRecord(toks, ref i)); continue; }
+            if (tok.Scopes.Helper.IsInterfaceLabel) { ifaces.Add(ParseInterface(toks, ref i)); continue; }
+            if (tok.Scopes.Helper.IsEnumLabel) { enums.Add(ParseEnum(toks, ref i)); continue; }
 
-            if (IsKeyword(tok, "field")) { fields.Add(ParseField(toks, ref i)); continue; }
-            if (IsKeyword(tok, "func")) { funcs.Add(ParseFunc(toks, ref i)); continue; }
-            if (IsKeyword(tok, "action")) { actions.Add(ParseAction(toks, ref i)); continue; }
+            if (tok.Scopes.Helper.IsFieldLabel) { fields.Add(ParseField(toks, ref i)); continue; }
+            if (tok.Scopes.Helper.IsFuncLabel) { funcs.Add(ParseFunc(toks, ref i)); continue; }
+            if (tok.Scopes.Helper.IsActionLabel) { actions.Add(ParseAction(toks, ref i)); continue; }
 
-            if (IsKeyword(tok, "module")) { subMods.Add(ParseModuleInternal(toks, ref i)); continue; }
+            if (tok.Scopes.Helper.IsControl("module")) { subMods.Add(ParseModuleInternal(toks, ref i)); continue; }
 
             i++;   // skip comments / whitespace / unknown
         }
 
-        Consume(toks, ref i, "meta.block.ubytec", "}");
+        Consume(toks, ref i, MetaBlock, "}");
 
         /* build & return */
         return new Module(
@@ -139,43 +140,43 @@ public static partial class HighLevelParser
 
     private static GlobalContext ParseGlobal(SyntaxToken[] t, ref int i)
     {
-        Consume(t, ref i, "storage.modifier.ubytec", "global");
-        Consume(t, ref i, "meta.block.ubytec", "{");
+        Consume(t, ref i, StorageModifier, "global");
+        Consume(t, ref i, MetaBlock, "{");
 
         var fields = new List<Field>();
         var props = new List<Property>();
         var funcs = new List<Func>();
         var actions = new List<Action>();
 
-        while (!LookAhead(t, i, "meta.block.ubytec", "}"))
+        while (!LookAhead(t, i, MetaBlock, "}"))
         {
-            if (IsKeyword(t[i], "field")) { fields.Add(ParseField(t, ref i)); continue; }
-            if (IsStorageType(t[i])) { props.Add(ParseProperty(t, ref i)); continue; }
-            if (IsKeyword(t[i], "func")) { funcs.Add(ParseFunc(t, ref i)); continue; }
-            if (IsKeyword(t[i], "action")) { actions.Add(ParseAction(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsControl("field")) { fields.Add(ParseField(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsStorageType) { props.Add(ParseProperty(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsControl("func")) { funcs.Add(ParseFunc(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsControl("action")) { actions.Add(ParseAction(t, ref i)); continue; }
             i++;
         }
-        Consume(t, ref i, "meta.block.ubytec", "}");
+        Consume(t, ref i, MetaBlock, "}");
         return new GlobalContext([.. fields], [.. props], [.. funcs], [.. actions], Guid.NewGuid());
     }
 
     private static LocalContext ParseLocal(SyntaxToken[] t, ref int i)
     {
-        Consume(t, ref i, "storage.modifier.ubytec", "local");
-        Consume(t, ref i, "meta.block.ubytec", "{");
+        Consume(t, ref i, StorageModifier, "local");
+        Consume(t, ref i, MetaBlock, "{");
 
         var vars = new List<Variable>();
         var funcs = new List<Func>();
         var acts = new List<Action>();
 
-        while (!LookAhead(t, i, "meta.block.ubytec", "}"))
+        while (!LookAhead(t, i, MetaBlock, "}"))
         {
-            if (IsStorageType(t[i])) { vars.Add(ParseVariable(t, ref i)); continue; }
-            if (IsKeyword(t[i], "func")) { funcs.Add(ParseFunc(t, ref i)); continue; }
-            if (IsKeyword(t[i], "action")) { acts.Add(ParseAction(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsStorageType) { vars.Add(ParseVariable(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsFuncLabel) { funcs.Add(ParseFunc(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsActionLabel) { acts.Add(ParseAction(t, ref i)); continue; }
             i++;
         }
-        Consume(t, ref i, "meta.block.ubytec", "}");
+        Consume(t, ref i, MetaBlock, "}");
         return new LocalContext([.. vars], [.. funcs], [.. acts], Guid.NewGuid());
     }
 
@@ -184,11 +185,11 @@ public static partial class HighLevelParser
     private static Field ParseField(SyntaxToken[] t, ref int i)
     {
         var mods = ParseModifierFlags(t, ref i);
-        Consume(t, ref i, "keyword.control.ubytec", "field");
+        Consume(t, ref i, KeywordControl, "field");
 
         _ = ConsumeType(t, ref i, out var ut);
         var nameTok = Consume(t, ref i, "entity.name.var.explicit.ubytec");
-        var valTok = i < t.Length && t[i].Scopes.Any(s => s.StartsWith("constant.")) ? t[i++] : default;
+        var valTok = i < t.Length && t[i].Scopes.DataSource.Any(s => s.StartsWith("constant.")) ? t[i++] : default;
 
         return new Field(nameTok.Source, ut, Guid.NewGuid(),
                          valTok?.Source,
@@ -202,7 +203,7 @@ public static partial class HighLevelParser
         _ = ConsumeType(t, ref i, out var ut);
 
         var nameTok = Consume(t, ref i, "entity.name.var.explicit.ubytec");
-        var valTok = i < t.Length && t[i].Scopes.Any(s => s.StartsWith("constant.")) ? t[i++] : default;
+        var valTok = i < t.Length && t[i].Scopes.DataSource.Any(s => s.StartsWith("constant.")) ? t[i++] : default;
 
         return new Variable(nameTok.Source, ut, Guid.NewGuid(), mods, valTok?.Source);
     }
@@ -220,23 +221,24 @@ public static partial class HighLevelParser
         /* 2.  check for an accessor body “{ … }”  */
         var accessorFuncs = new List<Func>();
 
-        if (LookAhead(t, i, "meta.block.ubytec", "{"))
+        if (LookAhead(t, i, MetaBlock, "{"))
         {
-            Consume(t, ref i, "meta.block.ubytec", "{");
+            Consume(t, ref i, MetaBlock, "{");
 
-            while (!LookAhead(t, i, "meta.block.ubytec", "}"))
+            while (!LookAhead(t, i, MetaBlock, "}"))
             {
                 /* only ‘func …’ is allowed inside a property body
                    and the function name must be get / set / init           */
-                if (IsKeyword(t[i], "func"))
+                if (t[i].Scopes.Helper.IsFuncLabel)
                 {
                     var fn = ParseFunc(t, ref i);
 
                     var n = fn.Name.ToLowerInvariant();
                     if (n is not ("get" or "set" or "init"))
-                        throw new Exception(
+                        _errors.Add(new ParseError(
+                            t[i].Line, "property",
                             $"Invalid accessor '{fn.Name}' inside property '{nameTok.Source}'. " +
-                            "Expected get / set / init.");
+                            "Expected 'get', 'set', or 'init'."));
 
                     accessorFuncs.Add(fn);
                     continue;
@@ -246,12 +248,12 @@ public static partial class HighLevelParser
                 i++;
             }
 
-            Consume(t, ref i, "meta.block.ubytec", "}");   // closing brace
+            Consume(t, ref i, MetaBlock, "}");   // closing brace
         }
 
         /* 3.  build AccessorContext (will self-validate) */
         var accCtx = new AccessorContext(
-                         accessorFuncs.ToArray(),
+                         [.. accessorFuncs],
                          Guid.NewGuid(),
                          ut);
 
@@ -268,15 +270,13 @@ public static partial class HighLevelParser
     private static Func ParseFunc(SyntaxToken[] t, ref int i)
     {
         var mods = ParseModifierFlags(t, ref i);
-        Consume(t, ref i, "keyword.control.ubytec", "func");
-
-        var nameTok = Consume(t, ref i, "entity.name.type.func.ubytec");
+        var nameTok = Consume(t, ref i, EntityNameTypeFunc, "func");
         ParseParamList(t, ref i, out var args);
 
         UType ret = new UType(PrimitiveType.Void);
-        if (LookAhead(t, i, "punctuation.arrow.ubytec", "->"))
+        if (LookAhead(t, i, PunctuationArrow, "->"))
         {
-            ConsumeSymbol(t, ref i, "->");          // «->»
+            Consume(t, ref i, PunctuationArrow, "->");
             ConsumeType(t, ref i, out ret);       // return type
         }
 
@@ -296,9 +296,9 @@ public static partial class HighLevelParser
     private static Action ParseAction(SyntaxToken[] t, ref int i)
     {
         var mods = ParseModifierFlags(t, ref i);
-        Consume(t, ref i, "keyword.control.ubytec", "action");
+        Consume(t, ref i, KeywordControl, "action");
 
-        var nameTok = Consume(t, ref i, "entity.name.type.action.ubytec");
+        var nameTok = Consume(t, ref i, EntityNameTypeAction);
         ParseParamList(t, ref i, out var args);
 
         var body = ParseOptionalBody(t, ref i, out var innerLocals);
@@ -317,11 +317,11 @@ public static partial class HighLevelParser
         var mods = ParseModifierFlags(t, ref i);              // may advance i
 
         /* 1.  keyword + name                                                      */
-        Consume(t, ref i, "keyword.control.ubytec", "class");
-        var nameTok = Consume(t, ref i, "entity.name.type.class.ubytec");
+        Consume(t, ref i, KeywordControl, "class");
+        var nameTok = Consume(t, ref i, EntityNameTypeClass);
 
         /* 2.  body “{ … }”                                                        */
-        Consume(t, ref i, "meta.block.ubytec", "{");
+        Consume(t, ref i, MetaBlock, "{");
 
         var fields = new List<Field>();
         var props = new List<Property>();
@@ -337,30 +337,30 @@ public static partial class HighLevelParser
         LocalContext? localCtx = null;
         GlobalContext? globalCtx = null;
 
-        if (LookAhead(t, i, "keyword.control.ubytec", "local"))
+        if (LookAhead(t, i, KeywordControl, "local"))
             localCtx = ParseLocal(t, ref i);
-        else if (LookAhead(t, i, "keyword.control.ubytec", "global"))
+        else if (LookAhead(t, i, KeywordControl, "global"))
             globalCtx = ParseGlobal(t, ref i);
 
         /* scan until ‘}’                                                           */
-        while (!LookAhead(t, i, "meta.block.ubytec", "}"))
+        while (!LookAhead(t, i, MetaBlock, "}"))
         {
-            if (IsKeyword(t[i], "field")) { fields.Add(ParseField(t, ref i)); continue; }
-            if (IsStorageType(t[i])) { props.Add(ParseProperty(t, ref i)); continue; }
-            if (IsKeyword(t[i], "func")) { funcs.Add(ParseFunc(t, ref i)); continue; }
-            if (IsKeyword(t[i], "action")) { actions.Add(ParseAction(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsFieldLabel) { fields.Add(ParseField(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsStorageType) { props.Add(ParseProperty(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsFuncLabel) { funcs.Add(ParseFunc(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsActionLabel) { actions.Add(ParseAction(t, ref i)); continue; }
 
             /* nested types ------------------------------------------------------ */
-            if (IsKeyword(t[i], "class")) { classes.Add(ParseClass(t, ref i)); continue; }
-            if (IsKeyword(t[i], "struct")) { structs.Add(ParseStruct(t, ref i)); continue; }
-            if (IsKeyword(t[i], "record")) { records.Add(ParseRecord(t, ref i)); continue; }
-            if (IsKeyword(t[i], "interface")) { ifaces.Add(ParseInterface(t, ref i)); continue; }
-            if (IsKeyword(t[i], "enum")) { enums.Add(ParseEnum(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsClassLabel) { classes.Add(ParseClass(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsStructLabel) { structs.Add(ParseStruct(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsRecordLabel) { records.Add(ParseRecord(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsInterfaceLabel) { ifaces.Add(ParseInterface(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsEnumLabel) { enums.Add(ParseEnum(t, ref i)); continue; }
 
             i++;   // comment / whitespace / unknown → skip
         }
 
-        Consume(t, ref i, "meta.block.ubytec", "}");          // closing brace
+        Consume(t, ref i, MetaBlock, "}");          // closing brace
 
         /* 3.  build & return                                                      */
         return new Class(
@@ -379,12 +379,12 @@ public static partial class HighLevelParser
         var mods = ParseModifierFlags(t, ref i);
 
         /* 1. keyword “enum” + identifier */
-        Consume(t, ref i, "keyword.control.ubytec", "enum");
-        var nameTok = Consume(t, ref i, "entity.name.type.enum.ubytec");
+        Consume(t, ref i, KeywordControl, "enum");
+        var nameTok = Consume(t, ref i, EntityNameTypeEnum);
 
         /* 2. optional underlying primitive  ( :: t_uint16 ) */
         PrimitiveType underlying = PrimitiveType.Byte;              // language default
-        if (LookAhead(t, i, "punctuation.scope.ubytec", "::"))
+        if (LookAhead(t, i, PunctuationScope, "::"))
         {
             i++;                                                     // eat “::”
             ConsumeType(t, ref i, out var ut);                       // t_int32 / [t_int32]?
@@ -392,12 +392,12 @@ public static partial class HighLevelParser
         }
 
         /* 3. body “{ … }”  – members ( NAME [= constant] ) */
-        Consume(t, ref i, "meta.block.ubytec", "{");
+        Consume(t, ref i, MetaBlock, "{");
 
         var members = new List<(string Name, long Value)>();
         long autoVal = 0;
 
-        while (!LookAhead(t, i, "meta.block.ubytec", "}"))
+        while (!LookAhead(t, i, MetaBlock, "}"))
         {
             /* identifier token – grammar labels each as entity.name… */
             var idTok = Consume(t, ref i,
@@ -405,7 +405,7 @@ public static partial class HighLevelParser
                                 "enum member");
 
             long value;
-            if (LookAhead(t, i, "operator.assign.ubytec", "="))
+            if (LookAhead(t, i, OperatorAssign, "="))
             {
                 i++;                                // eat '='
                 var valTok = t[i++];
@@ -420,15 +420,15 @@ public static partial class HighLevelParser
             members.Add((idTok.Source, value));
 
             /* optional trailing comma */
-            if (LookAhead(t, i, "punctuation.comma.ubytec", ","))
+            if (LookAhead(t, i, PunctuationComma, ","))
                 i++;
 
             /* skip comments / whitespace tokens that might sneak in */
-            while (i < t.Length && t[i].Scopes.Contains("comment.line.double-slash.ubytec"))
+            while (i < t.Length && t[i].Scopes.Helper.IsCommentLineDoubleSlash)
                 i++;
         }
 
-        Consume(t, ref i, "meta.block.ubytec", "}");        // closing brace
+        Consume(t, ref i, MetaBlock, "}");        // closing brace
 
         /* 4. determine bit-field property */
         bool isBitfield = members.All(m =>
@@ -450,11 +450,11 @@ public static partial class HighLevelParser
         var mods = ParseModifierFlags(t, ref i);
 
         /* 1.  keyword + identifier */
-        Consume(t, ref i, "keyword.control.ubytec", "struct");
-        var nameTok = Consume(t, ref i, "entity.name.type.struct.ubytec");
+        Consume(t, ref i, KeywordControl, "struct");
+        var nameTok = Consume(t, ref i, EntityNameTypeStruct);
 
         /* 2.  opening brace */
-        Consume(t, ref i, "meta.block.ubytec", "{");
+        Consume(t, ref i, MetaBlock, "{");
 
         /* 3.  member containers */
         var fields = new List<Field>();
@@ -470,28 +470,28 @@ public static partial class HighLevelParser
         bool doneGlobals = false;
         while (true)
         {
-            if (!doneLocals  && IsKeyword(t[i], "local"))
+            if (!doneLocals && t[i].Scopes.Helper.IsControl("local"))
             { locals  = ParseLocal(t, ref i); doneLocals  = true; continue; }
 
-            if (!doneGlobals && IsKeyword(t[i], "global"))
+            if (!doneGlobals && t[i].Scopes.Helper.IsControl("global"))
             { globals = ParseGlobal(t, ref i); doneGlobals = true; continue; }
 
             break;
         }
 
         /* 4.  scan members until ‘}’ */
-        while (!LookAhead(t, i, "meta.block.ubytec", "}"))
+        while (!LookAhead(t, i, MetaBlock, "}"))
         {
-            if (IsKeyword(t[i], "field")) { fields.Add(ParseField(t, ref i)); continue; }
-            if (IsStorageType(t[i])) { props.Add(ParseProperty(t, ref i)); continue; }
-            if (IsKeyword(t[i], "func")) { funcs.Add(ParseFunc(t, ref i)); continue; }
-            if (IsKeyword(t[i], "action")) { actions.Add(ParseAction(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsControl("field")) { fields.Add(ParseField(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsStorageType) { props.Add(ParseProperty(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsControl("func")) { funcs.Add(ParseFunc(t, ref i)); continue; }
+            if (t[i].Scopes.Helper.IsControl("action")) { actions.Add(ParseAction(t, ref i)); continue; }
 
             /* comments / whitespace / unknown → skip */
             i++;
         }
 
-        Consume(t, ref i, "meta.block.ubytec", "}");      // closing brace
+        Consume(t, ref i, MetaBlock, "}");  // closing brace
 
         /* 5.  build HL-Struct entity */
         return new Struct(
@@ -509,59 +509,67 @@ public static partial class HighLevelParser
         var mods = ParseModifierFlags(t, ref i);
 
         /* 1.  “interface”  keyword + identifier                                      */
-        Consume(t, ref i, "keyword.control.ubytec", "interface");
-        var nameTok = Consume(t, ref i, "entity.name.type.interface.ubytec");
+        Consume(t, ref i, KeywordControl, "interface");
+        var nameTok = Consume(t, ref i, EntityNameTypeInterface);
 
         /* 2.  body “{ … }”                                                           */
-        Consume(t, ref i, "meta.block.ubytec", "{");
+        Consume(t, ref i, MetaBlock, "{");
 
         var props = new List<Property>();
         var methods = new List<Func>();       // funcs without body
         var actions = new List<Action>();     // actions without body
 
-        while (!LookAhead(t, i, "meta.block.ubytec", "}"))
+        while (!LookAhead(t, i, MetaBlock, "}"))
         {
             /* ── a property signature (explicit-type) ───────────────────────────── */
-            if (IsStorageType(t[i]))
+            if (t[i].Scopes.Helper.IsStorageType)
             {
                 props.Add(ParseProperty(t, ref i));
                 continue;
             }
 
             /* ── function signature: must NOT have a body ───────────────────────── */
-            if (IsKeyword(t[i], "func"))
+            if (t[i].Scopes.Helper.IsControl("func"))
             {
                 var f = ParseFunc(t, ref i);
                 if (f.Definition is not null)
-                    throw new Exception($"Interface method '{f.Name}' cannot have a body.");
+                    _errors.Add(new ParseError(
+                        t[i].Line, "interface",
+                        $"Interface function '{f.Name}' cannot have a body."));
                 methods.Add(f);
                 continue;
             }
 
             /* ── action signature: same rule ────────────────────────────────────── */
-            if (IsKeyword(t[i], "action"))
+            if (t[i].Scopes.Helper.IsControl("action"))
             {
                 var a = ParseAction(t, ref i);
                 if (a.Definition is not null)
-                    throw new Exception($"Interface action '{a.Name}' cannot have a body.");
+                    _errors.Add(new ParseError(
+                        t[i].Line, "interface",
+                        $"Interface action '{a.Name}' cannot have a body."));
                 actions.Add(a);
                 continue;
             }
 
             /* interface must NOT contain fields or nested type definitions          */
-            if (IsKeyword(t[i], "field"))
-                throw new Exception("Interfaces cannot declare fields.");
+            if (t[i].Scopes.Helper.IsControl("field"))
+                _errors.Add(new ParseError(
+                    t[i].Line, "interface",
+                    "Interfaces cannot declare fields. Use properties instead."));
 
-            if (IsKeyword(t[i], "class") || IsKeyword(t[i], "struct") ||
-                IsKeyword(t[i], "record")|| IsKeyword(t[i], "interface") ||
-                IsKeyword(t[i], "enum"))
-                throw new Exception("Nested type declarations are not allowed in interfaces.");
+            if (t[i].Scopes.Helper.IsControl("class") || t[i].Scopes.Helper.IsControl("struct") ||
+                t[i].Scopes.Helper.IsControl("record") || t[i].Scopes.Helper.IsControl("interface") ||
+                t[i].Scopes.Helper.IsControl("enum"))
+                _errors.Add(new ParseError(
+                    t[i].Line, "interface",
+                    "Interfaces cannot contain nested type declarations."));
 
             /* skip comments / whitespace / unknown tokens                           */
             i++;
         }
 
-        Consume(t, ref i, "meta.block.ubytec", "}");           // closing brace
+        Consume(t, ref i, MetaBlock, "}");  // closing brace
 
         /* 3.  build HL-Interface entity                                              */
         return new Interface(
@@ -577,31 +585,31 @@ public static partial class HighLevelParser
         var mods = ParseModifierFlags(t, ref i);      // may advance i
 
         /* 1.  optional “type” keyword (module-level alias) */
-        if (LookAhead(t, i, "keyword.control.ubytec", "type"))
+        if (LookAhead(t, i, KeywordControl, "type"))
             i++;                                      // just consume it
 
         /* 2.  “record” keyword + identifier */
-        Consume(t, ref i, "keyword.control.ubytec", "record");
-        var nameTok = Consume(t, ref i, "entity.name.type.record.ubytec");
+        Consume(t, ref i, KeywordControl, "record");
+        var nameTok = Consume(t, ref i, EntityNameTypeRecord);
 
         /* 3.  optional positional list “( t_int32 X , … )”  → auto-properties */
         var positionalProps = new List<Property>();
-        if (LookAhead(t, i, "meta.grouping.ubytec", "("))
+        if (LookAhead(t, i, MetaGrouping, "("))
         {
-            Consume(t, ref i, "meta.grouping.ubytec", "(");
-            while (!LookAhead(t, i, "meta.grouping.ubytec", ")"))
+            Consume(t, ref i, MetaGrouping, "(");
+            while (!LookAhead(t, i, MetaGrouping, ")"))
             {
                 _ = ConsumeType(t, ref i, out var ut);
-                var idTok = Consume(t, ref i, "entity.name.argument.ubytec");
+                var idTok = Consume(t, ref i, EntityNameArgument);
 
                 positionalProps.Add(
                     new Property(idTok.Source, ut,
                                  new AccessorContext([], Guid.NewGuid(), ut),
                                  Guid.NewGuid(), TypeModifiers.None));
 
-                if (LookAhead(t, i, "punctuation.comma.ubytec", ",")) i++;
+                if (LookAhead(t, i, PunctuationComma, ",")) i++;
             }
-            Consume(t, ref i, "meta.grouping.ubytec", ")");
+            Consume(t, ref i, MetaGrouping, ")");
         }
 
         /* 4.  check for a body “{ … }”  — optional */
@@ -611,33 +619,33 @@ public static partial class HighLevelParser
         LocalContext? localCtx = null;
         GlobalContext? globalCtx = null;
 
-        if (LookAhead(t, i, "meta.block.ubytec", "{"))
+        if (LookAhead(t, i, MetaBlock, "{"))
         {
-            Consume(t, ref i, "meta.block.ubytec", "{");
+            Consume(t, ref i, MetaBlock, "{");
 
             /* optional leading local / global ctx inside the record */
-            if (LookAhead(t, i, "keyword.control.ubytec", "local"))
+            if (LookAhead(t, i, KeywordControl, "local"))
                 localCtx = ParseLocal(t, ref i);
-            else if (LookAhead(t, i, "keyword.control.ubytec", "global"))
+            else if (LookAhead(t, i, KeywordControl, "global"))
                 globalCtx = ParseGlobal(t, ref i);
 
             var propsList = new List<Property>();
             var funcsList = new List<Func>();
             var actsList = new List<Action>();
 
-            while (!LookAhead(t, i, "meta.block.ubytec", "}"))
+            while (!LookAhead(t, i, MetaBlock, "}"))
             {
-                if (IsStorageType(t[i])) { propsList.Add(ParseProperty(t, ref i)); continue; }
-                if (IsKeyword(t[i], "func")) { funcsList.Add(ParseFunc(t, ref i)); continue; }
-                if (IsKeyword(t[i], "action")) { actsList.Add(ParseAction(t, ref i)); continue; }
+                if (t[i].Scopes.Helper.IsStorageType) { propsList.Add(ParseProperty(t, ref i)); continue; }
+                if (t[i].Scopes.Helper.IsFuncCallKeyword) { funcsList.Add(ParseFunc(t, ref i)); continue; }
+                if (t[i].Scopes.Helper.IsActionLabel) { actsList.Add(ParseAction(t, ref i)); continue; }
 
                 /* fields are NOT allowed in records */
-                if (IsKeyword(t[i], "field"))
-                    throw new Exception($"Fields are not permitted inside record '{nameTok.Source}'.");
+                if (t[i].Scopes.Helper.IsFieldLabel)
+                    _errors.Add(new ParseError(t[i].Line, "record", $"Fields are not permitted inside record '{nameTok.Source}'."));
 
                 i++;   // comment / whitespace
             }
-            Consume(t, ref i, "meta.block.ubytec", "}");   // closing brace
+            Consume(t, ref i, MetaBlock, "}");   // closing brace
 
             extraProps = [.. propsList];
             funcs      = [.. funcsList];
@@ -662,29 +670,30 @@ public static partial class HighLevelParser
     /* numeric literal → long   (supports  decimal / 0xHEX / 0bBIN) */
     private static long ParseEnumConstant(SyntaxToken tok)
     {
-        if (tok.Scopes.Contains("constant.numeric.hex.ubytec"))
+        if (tok.Scopes.Helper.IsNumericHex)
             return Convert.ToInt64(tok.Source[2..], 16);
 
-        if (tok.Scopes.Contains("constant.numeric.binary.ubytec"))
+        if (tok.Scopes.Helper.IsNumericBinary)
             return Convert.ToInt64(tok.Source[2..], 2);
 
         // decimal int literal
         return long.Parse(tok.Source, System.Globalization.NumberStyles.Integer);
     }
     /*──────────────────────  ParseOptionalBody  ──────────────────────*/
-    private static SyntaxSentence? ParseOptionalBody(
-        SyntaxToken[] t,
-        ref int i,
-        out LocalContext? extractedLocals)
+    private static SyntaxSentence? ParseOptionalBody(SyntaxToken[] t, ref int i, out LocalContext? extractedLocals)
     {
         extractedLocals = null;
 
-        /* 0. body absent → declaration‑only */
-        if (!LookAhead(t, i, "meta.block.ubytec", "{"))
+        if (LookAhead(t, i, OperatorInlineReturn, "=>"))
+        {
+            Consume(t, ref i, OperatorInlineReturn, "=>");
+            SkipTrivia(t, ref i);                               // ← NEW
+        }
+        else if (!LookAhead(t, i, MetaBlock, "{")) /* 0. body absent → declaration‑only */
             return null;
 
         /* 1. “{”                                                            */
-        Consume(t, ref i, "meta.block.ubytec", "{");
+        Consume(t, ref i, MetaBlock, "{");
         SkipTrivia(t, ref i);                               // ← NEW
 
         int bodyStart = i;
@@ -695,7 +704,7 @@ public static partial class HighLevelParser
             extractedLocals = ParseLocal(t, ref i);
 
             /* optional semicolon after the local block                       */
-            if (LookAhead(t, i, "punctuation.semicolon.ubytec", ";"))
+            if (LookAhead(t, i, PunctuationSemicolon, ";"))
                 i++;
 
             SkipTrivia(t, ref i);                           // skip EOL / spaces
@@ -706,7 +715,7 @@ public static partial class HighLevelParser
         int depth = 1;
         while (i < t.Length && depth > 0)
         {
-            if (t[i].Scopes.Contains("meta.block.ubytec"))
+            if (t[i].Scopes.Helper.IsBlockStructure)
                 depth += t[i].Source != "}" ? 1 : -1;
             i++;
         }
@@ -717,7 +726,9 @@ public static partial class HighLevelParser
         var opCodes = ASTCompiler.Parse(bodyTokens);
         var (tree, compileErrors) = ASTCompiler.CompileSyntax(opCodes, bodyTokens);
         if (compileErrors.Count > 0)
-            throw new Exception($"Body contains {compileErrors.Count} statement‑level error(s).");
+            _errors.Add(new ParseError(compileErrors[0].Row, "body", $"Body contains {compileErrors.Count} statement-level error(s)."));
+        foreach (var error in compileErrors)
+            _errors.Add(new ParseError(error.Row, error.OpCode.OpCode.ToString(format: "x4"), error.Message));
 
         return tree.RootSentence.Sentences.FirstOrDefault();
     }
@@ -728,94 +739,92 @@ public static partial class HighLevelParser
         while (i < t.Length &&
                (string.IsNullOrWhiteSpace(t[i].Source) ||
                 t[i].Scopes.Length == 0 ||
-                (t[i].Scopes.Length == 1 && t[i].Scopes[0] == "source.ubytec")))
+                (t[i].Scopes.Length == 1 && t[i].Scopes.Helper.IsSource)))
                     i++; // step over whitespace / comments / blank
-    }
-
-    private static SyntaxToken ConsumeSymbol(SyntaxToken[] t, ref int i, string? src = null)
-    {
-        var tk = Consume(t, ref i, s => s.StartsWith("punctuation."), src: src);
-        return tk;
     }
 
     private static SyntaxToken ConsumeType(SyntaxToken[] t, ref int i, out UType ut)
     {
-        // • only the scope predicate matters here
-        // • pass null for src  → no “exact text” requirement
-        var tk = Consume(t, ref i, s => s.StartsWith("storage.type."), src: null);
+        var tk = Consume(t, ref i, s => s.StartsWith(StorageTypePrefix), src: null);
         ut = ParseUType(tk);
         return tk;
     }
 
-    private static SyntaxToken Consume(SyntaxToken[] t, ref int i,
-                                       string scope, string? src = null)
-        => Consume(t, ref i, s => s==scope, src);
+    private static SyntaxToken Consume(SyntaxToken[] t, ref int i, string scope, string? src = null)
+        => Consume(t, ref i, s => s == scope, src);
 
-    private static SyntaxToken Consume(
-            SyntaxToken[] t, ref int i,
-            Func<string, bool> scopePred, string? src = null)
+    private static SyntaxToken Consume(SyntaxToken[] t, ref int i, Func<string, bool> scopePred, string? src = null)
     {
-        SkipTrivia(t, ref i);                           // NEW
+        SkipTrivia(t, ref i);
         if (i >= t.Length)
-            throw new Exception("Unexpected end of tokens");
-
+            _errors.Add(new(t[^1].Line, src ?? "<unknown>", "Unexpected end of tokens"));
         var tk = t[i];
-        if (!tk.Scopes.Any(scopePred) || (src != null && tk.Source != src))
-            throw new Exception($"Expected {src ?? "<token>"} but found '{tk.Source}'");
+        if (!tk.Scopes.DataSource.Any(scopePred) || (src != null && tk.Source != src))
+            _errors.Add(new(tk.Line, src ?? "unknown", $"Expected {src ?? "<token>"} but found '{tk.Source}'"));
 
         return t[i++];
     }
 
+    /// <summary>
+    /// Looks ahead in the token stream starting from index i,
+    /// skipping over any trivia tokens (e.g., whitespace, comments),
+    /// and checks if the next significant token matches a specific scope and source text.
+    /// </summary>
+    /// <param name="t">Array of tokens to search.</param>
+    /// <param name="i">Current index to start looking ahead from.</param>
+    /// <param name="scope">Scope string to match in the lookahead token.</param>
+    /// <param name="src">Source text to match exactly in the lookahead token.</param>
+    /// <returns>
+    /// True if a non-trivia token is found after i that matches both the scope and the exact source text;
+    /// otherwise, false.
+    /// </returns>
     private static bool LookAhead(SyntaxToken[] t, int i, string scope, string src)
     {
-        var j = i;
+        var j = i; // Start from the given index
+
+        // Advance j forward skipping any trivia (whitespace/comments/etc.)
         SkipTrivia(t, ref j);
+
+        // Return true if we didn't run off the end of the array,
+        // and the next non-trivia token matches both the specified scope and source text exactly.
         return j < t.Length &&
-               t[j].Scopes.Contains(scope) &&
+               t[j].Scopes.DataSource.Contains(scope) &&
                t[j].Source == src;
     }
-
-    private static bool IsKeyword(SyntaxToken tk, string kw)
-        => tk.Scopes.Contains("keyword.control.ubytec") &&
-           tk.Source.Equals(kw, StringComparison.OrdinalIgnoreCase);
-
-    private static bool IsStorageType(SyntaxToken tk)
-        => tk.Scopes.Any(s => s.StartsWith("storage.type."));
 
     private static Dictionary<string, string> ParseHeaderArguments(SyntaxToken[] t, ref int i)
     {
         var dict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-        Consume(t, ref i, "meta.grouping.ubytec", "(");
-        while (!LookAhead(t, i, "meta.grouping.ubytec", ")"))
+        Consume(t, ref i, MetaGrouping, "(");
+        while (!LookAhead(t, i, MetaGrouping, ")"))
         {
             SkipTrivia(t, ref i);
-            var key = Consume(t, ref i, "entity.name.argument.ubytec").Source;
-            Consume(t, ref i, "punctuation.separator.key-value.ubytec", ":");
+            var key = Consume(t, ref i, EntityNameArgument).Source;
+            Consume(t, ref i, PunctuationSeparatorKeyValue, ":");
             var val = t[i++].Source.Trim('"');
             dict[key]=val;
-            if (LookAhead(t, i, "punctuation.comma.ubytec", ",")) i++;
+            if (LookAhead(t, i, PunctuationComma, ",")) i++;
         }
-        Consume(t, ref i, "meta.grouping.ubytec", ")");
+        Consume(t, ref i, MetaGrouping, ")");
         return dict;
     }
 
-    private static SyntaxToken[] ParseParamList(SyntaxToken[] t, ref int i,
-                                                out List<Argument> argObjs)
+    private static SyntaxToken[] ParseParamList(SyntaxToken[] t, ref int i, out List<Argument> argObjs)
     {
         argObjs = [];
-        if (!LookAhead(t, i, "meta.grouping.ubytec", "(")) return Array.Empty<SyntaxToken>();
+        if (!LookAhead(t, i, MetaGrouping, "(")) return [];
 
         var start = i;
-        Consume(t, ref i, "meta.grouping.ubytec", "(");
-        while (!LookAhead(t, i, "meta.grouping.ubytec", ")"))
+        Consume(t, ref i, MetaGrouping, "(");
+        while (!LookAhead(t, i, MetaGrouping, ")"))
         {
             SkipTrivia(t, ref i);
             _ = ConsumeType(t, ref i, out var ut);
-            var nameTok = Consume(t, ref i, "entity.name.argument.ubytec");
+            var nameTok = Consume(t, ref i, EntityNameArgument);
             argObjs.Add(new Argument(nameTok.Source, ut, Guid.NewGuid()));
-            if (LookAhead(t, i, "punctuation.comma.ubytec", ",")) i++;
+            if (LookAhead(t, i, PunctuationComma, ",")) i++;
         }
-        Consume(t, ref i, "meta.grouping.ubytec", ")");
+        Consume(t, ref i, MetaGrouping, ")");
         return t[start..i];
     }
 
@@ -824,10 +833,11 @@ public static partial class HighLevelParser
         /* ───────────────────────────── 1.  base primitive ────────────────────────── */
         // Quitamos los adornos [, ], ?, t_  para intentar resolver un PrimitiveType nativo
         string raw = tk.Source
-                        .TrimStart('[', ' ')          // posible '[' al inicio
-                        .TrimEnd(']', ' ')            //   y ']' al final
-                        .TrimStart('t', '_')          // prefijo   t_
-                        .TrimEnd('?');                // nullable  ?
+                    .TrimEnd('?')
+                    .TrimStart('[', ' ')          // posible '[' al inicio
+                    .TrimEnd(']', ' ')            //   y ']' al final
+                    .TrimStart('t', '_')          // prefijo   t_
+                    .TrimEnd('?');                // nullable  ?
 
         bool ok = System.Enum.TryParse(raw, ignoreCase: true, out PrimitiveType prim);
 
@@ -837,12 +847,10 @@ public static partial class HighLevelParser
         TypeModifiers mods = TypeModifiers.None;
         var s = tk.Scopes;
 
-        if (s.Contains("storage.type.array.ubytec")) mods |= TypeModifiers.IsArray;
-        if (s.Contains("storage.type.array.nullable-array.ubytec") ||
-            s.Contains("storage.type.array.nullable-both.ubytec")) mods |= TypeModifiers.NullableArray;
-        if (s.Contains("storage.type.array.nullable-items.ubytec") ||
-            s.Contains("storage.type.array.nullable-both.ubytec")) mods |= TypeModifiers.NullableItems;
-        if (s.Contains("storage.type.single.nullable.ubytec")) mods |= TypeModifiers.Nullable;
+        if (s.Helper.IsArray) mods |= TypeModifiers.IsArray;
+        if (s.Helper.IsArrayNullableArray || s.Helper.IsArrayNullableBoth) mods |= TypeModifiers.NullableArray;
+        if (s.Helper.IsArrayNullableItems || s.Helper.IsArrayNullableBoth) mods |= TypeModifiers.NullableItems;
+        if (s.Helper.IsSingleNullable) mods |= TypeModifiers.Nullable;
 
         if (prim == PrimitiveType.CustomType)
         {
@@ -858,26 +866,24 @@ public static partial class HighLevelParser
         return new UType(prim, mods, FromPrimitive(prim), prim.ToString());
     }
 
-    // ─── place this with the other helpers ──────────────────────────────────────
-    private static readonly Dictionary<string, TypeModifiers> _modMap =
-        new(StringComparer.OrdinalIgnoreCase)
-        {
-            ["public"]    = TypeModifiers.Public,
-            ["private"]   = TypeModifiers.Private,
-            ["protected"] = TypeModifiers.Protected,
-            ["internal"]  = TypeModifiers.Internal,
-            ["secret"]    = TypeModifiers.Secret,
+    private static readonly Dictionary<string, TypeModifiers> _modMap = new(StringComparer.OrdinalIgnoreCase)
+    {
+        [nameof(TypeModifiers.Public)]    = TypeModifiers.Public,
+        [nameof(TypeModifiers.Private)]   = TypeModifiers.Private,
+        [nameof(TypeModifiers.Protected)] = TypeModifiers.Protected,
+        [nameof(TypeModifiers.Internal)]  = TypeModifiers.Internal,
+        [nameof(TypeModifiers.Secret)]    = TypeModifiers.Secret,
 
-            ["abstract"]  = TypeModifiers.Abstract,
-            ["virtual"]   = TypeModifiers.Virtual,
-            ["override"]  = TypeModifiers.Override,
-            ["sealed"]    = TypeModifiers.Sealed,
-            ["readonly"]  = TypeModifiers.ReadOnly,
-            ["const"]     = TypeModifiers.Const,
+        [nameof(TypeModifiers.Abstract)]  = TypeModifiers.Abstract,
+        [nameof(TypeModifiers.Virtual)]   = TypeModifiers.Virtual,
+        [nameof(TypeModifiers.Override)]  = TypeModifiers.Override,
+        [nameof(TypeModifiers.Sealed)]    = TypeModifiers.Sealed,
+        [nameof(TypeModifiers.ReadOnly)]  = TypeModifiers.ReadOnly,
+        [nameof(TypeModifiers.Const)]     = TypeModifiers.Const,
 
-            ["local"]     = TypeModifiers.Local,
-            ["global"]    = TypeModifiers.Global
-        };
+        [nameof(TypeModifiers.Local)]     = TypeModifiers.Local,
+        [nameof(TypeModifiers.Global)]    = TypeModifiers.Global
+    };
 
     /// <summary>
     /// Reads every consecutive <c>storage.modifier.ubytec</c> token that starts at
@@ -887,11 +893,10 @@ public static partial class HighLevelParser
     {
         TypeModifiers mods = TypeModifiers.None;
 
-        while (i < t.Length && t[i].Scopes.Contains("storage.modifier.ubytec"))
+        while (i < t.Length && t[i].Scopes.Helper.IsModifier)
         {
-            if (_modMap.TryGetValue(t[i].Source, out var m))
-                mods |= m;
-            i++;                                     // consume the modifier token
+            if (_modMap.TryGetValue(t[i].Source, out var m)) mods |= m;
+            i++; // consume the modifier token
         }
         return mods;
     }

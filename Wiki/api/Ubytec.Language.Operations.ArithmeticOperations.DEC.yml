@@ -21,7 +21,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: DEC
     path: ../Ubytec/Language/Operations/ArithmeticOperations.cs
-    startLine: 60
+    startLine: 61
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations
@@ -29,7 +29,7 @@ items:
     content: 'public readonly record struct ArithmeticOperations.DEC : IOpCode, IUbytecEntity, IEquatable<ArithmeticOperations.DEC>'
     content.vb: Public Structure ArithmeticOperations.DEC Implements IOpCode, IUbytecEntity, IEquatable(Of ArithmeticOperations.DEC)
   implements:
-  - Ubytec.Language.Operations.IOpCode
+  - Ubytec.Language.Operations.Interfaces.IOpCode
   - Ubytec.Language.IUbytecEntity
   - System.IEquatable{Ubytec.Language.Operations.ArithmeticOperations.DEC}
   inheritedMembers:
@@ -57,7 +57,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: OpCode
     path: ../Ubytec/Language/Operations/ArithmeticOperations.cs
-    startLine: 62
+    startLine: 63
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations
@@ -70,7 +70,7 @@ items:
     content.vb: Public ReadOnly Property OpCode As Byte
   overload: Ubytec.Language.Operations.ArithmeticOperations.DEC.OpCode*
   implements:
-  - Ubytec.Language.Operations.IOpCode.OpCode
+  - Ubytec.Language.Operations.Interfaces.IOpCode.OpCode
 - uid: Ubytec.Language.Operations.ArithmeticOperations.DEC.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   commentId: M:Ubytec.Language.Operations.ArithmeticOperations.DEC.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   id: Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
@@ -89,7 +89,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Compile
     path: ../Ubytec/Language/Operations/ArithmeticOperations.cs
-    startLine: 64
+    startLine: 65
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations
@@ -145,13 +145,13 @@ references:
   - uid: Ubytec.Language.Operations
     name: Operations
     href: Ubytec.Language.Operations.html
-- uid: Ubytec.Language.Operations.IOpCode
-  commentId: T:Ubytec.Language.Operations.IOpCode
-  parent: Ubytec.Language.Operations
-  href: Ubytec.Language.Operations.IOpCode.html
+- uid: Ubytec.Language.Operations.Interfaces.IOpCode
+  commentId: T:Ubytec.Language.Operations.Interfaces.IOpCode
+  parent: Ubytec.Language.Operations.Interfaces
+  href: Ubytec.Language.Operations.Interfaces.IOpCode.html
   name: IOpCode
   nameWithType: IOpCode
-  fullName: Ubytec.Language.Operations.IOpCode
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCode
 - uid: Ubytec.Language.IUbytecEntity
   commentId: T:Ubytec.Language.IUbytecEntity
   parent: Ubytec.Language
@@ -391,6 +391,44 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.object
   - name: )
+- uid: Ubytec.Language.Operations.Interfaces
+  commentId: N:Ubytec.Language.Operations.Interfaces
+  href: Ubytec.html
+  name: Ubytec.Language.Operations.Interfaces
+  nameWithType: Ubytec.Language.Operations.Interfaces
+  fullName: Ubytec.Language.Operations.Interfaces
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
 - uid: Ubytec.Language
   commentId: N:Ubytec.Language
   href: Ubytec.html
@@ -473,13 +511,13 @@ references:
   name: OpCode
   nameWithType: ArithmeticOperations.DEC.OpCode
   fullName: Ubytec.Language.Operations.ArithmeticOperations.DEC.OpCode
-- uid: Ubytec.Language.Operations.IOpCode.OpCode
-  commentId: P:Ubytec.Language.Operations.IOpCode.OpCode
-  parent: Ubytec.Language.Operations.IOpCode
-  href: Ubytec.Language.Operations.IOpCode.OpCode.html#Ubytec_Language_Operations_IOpCode_OpCode
+- uid: Ubytec.Language.Operations.Interfaces.IOpCode.OpCode
+  commentId: P:Ubytec.Language.Operations.Interfaces.IOpCode.OpCode
+  parent: Ubytec.Language.Operations.Interfaces.IOpCode
+  href: Ubytec.Language.Operations.Interfaces.IOpCode.OpCode.html#Ubytec_Language_Operations_Interfaces_IOpCode_OpCode
   name: OpCode
   nameWithType: IOpCode.OpCode
-  fullName: Ubytec.Language.Operations.IOpCode.OpCode
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCode.OpCode
 - uid: System.Byte
   commentId: T:System.Byte
   parent: System

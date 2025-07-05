@@ -87,6 +87,7 @@ var opts = new JsonSerializerOptions
 opts.Converters.Add(new IOpCodeConverter());
 opts.Converters.Add(new ISyntaxTreeConverter());
 opts.Converters.Add(new IUbytecExpressionFragmentConverter());
+opts.Converters.Add(new IUbytecEntityConverter());
 
 var json = JsonSerializer.Serialize(rootModule, opts);
 var utf64 = Utf64Codec.Encode(json);

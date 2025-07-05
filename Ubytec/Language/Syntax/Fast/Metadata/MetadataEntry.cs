@@ -109,7 +109,7 @@ namespace Ubytec.Language.Syntax.Fast.Metadata
             int encLen = Encoding.UTF8.GetBytes(key, encoded);
 
             return encLen == storedLen
-                && stored.Slice(0, storedLen).SequenceEqual(encoded.Slice(0, encLen));
+                && stored[..storedLen].SequenceEqual(encoded[..encLen]);
         }
 
         /// <summary>

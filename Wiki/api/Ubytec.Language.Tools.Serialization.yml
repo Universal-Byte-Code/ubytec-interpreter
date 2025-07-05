@@ -7,6 +7,7 @@ items:
   children:
   - Ubytec.Language.Tools.Serialization.IOpCodeConverter
   - Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter
+  - Ubytec.Language.Tools.Serialization.IUbytecEntityConverter
   - Ubytec.Language.Tools.Serialization.IUbytecExpressionFragmentConverter
   langs:
   - csharp
@@ -30,6 +31,12 @@ references:
   name: ISyntaxTreeConverter
   nameWithType: ISyntaxTreeConverter
   fullName: Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter
+- uid: Ubytec.Language.Tools.Serialization.IUbytecEntityConverter
+  commentId: T:Ubytec.Language.Tools.Serialization.IUbytecEntityConverter
+  href: Ubytec.Language.Tools.Serialization.IUbytecEntityConverter.html
+  name: IUbytecEntityConverter
+  nameWithType: IUbytecEntityConverter
+  fullName: Ubytec.Language.Tools.Serialization.IUbytecEntityConverter
 - uid: Ubytec.Language.Tools.Serialization.IUbytecExpressionFragmentConverter
   commentId: T:Ubytec.Language.Tools.Serialization.IUbytecExpressionFragmentConverter
   href: Ubytec.Language.Tools.Serialization.IUbytecExpressionFragmentConverter.html

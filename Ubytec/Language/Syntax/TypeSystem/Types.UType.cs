@@ -94,12 +94,12 @@ namespace Ubytec.Language.Syntax.TypeSystem
             /// <see cref="PrimitiveType"/> and <see cref="TypeModifiers"/> flags.
             /// </summary>
             /// <param name="typeByte">Underlying byte value for <see cref="PrimitiveType"/>.</param>
-            /// <param name="flagsByte">Underlying byte value for <see cref="TypeModifiers"/>.</param>
+            /// <param name="flagsInt">Underlying byte value for <see cref="TypeModifiers"/>.</param>
             /// <returns>A new <see cref="UType"/> instance.</returns>
-            public static UType FromOperands(byte typeByte, byte flagsByte)
+            public static UType FromOperands(byte typeByte, int flagsInt)
             {
                 var type = (PrimitiveType)typeByte;
-                var modifiers = (TypeModifiers)flagsByte;
+                var modifiers = (TypeModifiers)flagsInt;
                 return new UType(type, modifiers);
             }
 

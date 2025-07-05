@@ -1,0 +1,482 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Operations.Extended.ExtKey
+  commentId: T:Ubytec.Language.Operations.Extended.ExtKey
+  id: ExtKey
+  parent: Ubytec.Language.Operations.Extended
+  children:
+  - Ubytec.Language.Operations.Extended.ExtKey.#ctor(System.Byte,System.Byte)
+  - Ubytec.Language.Operations.Extended.ExtKey.Code
+  - Ubytec.Language.Operations.Extended.ExtKey.Group
+  langs:
+  - csharp
+  - vb
+  name: ExtKey
+  nameWithType: ExtKey
+  fullName: Ubytec.Language.Operations.Extended.ExtKey
+  type: Struct
+  source:
+    remote:
+      path: Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ExtKey
+    path: ../Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
+    startLine: 20
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations.Extended
+  syntax:
+    content: 'internal readonly record struct ExtKey : IEquatable<ExtKey>'
+    content.vb: Friend Structure ExtKey Implements IEquatable(Of ExtKey)
+  implements:
+  - System.IEquatable{Ubytec.Language.Operations.Extended.ExtKey}
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubytec.Language.Operations.Extended.ExtKey.#ctor(System.Byte,System.Byte)
+  commentId: M:Ubytec.Language.Operations.Extended.ExtKey.#ctor(System.Byte,System.Byte)
+  id: '#ctor(System.Byte,System.Byte)'
+  parent: Ubytec.Language.Operations.Extended.ExtKey
+  langs:
+  - csharp
+  - vb
+  name: ExtKey(byte, byte)
+  nameWithType: ExtKey.ExtKey(byte, byte)
+  fullName: Ubytec.Language.Operations.Extended.ExtKey.ExtKey(byte, byte)
+  type: Constructor
+  source:
+    remote:
+      path: Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: .ctor
+    path: ../Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
+    startLine: 20
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations.Extended
+  syntax:
+    content: public ExtKey(byte Group, byte Code)
+    parameters:
+    - id: Group
+      type: System.Byte
+    - id: Code
+      type: System.Byte
+    content.vb: Public Sub New(Group As Byte, Code As Byte)
+  overload: Ubytec.Language.Operations.Extended.ExtKey.#ctor*
+  nameWithType.vb: ExtKey.New(Byte, Byte)
+  fullName.vb: Ubytec.Language.Operations.Extended.ExtKey.New(Byte, Byte)
+  name.vb: New(Byte, Byte)
+- uid: Ubytec.Language.Operations.Extended.ExtKey.Group
+  commentId: P:Ubytec.Language.Operations.Extended.ExtKey.Group
+  id: Group
+  parent: Ubytec.Language.Operations.Extended.ExtKey
+  langs:
+  - csharp
+  - vb
+  name: Group
+  nameWithType: ExtKey.Group
+  fullName: Ubytec.Language.Operations.Extended.ExtKey.Group
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Group
+    path: ../Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
+    startLine: 20
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations.Extended
+  syntax:
+    content: public byte Group { get; init; }
+    parameters: []
+    return:
+      type: System.Byte
+    content.vb: Public Property Group As Byte
+  overload: Ubytec.Language.Operations.Extended.ExtKey.Group*
+- uid: Ubytec.Language.Operations.Extended.ExtKey.Code
+  commentId: P:Ubytec.Language.Operations.Extended.ExtKey.Code
+  id: Code
+  parent: Ubytec.Language.Operations.Extended.ExtKey
+  langs:
+  - csharp
+  - vb
+  name: Code
+  nameWithType: ExtKey.Code
+  fullName: Ubytec.Language.Operations.Extended.ExtKey.Code
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Code
+    path: ../Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
+    startLine: 20
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations.Extended
+  syntax:
+    content: public byte Code { get; init; }
+    parameters: []
+    return:
+      type: System.Byte
+    content.vb: Public Property Code As Byte
+  overload: Ubytec.Language.Operations.Extended.ExtKey.Code*
+references:
+- uid: Ubytec.Language.Operations.Extended
+  commentId: N:Ubytec.Language.Operations.Extended
+  href: Ubytec.html
+  name: Ubytec.Language.Operations.Extended
+  nameWithType: Ubytec.Language.Operations.Extended
+  fullName: Ubytec.Language.Operations.Extended
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Extended
+    name: Extended
+    href: Ubytec.Language.Operations.Extended.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Extended
+    name: Extended
+    href: Ubytec.Language.Operations.Extended.html
+- uid: System.IEquatable{Ubytec.Language.Operations.Extended.ExtKey}
+  commentId: T:System.IEquatable{Ubytec.Language.Operations.Extended.ExtKey}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<ExtKey>
+  nameWithType: IEquatable<ExtKey>
+  fullName: System.IEquatable<Ubytec.Language.Operations.Extended.ExtKey>
+  nameWithType.vb: IEquatable(Of ExtKey)
+  fullName.vb: System.IEquatable(Of Ubytec.Language.Operations.Extended.ExtKey)
+  name.vb: IEquatable(Of ExtKey)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubytec.Language.Operations.Extended.ExtKey
+    name: ExtKey
+    href: Ubytec.Language.Operations.Extended.ExtKey.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Operations.Extended.ExtKey
+    name: ExtKey
+    href: Ubytec.Language.Operations.Extended.ExtKey.html
+  - name: )
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubytec.Language.Operations.Extended.ExtKey.#ctor*
+  commentId: Overload:Ubytec.Language.Operations.Extended.ExtKey.#ctor
+  href: Ubytec.Language.Operations.Extended.ExtKey.-ctor.html#Ubytec_Language_Operations_Extended_ExtKey__ctor_System_Byte_System_Byte_
+  name: ExtKey
+  nameWithType: ExtKey.ExtKey
+  fullName: Ubytec.Language.Operations.Extended.ExtKey.ExtKey
+  nameWithType.vb: ExtKey.New
+  fullName.vb: Ubytec.Language.Operations.Extended.ExtKey.New
+  name.vb: New
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.byte
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Ubytec.Language.Operations.Extended.ExtKey.Group*
+  commentId: Overload:Ubytec.Language.Operations.Extended.ExtKey.Group
+  href: Ubytec.Language.Operations.Extended.ExtKey.Group.html#Ubytec_Language_Operations_Extended_ExtKey_Group
+  name: Group
+  nameWithType: ExtKey.Group
+  fullName: Ubytec.Language.Operations.Extended.ExtKey.Group
+- uid: Ubytec.Language.Operations.Extended.ExtKey.Code*
+  commentId: Overload:Ubytec.Language.Operations.Extended.ExtKey.Code
+  href: Ubytec.Language.Operations.Extended.ExtKey.Code.html#Ubytec_Language_Operations_Extended_ExtKey_Code
+  name: Code
+  nameWithType: ExtKey.Code
+  fullName: Ubytec.Language.Operations.Extended.ExtKey.Code
+memberLayout: SeparatePages

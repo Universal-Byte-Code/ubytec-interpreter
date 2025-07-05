@@ -309,16 +309,16 @@ items:
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Model
-  summary: Extracts all operation codes (<xref href="Ubytec.Language.Operations.IOpCode" data-throw-if-not-resolved="false"></xref>) from the current sentence's nodes.
+  summary: Extracts all operation codes (<xref href="Ubytec.Language.Operations.Interfaces.IOpCode" data-throw-if-not-resolved="false"></xref>) from the current sentence's nodes.
   example: []
   syntax:
     content: public IOpCode[] ScopeOpCodes()
     return:
-      type: Ubytec.Language.Operations.IOpCode[]
+      type: Ubytec.Language.Operations.Interfaces.IOpCode[]
       description: >-
-        An array of <xref href="Ubytec.Language.Operations.IOpCode" data-throw-if-not-resolved="false"></xref> instances found in <xref href="Ubytec.Language.Syntax.Model.SyntaxSentence.Nodes" data-throw-if-not-resolved="false"></xref>.
+        An array of <xref href="Ubytec.Language.Operations.Interfaces.IOpCode" data-throw-if-not-resolved="false"></xref> instances found in <xref href="Ubytec.Language.Syntax.Model.SyntaxSentence.Nodes" data-throw-if-not-resolved="false"></xref>.
 
-        If no <xref href="Ubytec.Language.Operations.IOpCode" data-throw-if-not-resolved="false"></xref> is present in a node, it is skipped.
+        If no <xref href="Ubytec.Language.Operations.Interfaces.IOpCode" data-throw-if-not-resolved="false"></xref> is present in a node, it is skipped.
     content.vb: Public Function ScopeOpCodes() As IOpCode()
   overload: Ubytec.Language.Syntax.Model.SyntaxSentence.ScopeOpCodes*
 - uid: Ubytec.Language.Syntax.Model.SyntaxSentence.Dispose
@@ -1003,13 +1003,13 @@ references:
   nameWithType.vb: SyntaxSentence.New
   fullName.vb: Ubytec.Language.Syntax.Model.SyntaxSentence.New
   name.vb: New
-- uid: Ubytec.Language.Operations.IOpCode
-  commentId: T:Ubytec.Language.Operations.IOpCode
-  parent: Ubytec.Language.Operations
-  href: Ubytec.Language.Operations.IOpCode.html
+- uid: Ubytec.Language.Operations.Interfaces.IOpCode
+  commentId: T:Ubytec.Language.Operations.Interfaces.IOpCode
+  parent: Ubytec.Language.Operations.Interfaces
+  href: Ubytec.Language.Operations.Interfaces.IOpCode.html
   name: IOpCode
   nameWithType: IOpCode
-  fullName: Ubytec.Language.Operations.IOpCode
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCode
 - uid: Ubytec.Language.Syntax.Model.SyntaxSentence.Nodes
   commentId: P:Ubytec.Language.Syntax.Model.SyntaxSentence.Nodes
   href: Ubytec.Language.Syntax.Model.SyntaxSentence.Nodes.html#Ubytec_Language_Syntax_Model_SyntaxSentence_Nodes
@@ -1022,33 +1022,33 @@ references:
   name: ScopeOpCodes
   nameWithType: SyntaxSentence.ScopeOpCodes
   fullName: Ubytec.Language.Syntax.Model.SyntaxSentence.ScopeOpCodes
-- uid: Ubytec.Language.Operations.IOpCode[]
+- uid: Ubytec.Language.Operations.Interfaces.IOpCode[]
   isExternal: true
-  href: Ubytec.Language.Operations.IOpCode.html
+  href: Ubytec.Language.Operations.Interfaces.IOpCode.html
   name: IOpCode[]
   nameWithType: IOpCode[]
-  fullName: Ubytec.Language.Operations.IOpCode[]
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCode[]
   nameWithType.vb: IOpCode()
-  fullName.vb: Ubytec.Language.Operations.IOpCode()
+  fullName.vb: Ubytec.Language.Operations.Interfaces.IOpCode()
   name.vb: IOpCode()
   spec.csharp:
-  - uid: Ubytec.Language.Operations.IOpCode
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCode
     name: IOpCode
-    href: Ubytec.Language.Operations.IOpCode.html
+    href: Ubytec.Language.Operations.Interfaces.IOpCode.html
   - name: '['
   - name: ']'
   spec.vb:
-  - uid: Ubytec.Language.Operations.IOpCode
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCode
     name: IOpCode
-    href: Ubytec.Language.Operations.IOpCode.html
+    href: Ubytec.Language.Operations.Interfaces.IOpCode.html
   - name: (
   - name: )
-- uid: Ubytec.Language.Operations
-  commentId: N:Ubytec.Language.Operations
+- uid: Ubytec.Language.Operations.Interfaces
+  commentId: N:Ubytec.Language.Operations.Interfaces
   href: Ubytec.html
-  name: Ubytec.Language.Operations
-  nameWithType: Ubytec.Language.Operations
-  fullName: Ubytec.Language.Operations
+  name: Ubytec.Language.Operations.Interfaces
+  nameWithType: Ubytec.Language.Operations.Interfaces
+  fullName: Ubytec.Language.Operations.Interfaces
   spec.csharp:
   - uid: Ubytec
     name: Ubytec
@@ -1061,6 +1061,10 @@ references:
   - uid: Ubytec.Language.Operations
     name: Operations
     href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
   spec.vb:
   - uid: Ubytec
     name: Ubytec
@@ -1073,6 +1077,10 @@ references:
   - uid: Ubytec.Language.Operations
     name: Operations
     href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
 - uid: Ubytec.Language.Syntax.Model.SyntaxSentence.Dispose*
   commentId: Overload:Ubytec.Language.Syntax.Model.SyntaxSentence.Dispose
   href: Ubytec.Language.Syntax.Model.SyntaxSentence.Dispose.html#Ubytec_Language_Syntax_Model_SyntaxSentence_Dispose

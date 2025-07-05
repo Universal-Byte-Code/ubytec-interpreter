@@ -1,4 +1,5 @@
 ﻿using Ubytec.Language.Exceptions;
+using Ubytec.Language.Operations.Interfaces;
 using Ubytec.Language.Syntax.ExpressionFragments;
 using Ubytec.Language.Syntax.Model;
 using Ubytec.Language.Syntax.Scopes;
@@ -7,11 +8,12 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct END : IOpCode
+        public readonly record struct END : IOpCode, IOpCodeFactory
         {
-            public readonly byte OpCode => 0x06;
+            public const byte OP = 0x06;
+            public readonly byte OpCode => OP;
 
-            public static END CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
+            public static IOpCode CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
             {
                 if (operands.Length > 0)
                     throw new SyntaxException(0x06BADBEEF, $"END opcode should not receive any operands, but received: {operands.Length}");

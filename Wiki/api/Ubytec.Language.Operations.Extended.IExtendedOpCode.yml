@@ -21,15 +21,20 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: IExtendedOpCode
     path: ../Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
-    startLine: 2
+    startLine: 11
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations.Extended
+  summary: >-
+    Contract for opcodes that live in the extended space
+
+    (0xFF + ExtensionGroup + ExtendedOpCode).
+  example: []
   syntax:
     content: 'public interface IExtendedOpCode : IOpCode, IUbytecEntity'
     content.vb: Public Interface IExtendedOpCode Inherits IOpCode, IUbytecEntity
   inheritedMembers:
-  - Ubytec.Language.Operations.IOpCode.OpCode
+  - Ubytec.Language.Operations.Interfaces.IOpCode.OpCode
   - Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
 - uid: Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtensionGroup
   commentId: P:Ubytec.Language.Operations.Extended.IExtendedOpCode.ExtensionGroup
@@ -49,10 +54,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ExtensionGroup
     path: ../Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
-    startLine: 4
+    startLine: 14
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations.Extended
+  summary: High-order byte that identifies the extension group.
+  example: []
   syntax:
     content: byte ExtensionGroup { get; }
     parameters: []
@@ -78,10 +85,12 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ExtendedOpCode
     path: ../Ubytec/Language/Operations/Extended/IExtendedOpCode.cs
-    startLine: 5
+    startLine: 17
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations.Extended
+  summary: Low-order byte that identifies the opcode within its group.
+  example: []
   syntax:
     content: byte ExtendedOpCode { get; }
     parameters: []
@@ -128,13 +137,13 @@ references:
   - uid: Ubytec.Language.Operations.Extended
     name: Extended
     href: Ubytec.Language.Operations.Extended.html
-- uid: Ubytec.Language.Operations.IOpCode.OpCode
-  commentId: P:Ubytec.Language.Operations.IOpCode.OpCode
-  parent: Ubytec.Language.Operations.IOpCode
-  href: Ubytec.Language.Operations.IOpCode.OpCode.html#Ubytec_Language_Operations_IOpCode_OpCode
+- uid: Ubytec.Language.Operations.Interfaces.IOpCode.OpCode
+  commentId: P:Ubytec.Language.Operations.Interfaces.IOpCode.OpCode
+  parent: Ubytec.Language.Operations.Interfaces.IOpCode
+  href: Ubytec.Language.Operations.Interfaces.IOpCode.OpCode.html#Ubytec_Language_Operations_Interfaces_IOpCode_OpCode
   name: OpCode
   nameWithType: IOpCode.OpCode
-  fullName: Ubytec.Language.Operations.IOpCode.OpCode
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCode.OpCode
 - uid: Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   commentId: M:Ubytec.Language.IUbytecEntity.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   parent: Ubytec.Language.IUbytecEntity
@@ -160,13 +169,13 @@ references:
     name: CompilationScopes
     href: Ubytec.Language.Syntax.Scopes.CompilationScopes.html
   - name: )
-- uid: Ubytec.Language.Operations.IOpCode
-  commentId: T:Ubytec.Language.Operations.IOpCode
-  parent: Ubytec.Language.Operations
-  href: Ubytec.Language.Operations.IOpCode.html
+- uid: Ubytec.Language.Operations.Interfaces.IOpCode
+  commentId: T:Ubytec.Language.Operations.Interfaces.IOpCode
+  parent: Ubytec.Language.Operations.Interfaces
+  href: Ubytec.Language.Operations.Interfaces.IOpCode.html
   name: IOpCode
   nameWithType: IOpCode
-  fullName: Ubytec.Language.Operations.IOpCode
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCode
 - uid: Ubytec.Language.IUbytecEntity
   commentId: T:Ubytec.Language.IUbytecEntity
   parent: Ubytec.Language
@@ -174,12 +183,12 @@ references:
   name: IUbytecEntity
   nameWithType: IUbytecEntity
   fullName: Ubytec.Language.IUbytecEntity
-- uid: Ubytec.Language.Operations
-  commentId: N:Ubytec.Language.Operations
+- uid: Ubytec.Language.Operations.Interfaces
+  commentId: N:Ubytec.Language.Operations.Interfaces
   href: Ubytec.html
-  name: Ubytec.Language.Operations
-  nameWithType: Ubytec.Language.Operations
-  fullName: Ubytec.Language.Operations
+  name: Ubytec.Language.Operations.Interfaces
+  nameWithType: Ubytec.Language.Operations.Interfaces
+  fullName: Ubytec.Language.Operations.Interfaces
   spec.csharp:
   - uid: Ubytec
     name: Ubytec
@@ -192,6 +201,10 @@ references:
   - uid: Ubytec.Language.Operations
     name: Operations
     href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
   spec.vb:
   - uid: Ubytec
     name: Ubytec
@@ -204,6 +217,10 @@ references:
   - uid: Ubytec.Language.Operations
     name: Operations
     href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
 - uid: Ubytec.Language
   commentId: N:Ubytec.Language
   href: Ubytec.html

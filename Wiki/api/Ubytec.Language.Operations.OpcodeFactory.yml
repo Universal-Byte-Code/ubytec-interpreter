@@ -5,7 +5,7 @@ items:
   id: OpcodeFactory
   parent: Ubytec.Language.Operations
   children:
-  - Ubytec.Language.Operations.OpcodeFactory.Create(System.Byte,Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
+  - Ubytec.Language.Operations.OpcodeFactory.Create(System.ValueType,Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
   - Ubytec.Language.Operations.OpcodeFactory._factory
   langs:
   - csharp
@@ -21,7 +21,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: OpcodeFactory
     path: ../Ubytec/Language/Operations/OpCodeFactory.cs
-    startLine: 5
+    startLine: 8
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations
@@ -56,25 +56,25 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _factory
     path: ../Ubytec/Language/Operations/OpCodeFactory.cs
-    startLine: 7
+    startLine: 10
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations
   syntax:
-    content: private static readonly Dictionary<byte, Func<VariableExpressionFragment[], SyntaxToken[], ValueType[], IOpCode>> _factory
+    content: private static readonly Dictionary<ValueType, IOpCodeFactory.OpCodeFactoryDelegate> _factory
     return:
-      type: System.Collections.Generic.Dictionary{System.Byte,System.Func{Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[],Ubytec.Language.Operations.IOpCode}}
-    content.vb: Private Shared ReadOnly _factory As Dictionary(Of Byte, Func(Of VariableExpressionFragment(), SyntaxToken(), ValueType(), IOpCode))
-- uid: Ubytec.Language.Operations.OpcodeFactory.Create(System.Byte,Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
-  commentId: M:Ubytec.Language.Operations.OpcodeFactory.Create(System.Byte,Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
-  id: Create(System.Byte,Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
+      type: System.Collections.Generic.Dictionary{System.ValueType,Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate}
+    content.vb: Private Shared ReadOnly _factory As Dictionary(Of ValueType, IOpCodeFactory.OpCodeFactoryDelegate)
+- uid: Ubytec.Language.Operations.OpcodeFactory.Create(System.ValueType,Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
+  commentId: M:Ubytec.Language.Operations.OpcodeFactory.Create(System.ValueType,Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
+  id: Create(System.ValueType,Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
   parent: Ubytec.Language.Operations.OpcodeFactory
   langs:
   - csharp
   - vb
-  name: Create(byte, VariableExpressionFragment[], SyntaxToken[], params ValueType[])
-  nameWithType: OpcodeFactory.Create(byte, VariableExpressionFragment[], SyntaxToken[], params ValueType[])
-  fullName: Ubytec.Language.Operations.OpcodeFactory.Create(byte, Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[], Ubytec.Language.Syntax.Model.SyntaxToken[], params System.ValueType[])
+  name: Create(ValueType, VariableExpressionFragment[], SyntaxToken[], params ValueType[])
+  nameWithType: OpcodeFactory.Create(ValueType, VariableExpressionFragment[], SyntaxToken[], params ValueType[])
+  fullName: Ubytec.Language.Operations.OpcodeFactory.Create(System.ValueType, Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[], Ubytec.Language.Syntax.Model.SyntaxToken[], params System.ValueType[])
   type: Method
   source:
     remote:
@@ -83,15 +83,15 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Create
     path: ../Ubytec/Language/Operations/OpCodeFactory.cs
-    startLine: 28
+    startLine: 31
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations
   syntax:
-    content: public static IOpCode Create(byte opcode, VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
+    content: public static IOpCode Create(ValueType opcode, VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
     parameters:
     - id: opcode
-      type: System.Byte
+      type: System.ValueType
     - id: variables
       type: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[]
     - id: tokens
@@ -99,12 +99,12 @@ items:
     - id: operands
       type: System.ValueType[]
     return:
-      type: Ubytec.Language.Operations.IOpCode
-    content.vb: Public Shared Function Create(opcode As Byte, variables As VariableExpressionFragment(), tokens As SyntaxToken(), ParamArray operands As ValueType()) As IOpCode
+      type: Ubytec.Language.Operations.Interfaces.IOpCode
+    content.vb: Public Shared Function Create(opcode As ValueType, variables As VariableExpressionFragment(), tokens As SyntaxToken(), ParamArray operands As ValueType()) As IOpCode
   overload: Ubytec.Language.Operations.OpcodeFactory.Create*
-  nameWithType.vb: OpcodeFactory.Create(Byte, VariableExpressionFragment(), SyntaxToken(), ParamArray ValueType())
-  fullName.vb: Ubytec.Language.Operations.OpcodeFactory.Create(Byte, Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment(), Ubytec.Language.Syntax.Model.SyntaxToken(), ParamArray System.ValueType())
-  name.vb: Create(Byte, VariableExpressionFragment(), SyntaxToken(), ParamArray ValueType())
+  nameWithType.vb: OpcodeFactory.Create(ValueType, VariableExpressionFragment(), SyntaxToken(), ParamArray ValueType())
+  fullName.vb: Ubytec.Language.Operations.OpcodeFactory.Create(System.ValueType, Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment(), Ubytec.Language.Syntax.Model.SyntaxToken(), ParamArray System.ValueType())
+  name.vb: Create(ValueType, VariableExpressionFragment(), SyntaxToken(), ParamArray ValueType())
 references:
 - uid: Ubytec.Language.Operations
   commentId: N:Ubytec.Language.Operations
@@ -373,60 +373,36 @@ references:
   name: System
   nameWithType: System
   fullName: System
-- uid: System.Collections.Generic.Dictionary{System.Byte,System.Func{Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[],Ubytec.Language.Operations.IOpCode}}
-  commentId: T:System.Collections.Generic.Dictionary{System.Byte,System.Func{Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[],Ubytec.Language.Operations.IOpCode}}
+- uid: System.Collections.Generic.Dictionary{System.ValueType,Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate}
+  commentId: T:System.Collections.Generic.Dictionary{System.ValueType,Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate}
   parent: System.Collections.Generic
   definition: System.Collections.Generic.Dictionary`2
   href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
-  name: Dictionary<byte, Func<VariableExpressionFragment[], SyntaxToken[], ValueType[], IOpCode>>
-  nameWithType: Dictionary<byte, Func<VariableExpressionFragment[], SyntaxToken[], ValueType[], IOpCode>>
-  fullName: System.Collections.Generic.Dictionary<byte, System.Func<Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[], Ubytec.Language.Syntax.Model.SyntaxToken[], System.ValueType[], Ubytec.Language.Operations.IOpCode>>
-  nameWithType.vb: Dictionary(Of Byte, Func(Of VariableExpressionFragment(), SyntaxToken(), ValueType(), IOpCode))
-  fullName.vb: System.Collections.Generic.Dictionary(Of Byte, System.Func(Of Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment(), Ubytec.Language.Syntax.Model.SyntaxToken(), System.ValueType(), Ubytec.Language.Operations.IOpCode))
-  name.vb: Dictionary(Of Byte, Func(Of VariableExpressionFragment(), SyntaxToken(), ValueType(), IOpCode))
+  name: Dictionary<ValueType, IOpCodeFactory.OpCodeFactoryDelegate>
+  nameWithType: Dictionary<ValueType, IOpCodeFactory.OpCodeFactoryDelegate>
+  fullName: System.Collections.Generic.Dictionary<System.ValueType, Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate>
+  nameWithType.vb: Dictionary(Of ValueType, IOpCodeFactory.OpCodeFactoryDelegate)
+  fullName.vb: System.Collections.Generic.Dictionary(Of System.ValueType, Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate)
+  name.vb: Dictionary(Of ValueType, IOpCodeFactory.OpCodeFactoryDelegate)
   spec.csharp:
   - uid: System.Collections.Generic.Dictionary`2
     name: Dictionary
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
   - name: <
-  - uid: System.Byte
-    name: byte
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.byte
-  - name: ','
-  - name: " "
-  - uid: System.Func`4
-    name: Func
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.func-4
-  - name: <
-  - uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
-    name: VariableExpressionFragment
-    href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html
-  - name: '['
-  - name: ']'
-  - name: ','
-  - name: " "
-  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
-    name: SyntaxToken
-    href: Ubytec.Language.Syntax.Model.SyntaxToken.html
-  - name: '['
-  - name: ']'
-  - name: ','
-  - name: " "
   - uid: System.ValueType
     name: ValueType
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.valuetype
-  - name: '['
-  - name: ']'
   - name: ','
   - name: " "
-  - uid: Ubytec.Language.Operations.IOpCode
-    name: IOpCode
-    href: Ubytec.Language.Operations.IOpCode.html
-  - name: '>'
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory
+    name: IOpCodeFactory
+    href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate
+    name: OpCodeFactoryDelegate
+    href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate.html
   - name: '>'
   spec.vb:
   - uid: System.Collections.Generic.Dictionary`2
@@ -436,45 +412,19 @@ references:
   - name: (
   - name: Of
   - name: " "
-  - uid: System.Byte
-    name: Byte
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.byte
-  - name: ','
-  - name: " "
-  - uid: System.Func`4
-    name: Func
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.func-4
-  - name: (
-  - name: Of
-  - name: " "
-  - uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
-    name: VariableExpressionFragment
-    href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html
-  - name: (
-  - name: )
-  - name: ','
-  - name: " "
-  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
-    name: SyntaxToken
-    href: Ubytec.Language.Syntax.Model.SyntaxToken.html
-  - name: (
-  - name: )
-  - name: ','
-  - name: " "
   - uid: System.ValueType
     name: ValueType
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.valuetype
-  - name: (
-  - name: )
   - name: ','
   - name: " "
-  - uid: Ubytec.Language.Operations.IOpCode
-    name: IOpCode
-    href: Ubytec.Language.Operations.IOpCode.html
-  - name: )
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory
+    name: IOpCodeFactory
+    href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate
+    name: OpCodeFactoryDelegate
+    href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate.html
   - name: )
 - uid: System.Collections.Generic.Dictionary`2
   commentId: T:System.Collections.Generic.Dictionary`2
@@ -549,21 +499,18 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic
 - uid: Ubytec.Language.Operations.OpcodeFactory.Create*
   commentId: Overload:Ubytec.Language.Operations.OpcodeFactory.Create
-  href: Ubytec.Language.Operations.OpcodeFactory.Create.html#Ubytec_Language_Operations_OpcodeFactory_Create_System_Byte_Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment___Ubytec_Language_Syntax_Model_SyntaxToken___System_ValueType___
+  href: Ubytec.Language.Operations.OpcodeFactory.Create.html#Ubytec_Language_Operations_OpcodeFactory_Create_System_ValueType_Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment___Ubytec_Language_Syntax_Model_SyntaxToken___System_ValueType___
   name: Create
   nameWithType: OpcodeFactory.Create
   fullName: Ubytec.Language.Operations.OpcodeFactory.Create
-- uid: System.Byte
-  commentId: T:System.Byte
+- uid: System.ValueType
+  commentId: T:System.ValueType
   parent: System
   isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.byte
-  name: byte
-  nameWithType: byte
-  fullName: byte
-  nameWithType.vb: Byte
-  fullName.vb: Byte
-  name.vb: Byte
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
 - uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[]
   isExternal: true
   href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html
@@ -629,11 +576,49 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.valuetype
   - name: (
   - name: )
-- uid: Ubytec.Language.Operations.IOpCode
-  commentId: T:Ubytec.Language.Operations.IOpCode
-  parent: Ubytec.Language.Operations
-  href: Ubytec.Language.Operations.IOpCode.html
+- uid: Ubytec.Language.Operations.Interfaces.IOpCode
+  commentId: T:Ubytec.Language.Operations.Interfaces.IOpCode
+  parent: Ubytec.Language.Operations.Interfaces
+  href: Ubytec.Language.Operations.Interfaces.IOpCode.html
   name: IOpCode
   nameWithType: IOpCode
-  fullName: Ubytec.Language.Operations.IOpCode
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCode
+- uid: Ubytec.Language.Operations.Interfaces
+  commentId: N:Ubytec.Language.Operations.Interfaces
+  href: Ubytec.html
+  name: Ubytec.Language.Operations.Interfaces
+  nameWithType: Ubytec.Language.Operations.Interfaces
+  fullName: Ubytec.Language.Operations.Interfaces
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
 memberLayout: SeparatePages

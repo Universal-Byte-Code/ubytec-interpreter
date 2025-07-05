@@ -1,0 +1,112 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Operations.Interfaces
+  commentId: N:Ubytec.Language.Operations.Interfaces
+  id: Interfaces
+  parent: Ubytec.Language.Operations
+  children:
+  - Ubytec.Language.Operations.Interfaces.IBlockOpCode
+  - Ubytec.Language.Operations.Interfaces.IOpCode
+  - Ubytec.Language.Operations.Interfaces.IOpCodeFactory
+  - Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate
+  - Ubytec.Language.Operations.Interfaces.IOpVariableScope
+  langs:
+  - csharp
+  - vb
+  name: Ubytec.Language.Operations.Interfaces
+  nameWithType: Ubytec.Language.Operations.Interfaces
+  fullName: Ubytec.Language.Operations.Interfaces
+  type: Namespace
+  assemblies:
+  - Ubytec
+references:
+- uid: Ubytec.Language.Operations.Interfaces.IBlockOpCode
+  commentId: T:Ubytec.Language.Operations.Interfaces.IBlockOpCode
+  parent: Ubytec.Language.Operations.Interfaces
+  href: Ubytec.Language.Operations.Interfaces.IBlockOpCode.html
+  name: IBlockOpCode
+  nameWithType: IBlockOpCode
+  fullName: Ubytec.Language.Operations.Interfaces.IBlockOpCode
+- uid: Ubytec.Language.Operations.Interfaces.IOpCode
+  commentId: T:Ubytec.Language.Operations.Interfaces.IOpCode
+  parent: Ubytec.Language.Operations.Interfaces
+  href: Ubytec.Language.Operations.Interfaces.IOpCode.html
+  name: IOpCode
+  nameWithType: IOpCode
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCode
+- uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory
+  commentId: T:Ubytec.Language.Operations.Interfaces.IOpCodeFactory
+  parent: Ubytec.Language.Operations.Interfaces
+  href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.html
+  name: IOpCodeFactory
+  nameWithType: IOpCodeFactory
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCodeFactory
+- uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate
+  commentId: T:Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate
+  parent: Ubytec.Language.Operations.Interfaces
+  href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.html
+  name: IOpCodeFactory.OpCodeFactoryDelegate
+  nameWithType: IOpCodeFactory.OpCodeFactoryDelegate
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory
+    name: IOpCodeFactory
+    href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate
+    name: OpCodeFactoryDelegate
+    href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate.html
+  spec.vb:
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory
+    name: IOpCodeFactory
+    href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate
+    name: OpCodeFactoryDelegate
+    href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate.html
+- uid: Ubytec.Language.Operations.Interfaces.IOpVariableScope
+  commentId: T:Ubytec.Language.Operations.Interfaces.IOpVariableScope
+  parent: Ubytec.Language.Operations.Interfaces
+  href: Ubytec.Language.Operations.Interfaces.IOpVariableScope.html
+  name: IOpVariableScope
+  nameWithType: IOpVariableScope
+  fullName: Ubytec.Language.Operations.Interfaces.IOpVariableScope
+- uid: Ubytec.Language.Operations.Interfaces
+  commentId: N:Ubytec.Language.Operations.Interfaces
+  href: Ubytec.html
+  name: Ubytec.Language.Operations.Interfaces
+  nameWithType: Ubytec.Language.Operations.Interfaces
+  fullName: Ubytec.Language.Operations.Interfaces
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
+memberLayout: SeparatePages

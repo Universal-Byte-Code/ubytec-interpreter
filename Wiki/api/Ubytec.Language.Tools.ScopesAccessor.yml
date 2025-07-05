@@ -1,0 +1,793 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubytec.Language.Tools.ScopesAccessor
+  commentId: T:Ubytec.Language.Tools.ScopesAccessor
+  id: ScopesAccessor
+  parent: Ubytec.Language.Tools
+  children:
+  - Ubytec.Language.Tools.ScopesAccessor.#ctor(Ubytec.Language.Syntax.Model.SyntaxToken)
+  - Ubytec.Language.Tools.ScopesAccessor.DataSource
+  - Ubytec.Language.Tools.ScopesAccessor.Helper
+  - Ubytec.Language.Tools.ScopesAccessor.Length
+  - Ubytec.Language.Tools.ScopesAccessor.ToString
+  - Ubytec.Language.Tools.ScopesAccessor._helper
+  - Ubytec.Language.Tools.ScopesAccessor._token
+  langs:
+  - csharp
+  - vb
+  name: ScopesAccessor
+  nameWithType: ScopesAccessor
+  fullName: Ubytec.Language.Tools.ScopesAccessor
+  type: Struct
+  source:
+    remote:
+      path: Ubytec/Language/Tools/ScopesAccessor.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ScopesAccessor
+    path: ../Ubytec/Language/Tools/ScopesAccessor.cs
+    startLine: 10
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Tools
+  summary: Represents a strongly typed accessor for the semantic scopes of a <xref href="Ubytec.Language.Syntax.Model.SyntaxToken" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: 'public readonly record struct ScopesAccessor : IEquatable<ScopesAccessor>'
+    content.vb: Public Structure ScopesAccessor Implements IEquatable(Of ScopesAccessor)
+  implements:
+  - System.IEquatable{Ubytec.Language.Tools.ScopesAccessor}
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubytec.Language.Tools.ScopesAccessor._token
+  commentId: F:Ubytec.Language.Tools.ScopesAccessor._token
+  id: _token
+  parent: Ubytec.Language.Tools.ScopesAccessor
+  langs:
+  - csharp
+  - vb
+  name: _token
+  nameWithType: ScopesAccessor._token
+  fullName: Ubytec.Language.Tools.ScopesAccessor._token
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Tools/ScopesAccessor.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _token
+    path: ../Ubytec/Language/Tools/ScopesAccessor.cs
+    startLine: 12
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Tools
+  syntax:
+    content: private readonly SyntaxToken _token
+    return:
+      type: Ubytec.Language.Syntax.Model.SyntaxToken
+    content.vb: Private ReadOnly _token As SyntaxToken
+- uid: Ubytec.Language.Tools.ScopesAccessor._helper
+  commentId: F:Ubytec.Language.Tools.ScopesAccessor._helper
+  id: _helper
+  parent: Ubytec.Language.Tools.ScopesAccessor
+  langs:
+  - csharp
+  - vb
+  name: _helper
+  nameWithType: ScopesAccessor._helper
+  fullName: Ubytec.Language.Tools.ScopesAccessor._helper
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Tools/ScopesAccessor.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: _helper
+    path: ../Ubytec/Language/Tools/ScopesAccessor.cs
+    startLine: 13
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Tools
+  syntax:
+    content: private readonly SyntaxTokenScopeHelper _helper
+    return:
+      type: Ubytec.Language.Tools.SyntaxTokenScopeHelper
+    content.vb: Private ReadOnly _helper As SyntaxTokenScopeHelper
+- uid: Ubytec.Language.Tools.ScopesAccessor.#ctor(Ubytec.Language.Syntax.Model.SyntaxToken)
+  commentId: M:Ubytec.Language.Tools.ScopesAccessor.#ctor(Ubytec.Language.Syntax.Model.SyntaxToken)
+  id: '#ctor(Ubytec.Language.Syntax.Model.SyntaxToken)'
+  parent: Ubytec.Language.Tools.ScopesAccessor
+  langs:
+  - csharp
+  - vb
+  name: ScopesAccessor(SyntaxToken)
+  nameWithType: ScopesAccessor.ScopesAccessor(SyntaxToken)
+  fullName: Ubytec.Language.Tools.ScopesAccessor.ScopesAccessor(Ubytec.Language.Syntax.Model.SyntaxToken)
+  type: Constructor
+  source:
+    remote:
+      path: Ubytec/Language/Tools/ScopesAccessor.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: .ctor
+    path: ../Ubytec/Language/Tools/ScopesAccessor.cs
+    startLine: 19
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Tools
+  summary: Initializes a new instance of the <xref href="Ubytec.Language.Tools.ScopesAccessor" data-throw-if-not-resolved="false"></xref> struct with the specified token.
+  example: []
+  syntax:
+    content: public ScopesAccessor(SyntaxToken token)
+    parameters:
+    - id: token
+      type: Ubytec.Language.Syntax.Model.SyntaxToken
+      description: ''
+    content.vb: Public Sub New(token As SyntaxToken)
+  overload: Ubytec.Language.Tools.ScopesAccessor.#ctor*
+  nameWithType.vb: ScopesAccessor.New(SyntaxToken)
+  fullName.vb: Ubytec.Language.Tools.ScopesAccessor.New(Ubytec.Language.Syntax.Model.SyntaxToken)
+  name.vb: New(SyntaxToken)
+- uid: Ubytec.Language.Tools.ScopesAccessor.DataSource
+  commentId: P:Ubytec.Language.Tools.ScopesAccessor.DataSource
+  id: DataSource
+  parent: Ubytec.Language.Tools.ScopesAccessor
+  langs:
+  - csharp
+  - vb
+  name: DataSource
+  nameWithType: ScopesAccessor.DataSource
+  fullName: Ubytec.Language.Tools.ScopesAccessor.DataSource
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Tools/ScopesAccessor.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: DataSource
+    path: ../Ubytec/Language/Tools/ScopesAccessor.cs
+    startLine: 27
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Tools
+  summary: Gets the semantic scopes of the token.
+  example: []
+  syntax:
+    content: public ImmutableArray<string> DataSource { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Immutable.ImmutableArray{System.String}
+    content.vb: Public Property DataSource As ImmutableArray(Of String)
+  overload: Ubytec.Language.Tools.ScopesAccessor.DataSource*
+- uid: Ubytec.Language.Tools.ScopesAccessor.Helper
+  commentId: P:Ubytec.Language.Tools.ScopesAccessor.Helper
+  id: Helper
+  parent: Ubytec.Language.Tools.ScopesAccessor
+  langs:
+  - csharp
+  - vb
+  name: Helper
+  nameWithType: ScopesAccessor.Helper
+  fullName: Ubytec.Language.Tools.ScopesAccessor.Helper
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Tools/ScopesAccessor.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Helper
+    path: ../Ubytec/Language/Tools/ScopesAccessor.cs
+    startLine: 32
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Tools
+  summary: Provides a helper for accessing the token's scopes relevant information in a strongly typed manner.
+  example: []
+  syntax:
+    content: >-
+      [JsonIgnore]
+
+      public SyntaxTokenScopeHelper Helper { get; }
+    parameters: []
+    return:
+      type: Ubytec.Language.Tools.SyntaxTokenScopeHelper
+    content.vb: >-
+      <JsonIgnore>
+
+      Public ReadOnly Property Helper As SyntaxTokenScopeHelper
+  overload: Ubytec.Language.Tools.ScopesAccessor.Helper*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonIgnoreAttribute
+    ctor: System.Text.Json.Serialization.JsonIgnoreAttribute.#ctor
+    arguments: []
+- uid: Ubytec.Language.Tools.ScopesAccessor.Length
+  commentId: P:Ubytec.Language.Tools.ScopesAccessor.Length
+  id: Length
+  parent: Ubytec.Language.Tools.ScopesAccessor
+  langs:
+  - csharp
+  - vb
+  name: Length
+  nameWithType: ScopesAccessor.Length
+  fullName: Ubytec.Language.Tools.ScopesAccessor.Length
+  type: Property
+  source:
+    remote:
+      path: Ubytec/Language/Tools/ScopesAccessor.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: Length
+    path: ../Ubytec/Language/Tools/ScopesAccessor.cs
+    startLine: 38
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Tools
+  summary: Gets the number of elements in the array.
+  example: []
+  syntax:
+    content: public int Length { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Length As Integer
+  overload: Ubytec.Language.Tools.ScopesAccessor.Length*
+- uid: Ubytec.Language.Tools.ScopesAccessor.ToString
+  commentId: M:Ubytec.Language.Tools.ScopesAccessor.ToString
+  id: ToString
+  parent: Ubytec.Language.Tools.ScopesAccessor
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: ScopesAccessor.ToString()
+  fullName: Ubytec.Language.Tools.ScopesAccessor.ToString()
+  type: Method
+  source:
+    remote:
+      path: Ubytec/Language/Tools/ScopesAccessor.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: ToString
+    path: ../Ubytec/Language/Tools/ScopesAccessor.cs
+    startLine: 42
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Tools
+  summary: Returns the fully qualified type name of this instance.
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+      description: The fully qualified type name.
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Ubytec.Language.Tools.ScopesAccessor.ToString*
+references:
+- uid: Ubytec.Language.Syntax.Model.SyntaxToken
+  commentId: T:Ubytec.Language.Syntax.Model.SyntaxToken
+  parent: Ubytec.Language.Syntax.Model
+  href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  name: SyntaxToken
+  nameWithType: SyntaxToken
+  fullName: Ubytec.Language.Syntax.Model.SyntaxToken
+- uid: Ubytec.Language.Tools
+  commentId: N:Ubytec.Language.Tools
+  href: Ubytec.html
+  name: Ubytec.Language.Tools
+  nameWithType: Ubytec.Language.Tools
+  fullName: Ubytec.Language.Tools
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Tools
+    name: Tools
+    href: Ubytec.Language.Tools.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Tools
+    name: Tools
+    href: Ubytec.Language.Tools.html
+- uid: System.IEquatable{Ubytec.Language.Tools.ScopesAccessor}
+  commentId: T:System.IEquatable{Ubytec.Language.Tools.ScopesAccessor}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<ScopesAccessor>
+  nameWithType: IEquatable<ScopesAccessor>
+  fullName: System.IEquatable<Ubytec.Language.Tools.ScopesAccessor>
+  nameWithType.vb: IEquatable(Of ScopesAccessor)
+  fullName.vb: System.IEquatable(Of Ubytec.Language.Tools.ScopesAccessor)
+  name.vb: IEquatable(Of ScopesAccessor)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubytec.Language.Tools.ScopesAccessor
+    name: ScopesAccessor
+    href: Ubytec.Language.Tools.ScopesAccessor.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubytec.Language.Tools.ScopesAccessor
+    name: ScopesAccessor
+    href: Ubytec.Language.Tools.ScopesAccessor.html
+  - name: )
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Ubytec.Language.Syntax.Model
+  commentId: N:Ubytec.Language.Syntax.Model
+  href: Ubytec.html
+  name: Ubytec.Language.Syntax.Model
+  nameWithType: Ubytec.Language.Syntax.Model
+  fullName: Ubytec.Language.Syntax.Model
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Syntax
+    name: Syntax
+    href: Ubytec.Language.Syntax.html
+  - name: .
+  - uid: Ubytec.Language.Syntax.Model
+    name: Model
+    href: Ubytec.Language.Syntax.Model.html
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubytec.Language.Tools.SyntaxTokenScopeHelper
+  commentId: T:Ubytec.Language.Tools.SyntaxTokenScopeHelper
+  parent: Ubytec.Language.Tools
+  href: Ubytec.Language.Tools.SyntaxTokenScopeHelper.html
+  name: SyntaxTokenScopeHelper
+  nameWithType: SyntaxTokenScopeHelper
+  fullName: Ubytec.Language.Tools.SyntaxTokenScopeHelper
+- uid: Ubytec.Language.Tools.ScopesAccessor
+  commentId: T:Ubytec.Language.Tools.ScopesAccessor
+  parent: Ubytec.Language.Tools
+  href: Ubytec.Language.Tools.ScopesAccessor.html
+  name: ScopesAccessor
+  nameWithType: ScopesAccessor
+  fullName: Ubytec.Language.Tools.ScopesAccessor
+- uid: Ubytec.Language.Tools.ScopesAccessor.#ctor*
+  commentId: Overload:Ubytec.Language.Tools.ScopesAccessor.#ctor
+  href: Ubytec.Language.Tools.ScopesAccessor.-ctor.html#Ubytec_Language_Tools_ScopesAccessor__ctor_Ubytec_Language_Syntax_Model_SyntaxToken_
+  name: ScopesAccessor
+  nameWithType: ScopesAccessor.ScopesAccessor
+  fullName: Ubytec.Language.Tools.ScopesAccessor.ScopesAccessor
+  nameWithType.vb: ScopesAccessor.New
+  fullName.vb: Ubytec.Language.Tools.ScopesAccessor.New
+  name.vb: New
+- uid: Ubytec.Language.Tools.ScopesAccessor.DataSource*
+  commentId: Overload:Ubytec.Language.Tools.ScopesAccessor.DataSource
+  href: Ubytec.Language.Tools.ScopesAccessor.DataSource.html#Ubytec_Language_Tools_ScopesAccessor_DataSource
+  name: DataSource
+  nameWithType: ScopesAccessor.DataSource
+  fullName: Ubytec.Language.Tools.ScopesAccessor.DataSource
+- uid: System.Collections.Immutable.ImmutableArray{System.String}
+  commentId: T:System.Collections.Immutable.ImmutableArray{System.String}
+  parent: System.Collections.Immutable
+  definition: System.Collections.Immutable.ImmutableArray`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutablearray-1
+  name: ImmutableArray<string>
+  nameWithType: ImmutableArray<string>
+  fullName: System.Collections.Immutable.ImmutableArray<string>
+  nameWithType.vb: ImmutableArray(Of String)
+  fullName.vb: System.Collections.Immutable.ImmutableArray(Of String)
+  name.vb: ImmutableArray(Of String)
+  spec.csharp:
+  - uid: System.Collections.Immutable.ImmutableArray`1
+    name: ImmutableArray
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutablearray-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Immutable.ImmutableArray`1
+    name: ImmutableArray
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutablearray-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Collections.Immutable.ImmutableArray`1
+  commentId: T:System.Collections.Immutable.ImmutableArray`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutablearray-1
+  name: ImmutableArray<T>
+  nameWithType: ImmutableArray<T>
+  fullName: System.Collections.Immutable.ImmutableArray<T>
+  nameWithType.vb: ImmutableArray(Of T)
+  fullName.vb: System.Collections.Immutable.ImmutableArray(Of T)
+  name.vb: ImmutableArray(Of T)
+  spec.csharp:
+  - uid: System.Collections.Immutable.ImmutableArray`1
+    name: ImmutableArray
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutablearray-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Immutable.ImmutableArray`1
+    name: ImmutableArray
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutablearray-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Immutable
+  commentId: N:System.Collections.Immutable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Immutable
+  nameWithType: System.Collections.Immutable
+  fullName: System.Collections.Immutable
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Immutable
+    name: Immutable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.immutable
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Immutable
+    name: Immutable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.immutable
+- uid: Ubytec.Language.Tools.ScopesAccessor.Helper*
+  commentId: Overload:Ubytec.Language.Tools.ScopesAccessor.Helper
+  href: Ubytec.Language.Tools.ScopesAccessor.Helper.html#Ubytec_Language_Tools_ScopesAccessor_Helper
+  name: Helper
+  nameWithType: ScopesAccessor.Helper
+  fullName: Ubytec.Language.Tools.ScopesAccessor.Helper
+- uid: Ubytec.Language.Tools.ScopesAccessor.Length*
+  commentId: Overload:Ubytec.Language.Tools.ScopesAccessor.Length
+  href: Ubytec.Language.Tools.ScopesAccessor.Length.html#Ubytec_Language_Tools_ScopesAccessor_Length
+  name: Length
+  nameWithType: ScopesAccessor.Length
+  fullName: Ubytec.Language.Tools.ScopesAccessor.Length
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: Ubytec.Language.Tools.ScopesAccessor.ToString*
+  commentId: Overload:Ubytec.Language.Tools.ScopesAccessor.ToString
+  href: Ubytec.Language.Tools.ScopesAccessor.ToString.html#Ubytec_Language_Tools_ScopesAccessor_ToString
+  name: ToString
+  nameWithType: ScopesAccessor.ToString
+  fullName: Ubytec.Language.Tools.ScopesAccessor.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+memberLayout: SeparatePages

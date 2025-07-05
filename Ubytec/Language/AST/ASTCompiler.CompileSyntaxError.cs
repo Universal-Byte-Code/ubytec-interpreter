@@ -1,4 +1,5 @@
 ﻿using Ubytec.Language.Operations;
+using Ubytec.Language.Operations.Interfaces;
 
 namespace Ubytec.Language.AST
 {

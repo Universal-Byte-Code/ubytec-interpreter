@@ -8,7 +8,9 @@ items:
   - Ubytec.Language.Tools.DeprecatedCompiler
   - Ubytec.Language.Tools.FormattingHelper
   - Ubytec.Language.Tools.Optimization
+  - Ubytec.Language.Tools.ScopesAccessor
   - Ubytec.Language.Tools.Serialization
+  - Ubytec.Language.Tools.SyntaxTokenScopeHelper
   - Ubytec.Language.Tools.Utf64Codec
   langs:
   - csharp
@@ -108,10 +110,54 @@ references:
   name: FormattingHelper
   nameWithType: FormattingHelper
   fullName: Ubytec.Language.Tools.FormattingHelper
+- uid: Ubytec.Language.Tools.ScopesAccessor
+  commentId: T:Ubytec.Language.Tools.ScopesAccessor
+  parent: Ubytec.Language.Tools
+  href: Ubytec.Language.Tools.ScopesAccessor.html
+  name: ScopesAccessor
+  nameWithType: ScopesAccessor
+  fullName: Ubytec.Language.Tools.ScopesAccessor
+- uid: Ubytec.Language.Tools.SyntaxTokenScopeHelper
+  commentId: T:Ubytec.Language.Tools.SyntaxTokenScopeHelper
+  parent: Ubytec.Language.Tools
+  href: Ubytec.Language.Tools.SyntaxTokenScopeHelper.html
+  name: SyntaxTokenScopeHelper
+  nameWithType: SyntaxTokenScopeHelper
+  fullName: Ubytec.Language.Tools.SyntaxTokenScopeHelper
 - uid: Ubytec.Language.Tools.Utf64Codec
   commentId: T:Ubytec.Language.Tools.Utf64Codec
   href: Ubytec.Language.Tools.Utf64Codec.html
   name: Utf64Codec
   nameWithType: Utf64Codec
   fullName: Ubytec.Language.Tools.Utf64Codec
+- uid: Ubytec.Language.Tools
+  commentId: N:Ubytec.Language.Tools
+  href: Ubytec.html
+  name: Ubytec.Language.Tools
+  nameWithType: Ubytec.Language.Tools
+  fullName: Ubytec.Language.Tools
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Tools
+    name: Tools
+    href: Ubytec.Language.Tools.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Tools
+    name: Tools
+    href: Ubytec.Language.Tools.html
 memberLayout: SeparatePages

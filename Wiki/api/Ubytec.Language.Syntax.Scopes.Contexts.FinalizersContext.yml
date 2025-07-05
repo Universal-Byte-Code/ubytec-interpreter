@@ -44,7 +44,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: FinalizersContext
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 10
+    startLine: 11
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -62,7 +62,7 @@ items:
   - System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.RETURN}
   - System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.CONTINUE}
   - System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.CoreOperations.BREAK}
-  - System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.IOpCode}
+  - System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.Interfaces.IOpCode}
   - System.Collections.IEnumerable
   inheritedMembers:
   - System.Object.Equals(System.Object)
@@ -90,7 +90,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ReturnStack
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 19
+    startLine: 20
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -121,7 +121,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: BreakStack
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 24
+    startLine: 25
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -152,7 +152,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ContinueStack
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 29
+    startLine: 30
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -184,7 +184,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: System.Collections.IEnumerable.GetEnumerator
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 33
+    startLine: 34
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -220,7 +220,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: GetEnumerator
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 40
+    startLine: 41
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -232,12 +232,12 @@ items:
   syntax:
     content: public IEnumerator<IOpCode> GetEnumerator()
     return:
-      type: System.Collections.Generic.IEnumerator{Ubytec.Language.Operations.IOpCode}
+      type: System.Collections.Generic.IEnumerator{Ubytec.Language.Operations.Interfaces.IOpCode}
       description: An <xref href="System.Collections.Generic.IEnumerator%601" data-throw-if-not-resolved="false"></xref> over all opcodes.
     content.vb: Public Function GetEnumerator() As IEnumerator(Of IOpCode)
   overload: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.GetEnumerator*
   implements:
-  - System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.IOpCode}.GetEnumerator
+  - System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.Interfaces.IOpCode}.GetEnumerator
 - uid: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#RETURN}#GetEnumerator
   commentId: M:Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#RETURN}#GetEnumerator
   id: System#Collections#Generic#IEnumerable{Ubytec#Language#Operations#CoreOperations#RETURN}#GetEnumerator
@@ -257,7 +257,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.CoreOperations.RETURN>.GetEnumerator
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 48
+    startLine: 49
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -294,7 +294,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.CoreOperations.CONTINUE>.GetEnumerator
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 49
+    startLine: 50
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -331,7 +331,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.CoreOperations.BREAK>.GetEnumerator
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 50
+    startLine: 51
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -367,7 +367,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Push
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 59
+    startLine: 60
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -398,7 +398,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Push
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 64
+    startLine: 65
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -429,7 +429,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Push
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 69
+    startLine: 70
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -460,7 +460,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PopReturn
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 78
+    startLine: 79
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -490,7 +490,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PopBreak
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 83
+    startLine: 84
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -520,7 +520,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PopContinue
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 88
+    startLine: 89
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -550,7 +550,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PeekReturn
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 97
+    startLine: 98
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -580,7 +580,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PeekBreak
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 102
+    startLine: 103
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -610,7 +610,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: PeekContinue
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 107
+    startLine: 108
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -640,7 +640,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ReturnCount
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 116
+    startLine: 117
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -671,7 +671,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: BreakCount
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 121
+    startLine: 122
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -702,7 +702,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ContinueCount
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 126
+    startLine: 127
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -733,7 +733,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: TotalCount
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 131
+    startLine: 132
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -764,7 +764,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ClearReturns
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 140
+    startLine: 141
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -792,7 +792,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ClearBreaks
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 145
+    startLine: 146
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -820,7 +820,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ClearContinues
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 150
+    startLine: 151
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -848,7 +848,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ClearAll
     path: ../Ubytec/Language/Syntax/Scopes/Contexts/FinalizersContext.cs
-    startLine: 155
+    startLine: 156
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Syntax.Scopes.Contexts
@@ -1039,16 +1039,16 @@ references:
     name: BREAK
     href: Ubytec.Language.Operations.CoreOperations.BREAK.html
   - name: )
-- uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.IOpCode}
-  commentId: T:System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.IOpCode}
+- uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.Interfaces.IOpCode}
+  commentId: T:System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.Interfaces.IOpCode}
   parent: System.Collections.Generic
   definition: System.Collections.Generic.IEnumerable`1
   href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
   name: IEnumerable<IOpCode>
   nameWithType: IEnumerable<IOpCode>
-  fullName: System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.IOpCode>
+  fullName: System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.Interfaces.IOpCode>
   nameWithType.vb: IEnumerable(Of IOpCode)
-  fullName.vb: System.Collections.Generic.IEnumerable(Of Ubytec.Language.Operations.IOpCode)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Ubytec.Language.Operations.Interfaces.IOpCode)
   name.vb: IEnumerable(Of IOpCode)
   spec.csharp:
   - uid: System.Collections.Generic.IEnumerable`1
@@ -1056,9 +1056,9 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
   - name: <
-  - uid: Ubytec.Language.Operations.IOpCode
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCode
     name: IOpCode
-    href: Ubytec.Language.Operations.IOpCode.html
+    href: Ubytec.Language.Operations.Interfaces.IOpCode.html
   - name: '>'
   spec.vb:
   - uid: System.Collections.Generic.IEnumerable`1
@@ -1068,9 +1068,9 @@ references:
   - name: (
   - name: Of
   - name: " "
-  - uid: Ubytec.Language.Operations.IOpCode
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCode
     name: IOpCode
-    href: Ubytec.Language.Operations.IOpCode.html
+    href: Ubytec.Language.Operations.Interfaces.IOpCode.html
   - name: )
 - uid: System.Collections.IEnumerable
   commentId: T:System.Collections.IEnumerable
@@ -1746,40 +1746,40 @@ references:
   name: GetEnumerator
   nameWithType: FinalizersContext.GetEnumerator
   fullName: Ubytec.Language.Syntax.Scopes.Contexts.FinalizersContext.GetEnumerator
-- uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.IOpCode}.GetEnumerator
-  commentId: M:System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.IOpCode}.GetEnumerator
-  parent: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.IOpCode}
+- uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.Interfaces.IOpCode}.GetEnumerator
+  commentId: M:System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.Interfaces.IOpCode}.GetEnumerator
+  parent: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.Interfaces.IOpCode}
   definition: System.Collections.Generic.IEnumerable`1.GetEnumerator
   href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
   name: GetEnumerator()
   nameWithType: IEnumerable<IOpCode>.GetEnumerator()
-  fullName: System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.IOpCode>.GetEnumerator()
+  fullName: System.Collections.Generic.IEnumerable<Ubytec.Language.Operations.Interfaces.IOpCode>.GetEnumerator()
   nameWithType.vb: IEnumerable(Of IOpCode).GetEnumerator()
-  fullName.vb: System.Collections.Generic.IEnumerable(Of Ubytec.Language.Operations.IOpCode).GetEnumerator()
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Ubytec.Language.Operations.Interfaces.IOpCode).GetEnumerator()
   spec.csharp:
-  - uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.IOpCode}.GetEnumerator
+  - uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.Interfaces.IOpCode}.GetEnumerator
     name: GetEnumerator
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
   - name: (
   - name: )
   spec.vb:
-  - uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.IOpCode}.GetEnumerator
+  - uid: System.Collections.Generic.IEnumerable{Ubytec.Language.Operations.Interfaces.IOpCode}.GetEnumerator
     name: GetEnumerator
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
   - name: (
   - name: )
-- uid: System.Collections.Generic.IEnumerator{Ubytec.Language.Operations.IOpCode}
-  commentId: T:System.Collections.Generic.IEnumerator{Ubytec.Language.Operations.IOpCode}
+- uid: System.Collections.Generic.IEnumerator{Ubytec.Language.Operations.Interfaces.IOpCode}
+  commentId: T:System.Collections.Generic.IEnumerator{Ubytec.Language.Operations.Interfaces.IOpCode}
   parent: System.Collections.Generic
   definition: System.Collections.Generic.IEnumerator`1
   href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
   name: IEnumerator<IOpCode>
   nameWithType: IEnumerator<IOpCode>
-  fullName: System.Collections.Generic.IEnumerator<Ubytec.Language.Operations.IOpCode>
+  fullName: System.Collections.Generic.IEnumerator<Ubytec.Language.Operations.Interfaces.IOpCode>
   nameWithType.vb: IEnumerator(Of IOpCode)
-  fullName.vb: System.Collections.Generic.IEnumerator(Of Ubytec.Language.Operations.IOpCode)
+  fullName.vb: System.Collections.Generic.IEnumerator(Of Ubytec.Language.Operations.Interfaces.IOpCode)
   name.vb: IEnumerator(Of IOpCode)
   spec.csharp:
   - uid: System.Collections.Generic.IEnumerator`1
@@ -1787,9 +1787,9 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
   - name: <
-  - uid: Ubytec.Language.Operations.IOpCode
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCode
     name: IOpCode
-    href: Ubytec.Language.Operations.IOpCode.html
+    href: Ubytec.Language.Operations.Interfaces.IOpCode.html
   - name: '>'
   spec.vb:
   - uid: System.Collections.Generic.IEnumerator`1
@@ -1799,9 +1799,9 @@ references:
   - name: (
   - name: Of
   - name: " "
-  - uid: Ubytec.Language.Operations.IOpCode
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCode
     name: IOpCode
-    href: Ubytec.Language.Operations.IOpCode.html
+    href: Ubytec.Language.Operations.Interfaces.IOpCode.html
   - name: )
 - uid: System.Collections.Generic.IEnumerable`1.GetEnumerator
   commentId: M:System.Collections.Generic.IEnumerable`1.GetEnumerator

@@ -7,10 +7,7 @@ items:
   children:
   - Ubytec.Language.AST.HighLevelParser.Consume(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.Func{System.String,System.Boolean},System.String)
   - Ubytec.Language.AST.HighLevelParser.Consume(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.String,System.String)
-  - Ubytec.Language.AST.HighLevelParser.ConsumeSymbol(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.String)
   - Ubytec.Language.AST.HighLevelParser.ConsumeType(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,Ubytec.Language.Syntax.TypeSystem.Types.UType@)
-  - Ubytec.Language.AST.HighLevelParser.IsKeyword(Ubytec.Language.Syntax.Model.SyntaxToken,System.String)
-  - Ubytec.Language.AST.HighLevelParser.IsStorageType(Ubytec.Language.Syntax.Model.SyntaxToken)
   - Ubytec.Language.AST.HighLevelParser.LookAhead(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32,System.String,System.String)
   - Ubytec.Language.AST.HighLevelParser.ParseAction(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
   - Ubytec.Language.AST.HighLevelParser.ParseClass(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
@@ -84,7 +81,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _errors
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 11
+    startLine: 12
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -111,7 +108,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseModule
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 19
+    startLine: 20
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -149,7 +146,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseModuleInternal
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 27
+    startLine: 28
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -185,7 +182,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseGlobal
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 139
+    startLine: 140
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -221,7 +218,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseLocal
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 161
+    startLine: 162
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -257,7 +254,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseField
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 183
+    startLine: 184
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -293,7 +290,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseVariable
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 198
+    startLine: 199
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -329,7 +326,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseProperty
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 210
+    startLine: 211
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -365,7 +362,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseFunc
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 267
+    startLine: 269
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -581,7 +578,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseRecord
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 573
+    startLine: 581
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -617,7 +614,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseEnumConstant
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 662
+    startLine: 670
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -648,7 +645,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseOptionalBody
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 674
+    startLine: 682
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -686,7 +683,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: SkipTrivia
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 725
+    startLine: 736
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -702,44 +699,6 @@ items:
   nameWithType.vb: HighLevelParser.SkipTrivia(SyntaxToken(), Integer)
   fullName.vb: Ubytec.Language.AST.HighLevelParser.SkipTrivia(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer)
   name.vb: SkipTrivia(SyntaxToken(), Integer)
-- uid: Ubytec.Language.AST.HighLevelParser.ConsumeSymbol(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.String)
-  commentId: M:Ubytec.Language.AST.HighLevelParser.ConsumeSymbol(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.String)
-  id: ConsumeSymbol(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,System.String)
-  parent: Ubytec.Language.AST.HighLevelParser
-  langs:
-  - csharp
-  - vb
-  name: ConsumeSymbol(SyntaxToken[], ref int, string?)
-  nameWithType: HighLevelParser.ConsumeSymbol(SyntaxToken[], ref int, string?)
-  fullName: Ubytec.Language.AST.HighLevelParser.ConsumeSymbol(Ubytec.Language.Syntax.Model.SyntaxToken[], ref int, string?)
-  type: Method
-  source:
-    remote:
-      path: Ubytec/Language/AST/HighLevelParser.cs
-      branch: main
-      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
-    id: ConsumeSymbol
-    path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 734
-  assemblies:
-  - Ubytec
-  namespace: Ubytec.Language.AST
-  syntax:
-    content: private static SyntaxToken ConsumeSymbol(SyntaxToken[] t, ref int i, string? src = null)
-    parameters:
-    - id: t
-      type: Ubytec.Language.Syntax.Model.SyntaxToken[]
-    - id: i
-      type: System.Int32
-    - id: src
-      type: System.String
-    return:
-      type: Ubytec.Language.Syntax.Model.SyntaxToken
-    content.vb: Private Shared Function ConsumeSymbol(t As SyntaxToken(), i As Integer, src As String = Nothing) As SyntaxToken
-  overload: Ubytec.Language.AST.HighLevelParser.ConsumeSymbol*
-  nameWithType.vb: HighLevelParser.ConsumeSymbol(SyntaxToken(), Integer, String)
-  fullName.vb: Ubytec.Language.AST.HighLevelParser.ConsumeSymbol(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer, String)
-  name.vb: ConsumeSymbol(SyntaxToken(), Integer, String)
 - uid: Ubytec.Language.AST.HighLevelParser.ConsumeType(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,Ubytec.Language.Syntax.TypeSystem.Types.UType@)
   commentId: M:Ubytec.Language.AST.HighLevelParser.ConsumeType(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,Ubytec.Language.Syntax.TypeSystem.Types.UType@)
   id: ConsumeType(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@,Ubytec.Language.Syntax.TypeSystem.Types.UType@)
@@ -758,7 +717,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ConsumeType
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 740
+    startLine: 745
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -796,7 +755,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Consume
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 749
+    startLine: 752
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -836,7 +795,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Consume
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 753
+    startLine: 755
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -876,95 +835,43 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: LookAhead
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 768
+    startLine: 780
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
+  summary: >-
+    Looks ahead in the token stream starting from index i,
+
+    skipping over any trivia tokens (e.g., whitespace, comments),
+
+    and checks if the next significant token matches a specific scope and source text.
+  example: []
   syntax:
     content: private static bool LookAhead(SyntaxToken[] t, int i, string scope, string src)
     parameters:
     - id: t
       type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+      description: Array of tokens to search.
     - id: i
       type: System.Int32
+      description: Current index to start looking ahead from.
     - id: scope
       type: System.String
+      description: Scope string to match in the lookahead token.
     - id: src
       type: System.String
+      description: Source text to match exactly in the lookahead token.
     return:
       type: System.Boolean
+      description: >-
+        True if a non-trivia token is found after i that matches both the scope and the exact source text;
+
+        otherwise, false.
     content.vb: Private Shared Function LookAhead(t As SyntaxToken(), i As Integer, scope As String, src As String) As Boolean
   overload: Ubytec.Language.AST.HighLevelParser.LookAhead*
   nameWithType.vb: HighLevelParser.LookAhead(SyntaxToken(), Integer, String, String)
   fullName.vb: Ubytec.Language.AST.HighLevelParser.LookAhead(Ubytec.Language.Syntax.Model.SyntaxToken(), Integer, String, String)
   name.vb: LookAhead(SyntaxToken(), Integer, String, String)
-- uid: Ubytec.Language.AST.HighLevelParser.IsKeyword(Ubytec.Language.Syntax.Model.SyntaxToken,System.String)
-  commentId: M:Ubytec.Language.AST.HighLevelParser.IsKeyword(Ubytec.Language.Syntax.Model.SyntaxToken,System.String)
-  id: IsKeyword(Ubytec.Language.Syntax.Model.SyntaxToken,System.String)
-  parent: Ubytec.Language.AST.HighLevelParser
-  langs:
-  - csharp
-  - vb
-  name: IsKeyword(SyntaxToken, string)
-  nameWithType: HighLevelParser.IsKeyword(SyntaxToken, string)
-  fullName: Ubytec.Language.AST.HighLevelParser.IsKeyword(Ubytec.Language.Syntax.Model.SyntaxToken, string)
-  type: Method
-  source:
-    remote:
-      path: Ubytec/Language/AST/HighLevelParser.cs
-      branch: main
-      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
-    id: IsKeyword
-    path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 777
-  assemblies:
-  - Ubytec
-  namespace: Ubytec.Language.AST
-  syntax:
-    content: private static bool IsKeyword(SyntaxToken tk, string kw)
-    parameters:
-    - id: tk
-      type: Ubytec.Language.Syntax.Model.SyntaxToken
-    - id: kw
-      type: System.String
-    return:
-      type: System.Boolean
-    content.vb: Private Shared Function IsKeyword(tk As SyntaxToken, kw As String) As Boolean
-  overload: Ubytec.Language.AST.HighLevelParser.IsKeyword*
-  nameWithType.vb: HighLevelParser.IsKeyword(SyntaxToken, String)
-  fullName.vb: Ubytec.Language.AST.HighLevelParser.IsKeyword(Ubytec.Language.Syntax.Model.SyntaxToken, String)
-  name.vb: IsKeyword(SyntaxToken, String)
-- uid: Ubytec.Language.AST.HighLevelParser.IsStorageType(Ubytec.Language.Syntax.Model.SyntaxToken)
-  commentId: M:Ubytec.Language.AST.HighLevelParser.IsStorageType(Ubytec.Language.Syntax.Model.SyntaxToken)
-  id: IsStorageType(Ubytec.Language.Syntax.Model.SyntaxToken)
-  parent: Ubytec.Language.AST.HighLevelParser
-  langs:
-  - csharp
-  - vb
-  name: IsStorageType(SyntaxToken)
-  nameWithType: HighLevelParser.IsStorageType(SyntaxToken)
-  fullName: Ubytec.Language.AST.HighLevelParser.IsStorageType(Ubytec.Language.Syntax.Model.SyntaxToken)
-  type: Method
-  source:
-    remote:
-      path: Ubytec/Language/AST/HighLevelParser.cs
-      branch: main
-      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
-    id: IsStorageType
-    path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 781
-  assemblies:
-  - Ubytec
-  namespace: Ubytec.Language.AST
-  syntax:
-    content: private static bool IsStorageType(SyntaxToken tk)
-    parameters:
-    - id: tk
-      type: Ubytec.Language.Syntax.Model.SyntaxToken
-    return:
-      type: System.Boolean
-    content.vb: Private Shared Function IsStorageType(tk As SyntaxToken) As Boolean
-  overload: Ubytec.Language.AST.HighLevelParser.IsStorageType*
 - uid: Ubytec.Language.AST.HighLevelParser.ParseHeaderArguments(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
   commentId: M:Ubytec.Language.AST.HighLevelParser.ParseHeaderArguments(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
   id: ParseHeaderArguments(Ubytec.Language.Syntax.Model.SyntaxToken[],System.Int32@)
@@ -983,7 +890,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseHeaderArguments
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 784
+    startLine: 794
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -1019,7 +926,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseParamList
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 801
+    startLine: 811
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -1057,7 +964,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseUType
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 821
+    startLine: 830
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -1088,7 +995,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _modMap
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 861
+    startLine: 868
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -1115,7 +1022,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ParseModifierFlags
     path: ../Ubytec/Language/AST/HighLevelParser.cs
-    startLine: 885
+    startLine: 891
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -1960,23 +1867,6 @@ references:
   name: SkipTrivia
   nameWithType: HighLevelParser.SkipTrivia
   fullName: Ubytec.Language.AST.HighLevelParser.SkipTrivia
-- uid: Ubytec.Language.AST.HighLevelParser.ConsumeSymbol*
-  commentId: Overload:Ubytec.Language.AST.HighLevelParser.ConsumeSymbol
-  href: Ubytec.Language.AST.HighLevelParser.ConsumeSymbol.html#Ubytec_Language_AST_HighLevelParser_ConsumeSymbol_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__System_String_
-  name: ConsumeSymbol
-  nameWithType: HighLevelParser.ConsumeSymbol
-  fullName: Ubytec.Language.AST.HighLevelParser.ConsumeSymbol
-- uid: System.String
-  commentId: T:System.String
-  parent: System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.string
-  name: string
-  nameWithType: string
-  fullName: string
-  nameWithType.vb: String
-  fullName.vb: String
-  name.vb: String
 - uid: Ubytec.Language.AST.HighLevelParser.ConsumeType*
   commentId: Overload:Ubytec.Language.AST.HighLevelParser.ConsumeType
   href: Ubytec.Language.AST.HighLevelParser.ConsumeType.html#Ubytec_Language_AST_HighLevelParser_ConsumeType_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__Ubytec_Language_Syntax_TypeSystem_Types_UType__
@@ -2050,6 +1940,17 @@ references:
   name: Consume
   nameWithType: HighLevelParser.Consume
   fullName: Ubytec.Language.AST.HighLevelParser.Consume
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
 - uid: System.Func{System.String,System.Boolean}
   commentId: T:System.Func{System.String,System.Boolean}
   parent: System
@@ -2148,18 +2049,6 @@ references:
   nameWithType.vb: Boolean
   fullName.vb: Boolean
   name.vb: Boolean
-- uid: Ubytec.Language.AST.HighLevelParser.IsKeyword*
-  commentId: Overload:Ubytec.Language.AST.HighLevelParser.IsKeyword
-  href: Ubytec.Language.AST.HighLevelParser.IsKeyword.html#Ubytec_Language_AST_HighLevelParser_IsKeyword_Ubytec_Language_Syntax_Model_SyntaxToken_System_String_
-  name: IsKeyword
-  nameWithType: HighLevelParser.IsKeyword
-  fullName: Ubytec.Language.AST.HighLevelParser.IsKeyword
-- uid: Ubytec.Language.AST.HighLevelParser.IsStorageType*
-  commentId: Overload:Ubytec.Language.AST.HighLevelParser.IsStorageType
-  href: Ubytec.Language.AST.HighLevelParser.IsStorageType.html#Ubytec_Language_AST_HighLevelParser_IsStorageType_Ubytec_Language_Syntax_Model_SyntaxToken_
-  name: IsStorageType
-  nameWithType: HighLevelParser.IsStorageType
-  fullName: Ubytec.Language.AST.HighLevelParser.IsStorageType
 - uid: Ubytec.Language.AST.HighLevelParser.ParseHeaderArguments*
   commentId: Overload:Ubytec.Language.AST.HighLevelParser.ParseHeaderArguments
   href: Ubytec.Language.AST.HighLevelParser.ParseHeaderArguments.html#Ubytec_Language_AST_HighLevelParser_ParseHeaderArguments_Ubytec_Language_Syntax_Model_SyntaxToken___System_Int32__

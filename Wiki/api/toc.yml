@@ -78,6 +78,46 @@ items:
       - uid: Ubytec.Language.HighLevel.Interfaces.IUbytecHighLevelEntity
         name: IUbytecHighLevelEntity
         type: Interface
+    - uid: Ubytec.Language.HighLevel.NASM
+      name: NASM
+      type: Namespace
+      items:
+      - uid: Ubytec.Language.HighLevel.NASM.NASM_BSS`1
+        name: NASM_BSS<T>
+        type: Struct
+      - uid: Ubytec.Language.HighLevel.NASM.NASM_Data`1
+        name: NASM_Data<T>
+        type: Struct
+      - uid: Ubytec.Language.HighLevel.NASM.NASM_EntryPoint`1
+        name: NASM_EntryPoint<T>
+        type: Struct
+      - uid: Ubytec.Language.HighLevel.NASM.NASM_Exports`1
+        name: NASM_Exports<T>
+        type: Struct
+      - uid: Ubytec.Language.HighLevel.NASM.NASM_FunctionsAndActions`1
+        name: NASM_FunctionsAndActions<T>
+        type: Struct
+      - uid: Ubytec.Language.HighLevel.NASM.NASM_Header`1
+        name: NASM_Header<T>
+        type: Struct
+      - uid: Ubytec.Language.HighLevel.NASM.NASM_Interfaces`1
+        name: NASM_Interfaces<T>
+        type: Struct
+      - uid: Ubytec.Language.HighLevel.NASM.NASM_LocalContext`1
+        name: NASM_LocalContext<T>
+        type: Struct
+      - uid: Ubytec.Language.HighLevel.NASM.NASM_Metadata`1
+        name: NASM_Metadata<T>
+        type: Struct
+      - uid: Ubytec.Language.HighLevel.NASM.NASM_SubModules`1
+        name: NASM_SubModules<T>
+        type: Struct
+      - uid: Ubytec.Language.HighLevel.NASM.NASM_Text`1
+        name: NASM_Text<T>
+        type: Struct
+      - uid: Ubytec.Language.HighLevel.NASM.NASM_Types`1
+        name: NASM_Types<T>
+        type: Struct
     - uid: Ubytec.Language.HighLevel.AccessorContext
       name: AccessorContext
       type: Struct
@@ -131,6 +171,12 @@ items:
       name: Extended
       type: Namespace
       items:
+      - uid: Ubytec.Language.Operations.Extended.ExtKey
+        name: ExtKey
+        type: Struct
+      - uid: Ubytec.Language.Operations.Extended.ExtendedOpcodeFactory
+        name: ExtendedOpcodeFactory
+        type: Class
       - uid: Ubytec.Language.Operations.Extended.ExtendedStackOperations
         name: ExtendedStackOperations
         type: Class
@@ -148,6 +194,25 @@ items:
         type: Struct
       - uid: Ubytec.Language.Operations.Extended.IExtendedOpCode
         name: IExtendedOpCode
+        type: Interface
+    - uid: Ubytec.Language.Operations.Interfaces
+      name: Interfaces
+      type: Namespace
+      items:
+      - uid: Ubytec.Language.Operations.Interfaces.IBlockOpCode
+        name: IBlockOpCode
+        type: Interface
+      - uid: Ubytec.Language.Operations.Interfaces.IOpCode
+        name: IOpCode
+        type: Interface
+      - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory
+        name: IOpCodeFactory
+        type: Interface
+      - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.OpCodeFactoryDelegate
+        name: IOpCodeFactory.OpCodeFactoryDelegate
+        type: Delegate
+      - uid: Ubytec.Language.Operations.Interfaces.IOpVariableScope
+        name: IOpVariableScope
         type: Interface
     - uid: Ubytec.Language.Operations.ArithmeticOperations
       name: ArithmeticOperations
@@ -254,15 +319,6 @@ items:
     - uid: Ubytec.Language.Operations.CoreOperations.WHILE
       name: CoreOperations.WHILE
       type: Struct
-    - uid: Ubytec.Language.Operations.IBlockOpCode
-      name: IBlockOpCode
-      type: Interface
-    - uid: Ubytec.Language.Operations.IOpCode
-      name: IOpCode
-      type: Interface
-    - uid: Ubytec.Language.Operations.IOpInheritance
-      name: IOpInheritance
-      type: Interface
     - uid: Ubytec.Language.Operations.OpcodeFactory
       name: OpcodeFactory
       type: Class
@@ -444,6 +500,9 @@ items:
       - uid: Ubytec.Language.Tools.Serialization.ISyntaxTreeConverter
         name: ISyntaxTreeConverter
         type: Class
+      - uid: Ubytec.Language.Tools.Serialization.IUbytecEntityConverter
+        name: IUbytecEntityConverter
+        type: Class
       - uid: Ubytec.Language.Tools.Serialization.IUbytecExpressionFragmentConverter
         name: IUbytecExpressionFragmentConverter
         type: Class
@@ -452,6 +511,12 @@ items:
       type: Class
     - uid: Ubytec.Language.Tools.FormattingHelper
       name: FormattingHelper
+      type: Class
+    - uid: Ubytec.Language.Tools.ScopesAccessor
+      name: ScopesAccessor
+      type: Struct
+    - uid: Ubytec.Language.Tools.SyntaxTokenScopeHelper
+      name: SyntaxTokenScopeHelper
       type: Class
     - uid: Ubytec.Language.Tools.Utf64Codec
       name: Utf64Codec

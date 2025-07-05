@@ -1,10 +1,10 @@
 ﻿using System.Text;
 using Ubytec.Language.HighLevel.Interfaces;
+using Ubytec.Language.HighLevel.NASM;
 using Ubytec.Language.Syntax.Scopes;
 using Ubytec.Language.Syntax.Scopes.Contexts;
 using Ubytec.Language.Tools;
 using static Ubytec.Language.Syntax.TypeSystem.Types;
-using static Ubytec.Language.Tools.FormattingHelper;
 
 namespace Ubytec.Language.HighLevel
 {
@@ -64,7 +64,7 @@ namespace Ubytec.Language.HighLevel
                 throw new Exception($"Module '{Name}' must have an author.");
 
             // Only allow 'global' as optional module-level modifier
-            if ((Modifiers & ~(TypeModifiers.Global)) != 0)
+            if ((Modifiers & ~TypeModifiers.Global) != 0)
                 throw new Exception($"Module '{Name}' can only have the 'global' modifier.");
 
             // Ensure unique submodule names
@@ -120,152 +120,6 @@ namespace Ubytec.Language.HighLevel
             }
         }
 
-        private struct NASM_Header
-        {
-            public NASM_Header(CompilationScopes scopes, StringBuilder sb, Module thisModule)
-            {
-                sb.Append(FormatCompiledLines($"{scopes.Peek().StartLabel}:", scopes.GetDepth(-1)));
-                sb.AppendLine(FormatCompiledLines($"; Module: {thisModule.Name} v{thisModule.Version} by {thisModule.Author}", scopes.GetDepth(-1)));
-            }
-        }
-
-        private struct NASM_Metadata
-        {
-            public NASM_Metadata(CompilationScopes scopes, StringBuilder sb, Module module)
-            {
-                sb.Append(FormatCompiledLines("; ---------------- Metadata ----------------", scopes.GetDepth()));
-                sb.Append(FormatCompiledLines($"; Compilation UTC Time: {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}Z", scopes.GetDepth()));
-                sb.Append(FormatCompiledLines($"; Module UUID: {module.ID}", scopes.GetDepth()));
-                if (module.Requires is { Length: > 0 })
-                {
-                    sb.Append(FormatCompiledLines("; Requires:", scopes.GetDepth()));
-                    foreach (var req in module.Requires)
-                        sb.Append(FormatCompiledLines($"; - {req}", scopes.GetDepth()));
-                }
-                sb.AppendLine();
-            }
-        }
-
-        private struct NASM_Exports
-        {
-            public NASM_Exports(CompilationScopes scopes, StringBuilder sb, Module module)
-            {
-                foreach (var fn in module.Functions.Where(f => f.Modifiers.HasFlag(TypeModifiers.Global)))
-                {
-                    sb.Append(FormatCompiledLines($"global {nameof(Func).ToLower()}_{fn.Name}_{fn.ID}_start", scopes.GetDepth()));
-                }
-                sb.AppendLine();
-            }
-        }
-
-        private struct NASM_Data
-        {
-            public NASM_Data(CompilationScopes scopes, StringBuilder sb, Module thisModule)
-            {
-                sb.Append(FormatCompiledLines("section .data", scopes.GetDepth()));
-                foreach (var fld in thisModule.Fields)
-                    sb.Append(FormatCompiledLines(fld.Compile(scopes), scopes.GetDepth()));
-                if (thisModule.GlobalContext != null)
-                    sb.Append(FormatCompiledLines(thisModule.GlobalContext.Value.Compile(scopes), scopes.GetDepth()));
-                sb.AppendLine();
-            }
-        }
-
-        private struct NASM_BSS
-        {
-            public NASM_BSS(CompilationScopes scopes, StringBuilder sb, Module module)
-            {
-                sb.Append(FormatCompiledLines("section .bss", scopes.GetDepth()));
-                foreach (var prop in module.Properties)
-                    sb.Append(FormatCompiledLines(prop.Compile(scopes), scopes.GetDepth()));
-                sb.AppendLine();
-            }
-        }
-
-        private struct NASM_Text
-        {
-            public NASM_Text(CompilationScopes scopes, StringBuilder sb)
-            {
-                sb.Append(FormatCompiledLines("section .text", scopes.GetDepth()));
-                sb.Append(FormatCompiledLines("global _start", scopes.GetDepth()));
-                sb.AppendLine();
-            }
-        }
-
-        private struct NASM_Interfaces
-        {
-            public NASM_Interfaces(CompilationScopes scopes, StringBuilder sb, Module module)
-            {
-                foreach (var iface in module.Interfaces)
-                    sb.Append(FormatCompiledLines(iface.Compile(scopes), scopes.GetDepth()));
-            }
-        }
-
-        private struct NASM_Types
-        {
-            public NASM_Types(CompilationScopes scopes, StringBuilder sb, Module module)
-            {
-                foreach (var cls in module.Classes)
-                    sb.Append(FormatCompiledLines(cls.Compile(scopes), scopes.GetDepth()));
-                foreach (var st in module.Structs)
-                    sb.Append(FormatCompiledLines(st.Compile(scopes), scopes.GetDepth()));
-                foreach (var rec in module.Records)
-                    sb.Append(FormatCompiledLines(rec.Compile(scopes), scopes.GetDepth()));
-                foreach (var en in module.Enums)
-                    sb.Append(FormatCompiledLines(en.Compile(scopes), scopes.GetDepth()));
-            }
-        }
-
-        private struct NASM_FunctionsAndActions
-        {
-            public NASM_FunctionsAndActions(CompilationScopes scopes, StringBuilder sb, Module module)
-            {
-                foreach (var fn in module.Functions)
-                    sb.Append(FormatCompiledLines(fn.Compile(scopes), scopes.GetDepth()));
-                foreach (var ac in module.Actions)
-                    sb.Append(FormatCompiledLines(ac.Compile(scopes), scopes.GetDepth()));
-            }
-        }
-
-        private struct NASM_LocalContext
-        {
-            public NASM_LocalContext(CompilationScopes scopes, StringBuilder sb, Module module)
-            {
-                if (module.LocalContext != null)
-                    sb.Append(FormatCompiledLines(module.LocalContext.Value.Compile(scopes), scopes.GetDepth()));
-            }
-        }
-
-        private struct NASM_SubModules
-        {
-            public NASM_SubModules(CompilationScopes scopes, StringBuilder sb, Module module)
-            {
-                foreach (var sub in module.SubModules)
-                {
-                    sb.Append(FormatCompiledLines($"; ===== sub-module: {sub.Name} =====", scopes.GetDepth()));
-                    sb.Append(FormatCompiledLines(sub.Compile(scopes), scopes.GetDepth()));
-                }
-            }
-        }
-
-        private struct NASM_EntryPoint
-        {
-            public NASM_EntryPoint(CompilationScopes scopes, StringBuilder sb, Module module)
-            {
-                sb.AppendLine();
-                var mainFunc = module.Functions.FirstOrDefault(f => f.Name == "Main");
-                sb.Append(FormatCompiledLines("_start:", scopes.GetDepth()));
-                if (!string.IsNullOrEmpty(mainFunc.Name) && mainFunc.Definition is not null)
-                    sb.Append(FormatCompiledLines(
-                        $"call {nameof(Func).ToLower()}_{mainFunc.Name}_{mainFunc.ID}_start",
-                        scopes.GetDepth(1)
-                    ));
-                sb.Append(FormatCompiledLines("mov eax, 60", scopes.GetDepth(1)));
-                sb.Append(FormatCompiledLines("xor edi, edi", scopes.GetDepth(1)));
-                sb.Append(FormatCompiledLines("syscall", scopes.GetDepth(1)));
-            }
-        }
-
         public string Compile(CompilationScopes scopes)
         {
             scopes.Push(new ScopeContext
@@ -280,18 +134,18 @@ namespace Ubytec.Language.HighLevel
                 Validate();
                 var sb = new StringBuilder();
 
-                _ = new NASM_Header(scopes, sb, this);
-                _ = new NASM_Data(scopes, sb, this);
-                _ = new NASM_Metadata(scopes, sb, this);
-                _ = new NASM_Exports(scopes, sb, this);
-                _ = new NASM_BSS(scopes, sb, this);
-                _ = new NASM_Text(scopes, sb);
-                _ = new NASM_Interfaces(scopes, sb, this);
-                _ = new NASM_Types(scopes, sb, this);
-                _ = new NASM_FunctionsAndActions(scopes, sb, this);
-                _ = new NASM_LocalContext(scopes, sb, this);
-                _ = new NASM_SubModules(scopes, sb, this);
-                _ = new NASM_EntryPoint(scopes, sb, this);
+                _ = new NASM_Header<Module>(scopes, sb, this);
+                _ = new NASM_Data<Module>(scopes, sb, this, nullableGlobalContext: true);
+                _ = new NASM_Metadata<Module>(scopes, sb, this, nullableRequires: true);
+                _ = new NASM_Exports<Module>(scopes, sb, this);
+                _ = new NASM_BSS<Module>(scopes, sb, this);
+                _ = new NASM_Text<Module>(scopes, sb, this);
+                _ = new NASM_Interfaces<Module>(scopes, sb, this);
+                _ = new NASM_Types<Module>(scopes, sb, this);
+                _ = new NASM_FunctionsAndActions<Module>(scopes, sb, this);
+                _ = new NASM_LocalContext<Module>(scopes, sb, this, nullableLocalContext: true);
+                _ = new NASM_SubModules<Module>(scopes, sb, this);
+                _ = new NASM_EntryPoint<Module>(scopes, sb, this);
 
                 sb.AppendLine($"{scopes.Peek().EndLabel}:");
                 return sb.ToString();

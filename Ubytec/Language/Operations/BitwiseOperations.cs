@@ -1,4 +1,5 @@
-﻿using Ubytec.Language.Syntax.Scopes;
+﻿using Ubytec.Language.Operations.Interfaces;
+using Ubytec.Language.Syntax.Scopes;
 
 namespace Ubytec.Language.Operations
 {

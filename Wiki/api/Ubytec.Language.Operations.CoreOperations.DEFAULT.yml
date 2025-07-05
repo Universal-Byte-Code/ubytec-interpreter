@@ -7,6 +7,7 @@ items:
   children:
   - Ubytec.Language.Operations.CoreOperations.DEFAULT.Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   - Ubytec.Language.Operations.CoreOperations.DEFAULT.CreateInstruction(Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
+  - Ubytec.Language.Operations.CoreOperations.DEFAULT.OP
   - Ubytec.Language.Operations.CoreOperations.DEFAULT.OpCode
   - Ubytec.Language.Operations.CoreOperations.DEFAULT.Ubytec#Language#IUbytecEntity#Compile(Ubytec.Language.Syntax.Scopes.CompilationScopes)
   langs:
@@ -28,11 +29,12 @@ items:
   - Ubytec
   namespace: Ubytec.Language.Operations
   syntax:
-    content: 'public readonly record struct CoreOperations.DEFAULT : IOpCode, IUbytecEntity, IEquatable<CoreOperations.DEFAULT>'
-    content.vb: Public Structure CoreOperations.DEFAULT Implements IOpCode, IUbytecEntity, IEquatable(Of CoreOperations.DEFAULT)
+    content: 'public readonly record struct CoreOperations.DEFAULT : IOpCode, IUbytecEntity, IOpCodeFactory, IEquatable<CoreOperations.DEFAULT>'
+    content.vb: Public Structure CoreOperations.DEFAULT Implements IOpCode, IUbytecEntity, IOpCodeFactory, IEquatable(Of CoreOperations.DEFAULT)
   implements:
-  - Ubytec.Language.Operations.IOpCode
+  - Ubytec.Language.Operations.Interfaces.IOpCode
   - Ubytec.Language.IUbytecEntity
+  - Ubytec.Language.Operations.Interfaces.IOpCodeFactory
   - System.IEquatable{Ubytec.Language.Operations.CoreOperations.DEFAULT}
   inheritedMembers:
   - System.ValueType.Equals(System.Object)
@@ -41,6 +43,33 @@ items:
   - System.Object.Equals(System.Object,System.Object)
   - System.Object.GetType
   - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubytec.Language.Operations.CoreOperations.DEFAULT.OP
+  commentId: F:Ubytec.Language.Operations.CoreOperations.DEFAULT.OP
+  id: OP
+  parent: Ubytec.Language.Operations.CoreOperations.DEFAULT
+  langs:
+  - csharp
+  - vb
+  name: OP
+  nameWithType: CoreOperations.DEFAULT.OP
+  fullName: Ubytec.Language.Operations.CoreOperations.DEFAULT.OP
+  type: Field
+  source:
+    remote:
+      path: Ubytec/Language/Operations/Core/Instructions/CoreOperations.DEFAULT.cs
+      branch: main
+      repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
+    id: OP
+    path: ../Ubytec/Language/Operations/Core/Instructions/CoreOperations.DEFAULT.cs
+    startLine: 12
+  assemblies:
+  - Ubytec
+  namespace: Ubytec.Language.Operations
+  syntax:
+    content: public const byte OP = 14
+    return:
+      type: System.Byte
+    content.vb: Public Const OP As Byte = 14
 - uid: Ubytec.Language.Operations.CoreOperations.DEFAULT.OpCode
   commentId: P:Ubytec.Language.Operations.CoreOperations.DEFAULT.OpCode
   id: OpCode
@@ -59,7 +88,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: OpCode
     path: ../Ubytec/Language/Operations/Core/Instructions/CoreOperations.DEFAULT.cs
-    startLine: 12
+    startLine: 13
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations
@@ -72,7 +101,7 @@ items:
     content.vb: Public ReadOnly Property OpCode As Byte
   overload: Ubytec.Language.Operations.CoreOperations.DEFAULT.OpCode*
   implements:
-  - Ubytec.Language.Operations.IOpCode.OpCode
+  - Ubytec.Language.Operations.Interfaces.IOpCode.OpCode
 - uid: Ubytec.Language.Operations.CoreOperations.DEFAULT.CreateInstruction(Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
   commentId: M:Ubytec.Language.Operations.CoreOperations.DEFAULT.CreateInstruction(Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
   id: CreateInstruction(Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
@@ -91,23 +120,31 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: CreateInstruction
     path: ../Ubytec/Language/Operations/Core/Instructions/CoreOperations.DEFAULT.cs
-    startLine: 14
+    startLine: 15
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations
+  summary: Provides a mechanism to create an instruction based on a factory model.
+  example: []
   syntax:
-    content: public static CoreOperations.DEFAULT CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
+    content: public static IOpCode CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
     parameters:
     - id: variables
       type: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[]
+      description: ''
     - id: tokens
       type: Ubytec.Language.Syntax.Model.SyntaxToken[]
+      description: ''
     - id: operands
       type: System.ValueType[]
+      description: ''
     return:
-      type: Ubytec.Language.Operations.CoreOperations.DEFAULT
-    content.vb: Public Shared Function CreateInstruction(variables As VariableExpressionFragment(), tokens As SyntaxToken(), ParamArray operands As ValueType()) As CoreOperations.DEFAULT
+      type: Ubytec.Language.Operations.Interfaces.IOpCode
+      description: ''
+    content.vb: Public Shared Function CreateInstruction(variables As VariableExpressionFragment(), tokens As SyntaxToken(), ParamArray operands As ValueType()) As IOpCode
   overload: Ubytec.Language.Operations.CoreOperations.DEFAULT.CreateInstruction*
+  implements:
+  - Ubytec.Language.Operations.Interfaces.IOpCodeFactory.CreateInstruction(Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
   nameWithType.vb: CoreOperations.DEFAULT.CreateInstruction(VariableExpressionFragment(), SyntaxToken(), ParamArray ValueType())
   fullName.vb: Ubytec.Language.Operations.CoreOperations.DEFAULT.CreateInstruction(Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment(), Ubytec.Language.Syntax.Model.SyntaxToken(), ParamArray System.ValueType())
   name.vb: CreateInstruction(VariableExpressionFragment(), SyntaxToken(), ParamArray ValueType())
@@ -129,7 +166,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Compile
     path: ../Ubytec/Language/Operations/Core/Instructions/CoreOperations.DEFAULT.cs
-    startLine: 23
+    startLine: 24
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations
@@ -161,7 +198,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Ubytec.Language.IUbytecEntity.Compile
     path: ../Ubytec/Language/Operations/Core/Instructions/CoreOperations.DEFAULT.cs
-    startLine: 24
+    startLine: 25
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations
@@ -220,13 +257,13 @@ references:
   - uid: Ubytec.Language.Operations
     name: Operations
     href: Ubytec.Language.Operations.html
-- uid: Ubytec.Language.Operations.IOpCode
-  commentId: T:Ubytec.Language.Operations.IOpCode
-  parent: Ubytec.Language.Operations
-  href: Ubytec.Language.Operations.IOpCode.html
+- uid: Ubytec.Language.Operations.Interfaces.IOpCode
+  commentId: T:Ubytec.Language.Operations.Interfaces.IOpCode
+  parent: Ubytec.Language.Operations.Interfaces
+  href: Ubytec.Language.Operations.Interfaces.IOpCode.html
   name: IOpCode
   nameWithType: IOpCode
-  fullName: Ubytec.Language.Operations.IOpCode
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCode
 - uid: Ubytec.Language.IUbytecEntity
   commentId: T:Ubytec.Language.IUbytecEntity
   parent: Ubytec.Language
@@ -234,6 +271,13 @@ references:
   name: IUbytecEntity
   nameWithType: IUbytecEntity
   fullName: Ubytec.Language.IUbytecEntity
+- uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory
+  commentId: T:Ubytec.Language.Operations.Interfaces.IOpCodeFactory
+  parent: Ubytec.Language.Operations.Interfaces
+  href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.html
+  name: IOpCodeFactory
+  nameWithType: IOpCodeFactory
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCodeFactory
 - uid: System.IEquatable{Ubytec.Language.Operations.CoreOperations.DEFAULT}
   commentId: T:System.IEquatable{Ubytec.Language.Operations.CoreOperations.DEFAULT}
   parent: System
@@ -466,6 +510,44 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.object
   - name: )
+- uid: Ubytec.Language.Operations.Interfaces
+  commentId: N:Ubytec.Language.Operations.Interfaces
+  href: Ubytec.html
+  name: Ubytec.Language.Operations.Interfaces
+  nameWithType: Ubytec.Language.Operations.Interfaces
+  fullName: Ubytec.Language.Operations.Interfaces
+  spec.csharp:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
+  spec.vb:
+  - uid: Ubytec
+    name: Ubytec
+    href: Ubytec.html
+  - name: .
+  - uid: Ubytec.Language
+    name: Language
+    href: Ubytec.Language.html
+  - name: .
+  - uid: Ubytec.Language.Operations
+    name: Operations
+    href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
 - uid: Ubytec.Language
   commentId: N:Ubytec.Language
   href: Ubytec.html
@@ -542,19 +624,6 @@ references:
   nameWithType.vb: Object
   fullName.vb: Object
   name.vb: Object
-- uid: Ubytec.Language.Operations.CoreOperations.DEFAULT.OpCode*
-  commentId: Overload:Ubytec.Language.Operations.CoreOperations.DEFAULT.OpCode
-  href: Ubytec.Language.Operations.CoreOperations.DEFAULT.OpCode.html#Ubytec_Language_Operations_CoreOperations_DEFAULT_OpCode
-  name: OpCode
-  nameWithType: CoreOperations.DEFAULT.OpCode
-  fullName: Ubytec.Language.Operations.CoreOperations.DEFAULT.OpCode
-- uid: Ubytec.Language.Operations.IOpCode.OpCode
-  commentId: P:Ubytec.Language.Operations.IOpCode.OpCode
-  parent: Ubytec.Language.Operations.IOpCode
-  href: Ubytec.Language.Operations.IOpCode.OpCode.html#Ubytec_Language_Operations_IOpCode_OpCode
-  name: OpCode
-  nameWithType: IOpCode.OpCode
-  fullName: Ubytec.Language.Operations.IOpCode.OpCode
 - uid: System.Byte
   commentId: T:System.Byte
   parent: System
@@ -566,12 +635,92 @@ references:
   nameWithType.vb: Byte
   fullName.vb: Byte
   name.vb: Byte
+- uid: Ubytec.Language.Operations.CoreOperations.DEFAULT.OpCode*
+  commentId: Overload:Ubytec.Language.Operations.CoreOperations.DEFAULT.OpCode
+  href: Ubytec.Language.Operations.CoreOperations.DEFAULT.OpCode.html#Ubytec_Language_Operations_CoreOperations_DEFAULT_OpCode
+  name: OpCode
+  nameWithType: CoreOperations.DEFAULT.OpCode
+  fullName: Ubytec.Language.Operations.CoreOperations.DEFAULT.OpCode
+- uid: Ubytec.Language.Operations.Interfaces.IOpCode.OpCode
+  commentId: P:Ubytec.Language.Operations.Interfaces.IOpCode.OpCode
+  parent: Ubytec.Language.Operations.Interfaces.IOpCode
+  href: Ubytec.Language.Operations.Interfaces.IOpCode.OpCode.html#Ubytec_Language_Operations_Interfaces_IOpCode_OpCode
+  name: OpCode
+  nameWithType: IOpCode.OpCode
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCode.OpCode
 - uid: Ubytec.Language.Operations.CoreOperations.DEFAULT.CreateInstruction*
   commentId: Overload:Ubytec.Language.Operations.CoreOperations.DEFAULT.CreateInstruction
   href: Ubytec.Language.Operations.CoreOperations.DEFAULT.CreateInstruction.html#Ubytec_Language_Operations_CoreOperations_DEFAULT_CreateInstruction_Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment___Ubytec_Language_Syntax_Model_SyntaxToken___System_ValueType___
   name: CreateInstruction
   nameWithType: CoreOperations.DEFAULT.CreateInstruction
   fullName: Ubytec.Language.Operations.CoreOperations.DEFAULT.CreateInstruction
+- uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.CreateInstruction(Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
+  commentId: M:Ubytec.Language.Operations.Interfaces.IOpCodeFactory.CreateInstruction(Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
+  parent: Ubytec.Language.Operations.Interfaces.IOpCodeFactory
+  isExternal: true
+  href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.CreateInstruction.html#Ubytec_Language_Operations_Interfaces_IOpCodeFactory_CreateInstruction_Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment___Ubytec_Language_Syntax_Model_SyntaxToken___System_ValueType___
+  name: CreateInstruction(VariableExpressionFragment[], SyntaxToken[], params ValueType[])
+  nameWithType: IOpCodeFactory.CreateInstruction(VariableExpressionFragment[], SyntaxToken[], params ValueType[])
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.CreateInstruction(Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[], Ubytec.Language.Syntax.Model.SyntaxToken[], params System.ValueType[])
+  nameWithType.vb: IOpCodeFactory.CreateInstruction(VariableExpressionFragment(), SyntaxToken(), ParamArray ValueType())
+  fullName.vb: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.CreateInstruction(Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment(), Ubytec.Language.Syntax.Model.SyntaxToken(), ParamArray System.ValueType())
+  name.vb: CreateInstruction(VariableExpressionFragment(), SyntaxToken(), ParamArray ValueType())
+  spec.csharp:
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.CreateInstruction(Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
+    name: CreateInstruction
+    href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.CreateInstruction.html#Ubytec_Language_Operations_Interfaces_IOpCodeFactory_CreateInstruction_Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment___Ubytec_Language_Syntax_Model_SyntaxToken___System_ValueType___
+  - name: (
+  - uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+    name: VariableExpressionFragment
+    href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html
+  - name: '['
+  - name: ']'
+  - name: ','
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
+    name: SyntaxToken
+    href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  - name: '['
+  - name: ']'
+  - name: ','
+  - name: " "
+  - name: params
+  - name: " "
+  - uid: System.ValueType
+    name: ValueType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.CreateInstruction(Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[],Ubytec.Language.Syntax.Model.SyntaxToken[],System.ValueType[])
+    name: CreateInstruction
+    href: Ubytec.Language.Operations.Interfaces.IOpCodeFactory.CreateInstruction.html#Ubytec_Language_Operations_Interfaces_IOpCodeFactory_CreateInstruction_Ubytec_Language_Syntax_ExpressionFragments_VariableExpressionFragment___Ubytec_Language_Syntax_Model_SyntaxToken___System_ValueType___
+  - name: (
+  - uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment
+    name: VariableExpressionFragment
+    href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html
+  - name: (
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: Ubytec.Language.Syntax.Model.SyntaxToken
+    name: SyntaxToken
+    href: Ubytec.Language.Syntax.Model.SyntaxToken.html
+  - name: (
+  - name: )
+  - name: ','
+  - name: " "
+  - name: ParamArray
+  - name: " "
+  - uid: System.ValueType
+    name: ValueType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  - name: (
+  - name: )
+  - name: )
 - uid: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment[]
   isExternal: true
   href: Ubytec.Language.Syntax.ExpressionFragments.VariableExpressionFragment.html
@@ -637,29 +786,6 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.valuetype
   - name: (
   - name: )
-- uid: Ubytec.Language.Operations.CoreOperations.DEFAULT
-  commentId: T:Ubytec.Language.Operations.CoreOperations.DEFAULT
-  parent: Ubytec.Language.Operations
-  href: Ubytec.Language.Operations.CoreOperations.html
-  name: CoreOperations.DEFAULT
-  nameWithType: CoreOperations.DEFAULT
-  fullName: Ubytec.Language.Operations.CoreOperations.DEFAULT
-  spec.csharp:
-  - uid: Ubytec.Language.Operations.CoreOperations
-    name: CoreOperations
-    href: Ubytec.Language.Operations.CoreOperations.html
-  - name: .
-  - uid: Ubytec.Language.Operations.CoreOperations.DEFAULT
-    name: DEFAULT
-    href: Ubytec.Language.Operations.CoreOperations.DEFAULT.html
-  spec.vb:
-  - uid: Ubytec.Language.Operations.CoreOperations
-    name: CoreOperations
-    href: Ubytec.Language.Operations.CoreOperations.html
-  - name: .
-  - uid: Ubytec.Language.Operations.CoreOperations.DEFAULT
-    name: DEFAULT
-    href: Ubytec.Language.Operations.CoreOperations.DEFAULT.html
 - uid: Ubytec.Language.Operations.CoreOperations.DEFAULT.Compile*
   commentId: Overload:Ubytec.Language.Operations.CoreOperations.DEFAULT.Compile
   href: Ubytec.Language.Operations.CoreOperations.DEFAULT.Compile.html#Ubytec_Language_Operations_CoreOperations_DEFAULT_Compile_Ubytec_Language_Syntax_Scopes_CompilationScopes_

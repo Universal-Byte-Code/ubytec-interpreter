@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Text.Json.Serialization;
 using Ubytec.Language.Syntax.Fast.Metadata;
 using Ubytec.Language.Syntax.Interfaces;
+using Ubytec.Language.Tools;
 
 namespace Ubytec.Language.Syntax.Model
 {
@@ -38,7 +39,7 @@ namespace Ubytec.Language.Syntax.Model
         /// <summary>
         /// Gets the immutable list of semantic scopes (e.g., keyword, identifier, comment) assigned to the token.
         /// </summary>
-        public ImmutableArray<string> Scopes { get; init; }
+        public ScopesAccessor Scopes { get; private init; }
 
         private MetadataRegistry _metadata = new(1);
 
@@ -71,7 +72,11 @@ namespace Ubytec.Language.Syntax.Model
             Line = line;
             StartColumn = startColumn;
             EndColumn = endColumn;
-            Scopes = scopes;
+
+            Scopes = new ScopesAccessor(this)
+            {
+                DataSource = scopes
+            };
 
             _metadata.Add("guid", Guid.CreateVersion7());
         }
@@ -105,8 +110,8 @@ namespace Ubytec.Language.Syntax.Model
 
             unsafe
             {
-                ref string leftRef = ref MemoryMarshal.GetReference(Scopes.AsSpan());
-                ref string rightRef = ref MemoryMarshal.GetReference(other.Scopes.AsSpan());
+                ref string leftRef = ref MemoryMarshal.GetReference(Scopes.DataSource.AsSpan());
+                ref string rightRef = ref MemoryMarshal.GetReference(other.Scopes.DataSource.AsSpan());
                 for (int i = 0; i < Scopes.Length; i++)
                 {
                     if (!Unsafe.Add(ref leftRef, i).Equals(Unsafe.Add(ref rightRef, i)))
@@ -136,7 +141,7 @@ namespace Ubytec.Language.Syntax.Model
             var hash = HashCode.Combine(Source, Line, StartColumn, EndColumn, Scopes.Length);
             unsafe
             {
-                ref string start = ref MemoryMarshal.GetArrayDataReference(Scopes.ToArray());
+                ref string start = ref MemoryMarshal.GetArrayDataReference(Scopes.DataSource.ToArray());
                 for (int i = 0; i < Scopes.Length; i++)
                 {
                     hash = HashCode.Combine(hash, Unsafe.Add(ref start, i));
@@ -170,4 +175,5 @@ namespace Ubytec.Language.Syntax.Model
         /// <returns><c>true</c> if the tokens differ; otherwise, <c>false</c>.</returns>
         public static bool operator !=(SyntaxToken left, SyntaxToken right) => !left.Equals(right);
     }
+
 }

@@ -25,7 +25,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: CoreOperations
     path: ../Ubytec/Language/Operations/Core/Instructions/CoreOperations.TRAP.cs
-    startLine: 7
+    startLine: 8
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations
@@ -60,7 +60,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: _prefixToLabelCounterMap
     path: ../Ubytec/Language/Operations/CoreOperations.cs
-    startLine: 10
+    startLine: 8
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations
@@ -87,7 +87,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: NextLabel
     path: ../Ubytec/Language/Operations/CoreOperations.cs
-    startLine: 13
+    startLine: 11
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations
@@ -121,7 +121,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ValidateConditionalBlockType
     path: ../Ubytec/Language/Operations/CoreOperations.cs
-    startLine: 19
+    startLine: 17
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations
@@ -152,7 +152,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ProcessConditionFragment
     path: ../Ubytec/Language/Operations/CoreOperations.cs
-    startLine: 20
+    startLine: 18
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations
@@ -190,7 +190,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ProcessFragmentDereference
     path: ../Ubytec/Language/Operations/CoreOperations.cs
-    startLine: 53
+    startLine: 51
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations
@@ -226,7 +226,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: GenerateWhileCondition
     path: ../Ubytec/Language/Operations/CoreOperations.cs
-    startLine: 102
+    startLine: 100
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.Operations

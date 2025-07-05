@@ -5,7 +5,7 @@ items:
   id: ASTCompiler.CompileSyntaxError
   parent: Ubytec.Language.AST
   children:
-  - Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.#ctor(System.Int32,Ubytec.Language.Operations.IOpCode,System.String,System.Exception)
+  - Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.#ctor(System.Int32,Ubytec.Language.Operations.Interfaces.IOpCode,System.String,System.Exception)
   - Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.InnerException
   - Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.Message
   - Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.OpCode
@@ -25,7 +25,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: CompileSyntaxError
     path: ../Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
-    startLine: 10
+    startLine: 11
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -66,7 +66,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Row
     path: ../Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
-    startLine: 15
+    startLine: 16
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -97,17 +97,17 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: OpCode
     path: ../Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
-    startLine: 20
+    startLine: 21
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
-  summary: Gets the <xref href="Ubytec.Language.Operations.IOpCode" data-throw-if-not-resolved="false"></xref> instance that triggered this error.
+  summary: Gets the <xref href="Ubytec.Language.Operations.Interfaces.IOpCode" data-throw-if-not-resolved="false"></xref> instance that triggered this error.
   example: []
   syntax:
     content: public IOpCode OpCode { get; init; }
     parameters: []
     return:
-      type: Ubytec.Language.Operations.IOpCode
+      type: Ubytec.Language.Operations.Interfaces.IOpCode
     content.vb: Public Property OpCode As IOpCode
   overload: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.OpCode*
 - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.Message
@@ -128,7 +128,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: Message
     path: ../Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
-    startLine: 25
+    startLine: 26
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -159,7 +159,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: InnerException
     path: ../Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
-    startLine: 30
+    startLine: 31
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -172,16 +172,16 @@ items:
       type: System.Exception
     content.vb: Public Property InnerException As Exception
   overload: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.InnerException*
-- uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.#ctor(System.Int32,Ubytec.Language.Operations.IOpCode,System.String,System.Exception)
-  commentId: M:Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.#ctor(System.Int32,Ubytec.Language.Operations.IOpCode,System.String,System.Exception)
-  id: '#ctor(System.Int32,Ubytec.Language.Operations.IOpCode,System.String,System.Exception)'
+- uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.#ctor(System.Int32,Ubytec.Language.Operations.Interfaces.IOpCode,System.String,System.Exception)
+  commentId: M:Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.#ctor(System.Int32,Ubytec.Language.Operations.Interfaces.IOpCode,System.String,System.Exception)
+  id: '#ctor(System.Int32,Ubytec.Language.Operations.Interfaces.IOpCode,System.String,System.Exception)'
   parent: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError
   langs:
   - csharp
   - vb
   name: CompileSyntaxError(int, IOpCode, string, Exception?)
   nameWithType: ASTCompiler.CompileSyntaxError.CompileSyntaxError(int, IOpCode, string, Exception?)
-  fullName: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.CompileSyntaxError(int, Ubytec.Language.Operations.IOpCode, string, System.Exception?)
+  fullName: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.CompileSyntaxError(int, Ubytec.Language.Operations.Interfaces.IOpCode, string, System.Exception?)
   type: Constructor
   source:
     remote:
@@ -190,7 +190,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: .ctor
     path: ../Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
-    startLine: 41
+    startLine: 42
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -203,7 +203,7 @@ items:
       type: System.Int32
       description: The 1-based row number where the error occurred.
     - id: opCode
-      type: Ubytec.Language.Operations.IOpCode
+      type: Ubytec.Language.Operations.Interfaces.IOpCode
       description: The opcode that was being processed.
     - id: message
       type: System.String
@@ -214,7 +214,7 @@ items:
     content.vb: Public Sub New(row As Integer, opCode As IOpCode, message As String, innerException As Exception = Nothing)
   overload: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.#ctor*
   nameWithType.vb: ASTCompiler.CompileSyntaxError.New(Integer, IOpCode, String, Exception)
-  fullName.vb: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.New(Integer, Ubytec.Language.Operations.IOpCode, String, System.Exception)
+  fullName.vb: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.New(Integer, Ubytec.Language.Operations.Interfaces.IOpCode, String, System.Exception)
   name.vb: New(Integer, IOpCode, String, Exception)
 - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.ToString
   commentId: M:Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.ToString
@@ -234,7 +234,7 @@ items:
       repo: https://github.com/Universal-Byte-Code/ubytec-interpreter.git
     id: ToString
     path: ../Ubytec/Language/AST/ASTCompiler.CompileSyntaxError.cs
-    startLine: 54
+    startLine: 55
   assemblies:
   - Ubytec
   namespace: Ubytec.Language.AST
@@ -581,25 +581,25 @@ references:
   nameWithType.vb: Integer
   fullName.vb: Integer
   name.vb: Integer
-- uid: Ubytec.Language.Operations.IOpCode
-  commentId: T:Ubytec.Language.Operations.IOpCode
-  parent: Ubytec.Language.Operations
-  href: Ubytec.Language.Operations.IOpCode.html
+- uid: Ubytec.Language.Operations.Interfaces.IOpCode
+  commentId: T:Ubytec.Language.Operations.Interfaces.IOpCode
+  parent: Ubytec.Language.Operations.Interfaces
+  href: Ubytec.Language.Operations.Interfaces.IOpCode.html
   name: IOpCode
   nameWithType: IOpCode
-  fullName: Ubytec.Language.Operations.IOpCode
+  fullName: Ubytec.Language.Operations.Interfaces.IOpCode
 - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.OpCode*
   commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.OpCode
   href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.OpCode.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError_OpCode
   name: OpCode
   nameWithType: ASTCompiler.CompileSyntaxError.OpCode
   fullName: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.OpCode
-- uid: Ubytec.Language.Operations
-  commentId: N:Ubytec.Language.Operations
+- uid: Ubytec.Language.Operations.Interfaces
+  commentId: N:Ubytec.Language.Operations.Interfaces
   href: Ubytec.html
-  name: Ubytec.Language.Operations
-  nameWithType: Ubytec.Language.Operations
-  fullName: Ubytec.Language.Operations
+  name: Ubytec.Language.Operations.Interfaces
+  nameWithType: Ubytec.Language.Operations.Interfaces
+  fullName: Ubytec.Language.Operations.Interfaces
   spec.csharp:
   - uid: Ubytec
     name: Ubytec
@@ -612,6 +612,10 @@ references:
   - uid: Ubytec.Language.Operations
     name: Operations
     href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
   spec.vb:
   - uid: Ubytec
     name: Ubytec
@@ -624,6 +628,10 @@ references:
   - uid: Ubytec.Language.Operations
     name: Operations
     href: Ubytec.Language.Operations.html
+  - name: .
+  - uid: Ubytec.Language.Operations.Interfaces
+    name: Interfaces
+    href: Ubytec.Language.Operations.Interfaces.html
 - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.Message*
   commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.Message
   href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.Message.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError_Message
@@ -679,7 +687,7 @@ references:
     href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.html
 - uid: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.#ctor*
   commentId: Overload:Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.#ctor
-  href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.-ctor.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError__ctor_System_Int32_Ubytec_Language_Operations_IOpCode_System_String_System_Exception_
+  href: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.-ctor.html#Ubytec_Language_AST_ASTCompiler_CompileSyntaxError__ctor_System_Int32_Ubytec_Language_Operations_Interfaces_IOpCode_System_String_System_Exception_
   name: CompileSyntaxError
   nameWithType: ASTCompiler.CompileSyntaxError.CompileSyntaxError
   fullName: Ubytec.Language.AST.ASTCompiler.CompileSyntaxError.CompileSyntaxError
