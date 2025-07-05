@@ -28,7 +28,7 @@ namespace Ubytec.Language.Operations
         /// The collection of variables that become local to the block. Pass
         /// <see langword="null"/> if the block declares no variables.
         /// </param>
-        public readonly record struct BLOCK(UType? BlockType = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpVariableScope, IOpCodeFactory
+        public readonly record struct BLOCK(UType? BlockType = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpVariableScope, IOpCodeFactory, IEquatable<BLOCK>
         {
             /// <summary>
             /// Represents the opcode for the BLOCK operation.

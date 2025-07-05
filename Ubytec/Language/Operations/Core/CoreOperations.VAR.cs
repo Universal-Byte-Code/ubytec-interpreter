@@ -8,11 +8,11 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct VAR(VariableExpressionFragment Variable) : IOpCode
+        public readonly record struct VAR(VariableExpressionFragment Variable) : IOpCode, IOpCodeFactory, IEquatable<VAR>
         {
             public readonly byte OpCode => 0x10;
 
-            public static VAR CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
+            public static IOpCode CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
             {
                 if (operands.Length > 0 || variables.Length > 1)
                     throw new SyntaxException(0x10BADBEEF, $"VAR opcode should not receive any operands, but received: {operands.Length}");

@@ -10,7 +10,7 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct SWITCH(int? TableIDx, UType? BlockType = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpVariableScope, IOpCodeFactory
+        public readonly record struct SWITCH(int? TableIDx, UType? BlockType = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpVariableScope, IOpCodeFactory, IEquatable<SWITCH>
         {
             public const byte OP = 0x0B;
             public readonly byte OpCode => OP;

@@ -9,7 +9,7 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct RETURN(UType? BlockType = null, SyntaxExpression? Variables = null) : IOpVariableScope, IOpCodeFactory
+        public readonly record struct RETURN(UType? BlockType = null, SyntaxExpression? Variables = null) : IOpVariableScope, IOpCodeFactory, IEquatable<RETURN>
         {
             public const byte OP = 0x09;
             public readonly byte OpCode => OP;

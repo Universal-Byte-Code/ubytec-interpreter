@@ -8,7 +8,7 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct DEFAULT : IOpCode, IOpCodeFactory
+        public readonly record struct DEFAULT : IOpCode, IOpCodeFactory, IEquatable<DEFAULT>
         {
             public const byte OP = 0x0E;
             public readonly byte OpCode => OP;

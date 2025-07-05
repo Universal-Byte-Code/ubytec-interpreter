@@ -11,7 +11,7 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct WHILE(UType? BlockType = null, SyntaxExpression? Condition = null, int[]? LabelIDxs = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpVariableScope, IOpCodeFactory
+        public readonly record struct WHILE(UType? BlockType = null, SyntaxExpression? Condition = null, int[]? LabelIDxs = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpVariableScope, IOpCodeFactory, IEquatable<WHILE>
         {
             public const byte OP = 0x0C;
             public readonly byte OpCode => OP;

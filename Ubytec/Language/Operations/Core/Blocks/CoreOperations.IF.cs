@@ -10,7 +10,7 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct IF() : IBlockOpCode, IOpVariableScope, IOpCodeFactory
+        public readonly record struct IF() : IBlockOpCode, IOpVariableScope, IOpCodeFactory, IEquatable<IF>
         {
             public readonly UType? BlockType { get; init; } = null;
             public readonly SyntaxExpression? Condition { get; init; } = null;

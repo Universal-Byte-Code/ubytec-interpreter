@@ -9,7 +9,7 @@ namespace Ubytec.Language.Operations
 {
     public static partial class CoreOperations
     {
-        public readonly record struct BRANCH(object CaseValue, int? LabelIDx = null, UType? BlockType = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpVariableScope, IOpCodeFactory
+        public readonly record struct BRANCH(object CaseValue, int? LabelIDx = null, UType? BlockType = null, SyntaxExpression? Variables = null) : IBlockOpCode, IOpVariableScope, IOpCodeFactory, IEquatable<BRANCH>
         {
             public const byte OP = 0x0A;
             public readonly byte OpCode => OP;
