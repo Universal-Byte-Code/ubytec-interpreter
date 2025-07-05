@@ -10,6 +10,7 @@ namespace Ubytec.Language.Syntax.Model
     /// Represents a sentence (a sequence of syntax nodes) in the Ubytec AST,
     /// along with nested sentences and associated metadata.
     /// </summary>
+    [CLSCompliant(true)]
     public sealed class SyntaxSentence : IUbytecSyntax
     {
         /// <summary>
@@ -30,6 +31,7 @@ namespace Ubytec.Language.Syntax.Model
         /// Provides access to the metadata registry for this sentence.
         /// </summary>
         [JsonIgnore]
+        [CLSCompliant(false)]
         public ref MetadataRegistry Metadata => ref _metadata;
 
         /// <summary>

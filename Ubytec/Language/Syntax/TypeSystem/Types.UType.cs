@@ -17,7 +17,7 @@ namespace Ubytec.Language.Syntax.TypeSystem
         /// specifies the fixed size of the array; defaults to 1 for non-array types.</param>
         /// <remarks>
         /// <para>
-        /// Use <see cref="FromOperands(byte, byte)"/> to reconstruct a <see cref="UType"/> from
+        /// Use <see cref="FromOperands(byte, int)"/> to reconstruct a <see cref="UType"/> from
         /// low-level operand bytes.</para>
         /// </remarks>
         /// <example>
@@ -40,6 +40,8 @@ namespace Ubytec.Language.Syntax.TypeSystem
         /// </code>
         /// </example>
         [StructLayout(LayoutKind.Sequential)]
+        [CLSCompliant(true)]
+        [method:CLSCompliant(false)]
         public readonly struct UType(
             PrimitiveType type = PrimitiveType.Default,
             TypeModifiers modifiers = TypeModifiers.None,
@@ -76,6 +78,7 @@ namespace Ubytec.Language.Syntax.TypeSystem
             /// <summary>
             /// Gets the fixed size for array types; defaults to 1 for non-array types.
             /// </summary>
+            [CLSCompliant(false)]
             public ulong FixedArraySize { get; } = fixedArraySize;
 
             /// <summary>True if this type represents an array.</summary>

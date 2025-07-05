@@ -11,6 +11,7 @@ namespace Ubytec.Language.Syntax.Fast.Metadata
     /// </summary>
     [SkipLocalsInit]
     [StructLayout(LayoutKind.Auto)]
+    [CLSCompliant(false)]
     public unsafe struct MetadataRegistry : IDisposable
     {
         private MetadataEntry* _entries;

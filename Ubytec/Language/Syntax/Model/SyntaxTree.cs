@@ -11,6 +11,7 @@ namespace Ubytec.Language.Syntax.Model
     /// Represents the root of a Ubytec abstract syntax tree (AST),
     /// holding the top-level sentence and associated metadata.
     /// </summary>
+    [CLSCompliant(true)]
     public sealed class SyntaxTree : IUbytecSyntax
     {
         /// <summary>
@@ -26,6 +27,7 @@ namespace Ubytec.Language.Syntax.Model
         /// for efficient metadata operations.
         /// </summary>
         [JsonIgnore]
+        [CLSCompliant(false)]
         public ref MetadataRegistry Metadata => ref _metadata;
 
         /// <summary>

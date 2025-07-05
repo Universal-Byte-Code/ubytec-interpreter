@@ -6,6 +6,7 @@ namespace Ubytec.Language.Syntax.Interfaces
     /// Defines a Ubytec syntax element that holds and exposes metadata,
     /// and supports cleanup of resources.
     /// </summary>
+    [CLSCompliant(false)]
     public interface IUbytecSyntax : IDisposable
     {
         /// <summary>

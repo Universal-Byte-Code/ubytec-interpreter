@@ -6,6 +6,7 @@ using Ubytec.Language.Syntax.Scopes;
 
 namespace Ubytec.Language.Operations.Extended
 {
+    [CLSCompliant(true)]
     public static class ExtendedStackOperations
     {
         /// <summary>
@@ -15,6 +16,8 @@ namespace Ubytec.Language.Operations.Extended
         /// Wire format: <c>FF&amp;nbsp;10&amp;nbsp;11&amp;nbsp;loByte&amp;nbsp;hiByte</c><br/>
         /// (`0xFF` marker · extension group 0x10 · opcode 0x11 · little-endian index)
         /// </summary>
+        [CLSCompliant(true)]
+        [method: CLSCompliant(false)]
         public readonly record struct PUSH16(ushort StackIndex)
             : IExtendedOpCode, IOpCodeFactory
         {
@@ -52,6 +55,8 @@ namespace Ubytec.Language.Operations.Extended
                 ExtendedOpcodeFactory.Register(GROUP, OP, CreateInstruction);
         }
 
+        [CLSCompliant(true)]
+        [method: CLSCompliant(false)]
         public readonly record struct DROP16(ushort stackIndex) : IExtendedOpCode
         {
             public byte OpCode => 0xFF;
@@ -65,6 +70,8 @@ namespace Ubytec.Language.Operations.Extended
             }
         }
 
+        [CLSCompliant(true)]
+        [method: CLSCompliant(false)]
         public readonly record struct PICK16(ushort n) : IExtendedOpCode
         {
             public byte OpCode => 0xFF;
@@ -77,6 +84,8 @@ namespace Ubytec.Language.Operations.Extended
             }
         }
 
+        [CLSCompliant(true)]
+        [method: CLSCompliant(false)]
         public readonly record struct ROLL16(ushort n) : IExtendedOpCode
         {
             public byte OpCode => 0xFF;

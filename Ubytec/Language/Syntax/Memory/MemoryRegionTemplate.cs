@@ -1,5 +1,6 @@
 ﻿namespace Ubytec.Language.Syntax.Memory
 {
+    [CLSCompliant(false)]
     public readonly record struct MemoryRegionTemplate(
         string SectionName,     // p.ej. ".data", ".bss", ".rodata"
         nuint Alignment,        // alineamiento obligatorio en bytes

@@ -16,8 +16,8 @@ using Ubytec.Language.Syntax.Scopes;
 using Ubytec.Language.Tools;
 using Ubytec.Language.Tools.Serialization;
 
-[assembly: CLSCompliant(false)]
-[assembly: System.Runtime.InteropServices.ComVisible(false)]
+[assembly: CLSCompliant(true)]
+[assembly: System.Runtime.InteropServices.ComVisible(true)]
 
 var source = """
 module (name:"demo", version:"0.1", author:"papifuckingshushi")

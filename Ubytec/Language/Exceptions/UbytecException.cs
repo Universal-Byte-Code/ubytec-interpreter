@@ -6,6 +6,8 @@ namespace Ubytec.Language.Exceptions
     /// Represents the base class for all custom exceptions in the Ubytec language infrastructure.
     /// Encapsulates an error code and optional help link.
     /// </summary>
+    [CLSCompliant(true)]
+    [method:CLSCompliant(false)]
     public abstract class UbytecException(ulong errorCode, string message, string? helpLink = null) : Exception
     {
         /// <summary>

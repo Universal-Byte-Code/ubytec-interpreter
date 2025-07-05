@@ -12,6 +12,7 @@ namespace Ubytec.Language.Grammar
     /// Provides configuration options and retrieval methods for TextMate grammars and themes
     /// used by the Ubytec language support in editors.
     /// </summary>
+    [CLSCompliant(true)]
     public class UbytecRegistryOptions : IRegistryOptions
     {
         private static readonly HttpClient _httpClient = new();
@@ -42,6 +43,7 @@ namespace Ubytec.Language.Grammar
         /// <param name="scopeName">The grammar scope name to load (e.g., "source.ubytec").</param>
         /// <returns>An <see cref="IRawGrammar"/> representing the parsed grammar, or null on failure.</returns>
 #nullable enable
+        [CLSCompliant(false)]
         public IRawGrammar? GetGrammar(string scopeName)
 #nullable disable
         {
@@ -65,6 +67,7 @@ namespace Ubytec.Language.Grammar
         /// </summary>
         /// <param name="scopeName">The theme scope name to load.</param>
         /// <returns>An <see cref="IRawTheme"/> representing the theme, or null if not available.</returns>
+        [CLSCompliant(false)]
         public IRawTheme GetTheme(string scopeName) => null;
 
         /// <summary>
@@ -73,6 +76,7 @@ namespace Ubytec.Language.Grammar
         /// <returns>An <see cref="IRawTheme"/> representing the default theme.</returns>
         /// <exception cref="HttpIOException">Thrown if the theme cannot be fetched or parsed.</exception>
 #nullable enable
+        [CLSCompliant(false)]
         public IRawTheme? GetDefaultTheme()
 #nullable disable
         {

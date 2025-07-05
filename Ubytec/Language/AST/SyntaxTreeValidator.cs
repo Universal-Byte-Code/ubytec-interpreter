@@ -10,6 +10,7 @@ namespace Ubytec.Language.AST
     /// <summary>
     /// Provides functionality to validate a <see cref="SyntaxTree"/> against its JSON schema.
     /// </summary>
+    [CLSCompliant(true)]
     public static class SyntaxTreeValidator
     {
         /// <summary>
@@ -50,6 +51,7 @@ namespace Ubytec.Language.AST
         /// Thrown if the tree’s JSON does not contain a valid <c>$schema</c> URL,
         /// or if downloading the schema fails.
         /// </exception>
+        [CLSCompliant(false)]
         public static ICollection<ValidationError> CheckSyntaxTreeSchema(SyntaxTree tree)
         {
             // Serialize the SyntaxTree to JSON

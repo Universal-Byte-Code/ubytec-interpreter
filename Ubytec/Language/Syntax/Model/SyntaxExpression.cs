@@ -9,6 +9,7 @@ namespace Ubytec.Language.Syntax.Model
     /// Represents a composed Ubytec expression, built from one or more
     /// <see cref="IUbytecExpressionFragment"/> instances (e.g. variable or condition fragments).
     /// </summary>
+    [CLSCompliant(true)]
     public sealed class SyntaxExpression : IUbytecSyntax
     {
         /// <summary>
@@ -21,6 +22,7 @@ namespace Ubytec.Language.Syntax.Model
 
         /// <inheritdoc/>
         [JsonIgnore]
+        [CLSCompliant(false)]
         public ref MetadataRegistry Metadata => ref _metadata;
 
         /// <summary>

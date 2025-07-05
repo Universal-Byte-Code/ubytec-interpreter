@@ -3,6 +3,7 @@
 namespace Ubytec.Language.Syntax.Memory
 {
     // Devuelve la plantilla de memoria según tipo y modificadores
+    [CLSCompliant(false)]
     public static class MemoryTemplates
     {
         private static readonly Dictionary<PrimitiveType, MemoryRegionTemplate> _baseTemplates

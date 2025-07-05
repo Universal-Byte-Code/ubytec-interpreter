@@ -10,6 +10,7 @@ namespace Ubytec.Language.Syntax.Fast.Metadata
     /// </summary>
     [SkipLocalsInit]
     [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 320)]
+    [CLSCompliant(false)]
     public unsafe struct MetadataEntry
     {
         /// <summary>

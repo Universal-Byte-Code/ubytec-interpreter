@@ -11,6 +11,7 @@ namespace Ubytec.Language.Syntax.Model
     /// Represents a node in the Ubytec abstract syntax tree,
     /// holding an entity (opcode or context), optional child nodes, tokens, and metadata.
     /// </summary>
+    [CLSCompliant(true)]
     public sealed class SyntaxNode : IUbytecSyntax
     {
         /// <summary>
@@ -36,6 +37,7 @@ namespace Ubytec.Language.Syntax.Model
 
         /// <inheritdoc/>
         [JsonIgnore]
+        [CLSCompliant(false)]
         public ref MetadataRegistry Metadata => ref _metadata;
 
         /// <summary>

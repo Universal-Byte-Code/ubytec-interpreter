@@ -9,6 +9,7 @@ namespace Ubytec.Language.Syntax.Fast.Metadata
     /// Provides extension methods for <see cref="MetadataRegistry"/>, 
     /// enabling enumeration and retrieval of entries by index.
     /// </summary>
+    [CLSCompliant(true)]
     public static class MetadataRegistryExtensions
     {
         /// <summary>
@@ -19,6 +20,7 @@ namespace Ubytec.Language.Syntax.Fast.Metadata
         /// An <see cref="ImmutableDictionary{TKey, TValue}"/> containing all key/value pairs 
         /// present in <paramref name="registry"/> in insertion order.
         /// </returns>
+        [CLSCompliant(false)]
         public static ImmutableDictionary<string, object> ToImmutable(this MetadataRegistry registry)
         {
             var builder = ImmutableDictionary.CreateBuilder<string, object>();
@@ -49,6 +51,7 @@ namespace Ubytec.Language.Syntax.Fast.Metadata
         /// <c>true</c> if an entry at the specified <paramref name="index"/> exists; 
         /// otherwise, <c>false</c>.
         /// </returns>
+        [CLSCompliant(false)]
         public unsafe static bool TryGetByIndex(this MetadataRegistry registry, uint index, out string key, out object? value)
         {
             key = string.Empty;
