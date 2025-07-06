@@ -6,6 +6,7 @@ namespace Ubytec.Language
     /// Defines an element of the Ubytec language that can be compiled
     /// into its textual or bytecode representation within the given compilation context.
     /// </summary>
+    [CLSCompliant(true)]
     public interface IUbytecEntity
     {
         /// <summary>

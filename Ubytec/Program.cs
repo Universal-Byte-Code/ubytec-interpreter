@@ -14,7 +14,6 @@ using Ubytec.Language.AST;
 using Ubytec.Language.Grammar;
 using Ubytec.Language.Syntax.Scopes;
 using Ubytec.Language.Tools;
-using Ubytec.Language.Tools.Serialization;
 
 [assembly: CLSCompliant(true)]
 [assembly: System.Runtime.InteropServices.ComVisible(true)]
@@ -84,20 +83,3 @@ File.WriteAllText("output.module.ubc.json", json);
 File.WriteAllText("output.module.ubc.json.utf64", utf64);
 
 Console.WriteLine("✓ JSON and UTF-64 artefacts written.");
-
-
-static class SerializerOptionsHelper
-{
-    public static JsonSerializerOptions Options { get; private set; } = new()
-    {
-        WriteIndented              = true,
-        IncludeFields              = false,
-        RespectNullableAnnotations = true,
-        Converters = { 
-            new IOpCodeConverter(),
-            new ISyntaxTreeConverter(),
-            new IUbytecExpressionFragmentConverter(),
-            new IUbytecEntityConverter() }
-    };
-
-}
