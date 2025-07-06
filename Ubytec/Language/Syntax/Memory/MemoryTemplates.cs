@@ -3,9 +3,13 @@
 namespace Ubytec.Language.Syntax.Memory
 {
     // Devuelve la plantilla de memoria según tipo y modificadores
+    /// <summary>
+    /// Provides templates for memory regions based on primitive types and custom types.
+    /// </summary>
     [CLSCompliant(false)]
     public static class MemoryTemplates
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0052:Quitar miembros privados no leídos", Justification = "<pendiente>")]
         private static readonly Dictionary<PrimitiveType, MemoryRegionTemplate> _baseTemplates
             = new()
             {
@@ -49,7 +53,9 @@ namespace Ubytec.Language.Syntax.Memory
                 [PrimitiveType.Unknown]     = new MemoryRegionTemplate(".data", 8, 8, 0, true),
             };
 
-        // Registro inyectable para tipos definidos por el usuario
+        /// <summary>
+        /// Registry for custom memory region templates identified by GUIDs.
+        /// </summary>
         public static IDictionary<Guid, MemoryRegionTemplate> CustomTypeRegistry { get; set; }
             = new Dictionary<Guid, MemoryRegionTemplate>();
 

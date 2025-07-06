@@ -15,7 +15,7 @@
     <Exec
       WorkingDirectory="$(DocFxRoot)"
       Condition=" '$(OS)' == 'Windows_NT' "
-      Command="taskkill /F /IM docfx.exe"
+      Command="TASKKILL /F /IM docfx.exe /T"
       ContinueOnError="true" />
     <Exec
       WorkingDirectory="$(DocFxRoot)"

@@ -6,6 +6,5 @@ namespace Ubytec.Language.Operations.Interfaces
     public interface IBlockOpCode : IOpVariableScope
     {
         public UType? BlockType { get; init; }
-        public SyntaxExpression? Variables { get; init; }
     }
 }

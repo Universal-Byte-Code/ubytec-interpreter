@@ -19,6 +19,7 @@ using Ubytec.Language.Tools.Serialization;
 [assembly: CLSCompliant(true)]
 [assembly: System.Runtime.InteropServices.ComVisible(true)]
 
+
 var source = """
 module (name:"demo", version:"0.1", author:"papifuckingshushi")
 {
@@ -76,23 +77,27 @@ var nasm = rootModule.Compile(scopes);       // every nested entity compiles its
 File.WriteAllText("output.ubc.nasm", nasm);
 Console.WriteLine($"✓ NASM written to  {Path.GetFullPath("output.ubc.nasm")}");
 
-// 4.  JSON + UTF-64 serialisation -------------------------------------------
-var opts = new JsonSerializerOptions
-{
-    WriteIndented              = true,
-    IncludeFields              = false,
-    RespectNullableAnnotations = true
-};
-
-opts.Converters.Add(new IOpCodeConverter());
-opts.Converters.Add(new ISyntaxTreeConverter());
-opts.Converters.Add(new IUbytecExpressionFragmentConverter());
-opts.Converters.Add(new IUbytecEntityConverter());
-
-var json = JsonSerializer.Serialize(rootModule, opts);
+var json = JsonSerializer.Serialize(rootModule, SerializerOptionsHelper.Options);
 var utf64 = Utf64Codec.Encode(json);
 
 File.WriteAllText("output.module.ubc.json", json);
 File.WriteAllText("output.module.ubc.json.utf64", utf64);
 
 Console.WriteLine("✓ JSON and UTF-64 artefacts written.");
+
+
+static class SerializerOptionsHelper
+{
+    public static JsonSerializerOptions Options { get; private set; } = new()
+    {
+        WriteIndented              = true,
+        IncludeFields              = false,
+        RespectNullableAnnotations = true,
+        Converters = { 
+            new IOpCodeConverter(),
+            new ISyntaxTreeConverter(),
+            new IUbytecExpressionFragmentConverter(),
+            new IUbytecEntityConverter() }
+    };
+
+}
