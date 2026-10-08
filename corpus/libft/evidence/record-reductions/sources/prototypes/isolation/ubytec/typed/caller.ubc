@@ -1,0 +1,179 @@
+import Copy from memory.Copy (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+import SourceWrite from memory.SourceWrite (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+import Escape from memory.Escape (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+import Partial from memory.Partial (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+import SumValues from memory.SumValues (t_int64,t_uint64) -> t_int64
+import Spin from memory.Spin (t_int64) -> t_int64
+export Main as Main
+export SourceFault as SourceFault
+export EscapeFault as EscapeFault
+export PartialFault as PartialFault
+export Scalar as Scalar
+export Timeout as Timeout
+export Cancel as Cancel
+module (name:"typed_caller", version:"0.1", author:"Ubytec") {
+func Main(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_int64 status 0 }
+load @buffer
+push 16
+add
+load @buffer
+load t_uint64
+add
+load @buffer
+load t_uint64
+load @buffer
+push 16
+add
+load @buffer
+load t_uint64
+load @buffer
+push 8
+add
+load t_uint64
+push 1000
+load @buffer
+load @length
+add
+push 8
+sub
+call Copy
+store @status
+if @status != 0
+load @status
+return
+end
+load @buffer
+load @length
+add
+push 8
+sub
+load t_int64
+return
+}
+func SourceFault(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_int64 status 0 }
+load @buffer
+push 16
+add
+load @buffer
+load t_uint64
+add
+load @buffer
+load t_uint64
+load @buffer
+push 16
+add
+load @buffer
+load t_uint64
+load @buffer
+push 8
+add
+load t_uint64
+push 1000
+load @buffer
+load @length
+add
+push 8
+sub
+call SourceWrite
+return
+}
+func EscapeFault(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_int64 status 0 }
+load @buffer
+push 16
+add
+load @buffer
+load t_uint64
+add
+load @buffer
+load t_uint64
+load @buffer
+push 16
+add
+load @buffer
+load t_uint64
+load @buffer
+push 8
+add
+load t_uint64
+push 1000
+load @buffer
+load @length
+add
+push 8
+sub
+call Escape
+return
+}
+func PartialFault(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_int64 status 0 }
+load @buffer
+push 16
+add
+load @buffer
+load t_uint64
+add
+load @buffer
+load t_uint64
+load @buffer
+push 16
+add
+load @buffer
+load t_uint64
+load @buffer
+push 8
+add
+load t_uint64
+push 1000
+load @buffer
+load @length
+add
+push 8
+sub
+call Partial
+return
+}
+func Scalar(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+push -17
+push 4294967297
+push 1000
+load @buffer
+load @length
+add
+push 8
+sub
+call SumValues
+drop 0
+load @buffer
+load @length
+add
+push 8
+sub
+load t_int64
+return
+}
+func Timeout(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+push -17
+push 100
+load @buffer
+load @length
+add
+push 8
+sub
+call Spin
+return
+}
+func Cancel(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+push -17
+push 0
+load @buffer
+load @length
+add
+push 8
+sub
+call Spin
+return
+}
+}

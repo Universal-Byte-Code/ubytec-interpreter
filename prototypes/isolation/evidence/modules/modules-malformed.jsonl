@@ -1,0 +1,28 @@
+{"case": "elf_bad_magic", "pass": true, "response": {"accepted": false}}
+{"case": "elf_wrong_class", "pass": true, "response": {"accepted": false}}
+{"case": "elf_wrong_endian", "pass": true, "response": {"accepted": false}}
+{"case": "elf_wrong_machine", "pass": true, "response": {"accepted": false}}
+{"case": "elf_shared_object", "pass": true, "response": {"accepted": false}}
+{"case": "elf_phdr_overflow", "pass": true, "response": {"accepted": false}}
+{"case": "elf_shdr_overflow", "pass": true, "response": {"accepted": false}}
+{"case": "elf_phdr_count", "pass": true, "response": {"accepted": false}}
+{"case": "elf_section_count", "pass": true, "response": {"accepted": false}}
+{"case": "elf_writable_code", "pass": true, "response": {"accepted": false}}
+{"case": "elf_segment_outside", "pass": true, "response": {"accepted": false}}
+{"case": "elf_segment_overflow", "pass": true, "response": {"accepted": false}}
+{"case": "elf_file_outside", "pass": true, "response": {"accepted": false}}
+{"case": "elf_filesz_exceeds_memsz", "pass": true, "response": {"accepted": false}}
+{"case": "elf_unaligned_segment", "pass": true, "response": {"accepted": false}}
+{"case": "elf_bad_alignment", "pass": true, "response": {"accepted": false}}
+{"case": "elf_overlap", "pass": true, "response": {"accepted": false}}
+{"case": "elf_interpreter", "pass": true, "response": {"accepted": false}}
+{"case": "elf_dynamic_segment", "pass": true, "response": {"accepted": false}}
+{"case": "elf_tls_segment", "pass": true, "response": {"accepted": false}}
+{"case": "elf_noncode_entry", "pass": true, "response": {"accepted": false}}
+{"case": "elf_executable_stack", "pass": true, "response": {"accepted": false}}
+{"case": "elf_truncated", "pass": true, "response": {"accepted": false}}
+{"case": "elf_bad_symbol_stride", "pass": true, "response": {"accepted": false, "registration_rejected": true}}
+{"case": "elf_bad_string_link", "pass": true, "response": {"accepted": false, "registration_rejected": true}}
+{"case": "elf_export_noncode", "pass": true, "response": {"accepted": false, "registration_rejected": true}}
+{"case": "elf_unterminated_export", "pass": true, "response": {"accepted": false, "registration_rejected": true}}
+{"case": "elf_duplicate_export", "pass": true, "response": {"accepted": false, "registration_rejected": true}}

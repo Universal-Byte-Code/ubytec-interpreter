@@ -1,0 +1,30 @@
+{
+  "mode": "Windows .NET 9 source compilation; NASM handoff to WSL",
+  "dotnet_tests_passed": 504,
+  "compiler_sha256": "a81cfb72a2f8bee2acc051f8196fbb42b5e53ea4217b38b263798ebbc00d8119",
+  "source_sha256": {
+    "Ubytec/Language/AST/ModuleContracts.cs": "6c0a49892d4ee3433720e3df6426455cd2d4ac74ba1e545bd7edc6e5511e0460",
+    "Ubytec/Language/AST/SourceCompiler.cs": "a4e51920786098ea59cd1de9fbd5b96c197686c66a14ad5cfc4135d0813b0d6e",
+    "Ubytec/Language/Grammar/ubytec.tmLanguage.json": "da6277ad4ea2e24ca1deffba546180583097947b2e19d397cf5655ea9d8469b0",
+    "Ubytec/Program.cs": "b9a6301dae5c3d5a29b47da503fbeb9ae6cc1056beed9aa12689ef3884b16117",
+    "prototypes/isolation/ubytec/contracts/caller.ubc": "e108a571333613690fc31c94a1296d7ab4c18245dc54a997fd8f658c64e951c4",
+    "prototypes/isolation/ubytec/contracts/reader.ubc": "96886d66cc60b709a8d992b626a6dfb9fd90fe0290e176bffdc49965c8b5e8e0",
+    "prototypes/isolation/ubytec/contracts/writer.ubc": "386089ac1715bb3b090fbd3e00218b609834cff02ff81c62637dfef1fdb853d2",
+    "prototypes/isolation/ubytec/contracts/mismatch.ubc": "79b035324a0786b6eaa795669cca4c64043dc6774e6e6c86f1978c463427d1ac"
+  },
+  "assembly_sha256": {
+    "caller": "0493fd4e3da926dcd8872287d153edd7621385f47cd6e88d7bf8137a3d7fbb9d",
+    "reader": "3705726c5657b851054cdb8528573e0c04655c2fb9aea24b00dd0035d83cee10",
+    "writer": "d7cb95e65f1ba244afcd1b2d4bba26c9bf5990529a150723383ea66df166f1b7",
+    "mismatch": "38901bdf69953621a284a38422267afbdbcdef8db2826599dceb8ce75a9ca249"
+  },
+  "options": {
+    "caller": [
+      "--library",
+      "--module-calls"
+    ],
+    "providers": [
+      "--library"
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+export EscapeState as EscapeState (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+export UpperText as UpperText (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+module (name:"text_mapper", version:"0.1", author:"Ubytec") {
+func ft_toupper(t_int32 c) -> t_int32
+{
+    if @c < 97
+        load @c
+        return
+    end
+    if @c > 122
+        load @c
+        return
+    end
+    load @c
+    push 32
+    sub
+    return
+}
+func UpperText(t_uint64 destination,t_uint64 source,t_uint64 length) -> t_int64 {
+local { t_uint64 index 0 }
+while @index < @length
+load @destination
+load @index
+add
+load @source
+load @index
+add
+load t_byte
+call ft_toupper
+store t_byte
+load @index
+inc
+store @index
+end
+load @length
+return
+}
+func EscapeState(t_uint64 destination,t_uint64 source,t_uint64 length) -> t_int64 {
+load @destination
+push 255
+store t_byte
+load @destination
+push 1
+sub
+push 255
+store t_byte
+push 0
+return
+}
+}

@@ -1,0 +1,141 @@
+
+/mnt/x/codex/projects/ubytec-interpreter/artifacts/codegen-comparison/candidates.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <candidate_scalar4>:
+   0:	31 c0                	xor    eax,eax
+   2:	45 31 c0             	xor    r8d,r8d
+   5:	45 31 c9             	xor    r9d,r9d
+   8:	45 31 d2             	xor    r10d,r10d
+   b:	48 83 fe 04          	cmp    rsi,0x4
+   f:	72 29                	jb     3a <candidate_scalar4.finish>
+
+0000000000000011 <candidate_scalar4.loop>:
+  11:	0f b6 17             	movzx  edx,BYTE PTR [rdi]
+  14:	48 01 d0             	add    rax,rdx
+  17:	0f b6 57 01          	movzx  edx,BYTE PTR [rdi+0x1]
+  1b:	49 01 d0             	add    r8,rdx
+  1e:	0f b6 57 02          	movzx  edx,BYTE PTR [rdi+0x2]
+  22:	49 01 d1             	add    r9,rdx
+  25:	0f b6 57 03          	movzx  edx,BYTE PTR [rdi+0x3]
+  29:	49 01 d2             	add    r10,rdx
+  2c:	48 83 c7 04          	add    rdi,0x4
+  30:	48 83 ee 04          	sub    rsi,0x4
+  34:	48 83 fe 04          	cmp    rsi,0x4
+  38:	73 d7                	jae    11 <candidate_scalar4.loop>
+
+000000000000003a <candidate_scalar4.finish>:
+  3a:	4c 01 c0             	add    rax,r8
+  3d:	4c 01 c8             	add    rax,r9
+  40:	4c 01 d0             	add    rax,r10
+  43:	48 85 f6             	test   rsi,rsi
+  46:	74 0e                	je     56 <candidate_scalar4.done>
+
+0000000000000048 <candidate_scalar4.tail>:
+  48:	0f b6 17             	movzx  edx,BYTE PTR [rdi]
+  4b:	48 01 d0             	add    rax,rdx
+  4e:	48 ff c7             	inc    rdi
+  51:	48 ff ce             	dec    rsi
+  54:	75 f2                	jne    48 <candidate_scalar4.tail>
+
+0000000000000056 <candidate_scalar4.done>:
+  56:	c3                   	ret    
+
+0000000000000057 <candidate_sse2>:
+  57:	66 0f ef c0          	pxor   xmm0,xmm0
+  5b:	66 0f ef d2          	pxor   xmm2,xmm2
+  5f:	48 83 fe 10          	cmp    rsi,0x10
+  63:	72 1a                	jb     7f <candidate_sse2.finish>
+
+0000000000000065 <candidate_sse2.loop>:
+  65:	f3 0f 6f 0f          	movdqu xmm1,XMMWORD PTR [rdi]
+  69:	66 0f f6 c8          	psadbw xmm1,xmm0
+  6d:	66 0f d4 d1          	paddq  xmm2,xmm1
+  71:	48 83 c7 10          	add    rdi,0x10
+  75:	48 83 ee 10          	sub    rsi,0x10
+  79:	48 83 fe 10          	cmp    rsi,0x10
+  7d:	73 e6                	jae    65 <candidate_sse2.loop>
+
+000000000000007f <candidate_sse2.finish>:
+  7f:	66 48 0f 7e d0       	movq   rax,xmm2
+  84:	66 0f 73 da 08       	psrldq xmm2,0x8
+  89:	66 48 0f 7e d2       	movq   rdx,xmm2
+  8e:	48 01 d0             	add    rax,rdx
+  91:	48 85 f6             	test   rsi,rsi
+  94:	74 0e                	je     a4 <candidate_sse2.done>
+
+0000000000000096 <candidate_sse2.tail>:
+  96:	0f b6 17             	movzx  edx,BYTE PTR [rdi]
+  99:	48 01 d0             	add    rax,rdx
+  9c:	48 ff c7             	inc    rdi
+  9f:	48 ff ce             	dec    rsi
+  a2:	75 f2                	jne    96 <candidate_sse2.tail>
+
+00000000000000a4 <candidate_sse2.done>:
+  a4:	c3                   	ret    
+
+00000000000000a5 <candidate_avx2>:
+  a5:	c5 fd ef c0          	vpxor  ymm0,ymm0,ymm0
+  a9:	c4 41 3d ef c0       	vpxor  ymm8,ymm8,ymm8
+  ae:	c4 41 35 ef c9       	vpxor  ymm9,ymm9,ymm9
+  b3:	c4 41 2d ef d2       	vpxor  ymm10,ymm10,ymm10
+  b8:	c4 41 25 ef db       	vpxor  ymm11,ymm11,ymm11
+  bd:	48 81 fe 80 00 00 00 	cmp    rsi,0x80
+  c4:	72 4a                	jb     110 <candidate_avx2.single>
+
+00000000000000c6 <candidate_avx2.loop>:
+  c6:	c5 fe 6f 0f          	vmovdqu ymm1,YMMWORD PTR [rdi]
+  ca:	c5 fe 6f 57 20       	vmovdqu ymm2,YMMWORD PTR [rdi+0x20]
+  cf:	c5 fe 6f 5f 40       	vmovdqu ymm3,YMMWORD PTR [rdi+0x40]
+  d4:	c5 fe 6f 67 60       	vmovdqu ymm4,YMMWORD PTR [rdi+0x60]
+  d9:	c5 f5 f6 c8          	vpsadbw ymm1,ymm1,ymm0
+  dd:	c5 ed f6 d0          	vpsadbw ymm2,ymm2,ymm0
+  e1:	c5 e5 f6 d8          	vpsadbw ymm3,ymm3,ymm0
+  e5:	c5 dd f6 e0          	vpsadbw ymm4,ymm4,ymm0
+  e9:	c5 3d d4 c1          	vpaddq ymm8,ymm8,ymm1
+  ed:	c5 35 d4 ca          	vpaddq ymm9,ymm9,ymm2
+  f1:	c5 2d d4 d3          	vpaddq ymm10,ymm10,ymm3
+  f5:	c5 25 d4 dc          	vpaddq ymm11,ymm11,ymm4
+  f9:	48 81 c7 80 00 00 00 	add    rdi,0x80
+ 100:	48 81 ee 80 00 00 00 	sub    rsi,0x80
+ 107:	48 81 fe 80 00 00 00 	cmp    rsi,0x80
+ 10e:	73 b6                	jae    c6 <candidate_avx2.loop>
+
+0000000000000110 <candidate_avx2.single>:
+ 110:	48 83 fe 20          	cmp    rsi,0x20
+ 114:	72 1a                	jb     130 <candidate_avx2.finish>
+
+0000000000000116 <candidate_avx2.single_loop>:
+ 116:	c5 fe 6f 0f          	vmovdqu ymm1,YMMWORD PTR [rdi]
+ 11a:	c5 f5 f6 c8          	vpsadbw ymm1,ymm1,ymm0
+ 11e:	c5 3d d4 c1          	vpaddq ymm8,ymm8,ymm1
+ 122:	48 83 c7 20          	add    rdi,0x20
+ 126:	48 83 ee 20          	sub    rsi,0x20
+ 12a:	48 83 fe 20          	cmp    rsi,0x20
+ 12e:	73 e6                	jae    116 <candidate_avx2.single_loop>
+
+0000000000000130 <candidate_avx2.finish>:
+ 130:	c4 41 3d d4 c1       	vpaddq ymm8,ymm8,ymm9
+ 135:	c4 41 2d d4 d3       	vpaddq ymm10,ymm10,ymm11
+ 13a:	c4 41 3d d4 c2       	vpaddq ymm8,ymm8,ymm10
+ 13f:	c4 63 7d 39 c1 01    	vextracti128 xmm1,ymm8,0x1
+ 145:	c4 c1 71 d4 c8       	vpaddq xmm1,xmm1,xmm8
+ 14a:	c4 e1 f9 7e c8       	vmovq  rax,xmm1
+ 14f:	c5 f1 73 d9 08       	vpsrldq xmm1,xmm1,0x8
+ 154:	c4 e1 f9 7e ca       	vmovq  rdx,xmm1
+ 159:	48 01 d0             	add    rax,rdx
+ 15c:	c5 f8 77             	vzeroupper 
+ 15f:	48 85 f6             	test   rsi,rsi
+ 162:	74 0e                	je     172 <candidate_avx2.done>
+
+0000000000000164 <candidate_avx2.tail>:
+ 164:	0f b6 17             	movzx  edx,BYTE PTR [rdi]
+ 167:	48 01 d0             	add    rax,rdx
+ 16a:	48 ff c7             	inc    rdi
+ 16d:	48 ff ce             	dec    rsi
+ 170:	75 f2                	jne    164 <candidate_avx2.tail>
+
+0000000000000172 <candidate_avx2.done>:
+ 172:	c3                   	ret    

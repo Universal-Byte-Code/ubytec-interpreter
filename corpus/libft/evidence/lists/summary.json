@@ -1,0 +1,56 @@
+{
+  "accepted": true,
+  "dotnet": {
+    "total": "587",
+    "executed": "587",
+    "passed": "587",
+    "failed": "0",
+    "error": "0",
+    "timeout": "0",
+    "aborted": "0",
+    "inconclusive": "0",
+    "passedButRunAborted": "0",
+    "notRunnable": "0",
+    "notExecuted": "0",
+    "disconnected": "0",
+    "warning": "0",
+    "completed": "0",
+    "inProgress": "0",
+    "pending": "0"
+  },
+  "native": {
+    "gcc": {
+      "accepted": true,
+      "random_steps": 10000,
+      "checks": 571082,
+      "maps": 1956,
+      "failed_maps": 741,
+      "invalid_target_faults": 2,
+      "pin_rejections": 1492
+    },
+    "clang": {
+      "accepted": true,
+      "random_steps": 10000,
+      "checks": 571082,
+      "maps": 1956,
+      "failed_maps": 741,
+      "invalid_target_faults": 2,
+      "pin_rejections": 1492
+    },
+    "sanitized": {
+      "accepted": true,
+      "random_steps": 10000,
+      "checks": 571082,
+      "maps": 1956,
+      "failed_maps": 741,
+      "invalid_target_faults": 2,
+      "pin_rejections": 1492
+    }
+  },
+  "compiler_sha256": "77dbc8836a0d40032b0959ae15b74d48d15ff89dffa23c777b3d6c9485bcc0d7",
+  "source_manifest_verified": true,
+  "assembly_manifest_verified": true,
+  "composed_source_manifest_verified": true,
+  "report_sha256": "5843d98e241954544ec001500d729f5b7b42f5c31f81056430b65d4e55926b75",
+  "trx_sha256": "449b56233be5effbb1f3d0ef7c025fc238cd931441904fc40248a647a5cb9c1b"
+}

@@ -1,0 +1,182 @@
+
+/mnt/x/codex/projects/ubytec-interpreter/artifacts/codegen-comparison/gcc-intrinsics.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <c_gcc_intrinsic_bytes>:
+   0:	f3 0f 1e fa          	endbr64 
+   4:	48 89 f9             	mov    rcx,rdi
+   7:	48 83 fe 7f          	cmp    rsi,0x7f
+   b:	0f 86 8f 02 00 00    	jbe    2a0 <c_gcc_intrinsic_bytes+0x2a0>
+  11:	48 8d 46 80          	lea    rax,[rsi-0x80]
+  15:	c5 d9 ef e4          	vpxor  xmm4,xmm4,xmm4
+  19:	c5 f9 ef c0          	vpxor  xmm0,xmm0,xmm0
+  1d:	48 89 c1             	mov    rcx,rax
+  20:	48 83 e0 80          	and    rax,0xffffffffffffff80
+  24:	c5 fd 6f d4          	vmovdqa ymm2,ymm4
+  28:	c5 fd 6f ec          	vmovdqa ymm5,ymm4
+  2c:	48 8d 94 07 80 00 00 	lea    rdx,[rdi+rax*1+0x80]
+  33:	00 
+  34:	48 c1 e9 07          	shr    rcx,0x7
+  38:	48 89 f8             	mov    rax,rdi
+  3b:	c5 fd 6f dc          	vmovdqa ymm3,ymm4
+  3f:	90                   	nop
+  40:	c5 fe 6f 38          	vmovdqu ymm7,YMMWORD PTR [rax]
+  44:	48 83 e8 80          	sub    rax,0xffffffffffffff80
+  48:	c5 c5 f6 c8          	vpsadbw ymm1,ymm7,ymm0
+  4c:	c5 fe 6f 78 a0       	vmovdqu ymm7,YMMWORD PTR [rax-0x60]
+  51:	c5 e5 d4 d9          	vpaddq ymm3,ymm3,ymm1
+  55:	c5 fd 6f f3          	vmovdqa ymm6,ymm3
+  59:	c5 c5 f6 c8          	vpsadbw ymm1,ymm7,ymm0
+  5d:	c5 fe 6f 78 c0       	vmovdqu ymm7,YMMWORD PTR [rax-0x40]
+  62:	c5 d5 d4 e9          	vpaddq ymm5,ymm5,ymm1
+  66:	c5 c5 f6 c8          	vpsadbw ymm1,ymm7,ymm0
+  6a:	c5 fe 6f 78 e0       	vmovdqu ymm7,YMMWORD PTR [rax-0x20]
+  6f:	c5 ed d4 d1          	vpaddq ymm2,ymm2,ymm1
+  73:	c5 c5 f6 c8          	vpsadbw ymm1,ymm7,ymm0
+  77:	c5 dd d4 e1          	vpaddq ymm4,ymm4,ymm1
+  7b:	48 39 d0             	cmp    rax,rdx
+  7e:	75 c0                	jne    40 <c_gcc_intrinsic_bytes+0x40>
+  80:	48 ff c1             	inc    rcx
+  83:	c5 ed d4 d5          	vpaddq ymm2,ymm2,ymm5
+  87:	83 e6 7f             	and    esi,0x7f
+  8a:	48 c1 e1 07          	shl    rcx,0x7
+  8e:	c5 ed d4 d4          	vpaddq ymm2,ymm2,ymm4
+  92:	48 01 f9             	add    rcx,rdi
+  95:	48 83 fe 1f          	cmp    rsi,0x1f
+  99:	76 4a                	jbe    e5 <c_gcc_intrinsic_bytes+0xe5>
+  9b:	c5 fe 6f 29          	vmovdqu ymm5,YMMWORD PTR [rcx]
+  9f:	c5 f9 ef c0          	vpxor  xmm0,xmm0,xmm0
+  a3:	48 8d 46 e0          	lea    rax,[rsi-0x20]
+  a7:	c5 d5 f6 f0          	vpsadbw ymm6,ymm5,ymm0
+  ab:	c5 e5 d4 f6          	vpaddq ymm6,ymm3,ymm6
+  af:	48 83 f8 1f          	cmp    rax,0x1f
+  b3:	76 24                	jbe    d9 <c_gcc_intrinsic_bytes+0xd9>
+  b5:	c5 fe 6f 69 20       	vmovdqu ymm5,YMMWORD PTR [rcx+0x20]
+  ba:	48 8d 56 c0          	lea    rdx,[rsi-0x40]
+  be:	c5 d5 f6 c8          	vpsadbw ymm1,ymm5,ymm0
+  c2:	c5 cd d4 f1          	vpaddq ymm6,ymm6,ymm1
+  c6:	48 83 fa 1f          	cmp    rdx,0x1f
+  ca:	76 0d                	jbe    d9 <c_gcc_intrinsic_bytes+0xd9>
+  cc:	c5 fe 6f 69 40       	vmovdqu ymm5,YMMWORD PTR [rcx+0x40]
+  d1:	c5 d5 f6 c0          	vpsadbw ymm0,ymm5,ymm0
+  d5:	c5 cd d4 f0          	vpaddq ymm6,ymm6,ymm0
+  d9:	48 83 e0 e0          	and    rax,0xffffffffffffffe0
+  dd:	83 e6 1f             	and    esi,0x1f
+  e0:	48 8d 4c 01 20       	lea    rcx,[rcx+rax*1+0x20]
+  e5:	c5 ed d4 d6          	vpaddq ymm2,ymm2,ymm6
+  e9:	48 8d 56 ff          	lea    rdx,[rsi-0x1]
+  ed:	c4 e3 7d 39 d0 01    	vextracti128 xmm0,ymm2,0x1
+  f3:	c5 f9 d4 d2          	vpaddq xmm2,xmm0,xmm2
+  f7:	c5 f9 73 da 08       	vpsrldq xmm0,xmm2,0x8
+  fc:	c5 e9 d4 d0          	vpaddq xmm2,xmm2,xmm0
+ 100:	c4 e1 f9 7e d0       	vmovq  rax,xmm2
+ 105:	48 85 f6             	test   rsi,rsi
+ 108:	0f 84 81 01 00 00    	je     28f <c_gcc_intrinsic_bytes+0x28f>
+ 10e:	48 83 fa 0e          	cmp    rdx,0xe
+ 112:	0f 86 ac 00 00 00    	jbe    1c4 <c_gcc_intrinsic_bytes+0x1c4>
+ 118:	c5 f8 10 11          	vmovups xmm2,XMMWORD PTR [rcx]
+ 11c:	48 83 c1 10          	add    rcx,0x10
+ 120:	c4 e2 79 30 ca       	vpmovzxbw xmm1,xmm2
+ 125:	c5 e9 73 da 08       	vpsrldq xmm2,xmm2,0x8
+ 12a:	c4 e2 79 30 d2       	vpmovzxbw xmm2,xmm2
+ 12f:	c4 e2 79 33 d9       	vpmovzxwd xmm3,xmm1
+ 134:	c5 f1 73 d9 08       	vpsrldq xmm1,xmm1,0x8
+ 139:	c4 e2 79 33 c9       	vpmovzxwd xmm1,xmm1
+ 13e:	c4 e2 79 33 e2       	vpmovzxwd xmm4,xmm2
+ 143:	c4 e2 79 35 e9       	vpmovzxdq xmm5,xmm1
+ 148:	c5 f9 73 db 08       	vpsrldq xmm0,xmm3,0x8
+ 14d:	c4 e2 79 35 c0       	vpmovzxdq xmm0,xmm0
+ 152:	c5 f1 73 d9 08       	vpsrldq xmm1,xmm1,0x8
+ 157:	c5 f9 d4 c5          	vpaddq xmm0,xmm0,xmm5
+ 15b:	c4 e2 79 35 c9       	vpmovzxdq xmm1,xmm1
+ 160:	c5 e9 73 da 08       	vpsrldq xmm2,xmm2,0x8
+ 165:	c4 e2 79 33 d2       	vpmovzxwd xmm2,xmm2
+ 16a:	c5 f9 d4 c1          	vpaddq xmm0,xmm0,xmm1
+ 16e:	c4 e2 79 35 cc       	vpmovzxdq xmm1,xmm4
+ 173:	c5 d9 73 dc 08       	vpsrldq xmm4,xmm4,0x8
+ 178:	c4 e2 79 35 e4       	vpmovzxdq xmm4,xmm4
+ 17d:	c5 f9 d4 c1          	vpaddq xmm0,xmm0,xmm1
+ 181:	c4 e2 79 35 ca       	vpmovzxdq xmm1,xmm2
+ 186:	c5 e9 73 da 08       	vpsrldq xmm2,xmm2,0x8
+ 18b:	c4 e2 79 35 d2       	vpmovzxdq xmm2,xmm2
+ 190:	c5 f9 d4 c4          	vpaddq xmm0,xmm0,xmm4
+ 194:	c4 e2 79 35 db       	vpmovzxdq xmm3,xmm3
+ 199:	c5 f9 d4 c1          	vpaddq xmm0,xmm0,xmm1
+ 19d:	c5 f9 d4 c2          	vpaddq xmm0,xmm0,xmm2
+ 1a1:	c5 f9 d4 c3          	vpaddq xmm0,xmm0,xmm3
+ 1a5:	c5 f1 73 d8 08       	vpsrldq xmm1,xmm0,0x8
+ 1aa:	c5 f9 d4 c1          	vpaddq xmm0,xmm0,xmm1
+ 1ae:	c4 e1 f9 7e c2       	vmovq  rdx,xmm0
+ 1b3:	48 01 d0             	add    rax,rdx
+ 1b6:	48 8d 56 ef          	lea    rdx,[rsi-0x11]
+ 1ba:	48 83 fe 10          	cmp    rsi,0x10
+ 1be:	0f 84 cb 00 00 00    	je     28f <c_gcc_intrinsic_bytes+0x28f>
+ 1c4:	0f b6 31             	movzx  esi,BYTE PTR [rcx]
+ 1c7:	48 01 f0             	add    rax,rsi
+ 1ca:	48 85 d2             	test   rdx,rdx
+ 1cd:	0f 84 bc 00 00 00    	je     28f <c_gcc_intrinsic_bytes+0x28f>
+ 1d3:	0f b6 71 01          	movzx  esi,BYTE PTR [rcx+0x1]
+ 1d7:	48 01 f0             	add    rax,rsi
+ 1da:	48 83 fa 01          	cmp    rdx,0x1
+ 1de:	0f 84 ab 00 00 00    	je     28f <c_gcc_intrinsic_bytes+0x28f>
+ 1e4:	0f b6 71 02          	movzx  esi,BYTE PTR [rcx+0x2]
+ 1e8:	48 01 f0             	add    rax,rsi
+ 1eb:	48 83 fa 02          	cmp    rdx,0x2
+ 1ef:	0f 84 9a 00 00 00    	je     28f <c_gcc_intrinsic_bytes+0x28f>
+ 1f5:	0f b6 71 03          	movzx  esi,BYTE PTR [rcx+0x3]
+ 1f9:	48 01 f0             	add    rax,rsi
+ 1fc:	48 83 fa 03          	cmp    rdx,0x3
+ 200:	0f 84 89 00 00 00    	je     28f <c_gcc_intrinsic_bytes+0x28f>
+ 206:	0f b6 71 04          	movzx  esi,BYTE PTR [rcx+0x4]
+ 20a:	48 01 f0             	add    rax,rsi
+ 20d:	48 83 fa 04          	cmp    rdx,0x4
+ 211:	74 7c                	je     28f <c_gcc_intrinsic_bytes+0x28f>
+ 213:	0f b6 71 05          	movzx  esi,BYTE PTR [rcx+0x5]
+ 217:	48 01 f0             	add    rax,rsi
+ 21a:	48 83 fa 05          	cmp    rdx,0x5
+ 21e:	74 6f                	je     28f <c_gcc_intrinsic_bytes+0x28f>
+ 220:	0f b6 71 06          	movzx  esi,BYTE PTR [rcx+0x6]
+ 224:	48 01 f0             	add    rax,rsi
+ 227:	48 83 fa 06          	cmp    rdx,0x6
+ 22b:	74 62                	je     28f <c_gcc_intrinsic_bytes+0x28f>
+ 22d:	0f b6 71 07          	movzx  esi,BYTE PTR [rcx+0x7]
+ 231:	48 01 f0             	add    rax,rsi
+ 234:	48 83 fa 07          	cmp    rdx,0x7
+ 238:	74 55                	je     28f <c_gcc_intrinsic_bytes+0x28f>
+ 23a:	0f b6 71 08          	movzx  esi,BYTE PTR [rcx+0x8]
+ 23e:	48 01 f0             	add    rax,rsi
+ 241:	48 83 fa 08          	cmp    rdx,0x8
+ 245:	74 48                	je     28f <c_gcc_intrinsic_bytes+0x28f>
+ 247:	0f b6 71 09          	movzx  esi,BYTE PTR [rcx+0x9]
+ 24b:	48 01 f0             	add    rax,rsi
+ 24e:	48 83 fa 09          	cmp    rdx,0x9
+ 252:	74 3b                	je     28f <c_gcc_intrinsic_bytes+0x28f>
+ 254:	0f b6 71 0a          	movzx  esi,BYTE PTR [rcx+0xa]
+ 258:	48 01 f0             	add    rax,rsi
+ 25b:	48 83 fa 0a          	cmp    rdx,0xa
+ 25f:	74 2e                	je     28f <c_gcc_intrinsic_bytes+0x28f>
+ 261:	0f b6 71 0b          	movzx  esi,BYTE PTR [rcx+0xb]
+ 265:	48 01 f0             	add    rax,rsi
+ 268:	48 83 fa 0b          	cmp    rdx,0xb
+ 26c:	74 21                	je     28f <c_gcc_intrinsic_bytes+0x28f>
+ 26e:	0f b6 71 0c          	movzx  esi,BYTE PTR [rcx+0xc]
+ 272:	48 01 f0             	add    rax,rsi
+ 275:	48 83 fa 0c          	cmp    rdx,0xc
+ 279:	74 14                	je     28f <c_gcc_intrinsic_bytes+0x28f>
+ 27b:	0f b6 71 0d          	movzx  esi,BYTE PTR [rcx+0xd]
+ 27f:	48 01 f0             	add    rax,rsi
+ 282:	48 83 fa 0d          	cmp    rdx,0xd
+ 286:	74 07                	je     28f <c_gcc_intrinsic_bytes+0x28f>
+ 288:	0f b6 51 0e          	movzx  edx,BYTE PTR [rcx+0xe]
+ 28c:	48 01 d0             	add    rax,rdx
+ 28f:	c5 f8 77             	vzeroupper 
+ 292:	c3                   	ret    
+ 293:	66 66 2e 0f 1f 84 00 	data16 nop WORD PTR cs:[rax+rax*1+0x0]
+ 29a:	00 00 00 00 
+ 29e:	66 90                	xchg   ax,ax
+ 2a0:	c5 c9 ef f6          	vpxor  xmm6,xmm6,xmm6
+ 2a4:	c5 fd 6f d6          	vmovdqa ymm2,ymm6
+ 2a8:	c5 fd 6f de          	vmovdqa ymm3,ymm6
+ 2ac:	e9 e4 fd ff ff       	jmp    95 <c_gcc_intrinsic_bytes+0x95>

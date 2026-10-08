@@ -1,0 +1,338 @@
+{
+  "accepted": true,
+  "dotnet_tests_passed": 606,
+  "functional_cases_per_compiler": 45,
+  "statistical_cases_per_compiler": 8,
+  "warmup": 5,
+  "samples": 30,
+  "full_matrix_30_samples_executed": false,
+  "protected_regression_cases_per_compiler": 52,
+  "source_assembly_and_input_hashes_verified": true,
+  "is_wsl": true,
+  "compiler_changed": false,
+  "remote_ci_executed": false,
+  "comparisons": [
+    {
+      "case": "4096-v4-uniform-b64",
+      "variants": {
+        "gcc": {
+          "feed": {
+            "before_median_ns": 2366685.5,
+            "after_median_ns": 2878280.0,
+            "before_p95_ns": 2544088,
+            "after_p95_ns": 3052973,
+            "median_speedup": 0.8222568686854649
+          },
+          "protected_e2e": {
+            "before_median_ns": 19729530.0,
+            "after_median_ns": 20514165.5,
+            "before_p95_ns": 22319071,
+            "after_p95_ns": 29944039,
+            "median_speedup": 0.961751527255642
+          }
+        },
+        "clang": {
+          "feed": {
+            "before_median_ns": 2392589.5,
+            "after_median_ns": 2960218.0,
+            "before_p95_ns": 2542435,
+            "after_p95_ns": 3176684,
+            "median_speedup": 0.8082477371598984
+          },
+          "protected_e2e": {
+            "before_median_ns": 19625679.0,
+            "after_median_ns": 23380911.0,
+            "before_p95_ns": 21320020,
+            "after_p95_ns": 29891212,
+            "median_speedup": 0.8393889784705139
+          }
+        }
+      }
+    },
+    {
+      "case": "4096-v4-uniform-b4096",
+      "variants": {
+        "gcc": {
+          "feed": {
+            "before_median_ns": 2392950.0,
+            "after_median_ns": 2839209.5,
+            "before_p95_ns": 2983323,
+            "after_p95_ns": 3552559,
+            "median_speedup": 0.8428226236915592
+          },
+          "protected_e2e": {
+            "before_median_ns": 15285364.5,
+            "after_median_ns": 18928570.0,
+            "before_p95_ns": 20226615,
+            "after_p95_ns": 26834100,
+            "median_speedup": 0.8075287515116039
+          }
+        },
+        "clang": {
+          "feed": {
+            "before_median_ns": 2409271.0,
+            "after_median_ns": 3023556.5,
+            "before_p95_ns": 2659859,
+            "after_p95_ns": 3682863,
+            "median_speedup": 0.7968334641671158
+          },
+          "protected_e2e": {
+            "before_median_ns": 14580255.5,
+            "after_median_ns": 16616364.0,
+            "before_p95_ns": 21064238,
+            "after_p95_ns": 24616711,
+            "median_speedup": 0.8774636557071089
+          }
+        }
+      }
+    },
+    {
+      "case": "4096-v64-uniform-b4096",
+      "variants": {
+        "gcc": {
+          "feed": {
+            "before_median_ns": 19824808.5,
+            "after_median_ns": 5846763.5,
+            "before_p95_ns": 21721163,
+            "after_p95_ns": 11773056,
+            "median_speedup": 3.3907320691182394
+          },
+          "protected_e2e": {
+            "before_median_ns": 54567917.0,
+            "after_median_ns": 49027866.5,
+            "before_p95_ns": 62647841,
+            "after_p95_ns": 53983564,
+            "median_speedup": 1.112997992682386
+          }
+        },
+        "clang": {
+          "feed": {
+            "before_median_ns": 20212968.0,
+            "after_median_ns": 5112702.5,
+            "before_p95_ns": 23288145,
+            "after_p95_ns": 7200957,
+            "median_speedup": 3.9534801800026504
+          },
+          "protected_e2e": {
+            "before_median_ns": 55753139.5,
+            "after_median_ns": 42817092.5,
+            "before_p95_ns": 60334320,
+            "after_p95_ns": 56025062,
+            "median_speedup": 1.3021234335329985
+          }
+        }
+      }
+    },
+    {
+      "case": "4096-v256-uniform-b4096",
+      "variants": {
+        "gcc": {
+          "feed": {
+            "before_median_ns": 186675394.5,
+            "after_median_ns": 13292238.0,
+            "before_p95_ns": 191317680,
+            "after_p95_ns": 15756959,
+            "median_speedup": 14.043940117533255
+          },
+          "protected_e2e": {
+            "before_median_ns": 304925366.5,
+            "after_median_ns": 137130872.5,
+            "before_p95_ns": 318060121,
+            "after_p95_ns": 146360433,
+            "median_speedup": 2.2236084474704993
+          }
+        },
+        "clang": {
+          "feed": {
+            "before_median_ns": 186415413.5,
+            "after_median_ns": 13129300.5,
+            "before_p95_ns": 189865805,
+            "after_p95_ns": 18106672,
+            "median_speedup": 14.198426907815843
+          },
+          "protected_e2e": {
+            "before_median_ns": 303526986.0,
+            "after_median_ns": 139621192.0,
+            "before_p95_ns": 319950585,
+            "after_p95_ns": 155982160,
+            "median_speedup": 2.173932063264436
+          }
+        }
+      }
+    },
+    {
+      "case": "65536-v64-uniform-b4096",
+      "variants": {
+        "gcc": {
+          "feed": {
+            "before_median_ns": 332217464.0,
+            "after_median_ns": 76592807.5,
+            "before_p95_ns": 341273918,
+            "after_p95_ns": 87182177,
+            "median_speedup": 4.337449883920236
+          },
+          "protected_e2e": {
+            "before_median_ns": 373064912.0,
+            "after_median_ns": 114512222.0,
+            "before_p95_ns": 388723008,
+            "after_p95_ns": 127064390,
+            "median_speedup": 3.2578610866532656
+          }
+        },
+        "clang": {
+          "feed": {
+            "before_median_ns": 329413830.5,
+            "after_median_ns": 75620419.5,
+            "before_p95_ns": 342402995,
+            "after_p95_ns": 84928258,
+            "median_speedup": 4.3561492078207795
+          },
+          "protected_e2e": {
+            "before_median_ns": 371186275.5,
+            "after_median_ns": 117383490.0,
+            "before_p95_ns": 382098532,
+            "after_p95_ns": 122974282,
+            "median_speedup": 3.1621676566270094
+          }
+        }
+      }
+    },
+    {
+      "case": "1048576-v4-uniform-b4096",
+      "variants": {
+        "gcc": {
+          "feed": {
+            "before_median_ns": 621898920.5,
+            "after_median_ns": 685322324.5,
+            "before_p95_ns": 647703233,
+            "after_p95_ns": 728055423,
+            "median_speedup": 0.9074546359681589
+          },
+          "protected_e2e": {
+            "before_median_ns": 695693994.0,
+            "after_median_ns": 725240053.0,
+            "before_p95_ns": 720219922,
+            "after_p95_ns": 769030848,
+            "median_speedup": 0.9592603043946885
+          }
+        },
+        "clang": {
+          "feed": {
+            "before_median_ns": 622062024.0,
+            "after_median_ns": 646316910.0,
+            "before_p95_ns": 645573698,
+            "after_p95_ns": 691806969,
+            "median_speedup": 0.9624721469843641
+          },
+          "protected_e2e": {
+            "before_median_ns": 702815389.0,
+            "after_median_ns": 743367676.0,
+            "before_p95_ns": 719745381,
+            "after_p95_ns": 857931173,
+            "median_speedup": 0.9454478741687983
+          }
+        }
+      }
+    },
+    {
+      "case": "sort-v64-descending-b4096",
+      "variants": {
+        "gcc": {
+          "feed": {
+            "before_median_ns": 331675986.5,
+            "after_median_ns": 72725851.0,
+            "before_p95_ns": 343146642,
+            "after_p95_ns": 83999793,
+            "median_speedup": 4.560633969068303
+          },
+          "protected_e2e": {
+            "before_median_ns": 386374049.0,
+            "after_median_ns": 130046635.0,
+            "before_p95_ns": 399975876,
+            "after_p95_ns": 150152205,
+            "median_speedup": 2.9710422649536454
+          }
+        },
+        "clang": {
+          "feed": {
+            "before_median_ns": 331996293.5,
+            "after_median_ns": 75864749.5,
+            "before_p95_ns": 340072807,
+            "after_p95_ns": 86350178,
+            "median_speedup": 4.376160149319415
+          },
+          "protected_e2e": {
+            "before_median_ns": 388582997.0,
+            "after_median_ns": 135430137.0,
+            "before_p95_ns": 402794534,
+            "after_p95_ns": 149451248,
+            "median_speedup": 2.8692505642226442
+          }
+        }
+      }
+    },
+    {
+      "case": "empty",
+      "variants": {
+        "gcc": {
+          "feed": {
+            "before_median_ns": 100.0,
+            "after_median_ns": 130.0,
+            "before_p95_ns": 341,
+            "after_p95_ns": 341,
+            "median_speedup": 0.7692307692307693
+          },
+          "protected_e2e": {
+            "before_median_ns": 9099410.5,
+            "after_median_ns": 9387381.0,
+            "before_p95_ns": 13660935,
+            "after_p95_ns": 12124430,
+            "median_speedup": 0.9693236590695531
+          }
+        },
+        "clang": {
+          "feed": {
+            "before_median_ns": 100.0,
+            "after_median_ns": 100.0,
+            "before_p95_ns": 310,
+            "after_p95_ns": 331,
+            "median_speedup": 1.0
+          },
+          "protected_e2e": {
+            "before_median_ns": 9570137.0,
+            "after_median_ns": 9370908.5,
+            "before_p95_ns": 13238885,
+            "after_p95_ns": 19563229,
+            "median_speedup": 1.0212603185699658
+          }
+        }
+      }
+    }
+  ],
+  "profiles": [
+    {
+      "case": "4096-v4-uniform-b4096",
+      "before_arena_visits": 43998,
+      "after_arena_visits": 40326,
+      "reduction_percent": 8.345833901540978
+    },
+    {
+      "case": "4096-v64-uniform-b4096",
+      "before_arena_visits": 710826,
+      "after_arena_visits": 84730,
+      "reduction_percent": 88.08006460090093
+    },
+    {
+      "case": "4096-v256-uniform-b4096",
+      "before_arena_visits": 7729098,
+      "after_arena_visits": 284538,
+      "reduction_percent": 96.31861311630414
+    },
+    {
+      "case": "65536-v256-uniform-b4096",
+      "before_arena_visits": 164204490,
+      "after_arena_visits": 3221370,
+      "reduction_percent": 98.03819615407593
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+
+/mnt/x/codex/projects/ubytec-interpreter/artifacts/block-reductions/measurements/comparison/gcc-native.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <c_gcc_native_identity>:
+   0:	f3 0f 1e fa          	endbr64 
+   4:	48 89 f8             	mov    rax,rdi
+   7:	c3                   	ret    
+   8:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
+   f:	00 
+
+0000000000000010 <c_gcc_native_bytes>:
+  10:	f3 0f 1e fa          	endbr64 
+  14:	48 89 f9             	mov    rcx,rdi
+  17:	48 85 f6             	test   rsi,rsi
+  1a:	0f 84 f0 01 00 00    	je     210 <c_gcc_native_bytes+0x200>
+  20:	48 8d 46 ff          	lea    rax,[rsi-0x1]
+  24:	48 83 f8 0e          	cmp    rax,0xe
+  28:	0f 86 e5 01 00 00    	jbe    213 <c_gcc_native_bytes+0x203>
+  2e:	48 89 f0             	mov    rax,rsi
+  31:	c5 e0 57 db          	vxorps xmm3,xmm3,xmm3
+  35:	48 83 e0 f0          	and    rax,0xfffffffffffffff0
+  39:	48 01 f8             	add    rax,rdi
+  3c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  40:	c5 f8 10 07          	vmovups xmm0,XMMWORD PTR [rdi]
+  44:	48 83 c7 10          	add    rdi,0x10
+  48:	c4 e2 79 30 d0       	vpmovzxbw xmm2,xmm0
+  4d:	c5 f9 73 d8 08       	vpsrldq xmm0,xmm0,0x8
+  52:	c4 e2 79 30 c0       	vpmovzxbw xmm0,xmm0
+  57:	c4 e2 79 33 ea       	vpmovzxwd xmm5,xmm2
+  5c:	c5 e9 73 da 08       	vpsrldq xmm2,xmm2,0x8
+  61:	c4 e2 79 33 d2       	vpmovzxwd xmm2,xmm2
+  66:	c4 e2 79 33 e0       	vpmovzxwd xmm4,xmm0
+  6b:	c4 e2 79 35 cd       	vpmovzxdq xmm1,xmm5
+  70:	c5 d1 73 dd 08       	vpsrldq xmm5,xmm5,0x8
+  75:	c4 e2 79 35 ed       	vpmovzxdq xmm5,xmm5
+  7a:	c5 f9 73 d8 08       	vpsrldq xmm0,xmm0,0x8
+  7f:	c5 f1 d4 cd          	vpaddq xmm1,xmm1,xmm5
+  83:	c4 e2 79 35 ea       	vpmovzxdq xmm5,xmm2
+  88:	c5 e9 73 da 08       	vpsrldq xmm2,xmm2,0x8
+  8d:	c4 e2 79 35 d2       	vpmovzxdq xmm2,xmm2
+  92:	c5 f1 d4 cd          	vpaddq xmm1,xmm1,xmm5
+  96:	c4 e2 79 33 c0       	vpmovzxwd xmm0,xmm0
+  9b:	c5 f1 d4 ca          	vpaddq xmm1,xmm1,xmm2
+  9f:	c4 e2 79 35 d4       	vpmovzxdq xmm2,xmm4
+  a4:	c5 d9 73 dc 08       	vpsrldq xmm4,xmm4,0x8
+  a9:	c4 e2 79 35 e4       	vpmovzxdq xmm4,xmm4
+  ae:	c5 f1 d4 ca          	vpaddq xmm1,xmm1,xmm2
+  b2:	c4 e2 79 35 d0       	vpmovzxdq xmm2,xmm0
+  b7:	c5 f9 73 d8 08       	vpsrldq xmm0,xmm0,0x8
+  bc:	c4 e2 79 35 c0       	vpmovzxdq xmm0,xmm0
+  c1:	c5 f1 d4 cc          	vpaddq xmm1,xmm1,xmm4
+  c5:	c5 f1 d4 ca          	vpaddq xmm1,xmm1,xmm2
+  c9:	c5 f1 d4 c0          	vpaddq xmm0,xmm1,xmm0
+  cd:	c5 e1 d4 d8          	vpaddq xmm3,xmm3,xmm0
+  d1:	48 39 c7             	cmp    rdi,rax
+  d4:	0f 85 66 ff ff ff    	jne    40 <c_gcc_native_bytes+0x30>
+  da:	48 89 f2             	mov    rdx,rsi
+  dd:	c5 f9 73 db 08       	vpsrldq xmm0,xmm3,0x8
+  e2:	c5 e1 d4 d8          	vpaddq xmm3,xmm3,xmm0
+  e6:	48 83 e2 f0          	and    rdx,0xfffffffffffffff0
+  ea:	c4 e1 f9 7e d8       	vmovq  rax,xmm3
+  ef:	40 f6 c6 0f          	test   sil,0xf
+  f3:	0f 84 23 01 00 00    	je     21c <c_gcc_native_bytes+0x20c>
+  f9:	0f b6 3c 11          	movzx  edi,BYTE PTR [rcx+rdx*1]
+  fd:	48 01 f8             	add    rax,rdi
+ 100:	48 8d 7a 01          	lea    rdi,[rdx+0x1]
+ 104:	48 39 fe             	cmp    rsi,rdi
+ 107:	0f 86 05 01 00 00    	jbe    212 <c_gcc_native_bytes+0x202>
+ 10d:	0f b6 7c 11 01       	movzx  edi,BYTE PTR [rcx+rdx*1+0x1]
+ 112:	48 01 f8             	add    rax,rdi
+ 115:	48 8d 7a 02          	lea    rdi,[rdx+0x2]
+ 119:	48 39 fe             	cmp    rsi,rdi
+ 11c:	0f 86 f0 00 00 00    	jbe    212 <c_gcc_native_bytes+0x202>
+ 122:	0f b6 7c 11 02       	movzx  edi,BYTE PTR [rcx+rdx*1+0x2]
+ 127:	48 01 f8             	add    rax,rdi
+ 12a:	48 8d 7a 03          	lea    rdi,[rdx+0x3]
+ 12e:	48 39 fe             	cmp    rsi,rdi
+ 131:	0f 86 db 00 00 00    	jbe    212 <c_gcc_native_bytes+0x202>
+ 137:	0f b6 7c 11 03       	movzx  edi,BYTE PTR [rcx+rdx*1+0x3]
+ 13c:	48 01 f8             	add    rax,rdi
+ 13f:	48 8d 7a 04          	lea    rdi,[rdx+0x4]
+ 143:	48 39 fe             	cmp    rsi,rdi
+ 146:	0f 86 c6 00 00 00    	jbe    212 <c_gcc_native_bytes+0x202>
+ 14c:	0f b6 7c 11 04       	movzx  edi,BYTE PTR [rcx+rdx*1+0x4]
+ 151:	48 01 f8             	add    rax,rdi
+ 154:	48 8d 7a 05          	lea    rdi,[rdx+0x5]
+ 158:	48 39 fe             	cmp    rsi,rdi
+ 15b:	0f 86 b1 00 00 00    	jbe    212 <c_gcc_native_bytes+0x202>
+ 161:	0f b6 7c 11 05       	movzx  edi,BYTE PTR [rcx+rdx*1+0x5]
+ 166:	48 01 f8             	add    rax,rdi
+ 169:	48 8d 7a 06          	lea    rdi,[rdx+0x6]
+ 16d:	48 39 fe             	cmp    rsi,rdi
+ 170:	0f 86 9c 00 00 00    	jbe    212 <c_gcc_native_bytes+0x202>
+ 176:	0f b6 7c 11 06       	movzx  edi,BYTE PTR [rcx+rdx*1+0x6]
+ 17b:	48 01 f8             	add    rax,rdi
+ 17e:	48 8d 7a 07          	lea    rdi,[rdx+0x7]
+ 182:	48 39 fe             	cmp    rsi,rdi
+ 185:	0f 86 87 00 00 00    	jbe    212 <c_gcc_native_bytes+0x202>
+ 18b:	0f b6 7c 11 07       	movzx  edi,BYTE PTR [rcx+rdx*1+0x7]
+ 190:	48 01 f8             	add    rax,rdi
+ 193:	48 8d 7a 08          	lea    rdi,[rdx+0x8]
+ 197:	48 39 fe             	cmp    rsi,rdi
+ 19a:	76 76                	jbe    212 <c_gcc_native_bytes+0x202>
+ 19c:	0f b6 7c 11 08       	movzx  edi,BYTE PTR [rcx+rdx*1+0x8]
+ 1a1:	48 01 f8             	add    rax,rdi
+ 1a4:	48 8d 7a 09          	lea    rdi,[rdx+0x9]
+ 1a8:	48 39 fe             	cmp    rsi,rdi
+ 1ab:	76 65                	jbe    212 <c_gcc_native_bytes+0x202>
+ 1ad:	0f b6 7c 11 09       	movzx  edi,BYTE PTR [rcx+rdx*1+0x9]
+ 1b2:	48 01 f8             	add    rax,rdi
+ 1b5:	48 8d 7a 0a          	lea    rdi,[rdx+0xa]
+ 1b9:	48 39 fe             	cmp    rsi,rdi
+ 1bc:	76 54                	jbe    212 <c_gcc_native_bytes+0x202>
+ 1be:	0f b6 7c 11 0a       	movzx  edi,BYTE PTR [rcx+rdx*1+0xa]
+ 1c3:	48 01 f8             	add    rax,rdi
+ 1c6:	48 8d 7a 0b          	lea    rdi,[rdx+0xb]
+ 1ca:	48 39 fe             	cmp    rsi,rdi
+ 1cd:	76 43                	jbe    212 <c_gcc_native_bytes+0x202>
+ 1cf:	0f b6 7c 11 0b       	movzx  edi,BYTE PTR [rcx+rdx*1+0xb]
+ 1d4:	48 01 f8             	add    rax,rdi
+ 1d7:	48 8d 7a 0c          	lea    rdi,[rdx+0xc]
+ 1db:	48 39 fe             	cmp    rsi,rdi
+ 1de:	76 32                	jbe    212 <c_gcc_native_bytes+0x202>
+ 1e0:	0f b6 7c 11 0c       	movzx  edi,BYTE PTR [rcx+rdx*1+0xc]
+ 1e5:	48 01 f8             	add    rax,rdi
+ 1e8:	48 8d 7a 0d          	lea    rdi,[rdx+0xd]
+ 1ec:	48 39 fe             	cmp    rsi,rdi
+ 1ef:	76 21                	jbe    212 <c_gcc_native_bytes+0x202>
+ 1f1:	0f b6 7c 11 0d       	movzx  edi,BYTE PTR [rcx+rdx*1+0xd]
+ 1f6:	48 83 c2 0e          	add    rdx,0xe
+ 1fa:	48 01 f8             	add    rax,rdi
+ 1fd:	48 39 d6             	cmp    rsi,rdx
+ 200:	76 10                	jbe    212 <c_gcc_native_bytes+0x202>
+ 202:	0f b6 14 11          	movzx  edx,BYTE PTR [rcx+rdx*1]
+ 206:	48 01 d0             	add    rax,rdx
+ 209:	c3                   	ret    
+ 20a:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+ 210:	31 c0                	xor    eax,eax
+ 212:	c3                   	ret    
+ 213:	31 d2                	xor    edx,edx
+ 215:	31 c0                	xor    eax,eax
+ 217:	e9 dd fe ff ff       	jmp    f9 <c_gcc_native_bytes+0xe9>
+ 21c:	c3                   	ret    
+ 21d:	0f 1f 00             	nop    DWORD PTR [rax]
+
+0000000000000220 <c_gcc_native_records>:
+ 220:	f3 0f 1e fa          	endbr64 
+ 224:	48 85 f6             	test   rsi,rsi
+ 227:	74 27                	je     250 <c_gcc_native_records+0x30>
+ 229:	48 8d 04 76          	lea    rax,[rsi+rsi*2]
+ 22d:	48 8d 14 c7          	lea    rdx,[rdi+rax*8]
+ 231:	31 c0                	xor    eax,eax
+ 233:	66 66 2e 0f 1f 84 00 	data16 nop WORD PTR cs:[rax+rax*1+0x0]
+ 23a:	00 00 00 00 
+ 23e:	66 90                	xchg   ax,ax
+ 240:	48 03 47 10          	add    rax,QWORD PTR [rdi+0x10]
+ 244:	48 83 c7 18          	add    rdi,0x18
+ 248:	48 39 fa             	cmp    rdx,rdi
+ 24b:	75 f3                	jne    240 <c_gcc_native_records+0x20>
+ 24d:	c3                   	ret    
+ 24e:	66 90                	xchg   ax,ax
+ 250:	31 c0                	xor    eax,eax
+ 252:	c3                   	ret    
+ 253:	66 66 2e 0f 1f 84 00 	data16 nop WORD PTR cs:[rax+rax*1+0x0]
+ 25a:	00 00 00 00 
+ 25e:	66 90                	xchg   ax,ax
+
+0000000000000260 <c_gcc_native_lookup>:
+ 260:	f3 0f 1e fa          	endbr64 
+ 264:	48 85 f6             	test   rsi,rsi
+ 267:	74 47                	je     2b0 <c_gcc_native_lookup+0x50>
+ 269:	45 31 c0             	xor    r8d,r8d
+ 26c:	eb 0e                	jmp    27c <c_gcc_native_lookup+0x1c>
+ 26e:	66 90                	xchg   ax,ax
+ 270:	49 ff c0             	inc    r8
+ 273:	48 83 c7 18          	add    rdi,0x18
+ 277:	4c 39 c6             	cmp    rsi,r8
+ 27a:	74 34                	je     2b0 <c_gcc_native_lookup+0x50>
+ 27c:	48 39 4f 08          	cmp    QWORD PTR [rdi+0x8],rcx
+ 280:	75 ee                	jne    270 <c_gcc_native_lookup+0x10>
+ 282:	48 85 c9             	test   rcx,rcx
+ 285:	74 21                	je     2a8 <c_gcc_native_lookup+0x48>
+ 287:	4c 8b 0f             	mov    r9,QWORD PTR [rdi]
+ 28a:	31 c0                	xor    eax,eax
+ 28c:	eb 0a                	jmp    298 <c_gcc_native_lookup+0x38>
+ 28e:	66 90                	xchg   ax,ax
+ 290:	48 ff c0             	inc    rax
+ 293:	48 39 c1             	cmp    rcx,rax
+ 296:	74 10                	je     2a8 <c_gcc_native_lookup+0x48>
+ 298:	45 0f b6 14 01       	movzx  r10d,BYTE PTR [r9+rax*1]
+ 29d:	44 38 14 02          	cmp    BYTE PTR [rdx+rax*1],r10b
+ 2a1:	74 ed                	je     290 <c_gcc_native_lookup+0x30>
+ 2a3:	48 39 c1             	cmp    rcx,rax
+ 2a6:	75 c8                	jne    270 <c_gcc_native_lookup+0x10>
+ 2a8:	49 8d 40 01          	lea    rax,[r8+0x1]
+ 2ac:	c3                   	ret    
+ 2ad:	0f 1f 00             	nop    DWORD PTR [rax]
+ 2b0:	31 c0                	xor    eax,eax
+ 2b2:	c3                   	ret    

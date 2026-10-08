@@ -1,0 +1,521 @@
+{
+  "accepted": true,
+  "compiler_sha256": "90a7371c1625fde54580504ffd55b844ab249a8d6c34ea1b78a406885d16a50e",
+  "source_sha256": {
+    "corpus/libft/run_lookup_reduction_loans.py": "cc5498999cfa7d4af3754cd0ee86f363ccebcf591e67a0e5bd8114ec4658266c",
+    "corpus/libft/lookup-loan-fixture.c": "fd294a35dcbec8b320982cb8537fe123636364607e0e74f44d1a8c8019f1c33e",
+    "corpus/libft/run_block_reduction_loans.py": "3d56f8a61163d94fdecb7adcfe72922f7e324aba0db6f1381dc813df138431e6",
+    "corpus/libft/diagnose-kernels.ubc": "e060bea04f6eeace9644a0cdaa1fcdd284d3d7b62ed53ea61a83729ff41ab66b",
+    "prototypes/isolation/linux/program.c": "465d0ffe83256c6bf1f0e4aa0673e4e69cea6b6025f74c5ca07c8f3b5d50c938",
+    "prototypes/isolation/linux/bridge-runtime.c": "3f486b0beabff2276c4dd7a96da62071d078aca66dbadc7cc362b3ad4ddae284",
+    "prototypes/isolation/linux/module.ld": "75f50ae3559982186203efff300d1709a8fa4206fcbe250f5a23b5e3ef241335",
+    "prototypes/isolation/linux/contracts.h": "222368f8189ae3d1afe7789edf260194764dfc35c4267f17902c0da10ce4766a",
+    "prototypes/isolation/linux/host-io-service.h": "88d6370685847113a85e46444d24821b547e663491371c7c5c9f2561e3cfa95b",
+    "prototypes/isolation/linux/many-service.h": "64be11faa8f1f35d868229e07d504b810b80517fc0aed7fcd6e96e02efb083d7",
+    "prototypes/isolation/linux/many-wire.h": "9bfd79326726850dc99b8f5967084b539ea0cc139a719e8c24fc7dbcbe678b4a"
+  },
+  "fixture": "native worker preparation of private records; compiler-generated lookup body; two RO loans",
+  "tests": {
+    "gcc_reference": [
+      {
+        "case": "authorized_lookup",
+        "count": 0,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 0,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 1,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 1,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 1,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 2,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 3,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 0,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 0,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 7,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 7,
+        "value": 1,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 1,
+        "query_length": 0,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 0,
+        "value": 1,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "fault_beyond_loans",
+        "count": 1,
+        "query_length": 4097,
+        "name_loan_bytes": 4096,
+        "key_loan_bytes": 4096,
+        "value": 2,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "ungranted",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 1,
+        "callee_launches": 0,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "fresh_recovery",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 3,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      }
+    ],
+    "gcc_reduction": [
+      {
+        "case": "authorized_lookup",
+        "count": 0,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 0,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 1,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 1,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 1,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 2,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 3,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 0,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 0,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 7,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 7,
+        "value": 1,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 1,
+        "query_length": 0,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 0,
+        "value": 1,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "fault_beyond_loans",
+        "count": 1,
+        "query_length": 4097,
+        "name_loan_bytes": 4096,
+        "key_loan_bytes": 4096,
+        "value": 2,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "ungranted",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 1,
+        "callee_launches": 0,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "fresh_recovery",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 3,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      }
+    ],
+    "clang_reference": [
+      {
+        "case": "authorized_lookup",
+        "count": 0,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 0,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 1,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 1,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 1,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 2,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 3,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 0,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 0,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 7,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 7,
+        "value": 1,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 1,
+        "query_length": 0,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 0,
+        "value": 1,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "fault_beyond_loans",
+        "count": 1,
+        "query_length": 4097,
+        "name_loan_bytes": 4096,
+        "key_loan_bytes": 4096,
+        "value": 2,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "ungranted",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 1,
+        "callee_launches": 0,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "fresh_recovery",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 3,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      }
+    ],
+    "clang_reduction": [
+      {
+        "case": "authorized_lookup",
+        "count": 0,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 0,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 1,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 1,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 1,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 2,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 3,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 0,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 0,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 3,
+        "query_length": 7,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 7,
+        "value": 1,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "authorized_lookup",
+        "count": 1,
+        "query_length": 0,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 0,
+        "value": 1,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "fault_beyond_loans",
+        "count": 1,
+        "query_length": 4097,
+        "name_loan_bytes": 4096,
+        "key_loan_bytes": 4096,
+        "value": 2,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "ungranted",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 1,
+        "callee_launches": 0,
+        "neighbors_preserved": true
+      },
+      {
+        "case": "fresh_recovery",
+        "count": 3,
+        "query_length": 8,
+        "name_loan_bytes": 24,
+        "key_loan_bytes": 8,
+        "value": 3,
+        "callee_launches": 1,
+        "neighbors_preserved": true
+      }
+    ]
+  },
+  "assembly_transform": "Only Find public adapter replaced with jmp fixture_lookup; generated kernel and candidate adapter unchanged",
+  "artifact_sha256": {
+    "caller.elf": "09038de391da141529be9cd132715cf0c35306cdc93b3c1f0c4ee69d189c6336",
+    "caller.nasm": "d1f0dcc41ec954a88faa068406aa3ffe9ef1ad9547a26899e5cd25fe72aa46c3",
+    "caller.ubc": "2af364db26feb960d323ff4cf4fa51edfdc4bdd368ae061a6548f1d87105647f",
+    "memory.ubc": "bc6e82794884dbb2187aa1a75462a65a83ceb9da168f1de5bcecbf86bd52714d",
+    "reduction-original.nasm": "e1f0b16719909faa016efb1b22096bed451115d5806b995df29e3691d773b348",
+    "reduction.elf": "db638076b0783a8ea82f22ab5b982d0859afc733e7b3529315c0f7eaf2103905",
+    "reduction.nasm": "7ff7f9d3d29a815f33f04714cdbe2b2c5292ebf157b079e185fd3799e11d6f2e",
+    "reference-original.nasm": "b503be55ecba91efa1f84666a12db9e9fb1d5f93ef1af358d62a65153398b41b",
+    "reference.elf": "348d8ab6ba39fa70d7409a5d8ed187105fa1625c0a66f0f8e85e4d15ca8eb1be",
+    "reference.nasm": "af792c841aa0c79f938ede401c245d87a16c023c286241a65a840774b3cfd98b"
+  }
+}

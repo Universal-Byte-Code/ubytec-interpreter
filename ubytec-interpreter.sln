@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubytec", "Ubytec\Ubytec.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wiki", "Wiki\Wiki.csproj", "{254FEE8F-DADF-4E29-93AD-A16FE0EA13E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubytec.Tests", "Ubytec.Tests\Ubytec.Tests.csproj", "{7C1E2D07-537C-495C-B458-DA434952938E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,12 @@ Global
 		{254FEE8F-DADF-4E29-93AD-A16FE0EA13E5}.Release|Any CPU.Build.0 = Wiki|Any CPU
 		{254FEE8F-DADF-4E29-93AD-A16FE0EA13E5}.Wiki|Any CPU.ActiveCfg = Wiki|Any CPU
 		{254FEE8F-DADF-4E29-93AD-A16FE0EA13E5}.Wiki|Any CPU.Build.0 = Wiki|Any CPU
+		{7C1E2D07-537C-495C-B458-DA434952938E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C1E2D07-537C-495C-B458-DA434952938E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C1E2D07-537C-495C-B458-DA434952938E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C1E2D07-537C-495C-B458-DA434952938E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C1E2D07-537C-495C-B458-DA434952938E}.Wiki|Any CPU.ActiveCfg = Release|Any CPU
+		{7C1E2D07-537C-495C-B458-DA434952938E}.Wiki|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

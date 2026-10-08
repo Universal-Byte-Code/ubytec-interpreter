@@ -1,0 +1,565 @@
+{
+  "schema": 1,
+  "accepted": true,
+  "platform": "Linux-5.10.16.3-microsoft-standard-WSL2-x86_64-with-glibc2.29",
+  "source_sha256": {
+    "corpus/libft/arena.ubc": "9f9300b8966e7db225ed52fd18b879b626b1f71e254b80c473ed64d37f94d2a8",
+    "Ubytec/Program.cs": "22e398162340919df486152a38bb78c8caf4ad172641c5d4d7fbc6fc2a508dff",
+    "Ubytec/Ubytec.csproj": "6bfd41636d720ed2132947afb21a7eb474b05601bb80ed7ff5bfacad3470fbaf",
+    "Ubytec/Language/AST/ArenaImportGenerator.cs": "3488f64b4207ea5aa5f49dd4a04b89f0b7a41ad403d1797adaf9e010a79eccc0",
+    "Ubytec/Language/AST/ModuleContracts.cs": "5aa8ae251a191499ef8a1da13c56f988290b70d3a7b8681464cd7b3eda5d3570",
+    "Ubytec/Language/AST/SourceCompiler.cs": "5af95462109c9e791b81fca37ee619bc6e567a03855ad97cd5fe225d46bfd5af",
+    "prototypes/isolation/run_generic_arena.py": "e48f4884297270794443ded4b4e942f0a36eb5544c4d1bc3d7dbdc82f52f1595",
+    "prototypes/isolation/check_arena_cli.py": "f07ef203797c73c5bb66d8441e8bc9000382365b9fc21b84c6ad581c37763471",
+    "prototypes/isolation/generate_arena_imports.py": "a2a07dccdc19c7222adb82d7af1010325181ff86ed997ad7463aa311d5405477",
+    "prototypes/isolation/generic_text_cli.py": "23a50de485360fbbfc7ca34aaa7f8c335a568664b603ee6414f134e399ab06c2",
+    "prototypes/isolation/run.py": "cc316c9fce4e4ccc65f11915e101fddc760aa66b2dd013f2cbc9fb1e7be4286a",
+    "prototypes/isolation/linux/program.c": "5c326158be1432bfab627dc54d2af2f6144f0a6c55b04c7afa2eb6e68a7b0cbe",
+    "prototypes/isolation/linux/modules.c": "34dd7824a287db9209f4736526c34a2a56caf6ba6d7b396deb0dfb3834f748e2",
+    "prototypes/isolation/linux/contracts.h": "222368f8189ae3d1afe7789edf260194764dfc35c4267f17902c0da10ce4766a",
+    "prototypes/isolation/linux/many-service.h": "64be11faa8f1f35d868229e07d504b810b80517fc0aed7fcd6e96e02efb083d7",
+    "prototypes/isolation/linux/many-wire.h": "9bfd79326726850dc99b8f5967084b539ea0cc139a719e8c24fc7dbcbe678b4a",
+    "prototypes/isolation/linux/isolation.c": "7bdf7c22d285b931e707e3118e0ae228396036dccf56b4d3abe220465aa91bb1",
+    "prototypes/isolation/linux/bridge-runtime.c": "5bc303db6453e62ebfe3c5502bf907343bc92c23f3d403a6c16cfe00026ad965",
+    "prototypes/isolation/linux/arena-transport-inject.c": "8099cc4407eaafd6bc7f9a0a2774854f15ca42a8731b14800abe6193326deabc",
+    "prototypes/isolation/linux/module.ld": "75f50ae3559982186203efff300d1709a8fa4206fcbe250f5a23b5e3ef241335",
+    "prototypes/isolation/common/contract.h": "702be6fcb236a74540712923ca33b7662e0162b7f22dd3160a8629aebe5bc55e",
+    "prototypes/isolation/ubytec/arena/pair-caller.ubc": "67074fbc57bfa292def31322869789ec25c2f9db2b692474e64a08c92d38563c",
+    "prototypes/isolation/ubytec/arena/pair-receiver.ubc": "7d1710acea511e018ce5a66a394cfcc127f861e68d70e963702c83554ddf9ac7",
+    "prototypes/isolation/ubytec/arena/dynamic-text.ubc": "71ca451550393d42beea0a80be6bea2a7fdb82932d86f758684960897311331e",
+    "prototypes/isolation/ubytec/text/lexer.ubc": "4794d7df9156723ff930562081c9e7e0409c27821b585c5d4562998e96a61b1a",
+    "prototypes/isolation/ubytec/text/mapper.ubc": "d7c6d5d6c89b7fabff61ddd764e099c43302a4141654ca781a5e2e247e026161",
+    "prototypes/isolation/ubytec/text/writer.ubc": "f3014e1490c1abee8bebd9f1d903046966031e05bc9ca74f75ad78a49c5e57b3",
+    "prototypes/isolation/ubytec/arena/pair-source.ubc": "03821f21dd0061c2a28ffc6f77829d88d677c237969cd0d5efbe8f4077987d91",
+    "prototypes/isolation/ubytec/arena/dynamic-text-source.ubc": "7487ac592c9628b1ded44da38637ad4151d3dcc8eae76de8aae8796fbf1491e5"
+  },
+  "tests": {
+    "gcc": [
+      {
+        "case": "pair-0",
+        "pass": true
+      },
+      {
+        "case": "pair-1",
+        "pass": true
+      },
+      {
+        "case": "pair-2",
+        "pass": true
+      },
+      {
+        "case": "pair-3",
+        "pass": true
+      },
+      {
+        "case": "pair-4",
+        "pass": true
+      },
+      {
+        "case": "pair-5",
+        "pass": true
+      },
+      {
+        "case": "pair-6",
+        "pass": true
+      },
+      {
+        "case": "pair-7",
+        "pass": true
+      },
+      {
+        "case": "pair-8",
+        "pass": true
+      },
+      {
+        "case": "pair-9",
+        "pass": true
+      },
+      {
+        "case": "pair-10",
+        "pass": true
+      },
+      {
+        "case": "pair-11",
+        "pass": true
+      },
+      {
+        "case": "pair-12",
+        "pass": true
+      },
+      {
+        "case": "pair-13",
+        "pass": true
+      },
+      {
+        "case": "pair-14",
+        "pass": true
+      },
+      {
+        "case": "pair-15",
+        "pass": true
+      },
+      {
+        "case": "pair-16",
+        "pass": true
+      },
+      {
+        "case": "pair-17",
+        "pass": true
+      },
+      {
+        "case": "pair-18",
+        "pass": true
+      },
+      {
+        "case": "pair-19",
+        "pass": true
+      },
+      {
+        "case": "pair-20",
+        "pass": true
+      },
+      {
+        "case": "text-0",
+        "pass": true,
+        "value": 0
+      },
+      {
+        "case": "text-1",
+        "pass": true,
+        "value": 17
+      },
+      {
+        "case": "text-2",
+        "pass": true,
+        "value": 0
+      },
+      {
+        "case": "text-3",
+        "pass": true,
+        "value": 8
+      },
+      {
+        "case": "text-4",
+        "pass": true,
+        "value": 3
+      },
+      {
+        "case": "text-5",
+        "pass": true,
+        "value": 4096
+      },
+      {
+        "case": "text-6",
+        "pass": true,
+        "value": 177
+      },
+      {
+        "case": "text-7",
+        "pass": true,
+        "value": 38
+      },
+      {
+        "case": "text-8",
+        "pass": true,
+        "value": 135
+      },
+      {
+        "case": "text-9",
+        "pass": true,
+        "value": 218
+      },
+      {
+        "case": "text-10",
+        "pass": true,
+        "value": 45
+      },
+      {
+        "case": "text-11",
+        "pass": true,
+        "value": 93
+      },
+      {
+        "case": "text-12",
+        "pass": true,
+        "value": 188
+      },
+      {
+        "case": "text-13",
+        "pass": true,
+        "value": 103
+      },
+      {
+        "case": "text-14",
+        "pass": true,
+        "value": 196
+      },
+      {
+        "case": "text-15",
+        "pass": true,
+        "value": 125
+      },
+      {
+        "case": "text-16",
+        "pass": true,
+        "value": 133
+      },
+      {
+        "case": "text-17",
+        "pass": true,
+        "value": 34
+      },
+      {
+        "case": "text-18",
+        "pass": true,
+        "value": 77
+      },
+      {
+        "case": "text-19",
+        "pass": true,
+        "value": 38
+      },
+      {
+        "case": "text-20",
+        "pass": true,
+        "value": 37
+      },
+      {
+        "case": "text-21",
+        "pass": true,
+        "value": 89
+      },
+      {
+        "case": "text-22",
+        "pass": true,
+        "value": 103
+      },
+      {
+        "case": "text-23",
+        "pass": true,
+        "value": 204
+      },
+      {
+        "case": "text-24",
+        "pass": true,
+        "value": 0
+      },
+      {
+        "case": "text-25",
+        "pass": true,
+        "value": 29
+      },
+      {
+        "case": "token-oom",
+        "pass": true,
+        "value": -11
+      },
+      {
+        "case": "output-oom",
+        "pass": true,
+        "value": -12
+      },
+      {
+        "case": "arena-oom",
+        "pass": true,
+        "value": -20
+      },
+      {
+        "case": "no-fields-empty",
+        "pass": true,
+        "value": 0
+      },
+      {
+        "case": "no-output",
+        "pass": true,
+        "value": -12
+      },
+      {
+        "case": "denied-render",
+        "pass": true,
+        "value": -101
+      },
+      {
+        "case": "read-only-ceiling",
+        "pass": true,
+        "value": -101
+      }
+    ],
+    "clang": [
+      {
+        "case": "pair-0",
+        "pass": true
+      },
+      {
+        "case": "pair-1",
+        "pass": true
+      },
+      {
+        "case": "pair-2",
+        "pass": true
+      },
+      {
+        "case": "pair-3",
+        "pass": true
+      },
+      {
+        "case": "pair-4",
+        "pass": true
+      },
+      {
+        "case": "pair-5",
+        "pass": true
+      },
+      {
+        "case": "pair-6",
+        "pass": true
+      },
+      {
+        "case": "pair-7",
+        "pass": true
+      },
+      {
+        "case": "pair-8",
+        "pass": true
+      },
+      {
+        "case": "pair-9",
+        "pass": true
+      },
+      {
+        "case": "pair-10",
+        "pass": true
+      },
+      {
+        "case": "pair-11",
+        "pass": true
+      },
+      {
+        "case": "pair-12",
+        "pass": true
+      },
+      {
+        "case": "pair-13",
+        "pass": true
+      },
+      {
+        "case": "pair-14",
+        "pass": true
+      },
+      {
+        "case": "pair-15",
+        "pass": true
+      },
+      {
+        "case": "pair-16",
+        "pass": true
+      },
+      {
+        "case": "pair-17",
+        "pass": true
+      },
+      {
+        "case": "pair-18",
+        "pass": true
+      },
+      {
+        "case": "pair-19",
+        "pass": true
+      },
+      {
+        "case": "pair-20",
+        "pass": true
+      },
+      {
+        "case": "text-0",
+        "pass": true,
+        "value": 0
+      },
+      {
+        "case": "text-1",
+        "pass": true,
+        "value": 17
+      },
+      {
+        "case": "text-2",
+        "pass": true,
+        "value": 0
+      },
+      {
+        "case": "text-3",
+        "pass": true,
+        "value": 8
+      },
+      {
+        "case": "text-4",
+        "pass": true,
+        "value": 3
+      },
+      {
+        "case": "text-5",
+        "pass": true,
+        "value": 4096
+      },
+      {
+        "case": "text-6",
+        "pass": true,
+        "value": 177
+      },
+      {
+        "case": "text-7",
+        "pass": true,
+        "value": 38
+      },
+      {
+        "case": "text-8",
+        "pass": true,
+        "value": 135
+      },
+      {
+        "case": "text-9",
+        "pass": true,
+        "value": 218
+      },
+      {
+        "case": "text-10",
+        "pass": true,
+        "value": 45
+      },
+      {
+        "case": "text-11",
+        "pass": true,
+        "value": 93
+      },
+      {
+        "case": "text-12",
+        "pass": true,
+        "value": 188
+      },
+      {
+        "case": "text-13",
+        "pass": true,
+        "value": 103
+      },
+      {
+        "case": "text-14",
+        "pass": true,
+        "value": 196
+      },
+      {
+        "case": "text-15",
+        "pass": true,
+        "value": 125
+      },
+      {
+        "case": "text-16",
+        "pass": true,
+        "value": 133
+      },
+      {
+        "case": "text-17",
+        "pass": true,
+        "value": 34
+      },
+      {
+        "case": "text-18",
+        "pass": true,
+        "value": 77
+      },
+      {
+        "case": "text-19",
+        "pass": true,
+        "value": 38
+      },
+      {
+        "case": "text-20",
+        "pass": true,
+        "value": 37
+      },
+      {
+        "case": "text-21",
+        "pass": true,
+        "value": 89
+      },
+      {
+        "case": "text-22",
+        "pass": true,
+        "value": 103
+      },
+      {
+        "case": "text-23",
+        "pass": true,
+        "value": 204
+      },
+      {
+        "case": "text-24",
+        "pass": true,
+        "value": 0
+      },
+      {
+        "case": "text-25",
+        "pass": true,
+        "value": 29
+      },
+      {
+        "case": "token-oom",
+        "pass": true,
+        "value": -11
+      },
+      {
+        "case": "output-oom",
+        "pass": true,
+        "value": -12
+      },
+      {
+        "case": "arena-oom",
+        "pass": true,
+        "value": -20
+      },
+      {
+        "case": "no-fields-empty",
+        "pass": true,
+        "value": 0
+      },
+      {
+        "case": "no-output",
+        "pass": true,
+        "value": -12
+      },
+      {
+        "case": "denied-render",
+        "pass": true,
+        "value": -101
+      },
+      {
+        "case": "read-only-ceiling",
+        "pass": true,
+        "value": -101
+      }
+    ]
+  },
+  "assembly_sha256": {
+    "pair-caller": "554238a6363d234d6082988a5090dfe863e201edc729c3212676ba7c3c6670f6",
+    "pair-receiver": "3f157d0187de77f6c79f153f10ffe7843765d17b0ebda147689e1674f808a79f",
+    "dynamic-text": "2bc26f8c9037946a730f5a0d19e4bc663370a55223f22f79203137747fb134a3",
+    "lexer": "860655228f1db8dc8cc2ca365275b995e93a9ef39548d3d57ee28c1e51d4e9c5",
+    "mapper": "ce2756c1535a5c5654bcad8e037f2ae107623ff93280804fe9793844d1c7d176",
+    "writer": "62a320256b6414c02df0f583b0ce73eed0ca6f52a2e79c17e79391ebb701e9a6"
+  },
+  "generator_checks": {
+    "valid": 4,
+    "rejections": 6,
+    "generated_fixture_equality": 2,
+    "cli": 2
+  },
+  "integrated_cli_checks": {
+    "passed": true,
+    "count": 13,
+    "report_sha256": "60fe38dec5fe8a5cf453eb6f5d27e03c9a72327bb3abe2d966311b304e97eb20",
+    "compiler_sha256": "ea08904130c42ee32ebd8fe22d61d13b683ae954f993e78a2dc0b049608fa878"
+  },
+  "cli_generated_sha256": {
+    "pair-caller": "7cd9da4d5e3a20a5ee0005c25f31348383d416a3480d3b56788ab2cb94dad7e5",
+    "dynamic-text": "728c642ec3edafaaebb58b042d01b43560e7b8a59b299d56831ec7466d27de11"
+  },
+  "file_driver_checks": 5
+}

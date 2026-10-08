@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyVersion>1.0.9318.1774</AssemblyVersion>
+    <FileVersion>1.0.9318.1774</FileVersion>
+    <Configurations>Debug;Release</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Language/Grammar/ubytec.tmLanguage.json" LogicalName="Ubytec.Language.Grammar.ubytec.tmLanguage.json" />
+    <EmbeddedResource Include="../corpus/libft/arena.ubc" LogicalName="Ubytec.Runtime.arena.ubc" />
+    <PackageReference Include="NJsonSchema" Version="11.1.0" />
+    <PackageReference Include="TextMateSharp" Version="1.0.66" />
+  </ItemGroup>
+
+</Project>

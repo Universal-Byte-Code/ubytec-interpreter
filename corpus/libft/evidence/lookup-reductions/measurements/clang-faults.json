@@ -1,0 +1,1 @@
+{"accepted":true,"segv_cases":69,"bus_cases":68,"variants":2,"stages":4,"observations":"signal, code, address, four locals, three residual cells and RSP"}

@@ -1,0 +1,16 @@
+{
+  "mode": "Windows .NET 9 source compilation; NASM handoff to WSL",
+  "options": [
+    "--library",
+    "--module-calls"
+  ],
+  "dotnet_tests_passed": 497,
+  "compiler_sha256": "24876420b21dc5fb1176a5c6da0b5b224b63eb794b1ef6a5fc8e9c31c95df8af",
+  "assembly_sha256": "d448bd5b2c83586fe9fe9ed154772695f0657173960e6cdc3161b232ad176c0c",
+  "source_sha256": {
+    "Ubytec/Language/AST/SourceCompiler.cs": "d2a89eb3ccdcf9052aa2004865c79933230fed1abbf624348115ad4fdee7c4a1",
+    "Ubytec/Program.cs": "b9a6301dae5c3d5a29b47da503fbeb9ae6cc1056beed9aa12689ef3884b16117",
+    "Ubytec/Language/Grammar/ubytec.tmLanguage.json": "da6277ad4ea2e24ca1deffba546180583097947b2e19d397cf5655ea9d8469b0",
+    "prototypes/isolation/ubytec/modules/caller.ubc": "0d525765d58d18ec7bf80a5bd88e98c9a070a46c0d72fd5745baa941395d4f5a"
+  }
+}

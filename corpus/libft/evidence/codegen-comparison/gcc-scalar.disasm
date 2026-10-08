@@ -1,0 +1,85 @@
+
+/mnt/x/codex/projects/ubytec-interpreter/artifacts/codegen-comparison/gcc-scalar.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <c_gcc_scalar_identity>:
+   0:	f3 0f 1e fa          	endbr64 
+   4:	48 89 f8             	mov    rax,rdi
+   7:	c3                   	ret    
+   8:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
+   f:	00 
+
+0000000000000010 <c_gcc_scalar_bytes>:
+  10:	f3 0f 1e fa          	endbr64 
+  14:	48 85 f6             	test   rsi,rsi
+  17:	74 17                	je     30 <c_gcc_scalar_bytes+0x20>
+  19:	48 01 fe             	add    rsi,rdi
+  1c:	31 c0                	xor    eax,eax
+  1e:	66 90                	xchg   ax,ax
+  20:	0f b6 17             	movzx  edx,BYTE PTR [rdi]
+  23:	48 83 c7 01          	add    rdi,0x1
+  27:	48 01 d0             	add    rax,rdx
+  2a:	48 39 fe             	cmp    rsi,rdi
+  2d:	75 f1                	jne    20 <c_gcc_scalar_bytes+0x10>
+  2f:	c3                   	ret    
+  30:	31 c0                	xor    eax,eax
+  32:	c3                   	ret    
+  33:	66 66 2e 0f 1f 84 00 	data16 nop WORD PTR cs:[rax+rax*1+0x0]
+  3a:	00 00 00 00 
+  3e:	66 90                	xchg   ax,ax
+
+0000000000000040 <c_gcc_scalar_records>:
+  40:	f3 0f 1e fa          	endbr64 
+  44:	48 85 f6             	test   rsi,rsi
+  47:	74 27                	je     70 <c_gcc_scalar_records+0x30>
+  49:	48 8d 04 76          	lea    rax,[rsi+rsi*2]
+  4d:	48 8d 14 c7          	lea    rdx,[rdi+rax*8]
+  51:	31 c0                	xor    eax,eax
+  53:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  58:	48 03 47 10          	add    rax,QWORD PTR [rdi+0x10]
+  5c:	48 83 c7 18          	add    rdi,0x18
+  60:	48 39 d7             	cmp    rdi,rdx
+  63:	75 f3                	jne    58 <c_gcc_scalar_records+0x18>
+  65:	c3                   	ret    
+  66:	66 2e 0f 1f 84 00 00 	nop    WORD PTR cs:[rax+rax*1+0x0]
+  6d:	00 00 00 
+  70:	31 c0                	xor    eax,eax
+  72:	c3                   	ret    
+  73:	66 66 2e 0f 1f 84 00 	data16 nop WORD PTR cs:[rax+rax*1+0x0]
+  7a:	00 00 00 00 
+  7e:	66 90                	xchg   ax,ax
+
+0000000000000080 <c_gcc_scalar_lookup>:
+  80:	f3 0f 1e fa          	endbr64 
+  84:	48 85 f6             	test   rsi,rsi
+  87:	74 47                	je     d0 <c_gcc_scalar_lookup+0x50>
+  89:	45 31 c0             	xor    r8d,r8d
+  8c:	eb 0f                	jmp    9d <c_gcc_scalar_lookup+0x1d>
+  8e:	66 90                	xchg   ax,ax
+  90:	49 83 c0 01          	add    r8,0x1
+  94:	48 83 c7 18          	add    rdi,0x18
+  98:	4c 39 c6             	cmp    rsi,r8
+  9b:	74 33                	je     d0 <c_gcc_scalar_lookup+0x50>
+  9d:	48 39 4f 08          	cmp    QWORD PTR [rdi+0x8],rcx
+  a1:	75 ed                	jne    90 <c_gcc_scalar_lookup+0x10>
+  a3:	48 85 c9             	test   rcx,rcx
+  a6:	74 21                	je     c9 <c_gcc_scalar_lookup+0x49>
+  a8:	4c 8b 0f             	mov    r9,QWORD PTR [rdi]
+  ab:	31 c0                	xor    eax,eax
+  ad:	eb 0a                	jmp    b9 <c_gcc_scalar_lookup+0x39>
+  af:	90                   	nop
+  b0:	48 83 c0 01          	add    rax,0x1
+  b4:	48 39 c1             	cmp    rcx,rax
+  b7:	74 10                	je     c9 <c_gcc_scalar_lookup+0x49>
+  b9:	44 0f b6 14 02       	movzx  r10d,BYTE PTR [rdx+rax*1]
+  be:	45 38 14 01          	cmp    BYTE PTR [r9+rax*1],r10b
+  c2:	74 ec                	je     b0 <c_gcc_scalar_lookup+0x30>
+  c4:	48 39 c1             	cmp    rcx,rax
+  c7:	75 c7                	jne    90 <c_gcc_scalar_lookup+0x10>
+  c9:	49 8d 40 01          	lea    rax,[r8+0x1]
+  cd:	c3                   	ret    
+  ce:	66 90                	xchg   ax,ax
+  d0:	31 c0                	xor    eax,eax
+  d2:	c3                   	ret    

@@ -1,0 +1,8 @@
+_42	1
+alpha	1
+beta	2
+hello	2
+last	1
+word_42	1
+world	1
+z9	1

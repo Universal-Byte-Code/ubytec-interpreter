@@ -1,0 +1,83 @@
+     VMA      LMA     Size Align Out     In      Symbol
+       0        0       40     1 .vectors
+       0        0       40     1         /tmp/startup-c03580.o:(.vectors)
+      40       40     4124     4 .text
+      40       40      1d4     4         /tmp/startup-c03580.o:(.text)
+      40       40        0     1                 $t.0
+      41       41        0     1                 Reset_Handler
+      6d       6d        0     1                 enter_module
+      80       80        0     1                 resume_module
+      85       85        0     1                 SVC_Handler
+      d7       d7        0     1                 MemManage_Handler
+     129      129        0     1                 Fault_Handler
+     17b      17b        0     1                 SysTick_Handler
+     1cc      1cc        0     1                 $d.2
+     214      214     3b28     4         /tmp/monitor-0401bc.o:(.text)
+     214      214        0     1                 $t.0
+     215      215      8f6     1                 handle_exception
+     b0b      b0b     228e     1                 monitor_main
+    2d99     2d99      444     1                 invoke_policy
+    31dd     31dd      b60     1                 execution_report
+    3d3c     3d3c      336     1         <internal>:(.text)
+    4074     4074       f0     4         /tmp/monitor-0401bc.o:(.rodata)
+    4074     4074       50     1                 .L__const.monitor_main.cases
+    40c4     40c4        c     1                 .L__const.monitor_main.sizes
+    40d0     40d0       64     1                 fixture_names
+    4134     4134       18     1                 .L__const.execution_tests.fixtures
+    414c     414c       18     1                 .L__const.execution_tests.names
+   10000    10000      26c     4 .module_text
+   10000    10000       36     1         /tmp/startup-c03580.o:(.module_text)
+   10000    10000        0     1                 $t.1
+   10001    10001        0     1                 module_start
+   10038    10038      234     4         /tmp/monitor-0401bc.o:(.module_text)
+   10038    10038        0     1                 $t.1
+   10039    10039      1ea     1                 module_payload
+   10223    10223       36     1                 log2_size
+   10259    10259        6     1                 complete
+   10260    10260        0     1                 $d.2
+20000000     4164        4     4 .data
+20000000     4164        0     1         _data_start = .
+20000000     4164        4     4         /tmp/monitor-0401bc.o:(.data)
+20000000     4164        4     1                 monitor_secret
+20000004     4168        0     1         _data_end = .
+20000004     4168        0     1 _data_load = LOADADDR ( .data )
+20000004 20000004       54     4 .bss
+20000004 20000004        0     1         _bss_start = .
+20000004 20000004       4c     4         /tmp/monitor-0401bc.o:(.bss)
+20000004 20000004        4     1                 active
+20000008 20000008        4     1                 ticks
+2000000c 2000000c        1     1                 event_announced
+20000010 20000010        4     1                 budget_ticks
+20000014 20000014        4     1                 control_index
+20000018 20000018        4     1                 control_command
+2000001c 2000001c        4     1                 control_invocation
+20000020 20000020        4     1                 result
+20000024 20000024        4     1                 last_fault
+20000028 20000028        4     1                 sequence
+2000002c 2000002c        1     1                 exported.1
+20000030 20000030        4     1                 exported.2
+20000034 20000034        4     1                 loan.0
+20000038 20000038        4     1                 loan.2
+2000003c 2000003c        4     1                 loan.3
+20000040 20000040        4     1                 region.0
+20000044 20000044        1     1                 region.1
+20000048 20000048        4     1                 region.2
+2000004c 2000004c        4     1                 region.3
+20000050 20000050        4     4         /tmp/monitor-0401bc.o:(COMMON)
+20000050 20000050        4     1                 supervisor_resume
+20000050 20000050        4     1                 supervisor_resume
+20000054 20000054        4     4         /tmp/monitor-0401bc.o:(COMMON)
+20000054 20000054        4     1                 supervisor_sp
+20000054 20000054        4     1                 supervisor_sp
+20000058 20000058        0     1         _bss_end = .
+20000058 20000058        0     1 _monitor_stack_top = ORIGIN ( RAM ) + LENGTH ( RAM )
+20000058 20000058        0     1 
+20000058 20000058        0     1 
+       0        0       25     1 .ARM.attributes
+       0        0       25     1         /tmp/startup-c03580.o:(.ARM.attributes)
+       0        0      380     4 .symtab
+       0        0      380     4         <internal>:(.symtab)
+       0        0       52     1 .shstrtab
+       0        0       52     1         <internal>:(.shstrtab)
+       0        0      2b2     1 .strtab
+       0        0      2b2     1         <internal>:(.strtab)

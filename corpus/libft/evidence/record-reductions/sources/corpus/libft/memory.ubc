@@ -1,0 +1,119 @@
+module (name:"libft_memory", version:"0.1", author:"Ubytec")
+{
+func ft_strlen(t_uint64 text) -> t_uint64
+{
+    local { t_uint64 index 0 }
+    loop
+        load @text
+        load @index
+        add
+        load t_byte
+        if
+            load @index
+            inc
+            store @index
+        else
+            load @index
+            return
+        end
+    end
+}
+
+func ft_memcmp(t_uint64 left, t_uint64 right, t_uint64 count) -> t_int32
+{
+    local {
+        t_uint64 index 0
+        t_int32 first 0
+        t_int32 second 0
+    }
+    while @index < @count
+        load @left
+        load @index
+        add
+        load t_byte
+        store @first
+        load @right
+        load @index
+        add
+        load t_byte
+        store @second
+        if @first != @second
+            load @first
+            load @second
+            sub
+            return
+        end
+        load @index
+        inc
+        store @index
+    end
+    push 0
+    return
+}
+
+func ft_memset(t_uint64 destination, t_int32 value, t_uint64 count) -> t_uint64
+{
+    local { t_uint64 index 0 }
+    while @index < @count
+        load @destination
+        load @index
+        add
+        load @value
+        store t_byte
+        load @index
+        inc
+        store @index
+    end
+    load @destination
+    return
+}
+
+func ft_memcpy(t_uint64 destination, t_uint64 source, t_uint64 count) -> t_uint64
+{
+    local { t_uint64 index 0 }
+    while @index < @count
+        load @destination
+        load @index
+        add
+        load @source
+        load @index
+        add
+        load t_byte
+        store t_byte
+        load @index
+        inc
+        store @index
+    end
+    load @destination
+    return
+}
+
+func ft_memmove(t_uint64 destination, t_uint64 source, t_uint64 count) -> t_uint64
+{
+    local { t_uint64 index 0 }
+    if @destination < @source
+        load @destination
+        load @source
+        load @count
+        call ft_memcpy
+        return
+    end
+    load @count
+    store @index
+    while @index > 0
+        load @index
+        dec
+        store @index
+        load @destination
+        load @index
+        add
+        load @source
+        load @index
+        add
+        load t_byte
+        store t_byte
+    end
+    load @destination
+    return
+}
+}

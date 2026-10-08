@@ -1,0 +1,6 @@
+{"target":"linux-x64","metric":"module_invocation_and_read","bytes":256,"samples":100,"median_us":3862.505,"p95_us":4332.573,"worker_rss_kib":1436,"loan_mapped_bytes":4096,"private_stack_bytes":65536}
+{"metric":"module_worker_byte_read","bytes":256,"samples":100,"median_tsc_ticks":21120,"p95_tsc_ticks":26820,"module_reserved_bytes":16777216}
+{"target":"linux-x64","metric":"module_invocation_and_read","bytes":4096,"samples":100,"median_us":3814.208,"p95_us":4505.951,"worker_rss_kib":1436,"loan_mapped_bytes":4096,"private_stack_bytes":65536}
+{"metric":"module_worker_byte_read","bytes":4096,"samples":100,"median_tsc_ticks":107910,"p95_tsc_ticks":175530,"module_reserved_bytes":16777216}
+{"target":"linux-x64","metric":"module_invocation_and_read","bytes":65536,"samples":100,"median_us":4481.585,"p95_us":4997.028,"worker_rss_kib":1496,"loan_mapped_bytes":65536,"private_stack_bytes":65536}
+{"metric":"module_worker_byte_read","bytes":65536,"samples":100,"median_tsc_ticks":1639200,"p95_tsc_ticks":2058210,"module_reserved_bytes":16777216}

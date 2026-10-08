@@ -1,4 +1,4 @@
-﻿using Ubytec.Language.Exceptions;
+using Ubytec.Language.Exceptions;
 using Ubytec.Language.Operations.Interfaces;
 using Ubytec.Language.Syntax.ExpressionFragments;
 using Ubytec.Language.Syntax.Model;
@@ -18,8 +18,8 @@ namespace Ubytec.Language.Operations
                 if (operands.Length == 0)
                     return new CONTINUE(null);
 
-                if (operands.Length == 1 && operands[0] is int labelIdx)
-                    return new CONTINUE(labelIdx);
+                if (operands.Length == 1)
+                    return new CONTINUE(StackCode.Index(nameof(CONTINUE), operands, int.MaxValue));
 
                 throw new SyntaxException(0x08BADBEEF, $"CONTINUE opcode received unexpected operands: {string.Join(", ", operands.Select(o => o?.ToString() ?? "null"))}");
             }
@@ -29,19 +29,8 @@ namespace Ubytec.Language.Operations
 
             string IUbytecEntity.Compile(CompilationScopes scopes)
             {
-                if (scopes.Count == 0)
-                    throw new SyntaxStackException(0x08FACADE, "CONTINUE without a valid enclosing LOOP or WHILE block");
-
-                scopes.PushContinue(this);
-
-                var match = scopes.Find(ctx =>
-                    ctx.StartLabel.StartsWith("while") || ctx.StartLabel.StartsWith("loop")) ?? throw new SyntaxStackException(0x08D00DFACE, "CONTINUE used outside of any loop or while block");
-                var isWhile = match.StartLabel.StartsWith("while");
-                var labelBase = isWhile ? "while" : "loop";
-
-                return LabelIDx is int id
-                    ? $"jmp {labelBase}_{id} ; CONTINUE to labeled {labelBase}"
-                    : $"jmp {match.StartLabel} ; CONTINUE to {match.StartLabel}";
+                var target = TransferTarget(scopes, LabelIDx, true);
+                return $"jmp {target.StartLabel} ; CONTINUE";
             }
         }
     }

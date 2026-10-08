@@ -1,0 +1,12 @@
+{
+  "mode": "Windows source compilation; NASM/Linux execution in WSL2",
+  "compiler_sha256": "e7a17bf7ebb4af956b99c4f6c9e45a0be421c7cc73ee32ee84ca709d90089164",
+  "fixture_sha256": {
+    "loan-caller": "1a2b9d76f6d8886d37683360a37c02563f3878938ae145fdcefd3e2b5cb8404e",
+    "loan-receiver": "27b71ab6159864e94a3efa10d185e168b0648fac49feee244559c5ee5d5398d3"
+  },
+  "assembly_sha256": {
+    "loan-caller": "ee3f5eb00026800f8b4e9208bf0bd2007f00f271f73070bab8ab4453997d7b56",
+    "loan-receiver": "12b0141f86e652701255e327ac904e41ea047530f5a5539cd6f5831aa69682a8"
+  }
+}

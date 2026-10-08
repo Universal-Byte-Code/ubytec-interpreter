@@ -1,0 +1,30 @@
+{
+  "mode": "Windows .NET 9 source compilation; NASM handoff to WSL",
+  "compiler_sha256": "a81cfb72a2f8bee2acc051f8196fbb42b5e53ea4217b38b263798ebbc00d8119",
+  "source_sha256": {
+    "Ubytec/Language/AST/SourceCompiler.cs": "a4e51920786098ea59cd1de9fbd5b96c197686c66a14ad5cfc4135d0813b0d6e",
+    "Ubytec/Language/AST/ModuleContracts.cs": "6c0a49892d4ee3433720e3df6426455cd2d4ac74ba1e545bd7edc6e5511e0460",
+    "Ubytec/Language/Grammar/ubytec.tmLanguage.json": "da6277ad4ea2e24ca1deffba546180583097947b2e19d397cf5655ea9d8469b0",
+    "Ubytec/Program.cs": "b9a6301dae5c3d5a29b47da503fbeb9ae6cc1056beed9aa12689ef3884b16117",
+    "corpus/libft/memory.ubc": "5352696754bc2d12e398b23ae81c1bff913ab7859a2d599784ec61c405be85b7",
+    "prototypes/isolation/ubytec/libft/caller.ubc": "1d9472ba00f74533d36ed912638d7142567040f4ef35bbb0eadb59b2f4a28b83",
+    "prototypes/isolation/ubytec/libft/strings.ubc": "ff30ae4b46f2ac4d8a6bfcc9106f3726e2e72b6bca815ae3f1d7c7cd5296b995",
+    "prototypes/isolation/ubytec/libft/memory.ubc": "7039fafc8caebd670d0f3a11b91d506c0d2d1cb576406e54b2b1f6777a0ecf70",
+    "prototypes/isolation/ubytec/libft/grouped.ubc": "7befebc6e363e0f12a45bb6b67641db04a5048da09a00ed2edcae106a1d39ed1"
+  },
+  "assembly_sha256": {
+    "caller": "f3c887dbbb5d2baf50307dff905d888a1d8846cff3a8a77afa158e3a0d8787c4",
+    "strings": "fd512fa33d22d1cfe5ccd12765a2a1bc1a50f1f6908fbbb20feea1bf5bec7a7c",
+    "memory": "bd62a3420c5a4a9934996526160982b0e18dd1f0b9299da93e6221da913c6a0b",
+    "grouped": "062b2cf3829baa8037cf93227107eef9ee2cef9c00e98474c754eeaa71064a0d"
+  },
+  "options": {
+    "caller": [
+      "--library",
+      "--module-calls"
+    ],
+    "providers": [
+      "--library"
+    ]
+  }
+}

@@ -1,0 +1,138 @@
+
+/mnt/x/codex/projects/ubytec-interpreter/artifacts/frame-registers/paired/clang.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <c_DiagIdentity>:
+   0:	48 89 f8             	mov    rax,rdi
+   3:	c3                   	ret    
+   4:	66 2e 0f 1f 84 00 00 	nop    WORD PTR cs:[rax+rax*1+0x0]
+   b:	00 00 00 
+   e:	66 90                	xchg   ax,ax
+
+0000000000000010 <c_DiagBytes>:
+  10:	48 85 f6             	test   rsi,rsi
+  13:	74 17                	je     2c <c_DiagBytes+0x1c>
+  15:	48 8d 46 ff          	lea    rax,[rsi-0x1]
+  19:	41 89 f0             	mov    r8d,esi
+  1c:	41 83 e0 07          	and    r8d,0x7
+  20:	48 83 f8 07          	cmp    rax,0x7
+  24:	73 09                	jae    2f <c_DiagBytes+0x1f>
+  26:	31 d2                	xor    edx,edx
+  28:	31 c0                	xor    eax,eax
+  2a:	eb 5c                	jmp    88 <c_DiagBytes+0x78>
+  2c:	31 c0                	xor    eax,eax
+  2e:	c3                   	ret    
+  2f:	4c 29 c6             	sub    rsi,r8
+  32:	31 d2                	xor    edx,edx
+  34:	31 c0                	xor    eax,eax
+  36:	66 2e 0f 1f 84 00 00 	nop    WORD PTR cs:[rax+rax*1+0x0]
+  3d:	00 00 00 
+  40:	0f b6 0c 17          	movzx  ecx,BYTE PTR [rdi+rdx*1]
+  44:	48 01 c1             	add    rcx,rax
+  47:	0f b6 44 17 01       	movzx  eax,BYTE PTR [rdi+rdx*1+0x1]
+  4c:	48 01 c8             	add    rax,rcx
+  4f:	0f b6 4c 17 02       	movzx  ecx,BYTE PTR [rdi+rdx*1+0x2]
+  54:	48 01 c1             	add    rcx,rax
+  57:	0f b6 44 17 03       	movzx  eax,BYTE PTR [rdi+rdx*1+0x3]
+  5c:	48 01 c8             	add    rax,rcx
+  5f:	0f b6 4c 17 04       	movzx  ecx,BYTE PTR [rdi+rdx*1+0x4]
+  64:	48 01 c1             	add    rcx,rax
+  67:	0f b6 44 17 05       	movzx  eax,BYTE PTR [rdi+rdx*1+0x5]
+  6c:	48 01 c8             	add    rax,rcx
+  6f:	0f b6 4c 17 06       	movzx  ecx,BYTE PTR [rdi+rdx*1+0x6]
+  74:	48 01 c1             	add    rcx,rax
+  77:	0f b6 44 17 07       	movzx  eax,BYTE PTR [rdi+rdx*1+0x7]
+  7c:	48 01 c8             	add    rax,rcx
+  7f:	48 83 c2 08          	add    rdx,0x8
+  83:	48 39 d6             	cmp    rsi,rdx
+  86:	75 b8                	jne    40 <c_DiagBytes+0x30>
+  88:	4d 85 c0             	test   r8,r8
+  8b:	74 23                	je     b0 <c_DiagBytes+0xa0>
+  8d:	48 01 d7             	add    rdi,rdx
+  90:	31 d2                	xor    edx,edx
+  92:	66 2e 0f 1f 84 00 00 	nop    WORD PTR cs:[rax+rax*1+0x0]
+  99:	00 00 00 
+  9c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  a0:	0f b6 34 17          	movzx  esi,BYTE PTR [rdi+rdx*1]
+  a4:	48 01 f0             	add    rax,rsi
+  a7:	48 83 c2 01          	add    rdx,0x1
+  ab:	49 39 d0             	cmp    r8,rdx
+  ae:	75 f0                	jne    a0 <c_DiagBytes+0x90>
+  b0:	c3                   	ret    
+  b1:	66 2e 0f 1f 84 00 00 	nop    WORD PTR cs:[rax+rax*1+0x0]
+  b8:	00 00 00 
+  bb:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+
+00000000000000c0 <c_DiagRecords>:
+  c0:	48 85 f6             	test   rsi,rsi
+  c3:	74 17                	je     dc <c_DiagRecords+0x1c>
+  c5:	48 8d 46 ff          	lea    rax,[rsi-0x1]
+  c9:	41 89 f0             	mov    r8d,esi
+  cc:	41 83 e0 03          	and    r8d,0x3
+  d0:	48 83 f8 03          	cmp    rax,0x3
+  d4:	73 09                	jae    df <c_DiagRecords+0x1f>
+  d6:	31 d2                	xor    edx,edx
+  d8:	31 c0                	xor    eax,eax
+  da:	eb 30                	jmp    10c <c_DiagRecords+0x4c>
+  dc:	31 c0                	xor    eax,eax
+  de:	c3                   	ret    
+  df:	4c 29 c6             	sub    rsi,r8
+  e2:	48 8d 4f 58          	lea    rcx,[rdi+0x58]
+  e6:	31 d2                	xor    edx,edx
+  e8:	31 c0                	xor    eax,eax
+  ea:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  f0:	48 03 41 b8          	add    rax,QWORD PTR [rcx-0x48]
+  f4:	48 03 41 d0          	add    rax,QWORD PTR [rcx-0x30]
+  f8:	48 03 41 e8          	add    rax,QWORD PTR [rcx-0x18]
+  fc:	48 03 01             	add    rax,QWORD PTR [rcx]
+  ff:	48 83 c2 04          	add    rdx,0x4
+ 103:	48 83 c1 60          	add    rcx,0x60
+ 107:	48 39 d6             	cmp    rsi,rdx
+ 10a:	75 e4                	jne    f0 <c_DiagRecords+0x30>
+ 10c:	4d 85 c0             	test   r8,r8
+ 10f:	74 1c                	je     12d <c_DiagRecords+0x6d>
+ 111:	48 8d 0c 52          	lea    rcx,[rdx+rdx*2]
+ 115:	48 8d 0c cf          	lea    rcx,[rdi+rcx*8]
+ 119:	48 83 c1 10          	add    rcx,0x10
+ 11d:	0f 1f 00             	nop    DWORD PTR [rax]
+ 120:	48 03 01             	add    rax,QWORD PTR [rcx]
+ 123:	48 83 c1 18          	add    rcx,0x18
+ 127:	49 83 c0 ff          	add    r8,0xffffffffffffffff
+ 12b:	75 f3                	jne    120 <c_DiagRecords+0x60>
+ 12d:	c3                   	ret    
+ 12e:	66 90                	xchg   ax,ax
+
+0000000000000130 <c_DiagLookup>:
+ 130:	48 85 f6             	test   rsi,rsi
+ 133:	74 4f                	je     184 <c_DiagLookup+0x54>
+ 135:	31 c0                	xor    eax,eax
+ 137:	eb 10                	jmp    149 <c_DiagLookup+0x19>
+ 139:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+ 140:	48 83 c0 01          	add    rax,0x1
+ 144:	48 39 f0             	cmp    rax,rsi
+ 147:	74 3b                	je     184 <c_DiagLookup+0x54>
+ 149:	4c 8d 04 40          	lea    r8,[rax+rax*2]
+ 14d:	4a 39 4c c7 08       	cmp    QWORD PTR [rdi+r8*8+0x8],rcx
+ 152:	75 ec                	jne    140 <c_DiagLookup+0x10>
+ 154:	48 85 c9             	test   rcx,rcx
+ 157:	74 1d                	je     176 <c_DiagLookup+0x46>
+ 159:	4e 8b 0c c7          	mov    r9,QWORD PTR [rdi+r8*8]
+ 15d:	45 31 c0             	xor    r8d,r8d
+ 160:	47 0f b6 14 01       	movzx  r10d,BYTE PTR [r9+r8*1]
+ 165:	46 3a 14 02          	cmp    r10b,BYTE PTR [rdx+r8*1]
+ 169:	75 0e                	jne    179 <c_DiagLookup+0x49>
+ 16b:	49 83 c0 01          	add    r8,0x1
+ 16f:	4c 39 c1             	cmp    rcx,r8
+ 172:	75 ec                	jne    160 <c_DiagLookup+0x30>
+ 174:	eb 11                	jmp    187 <c_DiagLookup+0x57>
+ 176:	45 31 c0             	xor    r8d,r8d
+ 179:	48 83 c0 01          	add    rax,0x1
+ 17d:	49 39 c8             	cmp    r8,rcx
+ 180:	75 c2                	jne    144 <c_DiagLookup+0x14>
+ 182:	eb 07                	jmp    18b <c_DiagLookup+0x5b>
+ 184:	31 c0                	xor    eax,eax
+ 186:	c3                   	ret    
+ 187:	48 83 c0 01          	add    rax,0x1
+ 18b:	c3                   	ret    

@@ -1,0 +1,11 @@
+{
+  "compiler_sha256": "f04f2851d45b322ab3b37ec8405232309f10fc57ecd4a31a95548b1d01979c73",
+  "assembly_sha256": {
+    "bench-current": "93b3ab5e1aee997f25bbdf62aecf60c56a47d564f0315758d771a6b119e04842",
+    "pair-receiver": "8e693f70bba022a9c4e7440feaac38997c601bd08aecdc4da9d796be2a6a31d7",
+    "stress-caller": "0b6f4f7f646dd000d2f592011f16cf8ffbc97aa9189faa00ac05dc51a11935c6"
+  },
+  "generated_source_sha256": "bbfe9eb68d4d7ddc1e84d26d62fc57ed70e54552d188d652c93828d11a610f55",
+  "template_sha256": "f0287caa756f6773e04467a7b3d37c6c626483333563c6452a529dbf7bec2a4b",
+  "canonical_sha256": "a9a3394ae5d8f95a8c33336209ce96cc4b804259b5e14509632809d39efdd0e7"
+}

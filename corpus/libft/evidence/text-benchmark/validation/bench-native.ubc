@@ -1,0 +1,2866 @@
+module (name:"text_native_benchmark",version:"0.1",author:"Ubytec") {
+
+
+func ArenaInit(t_uint64 arena,t_uint64 capacity) -> t_uint64 {
+if @capacity > 65536
+push 0
+return
+end
+load @arena
+load @capacity
+store t_uint64
+load @arena
+push 8
+add
+push 0
+store t_uint64
+push 1
+return
+}
+func ArenaFind(t_uint64 arena,t_uint64 pointer) -> t_uint64 {
+local { t_uint64 used 0 t_uint64 cursor 0 t_uint64 nodeptr 0 t_uint64 size 0 }
+load @arena
+push 8
+add
+load t_uint64
+store @used
+while @cursor < @used
+load @arena
+push 16
+add
+load @cursor
+add
+store @nodeptr
+load @nodeptr
+load t_uint64
+store @size
+load @nodeptr
+push 32
+add
+load @pointer
+sub
+if
+else
+load @nodeptr
+push 16
+add
+load t_uint64
+if
+load @nodeptr
+return
+end
+push 0
+return
+end
+load @cursor
+push 32
+add
+load @size
+add
+store @cursor
+end
+push 0
+return
+}
+func ArenaAlloc(t_uint64 arena,t_uint64 length) -> t_uint64 {
+local { t_uint64 capacity 0 t_uint64 used 0 t_uint64 cursor 0 t_uint64 nodeptr 0 t_uint64 size 0 t_uint64 aligned 0 t_uint64 i 0 t_uint64 minimum 0 t_uint64 remainder 0 t_uint64 nextptr 0 }
+if @length > 65536
+push 0
+return
+end
+if @length == 0
+push 0
+return
+end
+load @length
+push 7
+add
+push 8
+div
+push 8
+mul
+store @aligned
+load @arena
+load t_uint64
+store @capacity
+load @arena
+push 8
+add
+load t_uint64
+store @used
+while @cursor < @used
+load @arena
+push 16
+add
+load @cursor
+add
+store @nodeptr
+load @nodeptr
+load t_uint64
+store @size
+load @nodeptr
+push 16
+add
+load t_uint64
+if
+else
+if @size >= @aligned
+break
+end
+end
+load @cursor
+push 32
+add
+load @size
+add
+store @cursor
+end
+if @cursor == @used
+load @aligned
+push 32
+add
+store @size
+load @capacity
+load @used
+sub
+store @capacity
+if @size > @capacity
+push 0
+return
+end
+load @arena
+push 16
+add
+load @used
+add
+store @nodeptr
+load @nodeptr
+load @aligned
+store t_uint64
+load @arena
+push 8
+add
+load @used
+load @size
+add
+store t_uint64
+load @aligned
+store @size
+else
+load @aligned
+push 40
+add
+store @minimum
+if @size >= @minimum
+load @size
+load @aligned
+sub
+push 32
+sub
+store @remainder
+load @nodeptr
+push 32
+add
+load @aligned
+add
+store @nextptr
+load @nextptr
+load @remainder
+store t_uint64
+load @nextptr
+push 8
+add
+push 0
+store t_uint64
+load @nextptr
+push 16
+add
+push 0
+store t_uint64
+load @nextptr
+push 24
+add
+push 0
+store t_uint64
+load @nodeptr
+load @aligned
+store t_uint64
+load @aligned
+store @size
+end
+end
+load @nodeptr
+push 8
+add
+load @length
+store t_uint64
+load @nodeptr
+push 16
+add
+push 1
+store t_uint64
+load @nodeptr
+push 24
+add
+push 0
+store t_uint64
+while @i < @size
+load @nodeptr
+push 32
+add
+load @i
+add
+push 0
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @nodeptr
+push 32
+add
+return
+}
+func ArenaPin(t_uint64 arena,t_uint64 pointer) -> t_uint64 {
+local { t_uint64 nodeptr 0 t_uint64 pins 0 }
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+store @pins
+if @pins >= 65536
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load @pins
+push 1
+add
+store t_uint64
+push 1
+return
+}
+func ArenaUnpin(t_uint64 arena,t_uint64 pointer) -> t_uint64 {
+local { t_uint64 nodeptr 0 t_uint64 pins 0 }
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+store @pins
+if @pins == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load @pins
+push 1
+sub
+store t_uint64
+push 1
+return
+}
+func ArenaFree(t_uint64 arena,t_uint64 pointer) -> t_uint64 {
+local { t_uint64 nodeptr 0 t_uint64 used 0 t_uint64 cursor 0 t_uint64 last 0 t_uint64 size 0 t_uint64 nextpos 0 t_uint64 nextptr 0 t_uint64 nextsize 0 }
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+if
+push 0
+return
+end
+load @nodeptr
+push 16
+add
+push 0
+store t_uint64
+load @nodeptr
+push 8
+add
+push 0
+store t_uint64
+load @arena
+push 8
+add
+load t_uint64
+store @used
+while @cursor < @used
+load @arena
+push 16
+add
+load @cursor
+add
+store @nodeptr
+load @nodeptr
+load t_uint64
+store @size
+load @cursor
+push 32
+add
+load @size
+add
+store @nextpos
+load @nodeptr
+push 16
+add
+load t_uint64
+if
+load @nextpos
+store @last
+else
+while @nextpos < @used
+load @arena
+push 16
+add
+load @nextpos
+add
+store @nextptr
+load @nextptr
+push 16
+add
+load t_uint64
+if
+break
+end
+load @nextptr
+load t_uint64
+store @nextsize
+load @size
+push 32
+add
+load @nextsize
+add
+store @size
+load @nextpos
+push 32
+add
+load @nextsize
+add
+store @nextpos
+end
+load @nodeptr
+load @size
+store t_uint64
+load @nodeptr
+push 8
+add
+push 0
+store t_uint64
+load @nodeptr
+push 24
+add
+push 0
+store t_uint64
+end
+load @nextpos
+store @cursor
+end
+load @arena
+push 8
+add
+load @last
+store t_uint64
+push 1
+return
+}
+func ArenaResize(t_uint64 arena,t_uint64 pointer,t_uint64 length) -> t_uint64 {
+local { t_uint64 nodeptr 0 t_uint64 size 0 t_uint64 old 0 t_uint64 fresh 0 t_uint64 i 0 t_uint64 ignored 0 t_uint64 aligned 0 t_uint64 used 0 t_uint64 endpos 0 t_uint64 delta 0 t_uint64 available 0 }
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+if
+push 0
+return
+end
+if @length > 65536
+push 0
+return
+end
+if @length == 0
+push 0
+return
+end
+load @nodeptr
+load t_uint64
+store @size
+load @nodeptr
+push 8
+add
+load t_uint64
+store @old
+if @length <= @size
+load @old
+store @i
+while @i < @length
+load @pointer
+load @i
+add
+push 0
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @nodeptr
+push 8
+add
+load @length
+store t_uint64
+load @pointer
+return
+end
+load @length
+push 7
+add
+push 8
+div
+push 8
+mul
+store @aligned
+load @arena
+push 8
+add
+load t_uint64
+store @used
+load @nodeptr
+load @arena
+sub
+push 16
+sub
+push 32
+add
+load @size
+add
+store @endpos
+if @endpos == @used
+load @aligned
+load @size
+sub
+store @delta
+load @arena
+load t_uint64
+load @used
+sub
+store @available
+if @delta <= @available
+load @old
+store @i
+while @i < @aligned
+load @pointer
+load @i
+add
+push 0
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @nodeptr
+load @aligned
+store t_uint64
+load @nodeptr
+push 8
+add
+load @length
+store t_uint64
+load @arena
+push 8
+add
+load @used
+load @delta
+add
+store t_uint64
+load @pointer
+return
+end
+end
+load @arena
+load @length
+call ArenaAlloc
+store @fresh
+if @fresh == 0
+push 0
+return
+end
+while @i < @old
+load @fresh
+load @i
+add
+load @pointer
+load @i
+add
+load t_byte
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @arena
+load @pointer
+call ArenaFree
+store @ignored
+load @fresh
+return
+}
+func ArenaAppendUpper(t_uint64 arena,t_uint64 pointer,t_uint64 used,t_uint64 source,t_uint64 count) -> t_uint64 {
+local { t_uint64 need 0 t_uint64 nodeptr 0 t_uint64 size 0 t_uint64 fresh 0 t_uint64 i 0 t_uint64 c 0 }
+if @used > 65536
+push 0
+return
+end
+if @count > 65536
+push 0
+return
+end
+load @used
+load @count
+add
+push 1
+add
+store @need
+if @need > 65536
+push 0
+return
+end
+if @pointer == 0
+if @used != 0
+push 0
+return
+end
+push 8
+store @size
+else
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+if
+push 0
+return
+end
+load @nodeptr
+load t_uint64
+store @size
+load @nodeptr
+push 8
+add
+load t_uint64
+store @c
+if @used >= @c
+push 0
+return
+end
+end
+while @size < @need
+load @size
+push 2
+mul
+store @size
+end
+if @pointer == 0
+load @arena
+load @size
+call ArenaAlloc
+store @fresh
+else
+load @arena
+load @pointer
+load @size
+call ArenaResize
+store @fresh
+end
+if @fresh == 0
+push 0
+return
+end
+while @i < @count
+load @source
+load @i
+add
+load t_byte
+store @c
+if @c >= 97
+if @c <= 122
+load @c
+push 32
+sub
+store @c
+end
+end
+load @fresh
+load @used
+add
+load @i
+add
+load @c
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @fresh
+load @used
+add
+load @count
+add
+push 0
+store t_byte
+load @fresh
+return
+}
+
+func ft_isdigit(t_int32 c) -> t_int32
+{
+    if @c < 48
+        push 0
+        return
+    end
+    if @c > 57
+        push 0
+        return
+    end
+    push 1
+    return
+}
+
+func ft_isalpha(t_int32 c) -> t_int32
+{
+    if @c < 65
+        push 0
+        return
+    end
+    if @c <= 90
+        push 1
+        return
+    end
+    if @c < 97
+        push 0
+        return
+    end
+    if @c <= 122
+        push 1
+        return
+    end
+    push 0
+    return
+}
+
+func ft_isalnum(t_int32 c) -> t_int32
+{
+    load @c
+    call ft_isalpha
+    if
+        push 1
+        return
+    end
+    load @c
+    call ft_isdigit
+    return
+}
+
+func ft_isascii(t_int32 c) -> t_int32
+{
+    if @c < 0
+        push 0
+        return
+    end
+    if @c > 127
+        push 0
+        return
+    end
+    push 1
+    return
+}
+
+func ft_isprint(t_int32 c) -> t_int32
+{
+    if @c < 32
+        push 0
+        return
+    end
+    if @c > 126
+        push 0
+        return
+    end
+    push 1
+    return
+}
+
+func ft_toupper(t_int32 c) -> t_int32
+{
+    if @c < 97
+        load @c
+        return
+    end
+    if @c > 122
+        load @c
+        return
+    end
+    load @c
+    push 32
+    sub
+    return
+}
+
+func ft_tolower(t_int32 c) -> t_int32
+{
+    if @c < 65
+        load @c
+        return
+    end
+    if @c > 90
+        load @c
+        return
+    end
+    load @c
+    push 32
+    add
+    return
+}
+
+func ft_isspace(t_int32 c) -> t_int32
+{
+    if @c == 32
+        push 1
+        return
+    end
+    if @c < 9
+        push 0
+        return
+    end
+    if @c > 13
+        push 0
+        return
+    end
+    push 1
+    return
+}
+
+func ft_atoi(t_uint64 text) -> t_int32
+{
+    local
+    {
+        t_int64 result 0
+        t_int64 polarity 1
+        t_int32 current 0
+    }
+    load @text
+    load t_byte
+    store @current
+
+    load @current
+    call ft_isspace
+    while
+        load @text
+        inc
+        store @text
+        load @text
+        load t_byte
+        store @current
+        load @current
+        call ft_isspace
+    end
+
+    if @current == 45
+        push -1
+        store @polarity
+        load @text
+        inc
+        store @text
+    end
+    if @current == 43
+        load @text
+        inc
+        store @text
+    end
+
+    load @text
+    load t_byte
+    store @current
+    load @current
+    call ft_isdigit
+    while
+        load @result
+        push 10
+        mul
+        load @current
+        push 48
+        sub
+        add
+        store @result
+        load @text
+        inc
+        store @text
+        load @text
+        load t_byte
+        store @current
+        load @current
+        call ft_isdigit
+    end
+    load @result
+    load @polarity
+    mul
+    return
+}
+
+func ft_strlen(t_uint64 text) -> t_uint64
+{
+    local { t_uint64 index 0 }
+    loop
+        load @text
+        load @index
+        add
+        load t_byte
+        if
+            load @index
+            inc
+            store @index
+        else
+            load @index
+            return
+        end
+    end
+}
+
+func ft_memcmp(t_uint64 left, t_uint64 right, t_uint64 count) -> t_int32
+{
+    local {
+        t_uint64 index 0
+        t_int32 first 0
+        t_int32 second 0
+    }
+    while @index < @count
+        load @left
+        load @index
+        add
+        load t_byte
+        store @first
+        load @right
+        load @index
+        add
+        load t_byte
+        store @second
+        if @first != @second
+            load @first
+            load @second
+            sub
+            return
+        end
+        load @index
+        inc
+        store @index
+    end
+    push 0
+    return
+}
+
+func ft_memset(t_uint64 destination, t_int32 value, t_uint64 count) -> t_uint64
+{
+    local { t_uint64 index 0 }
+    while @index < @count
+        load @destination
+        load @index
+        add
+        load @value
+        store t_byte
+        load @index
+        inc
+        store @index
+    end
+    load @destination
+    return
+}
+
+func ft_memcpy(t_uint64 destination, t_uint64 source, t_uint64 count) -> t_uint64
+{
+    local { t_uint64 index 0 }
+    while @index < @count
+        load @destination
+        load @index
+        add
+        load @source
+        load @index
+        add
+        load t_byte
+        store t_byte
+        load @index
+        inc
+        store @index
+    end
+    load @destination
+    return
+}
+
+func ft_memmove(t_uint64 destination, t_uint64 source, t_uint64 count) -> t_uint64
+{
+    local { t_uint64 index 0 }
+    if @destination < @source
+        load @destination
+        load @source
+        load @count
+        call ft_memcpy
+        return
+    end
+    load @count
+    store @index
+    while @index > 0
+        load @index
+        dec
+        store @index
+        load @destination
+        load @index
+        add
+        load @source
+        load @index
+        add
+        load t_byte
+        store t_byte
+    end
+    load @destination
+    return
+}
+
+func VectorInit(t_uint64 vec,t_uint64 arena,t_uint64 width) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 tmp 0 t_uint64 capacity 0 }
+if @vec == 0
+push 0
+return
+end
+if @arena == 0
+push 0
+return
+end
+if @width == 0
+push 0
+return
+end
+load @width
+push 65504
+ugt
+if
+push 0
+return
+end
+load @arena
+push 0
+add
+load t_uint64
+store @capacity
+load @capacity
+push 65536
+ugt
+if
+push 0
+return
+end
+while @i < 40
+load @vec
+load @i
+add
+load t_uint64
+store @tmp
+if @tmp != 0
+push 0
+return
+end
+load @i
+push 8
+add
+store @i
+end
+load @vec
+push 0
+add
+load @arena
+store t_uint64
+load @vec
+push 32
+add
+load @width
+store t_uint64
+push 1
+return
+}
+func VectorMaximum(t_uint64 vec) -> t_uint64 {
+local { t_uint64 arena 0 t_uint64 width 0 t_uint64 capacity 0 }
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+load @vec
+push 32
+add
+load t_uint64
+store @width
+load @arena
+push 0
+add
+load t_uint64
+store @capacity
+if @capacity < 32
+push 0
+return
+end
+load @capacity
+push 32
+sub
+load @width
+udiv
+return
+}
+func VectorValidate(t_uint64 vec) -> t_uint64 {
+local { t_uint64 arena 0 t_uint64 data 0 t_uint64 length 0 t_uint64 capacity 0 t_uint64 width 0 t_uint64 maximum 0 t_uint64 node 0 t_uint64 bytes 0 t_uint64 tmp 0 }
+if @vec == 0
+push 0
+return
+end
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+load @vec
+push 8
+add
+load t_uint64
+store @data
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @vec
+push 24
+add
+load t_uint64
+store @capacity
+load @vec
+push 32
+add
+load t_uint64
+store @width
+if @arena == 0
+push 0
+return
+end
+if @width == 0
+push 0
+return
+end
+load @width
+push 65504
+ugt
+if
+push 0
+return
+end
+load @arena
+push 0
+add
+load t_uint64
+store @tmp
+load @tmp
+push 65536
+ugt
+if
+push 0
+return
+end
+load @length
+load @capacity
+ugt
+if
+push 0
+return
+end
+load @vec
+call VectorMaximum
+store @maximum
+load @capacity
+load @maximum
+ugt
+if
+push 0
+return
+end
+if @capacity == 0
+if @data != 0
+push 0
+return
+end
+push 1
+return
+end
+if @data == 0
+push 0
+return
+end
+load @arena
+load @data
+call ArenaFind
+store @node
+if @node == 0
+push 0
+return
+end
+load @capacity
+load @width
+mul
+store @bytes
+load @node
+push 8
+add
+load t_uint64
+store @tmp
+if @tmp != @bytes
+push 0
+return
+end
+push 1
+return
+}
+func VectorMutable(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 arena 0 t_uint64 data 0 t_uint64 node 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+if @data == 0
+push 1
+return
+end
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+load @arena
+load @data
+call ArenaFind
+store @node
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 0
+push 0
+return
+end
+push 1
+return
+}
+func VectorReserve(t_uint64 vec,t_uint64 requested) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 maximum 0 t_uint64 capacity 0 t_uint64 width 0 t_uint64 data 0 t_uint64 arena 0 t_uint64 fresh 0 t_uint64 bytes 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 24
+add
+load t_uint64
+store @capacity
+load @requested
+load @capacity
+ule
+if
+push 1
+return
+end
+load @vec
+call VectorMaximum
+store @maximum
+load @requested
+load @maximum
+ugt
+if
+push 0
+return
+end
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 32
+add
+load t_uint64
+store @width
+load @vec
+push 8
+add
+load t_uint64
+store @data
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+load @requested
+load @width
+mul
+store @bytes
+if @data == 0
+load @arena
+load @bytes
+call ArenaAlloc
+store @fresh
+else
+load @arena
+load @data
+load @bytes
+call ArenaResize
+store @fresh
+end
+if @fresh == 0
+push 0
+return
+end
+load @vec
+push 8
+add
+load @fresh
+store t_uint64
+load @vec
+push 24
+add
+load @requested
+store t_uint64
+push 1
+return
+}
+func VectorEnsure(t_uint64 vec,t_uint64 requested) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 maximum 0 t_uint64 capacity 0 t_uint64 target 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 24
+add
+load t_uint64
+store @capacity
+load @requested
+load @capacity
+ule
+if
+push 1
+return
+end
+load @vec
+call VectorMaximum
+store @maximum
+load @requested
+load @maximum
+ugt
+if
+push 0
+return
+end
+load @capacity
+store @target
+if @target == 0
+push 1
+store @target
+end
+while @target < @requested
+load @target
+push 2
+mul
+store @target
+if @target > @maximum
+load @maximum
+store @target
+end
+end
+load @vec
+load @target
+call VectorReserve
+store @tmp
+load @tmp
+if
+push 1
+return
+end
+load @vec
+load @requested
+call VectorReserve
+store @tmp
+load @tmp
+return
+}
+func VectorSourceMode(t_uint64 vec,t_uint64 source) -> t_uint64 {
+local { t_uint64 width 0 t_uint64 finish 0 t_uint64 data 0 t_uint64 capacity 0 t_uint64 length 0 t_uint64 limit 0 t_uint64 offset 0 t_uint64 tmp 0 }
+if @source == 0
+push 0
+return
+end
+load @vec
+push 32
+add
+load t_uint64
+store @width
+load @source
+load @width
+add
+store @finish
+load @finish
+load @source
+ult
+if
+push 0
+return
+end
+load @source
+load @vec
+push 40
+add
+ult
+load @finish
+load @vec
+ugt
+and
+if
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+if @data == 0
+push 1
+return
+end
+load @vec
+push 24
+add
+load t_uint64
+store @capacity
+load @capacity
+load @width
+mul
+load @data
+add
+store @limit
+load @source
+load @limit
+ult
+load @finish
+load @data
+ugt
+and
+if
+load @source
+load @data
+ult
+if
+push 0
+return
+end
+load @source
+load @data
+sub
+store @offset
+load @offset
+load @width
+umod
+store @tmp
+if @tmp != 0
+push 0
+return
+end
+load @offset
+load @width
+udiv
+store @offset
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @offset
+load @length
+uge
+if
+push 0
+return
+end
+push 2
+return
+end
+push 1
+return
+}
+func VectorInsert(t_uint64 vec,t_uint64 index,t_uint64 source) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 length 0 t_uint64 width 0 t_uint64 data 0 t_uint64 mode 0 t_uint64 alias 0 t_uint64 need 0 t_uint64 i 0 t_uint64 endbytes 0 t_uint64 startbytes 0 t_uint64 target 0 }
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @index
+load @length
+ugt
+if
+push 0
+return
+end
+load @vec
+load @source
+call VectorSourceMode
+store @mode
+if @mode == 0
+push 0
+return
+end
+load @vec
+push 32
+add
+load t_uint64
+store @width
+load @vec
+push 8
+add
+load t_uint64
+store @data
+if @mode == 2
+load @source
+load @data
+sub
+load @width
+udiv
+store @alias
+end
+load @length
+inc
+store @need
+load @vec
+load @need
+call VectorEnsure
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+load @length
+load @width
+mul
+store @endbytes
+load @index
+load @width
+mul
+store @startbytes
+load @endbytes
+store @i
+while @i > @startbytes
+load @i
+dec
+store @i
+load @data
+load @i
+add
+load @width
+add
+load @data
+load @i
+add
+load t_byte
+store t_byte
+end
+if @mode == 2
+if @alias >= @index
+load @alias
+inc
+store @alias
+end
+load @data
+load @alias
+load @width
+mul
+add
+store @source
+end
+load @data
+load @startbytes
+add
+store @target
+push 0
+store @i
+while @i < @width
+load @target
+load @i
+add
+load @source
+load @i
+add
+load t_byte
+store t_byte
+load @i
+inc
+store @i
+end
+load @vec
+push 16
+add
+load @need
+store t_uint64
+push 1
+return
+}
+func VectorPush(t_uint64 vec,t_uint64 source) -> t_uint64 {
+local { t_uint64 length 0 t_uint64 tmp 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @vec
+load @length
+load @source
+call VectorInsert
+store @tmp
+load @tmp
+return
+}
+func VectorAt(t_uint64 vec,t_uint64 index) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 length 0 t_uint64 data 0 t_uint64 width 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @index
+load @length
+uge
+if
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+load @vec
+push 32
+add
+load t_uint64
+store @width
+load @data
+load @index
+load @width
+mul
+add
+return
+}
+func VectorSet(t_uint64 vec,t_uint64 index,t_uint64 element) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 target 0 t_uint64 width 0 t_uint64 i 0 t_uint64 source 0 t_uint64 mode 0 }
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+load @index
+call VectorAt
+store @target
+if @target == 0
+push 0
+return
+end
+load @vec
+load @element
+call VectorSourceMode
+store @mode
+if @mode == 0
+push 0
+return
+end
+load @element
+store @source
+load @vec
+push 32
+add
+load t_uint64
+store @width
+while @i < @width
+load @target
+load @i
+add
+load @source
+load @i
+add
+load t_byte
+store t_byte
+load @i
+inc
+store @i
+end
+push 1
+return
+}
+func VectorGet(t_uint64 vec,t_uint64 index,t_uint64 element) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 target 0 t_uint64 width 0 t_uint64 i 0 t_uint64 source 0 t_uint64 mode 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+load @index
+call VectorAt
+store @target
+if @target == 0
+push 0
+return
+end
+load @vec
+load @element
+call VectorSourceMode
+store @mode
+if @mode == 0
+push 0
+return
+end
+if @mode != 1
+push 0
+return
+end
+load @target
+store @source
+load @element
+store @target
+load @vec
+push 32
+add
+load t_uint64
+store @width
+while @i < @width
+load @target
+load @i
+add
+load @source
+load @i
+add
+load t_byte
+store t_byte
+load @i
+inc
+store @i
+end
+push 1
+return
+}
+func VectorLength(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 16
+add
+load t_uint64
+store @tmp
+load @tmp
+return
+}
+func VectorCapacity(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 24
+add
+load t_uint64
+store @tmp
+load @tmp
+return
+}
+func VectorErase(t_uint64 vec,t_uint64 index,t_uint64 count) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 length 0 t_uint64 remaining 0 t_uint64 width 0 t_uint64 data 0 t_uint64 startbytes 0 t_uint64 readbytes 0 t_uint64 endbytes 0 t_uint64 i 0 t_uint64 freshlength 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @index
+load @length
+ugt
+if
+push 0
+return
+end
+load @length
+load @index
+sub
+store @remaining
+load @count
+load @remaining
+ugt
+if
+push 0
+return
+end
+if @count == 0
+push 1
+return
+end
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 32
+add
+load t_uint64
+store @width
+load @vec
+push 8
+add
+load t_uint64
+store @data
+load @index
+load @width
+mul
+store @startbytes
+load @index
+load @count
+add
+load @width
+mul
+store @readbytes
+load @length
+load @width
+mul
+store @endbytes
+while @readbytes < @endbytes
+load @data
+load @startbytes
+add
+load @data
+load @readbytes
+add
+load t_byte
+store t_byte
+load @startbytes
+inc
+store @startbytes
+load @readbytes
+inc
+store @readbytes
+end
+load @length
+load @count
+sub
+store @freshlength
+load @freshlength
+load @width
+mul
+store @i
+while @i < @endbytes
+load @data
+load @i
+add
+push 0
+store t_byte
+load @i
+inc
+store @i
+end
+load @vec
+push 16
+add
+load @freshlength
+store t_uint64
+push 1
+return
+}
+func VectorClear(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 length 0 }
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @vec
+push 0
+load @length
+call VectorErase
+store @tmp
+load @tmp
+return
+}
+func VectorPin(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 arena 0 t_uint64 data 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+if @data == 0
+push 0
+return
+end
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+load @arena
+load @data
+call ArenaPin
+store @tmp
+load @tmp
+return
+}
+func VectorUnpin(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 arena 0 t_uint64 data 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+if @data == 0
+push 0
+return
+end
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+load @arena
+load @data
+call ArenaUnpin
+store @tmp
+load @tmp
+return
+}
+func VectorDestroy(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 arena 0 t_uint64 data 0 t_uint64 i 0 }
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+if @data != 0
+load @arena
+load @data
+call ArenaFree
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+end
+while @i < 40
+load @vec
+load @i
+add
+push 0
+store t_uint64
+load @i
+push 8
+add
+store @i
+end
+push 1
+return
+}
+
+func TextIsWord(t_uint64 bytevalue) -> t_uint64 {
+if @bytevalue >= 48
+if @bytevalue <= 57
+push 1
+return
+end
+end
+if @bytevalue >= 65
+if @bytevalue <= 90
+push 1
+return
+end
+end
+if @bytevalue >= 97
+if @bytevalue <= 122
+push 1
+return
+end
+end
+if @bytevalue == 95
+push 1
+return
+end
+push 0
+return
+}
+func TextRecordCompare(t_uint64 left,t_uint64 right) -> t_int64 {
+local { t_uint64 a 0 t_uint64 b 0 t_uint64 alen 0 t_uint64 blen 0 t_uint64 size 0 t_int64 difference 0 }
+load @left
+load t_uint64
+store @a
+load @right
+load t_uint64
+store @b
+load @left
+push 8
+add
+load t_uint64
+store @alen
+load @right
+push 8
+add
+load t_uint64
+store @blen
+load @alen
+store @size
+if @blen < @size
+load @blen
+store @size
+end
+load @a
+load @b
+load @size
+call ft_memcmp
+store @difference
+if @difference != 0
+load @difference
+return
+end
+if @alen < @blen
+push -1
+return
+end
+if @alen > @blen
+push 1
+return
+end
+push 0
+return
+}
+func TextSort(t_uint64 vec,t_uint64 compare,t_uint64 scratch) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 j 0 t_uint64 count 0 t_uint64 left 0 t_int64 difference 0 }
+load @vec
+call VectorMutable
+if
+else
+push 0
+return
+end
+load @vec
+push 32
+add
+load t_uint64
+push 24
+neq
+if
+push 0
+return
+end
+if @compare == 0
+push 0
+return
+end
+load @vec
+call VectorLength
+store @count
+push 1
+store @i
+while @i < @count
+load @vec
+load @i
+load @scratch
+call VectorGet
+if
+else
+push 0
+return
+end
+load @i
+store @j
+while @j > 0
+load @vec
+load @j
+dec
+call VectorAt
+store @left
+load @left
+load @scratch
+load @compare
+calli 2 t_int64
+store @difference
+if @difference <= 0
+break
+end
+load @vec
+load @j
+load @left
+call VectorSet
+if
+else
+push 0
+return
+end
+load @j
+dec
+store @j
+end
+load @vec
+load @j
+load @scratch
+call VectorSet
+if
+else
+push 0
+return
+end
+load @i
+inc
+store @i
+end
+push 1
+return
+}
+func TextFlush(t_uint64 words,t_uint64 token,t_uint64 scratch) -> t_uint64 {
+local { t_uint64 size 0 t_uint64 data 0 t_uint64 count 0 t_uint64 i 0 t_uint64 entryptr 0 t_uint64 arena 0 t_uint64 name 0 t_uint64 frequency 0 t_uint64 status 0 }
+load @token
+call VectorLength
+store @size
+if @size == 0
+push 1
+return
+end
+load @token
+push 0
+call VectorAt
+store @data
+load @words
+call VectorLength
+store @count
+while @i < @count
+load @words
+load @i
+call VectorAt
+store @entryptr
+load @entryptr
+push 8
+add
+load t_uint64
+load @size
+eq
+if
+load @entryptr
+load t_uint64
+load @data
+load @size
+call ft_memcmp
+if
+else
+load @entryptr
+push 16
+add
+load t_uint64
+store @frequency
+load @frequency
+push 18446744073709551615
+eq
+if
+push 0
+return
+end
+load @entryptr
+push 16
+add
+load @frequency
+inc
+store t_uint64
+load @token
+call VectorClear
+return
+end
+end
+load @i
+inc
+store @i
+end
+load @words
+load t_uint64
+store @arena
+load @arena
+load @size
+call ArenaAlloc
+store @name
+if @name == 0
+push 0
+return
+end
+load @name
+load @data
+load @size
+call ft_memcpy
+pop
+load @scratch
+load @name
+store t_uint64
+load @scratch
+push 8
+add
+load @size
+store t_uint64
+load @scratch
+push 16
+add
+push 1
+store t_uint64
+load @words
+load @scratch
+call VectorPush
+store @status
+if @status == 0
+load @arena
+load @name
+call ArenaFree
+pop
+push 0
+return
+end
+load @token
+call VectorClear
+return
+}
+func TextFeed(t_uint64 words,t_uint64 token,t_uint64 data,t_uint64 length,t_uint64 scratch) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 bytevalue 0 }
+while @i < @length
+load @data
+load @i
+add
+load t_byte
+store @bytevalue
+load @bytevalue
+call TextIsWord
+if
+load @scratch
+load @bytevalue
+call ft_tolower
+store t_byte
+load @token
+load @scratch
+call VectorPush
+if
+else
+push 0
+return
+end
+else
+load @words
+load @token
+load @scratch
+call TextFlush
+if
+else
+push 0
+return
+end
+end
+load @i
+inc
+store @i
+end
+push 1
+return
+}
+func TextTotal(t_uint64 words) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 count 0 t_uint64 entryptr 0 t_uint64 total 0 }
+load @words
+call VectorLength
+store @count
+while @i < @count
+load @words
+load @i
+call VectorAt
+store @entryptr
+load @entryptr
+push 16
+add
+load t_uint64
+load @total
+add
+store @total
+load @i
+inc
+store @i
+end
+load @total
+return
+}
+func TextDecimal(t_uint64 number,t_uint64 destination) -> t_uint64 {
+local { t_uint64 value 0 t_uint64 count 0 t_uint64 i 0 t_uint64 left 0 t_uint64 right 0 t_uint64 a 0 t_uint64 b 0 }
+load @number
+store @value
+loop
+load @destination
+load @count
+add
+load @value
+push 10
+umod
+push 48
+add
+store t_byte
+load @count
+inc
+store @count
+load @value
+push 10
+udiv
+store @value
+if @value == 0
+break
+end
+end
+load @count
+push 2
+udiv
+store @right
+while @i < @right
+load @destination
+load @i
+add
+store @left
+load @destination
+load @count
+dec
+load @i
+sub
+add
+store @a
+load @left
+load t_byte
+store @b
+load @left
+load @a
+load t_byte
+store t_byte
+load @a
+load @b
+store t_byte
+load @i
+inc
+store @i
+end
+load @count
+return
+}
+func TextWrite(t_uint64 resource,t_uint64 data,t_uint64 length,t_uint64 resultcell,t_uint64 offsetcell) -> t_uint64 {
+local { t_uint64 cursor 0 t_uint64 size 0 t_uint64 offset 0 t_uint64 status 0 t_uint64 count 0 }
+while @cursor < @length
+load @length
+load @cursor
+sub
+store @size
+if @size > 4096
+push 4096
+store @size
+end
+load @offsetcell
+load t_uint64
+store @offset
+load @resource
+load @offset
+load @data
+load @cursor
+add
+load @size
+load @resultcell
+call HostWrite
+store @status
+if @status != 0
+push 0
+return
+end
+load @resultcell
+load t_uint64
+store @count
+if @count == 0
+push 0
+return
+end
+load @count
+load @size
+ugt
+if
+push 0
+return
+end
+load @offsetcell
+load @offset
+load @count
+add
+store t_uint64
+load @cursor
+load @count
+add
+store @cursor
+end
+push 1
+return
+}
+func TextCleanup(t_uint64 words,t_uint64 token,t_uint64 io) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 count 0 t_uint64 entryptr 0 t_uint64 arena 0 t_uint64 status 0 }
+load @words
+load t_uint64
+store @arena
+load @words
+call VectorLength
+store @count
+while @i < @count
+load @words
+load @i
+call VectorAt
+store @entryptr
+load @arena
+load @entryptr
+load t_uint64
+call ArenaFree
+pop
+load @i
+inc
+store @i
+end
+load @words
+call VectorDestroy
+pop
+load @token
+call VectorDestroy
+pop
+if @io != 0
+load @arena
+load @io
+call ArenaFree
+pop
+end
+push 1
+return
+}
+func TextMain(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_uint64 chunk 0 t_uint64 capacity 0 t_uint64 arena 0 t_uint64 words 0 t_uint64 token 0 t_uint64 scratch 0 t_uint64 digits 0 t_uint64 resultcell 0 t_uint64 offsetcell 0 t_uint64 reader 0 t_uint64 writer 0 t_uint64 io 0 t_uint64 offset 0 t_uint64 count 0 t_uint64 status 0 t_uint64 unique 0 t_uint64 i 0 t_uint64 entryptr 0 t_int64 outcome 0 }
+if @length != 65536
+push -1
+return
+end
+load @buffer
+push 40
+add
+load t_uint64
+store @chunk
+load @buffer
+push 48
+add
+load t_uint64
+store @capacity
+if @chunk == 0
+push -1
+return
+end
+if @chunk > 4096
+push -1
+return
+end
+if @capacity > 65248
+push -1
+return
+end
+load @buffer
+push 256
+add
+store @arena
+load @buffer
+push 80
+add
+store @words
+load @buffer
+push 120
+add
+store @token
+load @buffer
+push 160
+add
+store @scratch
+load @buffer
+push 208
+add
+store @digits
+load @buffer
+push 72
+add
+store @resultcell
+load @buffer
+push 24
+add
+store @offsetcell
+load @buffer
+push 56
+add
+load t_uint64
+store @reader
+load @buffer
+push 64
+add
+load t_uint64
+store @writer
+load @arena
+load @capacity
+call ArenaInit
+pop
+load @words
+load @arena
+push 24
+call VectorInit
+store @status
+if @status == 0
+push -1
+return
+end
+load @token
+load @arena
+push 1
+call VectorInit
+store @status
+if @status == 0
+load @words
+call VectorDestroy
+pop
+push -1
+return
+end
+loop
+load @arena
+load @chunk
+call ArenaAlloc
+store @io
+if @io == 0
+push -2
+store @outcome
+break
+end
+loop
+load @reader
+load @offset
+load @io
+load @chunk
+load @resultcell
+call HostRead
+store @status
+if @status != 0
+push -3
+store @outcome
+break
+end
+load @resultcell
+load t_uint64
+store @count
+if @count == 0
+break
+end
+load @buffer
+load @offset
+load @count
+add
+store t_uint64
+load @words
+load @token
+load @io
+load @count
+load @scratch
+call TextFeed
+store @status
+if @status == 0
+push -2
+store @outcome
+break
+end
+load @offset
+load @count
+add
+store @offset
+end
+if @outcome != 0
+break
+end
+load @words
+load @token
+load @scratch
+call TextFlush
+store @status
+if @status == 0
+push -2
+store @outcome
+break
+end
+load @words
+fnaddr TextRecordCompare
+load @scratch
+call TextSort
+store @status
+if @status == 0
+push -4
+store @outcome
+break
+end
+load @buffer
+push 240
+add
+push 9
+store t_byte
+load @buffer
+push 241
+add
+push 10
+store t_byte
+load @words
+call VectorLength
+store @unique
+while @i < @unique
+load @words
+load @i
+call VectorAt
+store @entryptr
+load @writer
+load @entryptr
+load t_uint64
+load @entryptr
+push 8
+add
+load t_uint64
+load @resultcell
+load @offsetcell
+call TextWrite
+store @status
+if @status == 0
+push -5
+store @outcome
+break
+end
+load @writer
+load @buffer
+push 240
+add
+push 1
+load @resultcell
+load @offsetcell
+call TextWrite
+store @status
+if @status == 0
+push -5
+store @outcome
+break
+end
+load @entryptr
+push 16
+add
+load t_uint64
+load @digits
+call TextDecimal
+store @count
+load @writer
+load @digits
+load @count
+load @resultcell
+load @offsetcell
+call TextWrite
+store @status
+if @status == 0
+push -5
+store @outcome
+break
+end
+load @writer
+load @buffer
+push 241
+add
+push 1
+load @resultcell
+load @offsetcell
+call TextWrite
+store @status
+if @status == 0
+push -5
+store @outcome
+break
+end
+load @i
+inc
+store @i
+end
+break
+end
+load @buffer
+push 8
+add
+load @words
+call TextTotal
+store t_uint64
+load @buffer
+push 16
+add
+load @words
+call VectorLength
+store t_uint64
+load @buffer
+push 32
+add
+load @outcome
+store t_uint64
+load @words
+load @token
+load @io
+call TextCleanup
+pop
+load @outcome
+return
+}
+
+func BenchSort(t_uint64 words,t_uint64 scratch) -> t_uint64 {
+load @words
+fnaddr TextRecordCompare
+load @scratch
+call TextSort
+return
+}
+func BenchEmit(t_uint64 words,t_uint64 digits,t_uint64 resultcell,t_uint64 offsetcell) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 entryptr 0 t_uint64 count 0 t_uint64 status 0 }
+loop
+load @words
+call VectorLength
+load @i
+ule
+if
+break
+end
+load @words
+load @i
+call VectorAt
+store @entryptr
+push 258
+load @entryptr
+load t_uint64
+load @entryptr
+push 8
+add
+load t_uint64
+load @resultcell
+load @offsetcell
+call TextWrite
+store @status
+if @status == 0
+push 0
+return
+end
+load @digits
+push 9
+store t_byte
+push 258
+load @digits
+push 1
+load @resultcell
+load @offsetcell
+call TextWrite
+if
+else
+push 0
+return
+end
+load @entryptr
+push 16
+add
+load t_uint64
+load @digits
+call TextDecimal
+store @count
+push 258
+load @digits
+load @count
+load @resultcell
+load @offsetcell
+call TextWrite
+if
+else
+push 0
+return
+end
+load @digits
+push 10
+store t_byte
+push 258
+load @digits
+push 1
+load @resultcell
+load @offsetcell
+call TextWrite
+if
+else
+push 0
+return
+end
+load @i
+inc
+store @i
+end
+push 1
+return
+}
+
+}

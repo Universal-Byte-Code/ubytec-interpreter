@@ -1,0 +1,612 @@
+{
+  "schema": 2,
+  "accepted": true,
+  "source_sha256": {
+    "prototypes/isolation/run_typed.py": "1ad9e43c30b918c97b32035504ff5dff6a26ddb3008e95dc9b0af8a4859a47d3",
+    "prototypes/isolation/run.py": "cc316c9fce4e4ccc65f11915e101fddc760aa66b2dd013f2cbc9fb1e7be4286a",
+    "prototypes/isolation/linux/program.c": "5c326158be1432bfab627dc54d2af2f6144f0a6c55b04c7afa2eb6e68a7b0cbe",
+    "prototypes/isolation/linux/modules.c": "34dd7824a287db9209f4736526c34a2a56caf6ba6d7b396deb0dfb3834f748e2",
+    "prototypes/isolation/linux/contracts.h": "222368f8189ae3d1afe7789edf260194764dfc35c4267f17902c0da10ce4766a",
+    "prototypes/isolation/linux/many-service.h": "64be11faa8f1f35d868229e07d504b810b80517fc0aed7fcd6e96e02efb083d7",
+    "prototypes/isolation/linux/many-wire.h": "9bfd79326726850dc99b8f5967084b539ea0cc139a719e8c24fc7dbcbe678b4a",
+    "prototypes/isolation/linux/many-parser-test.c": "ca7ee504c4d1c02511cf445d59183544338e2a2490c735aa9c2b5a62baafbf14",
+    "prototypes/isolation/linux/bridge-transfer-test.c": "909994293baecfb74b9c84263895edec74c8f2f496b17889f41f52192f725e3b",
+    "prototypes/isolation/linux/isolation.c": "7bdf7c22d285b931e707e3118e0ae228396036dccf56b4d3abe220465aa91bb1",
+    "prototypes/isolation/linux/bridge-runtime.c": "5bc303db6453e62ebfe3c5502bf907343bc92c23f3d403a6c16cfe00026ad965",
+    "prototypes/isolation/linux/module.ld": "75f50ae3559982186203efff300d1709a8fa4206fcbe250f5a23b5e3ef241335",
+    "prototypes/isolation/common/contract.h": "702be6fcb236a74540712923ca33b7662e0162b7f22dd3160a8629aebe5bc55e",
+    "prototypes/isolation/ubytec/typed/caller.ubc": "a6d348a244efc000d3e41a5e168d8b565aedf11deaf61e7d96ceea414c0c21e4",
+    "prototypes/isolation/ubytec/typed/memory.ubc": "98b37f06e93fd2cbcef6ff2b6dd1db44f0568e86806e3c90d8557c61b0af4ee6",
+    "corpus/libft/memory.ubc": "5352696754bc2d12e398b23ae81c1bff913ab7859a2d599784ec61c405be85b7",
+    "corpus/libft/loans-reference.c": "93c023e5a1cca9dcf94caeff478cdc4f5cb3784a73437a3bd89348926759cb8c"
+  },
+  "environment": {
+    "platform": "Linux-5.10.16.3-microsoft-standard-WSL2-x86_64-with-glibc2.29",
+    "artifact_directory": "/tmp/ubytec-bridge-typed",
+    "gcc": "gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0",
+    "clang": "clang version 10.0.0-4ubuntu1 ",
+    "reference": "gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0",
+    "fallback": "gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0"
+  },
+  "tests": {
+    "gcc": [
+      {
+        "case": "empty",
+        "pass": true,
+        "packet_bytes": 32,
+        "copied_bytes": 0
+      },
+      {
+        "case": "one",
+        "pass": true,
+        "packet_bytes": 256,
+        "copied_bytes": 1
+      },
+      {
+        "case": "partial",
+        "pass": true,
+        "packet_bytes": 256,
+        "copied_bytes": 17
+      },
+      {
+        "case": "binary",
+        "pass": true,
+        "packet_bytes": 4096,
+        "copied_bytes": 1800
+      },
+      {
+        "case": "boundary_256",
+        "pass": true,
+        "packet_bytes": 256,
+        "copied_bytes": 112
+      },
+      {
+        "case": "boundary_4096",
+        "pass": true,
+        "packet_bytes": 4096,
+        "copied_bytes": 2032
+      },
+      {
+        "case": "boundary_65536",
+        "pass": true,
+        "packet_bytes": 65536,
+        "copied_bytes": 32752
+      },
+      {
+        "case": "source_write",
+        "pass": true,
+        "status": 2,
+        "callee_launches": 1
+      },
+      {
+        "case": "destination_escape",
+        "pass": true,
+        "status": 2,
+        "callee_launches": 1
+      },
+      {
+        "case": "failed_partial_write",
+        "pass": true,
+        "status": 2,
+        "callee_launches": 1
+      },
+      {
+        "case": "insufficient_destination_rights",
+        "pass": true,
+        "status": 1,
+        "callee_launches": 0
+      },
+      {
+        "case": "destination_length_ceiling",
+        "pass": true,
+        "status": 1,
+        "callee_launches": 0
+      },
+      {
+        "case": "ungranted",
+        "pass": true,
+        "status": 1,
+        "callee_launches": 0
+      },
+      {
+        "case": "finite_timeout",
+        "pass": true,
+        "status": 3,
+        "callee_launches": 1
+      },
+      {
+        "case": "signed_and_full_width_scalar",
+        "pass": true,
+        "value": 4294967280
+      },
+      {
+        "case": "unbounded_call_explicit_cancellation",
+        "pass": true
+      },
+      {
+        "case": "fresh_recovery",
+        "pass": true
+      }
+    ],
+    "clang": [
+      {
+        "case": "empty",
+        "pass": true,
+        "packet_bytes": 32,
+        "copied_bytes": 0
+      },
+      {
+        "case": "one",
+        "pass": true,
+        "packet_bytes": 256,
+        "copied_bytes": 1
+      },
+      {
+        "case": "partial",
+        "pass": true,
+        "packet_bytes": 256,
+        "copied_bytes": 17
+      },
+      {
+        "case": "binary",
+        "pass": true,
+        "packet_bytes": 4096,
+        "copied_bytes": 1800
+      },
+      {
+        "case": "boundary_256",
+        "pass": true,
+        "packet_bytes": 256,
+        "copied_bytes": 112
+      },
+      {
+        "case": "boundary_4096",
+        "pass": true,
+        "packet_bytes": 4096,
+        "copied_bytes": 2032
+      },
+      {
+        "case": "boundary_65536",
+        "pass": true,
+        "packet_bytes": 65536,
+        "copied_bytes": 32752
+      },
+      {
+        "case": "source_write",
+        "pass": true,
+        "status": 2,
+        "callee_launches": 1
+      },
+      {
+        "case": "destination_escape",
+        "pass": true,
+        "status": 2,
+        "callee_launches": 1
+      },
+      {
+        "case": "failed_partial_write",
+        "pass": true,
+        "status": 2,
+        "callee_launches": 1
+      },
+      {
+        "case": "insufficient_destination_rights",
+        "pass": true,
+        "status": 1,
+        "callee_launches": 0
+      },
+      {
+        "case": "destination_length_ceiling",
+        "pass": true,
+        "status": 1,
+        "callee_launches": 0
+      },
+      {
+        "case": "ungranted",
+        "pass": true,
+        "status": 1,
+        "callee_launches": 0
+      },
+      {
+        "case": "finite_timeout",
+        "pass": true,
+        "status": 3,
+        "callee_launches": 1
+      },
+      {
+        "case": "signed_and_full_width_scalar",
+        "pass": true,
+        "value": 4294967280
+      },
+      {
+        "case": "unbounded_call_explicit_cancellation",
+        "pass": true
+      },
+      {
+        "case": "fresh_recovery",
+        "pass": true
+      }
+    ],
+    "reference": [
+      {
+        "case": "empty",
+        "pass": true,
+        "packet_bytes": 32,
+        "copied_bytes": 0
+      },
+      {
+        "case": "one",
+        "pass": true,
+        "packet_bytes": 256,
+        "copied_bytes": 1
+      },
+      {
+        "case": "partial",
+        "pass": true,
+        "packet_bytes": 256,
+        "copied_bytes": 17
+      },
+      {
+        "case": "binary",
+        "pass": true,
+        "packet_bytes": 4096,
+        "copied_bytes": 1800
+      },
+      {
+        "case": "boundary_256",
+        "pass": true,
+        "packet_bytes": 256,
+        "copied_bytes": 112
+      },
+      {
+        "case": "boundary_4096",
+        "pass": true,
+        "packet_bytes": 4096,
+        "copied_bytes": 2032
+      },
+      {
+        "case": "boundary_65536",
+        "pass": true,
+        "packet_bytes": 65536,
+        "copied_bytes": 32752
+      },
+      {
+        "case": "source_write",
+        "pass": true,
+        "status": 2,
+        "callee_launches": 1
+      },
+      {
+        "case": "destination_escape",
+        "pass": true,
+        "status": 2,
+        "callee_launches": 1
+      },
+      {
+        "case": "failed_partial_write",
+        "pass": true,
+        "status": 2,
+        "callee_launches": 1
+      },
+      {
+        "case": "insufficient_destination_rights",
+        "pass": true,
+        "status": 1,
+        "callee_launches": 0
+      },
+      {
+        "case": "destination_length_ceiling",
+        "pass": true,
+        "status": 1,
+        "callee_launches": 0
+      },
+      {
+        "case": "ungranted",
+        "pass": true,
+        "status": 1,
+        "callee_launches": 0
+      },
+      {
+        "case": "finite_timeout",
+        "pass": true,
+        "status": 3,
+        "callee_launches": 1
+      },
+      {
+        "case": "signed_and_full_width_scalar",
+        "pass": true,
+        "value": 4294967280
+      },
+      {
+        "case": "unbounded_call_explicit_cancellation",
+        "pass": true
+      },
+      {
+        "case": "fresh_recovery",
+        "pass": true
+      }
+    ],
+    "fallback": [
+      {
+        "case": "empty",
+        "pass": true,
+        "packet_bytes": 32,
+        "copied_bytes": 0
+      },
+      {
+        "case": "one",
+        "pass": true,
+        "packet_bytes": 256,
+        "copied_bytes": 1
+      },
+      {
+        "case": "partial",
+        "pass": true,
+        "packet_bytes": 256,
+        "copied_bytes": 17
+      },
+      {
+        "case": "binary",
+        "pass": true,
+        "packet_bytes": 4096,
+        "copied_bytes": 1800
+      },
+      {
+        "case": "boundary_256",
+        "pass": true,
+        "packet_bytes": 256,
+        "copied_bytes": 112
+      },
+      {
+        "case": "boundary_4096",
+        "pass": true,
+        "packet_bytes": 4096,
+        "copied_bytes": 2032
+      },
+      {
+        "case": "boundary_65536",
+        "pass": true,
+        "packet_bytes": 65536,
+        "copied_bytes": 32752
+      },
+      {
+        "case": "source_write",
+        "pass": true,
+        "status": 2,
+        "callee_launches": 1
+      },
+      {
+        "case": "destination_escape",
+        "pass": true,
+        "status": 2,
+        "callee_launches": 1
+      },
+      {
+        "case": "failed_partial_write",
+        "pass": true,
+        "status": 2,
+        "callee_launches": 1
+      },
+      {
+        "case": "insufficient_destination_rights",
+        "pass": true,
+        "status": 1,
+        "callee_launches": 0
+      },
+      {
+        "case": "destination_length_ceiling",
+        "pass": true,
+        "status": 1,
+        "callee_launches": 0
+      },
+      {
+        "case": "ungranted",
+        "pass": true,
+        "status": 1,
+        "callee_launches": 0
+      },
+      {
+        "case": "finite_timeout",
+        "pass": true,
+        "status": 3,
+        "callee_launches": 1
+      },
+      {
+        "case": "signed_and_full_width_scalar",
+        "pass": true,
+        "value": 4294967280
+      },
+      {
+        "case": "unbounded_call_explicit_cancellation",
+        "pass": true
+      },
+      {
+        "case": "fresh_recovery",
+        "pass": true
+      }
+    ]
+  },
+  "benchmarks": [
+    {
+      "packet_bytes": 256,
+      "copied_bytes": 112,
+      "samples": 100,
+      "warmup": 10,
+      "variants": {
+        "reference": {
+          "median_us": 6334.4875,
+          "p95_us": 6799.479,
+          "phase_medians": {
+            "pidfd_workers": 0.0,
+            "preparation_ns": 134847.5,
+            "module_registration_ns": 75571.5,
+            "module_read_ns": 44293.0,
+            "request_receive_ns": 52674.0,
+            "loan_setup_ns": 75316.0,
+            "receiver_setup_ns": 7940.0,
+            "receiver_fork_ns": 99231.5,
+            "receiver_wait_ns": 1977146.0,
+            "receiver_reap_ns": 6172.0,
+            "reply_send_ns": 35636.5,
+            "receiver_ticks": 21945.0,
+            "caller_wait_ns": 4514231.0
+          },
+          "caller_peak_rss_kib": 1512,
+          "receiver_peak_rss_kib": 1504
+        },
+        "gcc": {
+          "median_us": 4122.4265,
+          "p95_us": 4730.971,
+          "phase_medians": {
+            "pidfd_workers": 2.0,
+            "preparation_ns": 136301.0,
+            "module_registration_ns": 76443.0,
+            "module_read_ns": 44854.5,
+            "request_receive_ns": 29495.0,
+            "loan_setup_ns": 61471.0,
+            "receiver_setup_ns": 8431.0,
+            "receiver_fork_ns": 99721.0,
+            "receiver_wait_ns": 920418.5,
+            "receiver_reap_ns": 6041.5,
+            "reply_send_ns": 29760.5,
+            "receiver_ticks": 22425.0,
+            "caller_wait_ns": 2306349.0
+          },
+          "caller_peak_rss_kib": 1512,
+          "receiver_peak_rss_kib": 1504
+        }
+      },
+      "median_reduction_percent": 34.920915070082636,
+      "receiver_invocations": 1,
+      "includes": "whole application, host profiling enabled; no output file",
+      "comparison": "alternating pairs; same artifacts, input, permissions, fresh workers and filesystem; reference uses separate writes and periodic polling"
+    },
+    {
+      "packet_bytes": 4096,
+      "copied_bytes": 2032,
+      "samples": 100,
+      "warmup": 10,
+      "variants": {
+        "reference": {
+          "median_us": 6397.916499999999,
+          "p95_us": 6873.719,
+          "phase_medians": {
+            "pidfd_workers": 0.0,
+            "preparation_ns": 140183.0,
+            "module_registration_ns": 77515.5,
+            "module_read_ns": 44974.0,
+            "request_receive_ns": 53550.5,
+            "loan_setup_ns": 75817.5,
+            "receiver_setup_ns": 8606.5,
+            "receiver_fork_ns": 102462.0,
+            "receiver_wait_ns": 2003285.0,
+            "receiver_reap_ns": 6242.0,
+            "reply_send_ns": 37615.0,
+            "receiver_ticks": 102810.0,
+            "caller_wait_ns": 4524509.0
+          },
+          "caller_peak_rss_kib": 1508,
+          "receiver_peak_rss_kib": 1504
+        },
+        "gcc": {
+          "median_us": 4177.291,
+          "p95_us": 4831.325,
+          "phase_medians": {
+            "pidfd_workers": 2.0,
+            "preparation_ns": 136962.0,
+            "module_registration_ns": 77053.5,
+            "module_read_ns": 44828.5,
+            "request_receive_ns": 30353.0,
+            "loan_setup_ns": 62568.5,
+            "receiver_setup_ns": 8430.5,
+            "receiver_fork_ns": 102457.5,
+            "receiver_wait_ns": 943950.5,
+            "receiver_reap_ns": 6156.5,
+            "reply_send_ns": 30122.0,
+            "receiver_ticks": 102660.0,
+            "caller_wait_ns": 2339155.5
+          },
+          "caller_peak_rss_kib": 1516,
+          "receiver_peak_rss_kib": 1500
+        }
+      },
+      "median_reduction_percent": 34.70857270487977,
+      "receiver_invocations": 1,
+      "includes": "whole application, host profiling enabled; no output file",
+      "comparison": "alternating pairs; same artifacts, input, permissions, fresh workers and filesystem; reference uses separate writes and periodic polling"
+    },
+    {
+      "packet_bytes": 65536,
+      "copied_bytes": 32752,
+      "samples": 100,
+      "warmup": 10,
+      "variants": {
+        "reference": {
+          "median_us": 7099.7815,
+          "p95_us": 7663.234,
+          "phase_medians": {
+            "pidfd_workers": 0.0,
+            "preparation_ns": 174757.5,
+            "module_registration_ns": 77114.5,
+            "module_read_ns": 44648.5,
+            "request_receive_ns": 59836.5,
+            "loan_setup_ns": 103398.0,
+            "receiver_setup_ns": 8857.0,
+            "receiver_fork_ns": 105057.0,
+            "receiver_wait_ns": 2472970.5,
+            "receiver_reap_ns": 6723.0,
+            "reply_send_ns": 40476.0,
+            "receiver_ticks": 1446735.0,
+            "caller_wait_ns": 5145568.0
+          },
+          "caller_peak_rss_kib": 1636,
+          "receiver_peak_rss_kib": 1560
+        },
+        "gcc": {
+          "median_us": 4894.744500000001,
+          "p95_us": 5308.043,
+          "phase_medians": {
+            "pidfd_workers": 2.0,
+            "preparation_ns": 172558.0,
+            "module_registration_ns": 77785.5,
+            "module_read_ns": 45109.5,
+            "request_receive_ns": 36809.0,
+            "loan_setup_ns": 87789.0,
+            "receiver_setup_ns": 8591.0,
+            "receiver_fork_ns": 103564.0,
+            "receiver_wait_ns": 1401111.5,
+            "receiver_reap_ns": 6297.0,
+            "reply_send_ns": 33262.0,
+            "receiver_ticks": 1445655.0,
+            "caller_wait_ns": 2982558.0
+          },
+          "caller_peak_rss_kib": 1664,
+          "receiver_peak_rss_kib": 1556
+        }
+      },
+      "median_reduction_percent": 31.05781494824875,
+      "receiver_invocations": 1,
+      "includes": "whole application, host profiling enabled; no output file",
+      "comparison": "alternating pairs; same artifacts, input, permissions, fresh workers and filesystem; reference uses separate writes and periodic polling"
+    }
+  ],
+  "compilation": {
+    "mode": "precompiled-assembly-handoff"
+  },
+  "sanitizer_tests": {
+    "malformed_requests": 10,
+    "passed": true,
+    "checks_worker_identity": true
+  },
+  "transport_tests": {
+    "fragmented_io_eintr_full_size_atomic_copyback": 5,
+    "passed": true
+  },
+  "artifact_sha256": {
+    "caller.elf": "ec66303bab0a971f691e0fe7367a7e4adf02f84c40a130731c2fdf8e536d9ff9",
+    "memory.nasm": "271b421f19f40a77184f5277f3bed6a2910193d04cf567a6e3582dfe632ec3fe",
+    "caller-reference.elf": "b5812883be59b1547c6d1e49d6ac108f1d1ebec33bbb50fb01f9a021fbd177e5",
+    "caller.nasm": "d1b248e6f45545223912bfe6220956ac7766786b2f304a7704eb52eb30e069cd",
+    "memory.elf": "754b4652d4093a5e2f46f8b36116fc25acadff8db741394c892f11f374a2cd0b"
+  }
+}

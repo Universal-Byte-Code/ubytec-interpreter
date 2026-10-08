@@ -1,0 +1,1491 @@
+import Copy from pair_receiver.Copy (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+import Partial from pair_receiver.Partial (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+import Spin from pair_receiver.Spin (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+export StressMain as StressMain
+module (name:"arena_stress",version:"0.1",author:"Ubytec") {
+func StressMain(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_uint64 arena 0 t_uint64 dst 0 t_uint64 src 0 t_uint64 fresh 0 t_uint64 node 0 t_uint64 size 0 t_uint64 span 0 t_uint64 round 0 t_uint64 i 0 t_uint64 byte 0 t_uint64 tmp 0 t_uint64 faults 0 t_uint64 deadlines 0 t_int64 status 0 }
+if @length != 8352
+push -10
+return
+end
+load @buffer
+push 128
+add
+store @arena
+load @arena
+push 8192
+call ArenaInit
+store @tmp
+if @tmp != 1
+push -11
+return
+end
+while @round < 1024
+load @round
+push 64
+mod
+push 8
+mul
+push 64
+add
+store @size
+load @round
+push 48
+mod
+push 16
+add
+store @span
+load @arena
+load @size
+call ArenaAlloc
+store @dst
+if @dst == 0
+push -16
+return
+end
+load @arena
+load @size
+call ArenaAlloc
+store @src
+if @src == 0
+push -17
+return
+end
+push 0
+store @i
+while @i < @size
+load @dst
+load @i
+add
+push 17
+store t_byte
+load @src
+load @i
+add
+load @round
+load @i
+add
+push 251
+mod
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @arena
+push 8192
+call ArenaAlloc
+store @tmp
+if @tmp != 0
+push -18
+return
+end
+load @arena
+load @src
+push 8192
+call ArenaResize
+store @tmp
+if @tmp != 0
+push -19
+return
+end
+load @arena
+load @dst
+call ArenaPin
+store @tmp
+if @tmp != 1
+push -20
+return
+end
+load @arena
+load @dst
+call ArenaFree
+store @tmp
+if @tmp != 0
+push -21
+return
+end
+load @arena
+load @dst
+load @size
+call ArenaResize
+store @tmp
+if @tmp != 0
+push -22
+return
+end
+load @round
+push 32
+mod
+store @tmp
+if @tmp == 0
+load @arena
+load @dst
+push 0
+load @span
+load @arena
+load @src
+push 0
+load @span
+load @span
+push 1000
+load @buffer
+push 64
+add
+call Arena_Partial
+store @status
+if @status != 2
+push -23
+return
+end
+load @arena
+load @dst
+call ArenaFind
+store @node
+if @node == 0
+push -12
+return
+end
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 1
+push -13
+return
+end
+load @arena
+load @src
+call ArenaFind
+store @node
+if @node == 0
+push -14
+return
+end
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 0
+push -15
+return
+end
+push 0
+store @i
+while @i < @size
+load @dst
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != 17
+push -24
+return
+end
+load @round
+load @i
+add
+push 251
+mod
+store @byte
+load @src
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != @byte
+push -26
+return
+end
+load @i
+push 1
+add
+store @i
+end
+load @faults
+push 1
+add
+store @faults
+end
+load @round
+push 128
+mod
+store @tmp
+if @tmp == 0
+load @arena
+load @dst
+push 0
+load @span
+load @arena
+load @src
+push 0
+load @span
+load @span
+push 25
+load @buffer
+push 64
+add
+call Arena_Spin
+store @status
+if @status != 3
+push -25
+return
+end
+load @arena
+load @dst
+call ArenaFind
+store @node
+if @node == 0
+push -12
+return
+end
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 1
+push -13
+return
+end
+load @arena
+load @src
+call ArenaFind
+store @node
+if @node == 0
+push -14
+return
+end
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 0
+push -15
+return
+end
+push 0
+store @i
+while @i < @size
+load @dst
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != 17
+push -24
+return
+end
+load @round
+load @i
+add
+push 251
+mod
+store @byte
+load @src
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != @byte
+push -26
+return
+end
+load @i
+push 1
+add
+store @i
+end
+load @deadlines
+push 1
+add
+store @deadlines
+end
+load @arena
+load @dst
+push 0
+load @span
+load @arena
+load @src
+push 0
+load @span
+load @span
+push 1000
+load @buffer
+push 64
+add
+call Arena_Copy
+store @status
+if @status != 0
+push -27
+return
+end
+load @arena
+load @dst
+call ArenaFind
+store @node
+if @node == 0
+push -12
+return
+end
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 1
+push -13
+return
+end
+load @arena
+load @src
+call ArenaFind
+store @node
+if @node == 0
+push -14
+return
+end
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 0
+push -15
+return
+end
+load @buffer
+push 64
+add
+load t_uint64
+store @tmp
+if @tmp != @span
+push -28
+return
+end
+push 0
+store @i
+while @i < @size
+load @round
+load @i
+add
+push 251
+mod
+store @byte
+load @src
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != @byte
+push -29
+return
+end
+if @i < @span
+load @dst
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != @byte
+push -30
+return
+end
+else
+load @dst
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != 17
+push -31
+return
+end
+end
+load @i
+push 1
+add
+store @i
+end
+load @arena
+load @dst
+call ArenaUnpin
+store @tmp
+if @tmp != 1
+push -32
+return
+end
+load @size
+push 32
+add
+store @tmp
+load @arena
+load @dst
+load @tmp
+call ArenaResize
+store @fresh
+if @fresh == 0
+push -33
+return
+end
+push 0
+store @i
+while @i < @size
+load @fresh
+load @i
+add
+load t_byte
+store @tmp
+if @i < @span
+load @round
+load @i
+add
+push 251
+mod
+store @byte
+if @tmp != @byte
+push -34
+return
+end
+else
+if @tmp != 17
+push -35
+return
+end
+end
+load @i
+push 1
+add
+store @i
+end
+load @size
+push 32
+add
+store @span
+while @i < @span
+load @fresh
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != 0
+push -36
+return
+end
+load @i
+push 1
+add
+store @i
+end
+load @arena
+load @src
+call ArenaFree
+store @tmp
+if @tmp != 1
+push -37
+return
+end
+load @arena
+load @fresh
+call ArenaFree
+store @tmp
+if @tmp != 1
+push -38
+return
+end
+load @arena
+push 8
+add
+load t_uint64
+store @tmp
+if @tmp != 0
+push -39
+return
+end
+load @round
+push 1
+add
+store @round
+end
+load @buffer
+push 0
+add
+load @round
+store t_uint64
+load @buffer
+push 8
+add
+load @faults
+store t_uint64
+load @buffer
+push 16
+add
+load @deadlines
+store t_uint64
+load @round
+return
+}
+
+func ArenaInit(t_uint64 arena,t_uint64 capacity) -> t_uint64 {
+if @capacity > 65536
+push 0
+return
+end
+load @arena
+load @capacity
+store t_uint64
+load @arena
+push 8
+add
+push 0
+store t_uint64
+push 1
+return
+}
+func ArenaFind(t_uint64 arena,t_uint64 pointer) -> t_uint64 {
+local { t_uint64 used 0 t_uint64 cursor 0 t_uint64 nodeptr 0 t_uint64 size 0 }
+load @arena
+push 8
+add
+load t_uint64
+store @used
+while @cursor < @used
+load @arena
+push 16
+add
+load @cursor
+add
+store @nodeptr
+load @nodeptr
+load t_uint64
+store @size
+load @nodeptr
+push 32
+add
+load @pointer
+sub
+if
+else
+load @nodeptr
+push 16
+add
+load t_uint64
+if
+load @nodeptr
+return
+end
+push 0
+return
+end
+load @cursor
+push 32
+add
+load @size
+add
+store @cursor
+end
+push 0
+return
+}
+func ArenaAlloc(t_uint64 arena,t_uint64 length) -> t_uint64 {
+local { t_uint64 capacity 0 t_uint64 used 0 t_uint64 cursor 0 t_uint64 nodeptr 0 t_uint64 size 0 t_uint64 aligned 0 t_uint64 i 0 t_uint64 minimum 0 t_uint64 remainder 0 t_uint64 nextptr 0 }
+if @length > 65536
+push 0
+return
+end
+if @length == 0
+push 0
+return
+end
+load @length
+push 7
+add
+push 8
+div
+push 8
+mul
+store @aligned
+load @arena
+load t_uint64
+store @capacity
+load @arena
+push 8
+add
+load t_uint64
+store @used
+while @cursor < @used
+load @arena
+push 16
+add
+load @cursor
+add
+store @nodeptr
+load @nodeptr
+load t_uint64
+store @size
+load @nodeptr
+push 16
+add
+load t_uint64
+if
+else
+if @size >= @aligned
+break
+end
+end
+load @cursor
+push 32
+add
+load @size
+add
+store @cursor
+end
+if @cursor == @used
+load @aligned
+push 32
+add
+store @size
+load @capacity
+load @used
+sub
+store @capacity
+if @size > @capacity
+push 0
+return
+end
+load @arena
+push 16
+add
+load @used
+add
+store @nodeptr
+load @nodeptr
+load @aligned
+store t_uint64
+load @arena
+push 8
+add
+load @used
+load @size
+add
+store t_uint64
+load @aligned
+store @size
+else
+load @aligned
+push 40
+add
+store @minimum
+if @size >= @minimum
+load @size
+load @aligned
+sub
+push 32
+sub
+store @remainder
+load @nodeptr
+push 32
+add
+load @aligned
+add
+store @nextptr
+load @nextptr
+load @remainder
+store t_uint64
+load @nextptr
+push 8
+add
+push 0
+store t_uint64
+load @nextptr
+push 16
+add
+push 0
+store t_uint64
+load @nextptr
+push 24
+add
+push 0
+store t_uint64
+load @nodeptr
+load @aligned
+store t_uint64
+load @aligned
+store @size
+end
+end
+load @nodeptr
+push 8
+add
+load @length
+store t_uint64
+load @nodeptr
+push 16
+add
+push 1
+store t_uint64
+load @nodeptr
+push 24
+add
+push 0
+store t_uint64
+while @i < @size
+load @nodeptr
+push 32
+add
+load @i
+add
+push 0
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @nodeptr
+push 32
+add
+return
+}
+func ArenaPin(t_uint64 arena,t_uint64 pointer) -> t_uint64 {
+local { t_uint64 nodeptr 0 t_uint64 pins 0 }
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+store @pins
+if @pins >= 65536
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load @pins
+push 1
+add
+store t_uint64
+push 1
+return
+}
+func ArenaUnpin(t_uint64 arena,t_uint64 pointer) -> t_uint64 {
+local { t_uint64 nodeptr 0 t_uint64 pins 0 }
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+store @pins
+if @pins == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load @pins
+push 1
+sub
+store t_uint64
+push 1
+return
+}
+func ArenaFree(t_uint64 arena,t_uint64 pointer) -> t_uint64 {
+local { t_uint64 nodeptr 0 t_uint64 used 0 t_uint64 cursor 0 t_uint64 last 0 t_uint64 size 0 t_uint64 nextpos 0 t_uint64 nextptr 0 t_uint64 nextsize 0 }
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+if
+push 0
+return
+end
+load @nodeptr
+push 16
+add
+push 0
+store t_uint64
+load @nodeptr
+push 8
+add
+push 0
+store t_uint64
+load @arena
+push 8
+add
+load t_uint64
+store @used
+while @cursor < @used
+load @arena
+push 16
+add
+load @cursor
+add
+store @nodeptr
+load @nodeptr
+load t_uint64
+store @size
+load @cursor
+push 32
+add
+load @size
+add
+store @nextpos
+load @nodeptr
+push 16
+add
+load t_uint64
+if
+load @nextpos
+store @last
+else
+while @nextpos < @used
+load @arena
+push 16
+add
+load @nextpos
+add
+store @nextptr
+load @nextptr
+push 16
+add
+load t_uint64
+if
+break
+end
+load @nextptr
+load t_uint64
+store @nextsize
+load @size
+push 32
+add
+load @nextsize
+add
+store @size
+load @nextpos
+push 32
+add
+load @nextsize
+add
+store @nextpos
+end
+load @nodeptr
+load @size
+store t_uint64
+load @nodeptr
+push 8
+add
+push 0
+store t_uint64
+load @nodeptr
+push 24
+add
+push 0
+store t_uint64
+end
+load @nextpos
+store @cursor
+end
+load @arena
+push 8
+add
+load @last
+store t_uint64
+push 1
+return
+}
+func ArenaResize(t_uint64 arena,t_uint64 pointer,t_uint64 length) -> t_uint64 {
+local { t_uint64 nodeptr 0 t_uint64 size 0 t_uint64 old 0 t_uint64 fresh 0 t_uint64 i 0 t_uint64 ignored 0 t_uint64 aligned 0 t_uint64 used 0 t_uint64 endpos 0 t_uint64 delta 0 t_uint64 available 0 }
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+if
+push 0
+return
+end
+if @length > 65536
+push 0
+return
+end
+if @length == 0
+push 0
+return
+end
+load @nodeptr
+load t_uint64
+store @size
+load @nodeptr
+push 8
+add
+load t_uint64
+store @old
+if @length <= @size
+load @old
+store @i
+while @i < @length
+load @pointer
+load @i
+add
+push 0
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @nodeptr
+push 8
+add
+load @length
+store t_uint64
+load @pointer
+return
+end
+load @length
+push 7
+add
+push 8
+div
+push 8
+mul
+store @aligned
+load @arena
+push 8
+add
+load t_uint64
+store @used
+load @nodeptr
+load @arena
+sub
+push 16
+sub
+push 32
+add
+load @size
+add
+store @endpos
+if @endpos == @used
+load @aligned
+load @size
+sub
+store @delta
+load @arena
+load t_uint64
+load @used
+sub
+store @available
+if @delta <= @available
+load @old
+store @i
+while @i < @aligned
+load @pointer
+load @i
+add
+push 0
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @nodeptr
+load @aligned
+store t_uint64
+load @nodeptr
+push 8
+add
+load @length
+store t_uint64
+load @arena
+push 8
+add
+load @used
+load @delta
+add
+store t_uint64
+load @pointer
+return
+end
+end
+load @arena
+load @length
+call ArenaAlloc
+store @fresh
+if @fresh == 0
+push 0
+return
+end
+while @i < @old
+load @fresh
+load @i
+add
+load @pointer
+load @i
+add
+load t_byte
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @arena
+load @pointer
+call ArenaFree
+store @ignored
+load @fresh
+return
+}
+func ArenaAppendUpper(t_uint64 arena,t_uint64 pointer,t_uint64 used,t_uint64 source,t_uint64 count) -> t_uint64 {
+local { t_uint64 need 0 t_uint64 nodeptr 0 t_uint64 size 0 t_uint64 fresh 0 t_uint64 i 0 t_uint64 c 0 }
+if @used > 65536
+push 0
+return
+end
+if @count > 65536
+push 0
+return
+end
+load @used
+load @count
+add
+push 1
+add
+store @need
+if @need > 65536
+push 0
+return
+end
+if @pointer == 0
+if @used != 0
+push 0
+return
+end
+push 8
+store @size
+else
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+if
+push 0
+return
+end
+load @nodeptr
+load t_uint64
+store @size
+load @nodeptr
+push 8
+add
+load t_uint64
+store @c
+if @used >= @c
+push 0
+return
+end
+end
+while @size < @need
+load @size
+push 2
+mul
+store @size
+end
+if @pointer == 0
+load @arena
+load @size
+call ArenaAlloc
+store @fresh
+else
+load @arena
+load @pointer
+load @size
+call ArenaResize
+store @fresh
+end
+if @fresh == 0
+push 0
+return
+end
+while @i < @count
+load @source
+load @i
+add
+load t_byte
+store @c
+if @c >= 97
+if @c <= 122
+load @c
+push 32
+sub
+store @c
+end
+end
+load @fresh
+load @used
+add
+load @i
+add
+load @c
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @fresh
+load @used
+add
+load @count
+add
+push 0
+store t_byte
+load @fresh
+return
+}
+
+// BEGIN GENERATED ARENA IMPORTS
+func Arena_Copy(t_uint64 a0_arena,t_uint64 a0_pointer,t_uint64 a0_offset,t_uint64 a0_length,t_uint64 a1_arena,t_uint64 a1_pointer,t_uint64 a1_offset,t_uint64 a1_length,t_uint64 a2,t_uint64 budget,t_uint64 resultcell) -> t_int64 {
+local { t_uint64 node0 0 t_uint64 size0 0 t_uint64 node1 0 t_uint64 size1 0 t_uint64 ignored 0 t_int64 status 1 }
+load @resultcell
+push 0
+store t_int64
+load @a0_arena
+load @a0_pointer
+call ArenaFind
+store @node0
+if @node0 == 0
+push 1
+return
+end
+load @node0
+push 8
+add
+load t_uint64
+store @size0
+if @a0_offset > @size0
+push 1
+return
+end
+load @size0
+load @a0_offset
+sub
+store @size0
+if @a0_length > @size0
+push 1
+return
+end
+load @a1_arena
+load @a1_pointer
+call ArenaFind
+store @node1
+if @node1 == 0
+push 1
+return
+end
+load @node1
+push 8
+add
+load t_uint64
+store @size1
+if @a1_offset > @size1
+push 1
+return
+end
+load @size1
+load @a1_offset
+sub
+store @size1
+if @a1_length > @size1
+push 1
+return
+end
+load @a0_arena
+load @a0_pointer
+call ArenaPin
+store @ignored
+if @ignored == 0
+push 1
+return
+end
+load @a1_arena
+load @a1_pointer
+call ArenaPin
+store @ignored
+if @ignored == 0
+load @a0_arena
+load @a0_pointer
+call ArenaUnpin
+store @ignored
+push 1
+return
+end
+load @a0_pointer
+load @a0_offset
+add
+load @a0_length
+load @a1_pointer
+load @a1_offset
+add
+load @a1_length
+load @a2
+load @budget
+load @resultcell
+call Copy
+store @status
+load @a1_arena
+load @a1_pointer
+call ArenaUnpin
+store @ignored
+load @a0_arena
+load @a0_pointer
+call ArenaUnpin
+store @ignored
+load @status
+return
+}
+func Arena_Partial(t_uint64 a0_arena,t_uint64 a0_pointer,t_uint64 a0_offset,t_uint64 a0_length,t_uint64 a1_arena,t_uint64 a1_pointer,t_uint64 a1_offset,t_uint64 a1_length,t_uint64 a2,t_uint64 budget,t_uint64 resultcell) -> t_int64 {
+local { t_uint64 node0 0 t_uint64 size0 0 t_uint64 node1 0 t_uint64 size1 0 t_uint64 ignored 0 t_int64 status 1 }
+load @resultcell
+push 0
+store t_int64
+load @a0_arena
+load @a0_pointer
+call ArenaFind
+store @node0
+if @node0 == 0
+push 1
+return
+end
+load @node0
+push 8
+add
+load t_uint64
+store @size0
+if @a0_offset > @size0
+push 1
+return
+end
+load @size0
+load @a0_offset
+sub
+store @size0
+if @a0_length > @size0
+push 1
+return
+end
+load @a1_arena
+load @a1_pointer
+call ArenaFind
+store @node1
+if @node1 == 0
+push 1
+return
+end
+load @node1
+push 8
+add
+load t_uint64
+store @size1
+if @a1_offset > @size1
+push 1
+return
+end
+load @size1
+load @a1_offset
+sub
+store @size1
+if @a1_length > @size1
+push 1
+return
+end
+load @a0_arena
+load @a0_pointer
+call ArenaPin
+store @ignored
+if @ignored == 0
+push 1
+return
+end
+load @a1_arena
+load @a1_pointer
+call ArenaPin
+store @ignored
+if @ignored == 0
+load @a0_arena
+load @a0_pointer
+call ArenaUnpin
+store @ignored
+push 1
+return
+end
+load @a0_pointer
+load @a0_offset
+add
+load @a0_length
+load @a1_pointer
+load @a1_offset
+add
+load @a1_length
+load @a2
+load @budget
+load @resultcell
+call Partial
+store @status
+load @a1_arena
+load @a1_pointer
+call ArenaUnpin
+store @ignored
+load @a0_arena
+load @a0_pointer
+call ArenaUnpin
+store @ignored
+load @status
+return
+}
+func Arena_Spin(t_uint64 a0_arena,t_uint64 a0_pointer,t_uint64 a0_offset,t_uint64 a0_length,t_uint64 a1_arena,t_uint64 a1_pointer,t_uint64 a1_offset,t_uint64 a1_length,t_uint64 a2,t_uint64 budget,t_uint64 resultcell) -> t_int64 {
+local { t_uint64 node0 0 t_uint64 size0 0 t_uint64 node1 0 t_uint64 size1 0 t_uint64 ignored 0 t_int64 status 1 }
+load @resultcell
+push 0
+store t_int64
+load @a0_arena
+load @a0_pointer
+call ArenaFind
+store @node0
+if @node0 == 0
+push 1
+return
+end
+load @node0
+push 8
+add
+load t_uint64
+store @size0
+if @a0_offset > @size0
+push 1
+return
+end
+load @size0
+load @a0_offset
+sub
+store @size0
+if @a0_length > @size0
+push 1
+return
+end
+load @a1_arena
+load @a1_pointer
+call ArenaFind
+store @node1
+if @node1 == 0
+push 1
+return
+end
+load @node1
+push 8
+add
+load t_uint64
+store @size1
+if @a1_offset > @size1
+push 1
+return
+end
+load @size1
+load @a1_offset
+sub
+store @size1
+if @a1_length > @size1
+push 1
+return
+end
+load @a0_arena
+load @a0_pointer
+call ArenaPin
+store @ignored
+if @ignored == 0
+push 1
+return
+end
+load @a1_arena
+load @a1_pointer
+call ArenaPin
+store @ignored
+if @ignored == 0
+load @a0_arena
+load @a0_pointer
+call ArenaUnpin
+store @ignored
+push 1
+return
+end
+load @a0_pointer
+load @a0_offset
+add
+load @a0_length
+load @a1_pointer
+load @a1_offset
+add
+load @a1_length
+load @a2
+load @budget
+load @resultcell
+call Spin
+store @status
+load @a1_arena
+load @a1_pointer
+call ArenaUnpin
+store @ignored
+load @a0_arena
+load @a0_pointer
+call ArenaUnpin
+store @ignored
+load @status
+return
+}
+// END GENERATED ARENA IMPORTS
+}

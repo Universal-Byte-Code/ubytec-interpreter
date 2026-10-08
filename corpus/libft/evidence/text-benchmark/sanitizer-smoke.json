@@ -1,0 +1,21 @@
+{
+  "accepted": true,
+  "case": "4096-v256-uniform-b4096",
+  "actual_vocabulary": 257,
+  "modes": [
+    "ubytec",
+    "c-linear"
+  ],
+  "samples_per_mode": 1,
+  "output_matches": true,
+  "client_source_sha256": "c92bd9aedbb2e6b1ed5da024e63a1294ea2b0bda9c15713552d751de5766a717",
+  "nasm_sha256": "6adbd6a0c312e08c34b864a3f9d203cc5cc0e79050668164654c3637993b965e",
+  "flags": [
+    "-O1",
+    "-g",
+    "-fsanitize=address,undefined",
+    "-fno-sanitize-recover=all",
+    "-fno-omit-frame-pointer"
+  ],
+  "scope": "C client and libc accesses instrumented; generated NASM checked by canaries/output, not sanitizer-instrumented."
+}

@@ -1,0 +1,11 @@
+{
+  "accepted": true,
+  "scalar_cases_per_compiler": 16,
+  "warmup": 5,
+  "samples": 30,
+  "profile_cases": 4,
+  "source_assembly_provider_input_output_hashes_verified": true,
+  "is_wsl": true,
+  "production_program_libraries_compiler_changed": false,
+  "remote_ci_executed": false
+}

@@ -1,0 +1,235 @@
+name: .NET
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore -p:EnableDocFxOnBuild=false -p:EnableNETAnalyzers=true -p:RunAnalyzers=true -p:ErrorLog=analyzers.sarif
+    - name: Upload SARIF Analysis Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: analyzers-sarif-${{ matrix.os }}
+        path: '**/analyzers.sarif'
+    - name: Install NASM on Linux
+      if: runner.os == 'Linux'
+      run: sudo apt-get update && sudo apt-get install -y nasm gcc clang time
+    - name: Install NASM on Windows
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        $archive = Join-Path $env:RUNNER_TEMP 'nasm.zip'
+        $destination = Join-Path $env:RUNNER_TEMP 'ubytec-nasm'
+        Invoke-WebRequest 'https://www.nasm.us/pub/nasm/releasebuilds/2.16.03/win64/nasm-2.16.03-win64.zip' -OutFile $archive
+        Expand-Archive -LiteralPath $archive -DestinationPath $destination
+        $assembler = Join-Path $destination 'nasm-2.16.03/nasm.exe'
+        "UBYTEC_NASM=$assembler" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+    - name: Test native core and complete source programs
+      run: dotnet test Ubytec.Tests/Ubytec.Tests.csproj --configuration Release --no-build --verbosity normal --logger trx --results-directory artifacts/tests
+    - name: Native bounded string corpus and unsigned integer reference
+      if: runner.os == 'Linux'
+      run: python3 corpus/libft/run_strings.py --output artifacts/libft-strings
+    - name: Generic vector model and protected loan lifecycle
+      if: runner.os == 'Linux'
+      run: python3 corpus/libft/run_vector.py --output artifacts/vector
+    - name: Indirect callbacks and independent linked-list model
+      if: runner.os == 'Linux'
+      run: python3 corpus/libft/run_lists.py --output artifacts/lists
+    - name: Complete streaming text application and authorized file I/O
+      if: runner.os == 'Linux'
+      run: python3 corpus/libft/run_text.py --output artifacts/text
+    - name: Text diagnostics and equivalent scalar kernels (no speed threshold)
+      if: runner.os == 'Linux'
+      run: python3 corpus/libft/run_text_diagnostics.py --output artifacts/text-diagnostics
+    - name: Stack transfers paired correctness and protected regression
+      if: runner.os == 'Linux'
+      run: |
+        python3 corpus/libft/run_stack_transfers.py --output artifacts/stack-transfers
+        python3 corpus/libft/run_text.py --stack-transfers --output artifacts/text-stack-transfers
+    - name: Frame values paired correctness and protected regression
+      if: runner.os == 'Linux'
+      run: |
+        python3 corpus/libft/run_stack_transfers.py --frame-values --output artifacts/frame-values
+        python3 corpus/libft/run_text.py --stack-transfers --frame-values --output artifacts/text-frame-values
+    - name: Frame registers interleaved correctness and protected regression
+      if: runner.os == 'Linux'
+      run: |
+        python3 corpus/libft/run_frame_registers.py --output artifacts/frame-registers
+        python3 corpus/libft/run_text.py --stack-transfers --frame-registers --output artifacts/text-frame-registers
+    - name: Scalar loop reductions, fault ledger and protected regression
+      if: runner.os == 'Linux'
+      run: |
+        python3 corpus/libft/run_loop_reductions.py --output artifacts/loop-reductions
+        python3 corpus/libft/run_text.py --stack-transfers --frame-registers --loop-reductions --output artifacts/text-loop-reductions
+    - name: Page bounded SSE2 reductions, faults and protected loans
+      if: runner.os == 'Linux'
+      run: |
+        python3 corpus/libft/run_block_reductions.py --output artifacts/block-reductions/paired
+        python3 corpus/libft/run_block_reduction_loans.py --output artifacts/block-reductions/protected
+        python3 corpus/libft/run_text.py --stack-transfers --frame-registers --block-reductions --output artifacts/text-block-reductions
+    - name: Native AVX2 selection, forced SSE2 fallback and protected regression
+      if: runner.os == 'Linux'
+      run: |
+        DOTNET_EnableAVX2=0 dotnet test Ubytec.Tests/Ubytec.Tests.csproj --configuration Release --no-build --filter "FullyQualifiedName~BlockReductionTests|FullyQualifiedName~LoopReductionTests" --logger "trx;LogFileName=forced-sse2.trx" --results-directory artifacts/avx2-reductions/tests
+        python3 corpus/libft/run_block_reduction_loans.py --native-block-reductions --output artifacts/avx2-reductions/protected
+        python3 corpus/libft/run_text.py --stack-transfers --frame-registers --block-reductions-native --output artifacts/text-avx2-reductions
+        python3 corpus/libft/run_avx2_reductions.py --output artifacts/avx2-reductions/paired
+    - name: Constant stride record reductions, exact faults and protected regression
+      if: runner.os == 'Linux'
+      run: |
+        python3 corpus/libft/run_record_reduction_loans.py --output artifacts/record-reductions/protected
+        python3 corpus/libft/run_text.py --stack-transfers --frame-registers --record-reductions --output artifacts/text-record-reductions
+        python3 corpus/libft/run_record_reductions.py --output artifacts/record-reductions/paired
+    - name: Text benchmark functional smoke (no speed threshold)
+      if: runner.os == 'Linux'
+      run: python3 corpus/libft/run_text_benchmark.py --warmup 0 --samples 1 --case empty --case 4096-v64-uniform-b4096 --output artifacts/text-benchmark
+    - name: Build and smoke-test standalone C reference
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        mkdir -p artifacts
+        cc -std=c11 -Wall -Wextra -Werror corpus/libft/reference.c -o artifacts/libft-reference
+        test "$(artifacts/libft-reference isalpha 65)" -eq 1
+        test "$(artifacts/libft-reference toupper 97)" -eq 65
+        test "$(artifacts/libft-reference atoi '  -42suffix')" -eq -42
+        test "$(artifacts/libft-reference atoi '-2147483648')" -eq -2147483648
+    - name: Compile and execute complete Linux examples
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        mkdir -p artifacts
+        for example in answer control-flow; do
+          dotnet Ubytec/bin/Release/net9.0/Ubytec.dll "examples/$example.ubc" -o "artifacts/$example.nasm"
+          nasm -f elf64 "artifacts/$example.nasm" -o "artifacts/$example.o"
+          ld -o "artifacts/$example" "artifacts/$example.o"
+          ubytec_status=0
+          "./artifacts/$example" || ubytec_status=$?
+          test "$ubytec_status" -eq 42
+        done
+    - name: Preserve corpus evidence
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: corpus-evidence-${{ matrix.os }}
+        path: |
+          artifacts/tests/*.trx
+          artifacts/record-reductions/**/*.trx
+          artifacts/record-reductions/**/*.json
+          artifacts/record-reductions/**/*.jsonl
+          artifacts/record-reductions/**/*.nasm
+          artifacts/record-reductions/**/*.ubc
+          artifacts/record-reductions/**/*.disasm
+          artifacts/record-reductions/paired/text-paired-client.c
+          artifacts/text-record-reductions/text-report.json
+          artifacts/text-record-reductions/text-provenance.json
+          artifacts/text-record-reductions/protected-*.jsonl
+          artifacts/text-record-reductions/*.nasm
+          artifacts/text-record-reductions/*.ubc
+          artifacts/text-record-reductions/typed-regression/typed-report.json
+          artifacts/avx2-reductions/**/*.trx
+          artifacts/avx2-reductions/**/*.json
+          artifacts/avx2-reductions/**/*.jsonl
+          artifacts/avx2-reductions/**/*.nasm
+          artifacts/avx2-reductions/**/*.ubc
+          artifacts/avx2-reductions/**/*.disasm
+          artifacts/text-avx2-reductions/text-report.json
+          artifacts/text-avx2-reductions/text-provenance.json
+          artifacts/text-avx2-reductions/protected-*.jsonl
+          artifacts/text-avx2-reductions/*.nasm
+          artifacts/text-avx2-reductions/*.ubc
+          artifacts/text-avx2-reductions/typed-regression/typed-report.json
+          artifacts/block-reductions/**/*.json
+          artifacts/block-reductions/**/*.jsonl
+          artifacts/block-reductions/**/*.nasm
+          artifacts/block-reductions/**/*.ubc
+          artifacts/block-reductions/**/*.disasm
+          artifacts/text-block-reductions/text-report.json
+          artifacts/text-block-reductions/text-provenance.json
+          artifacts/text-block-reductions/protected-*.jsonl
+          artifacts/text-block-reductions/*.nasm
+          artifacts/text-block-reductions/*.ubc
+          artifacts/text-block-reductions/typed-regression/typed-report.json
+          artifacts/loop-reductions/**/*.json
+          artifacts/loop-reductions/**/*.jsonl
+          artifacts/loop-reductions/**/*.nasm
+          artifacts/loop-reductions/**/*.disasm
+          artifacts/text-loop-reductions/text-report.json
+          artifacts/text-loop-reductions/text-provenance.json
+          artifacts/text-loop-reductions/protected-*.jsonl
+          artifacts/text-loop-reductions/*.nasm
+          artifacts/text-loop-reductions/*.ubc
+          artifacts/text-loop-reductions/typed-regression/typed-report.json
+          artifacts/libft-strings/strings-report.json
+          artifacts/libft-strings/strings-*.jsonl
+          artifacts/libft-strings/*.nasm
+          artifacts/libft-strings/*.ubc
+          artifacts/vector/vector-report.json
+          artifacts/vector/native-*.jsonl
+          artifacts/vector/protected-*.jsonl
+          artifacts/vector/*.nasm
+          artifacts/vector/*.ubc
+          artifacts/vector/actual-*.bin
+          artifacts/lists/lists-report.json
+          artifacts/lists/lists-provenance.json
+          artifacts/lists/native-*.jsonl
+          artifacts/lists/*.nasm
+          artifacts/lists/*.ubc
+          artifacts/frame-values/*.json
+          artifacts/frame-values/*.jsonl
+          artifacts/frame-values/*.nasm
+          artifacts/frame-values/*.ubc
+          artifacts/frame-values/*.txt
+          artifacts/text-frame-values/text-report.json
+          artifacts/text-frame-values/text-provenance.json
+          artifacts/text-frame-values/protected-*.jsonl
+          artifacts/text-frame-values/*.nasm
+          artifacts/text-frame-values/*.ubc
+          artifacts/text-frame-values/typed-regression/typed-report.json
+          artifacts/stack-transfers/*.json
+          artifacts/stack-transfers/*.jsonl
+          artifacts/stack-transfers/*.nasm
+          artifacts/stack-transfers/*.ubc
+          artifacts/stack-transfers/*.txt
+          artifacts/text-stack-transfers/text-report.json
+          artifacts/text-stack-transfers/text-provenance.json
+          artifacts/text-stack-transfers/protected-*.jsonl
+          artifacts/text-stack-transfers/*.nasm
+          artifacts/text-stack-transfers/*.ubc
+          artifacts/text-stack-transfers/typed-regression/typed-report.json
+          artifacts/text-diagnostics/*.json
+          artifacts/text-diagnostics/*.jsonl
+          artifacts/text-diagnostics/*.nasm
+          artifacts/text-diagnostics/*.ubc
+          artifacts/text-diagnostics/*.txt
+          artifacts/text-diagnostics/profile-client.c
+          artifacts/text-benchmark/benchmark-report.json
+          artifacts/text-benchmark/benchmark-provenance.json
+          artifacts/text-benchmark/benchmark-summary.md
+          artifacts/text-benchmark/*.ubc
+          artifacts/text-benchmark/*.nasm
+          artifacts/text/text-report.json
+          artifacts/text/text-provenance.json
+          artifacts/text/protected-*.jsonl
+          artifacts/text/*.nasm
+          artifacts/text/*.ubc
+          artifacts/text/actual-*/*.txt
+          artifacts/text/typed-regression/typed-report.json

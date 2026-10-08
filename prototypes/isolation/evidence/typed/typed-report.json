@@ -1,0 +1,279 @@
+{
+  "schema": 1,
+  "accepted": true,
+  "source_sha256": {
+    "prototypes/isolation/run_typed.py": "bb221c89b2f36b7f52963cd91e183324abf0aa024163f7c9778acb613ff8f57c",
+    "prototypes/isolation/run.py": "cc316c9fce4e4ccc65f11915e101fddc760aa66b2dd013f2cbc9fb1e7be4286a",
+    "prototypes/isolation/linux/program.c": "0eb12940b38560d1223a32f5d8c02e4f5046dd1f7aa93ce6b3894e90f127270a",
+    "prototypes/isolation/linux/modules.c": "1380d0d71cb76141054a623c103c27431bc6cfc5f9a0d356a2de9518e388d356",
+    "prototypes/isolation/linux/contracts.h": "222368f8189ae3d1afe7789edf260194764dfc35c4267f17902c0da10ce4766a",
+    "prototypes/isolation/linux/many-service.h": "47f35283e3e481f40d8e6e2b9ba001a1fbd4e55fa4751a8127e55a39caeb2112",
+    "prototypes/isolation/linux/many-wire.h": "9bfd79326726850dc99b8f5967084b539ea0cc139a719e8c24fc7dbcbe678b4a",
+    "prototypes/isolation/linux/many-parser-test.c": "ca7ee504c4d1c02511cf445d59183544338e2a2490c735aa9c2b5a62baafbf14",
+    "prototypes/isolation/linux/isolation.c": "7bdf7c22d285b931e707e3118e0ae228396036dccf56b4d3abe220465aa91bb1",
+    "prototypes/isolation/linux/bridge-runtime.c": "4c5c01bc3cd2ddfa73f2be61273b04dfeda1437f2dc778eb8ed9267607b1d3ad",
+    "prototypes/isolation/linux/module.ld": "75f50ae3559982186203efff300d1709a8fa4206fcbe250f5a23b5e3ef241335",
+    "prototypes/isolation/common/contract.h": "702be6fcb236a74540712923ca33b7662e0162b7f22dd3160a8629aebe5bc55e",
+    "prototypes/isolation/ubytec/typed/caller.ubc": "a6d348a244efc000d3e41a5e168d8b565aedf11deaf61e7d96ceea414c0c21e4",
+    "prototypes/isolation/ubytec/typed/memory.ubc": "98b37f06e93fd2cbcef6ff2b6dd1db44f0568e86806e3c90d8557c61b0af4ee6",
+    "corpus/libft/memory.ubc": "5352696754bc2d12e398b23ae81c1bff913ab7859a2d599784ec61c405be85b7",
+    "corpus/libft/loans-reference.c": "93c023e5a1cca9dcf94caeff478cdc4f5cb3784a73437a3bd89348926759cb8c"
+  },
+  "environment": {
+    "platform": "Linux-5.10.16.3-microsoft-standard-WSL2-x86_64-with-glibc2.29",
+    "gcc": "gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0",
+    "clang": "clang version 10.0.0-4ubuntu1 "
+  },
+  "tests": {
+    "gcc": [
+      {
+        "case": "empty",
+        "pass": true,
+        "packet_bytes": 32,
+        "copied_bytes": 0
+      },
+      {
+        "case": "one",
+        "pass": true,
+        "packet_bytes": 256,
+        "copied_bytes": 1
+      },
+      {
+        "case": "partial",
+        "pass": true,
+        "packet_bytes": 256,
+        "copied_bytes": 17
+      },
+      {
+        "case": "binary",
+        "pass": true,
+        "packet_bytes": 4096,
+        "copied_bytes": 1800
+      },
+      {
+        "case": "boundary_256",
+        "pass": true,
+        "packet_bytes": 256,
+        "copied_bytes": 112
+      },
+      {
+        "case": "boundary_4096",
+        "pass": true,
+        "packet_bytes": 4096,
+        "copied_bytes": 2032
+      },
+      {
+        "case": "boundary_65536",
+        "pass": true,
+        "packet_bytes": 65536,
+        "copied_bytes": 32752
+      },
+      {
+        "case": "source_write",
+        "pass": true,
+        "status": 2,
+        "callee_launches": 1
+      },
+      {
+        "case": "destination_escape",
+        "pass": true,
+        "status": 2,
+        "callee_launches": 1
+      },
+      {
+        "case": "failed_partial_write",
+        "pass": true,
+        "status": 2,
+        "callee_launches": 1
+      },
+      {
+        "case": "insufficient_destination_rights",
+        "pass": true,
+        "status": 1,
+        "callee_launches": 0
+      },
+      {
+        "case": "destination_length_ceiling",
+        "pass": true,
+        "status": 1,
+        "callee_launches": 0
+      },
+      {
+        "case": "ungranted",
+        "pass": true,
+        "status": 1,
+        "callee_launches": 0
+      },
+      {
+        "case": "finite_timeout",
+        "pass": true,
+        "status": 3,
+        "callee_launches": 1
+      },
+      {
+        "case": "signed_and_full_width_scalar",
+        "pass": true,
+        "value": 4294967280
+      },
+      {
+        "case": "unbounded_call_explicit_cancellation",
+        "pass": true
+      },
+      {
+        "case": "fresh_recovery",
+        "pass": true
+      }
+    ],
+    "clang": [
+      {
+        "case": "empty",
+        "pass": true,
+        "packet_bytes": 32,
+        "copied_bytes": 0
+      },
+      {
+        "case": "one",
+        "pass": true,
+        "packet_bytes": 256,
+        "copied_bytes": 1
+      },
+      {
+        "case": "partial",
+        "pass": true,
+        "packet_bytes": 256,
+        "copied_bytes": 17
+      },
+      {
+        "case": "binary",
+        "pass": true,
+        "packet_bytes": 4096,
+        "copied_bytes": 1800
+      },
+      {
+        "case": "boundary_256",
+        "pass": true,
+        "packet_bytes": 256,
+        "copied_bytes": 112
+      },
+      {
+        "case": "boundary_4096",
+        "pass": true,
+        "packet_bytes": 4096,
+        "copied_bytes": 2032
+      },
+      {
+        "case": "boundary_65536",
+        "pass": true,
+        "packet_bytes": 65536,
+        "copied_bytes": 32752
+      },
+      {
+        "case": "source_write",
+        "pass": true,
+        "status": 2,
+        "callee_launches": 1
+      },
+      {
+        "case": "destination_escape",
+        "pass": true,
+        "status": 2,
+        "callee_launches": 1
+      },
+      {
+        "case": "failed_partial_write",
+        "pass": true,
+        "status": 2,
+        "callee_launches": 1
+      },
+      {
+        "case": "insufficient_destination_rights",
+        "pass": true,
+        "status": 1,
+        "callee_launches": 0
+      },
+      {
+        "case": "destination_length_ceiling",
+        "pass": true,
+        "status": 1,
+        "callee_launches": 0
+      },
+      {
+        "case": "ungranted",
+        "pass": true,
+        "status": 1,
+        "callee_launches": 0
+      },
+      {
+        "case": "finite_timeout",
+        "pass": true,
+        "status": 3,
+        "callee_launches": 1
+      },
+      {
+        "case": "signed_and_full_width_scalar",
+        "pass": true,
+        "value": 4294967280
+      },
+      {
+        "case": "unbounded_call_explicit_cancellation",
+        "pass": true
+      },
+      {
+        "case": "fresh_recovery",
+        "pass": true
+      }
+    ]
+  },
+  "benchmarks": [
+    {
+      "packet_bytes": 256,
+      "copied_bytes": 112,
+      "samples": 100,
+      "warmup": 10,
+      "median_us": 26739.955,
+      "p95_us": 28847.759,
+      "receiver_invocations": 1,
+      "caller_peak_rss_kib": 1512,
+      "receiver_peak_rss_kib": 1504,
+      "includes": "whole application: supervisor, ELF/contracts, input, caller, two loan copies, receiver, copyback and reap; no output file"
+    },
+    {
+      "packet_bytes": 4096,
+      "copied_bytes": 2032,
+      "samples": 100,
+      "warmup": 10,
+      "median_us": 26940.2915,
+      "p95_us": 29676.701,
+      "receiver_invocations": 1,
+      "caller_peak_rss_kib": 1512,
+      "receiver_peak_rss_kib": 1504,
+      "includes": "whole application: supervisor, ELF/contracts, input, caller, two loan copies, receiver, copyback and reap; no output file"
+    },
+    {
+      "packet_bytes": 65536,
+      "copied_bytes": 32752,
+      "samples": 100,
+      "warmup": 10,
+      "median_us": 27998.7655,
+      "p95_us": 31569.576,
+      "receiver_invocations": 1,
+      "caller_peak_rss_kib": 1628,
+      "receiver_peak_rss_kib": 1560,
+      "includes": "whole application: supervisor, ELF/contracts, input, caller, two loan copies, receiver, copyback and reap; no output file"
+    }
+  ],
+  "compilation": {
+    "mode": "precompiled-assembly-handoff"
+  },
+  "sanitizer_tests": {
+    "malformed_requests": 10,
+    "passed": true,
+    "checks_worker_identity": true
+  },
+  "artifact_sha256": {
+    "caller.elf": "48cd619ace45a83d4202bd7d5196b79d69123628a8f8279a7404f5dd17d6aac1",
+    "caller.nasm": "d1b248e6f45545223912bfe6220956ac7766786b2f304a7704eb52eb30e069cd",
+    "memory.elf": "ee2ddfc144a169b97f925c4e772ad3564318d35b240bc73fbf743d975663a29d",
+    "memory.nasm": "271b421f19f40a77184f5277f3bed6a2910193d04cf567a6e3582dfe632ec3fe"
+  }
+}

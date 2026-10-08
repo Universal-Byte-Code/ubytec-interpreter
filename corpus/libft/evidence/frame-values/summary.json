@@ -1,0 +1,36 @@
+{
+  "accepted": true,
+  "dotnet_tests_passed": 641,
+  "protected_cases_per_compiler": {
+    "gcc": 52,
+    "clang": 52
+  },
+  "typed_regression": {
+    "accepted": true,
+    "checks_per_variant": {
+      "gcc": 17,
+      "clang": 17,
+      "reference": 17,
+      "fallback": 17
+    },
+    "transport": {
+      "fragmented_io_eintr_full_size_atomic_copyback": 5,
+      "passed": true
+    },
+    "sanitizer": {
+      "malformed_requests": 10,
+      "passed": true,
+      "checks_worker_identity": true
+    }
+  },
+  "kernels_per_compiler": 16,
+  "text_cases_per_compiler": 3,
+  "samples": 30,
+  "warmup": 5,
+  "hashes_verified": true,
+  "is_wsl": true,
+  "remote_ci_executed": false,
+  "default_enabled": false,
+  "baseline": "stack transfers only",
+  "optimized": "stack transfers plus frame values"
+}

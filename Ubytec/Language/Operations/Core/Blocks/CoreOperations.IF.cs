@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Ubytec.Language.Exceptions;
 using Ubytec.Language.Operations.Interfaces;
 using Ubytec.Language.Syntax.ExpressionFragments;
@@ -20,6 +20,8 @@ namespace Ubytec.Language.Operations
 
             public static IOpCode CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
             {
+                if (TryTokenCondition(tokens, out var tokenCondition, out var tokenType))
+                    return new IF { Condition = tokenCondition, BlockType = tokenType, Variables = new([.. variables]) };
                 // IF sin condición ni tipo explícito
                 if (operands.Length == 0)
                 {
@@ -114,21 +116,13 @@ namespace Ubytec.Language.Operations
                     DeclaredByKeyword = "if"
                 });
 
-                var raxHandling = "  pop rax; IF condition";
-                if (Condition != null)
-                {
-                    var finalCondition = new StringBuilder();
-                    foreach (ConditionExpressionFragment conditionFragment in Condition.Syntaxes.Select(v => (ConditionExpressionFragment)v))
-                    {
-                        var dereferencedConditionFragment = ProcessFragmentDereference(conditionFragment, [.. Variables?.Syntaxes.Cast<VariableExpressionFragment>()]);
-                        var processedFragment = ProcessConditionFragment(dereferencedConditionFragment, ifLabel, ifEndLabel);
-                        finalCondition.AppendLine(processedFragment);
-                    }
-
-                    return finalCondition.ToString();
-                }
-
-                return $"{ifLabel}: ; IF START\n{raxHandling}\n  cmp rax, 0\n  je {ifEndLabel}   ; Jump if condition == 0";
+                var output = new StringBuilder().AppendLine($"{ifLabel}: ; IF start");
+                if (Condition is null)
+                    output.AppendLine($"pop rax\n  test rax, rax\n  je {ifEndLabel}");
+                else
+                    foreach (var condition in Condition.Syntaxes.Cast<ConditionExpressionFragment>())
+                        output.AppendLine(EmitCondition(condition, ifEndLabel, scopes, BlockType));
+                return output.ToString();
             }
         }
     }

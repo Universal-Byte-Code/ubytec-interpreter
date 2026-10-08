@@ -1,0 +1,19 @@
+
+/mnt/x/codex/projects/ubytec-interpreter/artifacts/record-reductions/measurements/clang-native.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <c_clang_native>:
+   0:	48 85 f6             	test   rsi,rsi
+   3:	74 18                	je     1d <c_clang_native+0x1d>
+   5:	48 83 c7 10          	add    rdi,0x10
+   9:	31 c0                	xor    eax,eax
+   b:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  10:	48 03 07             	add    rax,QWORD PTR [rdi]
+  13:	48 83 c7 18          	add    rdi,0x18
+  17:	48 ff ce             	dec    rsi
+  1a:	75 f4                	jne    10 <c_clang_native+0x10>
+  1c:	c3                   	ret    
+  1d:	31 c0                	xor    eax,eax
+  1f:	c3                   	ret    

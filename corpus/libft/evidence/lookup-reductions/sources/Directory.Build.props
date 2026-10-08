@@ -1,0 +1,15 @@
+<Project>
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<RootNamespace>Ubytec</RootNamespace>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<EnableDocFxOnBuild>true</EnableDocFxOnBuild>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<EnableDocFxOnBuild Condition="'$(EnableDocFxOnBuild)'==''">false</EnableDocFxOnBuild>
+	</PropertyGroup>
+</Project>

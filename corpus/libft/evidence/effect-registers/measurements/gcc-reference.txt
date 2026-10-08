@@ -1,0 +1,102 @@
+
+/mnt/x/codex/projects/ubytec-interpreter/artifacts/effect-registers/measurements/gcc.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <scalar_compare>:
+   0:	48 85 d2             	test   rdx,rdx
+   3:	74 2b                	je     30 <scalar_compare+0x30>
+   5:	31 c0                	xor    eax,eax
+   7:	eb 10                	jmp    19 <scalar_compare+0x19>
+   9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  10:	48 83 c0 01          	add    rax,0x1
+  14:	48 39 c2             	cmp    rdx,rax
+  17:	74 17                	je     30 <scalar_compare+0x30>
+  19:	0f b6 0c 07          	movzx  ecx,BYTE PTR [rdi+rax*1]
+  1d:	44 0f b6 04 06       	movzx  r8d,BYTE PTR [rsi+rax*1]
+  22:	44 38 c1             	cmp    cl,r8b
+  25:	74 e9                	je     10 <scalar_compare+0x10>
+  27:	0f b6 c1             	movzx  eax,cl
+  2a:	44 29 c0             	sub    eax,r8d
+  2d:	c3                   	ret    
+  2e:	66 90                	xchg   ax,ax
+  30:	31 c0                	xor    eax,eax
+  32:	c3                   	ret    
+  33:	66 66 2e 0f 1f 84 00 	data16 nop WORD PTR cs:[rax+rax*1+0x0]
+  3a:	00 00 00 00 
+  3e:	66 90                	xchg   ax,ax
+
+0000000000000040 <c_DiagIdentity>:
+  40:	f3 0f 1e fa          	endbr64 
+  44:	48 89 f8             	mov    rax,rdi
+  47:	c3                   	ret    
+  48:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
+  4f:	00 
+
+0000000000000050 <c_DiagBytes>:
+  50:	f3 0f 1e fa          	endbr64 
+  54:	48 85 f6             	test   rsi,rsi
+  57:	74 17                	je     70 <c_DiagBytes+0x20>
+  59:	48 01 fe             	add    rsi,rdi
+  5c:	31 c0                	xor    eax,eax
+  5e:	66 90                	xchg   ax,ax
+  60:	0f b6 17             	movzx  edx,BYTE PTR [rdi]
+  63:	48 83 c7 01          	add    rdi,0x1
+  67:	48 01 d0             	add    rax,rdx
+  6a:	48 39 fe             	cmp    rsi,rdi
+  6d:	75 f1                	jne    60 <c_DiagBytes+0x10>
+  6f:	c3                   	ret    
+  70:	31 c0                	xor    eax,eax
+  72:	c3                   	ret    
+  73:	66 66 2e 0f 1f 84 00 	data16 nop WORD PTR cs:[rax+rax*1+0x0]
+  7a:	00 00 00 00 
+  7e:	66 90                	xchg   ax,ax
+
+0000000000000080 <c_DiagRecords>:
+  80:	f3 0f 1e fa          	endbr64 
+  84:	48 85 f6             	test   rsi,rsi
+  87:	74 27                	je     b0 <c_DiagRecords+0x30>
+  89:	48 8d 04 76          	lea    rax,[rsi+rsi*2]
+  8d:	48 8d 14 c7          	lea    rdx,[rdi+rax*8]
+  91:	31 c0                	xor    eax,eax
+  93:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  98:	48 03 47 10          	add    rax,QWORD PTR [rdi+0x10]
+  9c:	48 83 c7 18          	add    rdi,0x18
+  a0:	48 39 d7             	cmp    rdi,rdx
+  a3:	75 f3                	jne    98 <c_DiagRecords+0x18>
+  a5:	c3                   	ret    
+  a6:	66 2e 0f 1f 84 00 00 	nop    WORD PTR cs:[rax+rax*1+0x0]
+  ad:	00 00 00 
+  b0:	31 c0                	xor    eax,eax
+  b2:	c3                   	ret    
+  b3:	66 66 2e 0f 1f 84 00 	data16 nop WORD PTR cs:[rax+rax*1+0x0]
+  ba:	00 00 00 00 
+  be:	66 90                	xchg   ax,ax
+
+00000000000000c0 <c_DiagLookup>:
+  c0:	f3 0f 1e fa          	endbr64 
+  c4:	49 89 f3             	mov    r11,rsi
+  c7:	49 89 f9             	mov    r9,rdi
+  ca:	48 89 d6             	mov    rsi,rdx
+  cd:	48 89 ca             	mov    rdx,rcx
+  d0:	4d 85 db             	test   r11,r11
+  d3:	74 33                	je     108 <c_DiagLookup+0x48>
+  d5:	45 31 d2             	xor    r10d,r10d
+  d8:	eb 13                	jmp    ed <c_DiagLookup+0x2d>
+  da:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  e0:	49 83 c2 01          	add    r10,0x1
+  e4:	49 83 c1 18          	add    r9,0x18
+  e8:	4d 39 d3             	cmp    r11,r10
+  eb:	74 1b                	je     108 <c_DiagLookup+0x48>
+  ed:	49 39 51 08          	cmp    QWORD PTR [r9+0x8],rdx
+  f1:	75 ed                	jne    e0 <c_DiagLookup+0x20>
+  f3:	49 8b 39             	mov    rdi,QWORD PTR [r9]
+  f6:	e8 05 ff ff ff       	call   0 <scalar_compare>
+  fb:	85 c0                	test   eax,eax
+  fd:	75 e1                	jne    e0 <c_DiagLookup+0x20>
+  ff:	49 8d 42 01          	lea    rax,[r10+0x1]
+ 103:	c3                   	ret    
+ 104:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+ 108:	31 c0                	xor    eax,eax
+ 10a:	c3                   	ret    

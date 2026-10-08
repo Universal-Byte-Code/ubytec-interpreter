@@ -1,0 +1,884 @@
+{
+  "schema": 1,
+  "accepted": true,
+  "benchmarks_executed": true,
+  "environment": {
+    "platform": "Linux-5.10.16.3-microsoft-standard-WSL2-x86_64-with-glibc2.29",
+    "machine": "x86_64",
+    "gcc": "gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0",
+    "clang": "clang version 10.0.0-4ubuntu1 ",
+    "qemu": "QEMU emulator version 4.2.1 (Debian 1:4.2-3ubuntu6.30)"
+  },
+  "source_sha256": {
+    "arm/linker.ld": "4b7826d0f811838aa7b355bcb64bc6233375c2fd652a3c37f64c05390424767b",
+    "arm/monitor.c": "64ee65cc0aacd06e26209a724772de60af796a64c7490eb1d3f681c891bdfd1d",
+    "arm/startup.S": "741a64f5ea53503b47bdfa39a654253b335ac4f3279dc6b57dba682d301ebaa0",
+    "common/contract.h": "702be6fcb236a74540712923ca33b7662e0162b7f22dd3160a8629aebe5bc55e",
+    "execution_cases.py": "dfe2ed4a59b2e40d1a9875c605c594b3d77fbd5e668ab6c10ef2cb12be17fd02",
+    "linux/bridge-runtime.c": "4c5c01bc3cd2ddfa73f2be61273b04dfeda1437f2dc778eb8ed9267607b1d3ad",
+    "linux/contracts.h": "222368f8189ae3d1afe7789edf260194764dfc35c4267f17902c0da10ce4766a",
+    "linux/isolation.c": "7bdf7c22d285b931e707e3118e0ae228396036dccf56b4d3abe220465aa91bb1",
+    "linux/many-parser-test.c": "ca7ee504c4d1c02511cf445d59183544338e2a2490c735aa9c2b5a62baafbf14",
+    "linux/many-service.h": "47f35283e3e481f40d8e6e2b9ba001a1fbd4e55fa4751a8127e55a39caeb2112",
+    "linux/many-wire.h": "9bfd79326726850dc99b8f5967084b539ea0cc139a719e8c24fc7dbcbe678b4a",
+    "linux/module.ld": "75f50ae3559982186203efff300d1709a8fa4206fcbe250f5a23b5e3ef241335",
+    "linux/modules.c": "1380d0d71cb76141054a623c103c27431bc6cfc5f9a0d356a2de9518e388d356",
+    "linux/program.c": "0eb12940b38560d1223a32f5d8c02e4f5046dd1f7aa93ce6b3894e90f127270a",
+    "run.py": "cc316c9fce4e4ccc65f11915e101fddc760aa66b2dd013f2cbc9fb1e7be4286a",
+    "run_contracts.py": "f4175b6e30248db89df264b2e2fcb3e87900ccc388301bba24e364015b9f7f6b",
+    "run_libft.py": "b3440ec958825316dfc2811a2b3bd7ec81d9eff254ddcf039aabba3f3b976e33",
+    "run_modules.py": "ced0ffd0cee4a60c7d1f90b14af2c4248402b684f26813d14f7b364be881671d",
+    "run_program.py": "4c426b769078404ec99db9b80ad954f70067c1614cfd45c239bb0605fad6c67e",
+    "run_typed.py": "bb221c89b2f36b7f52963cd91e183324abf0aa024163f7c9778acb613ff8f57c",
+    "run_ubytec.py": "b9566e6f68c54b9404f6bbd6b008b84f028443d36f33d369214a99beae5474a2"
+  },
+  "limits": [
+    "Native fixtures, not language integration",
+    "ARM is QEMU, not physical-board timing",
+    "No microarchitectural side-channel claim",
+    "Trusted OS/MPU/monitor/toolchain",
+    "One invocation at a time; no persistent loans or delegation"
+  ],
+  "linux_tests": [
+    {
+      "target": "linux-x64",
+      "case": "read",
+      "pass": true,
+      "signal": 0,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1156,
+      "value": 256
+    },
+    {
+      "target": "linux-x64",
+      "case": "write",
+      "pass": true,
+      "signal": 0,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1040,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "read_only_write",
+      "pass": true,
+      "signal": 11,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1076,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "foreign_pointer",
+      "pass": true,
+      "signal": 11,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1020,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "monitor_pointer",
+      "pass": true,
+      "signal": 11,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1164,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "neighbor_pointer",
+      "pass": true,
+      "signal": 11,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1168,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "stack_overflow",
+      "pass": true,
+      "signal": 11,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1108,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "alter_permissions",
+      "pass": true,
+      "signal": 31,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1068,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "forged_request",
+      "pass": true,
+      "signal": 0,
+      "timeout": 0,
+      "protocol_rejected": 1,
+      "rss_kib": 1164,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "execute_data",
+      "pass": true,
+      "signal": 11,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1040,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "infinite_loop",
+      "pass": true,
+      "signal": 9,
+      "timeout": 1,
+      "protocol_rejected": 0,
+      "rss_kib": 1040,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "stale_pointer",
+      "pass": true,
+      "signal": 11,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1104,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "copy",
+      "pass": true,
+      "signal": 0,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1092,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "open_resource",
+      "pass": true,
+      "signal": 31,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1176,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "create_process",
+      "pass": true,
+      "signal": 31,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1016,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "inspect_process",
+      "pass": true,
+      "signal": 31,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1184,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "new_mapping",
+      "pass": true,
+      "signal": 31,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1020,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "x32_syscall",
+      "pass": true,
+      "signal": 31,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1188,
+      "value": 0
+    }
+  ],
+  "arm_tests": [
+    {
+      "target": "arm-mpu",
+      "mpu_regions": 8
+    },
+    {
+      "target": "arm-mpu",
+      "case": "read",
+      "pass": true,
+      "outcome": 1,
+      "cfsr": 0
+    },
+    {
+      "target": "arm-mpu",
+      "case": "write",
+      "pass": true,
+      "outcome": 1,
+      "cfsr": 0
+    },
+    {
+      "target": "arm-mpu",
+      "case": "read_only_write",
+      "pass": true,
+      "outcome": 2,
+      "cfsr": 130
+    },
+    {
+      "target": "arm-mpu",
+      "case": "foreign_pointer",
+      "pass": true,
+      "outcome": 2,
+      "cfsr": 130
+    },
+    {
+      "target": "arm-mpu",
+      "case": "monitor_pointer",
+      "pass": true,
+      "outcome": 2,
+      "cfsr": 130
+    },
+    {
+      "target": "arm-mpu",
+      "case": "neighbor_pointer",
+      "pass": true,
+      "outcome": 2,
+      "cfsr": 130
+    },
+    {
+      "target": "arm-mpu",
+      "case": "stack_overflow",
+      "pass": true,
+      "outcome": 2,
+      "cfsr": 146
+    },
+    {
+      "target": "arm-mpu",
+      "case": "alter_permissions",
+      "pass": true,
+      "outcome": 3,
+      "cfsr": 33280
+    },
+    {
+      "target": "arm-mpu",
+      "case": "forged_request",
+      "pass": true,
+      "outcome": 5,
+      "cfsr": 0
+    },
+    {
+      "target": "arm-mpu",
+      "case": "execute_data",
+      "pass": true,
+      "outcome": 2,
+      "cfsr": 1
+    },
+    {
+      "target": "arm-mpu",
+      "case": "infinite_loop",
+      "pass": true,
+      "outcome": 4,
+      "cfsr": 0
+    },
+    {
+      "target": "arm-mpu",
+      "case": "stale_pointer",
+      "pass": true,
+      "outcome": 2,
+      "cfsr": 130
+    },
+    {
+      "target": "arm-mpu",
+      "case": "copy",
+      "pass": true,
+      "outcome": 1,
+      "cfsr": 0
+    },
+    {
+      "target": "arm-mpu",
+      "case": "bad_exception_frame",
+      "pass": true,
+      "outcome": 2,
+      "cfsr": 16
+    },
+    {
+      "target": "arm-mpu",
+      "case": "semihosting",
+      "pass": true,
+      "outcome": 3,
+      "cfsr": 0
+    },
+    {
+      "target": "arm-mpu",
+      "case": "raise_privilege",
+      "pass": true,
+      "outcome": 2,
+      "cfsr": 130
+    },
+    {
+      "target": "arm-mpu",
+      "case": "bitband_alias",
+      "pass": true,
+      "outcome": 2,
+      "cfsr": 130
+    },
+    {
+      "target": "arm-mpu",
+      "case": "invalid_service_frame",
+      "pass": true,
+      "outcome": 5,
+      "cfsr": 0
+    },
+    {
+      "target": "arm-mpu",
+      "case": "mask_interrupts",
+      "pass": true,
+      "outcome": 4,
+      "cfsr": 0
+    },
+    {
+      "target": "arm-mpu",
+      "case": "device_access",
+      "pass": true,
+      "outcome": 2,
+      "cfsr": 130
+    },
+    {
+      "target": "arm-mpu",
+      "resource_bytes": 256,
+      "mapped_bytes": 256,
+      "stack_bytes": 4096,
+      "private_bytes": 4096,
+      "pass": true
+    },
+    {
+      "target": "arm-mpu",
+      "resource_bytes": 4096,
+      "mapped_bytes": 4096,
+      "stack_bytes": 4096,
+      "private_bytes": 4096,
+      "pass": true
+    },
+    {
+      "target": "arm-mpu",
+      "resource_bytes": 65536,
+      "mapped_bytes": 65536,
+      "stack_bytes": 4096,
+      "private_bytes": 4096,
+      "pass": true
+    },
+    {
+      "event": "arm-await-input",
+      "ticks": 12,
+      "invocation": 72
+    },
+    {
+      "target": "arm-mpu",
+      "case": "ordinary_event_after_default",
+      "pass": true,
+      "outcome": 1,
+      "ticks": 20,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "stale_after_ordinary_event_after_default",
+      "pass": true,
+      "outcome": 2,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "recovery_after_ordinary_event_after_default",
+      "pass": true,
+      "outcome": 1,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "event": "arm-await-input",
+      "ticks": 12,
+      "invocation": 80
+    },
+    {
+      "target": "arm-mpu",
+      "case": "cancel_no_deadline",
+      "pass": true,
+      "outcome": 6,
+      "ticks": 17,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "stale_after_cancel_no_deadline",
+      "pass": true,
+      "outcome": 2,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "recovery_after_cancel_no_deadline",
+      "pass": true,
+      "outcome": 1,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "finite_custom_budget",
+      "pass": true,
+      "outcome": 4,
+      "ticks": 3,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "stale_after_finite_custom_budget",
+      "pass": true,
+      "outcome": 2,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "recovery_after_finite_custom_budget",
+      "pass": true,
+      "outcome": 1,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "unbounded_still_protected",
+      "pass": true,
+      "outcome": 2,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "stale_after_unbounded_still_protected",
+      "pass": true,
+      "outcome": 2,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "recovery_after_unbounded_still_protected",
+      "pass": true,
+      "outcome": 1,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "event": "arm-await-input",
+      "ticks": 12,
+      "invocation": 104
+    },
+    {
+      "target": "arm-mpu",
+      "case": "cancel_masked_interrupt_attempt",
+      "pass": true,
+      "outcome": 6,
+      "ticks": 17,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "stale_after_cancel_masked_interrupt_attempt",
+      "pass": true,
+      "outcome": 2,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "recovery_after_cancel_masked_interrupt_attempt",
+      "pass": true,
+      "outcome": 1,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "event": "arm-await-input",
+      "ticks": 12,
+      "invocation": 112
+    },
+    {
+      "target": "arm-mpu",
+      "case": "cancel_finite_call",
+      "pass": true,
+      "outcome": 6,
+      "ticks": 17,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "stale_after_cancel_finite_call",
+      "pass": true,
+      "outcome": 2,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "recovery_after_cancel_finite_call",
+      "pass": true,
+      "outcome": 1,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "invalid_execution_budget",
+      "pass": true,
+      "outcome": 7,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "invalid_execution_rights",
+      "pass": true,
+      "outcome": 7,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "invalid_execution_export",
+      "pass": true,
+      "outcome": 7,
+      "ticks": 0,
+      "loan_revoked": true
+    }
+  ],
+  "arm_execution_tests": [
+    {
+      "target": "arm-mpu",
+      "case": "ordinary_event_after_default",
+      "pass": true,
+      "outcome": 1,
+      "ticks": 20,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "stale_after_ordinary_event_after_default",
+      "pass": true,
+      "outcome": 2,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "recovery_after_ordinary_event_after_default",
+      "pass": true,
+      "outcome": 1,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "cancel_no_deadline",
+      "pass": true,
+      "outcome": 6,
+      "ticks": 17,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "stale_after_cancel_no_deadline",
+      "pass": true,
+      "outcome": 2,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "recovery_after_cancel_no_deadline",
+      "pass": true,
+      "outcome": 1,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "finite_custom_budget",
+      "pass": true,
+      "outcome": 4,
+      "ticks": 3,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "stale_after_finite_custom_budget",
+      "pass": true,
+      "outcome": 2,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "recovery_after_finite_custom_budget",
+      "pass": true,
+      "outcome": 1,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "unbounded_still_protected",
+      "pass": true,
+      "outcome": 2,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "stale_after_unbounded_still_protected",
+      "pass": true,
+      "outcome": 2,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "recovery_after_unbounded_still_protected",
+      "pass": true,
+      "outcome": 1,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "cancel_masked_interrupt_attempt",
+      "pass": true,
+      "outcome": 6,
+      "ticks": 17,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "stale_after_cancel_masked_interrupt_attempt",
+      "pass": true,
+      "outcome": 2,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "recovery_after_cancel_masked_interrupt_attempt",
+      "pass": true,
+      "outcome": 1,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "cancel_finite_call",
+      "pass": true,
+      "outcome": 6,
+      "ticks": 17,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "stale_after_cancel_finite_call",
+      "pass": true,
+      "outcome": 2,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "recovery_after_cancel_finite_call",
+      "pass": true,
+      "outcome": 1,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "invalid_execution_budget",
+      "pass": true,
+      "outcome": 7,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "invalid_execution_rights",
+      "pass": true,
+      "outcome": 7,
+      "ticks": 0,
+      "loan_revoked": true
+    },
+    {
+      "target": "arm-mpu",
+      "case": "invalid_execution_export",
+      "pass": true,
+      "outcome": 7,
+      "ticks": 0,
+      "loan_revoked": true
+    }
+  ],
+  "arm_elf_section_bytes": {
+    ".vectors": 64,
+    ".text": 16676,
+    ".module_text": 620,
+    ".data": 4,
+    ".bss": 84
+  },
+  "linux_benchmarks": [
+    {
+      "target": "linux-x64",
+      "metric": "invocation_and_read",
+      "bytes": 256,
+      "samples": 100,
+      "median_us": 3464.298,
+      "p95_us": 3935.127,
+      "worker_rss_kib": 1192,
+      "loan_mapped_bytes": 4096,
+      "private_stack_bytes": 65536
+    },
+    {
+      "target": "linux-x64",
+      "metric": "copy_only",
+      "bytes": 256,
+      "samples": 100,
+      "median_us": 0.01,
+      "p95_us": 0.013,
+      "worker_rss_kib": 1192,
+      "loan_mapped_bytes": 4096,
+      "private_stack_bytes": 65536
+    },
+    {
+      "target": "linux-x64",
+      "metric": "local_byte_read_baseline",
+      "bytes": 256,
+      "samples": 100,
+      "median_us": 0.642,
+      "p95_us": 1.022,
+      "worker_rss_kib": 1192,
+      "loan_mapped_bytes": 4096,
+      "private_stack_bytes": 65536
+    },
+    {
+      "target": "linux-x64",
+      "metric": "worker_byte_read",
+      "bytes": 256,
+      "samples": 100,
+      "median_tsc_ticks": 12810,
+      "p95_tsc_ticks": 18810
+    },
+    {
+      "target": "linux-x64",
+      "metric": "invocation_and_read",
+      "bytes": 4096,
+      "samples": 100,
+      "median_us": 3661.455,
+      "p95_us": 4081.68,
+      "worker_rss_kib": 1188,
+      "loan_mapped_bytes": 4096,
+      "private_stack_bytes": 65536
+    },
+    {
+      "target": "linux-x64",
+      "metric": "copy_only",
+      "bytes": 4096,
+      "samples": 100,
+      "median_us": 0.112,
+      "p95_us": 0.154,
+      "worker_rss_kib": 1188,
+      "loan_mapped_bytes": 4096,
+      "private_stack_bytes": 65536
+    },
+    {
+      "target": "linux-x64",
+      "metric": "local_byte_read_baseline",
+      "bytes": 4096,
+      "samples": 100,
+      "median_us": 10.674,
+      "p95_us": 11.87,
+      "worker_rss_kib": 1188,
+      "loan_mapped_bytes": 4096,
+      "private_stack_bytes": 65536
+    },
+    {
+      "target": "linux-x64",
+      "metric": "worker_byte_read",
+      "bytes": 4096,
+      "samples": 100,
+      "median_tsc_ticks": 19320,
+      "p95_tsc_ticks": 26100
+    },
+    {
+      "target": "linux-x64",
+      "metric": "invocation_and_read",
+      "bytes": 65536,
+      "samples": 100,
+      "median_us": 3870.367,
+      "p95_us": 4199.732,
+      "worker_rss_kib": 1252,
+      "loan_mapped_bytes": 65536,
+      "private_stack_bytes": 65536
+    },
+    {
+      "target": "linux-x64",
+      "metric": "copy_only",
+      "bytes": 65536,
+      "samples": 100,
+      "median_us": 1.972,
+      "p95_us": 2.587,
+      "worker_rss_kib": 1252,
+      "loan_mapped_bytes": 65536,
+      "private_stack_bytes": 65536
+    },
+    {
+      "target": "linux-x64",
+      "metric": "local_byte_read_baseline",
+      "bytes": 65536,
+      "samples": 100,
+      "median_us": 171.567,
+      "p95_us": 181.074,
+      "worker_rss_kib": 1252,
+      "loan_mapped_bytes": 65536,
+      "private_stack_bytes": 65536
+    },
+    {
+      "target": "linux-x64",
+      "metric": "worker_byte_read",
+      "bytes": 65536,
+      "samples": 100,
+      "median_tsc_ticks": 100080,
+      "p95_tsc_ticks": 148620
+    }
+  ]
+}

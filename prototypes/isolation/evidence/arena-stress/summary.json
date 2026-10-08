@@ -1,0 +1,19 @@
+{
+  "accepted": true,
+  "native_random_steps_per_compiler": 73728,
+  "persistent_arenas_per_compiler": 6,
+  "epochs_per_compiler": 144,
+  "protected_cycles_per_compiler": 1024,
+  "faults_per_compiler": 32,
+  "explicit_deadlines_per_compiler": 8,
+  "protected_oom_per_compiler": 2048,
+  "report_sha256": "3159809aace7df3f1da00d90d5b87526233b23174b339f54e08c9e51d53817ed",
+  "compiler_sha256": "f04f2851d45b322ab3b37ec8405232309f10fc57ecd4a31a95548b1d01979c73",
+  "source_manifest_verified": true,
+  "assembly_manifest_verified": true,
+  "sanitized_native_client": {
+    "pass": true,
+    "epochs": 144,
+    "assembly_instrumented": false
+  }
+}

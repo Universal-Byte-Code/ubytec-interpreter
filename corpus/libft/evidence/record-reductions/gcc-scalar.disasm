@@ -1,0 +1,25 @@
+
+/mnt/x/codex/projects/ubytec-interpreter/artifacts/record-reductions/measurements/gcc-scalar.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <c_gcc_scalar>:
+   0:	f3 0f 1e fa          	endbr64 
+   4:	48 85 f6             	test   rsi,rsi
+   7:	74 27                	je     30 <c_gcc_scalar+0x30>
+   9:	48 83 c7 10          	add    rdi,0x10
+   d:	31 c0                	xor    eax,eax
+   f:	45 31 c0             	xor    r8d,r8d
+  12:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  18:	48 83 c0 01          	add    rax,0x1
+  1c:	4c 03 07             	add    r8,QWORD PTR [rdi]
+  1f:	48 83 c7 18          	add    rdi,0x18
+  23:	48 39 c6             	cmp    rsi,rax
+  26:	75 f0                	jne    18 <c_gcc_scalar+0x18>
+  28:	4c 89 c0             	mov    rax,r8
+  2b:	c3                   	ret    
+  2c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  30:	45 31 c0             	xor    r8d,r8d
+  33:	4c 89 c0             	mov    rax,r8
+  36:	c3                   	ret    

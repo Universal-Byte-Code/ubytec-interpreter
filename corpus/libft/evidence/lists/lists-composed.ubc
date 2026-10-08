@@ -1,0 +1,1284 @@
+module (name:"lists_native",version:"0.1",author:"Ubytec") {
+
+func ArenaInit(t_uint64 arena,t_uint64 capacity) -> t_uint64 {
+if @capacity > 65536
+push 0
+return
+end
+load @arena
+load @capacity
+store t_uint64
+load @arena
+push 8
+add
+push 0
+store t_uint64
+push 1
+return
+}
+func ArenaFind(t_uint64 arena,t_uint64 pointer) -> t_uint64 {
+local { t_uint64 used 0 t_uint64 cursor 0 t_uint64 nodeptr 0 t_uint64 size 0 }
+load @arena
+push 8
+add
+load t_uint64
+store @used
+while @cursor < @used
+load @arena
+push 16
+add
+load @cursor
+add
+store @nodeptr
+load @nodeptr
+load t_uint64
+store @size
+load @nodeptr
+push 32
+add
+load @pointer
+sub
+if
+else
+load @nodeptr
+push 16
+add
+load t_uint64
+if
+load @nodeptr
+return
+end
+push 0
+return
+end
+load @cursor
+push 32
+add
+load @size
+add
+store @cursor
+end
+push 0
+return
+}
+func ArenaAlloc(t_uint64 arena,t_uint64 length) -> t_uint64 {
+local { t_uint64 capacity 0 t_uint64 used 0 t_uint64 cursor 0 t_uint64 nodeptr 0 t_uint64 size 0 t_uint64 aligned 0 t_uint64 i 0 t_uint64 minimum 0 t_uint64 remainder 0 t_uint64 nextptr 0 }
+if @length > 65536
+push 0
+return
+end
+if @length == 0
+push 0
+return
+end
+load @length
+push 7
+add
+push 8
+div
+push 8
+mul
+store @aligned
+load @arena
+load t_uint64
+store @capacity
+load @arena
+push 8
+add
+load t_uint64
+store @used
+while @cursor < @used
+load @arena
+push 16
+add
+load @cursor
+add
+store @nodeptr
+load @nodeptr
+load t_uint64
+store @size
+load @nodeptr
+push 16
+add
+load t_uint64
+if
+else
+if @size >= @aligned
+break
+end
+end
+load @cursor
+push 32
+add
+load @size
+add
+store @cursor
+end
+if @cursor == @used
+load @aligned
+push 32
+add
+store @size
+load @capacity
+load @used
+sub
+store @capacity
+if @size > @capacity
+push 0
+return
+end
+load @arena
+push 16
+add
+load @used
+add
+store @nodeptr
+load @nodeptr
+load @aligned
+store t_uint64
+load @arena
+push 8
+add
+load @used
+load @size
+add
+store t_uint64
+load @aligned
+store @size
+else
+load @aligned
+push 40
+add
+store @minimum
+if @size >= @minimum
+load @size
+load @aligned
+sub
+push 32
+sub
+store @remainder
+load @nodeptr
+push 32
+add
+load @aligned
+add
+store @nextptr
+load @nextptr
+load @remainder
+store t_uint64
+load @nextptr
+push 8
+add
+push 0
+store t_uint64
+load @nextptr
+push 16
+add
+push 0
+store t_uint64
+load @nextptr
+push 24
+add
+push 0
+store t_uint64
+load @nodeptr
+load @aligned
+store t_uint64
+load @aligned
+store @size
+end
+end
+load @nodeptr
+push 8
+add
+load @length
+store t_uint64
+load @nodeptr
+push 16
+add
+push 1
+store t_uint64
+load @nodeptr
+push 24
+add
+push 0
+store t_uint64
+while @i < @size
+load @nodeptr
+push 32
+add
+load @i
+add
+push 0
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @nodeptr
+push 32
+add
+return
+}
+func ArenaPin(t_uint64 arena,t_uint64 pointer) -> t_uint64 {
+local { t_uint64 nodeptr 0 t_uint64 pins 0 }
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+store @pins
+if @pins >= 65536
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load @pins
+push 1
+add
+store t_uint64
+push 1
+return
+}
+func ArenaUnpin(t_uint64 arena,t_uint64 pointer) -> t_uint64 {
+local { t_uint64 nodeptr 0 t_uint64 pins 0 }
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+store @pins
+if @pins == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load @pins
+push 1
+sub
+store t_uint64
+push 1
+return
+}
+func ArenaFree(t_uint64 arena,t_uint64 pointer) -> t_uint64 {
+local { t_uint64 nodeptr 0 t_uint64 used 0 t_uint64 cursor 0 t_uint64 last 0 t_uint64 size 0 t_uint64 nextpos 0 t_uint64 nextptr 0 t_uint64 nextsize 0 }
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+if
+push 0
+return
+end
+load @nodeptr
+push 16
+add
+push 0
+store t_uint64
+load @nodeptr
+push 8
+add
+push 0
+store t_uint64
+load @arena
+push 8
+add
+load t_uint64
+store @used
+while @cursor < @used
+load @arena
+push 16
+add
+load @cursor
+add
+store @nodeptr
+load @nodeptr
+load t_uint64
+store @size
+load @cursor
+push 32
+add
+load @size
+add
+store @nextpos
+load @nodeptr
+push 16
+add
+load t_uint64
+if
+load @nextpos
+store @last
+else
+while @nextpos < @used
+load @arena
+push 16
+add
+load @nextpos
+add
+store @nextptr
+load @nextptr
+push 16
+add
+load t_uint64
+if
+break
+end
+load @nextptr
+load t_uint64
+store @nextsize
+load @size
+push 32
+add
+load @nextsize
+add
+store @size
+load @nextpos
+push 32
+add
+load @nextsize
+add
+store @nextpos
+end
+load @nodeptr
+load @size
+store t_uint64
+load @nodeptr
+push 8
+add
+push 0
+store t_uint64
+load @nodeptr
+push 24
+add
+push 0
+store t_uint64
+end
+load @nextpos
+store @cursor
+end
+load @arena
+push 8
+add
+load @last
+store t_uint64
+push 1
+return
+}
+func ArenaResize(t_uint64 arena,t_uint64 pointer,t_uint64 length) -> t_uint64 {
+local { t_uint64 nodeptr 0 t_uint64 size 0 t_uint64 old 0 t_uint64 fresh 0 t_uint64 i 0 t_uint64 ignored 0 t_uint64 aligned 0 t_uint64 used 0 t_uint64 endpos 0 t_uint64 delta 0 t_uint64 available 0 }
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+if
+push 0
+return
+end
+if @length > 65536
+push 0
+return
+end
+if @length == 0
+push 0
+return
+end
+load @nodeptr
+load t_uint64
+store @size
+load @nodeptr
+push 8
+add
+load t_uint64
+store @old
+if @length <= @size
+load @old
+store @i
+while @i < @length
+load @pointer
+load @i
+add
+push 0
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @nodeptr
+push 8
+add
+load @length
+store t_uint64
+load @pointer
+return
+end
+load @length
+push 7
+add
+push 8
+div
+push 8
+mul
+store @aligned
+load @arena
+push 8
+add
+load t_uint64
+store @used
+load @nodeptr
+load @arena
+sub
+push 16
+sub
+push 32
+add
+load @size
+add
+store @endpos
+if @endpos == @used
+load @aligned
+load @size
+sub
+store @delta
+load @arena
+load t_uint64
+load @used
+sub
+store @available
+if @delta <= @available
+load @old
+store @i
+while @i < @aligned
+load @pointer
+load @i
+add
+push 0
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @nodeptr
+load @aligned
+store t_uint64
+load @nodeptr
+push 8
+add
+load @length
+store t_uint64
+load @arena
+push 8
+add
+load @used
+load @delta
+add
+store t_uint64
+load @pointer
+return
+end
+end
+load @arena
+load @length
+call ArenaAlloc
+store @fresh
+if @fresh == 0
+push 0
+return
+end
+while @i < @old
+load @fresh
+load @i
+add
+load @pointer
+load @i
+add
+load t_byte
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @arena
+load @pointer
+call ArenaFree
+store @ignored
+load @fresh
+return
+}
+func ArenaAppendUpper(t_uint64 arena,t_uint64 pointer,t_uint64 used,t_uint64 source,t_uint64 count) -> t_uint64 {
+local { t_uint64 need 0 t_uint64 nodeptr 0 t_uint64 size 0 t_uint64 fresh 0 t_uint64 i 0 t_uint64 c 0 }
+if @used > 65536
+push 0
+return
+end
+if @count > 65536
+push 0
+return
+end
+load @used
+load @count
+add
+push 1
+add
+store @need
+if @need > 65536
+push 0
+return
+end
+if @pointer == 0
+if @used != 0
+push 0
+return
+end
+push 8
+store @size
+else
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+if
+push 0
+return
+end
+load @nodeptr
+load t_uint64
+store @size
+load @nodeptr
+push 8
+add
+load t_uint64
+store @c
+if @used >= @c
+push 0
+return
+end
+end
+while @size < @need
+load @size
+push 2
+mul
+store @size
+end
+if @pointer == 0
+load @arena
+load @size
+call ArenaAlloc
+store @fresh
+else
+load @arena
+load @pointer
+load @size
+call ArenaResize
+store @fresh
+end
+if @fresh == 0
+push 0
+return
+end
+while @i < @count
+load @source
+load @i
+add
+load t_byte
+store @c
+if @c >= 97
+if @c <= 122
+load @c
+push 32
+sub
+store @c
+end
+end
+load @fresh
+load @used
+add
+load @i
+add
+load @c
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @fresh
+load @used
+add
+load @count
+add
+push 0
+store t_byte
+load @fresh
+return
+}
+
+func ListNodeCheck(t_uint64 arena,t_uint64 node,t_uint64 mutable) -> t_uint64 {
+local { t_uint64 nodeptr 0 }
+if @arena == 0
+push 0
+return
+end
+load @arena
+load @node
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 8
+add
+load t_uint64
+push 16
+neq
+if
+push 0
+return
+end
+load @mutable
+if
+load @nodeptr
+push 24
+add
+load t_uint64
+if
+push 0
+return
+end
+end
+push 1
+return
+}
+func ListCheck(t_uint64 arena,t_uint64 head,t_uint64 mutable) -> t_uint64 {
+local { t_uint64 cursor 0 t_uint64 count 0 }
+load @head
+store @cursor
+while @cursor != 0
+load @count
+push 1365
+uge
+if
+push 0
+return
+end
+load @arena
+load @cursor
+load @mutable
+call ListNodeCheck
+if
+else
+push 0
+return
+end
+load @cursor
+push 8
+add
+load t_uint64
+store @cursor
+load @count
+inc
+store @count
+end
+push 1
+return
+}
+func ft_lstnew_arena(t_uint64 arena,t_uint64 content) -> t_uint64 {
+local { t_uint64 node 0 }
+if @arena == 0
+push 0
+return
+end
+load @arena
+push 16
+call ArenaAlloc
+store @node
+if @node == 0
+push 0
+return
+end
+load @node
+load @content
+store t_uint64
+load @node
+push 8
+add
+push 0
+store t_uint64
+load @node
+return
+}
+func ft_lstsize(t_uint64 head) -> t_uint64 {
+local { t_uint64 cursor 0 t_uint64 count 0 }
+load @head
+store @cursor
+while @cursor != 0
+load @count
+inc
+store @count
+load @cursor
+push 8
+add
+load t_uint64
+store @cursor
+end
+load @count
+return
+}
+func ft_lstlast(t_uint64 head) -> t_uint64 {
+local { t_uint64 cursor 0 t_uint64 next 0 }
+load @head
+store @cursor
+while @cursor != 0
+load @cursor
+push 8
+add
+load t_uint64
+store @next
+if @next == 0
+load @cursor
+return
+end
+load @next
+store @cursor
+end
+push 0
+return
+}
+func ft_lstadd_front_arena(t_uint64 arena,t_uint64 headref,t_uint64 node) -> t_uint64 {
+local { t_uint64 head 0 t_uint64 cursor 0 }
+if @headref == 0
+push 0
+return
+end
+load @headref
+load t_uint64
+store @head
+load @arena
+load @head
+push 1
+call ListCheck
+if
+else
+push 0
+return
+end
+load @arena
+load @node
+push 1
+call ListNodeCheck
+if
+else
+push 0
+return
+end
+load @node
+push 8
+add
+load t_uint64
+if
+push 0
+return
+end
+load @head
+store @cursor
+while @cursor != 0
+if @cursor == @node
+push 0
+return
+end
+load @cursor
+push 8
+add
+load t_uint64
+store @cursor
+end
+load @node
+push 8
+add
+load @head
+store t_uint64
+load @headref
+load @node
+store t_uint64
+push 1
+return
+}
+func ft_lstadd_back_arena(t_uint64 arena,t_uint64 headref,t_uint64 node) -> t_uint64 {
+local { t_uint64 head 0 t_uint64 cursor 0 }
+if @headref == 0
+push 0
+return
+end
+load @headref
+load t_uint64
+store @head
+load @arena
+load @head
+push 1
+call ListCheck
+if
+else
+push 0
+return
+end
+load @arena
+load @node
+push 1
+call ListNodeCheck
+if
+else
+push 0
+return
+end
+load @node
+push 8
+add
+load t_uint64
+if
+push 0
+return
+end
+load @head
+store @cursor
+while @cursor != 0
+if @cursor == @node
+push 0
+return
+end
+load @cursor
+push 8
+add
+load t_uint64
+store @cursor
+end
+if @head == 0
+load @headref
+load @node
+store t_uint64
+else
+load @head
+call ft_lstlast
+store @cursor
+load @cursor
+push 8
+add
+load @node
+store t_uint64
+end
+push 1
+return
+}
+func ft_lstdelone_arena(t_uint64 arena,t_uint64 node,t_uint64 destroy) -> t_uint64 {
+if @destroy == 0
+push 0
+return
+end
+load @arena
+load @node
+push 1
+call ListNodeCheck
+if
+else
+push 0
+return
+end
+load @node
+load t_uint64
+load @destroy
+calli 1 t_void
+load @arena
+load @node
+call ArenaFree
+return
+}
+func ft_lstclear_arena(t_uint64 arena,t_uint64 headref,t_uint64 destroy) -> t_uint64 {
+local { t_uint64 cursor 0 t_uint64 next 0 t_uint64 ignored 0 }
+if @headref == 0
+push 0
+return
+end
+load @headref
+load t_uint64
+store @cursor
+if @cursor == 0
+push 1
+return
+end
+if @destroy == 0
+push 0
+return
+end
+load @arena
+load @cursor
+push 1
+call ListCheck
+if
+else
+push 0
+return
+end
+load @headref
+push 0
+store t_uint64
+while @cursor != 0
+load @cursor
+push 8
+add
+load t_uint64
+store @next
+load @arena
+load @cursor
+load @destroy
+call ft_lstdelone_arena
+store @ignored
+load @next
+store @cursor
+end
+push 1
+return
+}
+func ft_lstiter(t_uint64 head,t_uint64 visit) -> t_uint64 {
+local { t_uint64 cursor 0 t_uint64 next 0 }
+if @head == 0
+push 1
+return
+end
+if @visit == 0
+push 0
+return
+end
+load @head
+store @cursor
+while @cursor != 0
+load @cursor
+push 8
+add
+load t_uint64
+store @next
+load @cursor
+load t_uint64
+load @visit
+calli 1 t_void
+load @next
+store @cursor
+end
+push 1
+return
+}
+func ft_lstmap_arena(t_uint64 arena,t_uint64 head,t_uint64 transform,t_uint64 destroy) -> t_uint64 {
+local { t_uint64 result 0 t_uint64 tail 0 t_uint64 cursor 0 t_uint64 content 0 t_uint64 node 0 t_uint64 ignored 0 }
+if @head == 0
+push 0
+return
+end
+if @transform == 0
+push 0
+return
+end
+if @destroy == 0
+push 0
+return
+end
+load @arena
+load @head
+push 0
+call ListCheck
+if
+else
+push 0
+return
+end
+load @head
+store @cursor
+while @cursor != 0
+load @cursor
+load t_uint64
+load @transform
+calli 1 t_uint64
+store @content
+if @content == 0
+break
+end
+load @arena
+load @content
+call ft_lstnew_arena
+store @node
+if @node == 0
+load @content
+load @destroy
+calli 1 t_void
+break
+end
+if @result == 0
+load @node
+store @result
+else
+load @tail
+push 8
+add
+load @node
+store t_uint64
+end
+load @node
+store @tail
+load @cursor
+push 8
+add
+load t_uint64
+store @cursor
+end
+if @cursor == 0
+load @result
+return
+end
+// Release every newly owned content and node after a failed map.
+load @result
+store @cursor
+while @cursor != 0
+load @cursor
+push 8
+add
+load t_uint64
+store @tail
+load @arena
+load @cursor
+load @destroy
+call ft_lstdelone_arena
+store @ignored
+load @tail
+store @cursor
+end
+push 0
+return
+}
+
+func ListTransform(t_uint64 content) -> t_uint64 {
+local { t_uint64 arena 0 t_uint64 stats 0 t_uint64 fresh 0 t_uint64 value 0 t_uint64 count 0 }
+load @content
+load t_uint64
+store @arena
+load @content
+push 16
+add
+load t_uint64
+store @stats
+load @content
+push 8
+add
+load t_uint64
+store @value
+load @stats
+load t_uint64
+inc
+store @count
+load @stats
+load @count
+store t_uint64
+load @stats
+push 24
+add
+load t_uint64
+load @count
+eq
+if
+push 0
+return
+end
+load @arena
+push 24
+call ArenaAlloc
+store @fresh
+if @fresh == 0
+push 0
+return
+end
+load @fresh
+load @arena
+store t_uint64
+load @fresh
+push 8
+add
+load @value
+push 2
+mul
+push 7
+add
+store t_uint64
+load @fresh
+push 16
+add
+load @stats
+store t_uint64
+load @fresh
+return
+}
+func ListDestroy(t_uint64 content) -> t_void {
+local { t_uint64 arena 0 t_uint64 stats 0 t_uint64 value 0 t_uint64 ignored 0 }
+if @content == 0
+return
+end
+load @content
+load t_uint64
+store @arena
+load @content
+push 16
+add
+load t_uint64
+store @stats
+load @content
+push 8
+add
+load t_uint64
+store @value
+load @stats
+push 8
+add
+load @stats
+push 8
+add
+load t_uint64
+inc
+store t_uint64
+load @stats
+push 40
+add
+load @stats
+push 40
+add
+load t_uint64
+push 131
+mul
+load @value
+add
+store t_uint64
+load @arena
+load @content
+call ArenaFree
+store @ignored
+return
+}
+func ListVisit(t_uint64 content) -> t_void {
+local { t_uint64 stats 0 t_uint64 value 0 }
+load @content
+push 16
+add
+load t_uint64
+store @stats
+load @content
+push 8
+add
+load t_uint64
+push 3
+add
+store @value
+load @content
+push 8
+add
+load @value
+store t_uint64
+load @stats
+push 16
+add
+load @stats
+push 16
+add
+load t_uint64
+inc
+store t_uint64
+load @stats
+push 32
+add
+load @stats
+push 32
+add
+load t_uint64
+push 131
+mul
+load @value
+add
+store t_uint64
+return
+}
+func ListMap(t_uint64 arena,t_uint64 head) -> t_uint64 {
+load @arena
+load @head
+fnaddr ListTransform
+fnaddr ListDestroy
+call ft_lstmap_arena
+return
+}
+func ListClear(t_uint64 arena,t_uint64 headref) -> t_uint64 {
+load @arena
+load @headref
+fnaddr ListDestroy
+call ft_lstclear_arena
+return
+}
+func ListDelete(t_uint64 arena,t_uint64 node) -> t_uint64 {
+load @arena
+load @node
+fnaddr ListDestroy
+call ft_lstdelone_arena
+return
+}
+func ListIter(t_uint64 head) -> t_uint64 {
+load @head
+fnaddr ListVisit
+call ft_lstiter
+return
+}
+func ListCallRaw(t_uint64 target,t_uint64 value) -> t_uint64 {
+load @value
+load @target
+calli 1 t_uint64
+return
+}
+
+}

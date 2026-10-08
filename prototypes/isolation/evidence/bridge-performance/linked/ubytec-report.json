@@ -1,0 +1,195 @@
+{
+  "schema": 1,
+  "accepted": true,
+  "environment": "Linux-5.10.16.3-microsoft-standard-WSL2-x86_64-with-glibc2.29",
+  "source_sha256": {
+    "ubytec/attacks.ubc": "6eab39baab5717edc0161ce36f70009fe26a1153ce29cf4612e39d8d11260375",
+    "linux/isolation.c": "7bdf7c22d285b931e707e3118e0ae228396036dccf56b4d3abe220465aa91bb1",
+    "common/contract.h": "702be6fcb236a74540712923ca33b7662e0162b7f22dd3160a8629aebe5bc55e",
+    "run_ubytec.py": "b9566e6f68c54b9404f6bbd6b008b84f028443d36f33d369214a99beae5474a2",
+    "run.py": "cc316c9fce4e4ccc65f11915e101fddc760aa66b2dd013f2cbc9fb1e7be4286a"
+  },
+  "exports": {
+    "Read": "read",
+    "Write": "write",
+    "ReadOnlyWrite": "read_only_write",
+    "Foreign": "foreign",
+    "Monitor": "monitor",
+    "Neighbor": "neighbor",
+    "StackOverflow": "stack_overflow",
+    "Spin": "loop",
+    "Stale": "stale",
+    "Copy": "copy"
+  },
+  "benchmarks_executed": false,
+  "limits": [
+    "Statically linked fixture module; no general dynamic module loader",
+    "Linux integration only; ARM continues to use native fixtures",
+    "OS, supervisor, compiler and toolchain remain trusted",
+    "Integer System V arguments only, at most six",
+    "Serialized per-call loans; no delegation or persistent grants",
+    "Raw pointers within a granted page can access initialized padding",
+    "A failed writable loan can contain partial writes; copy commit requires successful return"
+  ],
+  "compilation": {
+    "mode": "precompiled-cross-host-handoff",
+    "input_assembly_sha256": "21ba3e2119e6315a4e7b5fb313ab71a9e767d80fcea9feed1fce8e5a7584d065"
+  },
+  "artifact_sha256": {
+    "attacks.nasm": "21ba3e2119e6315a4e7b5fb313ab71a9e767d80fcea9feed1fce8e5a7584d065",
+    "attacks.o": "c441ca94bba2bfc82465c8b3e043d00b5a1b1898022fcee251414043a5c4a713",
+    "ubytec-isolation": "3bc05cd6d684e7bef36b8da52fef848a30d4002df3b093c7f42bcab0b9036d84"
+  },
+  "tests": [
+    {
+      "target": "linux-x64",
+      "case": "read",
+      "pass": true,
+      "signal": 0,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1180,
+      "value": 256
+    },
+    {
+      "target": "linux-x64",
+      "case": "recovery_after_read",
+      "pass": true
+    },
+    {
+      "target": "linux-x64",
+      "case": "write",
+      "pass": true,
+      "signal": 0,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1180,
+      "value": 4294967297
+    },
+    {
+      "target": "linux-x64",
+      "case": "recovery_after_write",
+      "pass": true
+    },
+    {
+      "target": "linux-x64",
+      "case": "read_only_write",
+      "pass": true,
+      "signal": 11,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1068,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "recovery_after_read_only_write",
+      "pass": true
+    },
+    {
+      "target": "linux-x64",
+      "case": "foreign_pointer",
+      "pass": true,
+      "signal": 11,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1080,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "recovery_after_foreign_pointer",
+      "pass": true
+    },
+    {
+      "target": "linux-x64",
+      "case": "monitor_pointer",
+      "pass": true,
+      "signal": 11,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1184,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "recovery_after_monitor_pointer",
+      "pass": true
+    },
+    {
+      "target": "linux-x64",
+      "case": "neighbor_pointer",
+      "pass": true,
+      "signal": 11,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1108,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "recovery_after_neighbor_pointer",
+      "pass": true
+    },
+    {
+      "target": "linux-x64",
+      "case": "stack_overflow",
+      "pass": true,
+      "signal": 11,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1080,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "recovery_after_stack_overflow",
+      "pass": true
+    },
+    {
+      "target": "linux-x64",
+      "case": "infinite_loop",
+      "pass": true,
+      "signal": 9,
+      "timeout": 1,
+      "protocol_rejected": 0,
+      "rss_kib": 1088,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "recovery_after_infinite_loop",
+      "pass": true
+    },
+    {
+      "target": "linux-x64",
+      "case": "stale_pointer",
+      "pass": true,
+      "signal": 11,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1020,
+      "value": 0
+    },
+    {
+      "target": "linux-x64",
+      "case": "recovery_after_stale_pointer",
+      "pass": true
+    },
+    {
+      "target": "linux-x64",
+      "case": "copy",
+      "pass": true,
+      "signal": 0,
+      "timeout": 0,
+      "protocol_rejected": 0,
+      "rss_kib": 1040,
+      "value": 4294967297
+    },
+    {
+      "target": "linux-x64",
+      "case": "recovery_after_copy",
+      "pass": true
+    }
+  ]
+}

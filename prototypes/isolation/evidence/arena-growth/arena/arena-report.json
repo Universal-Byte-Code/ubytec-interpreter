@@ -1,0 +1,1040 @@
+{
+  "schema": 1,
+  "accepted": true,
+  "platform": "Linux-5.10.16.3-microsoft-standard-WSL2-x86_64-with-glibc2.29",
+  "source_sha256": {
+    "corpus/libft/arena.ubc": "a9a3394ae5d8f95a8c33336209ce96cc4b804259b5e14509632809d39efdd0e7",
+    "prototypes/isolation/ubytec/arena/arena.ubc": "94b017e26d258dc99dd43a9d2488af514a4219483e7260a6c281091f82e26530",
+    "prototypes/isolation/run_arena.py": "5824d91a73afc4e2ff88267b0c8c2d6cac5d3fbe1a1d3e22186acf8bdde716d0",
+    "prototypes/isolation/arena_text_cli.py": "4831c78607947fadd6c2bb689d440ae84ec7dfb241bdbd9af91784c5e62d8f40",
+    "prototypes/isolation/run.py": "cc316c9fce4e4ccc65f11915e101fddc760aa66b2dd013f2cbc9fb1e7be4286a",
+    "prototypes/isolation/linux/program.c": "5c326158be1432bfab627dc54d2af2f6144f0a6c55b04c7afa2eb6e68a7b0cbe",
+    "prototypes/isolation/linux/modules.c": "34dd7824a287db9209f4736526c34a2a56caf6ba6d7b396deb0dfb3834f748e2",
+    "prototypes/isolation/linux/contracts.h": "222368f8189ae3d1afe7789edf260194764dfc35c4267f17902c0da10ce4766a",
+    "prototypes/isolation/linux/many-service.h": "64be11faa8f1f35d868229e07d504b810b80517fc0aed7fcd6e96e02efb083d7",
+    "prototypes/isolation/linux/many-wire.h": "9bfd79326726850dc99b8f5967084b539ea0cc139a719e8c24fc7dbcbe678b4a",
+    "prototypes/isolation/linux/isolation.c": "7bdf7c22d285b931e707e3118e0ae228396036dccf56b4d3abe220465aa91bb1",
+    "prototypes/isolation/linux/bridge-runtime.c": "5bc303db6453e62ebfe3c5502bf907343bc92c23f3d403a6c16cfe00026ad965",
+    "prototypes/isolation/linux/module.ld": "75f50ae3559982186203efff300d1709a8fa4206fcbe250f5a23b5e3ef241335",
+    "prototypes/isolation/common/contract.h": "702be6fcb236a74540712923ca33b7662e0162b7f22dd3160a8629aebe5bc55e"
+  },
+  "tests": {
+    "gcc": [
+      {
+        "case": "growth-preserves",
+        "pass": true
+      },
+      {
+        "case": "pinned-lifetime",
+        "pass": true
+      },
+      {
+        "case": "reuse-and-coalesce-tail",
+        "pass": true
+      },
+      {
+        "case": "oom-preserves",
+        "pass": true
+      },
+      {
+        "case": "interior-and-invalid",
+        "pass": true
+      },
+      {
+        "case": "size-0",
+        "pass": true
+      },
+      {
+        "case": "size-1",
+        "pass": true
+      },
+      {
+        "case": "size-7",
+        "pass": true
+      },
+      {
+        "case": "size-8",
+        "pass": true
+      },
+      {
+        "case": "size-9",
+        "pass": true
+      },
+      {
+        "case": "size-65536",
+        "pass": true
+      },
+      {
+        "case": "size-65537",
+        "pass": true
+      },
+      {
+        "case": "size-9223372036854775808",
+        "pass": true
+      },
+      {
+        "case": "size-18446744073709551615",
+        "pass": true
+      },
+      {
+        "case": "capacity-0",
+        "pass": true
+      },
+      {
+        "case": "capacity-31",
+        "pass": true
+      },
+      {
+        "case": "capacity-32",
+        "pass": true
+      },
+      {
+        "case": "capacity-39",
+        "pass": true
+      },
+      {
+        "case": "capacity-40",
+        "pass": true
+      },
+      {
+        "case": "capacity-41",
+        "pass": true
+      },
+      {
+        "case": "capacity-256",
+        "pass": true
+      },
+      {
+        "case": "incremental-text-1",
+        "pass": true
+      },
+      {
+        "case": "incremental-text-2",
+        "pass": true
+      },
+      {
+        "case": "incremental-text-8",
+        "pass": true
+      },
+      {
+        "case": "incremental-text-32",
+        "pass": true
+      },
+      {
+        "case": "incremental-text-128",
+        "pass": true
+      },
+      {
+        "case": "text-oom",
+        "pass": true
+      },
+      {
+        "case": "text-pinned",
+        "pass": true
+      },
+      {
+        "case": "tail-grow-exact",
+        "pass": true
+      },
+      {
+        "case": "tail-grow-pinned",
+        "pass": true
+      },
+      {
+        "case": "non-tail-relocation",
+        "pass": true
+      },
+      {
+        "case": "split-three",
+        "pass": true
+      },
+      {
+        "case": "split-threshold-40",
+        "pass": true
+      },
+      {
+        "case": "split-threshold-48",
+        "pass": true
+      },
+      {
+        "case": "split-threshold-56",
+        "pass": true
+      },
+      {
+        "case": "split-threshold-64",
+        "pass": true
+      },
+      {
+        "case": "split-threshold-80",
+        "pass": true
+      },
+      {
+        "case": "coalesce-(1, 2)",
+        "pass": true
+      },
+      {
+        "case": "coalesce-(2, 1)",
+        "pass": true
+      },
+      {
+        "case": "coalesce-pin-neighbor",
+        "pass": true
+      },
+      {
+        "case": "merge-middle-stale",
+        "pass": true
+      },
+      {
+        "case": "random-0",
+        "pass": true
+      },
+      {
+        "case": "random-1",
+        "pass": true
+      },
+      {
+        "case": "random-2",
+        "pass": true
+      },
+      {
+        "case": "random-3",
+        "pass": true
+      },
+      {
+        "case": "random-4",
+        "pass": true
+      },
+      {
+        "case": "random-5",
+        "pass": true
+      },
+      {
+        "case": "random-6",
+        "pass": true
+      },
+      {
+        "case": "random-7",
+        "pass": true
+      },
+      {
+        "case": "random-8",
+        "pass": true
+      },
+      {
+        "case": "random-9",
+        "pass": true
+      },
+      {
+        "case": "random-10",
+        "pass": true
+      },
+      {
+        "case": "random-11",
+        "pass": true
+      },
+      {
+        "case": "random-12",
+        "pass": true
+      },
+      {
+        "case": "random-13",
+        "pass": true
+      },
+      {
+        "case": "random-14",
+        "pass": true
+      },
+      {
+        "case": "random-15",
+        "pass": true
+      },
+      {
+        "case": "random-16",
+        "pass": true
+      },
+      {
+        "case": "random-17",
+        "pass": true
+      },
+      {
+        "case": "random-18",
+        "pass": true
+      },
+      {
+        "case": "random-19",
+        "pass": true
+      },
+      {
+        "case": "random-20",
+        "pass": true
+      },
+      {
+        "case": "random-21",
+        "pass": true
+      },
+      {
+        "case": "random-22",
+        "pass": true
+      },
+      {
+        "case": "random-23",
+        "pass": true
+      },
+      {
+        "case": "random-24",
+        "pass": true
+      },
+      {
+        "case": "random-25",
+        "pass": true
+      },
+      {
+        "case": "random-26",
+        "pass": true
+      },
+      {
+        "case": "random-27",
+        "pass": true
+      },
+      {
+        "case": "random-28",
+        "pass": true
+      },
+      {
+        "case": "random-29",
+        "pass": true
+      },
+      {
+        "case": "random-30",
+        "pass": true
+      },
+      {
+        "case": "random-31",
+        "pass": true
+      },
+      {
+        "case": "random-32",
+        "pass": true
+      },
+      {
+        "case": "random-33",
+        "pass": true
+      },
+      {
+        "case": "random-34",
+        "pass": true
+      },
+      {
+        "case": "random-35",
+        "pass": true
+      },
+      {
+        "case": "random-36",
+        "pass": true
+      },
+      {
+        "case": "random-37",
+        "pass": true
+      },
+      {
+        "case": "random-38",
+        "pass": true
+      },
+      {
+        "case": "random-39",
+        "pass": true
+      },
+      {
+        "case": "random-40",
+        "pass": true
+      },
+      {
+        "case": "random-41",
+        "pass": true
+      },
+      {
+        "case": "random-42",
+        "pass": true
+      },
+      {
+        "case": "random-43",
+        "pass": true
+      },
+      {
+        "case": "random-44",
+        "pass": true
+      },
+      {
+        "case": "random-45",
+        "pass": true
+      },
+      {
+        "case": "random-46",
+        "pass": true
+      },
+      {
+        "case": "random-47",
+        "pass": true
+      },
+      {
+        "case": "random-48",
+        "pass": true
+      },
+      {
+        "case": "random-49",
+        "pass": true
+      },
+      {
+        "case": "random-50",
+        "pass": true
+      },
+      {
+        "case": "random-51",
+        "pass": true
+      },
+      {
+        "case": "random-52",
+        "pass": true
+      },
+      {
+        "case": "random-53",
+        "pass": true
+      },
+      {
+        "case": "random-54",
+        "pass": true
+      },
+      {
+        "case": "random-55",
+        "pass": true
+      },
+      {
+        "case": "random-56",
+        "pass": true
+      },
+      {
+        "case": "random-57",
+        "pass": true
+      },
+      {
+        "case": "random-58",
+        "pass": true
+      },
+      {
+        "case": "random-59",
+        "pass": true
+      },
+      {
+        "case": "invalid-capacity",
+        "pass": true
+      },
+      {
+        "case": "invalid-command-count",
+        "pass": true
+      },
+      {
+        "case": "short",
+        "pass": true
+      },
+      {
+        "case": "text-0-chunk-1",
+        "pass": true
+      },
+      {
+        "case": "text-0-chunk-7",
+        "pass": true
+      },
+      {
+        "case": "text-0-chunk-64",
+        "pass": true
+      },
+      {
+        "case": "text-0-chunk-256",
+        "pass": true
+      },
+      {
+        "case": "text-1-chunk-1",
+        "pass": true
+      },
+      {
+        "case": "text-1-chunk-7",
+        "pass": true
+      },
+      {
+        "case": "text-1-chunk-64",
+        "pass": true
+      },
+      {
+        "case": "text-1-chunk-256",
+        "pass": true
+      },
+      {
+        "case": "text-2-chunk-1",
+        "pass": true
+      },
+      {
+        "case": "text-2-chunk-7",
+        "pass": true
+      },
+      {
+        "case": "text-2-chunk-64",
+        "pass": true
+      },
+      {
+        "case": "text-2-chunk-256",
+        "pass": true
+      },
+      {
+        "case": "text-3-chunk-1",
+        "pass": true
+      },
+      {
+        "case": "text-3-chunk-7",
+        "pass": true
+      },
+      {
+        "case": "text-3-chunk-64",
+        "pass": true
+      },
+      {
+        "case": "text-3-chunk-256",
+        "pass": true
+      },
+      {
+        "case": "text-4-chunk-1",
+        "pass": true
+      },
+      {
+        "case": "text-4-chunk-7",
+        "pass": true
+      },
+      {
+        "case": "text-4-chunk-64",
+        "pass": true
+      },
+      {
+        "case": "text-4-chunk-256",
+        "pass": true
+      },
+      {
+        "case": "text-no-memory",
+        "pass": true
+      },
+      {
+        "case": "text-growth-oom",
+        "pass": true
+      }
+    ],
+    "clang": [
+      {
+        "case": "growth-preserves",
+        "pass": true
+      },
+      {
+        "case": "pinned-lifetime",
+        "pass": true
+      },
+      {
+        "case": "reuse-and-coalesce-tail",
+        "pass": true
+      },
+      {
+        "case": "oom-preserves",
+        "pass": true
+      },
+      {
+        "case": "interior-and-invalid",
+        "pass": true
+      },
+      {
+        "case": "size-0",
+        "pass": true
+      },
+      {
+        "case": "size-1",
+        "pass": true
+      },
+      {
+        "case": "size-7",
+        "pass": true
+      },
+      {
+        "case": "size-8",
+        "pass": true
+      },
+      {
+        "case": "size-9",
+        "pass": true
+      },
+      {
+        "case": "size-65536",
+        "pass": true
+      },
+      {
+        "case": "size-65537",
+        "pass": true
+      },
+      {
+        "case": "size-9223372036854775808",
+        "pass": true
+      },
+      {
+        "case": "size-18446744073709551615",
+        "pass": true
+      },
+      {
+        "case": "capacity-0",
+        "pass": true
+      },
+      {
+        "case": "capacity-31",
+        "pass": true
+      },
+      {
+        "case": "capacity-32",
+        "pass": true
+      },
+      {
+        "case": "capacity-39",
+        "pass": true
+      },
+      {
+        "case": "capacity-40",
+        "pass": true
+      },
+      {
+        "case": "capacity-41",
+        "pass": true
+      },
+      {
+        "case": "capacity-256",
+        "pass": true
+      },
+      {
+        "case": "incremental-text-1",
+        "pass": true
+      },
+      {
+        "case": "incremental-text-2",
+        "pass": true
+      },
+      {
+        "case": "incremental-text-8",
+        "pass": true
+      },
+      {
+        "case": "incremental-text-32",
+        "pass": true
+      },
+      {
+        "case": "incremental-text-128",
+        "pass": true
+      },
+      {
+        "case": "text-oom",
+        "pass": true
+      },
+      {
+        "case": "text-pinned",
+        "pass": true
+      },
+      {
+        "case": "tail-grow-exact",
+        "pass": true
+      },
+      {
+        "case": "tail-grow-pinned",
+        "pass": true
+      },
+      {
+        "case": "non-tail-relocation",
+        "pass": true
+      },
+      {
+        "case": "split-three",
+        "pass": true
+      },
+      {
+        "case": "split-threshold-40",
+        "pass": true
+      },
+      {
+        "case": "split-threshold-48",
+        "pass": true
+      },
+      {
+        "case": "split-threshold-56",
+        "pass": true
+      },
+      {
+        "case": "split-threshold-64",
+        "pass": true
+      },
+      {
+        "case": "split-threshold-80",
+        "pass": true
+      },
+      {
+        "case": "coalesce-(1, 2)",
+        "pass": true
+      },
+      {
+        "case": "coalesce-(2, 1)",
+        "pass": true
+      },
+      {
+        "case": "coalesce-pin-neighbor",
+        "pass": true
+      },
+      {
+        "case": "merge-middle-stale",
+        "pass": true
+      },
+      {
+        "case": "random-0",
+        "pass": true
+      },
+      {
+        "case": "random-1",
+        "pass": true
+      },
+      {
+        "case": "random-2",
+        "pass": true
+      },
+      {
+        "case": "random-3",
+        "pass": true
+      },
+      {
+        "case": "random-4",
+        "pass": true
+      },
+      {
+        "case": "random-5",
+        "pass": true
+      },
+      {
+        "case": "random-6",
+        "pass": true
+      },
+      {
+        "case": "random-7",
+        "pass": true
+      },
+      {
+        "case": "random-8",
+        "pass": true
+      },
+      {
+        "case": "random-9",
+        "pass": true
+      },
+      {
+        "case": "random-10",
+        "pass": true
+      },
+      {
+        "case": "random-11",
+        "pass": true
+      },
+      {
+        "case": "random-12",
+        "pass": true
+      },
+      {
+        "case": "random-13",
+        "pass": true
+      },
+      {
+        "case": "random-14",
+        "pass": true
+      },
+      {
+        "case": "random-15",
+        "pass": true
+      },
+      {
+        "case": "random-16",
+        "pass": true
+      },
+      {
+        "case": "random-17",
+        "pass": true
+      },
+      {
+        "case": "random-18",
+        "pass": true
+      },
+      {
+        "case": "random-19",
+        "pass": true
+      },
+      {
+        "case": "random-20",
+        "pass": true
+      },
+      {
+        "case": "random-21",
+        "pass": true
+      },
+      {
+        "case": "random-22",
+        "pass": true
+      },
+      {
+        "case": "random-23",
+        "pass": true
+      },
+      {
+        "case": "random-24",
+        "pass": true
+      },
+      {
+        "case": "random-25",
+        "pass": true
+      },
+      {
+        "case": "random-26",
+        "pass": true
+      },
+      {
+        "case": "random-27",
+        "pass": true
+      },
+      {
+        "case": "random-28",
+        "pass": true
+      },
+      {
+        "case": "random-29",
+        "pass": true
+      },
+      {
+        "case": "random-30",
+        "pass": true
+      },
+      {
+        "case": "random-31",
+        "pass": true
+      },
+      {
+        "case": "random-32",
+        "pass": true
+      },
+      {
+        "case": "random-33",
+        "pass": true
+      },
+      {
+        "case": "random-34",
+        "pass": true
+      },
+      {
+        "case": "random-35",
+        "pass": true
+      },
+      {
+        "case": "random-36",
+        "pass": true
+      },
+      {
+        "case": "random-37",
+        "pass": true
+      },
+      {
+        "case": "random-38",
+        "pass": true
+      },
+      {
+        "case": "random-39",
+        "pass": true
+      },
+      {
+        "case": "random-40",
+        "pass": true
+      },
+      {
+        "case": "random-41",
+        "pass": true
+      },
+      {
+        "case": "random-42",
+        "pass": true
+      },
+      {
+        "case": "random-43",
+        "pass": true
+      },
+      {
+        "case": "random-44",
+        "pass": true
+      },
+      {
+        "case": "random-45",
+        "pass": true
+      },
+      {
+        "case": "random-46",
+        "pass": true
+      },
+      {
+        "case": "random-47",
+        "pass": true
+      },
+      {
+        "case": "random-48",
+        "pass": true
+      },
+      {
+        "case": "random-49",
+        "pass": true
+      },
+      {
+        "case": "random-50",
+        "pass": true
+      },
+      {
+        "case": "random-51",
+        "pass": true
+      },
+      {
+        "case": "random-52",
+        "pass": true
+      },
+      {
+        "case": "random-53",
+        "pass": true
+      },
+      {
+        "case": "random-54",
+        "pass": true
+      },
+      {
+        "case": "random-55",
+        "pass": true
+      },
+      {
+        "case": "random-56",
+        "pass": true
+      },
+      {
+        "case": "random-57",
+        "pass": true
+      },
+      {
+        "case": "random-58",
+        "pass": true
+      },
+      {
+        "case": "random-59",
+        "pass": true
+      },
+      {
+        "case": "invalid-capacity",
+        "pass": true
+      },
+      {
+        "case": "invalid-command-count",
+        "pass": true
+      },
+      {
+        "case": "short",
+        "pass": true
+      },
+      {
+        "case": "text-0-chunk-1",
+        "pass": true
+      },
+      {
+        "case": "text-0-chunk-7",
+        "pass": true
+      },
+      {
+        "case": "text-0-chunk-64",
+        "pass": true
+      },
+      {
+        "case": "text-0-chunk-256",
+        "pass": true
+      },
+      {
+        "case": "text-1-chunk-1",
+        "pass": true
+      },
+      {
+        "case": "text-1-chunk-7",
+        "pass": true
+      },
+      {
+        "case": "text-1-chunk-64",
+        "pass": true
+      },
+      {
+        "case": "text-1-chunk-256",
+        "pass": true
+      },
+      {
+        "case": "text-2-chunk-1",
+        "pass": true
+      },
+      {
+        "case": "text-2-chunk-7",
+        "pass": true
+      },
+      {
+        "case": "text-2-chunk-64",
+        "pass": true
+      },
+      {
+        "case": "text-2-chunk-256",
+        "pass": true
+      },
+      {
+        "case": "text-3-chunk-1",
+        "pass": true
+      },
+      {
+        "case": "text-3-chunk-7",
+        "pass": true
+      },
+      {
+        "case": "text-3-chunk-64",
+        "pass": true
+      },
+      {
+        "case": "text-3-chunk-256",
+        "pass": true
+      },
+      {
+        "case": "text-4-chunk-1",
+        "pass": true
+      },
+      {
+        "case": "text-4-chunk-7",
+        "pass": true
+      },
+      {
+        "case": "text-4-chunk-64",
+        "pass": true
+      },
+      {
+        "case": "text-4-chunk-256",
+        "pass": true
+      },
+      {
+        "case": "text-no-memory",
+        "pass": true
+      },
+      {
+        "case": "text-growth-oom",
+        "pass": true
+      }
+    ]
+  },
+  "assembly_sha256": "43dfa1fe8fbe86be134bf892df7138b29bbd4689574b3171aa034d16c9c22823",
+  "file_driver": {
+    "success": true,
+    "oom_preserves_output": true
+  }
+}

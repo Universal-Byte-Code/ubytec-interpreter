@@ -1,4 +1,4 @@
-﻿using Ubytec.Language.Exceptions;
+using Ubytec.Language.Exceptions;
 using Ubytec.Language.Operations.Interfaces;
 using Ubytec.Language.Syntax.ExpressionFragments;
 using Ubytec.Language.Syntax.Model;
@@ -26,9 +26,9 @@ namespace Ubytec.Language.Operations
                 }
 
                 // Caso 2: BRANCH con CaseValue y LabelIDx
-                if (operands.Length == 2 && operands[1] is int labelIdx)
+                if (operands.Length == 2 && operands[1] is not UType and not PrimitiveType)
                 {
-                    return new BRANCH(operands[0], labelIdx)
+                    return new BRANCH(operands[0], StackCode.Index(nameof(BRANCH), [operands[1]], int.MaxValue))
                     {
                         Variables = new([.. variables])
                     };
@@ -60,28 +60,14 @@ namespace Ubytec.Language.Operations
 
             string IUbytecEntity.Compile(CompilationScopes scopes)
             {
-                if (scopes.Count == 0)
-                    throw new SyntaxStackException(0x0AFACADE, "BRANCH without matching SWITCH");
-
-                var parentSwitch = scopes.Find(ctx => ctx.DeclaredByKeyword == "switch")
-                    ?? throw new SyntaxStackException(0xBADA001A, "BRANCH must be nested inside a SWITCH block");
-
-                string branchLabel = LabelIDx == null ? NextLabel("branch") : $"branch_{LabelIDx}";
-                string branchEndLabel = LabelIDx == null ? NextLabel("end_branch") : $"end_branch_{LabelIDx}";
-
-                scopes.Push(new()
-                {
-                    StartLabel = branchLabel,
-                    EndLabel = branchEndLabel,
-                    ExpectedReturnType = BlockType,
-                    DeclaredByKeyword = "branch"
-                });
-
-                return
-                    $"{branchLabel}: ; Start BRANCH block\n" +
-                    $"  pop rax\n" +
-                    $"  cmp rax, {CaseValue}\n" +
-                    $"  jne {branchEndLabel} ; Skip branch if condition fails";
+                var parent = scopes.PeekOrDefault();
+                if (parent?.DeclaredByKeyword != "switch" || parent.HasDefault)
+                    throw new SyntaxStackException(0xBAD084, "BRANCH must be directly inside SWITCH, before DEFAULT.");
+                string start = NextLabel("branch"), end = NextLabel("end_branch");
+                long value = FunctionCode.InitialValue(new(PrimitiveType.Int64), CaseValue);
+                scopes.Push(new() { StartLabel = start, EndLabel = end, DeclaredByKeyword = "branch",
+                    LabelIndex = LabelIDx, ExpectedReturnType = BlockType });
+                return $"{start}:\n  mov rax, {value}\n  cmp qword [rbp - {-parent.SwitchOffset}], rax\n  jne {end}";
             }
         }
     }

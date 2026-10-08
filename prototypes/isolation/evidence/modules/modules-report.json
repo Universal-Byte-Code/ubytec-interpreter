@@ -1,0 +1,1911 @@
+{
+  "schema": 1,
+  "accepted": true,
+  "environment": "Linux-5.10.16.3-microsoft-standard-WSL2-x86_64-with-glibc2.29",
+  "source_sha256": {
+    "linux/modules.c": "1380d0d71cb76141054a623c103c27431bc6cfc5f9a0d356a2de9518e388d356",
+    "linux/many-wire.h": "9bfd79326726850dc99b8f5967084b539ea0cc139a719e8c24fc7dbcbe678b4a",
+    "linux/module.ld": "75f50ae3559982186203efff300d1709a8fa4206fcbe250f5a23b5e3ef241335",
+    "linux/hostile-module.nasm": "83e59611daa0a6a6fe87b2f0956a10eaf6cb8336d694e4047a3239e1fd049264",
+    "linux/isolation.c": "7bdf7c22d285b931e707e3118e0ae228396036dccf56b4d3abe220465aa91bb1",
+    "common/contract.h": "702be6fcb236a74540712923ca33b7662e0162b7f22dd3160a8629aebe5bc55e",
+    "run_modules.py": "ced0ffd0cee4a60c7d1f90b14af2c4248402b684f26813d14f7b364be881671d",
+    "run.py": "cc316c9fce4e4ccc65f11915e101fddc760aa66b2dd013f2cbc9fb1e7be4286a",
+    "execution_cases.py": "dfe2ed4a59b2e40d1a9875c605c594b3d77fbd5e668ab6c10ef2cb12be17fd02",
+    "ubytec/modules/data.ubc": "c1c4c23e4dcb0e18833376d8f819027523ad985628daa19fd2a0dcdea047f55a",
+    "ubytec/modules/faults.ubc": "9b8fe1f63eb93a50fcfc2fc4be6a364009d606466bffc997425e4dbd17377640"
+  },
+  "exports": {
+    "data": {
+      "Read": "read",
+      "Write": "write",
+      "Copy": "copy",
+      "ReadOwnData": "own_data",
+      "TailSelf": "tail_self",
+      "TailMutual": "tail_mutual",
+      "TailInfinite": "tail_infinite"
+    },
+    "faults": {
+      "ReadOnlyWrite": "read_only_write",
+      "Foreign": "foreign",
+      "Monitor": "monitor",
+      "Neighbor": "neighbor",
+      "StackOverflow": "stack_overflow",
+      "Spin": "loop",
+      "Stale": "stale",
+      "PartialFailure": "partial"
+    }
+  },
+  "benchmarks_executed": true,
+  "sanitizers_executed": true,
+  "limits": [
+    "Linux x64 static ELF subset only; no relocations, interpreter, TLS or dynamic dependencies",
+    "Four uint64 arguments and one int64 result are a caller-defined experimental ABI",
+    "Trusted host selects artifacts/contracts; no signature-based publisher authentication",
+    "No module constructors or ELF entry point are automatically executed",
+    "Module code runs only after no_new_privs/seccomp in a new worker per call",
+    "Serialized loans; no delegation, concurrent or persistent grants",
+    "Direct writable loans can retain partial writes; copy commit requires validated success",
+    "ARM remains native fixtures, not a language backend",
+    "No microarchitectural side-channel or kernel/hardware failure guarantee"
+  ],
+  "compilation": {
+    "mode": "precompiled-cross-host-handoff",
+    "assembly_sha256": {
+      "data": "daf5cc2c816f9ee06395e4bb98b3592388427bc85bd3d72591883fdc313a9de8",
+      "faults": "9f8aeda225968a070e8b1bf36c4154a5e1f205234d8d4dc4bf988614d2f4ac74"
+    }
+  },
+  "gcc_tests": [
+    {
+      "case": "read",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "recovery_after_read",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "own_private_data",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 1234605616436508552
+    },
+    {
+      "case": "recovery_after_own_private_data",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "tail_infinite",
+      "pass": true,
+      "rejected": 0,
+      "signal": 9,
+      "timeout": 1,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_tail_infinite",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "tail_self",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 1400000
+    },
+    {
+      "case": "recovery_after_tail_self",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "tail_mutual",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 200000
+    },
+    {
+      "case": "recovery_after_tail_mutual",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "write",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 4294967297
+    },
+    {
+      "case": "recovery_after_write",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "copy",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 4294967297
+    },
+    {
+      "case": "recovery_after_copy",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "read_only_write",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_read_only_write",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "foreign_pointer",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_foreign_pointer",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "monitor_pointer",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_monitor_pointer",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "neighbor_pointer",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_neighbor_pointer",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "stack_overflow",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_stack_overflow",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "infinite_loop",
+      "pass": true,
+      "rejected": 0,
+      "signal": 9,
+      "timeout": 1,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_infinite_loop",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "stale_pointer",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_stale_pointer",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "partial_write_failure",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_partial_write_failure",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "forged_request",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 1,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_forged_request",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "open_resource",
+      "pass": true,
+      "rejected": 0,
+      "signal": 31,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_open_resource",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "fresh_private_state",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 1
+    },
+    {
+      "case": "recovery_after_fresh_private_state",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "write_code",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_write_code",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "execute_loan",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_execute_loan",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "read_other_module_data",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_read_other_module_data",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "rights_ceiling",
+      "pass": true,
+      "rejected": 1,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "size_contract",
+      "pass": true,
+      "rejected": 1,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "unknown_module",
+      "pass": true,
+      "rejected": 1,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "unregistered_function",
+      "pass": true,
+      "rejected": 1,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "wrong_owner",
+      "pass": true,
+      "rejected": 1,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "invalid_registration",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "sealed_snapshot",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "source_replaced_after_registration",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 1
+    },
+    {
+      "case": "closed_module",
+      "pass": true,
+      "rejected": 1,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    }
+  ],
+  "gcc_execution_tests": [
+    {
+      "case": "ordinary_event_after_old_deadline",
+      "pass": true
+    },
+    {
+      "case": "cancel_usr1",
+      "pass": true
+    },
+    {
+      "case": "cancel_int",
+      "pass": true
+    },
+    {
+      "case": "cancel_term",
+      "pass": true
+    },
+    {
+      "case": "finite_budget",
+      "pass": true
+    },
+    {
+      "case": "unbounded_still_protected",
+      "pass": true
+    },
+    {
+      "case": "invalid_budget_0",
+      "pass": true
+    },
+    {
+      "case": "invalid_budget_-1",
+      "pass": true
+    },
+    {
+      "case": "invalid_budget_3600001",
+      "pass": true
+    },
+    {
+      "case": "invalid_budget_forever",
+      "pass": true
+    },
+    {
+      "case": "invalid_budget_100x",
+      "pass": true
+    }
+  ],
+  "clang_tests": [
+    {
+      "case": "read",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "recovery_after_read",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "own_private_data",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 1234605616436508552
+    },
+    {
+      "case": "recovery_after_own_private_data",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "tail_infinite",
+      "pass": true,
+      "rejected": 0,
+      "signal": 9,
+      "timeout": 1,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_tail_infinite",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "tail_self",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 1400000
+    },
+    {
+      "case": "recovery_after_tail_self",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "tail_mutual",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 200000
+    },
+    {
+      "case": "recovery_after_tail_mutual",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "write",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 4294967297
+    },
+    {
+      "case": "recovery_after_write",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "copy",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 4294967297
+    },
+    {
+      "case": "recovery_after_copy",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "read_only_write",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_read_only_write",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "foreign_pointer",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_foreign_pointer",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "monitor_pointer",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_monitor_pointer",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "neighbor_pointer",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_neighbor_pointer",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "stack_overflow",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_stack_overflow",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "infinite_loop",
+      "pass": true,
+      "rejected": 0,
+      "signal": 9,
+      "timeout": 1,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_infinite_loop",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "stale_pointer",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_stale_pointer",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "partial_write_failure",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_partial_write_failure",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "forged_request",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 1,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_forged_request",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "open_resource",
+      "pass": true,
+      "rejected": 0,
+      "signal": 31,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_open_resource",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "fresh_private_state",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 1
+    },
+    {
+      "case": "recovery_after_fresh_private_state",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "write_code",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_write_code",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "execute_loan",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_execute_loan",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "read_other_module_data",
+      "pass": true,
+      "rejected": 0,
+      "signal": 11,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "recovery_after_read_other_module_data",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 256
+    },
+    {
+      "case": "rights_ceiling",
+      "pass": true,
+      "rejected": 1,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "size_contract",
+      "pass": true,
+      "rejected": 1,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "unknown_module",
+      "pass": true,
+      "rejected": 1,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "unregistered_function",
+      "pass": true,
+      "rejected": 1,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "wrong_owner",
+      "pass": true,
+      "rejected": 1,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "invalid_registration",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "sealed_snapshot",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    },
+    {
+      "case": "source_replaced_after_registration",
+      "pass": true,
+      "rejected": 0,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 1
+    },
+    {
+      "case": "closed_module",
+      "pass": true,
+      "rejected": 1,
+      "signal": 0,
+      "timeout": 0,
+      "cancelled": 0,
+      "protocol_rejected": 0,
+      "value": 0
+    }
+  ],
+  "clang_execution_tests": [
+    {
+      "case": "ordinary_event_after_old_deadline",
+      "pass": true
+    },
+    {
+      "case": "cancel_usr1",
+      "pass": true
+    },
+    {
+      "case": "cancel_int",
+      "pass": true
+    },
+    {
+      "case": "cancel_term",
+      "pass": true
+    },
+    {
+      "case": "finite_budget",
+      "pass": true
+    },
+    {
+      "case": "unbounded_still_protected",
+      "pass": true
+    },
+    {
+      "case": "invalid_budget_0",
+      "pass": true
+    },
+    {
+      "case": "invalid_budget_-1",
+      "pass": true
+    },
+    {
+      "case": "invalid_budget_3600001",
+      "pass": true
+    },
+    {
+      "case": "invalid_budget_forever",
+      "pass": true
+    },
+    {
+      "case": "invalid_budget_100x",
+      "pass": true
+    }
+  ],
+  "malformed_tests": [
+    {
+      "case": "elf_bad_magic",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_wrong_class",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_wrong_endian",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_wrong_machine",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_shared_object",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_phdr_overflow",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_shdr_overflow",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_phdr_count",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_section_count",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_writable_code",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_segment_outside",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_segment_overflow",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_file_outside",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_filesz_exceeds_memsz",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_unaligned_segment",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_bad_alignment",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_overlap",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_interpreter",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_dynamic_segment",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_tls_segment",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_noncode_entry",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_executable_stack",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_truncated",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_bad_symbol_stride",
+      "pass": true,
+      "response": {
+        "accepted": false,
+        "registration_rejected": true
+      }
+    },
+    {
+      "case": "elf_bad_string_link",
+      "pass": true,
+      "response": {
+        "accepted": false,
+        "registration_rejected": true
+      }
+    },
+    {
+      "case": "elf_export_noncode",
+      "pass": true,
+      "response": {
+        "accepted": false,
+        "registration_rejected": true
+      }
+    },
+    {
+      "case": "elf_unterminated_export",
+      "pass": true,
+      "response": {
+        "accepted": false,
+        "registration_rejected": true
+      }
+    },
+    {
+      "case": "elf_duplicate_export",
+      "pass": true,
+      "response": {
+        "accepted": false,
+        "registration_rejected": true
+      }
+    }
+  ],
+  "sanitizer_checks": [
+    {
+      "case": "elf_bad_magic",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_wrong_class",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_wrong_endian",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_wrong_machine",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_shared_object",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_phdr_overflow",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_shdr_overflow",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_phdr_count",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_section_count",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_writable_code",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_segment_outside",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_segment_overflow",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_file_outside",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_filesz_exceeds_memsz",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_unaligned_segment",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_bad_alignment",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_overlap",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_interpreter",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_dynamic_segment",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_tls_segment",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_noncode_entry",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_executable_stack",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_truncated",
+      "pass": true,
+      "response": {
+        "accepted": false
+      }
+    },
+    {
+      "case": "elf_bad_symbol_stride",
+      "pass": true,
+      "response": {
+        "accepted": false,
+        "registration_rejected": true
+      }
+    },
+    {
+      "case": "elf_bad_string_link",
+      "pass": true,
+      "response": {
+        "accepted": false,
+        "registration_rejected": true
+      }
+    },
+    {
+      "case": "elf_export_noncode",
+      "pass": true,
+      "response": {
+        "accepted": false,
+        "registration_rejected": true
+      }
+    },
+    {
+      "case": "elf_unterminated_export",
+      "pass": true,
+      "response": {
+        "accepted": false,
+        "registration_rejected": true
+      }
+    },
+    {
+      "case": "elf_duplicate_export",
+      "pass": true,
+      "response": {
+        "accepted": false,
+        "registration_rejected": true
+      }
+    }
+  ],
+  "bounded_mutation_tests": [
+    {
+      "index": 0,
+      "accepted": true
+    },
+    {
+      "index": 1,
+      "accepted": true
+    },
+    {
+      "index": 2,
+      "accepted": true
+    },
+    {
+      "index": 3,
+      "accepted": true
+    },
+    {
+      "index": 4,
+      "accepted": true
+    },
+    {
+      "index": 5,
+      "accepted": true
+    },
+    {
+      "index": 6,
+      "accepted": true
+    },
+    {
+      "index": 7,
+      "accepted": true
+    },
+    {
+      "index": 8,
+      "accepted": true
+    },
+    {
+      "index": 9,
+      "accepted": true
+    },
+    {
+      "index": 10,
+      "accepted": true
+    },
+    {
+      "index": 11,
+      "accepted": true
+    },
+    {
+      "index": 12,
+      "accepted": true
+    },
+    {
+      "index": 13,
+      "accepted": true
+    },
+    {
+      "index": 14,
+      "accepted": true
+    },
+    {
+      "index": 15,
+      "accepted": true
+    },
+    {
+      "index": 16,
+      "accepted": true
+    },
+    {
+      "index": 17,
+      "accepted": true
+    },
+    {
+      "index": 18,
+      "accepted": true
+    },
+    {
+      "index": 19,
+      "accepted": true
+    },
+    {
+      "index": 20,
+      "accepted": true
+    },
+    {
+      "index": 21,
+      "accepted": true
+    },
+    {
+      "index": 22,
+      "accepted": true
+    },
+    {
+      "index": 23,
+      "accepted": true
+    },
+    {
+      "index": 24,
+      "accepted": true
+    },
+    {
+      "index": 25,
+      "accepted": true
+    },
+    {
+      "index": 26,
+      "accepted": true
+    },
+    {
+      "index": 27,
+      "accepted": true
+    },
+    {
+      "index": 28,
+      "accepted": true
+    },
+    {
+      "index": 29,
+      "accepted": true
+    },
+    {
+      "index": 30,
+      "accepted": true
+    },
+    {
+      "index": 31,
+      "accepted": true
+    },
+    {
+      "index": 32,
+      "accepted": true
+    },
+    {
+      "index": 33,
+      "accepted": true
+    },
+    {
+      "index": 34,
+      "accepted": true
+    },
+    {
+      "index": 35,
+      "accepted": true
+    },
+    {
+      "index": 36,
+      "accepted": true
+    },
+    {
+      "index": 37,
+      "accepted": true
+    },
+    {
+      "index": 38,
+      "accepted": true
+    },
+    {
+      "index": 39,
+      "accepted": true
+    },
+    {
+      "index": 40,
+      "accepted": true
+    },
+    {
+      "index": 41,
+      "accepted": true
+    },
+    {
+      "index": 42,
+      "accepted": true
+    },
+    {
+      "index": 43,
+      "accepted": true
+    },
+    {
+      "index": 44,
+      "accepted": true
+    },
+    {
+      "index": 45,
+      "accepted": true
+    },
+    {
+      "index": 46,
+      "accepted": true
+    },
+    {
+      "index": 47,
+      "accepted": true
+    },
+    {
+      "index": 48,
+      "accepted": true
+    },
+    {
+      "index": 49,
+      "accepted": true
+    },
+    {
+      "index": 50,
+      "accepted": true
+    },
+    {
+      "index": 51,
+      "accepted": true
+    },
+    {
+      "index": 52,
+      "accepted": true
+    },
+    {
+      "index": 53,
+      "accepted": false
+    },
+    {
+      "index": 54,
+      "accepted": true
+    },
+    {
+      "index": 55,
+      "accepted": true
+    },
+    {
+      "index": 56,
+      "accepted": true
+    },
+    {
+      "index": 57,
+      "accepted": true
+    },
+    {
+      "index": 58,
+      "accepted": true
+    },
+    {
+      "index": 59,
+      "accepted": false
+    },
+    {
+      "index": 60,
+      "accepted": true
+    },
+    {
+      "index": 61,
+      "accepted": true
+    },
+    {
+      "index": 62,
+      "accepted": false
+    },
+    {
+      "index": 63,
+      "accepted": true
+    }
+  ],
+  "benchmarks": [
+    {
+      "target": "linux-x64",
+      "metric": "module_invocation_and_read",
+      "bytes": 256,
+      "samples": 100,
+      "median_us": 3862.505,
+      "p95_us": 4332.573,
+      "worker_rss_kib": 1436,
+      "loan_mapped_bytes": 4096,
+      "private_stack_bytes": 65536
+    },
+    {
+      "metric": "module_worker_byte_read",
+      "bytes": 256,
+      "samples": 100,
+      "median_tsc_ticks": 21120,
+      "p95_tsc_ticks": 26820,
+      "module_reserved_bytes": 16777216
+    },
+    {
+      "target": "linux-x64",
+      "metric": "module_invocation_and_read",
+      "bytes": 4096,
+      "samples": 100,
+      "median_us": 3814.208,
+      "p95_us": 4505.951,
+      "worker_rss_kib": 1436,
+      "loan_mapped_bytes": 4096,
+      "private_stack_bytes": 65536
+    },
+    {
+      "metric": "module_worker_byte_read",
+      "bytes": 4096,
+      "samples": 100,
+      "median_tsc_ticks": 107910,
+      "p95_tsc_ticks": 175530,
+      "module_reserved_bytes": 16777216
+    },
+    {
+      "target": "linux-x64",
+      "metric": "module_invocation_and_read",
+      "bytes": 65536,
+      "samples": 100,
+      "median_us": 4481.585,
+      "p95_us": 4997.028,
+      "worker_rss_kib": 1496,
+      "loan_mapped_bytes": 65536,
+      "private_stack_bytes": 65536
+    },
+    {
+      "metric": "module_worker_byte_read",
+      "bytes": 65536,
+      "samples": 100,
+      "median_tsc_ticks": 1639200,
+      "p95_tsc_ticks": 2058210,
+      "module_reserved_bytes": 16777216
+    }
+  ],
+  "artifact_sha256": {
+    "data.nasm": "daf5cc2c816f9ee06395e4bb98b3592388427bc85bd3d72591883fdc313a9de8",
+    "data.o": "228d8c5834f89ed228f282c8db74b55a2f24d2696e03b276b579adc567cef67e",
+    "data.elf": "c2afa0a6281c0692ffa30f87828e521235eed30668d958be0565cc76895b6744",
+    "faults.nasm": "9f8aeda225968a070e8b1bf36c4154a5e1f205234d8d4dc4bf988614d2f4ac74",
+    "faults.o": "9a7586453340dbaabf03476991cd516c243234a07b4a3d1d6fdf0b37834a8f61",
+    "faults.elf": "acccacb43849992c04f15f14d598e661eab15ae9c6ff6d1cf8f5ecc21b3610d6",
+    "hostile.o": "097bc5299b40bc2f8472c8437c7db50b03dc8a158ee146134d3b1aecadd5fe1b",
+    "hostile.elf": "d8a0551c697b383d1c6d0c9f11cf94a4baecb26a5f689b787685a14c6a117366",
+    "modules-gcc": "fa948092fa4f3a7e975ddbfa0a3fb92d452999cedb8d14bd8cb53dbac1d5015a",
+    "modules-clang": "06791d6ac5fd5ac0719df15966ebc822660b91f94ffbdd0a1a093c9330501bfa",
+    "modules-sanitized": "3a7bc8514625e3d6e89ab636e78c25d51c0076a1214e30b05780725a46d261d4"
+  }
+}

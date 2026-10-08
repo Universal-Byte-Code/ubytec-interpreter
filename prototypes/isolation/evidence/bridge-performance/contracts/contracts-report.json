@@ -1,0 +1,250 @@
+{
+  "accepted": true,
+  "schema": 1,
+  "source_sha256": {
+    "run_contracts.py": "f4175b6e30248db89df264b2e2fcb3e87900ccc388301bba24e364015b9f7f6b",
+    "run.py": "cc316c9fce4e4ccc65f11915e101fddc760aa66b2dd013f2cbc9fb1e7be4286a",
+    "linux/program.c": "5c326158be1432bfab627dc54d2af2f6144f0a6c55b04c7afa2eb6e68a7b0cbe",
+    "linux/modules.c": "34dd7824a287db9209f4736526c34a2a56caf6ba6d7b396deb0dfb3834f748e2",
+    "linux/many-wire.h": "9bfd79326726850dc99b8f5967084b539ea0cc139a719e8c24fc7dbcbe678b4a",
+    "linux/many-service.h": "64be11faa8f1f35d868229e07d504b810b80517fc0aed7fcd6e96e02efb083d7",
+    "linux/isolation.c": "7bdf7c22d285b931e707e3118e0ae228396036dccf56b4d3abe220465aa91bb1",
+    "linux/contracts.h": "222368f8189ae3d1afe7789edf260194764dfc35c4267f17902c0da10ce4766a",
+    "linux/bridge-runtime.c": "5bc303db6453e62ebfe3c5502bf907343bc92c23f3d403a6c16cfe00026ad965",
+    "linux/module.ld": "75f50ae3559982186203efff300d1709a8fa4206fcbe250f5a23b5e3ef241335",
+    "common/contract.h": "702be6fcb236a74540712923ca33b7662e0162b7f22dd3160a8629aebe5bc55e",
+    "ubytec/contracts/caller.ubc": "e108a571333613690fc31c94a1296d7ab4c18245dc54a997fd8f658c64e951c4",
+    "ubytec/contracts/reader.ubc": "96886d66cc60b709a8d992b626a6dfb9fd90fe0290e176bffdc49965c8b5e8e0",
+    "ubytec/contracts/writer.ubc": "386089ac1715bb3b090fbd3e00218b609834cff02ff81c62637dfef1fdb853d2",
+    "ubytec/contracts/mismatch.ubc": "79b035324a0786b6eaa795669cca4c64043dc6774e6e6c86f1978c463427d1ac"
+  },
+  "tests": {
+    "gcc": [
+      {
+        "case": "two_modules_three_calls",
+        "pass": true
+      },
+      {
+        "case": "exported_but_not_granted",
+        "pass": true
+      },
+      {
+        "case": "separate_function_grant",
+        "pass": true
+      },
+      {
+        "case": "no_import_authority",
+        "pass": true
+      },
+      {
+        "case": "per_function_rights",
+        "pass": true
+      },
+      {
+        "case": "per_function_size",
+        "pass": true
+      },
+      {
+        "case": "per_function_budget",
+        "pass": true
+      },
+      {
+        "case": "signature_mismatch",
+        "pass": true
+      },
+      {
+        "case": "duplicate_module",
+        "pass": true
+      },
+      {
+        "case": "unknown_grant",
+        "pass": true
+      },
+      {
+        "case": "grant_cannot_redirect_import",
+        "pass": true
+      },
+      {
+        "case": "duplicate_grant",
+        "pass": true
+      },
+      {
+        "case": "unknown_entry",
+        "pass": true
+      },
+      {
+        "case": "missing_module",
+        "pass": true
+      },
+      {
+        "case": "malformed_section_too_large",
+        "pass": true
+      },
+      {
+        "case": "malformed_writable_contract",
+        "pass": true
+      },
+      {
+        "case": "malformed_wrong_section_type",
+        "pass": true
+      },
+      {
+        "case": "malformed_bad_magic",
+        "pass": true
+      },
+      {
+        "case": "malformed_duplicate_handle",
+        "pass": true
+      },
+      {
+        "case": "malformed_missing_end",
+        "pass": true
+      },
+      {
+        "case": "malformed_bad_signature",
+        "pass": true
+      },
+      {
+        "case": "malformed_embedded_nul",
+        "pass": true
+      }
+    ],
+    "clang": [
+      {
+        "case": "two_modules_three_calls",
+        "pass": true
+      },
+      {
+        "case": "exported_but_not_granted",
+        "pass": true
+      },
+      {
+        "case": "separate_function_grant",
+        "pass": true
+      },
+      {
+        "case": "no_import_authority",
+        "pass": true
+      },
+      {
+        "case": "per_function_rights",
+        "pass": true
+      },
+      {
+        "case": "per_function_size",
+        "pass": true
+      },
+      {
+        "case": "per_function_budget",
+        "pass": true
+      },
+      {
+        "case": "signature_mismatch",
+        "pass": true
+      },
+      {
+        "case": "duplicate_module",
+        "pass": true
+      },
+      {
+        "case": "unknown_grant",
+        "pass": true
+      },
+      {
+        "case": "grant_cannot_redirect_import",
+        "pass": true
+      },
+      {
+        "case": "duplicate_grant",
+        "pass": true
+      },
+      {
+        "case": "unknown_entry",
+        "pass": true
+      },
+      {
+        "case": "missing_module",
+        "pass": true
+      },
+      {
+        "case": "malformed_section_too_large",
+        "pass": true
+      },
+      {
+        "case": "malformed_writable_contract",
+        "pass": true
+      },
+      {
+        "case": "malformed_wrong_section_type",
+        "pass": true
+      },
+      {
+        "case": "malformed_bad_magic",
+        "pass": true
+      },
+      {
+        "case": "malformed_duplicate_handle",
+        "pass": true
+      },
+      {
+        "case": "malformed_missing_end",
+        "pass": true
+      },
+      {
+        "case": "malformed_bad_signature",
+        "pass": true
+      },
+      {
+        "case": "malformed_embedded_nul",
+        "pass": true
+      }
+    ]
+  },
+  "compilation": {
+    "mode": "precompiled-assembly-handoff"
+  },
+  "sanitizer_tests": [
+    {
+      "case": "section_too_large",
+      "pass": true
+    },
+    {
+      "case": "writable_contract",
+      "pass": true
+    },
+    {
+      "case": "wrong_section_type",
+      "pass": true
+    },
+    {
+      "case": "bad_magic",
+      "pass": true
+    },
+    {
+      "case": "duplicate_handle",
+      "pass": true
+    },
+    {
+      "case": "missing_end",
+      "pass": true
+    },
+    {
+      "case": "bad_signature",
+      "pass": true
+    },
+    {
+      "case": "embedded_nul",
+      "pass": true
+    }
+  ],
+  "artifact_sha256": {
+    "caller.elf": "1a9496462ae15711e49831f5ef38f176e6977b144bc0cf31cdc4d78da58b0f4f",
+    "caller.nasm": "0493fd4e3da926dcd8872287d153edd7621385f47cd6e88d7bf8137a3d7fbb9d",
+    "mismatch.elf": "4aa55e6384f967538d7dc765e10707b98fbc53073cc2e73a826c9c9d1ccdea02",
+    "mismatch.nasm": "38901bdf69953621a284a38422267afbdbcdef8db2826599dceb8ce75a9ca249",
+    "reader.elf": "4a0087176d92cf00fe86b59cd159080d6f96fd1a2393fe6827f5a3320da38f4b",
+    "reader.nasm": "3705726c5657b851054cdb8528573e0c04655c2fb9aea24b00dd0035d83cee10",
+    "writer.elf": "330dce9fa69a7399cd0b2484c9c977413bdd678990dfb6dbd7a59208f69dacaa",
+    "writer.nasm": "d7cb95e65f1ba244afcd1b2d4bba26c9bf5990529a150723383ea66df166f1b7"
+  }
+}

@@ -1,0 +1,116 @@
+
+/mnt/x/codex/projects/ubytec-interpreter/artifacts/block-reductions/measurements/comparison/clang-intrinsics.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <c_clang_intrinsic_bytes>:
+   0:	48 81 fe 80 00 00 00 	cmp    rsi,0x80
+   7:	72 79                	jb     82 <c_clang_intrinsic_bytes+0x82>
+   9:	48 8d 46 80          	lea    rax,[rsi-0x80]
+   d:	48 89 fa             	mov    rdx,rdi
+  10:	c5 d9 ef e4          	vpxor  xmm4,xmm4,xmm4
+  14:	c5 f1 ef c9          	vpxor  xmm1,xmm1,xmm1
+  18:	c5 e1 ef db          	vpxor  xmm3,xmm3,xmm3
+  1c:	c5 e9 ef d2          	vpxor  xmm2,xmm2,xmm2
+  20:	c5 f9 ef c0          	vpxor  xmm0,xmm0,xmm0
+  24:	48 89 c1             	mov    rcx,rax
+  27:	48 83 e1 80          	and    rcx,0xffffffffffffff80
+  2b:	48 8d bc 39 80 00 00 	lea    rdi,[rcx+rdi*1+0x80]
+  32:	00 
+  33:	66 66 66 66 2e 0f 1f 	data16 data16 data16 nop WORD PTR cs:[rax+rax*1+0x0]
+  3a:	84 00 00 00 00 00 
+  40:	c5 dd f6 72 20       	vpsadbw ymm6,ymm4,YMMWORD PTR [rdx+0x20]
+  45:	c5 dd f6 2a          	vpsadbw ymm5,ymm4,YMMWORD PTR [rdx]
+  49:	c5 dd f6 7a 40       	vpsadbw ymm7,ymm4,YMMWORD PTR [rdx+0x40]
+  4e:	48 83 c6 80          	add    rsi,0xffffffffffffff80
+  52:	c5 cd d4 d2          	vpaddq ymm2,ymm6,ymm2
+  56:	c5 dd f6 72 60       	vpsadbw ymm6,ymm4,YMMWORD PTR [rdx+0x60]
+  5b:	c5 d5 d4 c0          	vpaddq ymm0,ymm5,ymm0
+  5f:	c5 c5 d4 db          	vpaddq ymm3,ymm7,ymm3
+  63:	48 83 ea 80          	sub    rdx,0xffffffffffffff80
+  67:	c5 cd d4 c9          	vpaddq ymm1,ymm6,ymm1
+  6b:	48 83 fe 7f          	cmp    rsi,0x7f
+  6f:	77 cf                	ja     40 <c_clang_intrinsic_bytes+0x40>
+  71:	48 29 c8             	sub    rax,rcx
+  74:	48 89 c6             	mov    rsi,rax
+  77:	48 83 fe 20          	cmp    rsi,0x20
+  7b:	73 1b                	jae    98 <c_clang_intrinsic_bytes+0x98>
+  7d:	48 89 f9             	mov    rcx,rdi
+  80:	eb 4a                	jmp    cc <c_clang_intrinsic_bytes+0xcc>
+  82:	c5 f9 ef c0          	vpxor  xmm0,xmm0,xmm0
+  86:	c5 e9 ef d2          	vpxor  xmm2,xmm2,xmm2
+  8a:	c5 e1 ef db          	vpxor  xmm3,xmm3,xmm3
+  8e:	c5 f1 ef c9          	vpxor  xmm1,xmm1,xmm1
+  92:	48 83 fe 20          	cmp    rsi,0x20
+  96:	72 e5                	jb     7d <c_clang_intrinsic_bytes+0x7d>
+  98:	48 8d 46 e0          	lea    rax,[rsi-0x20]
+  9c:	c5 d9 ef e4          	vpxor  xmm4,xmm4,xmm4
+  a0:	48 89 c2             	mov    rdx,rax
+  a3:	48 83 e2 e0          	and    rdx,0xffffffffffffffe0
+  a7:	48 8d 4c 3a 20       	lea    rcx,[rdx+rdi*1+0x20]
+  ac:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  b0:	c5 dd f6 2f          	vpsadbw ymm5,ymm4,YMMWORD PTR [rdi]
+  b4:	48 83 c7 20          	add    rdi,0x20
+  b8:	48 83 c6 e0          	add    rsi,0xffffffffffffffe0
+  bc:	c5 d5 d4 c0          	vpaddq ymm0,ymm5,ymm0
+  c0:	48 83 fe 1f          	cmp    rsi,0x1f
+  c4:	77 ea                	ja     b0 <c_clang_intrinsic_bytes+0xb0>
+  c6:	48 29 d0             	sub    rax,rdx
+  c9:	48 89 c6             	mov    rsi,rax
+  cc:	c5 e5 d4 d2          	vpaddq ymm2,ymm3,ymm2
+  d0:	c5 ed d4 c9          	vpaddq ymm1,ymm2,ymm1
+  d4:	c5 f5 d4 c0          	vpaddq ymm0,ymm1,ymm0
+  d8:	c4 e3 7d 39 c1 01    	vextracti128 xmm1,ymm0,0x1
+  de:	c5 f1 d4 c0          	vpaddq xmm0,xmm1,xmm0
+  e2:	c5 f9 70 c8 4e       	vpshufd xmm1,xmm0,0x4e
+  e7:	c5 f9 d4 c1          	vpaddq xmm0,xmm0,xmm1
+  eb:	c4 e1 f9 7e c0       	vmovq  rax,xmm0
+  f0:	48 85 f6             	test   rsi,rsi
+  f3:	0f 84 a6 00 00 00    	je     19f <c_clang_intrinsic_bytes+0x19f>
+  f9:	48 83 fe 10          	cmp    rsi,0x10
+  fd:	73 0b                	jae    10a <c_clang_intrinsic_bytes+0x10a>
+  ff:	48 89 f2             	mov    rdx,rsi
+ 102:	48 89 cf             	mov    rdi,rcx
+ 105:	e9 83 00 00 00       	jmp    18d <c_clang_intrinsic_bytes+0x18d>
+ 10a:	49 89 f0             	mov    r8,rsi
+ 10d:	c4 e1 f9 6e c0       	vmovq  xmm0,rax
+ 112:	89 f2                	mov    edx,esi
+ 114:	c5 f1 ef c9          	vpxor  xmm1,xmm1,xmm1
+ 118:	31 c0                	xor    eax,eax
+ 11a:	c5 e9 ef d2          	vpxor  xmm2,xmm2,xmm2
+ 11e:	c5 e1 ef db          	vpxor  xmm3,xmm3,xmm3
+ 122:	49 83 e0 f0          	and    r8,0xfffffffffffffff0
+ 126:	83 e2 0f             	and    edx,0xf
+ 129:	4a 8d 3c 01          	lea    rdi,[rcx+r8*1]
+ 12d:	0f 1f 00             	nop    DWORD PTR [rax]
+ 130:	c4 e2 7d 32 6c 01 04 	vpmovzxbq ymm5,DWORD PTR [rcx+rax*1+0x4]
+ 137:	c4 e2 7d 32 24 01    	vpmovzxbq ymm4,DWORD PTR [rcx+rax*1]
+ 13d:	c4 e2 7d 32 74 01 08 	vpmovzxbq ymm6,DWORD PTR [rcx+rax*1+0x8]
+ 144:	c5 f5 d4 cd          	vpaddq ymm1,ymm1,ymm5
+ 148:	c4 e2 7d 32 6c 01 0c 	vpmovzxbq ymm5,DWORD PTR [rcx+rax*1+0xc]
+ 14f:	c5 fd d4 c4          	vpaddq ymm0,ymm0,ymm4
+ 153:	c5 ed d4 d6          	vpaddq ymm2,ymm2,ymm6
+ 157:	48 83 c0 10          	add    rax,0x10
+ 15b:	c5 e5 d4 dd          	vpaddq ymm3,ymm3,ymm5
+ 15f:	49 39 c0             	cmp    r8,rax
+ 162:	75 cc                	jne    130 <c_clang_intrinsic_bytes+0x130>
+ 164:	c5 f5 d4 c0          	vpaddq ymm0,ymm1,ymm0
+ 168:	c5 ed d4 c0          	vpaddq ymm0,ymm2,ymm0
+ 16c:	c5 e5 d4 c0          	vpaddq ymm0,ymm3,ymm0
+ 170:	c4 e3 7d 39 c1 01    	vextracti128 xmm1,ymm0,0x1
+ 176:	c5 f9 d4 c1          	vpaddq xmm0,xmm0,xmm1
+ 17a:	c5 f9 70 c8 4e       	vpshufd xmm1,xmm0,0x4e
+ 17f:	c5 f9 d4 c1          	vpaddq xmm0,xmm0,xmm1
+ 183:	c4 e1 f9 7e c0       	vmovq  rax,xmm0
+ 188:	4c 39 c6             	cmp    rsi,r8
+ 18b:	74 12                	je     19f <c_clang_intrinsic_bytes+0x19f>
+ 18d:	31 c9                	xor    ecx,ecx
+ 18f:	90                   	nop
+ 190:	0f b6 34 0f          	movzx  esi,BYTE PTR [rdi+rcx*1]
+ 194:	48 ff c1             	inc    rcx
+ 197:	48 01 f0             	add    rax,rsi
+ 19a:	48 39 ca             	cmp    rdx,rcx
+ 19d:	75 f1                	jne    190 <c_clang_intrinsic_bytes+0x190>
+ 19f:	c5 f8 77             	vzeroupper 
+ 1a2:	c3                   	ret    

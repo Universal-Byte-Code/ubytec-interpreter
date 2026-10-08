@@ -1,0 +1,14 @@
+{
+  "generated_source_sha256": "791b414816b80d54dd6dd999de30ec8553216191b9fbe36cb2db30e589120578",
+  "assembly_sha256": {
+    "vector-loans": "37b06c3b67a96d1e3499a3f78f12904c84d193e2483222136b2f977cc6c65840",
+    "pair-receiver": "9779bb0ef07f25fb1f7a151039a07a707e9b60bab2a862e2ff825f5138c489b1",
+    "vector-composed": "bccc77b711627f132662597cb0409595cccfbb91399a8c9eab4c6031eb23cfc9"
+  },
+  "composed_source_sha256": {
+    "vector-loans": "8314d20af25bedb3e247f77e616dd36e1958610c83c8b1ef582caee6f9e729ca",
+    "pair-receiver": "7d1710acea511e018ce5a66a394cfcc127f861e68d70e963702c83554ddf9ac7",
+    "vector-composed": "0d583fbfd28195af83f58e63042c45da52246383d8ea6575078e4c93c19e7de9"
+  },
+  "compiler_sha256": "aab1ca0bc973d16d331a007c8394e21b4afd8a45346ad68a20e085d242271b66"
+}

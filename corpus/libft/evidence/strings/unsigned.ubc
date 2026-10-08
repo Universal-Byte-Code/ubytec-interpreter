@@ -1,0 +1,51 @@
+export UnsignedDiv as UnsignedDiv
+export UnsignedMod as UnsignedMod
+export LogicalShift as LogicalShift
+export UnsignedLt as UnsignedLt
+export UnsignedLe as UnsignedLe
+export UnsignedGt as UnsignedGt
+export UnsignedGe as UnsignedGe
+module (name:"unsigned_native",version:"0.1",author:"Ubytec") {
+func UnsignedDiv(t_uint64 a,t_uint64 b) -> t_uint64 {
+load @a
+load @b
+udiv
+return
+}
+func UnsignedMod(t_uint64 a,t_uint64 b) -> t_uint64 {
+load @a
+load @b
+umod
+return
+}
+func LogicalShift(t_uint64 a,t_uint64 b) -> t_uint64 {
+load @a
+load @b
+lshr
+return
+}
+func UnsignedLt(t_uint64 a,t_uint64 b) -> t_uint64 {
+load @a
+load @b
+ult
+return
+}
+func UnsignedLe(t_uint64 a,t_uint64 b) -> t_uint64 {
+load @a
+load @b
+ule
+return
+}
+func UnsignedGt(t_uint64 a,t_uint64 b) -> t_uint64 {
+load @a
+load @b
+ugt
+return
+}
+func UnsignedGe(t_uint64 a,t_uint64 b) -> t_uint64 {
+load @a
+load @b
+uge
+return
+}
+}

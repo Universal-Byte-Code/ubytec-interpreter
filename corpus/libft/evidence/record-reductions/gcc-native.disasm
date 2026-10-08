@@ -1,0 +1,29 @@
+
+/mnt/x/codex/projects/ubytec-interpreter/artifacts/record-reductions/measurements/gcc-native.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <c_gcc_native>:
+   0:	f3 0f 1e fa          	endbr64 
+   4:	48 85 f6             	test   rsi,rsi
+   7:	74 37                	je     40 <c_gcc_native+0x40>
+   9:	48 83 c7 10          	add    rdi,0x10
+   d:	31 c0                	xor    eax,eax
+   f:	45 31 c0             	xor    r8d,r8d
+  12:	66 66 2e 0f 1f 84 00 	data16 nop WORD PTR cs:[rax+rax*1+0x0]
+  19:	00 00 00 00 
+  1d:	0f 1f 00             	nop    DWORD PTR [rax]
+  20:	48 ff c0             	inc    rax
+  23:	4c 03 07             	add    r8,QWORD PTR [rdi]
+  26:	48 83 c7 18          	add    rdi,0x18
+  2a:	48 39 c6             	cmp    rsi,rax
+  2d:	75 f1                	jne    20 <c_gcc_native+0x20>
+  2f:	4c 89 c0             	mov    rax,r8
+  32:	c3                   	ret    
+  33:	66 66 2e 0f 1f 84 00 	data16 nop WORD PTR cs:[rax+rax*1+0x0]
+  3a:	00 00 00 00 
+  3e:	66 90                	xchg   ax,ax
+  40:	45 31 c0             	xor    r8d,r8d
+  43:	4c 89 c0             	mov    rax,r8
+  46:	c3                   	ret    

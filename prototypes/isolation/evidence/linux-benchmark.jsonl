@@ -1,0 +1,12 @@
+{"target":"linux-x64","metric":"invocation_and_read","bytes":256,"samples":100,"median_us":3464.298,"p95_us":3935.127,"worker_rss_kib":1192,"loan_mapped_bytes":4096,"private_stack_bytes":65536}
+{"target":"linux-x64","metric":"copy_only","bytes":256,"samples":100,"median_us":0.010,"p95_us":0.013,"worker_rss_kib":1192,"loan_mapped_bytes":4096,"private_stack_bytes":65536}
+{"target":"linux-x64","metric":"local_byte_read_baseline","bytes":256,"samples":100,"median_us":0.642,"p95_us":1.022,"worker_rss_kib":1192,"loan_mapped_bytes":4096,"private_stack_bytes":65536}
+{"target":"linux-x64","metric":"worker_byte_read","bytes":256,"samples":100,"median_tsc_ticks":12810,"p95_tsc_ticks":18810}
+{"target":"linux-x64","metric":"invocation_and_read","bytes":4096,"samples":100,"median_us":3661.455,"p95_us":4081.680,"worker_rss_kib":1188,"loan_mapped_bytes":4096,"private_stack_bytes":65536}
+{"target":"linux-x64","metric":"copy_only","bytes":4096,"samples":100,"median_us":0.112,"p95_us":0.154,"worker_rss_kib":1188,"loan_mapped_bytes":4096,"private_stack_bytes":65536}
+{"target":"linux-x64","metric":"local_byte_read_baseline","bytes":4096,"samples":100,"median_us":10.674,"p95_us":11.870,"worker_rss_kib":1188,"loan_mapped_bytes":4096,"private_stack_bytes":65536}
+{"target":"linux-x64","metric":"worker_byte_read","bytes":4096,"samples":100,"median_tsc_ticks":19320,"p95_tsc_ticks":26100}
+{"target":"linux-x64","metric":"invocation_and_read","bytes":65536,"samples":100,"median_us":3870.367,"p95_us":4199.732,"worker_rss_kib":1252,"loan_mapped_bytes":65536,"private_stack_bytes":65536}
+{"target":"linux-x64","metric":"copy_only","bytes":65536,"samples":100,"median_us":1.972,"p95_us":2.587,"worker_rss_kib":1252,"loan_mapped_bytes":65536,"private_stack_bytes":65536}
+{"target":"linux-x64","metric":"local_byte_read_baseline","bytes":65536,"samples":100,"median_us":171.567,"p95_us":181.074,"worker_rss_kib":1252,"loan_mapped_bytes":65536,"private_stack_bytes":65536}
+{"target":"linux-x64","metric":"worker_byte_read","bytes":65536,"samples":100,"median_tsc_ticks":100080,"p95_tsc_ticks":148620}

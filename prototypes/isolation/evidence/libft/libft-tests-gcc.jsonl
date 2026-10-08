@@ -1,0 +1,19 @@
+{"case": "empty_Split", "pass": true, "bytes": 256, "string_length": 0, "callee_launches": 2}
+{"case": "empty_Group", "pass": true, "bytes": 256, "string_length": 0, "callee_launches": 1}
+{"case": "ascii_Split", "pass": true, "bytes": 256, "string_length": 5, "callee_launches": 2}
+{"case": "ascii_Group", "pass": true, "bytes": 256, "string_length": 5, "callee_launches": 1}
+{"case": "embedded_nul_Split", "pass": true, "bytes": 256, "string_length": 1, "callee_launches": 2}
+{"case": "embedded_nul_Group", "pass": true, "bytes": 256, "string_length": 1, "callee_launches": 1}
+{"case": "high_bytes_Split", "pass": true, "bytes": 256, "string_length": 90, "callee_launches": 2}
+{"case": "high_bytes_Group", "pass": true, "bytes": 256, "string_length": 90, "callee_launches": 1}
+{"case": "boundary_256_Split", "pass": true, "bytes": 256, "string_length": 111, "callee_launches": 2}
+{"case": "boundary_256_Group", "pass": true, "bytes": 256, "string_length": 111, "callee_launches": 1}
+{"case": "boundary_4096_Split", "pass": true, "bytes": 4096, "string_length": 2031, "callee_launches": 2}
+{"case": "boundary_4096_Group", "pass": true, "bytes": 4096, "string_length": 2031, "callee_launches": 1}
+{"case": "boundary_65536_Split", "pass": true, "bytes": 65536, "string_length": 32751, "callee_launches": 2}
+{"case": "boundary_65536_Group", "pass": true, "bytes": 65536, "string_length": 32751, "callee_launches": 1}
+{"case": "insufficient_rights", "pass": true, "status": 1, "callee_launches": 1}
+{"case": "readonly_write_fault", "pass": true, "status": 2, "callee_launches": 1}
+{"case": "outside_loan", "pass": true, "status": 2, "callee_launches": 1}
+{"case": "ungranted_export", "pass": true, "status": 1, "callee_launches": 0}
+{"case": "no_grants", "pass": true, "status": 1, "callee_launches": 0}

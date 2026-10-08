@@ -1,4 +1,4 @@
-﻿using Ubytec.Language.Exceptions;
+using Ubytec.Language.Exceptions;
 using Ubytec.Language.Operations.Interfaces;
 using Ubytec.Language.Syntax.ExpressionFragments;
 using Ubytec.Language.Syntax.Model;
@@ -27,9 +27,9 @@ namespace Ubytec.Language.Operations
                 }
 
                 // Caso 2: SWITCH con solo TableIDx (entero)
-                if (operands.Length == 1 && operands[0] is int tableIDx)
+                if (operands.Length == 1 && operands[0] is not UType and not PrimitiveType)
                 {
-                    return new SWITCH(tableIDx)
+                    return new SWITCH(StackCode.Index(nameof(SWITCH), operands, int.MaxValue))
                     {
                         Variables = new([.. variables])
                     };
@@ -87,18 +87,14 @@ namespace Ubytec.Language.Operations
                 ((IOpCode)this).Compile(scopes);
             string IUbytecEntity.Compile(CompilationScopes scopes)
             {
-                string switchEndLabel = TableIDx == null ? NextLabel("end_switch") : $"end_switch_{TableIDx}";
-                string switchStartLabel = TableIDx == null ? NextLabel("switch") : $"switch_{TableIDx}";
-
-                scopes.Push(new ScopeContext()
-                {
-                    StartLabel = switchStartLabel,
-                    EndLabel = switchEndLabel,
-                    ExpectedReturnType = BlockType,
-                    DeclaredByKeyword = "switch"
-                });
-
-                return $"{switchStartLabel}: ; SWITCH: Salto múltiple";
+                var frame = scopes.All.FirstOrDefault(x => x.DeclaredByKeyword is "func" or "action");
+                if (frame is null || frame.SwitchSlots.Count == 0)
+                    throw new SyntaxStackException(0xBAD083, "SWITCH requires a preallocated function frame slot.");
+                string start = NextLabel("switch"), end = NextLabel("end_switch");
+                int offset = frame.SwitchSlots.Dequeue();
+                scopes.Push(new ScopeContext { StartLabel = start, EndLabel = end,
+                    DeclaredByKeyword = "switch", LabelIndex = TableIDx, SwitchOffset = offset, ExpectedReturnType = BlockType });
+                return $"{start}:\n  pop rax\n  mov qword [rbp - {-offset}], rax";
             }
         }
     }

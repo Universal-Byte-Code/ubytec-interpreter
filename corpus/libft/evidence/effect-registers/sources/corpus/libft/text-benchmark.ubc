@@ -1,0 +1,89 @@
+func BenchSort(t_uint64 words,t_uint64 scratch) -> t_uint64 {
+load @words
+fnaddr TextRecordCompare
+load @scratch
+call TextSort
+return
+}
+func BenchEmit(t_uint64 words,t_uint64 digits,t_uint64 resultcell,t_uint64 offsetcell) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 entryptr 0 t_uint64 count 0 t_uint64 status 0 }
+loop
+load @words
+call VectorLength
+load @i
+ule
+if
+break
+end
+load @words
+load @i
+call VectorAt
+store @entryptr
+push 258
+load @entryptr
+load t_uint64
+load @entryptr
+push 8
+add
+load t_uint64
+load @resultcell
+load @offsetcell
+call TextWrite
+store @status
+if @status == 0
+push 0
+return
+end
+load @digits
+push 9
+store t_byte
+push 258
+load @digits
+push 1
+load @resultcell
+load @offsetcell
+call TextWrite
+if
+else
+push 0
+return
+end
+load @entryptr
+push 16
+add
+load t_uint64
+load @digits
+call TextDecimal
+store @count
+push 258
+load @digits
+load @count
+load @resultcell
+load @offsetcell
+call TextWrite
+if
+else
+push 0
+return
+end
+load @digits
+push 10
+store t_byte
+push 258
+load @digits
+push 1
+load @resultcell
+load @offsetcell
+call TextWrite
+if
+else
+push 0
+return
+end
+load @i
+inc
+store @i
+end
+push 1
+return
+}

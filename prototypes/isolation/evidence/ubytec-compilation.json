@@ -1,0 +1,32 @@
+{
+  "mode": "Windows .NET source compilation; Linux ELF assembly/link/execution",
+  "compiler_sha256": "e69816671dd912dbf0c5ba486107e718b5500c1193c89c69f251e9d5d34ae249",
+  "compiler_source_sha256": {
+    "Ubytec/Language/AST/ASTCompiler.cs": "90ed67f50290c0da11e2ee948d3a8ffce772fca19b0e7348200f0511f6d02f00",
+    "Ubytec/Language/AST/SourceCompiler.cs": "20d43434472208ffce6a19b1d683b5438e2ef7599ebbb945886279ba4853bd56",
+    "Ubytec/Language/Operations/FunctionOperations.cs": "5adcb3adb33356a2f9e31beedaf3bf876b983dd6f7c4d506f0a52beb5245d341",
+    "Ubytec/Language/Operations/FunctionEmitter.cs": "72e347f6e285320356e9aaf3b2844ca39c51a6102d03f06ea1a8a6dd537da136",
+    "Ubytec/Language/Syntax/Scopes/CompilationScopes.cs": "d1b065f2c7537be498f084f035c15861e65571dc086f297ac7012c01b2c9a442",
+    "Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs": "8e8f2ee7c77dd552e60154430fb91369941f3c7ef5a998984dbe3464dceca980",
+    "Ubytec/Program.cs": "ec1ab52de3c2f7f1c26bc5792ad8b218d910ecc5fe6eaf437dd57908a8a72a32"
+  },
+  "source_sha256": "6eab39baab5717edc0161ce36f70009fe26a1153ce29cf4612e39d8d11260375",
+  "assembly_sha256": "21ba3e2119e6315a4e7b5fb313ab71a9e767d80fcea9feed1fce8e5a7584d065",
+  "exports": {
+    "Read": "read",
+    "Write": "write",
+    "ReadOnlyWrite": "read_only_write",
+    "Foreign": "foreign",
+    "Monitor": "monitor",
+    "Neighbor": "neighbor",
+    "StackOverflow": "stack_overflow",
+    "Spin": "loop",
+    "Stale": "stale",
+    "Copy": "copy"
+  },
+  "options": [
+    "--library",
+    "--tail-calls",
+    "--host-export Function=ubytec_host_symbol"
+  ]
+}

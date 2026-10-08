@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Ubytec.Language.Exceptions;
 using Ubytec.Language.Operations.Interfaces;
 using Ubytec.Language.Syntax.ExpressionFragments;
@@ -18,6 +18,8 @@ namespace Ubytec.Language.Operations
 
             public static IOpCode CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
             {
+                if (TryTokenCondition(tokens, out var tokenCondition, out var tokenType))
+                    return new WHILE { Condition = tokenCondition, BlockType = tokenType, Variables = new([.. variables]) };
                 // Caso 1: WHILE sin condición explícita
                 if (operands.Length == 0)
                 {
@@ -116,50 +118,25 @@ namespace Ubytec.Language.Operations
                     BlockType?.Type ?? PrimitiveType.Bool))
                     throw new SyntaxStackException(0x0CBAD1CE, $"Invalid WHILE blockType {BlockType}");
 
-                string? whileStartLabel;
-                string? whileEndLabel;
-
-                if (LabelIDxs is { Length: > 0 })
-                {
-                    StringBuilder output = new();
-                    foreach (var labelIDx in LabelIDxs)
-                    {
-                        whileEndLabel = $"end_while_{labelIDx}";
-                        whileStartLabel = $"while_{labelIDx}";
-
-                        foreach (var condExpression in Condition?.Syntaxes.Cast<ConditionExpressionFragment>() ?? [])
-                            output.AppendLine($"{whileStartLabel}: ; WHILE start\n{GenerateWhileCondition(condExpression, whileEndLabel)}");
-
-                        // Push to block stack (ensures proper END handling)
-                        scopes.Push(new ScopeContext()
-                        {
-                            StartLabel = whileStartLabel,
-                            EndLabel = whileEndLabel,
-                            ExpectedReturnType = BlockType,
-                            DeclaredByKeyword = nameof(WHILE).ToLower()
-                        });
-                    }
-                    return output.ToString();
-                }
-
-                // **Default Structured WHILE (No Operand Given)**
-                whileStartLabel = NextLabel("while");
-                whileEndLabel = NextLabel("end_while");
-
-                // Push to block stack (ensures proper END handling)
-
-                scopes.Push(new ScopeContext()
+                if (LabelIDxs is { Length: > 1 })
+                    throw new SyntaxStackException(0xBAD080, "WHILE accepts at most one label identifier.");
+                string whileStartLabel = NextLabel("while");
+                string whileEndLabel = NextLabel("end_while");
+                scopes.Push(new ScopeContext
                 {
                     StartLabel = whileStartLabel,
                     EndLabel = whileEndLabel,
+                    LabelIndex = LabelIDxs is { Length: 1 } ? LabelIDxs[0] : null,
                     ExpectedReturnType = BlockType,
-                    DeclaredByKeyword = nameof(WHILE).ToLower()
+                    DeclaredByKeyword = "while"
                 });
-
-                StringBuilder returnOutput = new();
-                foreach (var condExpression in Condition?.Syntaxes.Cast<ConditionExpressionFragment>() ?? [])
-                    returnOutput.AppendLine($"{whileStartLabel}: ; WHILE start\n{GenerateWhileCondition(condExpression, whileEndLabel)}");
-                return returnOutput.ToString();
+                var output = new StringBuilder().AppendLine($"{whileStartLabel}: ; WHILE start");
+                if (Condition is null)
+                    output.AppendLine(GenerateWhileCondition(null, whileEndLabel));
+                else
+                    foreach (var condition in Condition.Syntaxes.Cast<ConditionExpressionFragment>())
+                        output.AppendLine(EmitCondition(condition, whileEndLabel, scopes, BlockType));
+                return output.ToString();
             }
         }
     }

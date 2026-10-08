@@ -4,3 +4,15 @@
   href: getting-started.md
 - name: Overview
   href: overview.md
+- name: Data Opcode Reference
+  href: opcodes.md
+
+- name: Functions and Remaining Work
+  href: functions.md
+- name: Structured Control Flow
+  href: control-flow.md
+- name: Recursion and Tail Calls
+  href: recursion.md
+
+- name: Observable Contract and Optimization
+  href: observable-contract.md

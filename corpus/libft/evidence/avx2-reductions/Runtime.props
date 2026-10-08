@@ -1,0 +1,1 @@
+<Project><Import Project="../../Directory.Build.props" /><PropertyGroup><TargetFramework>net10.0</TargetFramework><EnableDocFxOnBuild>false</EnableDocFxOnBuild></PropertyGroup></Project>

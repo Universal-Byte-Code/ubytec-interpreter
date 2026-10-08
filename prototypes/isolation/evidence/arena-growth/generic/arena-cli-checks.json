@@ -1,0 +1,59 @@
+{
+  "accepted": true,
+  "tests": [
+    {
+      "case": "bundled-arena-alone",
+      "pass": true
+    },
+    {
+      "case": "tail-calls-compatible",
+      "pass": true
+    },
+    {
+      "case": "optional-inspection",
+      "pass": true
+    },
+    {
+      "case": "raw-mode-unchanged",
+      "pass": true
+    },
+    {
+      "case": "inspection-requires-mode",
+      "pass": true
+    },
+    {
+      "case": "cannot-overwrite-input",
+      "pass": true
+    },
+    {
+      "case": "cannot-share-assembly-path",
+      "pass": true
+    },
+    {
+      "case": "cannot-share-json-path",
+      "pass": true
+    },
+    {
+      "case": "no-imports",
+      "pass": true
+    },
+    {
+      "case": "legacy-contract",
+      "pass": true
+    },
+    {
+      "case": "wrapper-collision",
+      "pass": true
+    },
+    {
+      "case": "library-collision",
+      "pass": true
+    },
+    {
+      "case": "already-generated",
+      "pass": true
+    }
+  ],
+  "compiler_sha256": "f04f2851d45b322ab3b37ec8405232309f10fc57ecd4a31a95548b1d01979c73",
+  "runs_without_corpus_in_cwd": true
+}

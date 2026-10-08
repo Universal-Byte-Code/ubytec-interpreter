@@ -1,0 +1,84 @@
+export Copy as Copy
+export Escape as Escape
+module (name:"chain_memory", version:"0.1", author:"Ubytec")
+{
+func ft_memcpy(t_uint64 destination, t_uint64 source, t_uint64 count) -> t_uint64
+{
+    local { t_uint64 index 0 }
+    while @index < @count
+        load @destination
+        load @index
+        add
+        load @source
+        load @index
+        add
+        load t_byte
+        store t_byte
+        load @index
+        inc
+        store @index
+    end
+    load @destination
+    return
+}
+
+func Copy(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+local { t_uint64 capacity 0 t_uint64 count 0 }
+load @buffer
+load t_uint64
+store @capacity
+if @capacity == 0
+push -1
+return
+end
+if @capacity > 32752
+push -1
+return
+end
+load @capacity
+push 2
+mul
+push 32
+add
+load @length
+le
+if
+else
+push -1
+return
+end
+load @buffer
+push 8
+add
+load t_uint64
+inc
+store @count
+if @count > @capacity
+push -1
+return
+end
+load @buffer
+push 16
+add
+load @capacity
+add
+load @buffer
+push 16
+add
+load @count
+call ft_memcpy
+drop 0
+load @count
+dec
+return
+}
+func Escape(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+load @buffer
+push 65536
+add
+load t_byte
+return
+}
+}

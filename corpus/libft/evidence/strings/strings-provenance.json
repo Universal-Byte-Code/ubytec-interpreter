@@ -1,0 +1,11 @@
+{
+  "compiler_sha256": "aab1ca0bc973d16d331a007c8394e21b4afd8a45346ad68a20e085d242271b66",
+  "assembly_sha256": {
+    "unsigned": "dc3598bb88e9867badd1767613109e8ab65a12871f6e83fb9d4aa0f4e4eb6977",
+    "strings-composed": "eebac6fd9f2fb228a9dde012824cbee51ea82d468426b2301999e749f37098d2"
+  },
+  "composed_source_sha256": {
+    "unsigned": "e3a57a5653ffd9dc7d47b5cc6b092767a28eb284b0937d7853f890fe1c11f770",
+    "strings-composed": "0e879076cbe5f100bba050f8c4db582600cf555ce2ceba9268d2363d271b16ce"
+  }
+}

@@ -1,0 +1,35 @@
+import Fold from memory.Fold (t_loan_ro,t_uint64) -> t_uint64
+export Main as Main
+module (name:"block_caller",version:"0.1",author:"Ubytec") {
+func Main(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_int64 status 0 }
+load @buffer
+push 16
+add
+load @buffer
+load t_uint64
+load @buffer
+push 8
+add
+load t_uint64
+push 1000
+load @buffer
+load @length
+add
+push 8
+sub
+call Fold
+store @status
+if @status != 0
+load @status
+return
+end
+load @buffer
+load @length
+add
+push 8
+sub
+load t_int64
+return
+}
+}

@@ -1,0 +1,43 @@
+
+/mnt/x/codex/projects/ubytec-interpreter/artifacts/record-reductions/measurements/clang-scalar.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <c_clang_scalar>:
+   0:	48 85 f6             	test   rsi,rsi
+   3:	74 17                	je     1c <c_clang_scalar+0x1c>
+   5:	48 8d 46 ff          	lea    rax,[rsi-0x1]
+   9:	41 89 f0             	mov    r8d,esi
+   c:	41 83 e0 03          	and    r8d,0x3
+  10:	48 83 f8 03          	cmp    rax,0x3
+  14:	73 09                	jae    1f <c_clang_scalar+0x1f>
+  16:	31 c0                	xor    eax,eax
+  18:	31 d2                	xor    edx,edx
+  1a:	eb 30                	jmp    4c <c_clang_scalar+0x4c>
+  1c:	31 c0                	xor    eax,eax
+  1e:	c3                   	ret    
+  1f:	4c 29 c6             	sub    rsi,r8
+  22:	48 8d 4f 58          	lea    rcx,[rdi+0x58]
+  26:	31 c0                	xor    eax,eax
+  28:	31 d2                	xor    edx,edx
+  2a:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+  30:	48 03 41 b8          	add    rax,QWORD PTR [rcx-0x48]
+  34:	48 03 41 d0          	add    rax,QWORD PTR [rcx-0x30]
+  38:	48 03 41 e8          	add    rax,QWORD PTR [rcx-0x18]
+  3c:	48 03 01             	add    rax,QWORD PTR [rcx]
+  3f:	48 83 c2 04          	add    rdx,0x4
+  43:	48 83 c1 60          	add    rcx,0x60
+  47:	48 39 d6             	cmp    rsi,rdx
+  4a:	75 e4                	jne    30 <c_clang_scalar+0x30>
+  4c:	4d 85 c0             	test   r8,r8
+  4f:	74 1c                	je     6d <c_clang_scalar+0x6d>
+  51:	48 8d 0c 52          	lea    rcx,[rdx+rdx*2]
+  55:	48 8d 0c cf          	lea    rcx,[rdi+rcx*8]
+  59:	48 83 c1 10          	add    rcx,0x10
+  5d:	0f 1f 00             	nop    DWORD PTR [rax]
+  60:	48 03 01             	add    rax,QWORD PTR [rcx]
+  63:	48 83 c1 18          	add    rcx,0x18
+  67:	49 83 c0 ff          	add    r8,0xffffffffffffffff
+  6b:	75 f3                	jne    60 <c_clang_scalar+0x60>
+  6d:	c3                   	ret    

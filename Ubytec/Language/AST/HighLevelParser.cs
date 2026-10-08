@@ -1,4 +1,4 @@
-﻿using Ubytec.Language.HighLevel;
+using Ubytec.Language.HighLevel;
 using Ubytec.Language.Syntax.Model;
 using static Ubytec.Language.Syntax.TypeSystem.Types;
 using Action = Ubytec.Language.HighLevel.Action;
@@ -70,16 +70,7 @@ public static partial class HighLevelParser
         /* scan until matching '}' */
         while (!LookAhead(toks, i, MetaBlock, "}"))
         {
-            if (toks.Length <= i) return new Module(
-                name, version, requires, author,
-                [.. fields], [.. props], [.. funcs], [.. actions],
-                [.. ifaces], [.. classes], [.. structs], [.. records],
-                [.. enums], [.. subMods],
-                id: Guid.NewGuid(),
-                localContext: localCtx,
-                globalContext: globalCtx,
-                modifiers: mods
-            );
+            if (toks.Length <= i) throw new FormatException("Module body is missing its closing brace.");
             /* global { … } (max 1) */
             if (toks[i].Scopes.Helper.IsControl("global"))
             {
@@ -103,6 +94,7 @@ public static partial class HighLevelParser
             }
 
             var tok = toks[i];
+            if (tok.Source == "func") { i++; funcs.Add(ParseFunc(toks, ref i)); continue; }
 
             /* regular members (unchanged) */
             if (tok.Scopes.Helper.IsClassLabel) { classes.Add(ParseClass(toks, ref i)); continue; }
@@ -171,7 +163,8 @@ public static partial class HighLevelParser
 
         while (!LookAhead(t, i, MetaBlock, "}"))
         {
-            if (t[i].Scopes.Helper.IsStorageType) { vars.Add(ParseVariable(t, ref i)); continue; }
+            if (i >= t.Length) throw new FormatException("Local context has no closing brace.");
+            if (t[i].Scopes.Helper.IsStorageType || t[i].Scopes.Helper.IsModifier) { vars.Add(ParseVariable(t, ref i)); continue; }
             if (t[i].Scopes.Helper.IsFuncLabel) { funcs.Add(ParseFunc(t, ref i)); continue; }
             if (t[i].Scopes.Helper.IsActionLabel) { acts.Add(ParseAction(t, ref i)); continue; }
             i++;
@@ -189,6 +182,7 @@ public static partial class HighLevelParser
 
         _ = ConsumeType(t, ref i, out var ut);
         var nameTok = Consume(t, ref i, "entity.name.var.explicit.ubytec");
+        SkipTrivia(t, ref i);
         var valTok = i < t.Length && t[i].Scopes.DataSource.Any(s => s.StartsWith("constant.")) ? t[i++] : default;
 
         return new Field(nameTok.Source, ut, Guid.NewGuid(),
@@ -203,6 +197,7 @@ public static partial class HighLevelParser
         _ = ConsumeType(t, ref i, out var ut);
 
         var nameTok = Consume(t, ref i, "entity.name.var.explicit.ubytec");
+        SkipTrivia(t, ref i);
         var valTok = i < t.Length && t[i].Scopes.DataSource.Any(s => s.StartsWith("constant.")) ? t[i++] : default;
 
         return new Variable(nameTok.Source, ut, Guid.NewGuid(), mods, valTok?.Source);
@@ -270,7 +265,7 @@ public static partial class HighLevelParser
     private static Func ParseFunc(SyntaxToken[] t, ref int i)
     {
         var mods = ParseModifierFlags(t, ref i);
-        var nameTok = Consume(t, ref i, EntityNameTypeFunc, "func");
+        var nameTok = Consume(t, ref i, EntityNameTypeFunc);
         ParseParamList(t, ref i, out var args);
 
         UType ret = new UType(PrimitiveType.Void);
@@ -600,14 +595,14 @@ public static partial class HighLevelParser
             while (!LookAhead(t, i, MetaGrouping, ")"))
             {
                 _ = ConsumeType(t, ref i, out var ut);
-                var idTok = Consume(t, ref i, EntityNameArgument);
+                var idTok = Consume(t, ref i, s => s == EntityNameArgument || s == EntityNameVarExplicit);
 
                 positionalProps.Add(
                     new Property(idTok.Source, ut,
                                  new AccessorContext([], Guid.NewGuid(), ut),
                                  Guid.NewGuid(), TypeModifiers.None));
 
-                if (LookAhead(t, i, PunctuationComma, ",")) i++;
+                if (LookAhead(t, i, PunctuationComma, ",")) Consume(t, ref i, PunctuationComma, ",");
             }
             Consume(t, ref i, MetaGrouping, ")");
         }
@@ -715,12 +710,13 @@ public static partial class HighLevelParser
         int depth = 1;
         while (i < t.Length && depth > 0)
         {
-            if (t[i].Scopes.Helper.IsBlockStructure)
-                depth += t[i].Source != "}" ? 1 : -1;
+            if (t[i].Source == "{") depth++;
+            else if (t[i].Source == "}") depth--;
             i++;
         }
 
-        var bodyTokens = t[bodyStart..(i - 2)];
+        if (depth != 0) throw new FormatException("Function body has no closing brace.");
+        var bodyTokens = t[bodyStart..(i - 1)];
 
         /* 3. statement layer → SyntaxSentence                               */
         var opCodes = ASTCompiler.Parse(bodyTokens);
@@ -730,7 +726,7 @@ public static partial class HighLevelParser
         foreach (var error in compileErrors)
             _errors.Add(new ParseError(error.Row, error.OpCode.OpCode.ToString(format: "x4"), error.Message));
 
-        return tree.RootSentence.Sentences.FirstOrDefault();
+        return tree.RootSentence;
     }
 
     /*──────────────────────────  TOKEN UTILS  ─────────────────────*/
@@ -757,7 +753,7 @@ public static partial class HighLevelParser
     {
         SkipTrivia(t, ref i);
         if (i >= t.Length)
-            _errors.Add(new(t[^1].Line, src ?? "<unknown>", "Unexpected end of tokens"));
+            throw new FormatException($"Unexpected end of tokens while reading {src ?? "<token>"}.");
         var tk = t[i];
         if (!tk.Scopes.DataSource.Any(scopePred) || (src != null && tk.Source != src))
             _errors.Add(new(tk.Line, src ?? "unknown", $"Expected {src ?? "<token>"} but found '{tk.Source}'"));
@@ -801,9 +797,10 @@ public static partial class HighLevelParser
             SkipTrivia(t, ref i);
             var key = Consume(t, ref i, EntityNameArgument).Source;
             Consume(t, ref i, PunctuationSeparatorKeyValue, ":");
+            SkipTrivia(t, ref i);
             var val = t[i++].Source.Trim('"');
             dict[key]=val;
-            if (LookAhead(t, i, PunctuationComma, ",")) i++;
+            if (LookAhead(t, i, PunctuationComma, ",")) Consume(t, ref i, PunctuationComma, ",");
         }
         Consume(t, ref i, MetaGrouping, ")");
         return dict;
@@ -820,9 +817,9 @@ public static partial class HighLevelParser
         {
             SkipTrivia(t, ref i);
             _ = ConsumeType(t, ref i, out var ut);
-            var nameTok = Consume(t, ref i, EntityNameArgument);
+            var nameTok = Consume(t, ref i, s => s == EntityNameArgument || s == EntityNameVarExplicit);
             argObjs.Add(new Argument(nameTok.Source, ut, Guid.NewGuid()));
-            if (LookAhead(t, i, PunctuationComma, ",")) i++;
+            if (LookAhead(t, i, PunctuationComma, ",")) Consume(t, ref i, PunctuationComma, ",");
         }
         Consume(t, ref i, MetaGrouping, ")");
         return t[start..i];

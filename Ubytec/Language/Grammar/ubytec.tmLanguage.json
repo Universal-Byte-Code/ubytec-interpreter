@@ -1,0 +1,554 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/refs/heads/master/tmlanguage.json",
+    "scopeName": "source.ubytec",
+    "repository": {
+        "storageTypes": {
+            "patterns": [
+                {
+                    "name": "storage.type.array.nullable-both.ubytec",
+                    "match": "\\[(t_[A-Za-z0-9_]+\\?)\\]\\?"
+                },
+                {
+                    "name": "storage.type.array.nullable-array.ubytec",
+                    "match": "\\[(t_[A-Za-z0-9_]+)\\]\\?"
+                },
+                {
+                    "name": "storage.type.array.nullable-items.ubytec",
+                    "match": "\\[(t_[A-Za-z0-9_]+\\?)\\]"
+                },
+                {
+                    "name": "storage.type.single.nullable.ubytec",
+                    "match": "\\b(t_[A-Za-z0-9_]+\\?)(?!\\w)"
+                },
+                {
+                    "name": "storage.type.single.ubytec",
+                    "match": "\\b(t_[a-zA-Z0-9_]+)(?![\\[\\]?])"
+                },
+                {
+                    "name": "storage.type.array.ubytec",
+                    "match": "\\[(t_[a-zA-Z0-9_]+)\\]"
+                }
+            ]
+        },
+        "comments": {
+            "patterns": [
+                {
+                    "name": "comment.line.double-slash.ubytec",
+                    "match": "//.*$"
+                },
+                {
+                    "name": "comment.block.ubytec",
+                    "begin": "/\\*",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.comment.begin.ubytec"
+                        }
+                    },
+                    "end": "\\*/",
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.comment.end.ubytec"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#comments"
+                        }
+                    ]
+                }
+            ]
+        },
+        "modifiers": {
+            "patterns": [
+                {
+                    "name": "storage.modifier.ubytec",
+                    "match": "\\b(public|private|protected|internal|const|abstract|virtual|override|sealed|readonly|local|global|secret)\\b"
+                }
+            ]
+        },
+        "constants": {
+            "patterns": [
+                {
+                    "name": "constant.boolean.ubytec",
+                    "match": "\\b(true|false)\\b"
+                },
+                {
+                    "name": "constant.numeric.float.ubytec",
+                    "match": "\\b\\d+(?:_\\d+)*(?:\\.\\d+(?:_\\d+)*)?(?:[eE][+-]?\\d+(?:_\\d+)*)?(?:[FfDdMm])\\b"
+                },
+                {
+                    "name": "constant.numeric.double.ubytec",
+                    "match": "\\b(?:(?:\\d+(?:_\\d+)*\\.\\d+(?:_\\d+)*(?:[eE][+-]?\\d+(?:_\\d+)*)?)|(?:\\d+(?:_\\d+)*[eE][+-]?\\d+(?:_\\d+)*))\\b"
+                },
+                {
+                    "name": "constant.numeric.double.ubytec",
+                    "match": "\\b(?:(?:\\d+(?:_\\d+)*\\.\\d+(?:_\\d+)*(?:[eE][+-]?\\d+(?:_\\d+)*)?)|(?:\\d+(?:_\\d+)*[eE][+-]?\\d+(?:_\\d+)*))\\b"
+                },
+                {
+                    "name": "constant.numeric.int.ubytec",
+                    "match": "\\b\\d+(?:_\\d+)*(?:[Uu][Ll]|[Ll][Uu]|[Uu]|[Ll])?\\b"
+                },
+                {
+                    "name": "constant.numeric.hex.ubytec",
+                    "match": "\\b0x[0-9A-Fa-f]+(?:_[0-9A-Fa-f]+)*(?:[Uu][Ll]|[Ll][Uu]|[Uu]|[Ll])?\\b"
+                },
+                {
+                    "name": "constant.numeric.binary.ubytec",
+                    "match": "\\b0b[01]+(?:_[01]+)*(?:[Uu][Ll]|[Ll][Uu]|[Uu]|[Ll])?\\b"
+                }
+            ]
+        },
+        "codeStructures": {
+            "patterns": [
+                {
+                    "name": "meta.array.ubytec",
+                    "begin": "\\[",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.array.begin.ubytec"
+                        }
+                    },
+                    "end": "\\]",
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.array.end.ubytec"
+                        }
+                    },
+                    "contentName": "meta.array.content.ubytec",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "name": "meta.grouping.ubytec",
+                    "begin": "\\(",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.grouping.begin.ubytec"
+                        }
+                    },
+                    "end": "\\)",
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.grouping.end.ubytec"
+                        }
+                    },
+                    "contentName": "meta.grouping.content.ubytec",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "name": "meta.block.ubytec",
+                    "begin": "\\{",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.block.begin.ubytec"
+                        }
+                    },
+                    "end": "\\}",
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.block.end.ubytec"
+                        }
+                    },
+                    "contentName": "meta.block.content.ubytec",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "name": "meta.angle.grouping.ubytec",
+                    "begin": "\\<",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.angle.grouping.begin.ubytec"
+                        }
+                    },
+                    "end": "\\>",
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.angle.grouping.end.ubytec"
+                        }
+                    },
+                    "contentName": "meta.angle.grouping.content.ubytec",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                }
+            ]
+        },
+        "strings": {
+            "patterns": [
+                {
+                    "name": "string.quoted.double.ubytec",
+                    "match": "\"(?:[^\"\\\\]|\\\\.)*\""
+                },
+                {
+                    "name": "string.quoted.single.ubytec",
+                    "match": "'(?:\\\\.|[^'\\\\])'"
+                }
+            ]
+        },
+        "keywords": {
+            "patterns": [
+                {
+                    "name": "keyword.control.declaration.ubytec",
+                    "match": "\\b(?i)(?:namespace|using|new|is|as|this|base)\\b"
+                },
+                {
+                    "name": "keyword.control.ubytec",
+                    "match": "\\b(module|type|class|record|func|action|field|local|global)\\b"
+                },
+                {
+                    "name": "keyword.control.flow.ubytec",
+                    "match": "\\b(?i)(trap|nop|block|loop|if|else|end|break|continue|return|branch|switch|while|clear|default|null)\\b"
+                },
+                {
+                    "name": "keyword.storage.var.ubytec",
+                    "match": "\\b(?i)(var)\\b"
+                },
+                {
+                    "name": "keyword.stack.ubytec",
+                    "match": "\\b(?i)(push|pop|dup|swap|rot|over|nip|drop|2dup|2swap|2rot|2over|pick|roll)\\b"
+                },
+                {
+                    "name": "keyword.operator.arithmetic.ubytec",
+                    "match": "\\b(?i)(add|sub|mul|div|mod|inc|dec|neg|abs|udiv|umod)\\b"
+                },
+                {
+                    "name": "keyword.operator.bitwise.ubytec",
+                    "match": "\\b(?i)(and|or|xor|not|shl|shr|lshr)\\b"
+                },
+                {
+                    "name": "keyword.operator.comparison.ubytec",
+                    "match": "\\b(?i)(eq|neq|lt|le|gt|ge|ult|ule|ugt|uge)\\b"
+                },
+                {
+                    "name": "keyword.memory.ubytec",
+                    "match": "\\b(?i)(load|store|alloc|free|memcpy|memset)\\b"
+                },
+                {
+                    "name": "keyword.control.jump.ubytec",
+                    "match": "\\b(?i)(jmp|jz|jnz|call|calli|fnaddr|ret)\\b"
+                },
+                {
+                    "name": "keyword.function.call.ubytec",
+                    "match": "\\b(?i)(enter|leave|arg|retval)\\b"
+                },
+                {
+                    "name": "keyword.syscall.ubytec",
+                    "match": "\\b(?i)(syscall|print|input|file_open|file_write|file_read)\\b"
+                },
+                {
+                    "name": "keyword.threading.ubytec",
+                    "match": "\\b(?i)(thread_create|thread_join|thread_exit|lock|unlock|atomic_inc)\\b"
+                },
+                {
+                    "name": "keyword.security.ubytec",
+                    "match": "\\b(?i)(hash|encrypt|decrypt|sign|gen_random_bytes|hmac|verify_signature)\\b"
+                },
+                {
+                    "name": "keyword.exception.ubytec",
+                    "match": "\\b(?i)(try|catch|throw|finally|halt|assert|try_finally|log_error)\\b"
+                },
+                {
+                    "name": "keyword.vector.ubytec",
+                    "match": "\\b(?i)(vadd|vsub|vmul|vdot|vcross|vneg|vnorm|vlerp|vmatrix_mul|vmatrix_inv|vmatrix_transpose)\\b"
+                },
+                {
+                    "name": "keyword.audio.ubytec",
+                    "match": "\\b(?i)(play_sound|stop_sound|set_volume|fft|mix_audio)\\b"
+                },
+                {
+                    "name": "keyword.system.ubytec",
+                    "match": "\\b(?i)(get_system_time|get_cpu_usage|get_ram_usage|log_event)\\b"
+                },
+                {
+                    "name": "keyword.ml.ubytec",
+                    "match": "\\b(?i)(tensor_add|tensor_mul|activation_func|matrix_inv|neural_predict|ml_forward_pass|ml_backward_pass|ml_optimize|ml_load_model|ml_gradient_descent)\\b"
+                },
+                {
+                    "name": "keyword.power.ubytec",
+                    "match": "\\b(?i)(sleep|wake|low_power_mode|battery_status|cpu_throttle)\\b"
+                },
+                {
+                    "name": "keyword.quantum.ubytec",
+                    "match": "\\b(?i)(qinit|qhadamard|qmeasure|qfourier|qgrover|qentangle|qswap|qphase|qmeasure_all)\\b"
+                }
+            ]
+        },
+        "operators": {
+            "patterns": [
+                {
+                    "name": "operator.equality.ubytec",
+                    "match": "(?<=\\S\\s*)==(?=\\s*\\S)"
+                },
+                {
+                    "name": "operator.inequality.ubytec",
+                    "match": "(?<=\\S\\s*)!=(?=\\s*\\S)"
+                },
+                {
+                    "name": "operator.less-than-equals.ubytec",
+                    "match": "(?<=\\S\\s*)<=(?=\\s*\\S)"
+                },
+                {
+                    "name": "operator.greater-than-equals.ubytec",
+                    "match": "(?<=\\S\\s*)>=(?=\\s*\\S)"
+                },
+                {
+                    "name": "operator.less-than.ubytec",
+                    "match": "(?<=\\S\\s*)<(?![=])(?=\\s*\\S)"
+                },
+                {
+                    "name": "operator.greater-than.ubytec",
+                    "match": "(?<=\\S\\s*)>(?![=])(?=\\s*\\S)"
+                },
+                {
+                    "name": "operator.negation.ubytec",
+                    "match": "(?<=\\S\\s*)!(?!=)(?=\\s*\\S)"
+                },
+                {
+                    "name": "operator.unsigned-right-shift.ubytec",
+                    "match": "(?<=((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))\\s*))>>>(?=\\s*((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))))"
+                },
+                {
+                    "name": "operator.unsigned-left-shift.ubytec",
+                    "match": "(?<=((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))\\s*))<<<(?=\\s*((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))))"
+                },
+                {
+                    "name": "operator.left-shift.ubytec",
+                    "match": "(?<=((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))\\s*))<<(?!<)(?=\\s*((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))))"
+                },
+                {
+                    "name": "operator.right-shift.ubytec",
+                    "match": "(?<=((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))\\s*))>>(?!>)(?=\\s*((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))))"
+                },
+                {
+                    "name": "operator.addition.ubytec",
+                    "match": "(?<=((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))\\s*))\\+(?!\\+)(?=\\s*((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))))"
+                },
+                {
+                    "name": "operator.subtraction.ubytec",
+                    "match": "(?<=((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))\\s*))-(?!-)(?=\\s*((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))))"
+                },
+                {
+                    "name": "operator.division.ubytec",
+                    "match": "(?<=((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))\\s*))/(?=\\s*((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))))"
+                },
+                {
+                    "name": "operator.multiplication.ubytec",
+                    "match": "(?<=((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))\\s*))\\*(?!\\*)(?=\\s*((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))))"
+                },
+                {
+                    "name": "operator.exponentiation.ubytec",
+                    "match": "(?<=((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))\\s*))\\^(?=\\s*((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))))"
+                },
+                {
+                    "name": "operator.modulo.ubytec",
+                    "match": "(?<=((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))\\s*))%(?=\\s*((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))))"
+                },
+                {
+                    "name": "operator.bitwise-and.ubytec",
+                    "match": "(?<=((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))\\s*))&(?=\\s*((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))))"
+                },
+                {
+                    "name": "operator.hash.ubytec",
+                    "match": "(?<=((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))\\s*))#(?=\\s*((?:[A-Za-z_][A-Za-z0-9_]*|(?:0x[0-9A-Fa-f]+)|(?:0b[01]+)|(?:\\d+(?:\\.\\d+)?))))"
+                },
+                {
+                    "name": "operator.increment.ubytec",
+                    "match": "(?:(?<=\\S\\s*)\\+\\+(?=\\s*\\S)|(?<=^|\\s)\\+\\+(?=\\s*\\S))"
+                },
+                {
+                    "name": "operator.decrement.ubytec",
+                    "match": "(?:(?<=\\S\\s*)\\-\\-(?=\\s*\\S)|(?<=^|\\s)\\-\\-(?=\\s*\\S))"
+                },
+                {
+                    "name": "operator.logical-and.ubytec",
+                    "match": "(?<=\\S\\s*)&&(?=\\s*\\S)"
+                },
+                {
+                    "name": "operator.logical-or.ubytec",
+                    "match": "(?<=\\S\\s*)\\|\\|(?=\\s*\\S)"
+                },
+                {
+                    "name": "operator.optional-chaining.ubytec",
+                    "match": "(?<=\\S\\s*)\\?\\.(?=\\s*\\S)"
+                },
+                {
+                    "name": "operator.pipe.ubytec",
+                    "match": "(?<=\\S\\s*)<->(?=\\s*\\S)"
+                },
+                {
+                    "name": "operator.pipe-in.ubytec",
+                    "match": "(?<=\\S\\s*)<-<(?=\\s*\\S)"
+                },
+                {
+                    "name": "operator.pipe-out.ubytec",
+                    "match": "(?<=\\S\\s*)>->(?=\\s*\\S)"
+                },
+                {
+                    "name": "operator.nullable-coalescence.ubytec",
+                    "match": "(?<=\\S\\s*)\\?\\?(?=\\s*\\S)"
+                },
+                {
+                    "name": "operator.spread.ubytec",
+                    "match": "(?<=\\S\\s*)\\.\\.(?=\\s*\\S)"
+                },
+                {
+                    "name": "operator.schematize.ubytec",
+                    "match": "(?<=\\S\\s*)~~(?=\\s*\\S)"
+                },
+                {
+                    "name": "operator.assign.ubytec",
+                    "match": "(?<=\\S\\s*)=(?=\\s*\\S)"
+                },
+                {
+                    "name": "operator.inline-return.ubytec",
+                    "match": "(?<=\\S\\s*)=>(?=\\s*\\S)"
+                },
+            ]
+        },
+        "punctuation": {
+            "patterns": [
+                {
+                    "name": "punctuation.comma.ubytec",
+                    "match": ","
+                },
+                {
+                    "name": "punctuation.separator.key-value.ubytec",
+                    "match": ":"
+                },
+                {
+                    "name": "punctuation.scope.ubytec",
+                    "match": "::"
+                },
+                {
+                    "name": "punctuation.separator.parent-child.ubytec",
+                    "match": "\\."
+                },
+                {
+                    "name": "punctuation.semicolon.ubytec",
+                    "match": ";"
+                },
+                {
+                    "name": "punctuation.arrow.ubytec",
+                    "match": "(?<=(?:\\)[ \\t]*|func[ \\t]+\\w+[ \\t]*))->(?=[ \\t]+(?:t_[A-Za-z0-9_]+\\??|\\[t_[A-Za-z0-9_]+\\](?:\\?)?|\\[t_[A-Za-z0-9_]+\\?\\](?:\\?)?))"
+                }
+            ]
+        },
+        "arguments": {
+            "patterns": [
+                {
+                    "name": "entity.name.argument.ubytec",
+                    "match": "\\b[A-Za-z_][A-Za-z0-9_]*\\b"
+                },
+                {
+                    "include": "#comments"
+                },
+                {
+                    "include": "#constants"
+                }
+            ]
+        },
+        "labels": {
+            "patterns": [
+                {
+                    "name": "entity.name.type.class.ubytec",
+                    "match": "(?<=\\bclass\\s+)[A-Za-z_][A-Za-z0-9_]*\\b"
+                },
+                {
+                    "name": "entity.name.type.record.ubytec",
+                    "match": "(?<=\\brecord\\s+)[A-Za-z_][A-Za-z0-9_]*\\b"
+                },
+                {
+                    "name": "entity.name.type.struct.ubytec",
+                    "match": "(?<=\\bstruct\\s+)[A-Za-z_][A-Za-z0-9_]*\\b"
+                },
+                {
+                    "name": "entity.name.type.enum.ubytec",
+                    "match": "(?<=\\benum\\s+)[A-Za-z_][A-Za-z0-9_]*\\b"
+                },
+                {
+                    "name": "entity.name.type.interface.ubytec",
+                    "match": "(?<=\\binterface\\s+)[A-Za-z_][A-Za-z0-9_]*\\b"
+                },
+                {
+                    "name": "entity.name.type.action.ubytec",
+                    "match": "(?<=\\baction\\s+)[A-Za-z_][A-Za-z0-9_]*\\b"
+                },
+                {
+                    "name": "entity.name.type.func.ubytec",
+                    "match": "(?<=\\bfunc\\s+)[A-Za-z_][A-Za-z0-9_]*\\b"
+                },
+                {
+                    "name": "entity.name.var.implicit.ubytec",
+                    "match": "(?<=\\bvar\\s+)[A-Za-z_][A-Za-z0-9_]*\\b"
+                },
+                {
+                    "name": "entity.name.field.ubytec",
+                    "match": "(?<=\\bfield\\s+)[A-Za-z_][A-Za-z0-9_]*\\b"
+                },
+                {
+                    "name": "entity.name.var.explicit.ubytec",
+                    "match": "(?<=\\bt_[A-Za-z0-9_]+\\s+)[A-Za-z_][A-Za-z0-9_]*\\b"
+                }
+            ]
+        },
+        "invalid": {
+            "patterns": [
+                {
+                    "name": "invalid.illegal.ubytec",
+                    "match": "\\S+"
+                }
+            ]
+        }
+    },
+    "patterns": [
+        {
+            "include": "#storageTypes"
+        },
+        {
+            "include": "#comments"
+        },
+        {
+            "include": "#modifiers"
+        },
+        {
+            "include": "#constants"
+        },
+        {
+            "include": "#strings"
+        },
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "#operators"
+        },
+        {
+            "include": "#punctuation"
+        },
+        {
+            "include": "#labels"
+        },
+        {
+            "include": "#codeStructures"
+        },
+        {
+            "include": "#arguments"
+        },
+        {
+            "include": "#invalid"
+        }
+    ]
+}

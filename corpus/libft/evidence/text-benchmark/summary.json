@@ -1,0 +1,20 @@
+{
+  "accepted": true,
+  "created_at_utc": "2026-10-05T19:06:17.578461+00:00",
+  "functional_cases_per_compiler": 45,
+  "statistical_cases_per_compiler": 8,
+  "statistical_samples": 30,
+  "warmup": 5,
+  "all_cases_30_samples_executed": false,
+  "scope_choice": "Functional full matrix plus selected statistical cases; full default run remains available and can take hours.",
+  "dotnet_sdk": "9.0.318",
+  "is_wsl": true,
+  "dotnet_tests_passed": 601,
+  "protected_regression_cases": {
+    "gcc": 52,
+    "clang": 52
+  },
+  "source_compiler_input_output_hashes_verified": true,
+  "sanitizer_scope": "Existing oracle/service/transport C sanitizer suite plus new C client checked with ASan/UBSan on 4 KiB / 257 actual words, Ubytec and C-linear modes. Generated NASM is not sanitizer-instrumented.",
+  "remote_ci_executed": false
+}

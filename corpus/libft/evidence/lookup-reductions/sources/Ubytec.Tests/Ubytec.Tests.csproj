@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsTestProject>true</IsTestProject>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <IsPackable>false</IsPackable>
+    <EnableDocFxOnBuild>false</EnableDocFxOnBuild>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <None Include="../examples/answer.ubc" Link="answer.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../examples/control-flow.ubc" Link="control-flow.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../corpus/libft/scalar.ubc" Link="libft-scalar.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../corpus/libft/memory.ubc" Link="libft-memory.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../examples/recursion.ubc" Link="recursion.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../prototypes/isolation/ubytec/arena/pair-source.ubc" Link="pair-source.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../prototypes/isolation/ubytec/arena/pair-caller.ubc" Link="pair-generated.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../prototypes/isolation/ubytec/arena/dynamic-text-source.ubc" Link="dynamic-text-source.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../prototypes/isolation/ubytec/arena/dynamic-text.ubc" Link="dynamic-text-generated.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../corpus/libft/strings.ubc" Link="libft-strings.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../corpus/libft/arena-strings.ubc" Link="libft-arena-strings.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../corpus/libft/arena.ubc" Link="libft-arena.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../corpus/libft/vector.ubc" Link="vector.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../corpus/libft/vector-apps.ubc" Link="vector-apps.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../corpus/libft/lists.ubc" Link="lists.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../corpus/libft/lists-fixtures.ubc" Link="lists-fixtures.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../corpus/libft/text-analyzer.ubc" Link="text-analyzer.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="../Ubytec/Ubytec.csproj" />
+  </ItemGroup>
+</Project>

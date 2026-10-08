@@ -1,0 +1,2496 @@
+import Copy from pair_receiver.Copy (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+import Partial from pair_receiver.Partial (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+import Spin from pair_receiver.Spin (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+export VectorLoans as VectorLoans
+module (name:"vector_loans",version:"0.1",author:"Ubytec") {
+func VectorLoans(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_uint64 arena 0 t_uint64 dst 0 t_uint64 src 0 t_uint64 data0 0 t_uint64 data1 0 t_uint64 i 0 t_uint64 round 0 t_uint64 tmp 0 t_uint64 node 0 t_uint64 byte 0 t_uint64 faults 0 t_uint64 deadlines 0 t_uint64 scratch 0 t_int64 status 0 }
+if @length != 8480
+push -10
+return
+end
+load @buffer
+push 256
+add
+store @arena
+load @buffer
+push 128
+add
+store @dst
+load @buffer
+push 176
+add
+store @src
+load @buffer
+push 80
+add
+store @scratch
+load @arena
+push 8192
+call ArenaInit
+store @tmp
+if @tmp != 1
+push -11
+return
+end
+while @round < 64
+load @dst
+load @arena
+push 1
+call VectorInit
+store @tmp
+if @tmp != 1
+push -12
+return
+end
+load @src
+load @arena
+push 1
+call VectorInit
+store @tmp
+if @tmp != 1
+push -12
+return
+end
+push 0
+store @i
+while @i < 32
+load @scratch
+push 17
+store t_byte
+load @dst
+load @scratch
+call VectorPush
+store @tmp
+if @tmp != 1
+push -13
+return
+end
+load @scratch
+load @round
+load @i
+add
+push 251
+umod
+store t_byte
+load @src
+load @scratch
+call VectorPush
+store @tmp
+if @tmp != 1
+push -14
+return
+end
+load @i
+inc
+store @i
+end
+load @dst
+push 8
+add
+load t_uint64
+store @data0
+load @src
+push 8
+add
+load t_uint64
+store @data1
+load @dst
+call VectorPin
+store @tmp
+if @tmp != 1
+push -15
+return
+end
+load @dst
+push 33
+call VectorReserve
+store @tmp
+if @tmp != 0
+push -16
+return
+end
+load @dst
+push 0
+push 1
+call VectorErase
+store @tmp
+if @tmp != 0
+push -16
+return
+end
+load @dst
+call VectorClear
+store @tmp
+if @tmp != 0
+push -16
+return
+end
+load @dst
+call VectorDestroy
+store @tmp
+if @tmp != 0
+push -16
+return
+end
+load @dst
+push 0
+load @scratch
+call VectorSet
+store @tmp
+if @tmp != 0
+push -16
+return
+end
+load @round
+push 8
+umod
+store @tmp
+if @tmp == 0
+load @arena
+load @data0
+push 0
+push 32
+load @arena
+load @data1
+push 0
+push 32
+push 32
+push 1000
+load @buffer
+push 96
+add
+call Arena_Partial
+store @status
+if @status != 2
+push -17
+return
+end
+load @arena
+load @data0
+call ArenaFind
+store @node
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 1
+push -22
+return
+end
+load @arena
+load @data1
+call ArenaFind
+store @node
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 0
+push -23
+return
+end
+push 0
+store @i
+while @i < 32
+load @round
+load @i
+add
+push 251
+umod
+store @byte
+load @data1
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != @byte
+push -24
+return
+end
+load @data0
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != 17
+push -25
+return
+end
+load @i
+inc
+store @i
+end
+load @faults
+inc
+store @faults
+end
+load @round
+push 32
+umod
+store @tmp
+if @tmp == 0
+load @arena
+load @data0
+push 0
+push 32
+load @arena
+load @data1
+push 0
+push 32
+push 32
+push 25
+load @buffer
+push 96
+add
+call Arena_Spin
+store @status
+if @status != 3
+push -18
+return
+end
+load @arena
+load @data0
+call ArenaFind
+store @node
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 1
+push -22
+return
+end
+load @arena
+load @data1
+call ArenaFind
+store @node
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 0
+push -23
+return
+end
+push 0
+store @i
+while @i < 32
+load @round
+load @i
+add
+push 251
+umod
+store @byte
+load @data1
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != @byte
+push -24
+return
+end
+load @data0
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != 17
+push -25
+return
+end
+load @i
+inc
+store @i
+end
+load @deadlines
+inc
+store @deadlines
+end
+load @arena
+load @data0
+push 0
+push 32
+load @arena
+load @data1
+push 0
+push 32
+push 32
+push 1000
+load @buffer
+push 96
+add
+call Arena_Copy
+store @status
+if @status != 0
+push -19
+return
+end
+load @arena
+load @data0
+call ArenaFind
+store @node
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 1
+push -22
+return
+end
+load @arena
+load @data1
+call ArenaFind
+store @node
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 0
+push -23
+return
+end
+push 0
+store @i
+while @i < 32
+load @round
+load @i
+add
+push 251
+umod
+store @byte
+load @data1
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != @byte
+push -24
+return
+end
+load @data0
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != @byte
+push -25
+return
+end
+load @i
+inc
+store @i
+end
+load @dst
+call VectorUnpin
+store @tmp
+if @tmp != 1
+push -20
+return
+end
+load @dst
+push 33
+call VectorReserve
+store @tmp
+if @tmp != 1
+push -21
+return
+end
+load @dst
+push 8
+add
+load t_uint64
+store @data0
+push 0
+store @i
+while @i < 32
+load @round
+load @i
+add
+push 251
+umod
+store @byte
+load @data1
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != @byte
+push -24
+return
+end
+load @data0
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != @byte
+push -25
+return
+end
+load @i
+inc
+store @i
+end
+load @src
+call VectorDestroy
+store @tmp
+if @tmp != 1
+push -26
+return
+end
+load @dst
+call VectorDestroy
+store @tmp
+if @tmp != 1
+push -26
+return
+end
+load @arena
+push 8
+add
+load t_uint64
+store @tmp
+if @tmp != 0
+push -27
+return
+end
+load @round
+inc
+store @round
+end
+load @buffer
+push 0
+add
+load @round
+store t_uint64
+load @buffer
+push 8
+add
+load @faults
+store t_uint64
+load @buffer
+push 16
+add
+load @deadlines
+store t_uint64
+load @round
+return
+}
+
+func VectorInit(t_uint64 vec,t_uint64 arena,t_uint64 width) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 tmp 0 t_uint64 capacity 0 }
+if @vec == 0
+push 0
+return
+end
+if @arena == 0
+push 0
+return
+end
+if @width == 0
+push 0
+return
+end
+load @width
+push 65504
+ugt
+if
+push 0
+return
+end
+load @arena
+push 0
+add
+load t_uint64
+store @capacity
+load @capacity
+push 65536
+ugt
+if
+push 0
+return
+end
+while @i < 40
+load @vec
+load @i
+add
+load t_uint64
+store @tmp
+if @tmp != 0
+push 0
+return
+end
+load @i
+push 8
+add
+store @i
+end
+load @vec
+push 0
+add
+load @arena
+store t_uint64
+load @vec
+push 32
+add
+load @width
+store t_uint64
+push 1
+return
+}
+func VectorMaximum(t_uint64 vec) -> t_uint64 {
+local { t_uint64 arena 0 t_uint64 width 0 t_uint64 capacity 0 }
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+load @vec
+push 32
+add
+load t_uint64
+store @width
+load @arena
+push 0
+add
+load t_uint64
+store @capacity
+if @capacity < 32
+push 0
+return
+end
+load @capacity
+push 32
+sub
+load @width
+udiv
+return
+}
+func VectorValidate(t_uint64 vec) -> t_uint64 {
+local { t_uint64 arena 0 t_uint64 data 0 t_uint64 length 0 t_uint64 capacity 0 t_uint64 width 0 t_uint64 maximum 0 t_uint64 node 0 t_uint64 bytes 0 t_uint64 tmp 0 }
+if @vec == 0
+push 0
+return
+end
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+load @vec
+push 8
+add
+load t_uint64
+store @data
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @vec
+push 24
+add
+load t_uint64
+store @capacity
+load @vec
+push 32
+add
+load t_uint64
+store @width
+if @arena == 0
+push 0
+return
+end
+if @width == 0
+push 0
+return
+end
+load @width
+push 65504
+ugt
+if
+push 0
+return
+end
+load @arena
+push 0
+add
+load t_uint64
+store @tmp
+load @tmp
+push 65536
+ugt
+if
+push 0
+return
+end
+load @length
+load @capacity
+ugt
+if
+push 0
+return
+end
+load @vec
+call VectorMaximum
+store @maximum
+load @capacity
+load @maximum
+ugt
+if
+push 0
+return
+end
+if @capacity == 0
+if @data != 0
+push 0
+return
+end
+push 1
+return
+end
+if @data == 0
+push 0
+return
+end
+load @arena
+load @data
+call ArenaFind
+store @node
+if @node == 0
+push 0
+return
+end
+load @capacity
+load @width
+mul
+store @bytes
+load @node
+push 8
+add
+load t_uint64
+store @tmp
+if @tmp != @bytes
+push 0
+return
+end
+push 1
+return
+}
+func VectorMutable(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 arena 0 t_uint64 data 0 t_uint64 node 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+if @data == 0
+push 1
+return
+end
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+load @arena
+load @data
+call ArenaFind
+store @node
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 0
+push 0
+return
+end
+push 1
+return
+}
+func VectorReserve(t_uint64 vec,t_uint64 requested) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 maximum 0 t_uint64 capacity 0 t_uint64 width 0 t_uint64 data 0 t_uint64 arena 0 t_uint64 fresh 0 t_uint64 bytes 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 24
+add
+load t_uint64
+store @capacity
+load @requested
+load @capacity
+ule
+if
+push 1
+return
+end
+load @vec
+call VectorMaximum
+store @maximum
+load @requested
+load @maximum
+ugt
+if
+push 0
+return
+end
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 32
+add
+load t_uint64
+store @width
+load @vec
+push 8
+add
+load t_uint64
+store @data
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+load @requested
+load @width
+mul
+store @bytes
+if @data == 0
+load @arena
+load @bytes
+call ArenaAlloc
+store @fresh
+else
+load @arena
+load @data
+load @bytes
+call ArenaResize
+store @fresh
+end
+if @fresh == 0
+push 0
+return
+end
+load @vec
+push 8
+add
+load @fresh
+store t_uint64
+load @vec
+push 24
+add
+load @requested
+store t_uint64
+push 1
+return
+}
+func VectorEnsure(t_uint64 vec,t_uint64 requested) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 maximum 0 t_uint64 capacity 0 t_uint64 target 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 24
+add
+load t_uint64
+store @capacity
+load @requested
+load @capacity
+ule
+if
+push 1
+return
+end
+load @vec
+call VectorMaximum
+store @maximum
+load @requested
+load @maximum
+ugt
+if
+push 0
+return
+end
+load @capacity
+store @target
+if @target == 0
+push 1
+store @target
+end
+while @target < @requested
+load @target
+push 2
+mul
+store @target
+if @target > @maximum
+load @maximum
+store @target
+end
+end
+load @vec
+load @target
+call VectorReserve
+store @tmp
+load @tmp
+if
+push 1
+return
+end
+load @vec
+load @requested
+call VectorReserve
+store @tmp
+load @tmp
+return
+}
+func VectorSourceMode(t_uint64 vec,t_uint64 source) -> t_uint64 {
+local { t_uint64 width 0 t_uint64 finish 0 t_uint64 data 0 t_uint64 capacity 0 t_uint64 length 0 t_uint64 limit 0 t_uint64 offset 0 t_uint64 tmp 0 }
+if @source == 0
+push 0
+return
+end
+load @vec
+push 32
+add
+load t_uint64
+store @width
+load @source
+load @width
+add
+store @finish
+load @finish
+load @source
+ult
+if
+push 0
+return
+end
+load @source
+load @vec
+push 40
+add
+ult
+load @finish
+load @vec
+ugt
+and
+if
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+if @data == 0
+push 1
+return
+end
+load @vec
+push 24
+add
+load t_uint64
+store @capacity
+load @capacity
+load @width
+mul
+load @data
+add
+store @limit
+load @source
+load @limit
+ult
+load @finish
+load @data
+ugt
+and
+if
+load @source
+load @data
+ult
+if
+push 0
+return
+end
+load @source
+load @data
+sub
+store @offset
+load @offset
+load @width
+umod
+store @tmp
+if @tmp != 0
+push 0
+return
+end
+load @offset
+load @width
+udiv
+store @offset
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @offset
+load @length
+uge
+if
+push 0
+return
+end
+push 2
+return
+end
+push 1
+return
+}
+func VectorInsert(t_uint64 vec,t_uint64 index,t_uint64 source) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 length 0 t_uint64 width 0 t_uint64 data 0 t_uint64 mode 0 t_uint64 alias 0 t_uint64 need 0 t_uint64 i 0 t_uint64 endbytes 0 t_uint64 startbytes 0 t_uint64 target 0 }
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @index
+load @length
+ugt
+if
+push 0
+return
+end
+load @vec
+load @source
+call VectorSourceMode
+store @mode
+if @mode == 0
+push 0
+return
+end
+load @vec
+push 32
+add
+load t_uint64
+store @width
+load @vec
+push 8
+add
+load t_uint64
+store @data
+if @mode == 2
+load @source
+load @data
+sub
+load @width
+udiv
+store @alias
+end
+load @length
+inc
+store @need
+load @vec
+load @need
+call VectorEnsure
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+load @length
+load @width
+mul
+store @endbytes
+load @index
+load @width
+mul
+store @startbytes
+load @endbytes
+store @i
+while @i > @startbytes
+load @i
+dec
+store @i
+load @data
+load @i
+add
+load @width
+add
+load @data
+load @i
+add
+load t_byte
+store t_byte
+end
+if @mode == 2
+if @alias >= @index
+load @alias
+inc
+store @alias
+end
+load @data
+load @alias
+load @width
+mul
+add
+store @source
+end
+load @data
+load @startbytes
+add
+store @target
+push 0
+store @i
+while @i < @width
+load @target
+load @i
+add
+load @source
+load @i
+add
+load t_byte
+store t_byte
+load @i
+inc
+store @i
+end
+load @vec
+push 16
+add
+load @need
+store t_uint64
+push 1
+return
+}
+func VectorPush(t_uint64 vec,t_uint64 source) -> t_uint64 {
+local { t_uint64 length 0 t_uint64 tmp 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @vec
+load @length
+load @source
+call VectorInsert
+store @tmp
+load @tmp
+return
+}
+func VectorAt(t_uint64 vec,t_uint64 index) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 length 0 t_uint64 data 0 t_uint64 width 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @index
+load @length
+uge
+if
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+load @vec
+push 32
+add
+load t_uint64
+store @width
+load @data
+load @index
+load @width
+mul
+add
+return
+}
+func VectorSet(t_uint64 vec,t_uint64 index,t_uint64 element) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 target 0 t_uint64 width 0 t_uint64 i 0 t_uint64 source 0 t_uint64 mode 0 }
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+load @index
+call VectorAt
+store @target
+if @target == 0
+push 0
+return
+end
+load @vec
+load @element
+call VectorSourceMode
+store @mode
+if @mode == 0
+push 0
+return
+end
+load @element
+store @source
+load @vec
+push 32
+add
+load t_uint64
+store @width
+while @i < @width
+load @target
+load @i
+add
+load @source
+load @i
+add
+load t_byte
+store t_byte
+load @i
+inc
+store @i
+end
+push 1
+return
+}
+func VectorGet(t_uint64 vec,t_uint64 index,t_uint64 element) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 target 0 t_uint64 width 0 t_uint64 i 0 t_uint64 source 0 t_uint64 mode 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+load @index
+call VectorAt
+store @target
+if @target == 0
+push 0
+return
+end
+load @vec
+load @element
+call VectorSourceMode
+store @mode
+if @mode == 0
+push 0
+return
+end
+if @mode != 1
+push 0
+return
+end
+load @target
+store @source
+load @element
+store @target
+load @vec
+push 32
+add
+load t_uint64
+store @width
+while @i < @width
+load @target
+load @i
+add
+load @source
+load @i
+add
+load t_byte
+store t_byte
+load @i
+inc
+store @i
+end
+push 1
+return
+}
+func VectorLength(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 16
+add
+load t_uint64
+store @tmp
+load @tmp
+return
+}
+func VectorCapacity(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 24
+add
+load t_uint64
+store @tmp
+load @tmp
+return
+}
+func VectorErase(t_uint64 vec,t_uint64 index,t_uint64 count) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 length 0 t_uint64 remaining 0 t_uint64 width 0 t_uint64 data 0 t_uint64 startbytes 0 t_uint64 readbytes 0 t_uint64 endbytes 0 t_uint64 i 0 t_uint64 freshlength 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @index
+load @length
+ugt
+if
+push 0
+return
+end
+load @length
+load @index
+sub
+store @remaining
+load @count
+load @remaining
+ugt
+if
+push 0
+return
+end
+if @count == 0
+push 1
+return
+end
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 32
+add
+load t_uint64
+store @width
+load @vec
+push 8
+add
+load t_uint64
+store @data
+load @index
+load @width
+mul
+store @startbytes
+load @index
+load @count
+add
+load @width
+mul
+store @readbytes
+load @length
+load @width
+mul
+store @endbytes
+while @readbytes < @endbytes
+load @data
+load @startbytes
+add
+load @data
+load @readbytes
+add
+load t_byte
+store t_byte
+load @startbytes
+inc
+store @startbytes
+load @readbytes
+inc
+store @readbytes
+end
+load @length
+load @count
+sub
+store @freshlength
+load @freshlength
+load @width
+mul
+store @i
+while @i < @endbytes
+load @data
+load @i
+add
+push 0
+store t_byte
+load @i
+inc
+store @i
+end
+load @vec
+push 16
+add
+load @freshlength
+store t_uint64
+push 1
+return
+}
+func VectorClear(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 length 0 }
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @vec
+push 0
+load @length
+call VectorErase
+store @tmp
+load @tmp
+return
+}
+func VectorPin(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 arena 0 t_uint64 data 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+if @data == 0
+push 0
+return
+end
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+load @arena
+load @data
+call ArenaPin
+store @tmp
+load @tmp
+return
+}
+func VectorUnpin(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 arena 0 t_uint64 data 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+if @data == 0
+push 0
+return
+end
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+load @arena
+load @data
+call ArenaUnpin
+store @tmp
+load @tmp
+return
+}
+func VectorDestroy(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 arena 0 t_uint64 data 0 t_uint64 i 0 }
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+if @data != 0
+load @arena
+load @data
+call ArenaFree
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+end
+while @i < 40
+load @vec
+load @i
+add
+push 0
+store t_uint64
+load @i
+push 8
+add
+store @i
+end
+push 1
+return
+}
+
+func ArenaInit(t_uint64 arena,t_uint64 capacity) -> t_uint64 {
+if @capacity > 65536
+push 0
+return
+end
+load @arena
+load @capacity
+store t_uint64
+load @arena
+push 8
+add
+push 0
+store t_uint64
+push 1
+return
+}
+func ArenaFind(t_uint64 arena,t_uint64 pointer) -> t_uint64 {
+local { t_uint64 used 0 t_uint64 cursor 0 t_uint64 nodeptr 0 t_uint64 size 0 }
+load @arena
+push 8
+add
+load t_uint64
+store @used
+while @cursor < @used
+load @arena
+push 16
+add
+load @cursor
+add
+store @nodeptr
+load @nodeptr
+load t_uint64
+store @size
+load @nodeptr
+push 32
+add
+load @pointer
+sub
+if
+else
+load @nodeptr
+push 16
+add
+load t_uint64
+if
+load @nodeptr
+return
+end
+push 0
+return
+end
+load @cursor
+push 32
+add
+load @size
+add
+store @cursor
+end
+push 0
+return
+}
+func ArenaAlloc(t_uint64 arena,t_uint64 length) -> t_uint64 {
+local { t_uint64 capacity 0 t_uint64 used 0 t_uint64 cursor 0 t_uint64 nodeptr 0 t_uint64 size 0 t_uint64 aligned 0 t_uint64 i 0 t_uint64 minimum 0 t_uint64 remainder 0 t_uint64 nextptr 0 }
+if @length > 65536
+push 0
+return
+end
+if @length == 0
+push 0
+return
+end
+load @length
+push 7
+add
+push 8
+div
+push 8
+mul
+store @aligned
+load @arena
+load t_uint64
+store @capacity
+load @arena
+push 8
+add
+load t_uint64
+store @used
+while @cursor < @used
+load @arena
+push 16
+add
+load @cursor
+add
+store @nodeptr
+load @nodeptr
+load t_uint64
+store @size
+load @nodeptr
+push 16
+add
+load t_uint64
+if
+else
+if @size >= @aligned
+break
+end
+end
+load @cursor
+push 32
+add
+load @size
+add
+store @cursor
+end
+if @cursor == @used
+load @aligned
+push 32
+add
+store @size
+load @capacity
+load @used
+sub
+store @capacity
+if @size > @capacity
+push 0
+return
+end
+load @arena
+push 16
+add
+load @used
+add
+store @nodeptr
+load @nodeptr
+load @aligned
+store t_uint64
+load @arena
+push 8
+add
+load @used
+load @size
+add
+store t_uint64
+load @aligned
+store @size
+else
+load @aligned
+push 40
+add
+store @minimum
+if @size >= @minimum
+load @size
+load @aligned
+sub
+push 32
+sub
+store @remainder
+load @nodeptr
+push 32
+add
+load @aligned
+add
+store @nextptr
+load @nextptr
+load @remainder
+store t_uint64
+load @nextptr
+push 8
+add
+push 0
+store t_uint64
+load @nextptr
+push 16
+add
+push 0
+store t_uint64
+load @nextptr
+push 24
+add
+push 0
+store t_uint64
+load @nodeptr
+load @aligned
+store t_uint64
+load @aligned
+store @size
+end
+end
+load @nodeptr
+push 8
+add
+load @length
+store t_uint64
+load @nodeptr
+push 16
+add
+push 1
+store t_uint64
+load @nodeptr
+push 24
+add
+push 0
+store t_uint64
+while @i < @size
+load @nodeptr
+push 32
+add
+load @i
+add
+push 0
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @nodeptr
+push 32
+add
+return
+}
+func ArenaPin(t_uint64 arena,t_uint64 pointer) -> t_uint64 {
+local { t_uint64 nodeptr 0 t_uint64 pins 0 }
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+store @pins
+if @pins >= 65536
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load @pins
+push 1
+add
+store t_uint64
+push 1
+return
+}
+func ArenaUnpin(t_uint64 arena,t_uint64 pointer) -> t_uint64 {
+local { t_uint64 nodeptr 0 t_uint64 pins 0 }
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+store @pins
+if @pins == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load @pins
+push 1
+sub
+store t_uint64
+push 1
+return
+}
+func ArenaFree(t_uint64 arena,t_uint64 pointer) -> t_uint64 {
+local { t_uint64 nodeptr 0 t_uint64 used 0 t_uint64 cursor 0 t_uint64 last 0 t_uint64 size 0 t_uint64 nextpos 0 t_uint64 nextptr 0 t_uint64 nextsize 0 }
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+if
+push 0
+return
+end
+load @nodeptr
+push 16
+add
+push 0
+store t_uint64
+load @nodeptr
+push 8
+add
+push 0
+store t_uint64
+load @arena
+push 8
+add
+load t_uint64
+store @used
+while @cursor < @used
+load @arena
+push 16
+add
+load @cursor
+add
+store @nodeptr
+load @nodeptr
+load t_uint64
+store @size
+load @cursor
+push 32
+add
+load @size
+add
+store @nextpos
+load @nodeptr
+push 16
+add
+load t_uint64
+if
+load @nextpos
+store @last
+else
+while @nextpos < @used
+load @arena
+push 16
+add
+load @nextpos
+add
+store @nextptr
+load @nextptr
+push 16
+add
+load t_uint64
+if
+break
+end
+load @nextptr
+load t_uint64
+store @nextsize
+load @size
+push 32
+add
+load @nextsize
+add
+store @size
+load @nextpos
+push 32
+add
+load @nextsize
+add
+store @nextpos
+end
+load @nodeptr
+load @size
+store t_uint64
+load @nodeptr
+push 8
+add
+push 0
+store t_uint64
+load @nodeptr
+push 24
+add
+push 0
+store t_uint64
+end
+load @nextpos
+store @cursor
+end
+load @arena
+push 8
+add
+load @last
+store t_uint64
+push 1
+return
+}
+func ArenaResize(t_uint64 arena,t_uint64 pointer,t_uint64 length) -> t_uint64 {
+local { t_uint64 nodeptr 0 t_uint64 size 0 t_uint64 old 0 t_uint64 fresh 0 t_uint64 i 0 t_uint64 ignored 0 t_uint64 aligned 0 t_uint64 used 0 t_uint64 endpos 0 t_uint64 delta 0 t_uint64 available 0 }
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+if
+push 0
+return
+end
+if @length > 65536
+push 0
+return
+end
+if @length == 0
+push 0
+return
+end
+load @nodeptr
+load t_uint64
+store @size
+load @nodeptr
+push 8
+add
+load t_uint64
+store @old
+if @length <= @size
+load @old
+store @i
+while @i < @length
+load @pointer
+load @i
+add
+push 0
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @nodeptr
+push 8
+add
+load @length
+store t_uint64
+load @pointer
+return
+end
+load @length
+push 7
+add
+push 8
+div
+push 8
+mul
+store @aligned
+load @arena
+push 8
+add
+load t_uint64
+store @used
+load @nodeptr
+load @arena
+sub
+push 16
+sub
+push 32
+add
+load @size
+add
+store @endpos
+if @endpos == @used
+load @aligned
+load @size
+sub
+store @delta
+load @arena
+load t_uint64
+load @used
+sub
+store @available
+if @delta <= @available
+load @old
+store @i
+while @i < @aligned
+load @pointer
+load @i
+add
+push 0
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @nodeptr
+load @aligned
+store t_uint64
+load @nodeptr
+push 8
+add
+load @length
+store t_uint64
+load @arena
+push 8
+add
+load @used
+load @delta
+add
+store t_uint64
+load @pointer
+return
+end
+end
+load @arena
+load @length
+call ArenaAlloc
+store @fresh
+if @fresh == 0
+push 0
+return
+end
+while @i < @old
+load @fresh
+load @i
+add
+load @pointer
+load @i
+add
+load t_byte
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @arena
+load @pointer
+call ArenaFree
+store @ignored
+load @fresh
+return
+}
+func ArenaAppendUpper(t_uint64 arena,t_uint64 pointer,t_uint64 used,t_uint64 source,t_uint64 count) -> t_uint64 {
+local { t_uint64 need 0 t_uint64 nodeptr 0 t_uint64 size 0 t_uint64 fresh 0 t_uint64 i 0 t_uint64 c 0 }
+if @used > 65536
+push 0
+return
+end
+if @count > 65536
+push 0
+return
+end
+load @used
+load @count
+add
+push 1
+add
+store @need
+if @need > 65536
+push 0
+return
+end
+if @pointer == 0
+if @used != 0
+push 0
+return
+end
+push 8
+store @size
+else
+load @arena
+load @pointer
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 24
+add
+load t_uint64
+if
+push 0
+return
+end
+load @nodeptr
+load t_uint64
+store @size
+load @nodeptr
+push 8
+add
+load t_uint64
+store @c
+if @used >= @c
+push 0
+return
+end
+end
+while @size < @need
+load @size
+push 2
+mul
+store @size
+end
+if @pointer == 0
+load @arena
+load @size
+call ArenaAlloc
+store @fresh
+else
+load @arena
+load @pointer
+load @size
+call ArenaResize
+store @fresh
+end
+if @fresh == 0
+push 0
+return
+end
+while @i < @count
+load @source
+load @i
+add
+load t_byte
+store @c
+if @c >= 97
+if @c <= 122
+load @c
+push 32
+sub
+store @c
+end
+end
+load @fresh
+load @used
+add
+load @i
+add
+load @c
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @fresh
+load @used
+add
+load @count
+add
+push 0
+store t_byte
+load @fresh
+return
+}
+
+// BEGIN GENERATED ARENA IMPORTS
+func Arena_Copy(t_uint64 a0_arena,t_uint64 a0_pointer,t_uint64 a0_offset,t_uint64 a0_length,t_uint64 a1_arena,t_uint64 a1_pointer,t_uint64 a1_offset,t_uint64 a1_length,t_uint64 a2,t_uint64 budget,t_uint64 resultcell) -> t_int64 {
+local { t_uint64 node0 0 t_uint64 size0 0 t_uint64 node1 0 t_uint64 size1 0 t_uint64 ignored 0 t_int64 status 1 }
+load @resultcell
+push 0
+store t_int64
+load @a0_arena
+load @a0_pointer
+call ArenaFind
+store @node0
+if @node0 == 0
+push 1
+return
+end
+load @node0
+push 8
+add
+load t_uint64
+store @size0
+if @a0_offset > @size0
+push 1
+return
+end
+load @size0
+load @a0_offset
+sub
+store @size0
+if @a0_length > @size0
+push 1
+return
+end
+load @a1_arena
+load @a1_pointer
+call ArenaFind
+store @node1
+if @node1 == 0
+push 1
+return
+end
+load @node1
+push 8
+add
+load t_uint64
+store @size1
+if @a1_offset > @size1
+push 1
+return
+end
+load @size1
+load @a1_offset
+sub
+store @size1
+if @a1_length > @size1
+push 1
+return
+end
+load @a0_arena
+load @a0_pointer
+call ArenaPin
+store @ignored
+if @ignored == 0
+push 1
+return
+end
+load @a1_arena
+load @a1_pointer
+call ArenaPin
+store @ignored
+if @ignored == 0
+load @a0_arena
+load @a0_pointer
+call ArenaUnpin
+store @ignored
+push 1
+return
+end
+load @a0_pointer
+load @a0_offset
+add
+load @a0_length
+load @a1_pointer
+load @a1_offset
+add
+load @a1_length
+load @a2
+load @budget
+load @resultcell
+call Copy
+store @status
+load @a1_arena
+load @a1_pointer
+call ArenaUnpin
+store @ignored
+load @a0_arena
+load @a0_pointer
+call ArenaUnpin
+store @ignored
+load @status
+return
+}
+func Arena_Partial(t_uint64 a0_arena,t_uint64 a0_pointer,t_uint64 a0_offset,t_uint64 a0_length,t_uint64 a1_arena,t_uint64 a1_pointer,t_uint64 a1_offset,t_uint64 a1_length,t_uint64 a2,t_uint64 budget,t_uint64 resultcell) -> t_int64 {
+local { t_uint64 node0 0 t_uint64 size0 0 t_uint64 node1 0 t_uint64 size1 0 t_uint64 ignored 0 t_int64 status 1 }
+load @resultcell
+push 0
+store t_int64
+load @a0_arena
+load @a0_pointer
+call ArenaFind
+store @node0
+if @node0 == 0
+push 1
+return
+end
+load @node0
+push 8
+add
+load t_uint64
+store @size0
+if @a0_offset > @size0
+push 1
+return
+end
+load @size0
+load @a0_offset
+sub
+store @size0
+if @a0_length > @size0
+push 1
+return
+end
+load @a1_arena
+load @a1_pointer
+call ArenaFind
+store @node1
+if @node1 == 0
+push 1
+return
+end
+load @node1
+push 8
+add
+load t_uint64
+store @size1
+if @a1_offset > @size1
+push 1
+return
+end
+load @size1
+load @a1_offset
+sub
+store @size1
+if @a1_length > @size1
+push 1
+return
+end
+load @a0_arena
+load @a0_pointer
+call ArenaPin
+store @ignored
+if @ignored == 0
+push 1
+return
+end
+load @a1_arena
+load @a1_pointer
+call ArenaPin
+store @ignored
+if @ignored == 0
+load @a0_arena
+load @a0_pointer
+call ArenaUnpin
+store @ignored
+push 1
+return
+end
+load @a0_pointer
+load @a0_offset
+add
+load @a0_length
+load @a1_pointer
+load @a1_offset
+add
+load @a1_length
+load @a2
+load @budget
+load @resultcell
+call Partial
+store @status
+load @a1_arena
+load @a1_pointer
+call ArenaUnpin
+store @ignored
+load @a0_arena
+load @a0_pointer
+call ArenaUnpin
+store @ignored
+load @status
+return
+}
+func Arena_Spin(t_uint64 a0_arena,t_uint64 a0_pointer,t_uint64 a0_offset,t_uint64 a0_length,t_uint64 a1_arena,t_uint64 a1_pointer,t_uint64 a1_offset,t_uint64 a1_length,t_uint64 a2,t_uint64 budget,t_uint64 resultcell) -> t_int64 {
+local { t_uint64 node0 0 t_uint64 size0 0 t_uint64 node1 0 t_uint64 size1 0 t_uint64 ignored 0 t_int64 status 1 }
+load @resultcell
+push 0
+store t_int64
+load @a0_arena
+load @a0_pointer
+call ArenaFind
+store @node0
+if @node0 == 0
+push 1
+return
+end
+load @node0
+push 8
+add
+load t_uint64
+store @size0
+if @a0_offset > @size0
+push 1
+return
+end
+load @size0
+load @a0_offset
+sub
+store @size0
+if @a0_length > @size0
+push 1
+return
+end
+load @a1_arena
+load @a1_pointer
+call ArenaFind
+store @node1
+if @node1 == 0
+push 1
+return
+end
+load @node1
+push 8
+add
+load t_uint64
+store @size1
+if @a1_offset > @size1
+push 1
+return
+end
+load @size1
+load @a1_offset
+sub
+store @size1
+if @a1_length > @size1
+push 1
+return
+end
+load @a0_arena
+load @a0_pointer
+call ArenaPin
+store @ignored
+if @ignored == 0
+push 1
+return
+end
+load @a1_arena
+load @a1_pointer
+call ArenaPin
+store @ignored
+if @ignored == 0
+load @a0_arena
+load @a0_pointer
+call ArenaUnpin
+store @ignored
+push 1
+return
+end
+load @a0_pointer
+load @a0_offset
+add
+load @a0_length
+load @a1_pointer
+load @a1_offset
+add
+load @a1_length
+load @a2
+load @budget
+load @resultcell
+call Spin
+store @status
+load @a1_arena
+load @a1_pointer
+call ArenaUnpin
+store @ignored
+load @a0_arena
+load @a0_pointer
+call ArenaUnpin
+store @ignored
+load @status
+return
+}
+// END GENERATED ARENA IMPORTS
+}

@@ -1,0 +1,52 @@
+{
+  "mode": "Windows .NET source compilation; Linux ELF assembly/link/execution",
+  "compiler_sha256": "e69816671dd912dbf0c5ba486107e718b5500c1193c89c69f251e9d5d34ae249",
+  "compiler_source_sha256": {
+    "Ubytec/Language/AST/ASTCompiler.cs": "90ed67f50290c0da11e2ee948d3a8ffce772fca19b0e7348200f0511f6d02f00",
+    "Ubytec/Language/AST/SourceCompiler.cs": "20d43434472208ffce6a19b1d683b5438e2ef7599ebbb945886279ba4853bd56",
+    "Ubytec/Language/Operations/FunctionOperations.cs": "5adcb3adb33356a2f9e31beedaf3bf876b983dd6f7c4d506f0a52beb5245d341",
+    "Ubytec/Language/Operations/FunctionEmitter.cs": "72e347f6e285320356e9aaf3b2844ca39c51a6102d03f06ea1a8a6dd537da136",
+    "Ubytec/Language/Syntax/Scopes/CompilationScopes.cs": "d1b065f2c7537be498f084f035c15861e65571dc086f297ac7012c01b2c9a442",
+    "Ubytec/Language/Syntax/Scopes/Contexts/ScopeContext.cs": "8e8f2ee7c77dd552e60154430fb91369941f3c7ef5a998984dbe3464dceca980",
+    "Ubytec/Program.cs": "ec1ab52de3c2f7f1c26bc5792ad8b218d910ecc5fe6eaf437dd57908a8a72a32"
+  },
+  "modules": {
+    "data": {
+      "source_sha256": "c1c4c23e4dcb0e18833376d8f819027523ad985628daa19fd2a0dcdea047f55a",
+      "assembly_sha256": "daf5cc2c816f9ee06395e4bb98b3592388427bc85bd3d72591883fdc313a9de8",
+      "exports": {
+        "Read": "read",
+        "Write": "write",
+        "Copy": "copy",
+        "ReadOwnData": "own_data",
+        "TailSelf": "tail_self",
+        "TailMutual": "tail_mutual",
+        "TailInfinite": "tail_infinite"
+      },
+      "options": [
+        "--library",
+        "--tail-calls",
+        "--host-export Function=ubytec_host_symbol"
+      ]
+    },
+    "faults": {
+      "source_sha256": "9b8fe1f63eb93a50fcfc2fc4be6a364009d606466bffc997425e4dbd17377640",
+      "assembly_sha256": "9f8aeda225968a070e8b1bf36c4154a5e1f205234d8d4dc4bf988614d2f4ac74",
+      "exports": {
+        "ReadOnlyWrite": "read_only_write",
+        "Foreign": "foreign",
+        "Monitor": "monitor",
+        "Neighbor": "neighbor",
+        "StackOverflow": "stack_overflow",
+        "Spin": "loop",
+        "Stale": "stale",
+        "PartialFailure": "partial"
+      },
+      "options": [
+        "--library",
+        "--tail-calls",
+        "--host-export Function=ubytec_host_symbol"
+      ]
+    }
+  }
+}

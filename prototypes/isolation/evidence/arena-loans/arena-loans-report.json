@@ -1,0 +1,176 @@
+{
+  "schema": 1,
+  "accepted": true,
+  "platform": "Linux-5.10.16.3-microsoft-standard-WSL2-x86_64-with-glibc2.29",
+  "source_sha256": {
+    "corpus/libft/arena.ubc": "9f9300b8966e7db225ed52fd18b879b626b1f71e254b80c473ed64d37f94d2a8",
+    "prototypes/isolation/run_arena_loans.py": "c0364926bba12dcd9245f0edc037cf73c957ced267d02a9143fd29aa4e828f48",
+    "prototypes/isolation/run.py": "cc316c9fce4e4ccc65f11915e101fddc760aa66b2dd013f2cbc9fb1e7be4286a",
+    "prototypes/isolation/linux/program.c": "5c326158be1432bfab627dc54d2af2f6144f0a6c55b04c7afa2eb6e68a7b0cbe",
+    "prototypes/isolation/linux/modules.c": "34dd7824a287db9209f4736526c34a2a56caf6ba6d7b396deb0dfb3834f748e2",
+    "prototypes/isolation/linux/contracts.h": "222368f8189ae3d1afe7789edf260194764dfc35c4267f17902c0da10ce4766a",
+    "prototypes/isolation/linux/many-service.h": "64be11faa8f1f35d868229e07d504b810b80517fc0aed7fcd6e96e02efb083d7",
+    "prototypes/isolation/linux/many-wire.h": "9bfd79326726850dc99b8f5967084b539ea0cc139a719e8c24fc7dbcbe678b4a",
+    "prototypes/isolation/linux/isolation.c": "7bdf7c22d285b931e707e3118e0ae228396036dccf56b4d3abe220465aa91bb1",
+    "prototypes/isolation/linux/bridge-runtime.c": "5bc303db6453e62ebfe3c5502bf907343bc92c23f3d403a6c16cfe00026ad965",
+    "prototypes/isolation/linux/arena-transport-inject.c": "8099cc4407eaafd6bc7f9a0a2774854f15ca42a8731b14800abe6193326deabc",
+    "prototypes/isolation/linux/module.ld": "75f50ae3559982186203efff300d1709a8fa4206fcbe250f5a23b5e3ef241335",
+    "prototypes/isolation/common/contract.h": "702be6fcb236a74540712923ca33b7662e0162b7f22dd3160a8629aebe5bc55e",
+    "prototypes/isolation/ubytec/arena/loan-caller.ubc": "1a2b9d76f6d8886d37683360a37c02563f3878938ae145fdcefd3e2b5cb8404e",
+    "prototypes/isolation/ubytec/arena/loan-receiver.ubc": "27b71ab6159864e94a3efa10d185e168b0648fac49feee244559c5ee5d5398d3"
+  },
+  "tests": {
+    "gcc": [
+      {
+        "case": "success",
+        "pass": true,
+        "status": 0,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "header-attack",
+        "pass": true,
+        "status": 2,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "neighbor-attack",
+        "pass": true,
+        "status": 2,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "timeout",
+        "pass": true,
+        "status": 3,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "cancel",
+        "pass": true,
+        "status": 4,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "negative-result-commits",
+        "pass": true,
+        "status": 0,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "read-only-write",
+        "pass": true,
+        "status": 2,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "nested-owner-pin",
+        "pass": true,
+        "status": 0,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "missing-grant",
+        "pass": true,
+        "status": 1,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "length-ceiling",
+        "pass": true,
+        "status": 1,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "invalid-local-selection",
+        "pass": true,
+        "status": 1,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "transport-failure",
+        "pass": true,
+        "status": 5,
+        "same_worker_recovery": true
+      }
+    ],
+    "clang": [
+      {
+        "case": "success",
+        "pass": true,
+        "status": 0,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "header-attack",
+        "pass": true,
+        "status": 2,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "neighbor-attack",
+        "pass": true,
+        "status": 2,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "timeout",
+        "pass": true,
+        "status": 3,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "cancel",
+        "pass": true,
+        "status": 4,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "negative-result-commits",
+        "pass": true,
+        "status": 0,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "read-only-write",
+        "pass": true,
+        "status": 2,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "nested-owner-pin",
+        "pass": true,
+        "status": 0,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "missing-grant",
+        "pass": true,
+        "status": 1,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "length-ceiling",
+        "pass": true,
+        "status": 1,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "invalid-local-selection",
+        "pass": true,
+        "status": 1,
+        "same_worker_recovery": true
+      },
+      {
+        "case": "transport-failure",
+        "pass": true,
+        "status": 5,
+        "same_worker_recovery": true
+      }
+    ]
+  },
+  "assembly_sha256": {
+    "loan-caller": "ee3f5eb00026800f8b4e9208bf0bd2007f00f271f73070bab8ab4453997d7b56",
+    "loan-receiver": "12b0141f86e652701255e327ac904e41ea047530f5a5539cd6f5831aa69682a8"
+  }
+}

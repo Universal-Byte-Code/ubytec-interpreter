@@ -1,0 +1,1235 @@
+{
+  "accepted": true,
+  "schema": 1,
+  "source_sha256": {
+    "linux/program.c": "5c326158be1432bfab627dc54d2af2f6144f0a6c55b04c7afa2eb6e68a7b0cbe",
+    "linux/modules.c": "34dd7824a287db9209f4736526c34a2a56caf6ba6d7b396deb0dfb3834f748e2",
+    "linux/many-wire.h": "9bfd79326726850dc99b8f5967084b539ea0cc139a719e8c24fc7dbcbe678b4a",
+    "linux/many-service.h": "64be11faa8f1f35d868229e07d504b810b80517fc0aed7fcd6e96e02efb083d7",
+    "linux/isolation.c": "7bdf7c22d285b931e707e3118e0ae228396036dccf56b4d3abe220465aa91bb1",
+    "linux/bridge-runtime.c": "5bc303db6453e62ebfe3c5502bf907343bc92c23f3d403a6c16cfe00026ad965",
+    "linux/module.ld": "75f50ae3559982186203efff300d1709a8fa4206fcbe250f5a23b5e3ef241335",
+    "linux/contracts.h": "222368f8189ae3d1afe7789edf260194764dfc35c4267f17902c0da10ce4766a",
+    "linux/bridge-attacks.nasm": "5b8a1d7dff824869fdf46acdd859233ab8dd866d8d0b385411792cf661a5df11",
+    "common/contract.h": "702be6fcb236a74540712923ca33b7662e0162b7f22dd3160a8629aebe5bc55e",
+    "ubytec/modules/caller.ubc": "0d525765d58d18ec7bf80a5bd88e98c9a070a46c0d72fd5745baa941395d4f5a",
+    "run_program.py": "4c426b769078404ec99db9b80ad954f70067c1614cfd45c239bb0605fad6c67e",
+    "run.py": "cc316c9fce4e4ccc65f11915e101fddc760aa66b2dd013f2cbc9fb1e7be4286a"
+  },
+  "tests": {
+    "gcc": [
+      {
+        "case": "source_read_value",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 16
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1496,
+          "receiver_peak_rss_kib": 1496
+        }
+      },
+      {
+        "case": "source_full_64bit_return",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 4294967297
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 90,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1416,
+          "receiver_peak_rss_kib": 1452
+        }
+      },
+      {
+        "case": "source_return_status",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 0
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1444,
+          "receiver_peak_rss_kib": 1392
+        }
+      },
+      {
+        "case": "source_write_copyback",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 0
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 90,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1468,
+          "receiver_peak_rss_kib": 1380
+        }
+      },
+      {
+        "case": "source_repeated_calls",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 0
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 2,
+          "callee_launches": 2,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1424,
+          "receiver_peak_rss_kib": 1496
+        }
+      },
+      {
+        "case": "source_unknown_handle",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 1
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 0,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1416,
+          "receiver_peak_rss_kib": 0
+        }
+      },
+      {
+        "case": "source_rights_ceiling",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 1
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 0,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1392,
+          "receiver_peak_rss_kib": 0
+        }
+      },
+      {
+        "case": "source_length_ceiling",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 1
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 0,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1452,
+          "receiver_peak_rss_kib": 0
+        }
+      },
+      {
+        "case": "source_budget_ceiling",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 1
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 0,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1452,
+          "receiver_peak_rss_kib": 0
+        }
+      },
+      {
+        "case": "source_unlimited_denied",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 1
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 0,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1392,
+          "receiver_peak_rss_kib": 0
+        }
+      },
+      {
+        "case": "source_unlimited_return",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 0
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1416,
+          "receiver_peak_rss_kib": 1448
+        }
+      },
+      {
+        "case": "source_timeout_status",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 3
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1420,
+          "receiver_peak_rss_kib": 1460
+        }
+      },
+      {
+        "case": "source_fault_read_only_write",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 2
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1500,
+          "receiver_peak_rss_kib": 1452
+        }
+      },
+      {
+        "case": "source_fault_foreign",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 2
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1388,
+          "receiver_peak_rss_kib": 1320
+        }
+      },
+      {
+        "case": "source_fault_monitor",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 2
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1412,
+          "receiver_peak_rss_kib": 1432
+        }
+      },
+      {
+        "case": "source_fault_neighbor",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 2
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1408,
+          "receiver_peak_rss_kib": 1432
+        }
+      },
+      {
+        "case": "source_failed_copy_not_committed",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 2
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1392,
+          "receiver_peak_rss_kib": 1484
+        }
+      },
+      {
+        "case": "source_forged_callee_protocol",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 5
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1400,
+          "receiver_peak_rss_kib": 1440
+        }
+      },
+      {
+        "case": "source_bad_caller_pointer",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": false,
+          "rejected": 0,
+          "signal": 11,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 0
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 0,
+          "callee_launches": 0,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1388,
+          "receiver_peak_rss_kib": 0
+        }
+      },
+      {
+        "case": "source_cancel_none",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 4
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1492,
+          "receiver_peak_rss_kib": 1436
+        }
+      },
+      {
+        "case": "source_cancel_1000",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 4
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1396,
+          "receiver_peak_rss_kib": 1444
+        }
+      },
+      {
+        "case": "receiver_cannot_delegate",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 5
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1492,
+          "receiver_peak_rss_kib": 1396
+        }
+      },
+      {
+        "case": "malicious_caller_bad_length",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": false,
+          "rejected": 0,
+          "signal": 9,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 1,
+          "value": 0
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 0,
+          "callee_launches": 0,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1456,
+          "receiver_peak_rss_kib": 0
+        }
+      },
+      {
+        "case": "malicious_caller_bad_version",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": false,
+          "rejected": 0,
+          "signal": 9,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 1,
+          "value": 0
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 0,
+          "callee_launches": 0,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1380,
+          "receiver_peak_rss_kib": 0
+        }
+      },
+      {
+        "case": "supervisor_death_stops_borrowers",
+        "pass": true
+      },
+      {
+        "case": "program_stop_reaps_both_workers",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": false,
+          "rejected": 0,
+          "signal": 9,
+          "timeout": 0,
+          "cancelled": 1,
+          "protocol_rejected": 0,
+          "value": 0
+        }
+      }
+    ],
+    "clang": [
+      {
+        "case": "source_read_value",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 16
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1436,
+          "receiver_peak_rss_kib": 1416
+        }
+      },
+      {
+        "case": "source_full_64bit_return",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 4294967297
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 90,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1288,
+          "receiver_peak_rss_kib": 1420
+        }
+      },
+      {
+        "case": "source_return_status",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 0
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1424,
+          "receiver_peak_rss_kib": 1356
+        }
+      },
+      {
+        "case": "source_write_copyback",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 0
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 90,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1360,
+          "receiver_peak_rss_kib": 1332
+        }
+      },
+      {
+        "case": "source_repeated_calls",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 0
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 2,
+          "callee_launches": 2,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1448,
+          "receiver_peak_rss_kib": 1420
+        }
+      },
+      {
+        "case": "source_unknown_handle",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 1
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 0,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1448,
+          "receiver_peak_rss_kib": 0
+        }
+      },
+      {
+        "case": "source_rights_ceiling",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 1
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 0,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1404,
+          "receiver_peak_rss_kib": 0
+        }
+      },
+      {
+        "case": "source_length_ceiling",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 1
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 0,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1352,
+          "receiver_peak_rss_kib": 0
+        }
+      },
+      {
+        "case": "source_budget_ceiling",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 1
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 0,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1296,
+          "receiver_peak_rss_kib": 0
+        }
+      },
+      {
+        "case": "source_unlimited_denied",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 1
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 0,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1448,
+          "receiver_peak_rss_kib": 0
+        }
+      },
+      {
+        "case": "source_unlimited_return",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 0
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1348,
+          "receiver_peak_rss_kib": 1332
+        }
+      },
+      {
+        "case": "source_timeout_status",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 3
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1440,
+          "receiver_peak_rss_kib": 1412
+        }
+      },
+      {
+        "case": "source_fault_read_only_write",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 2
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1352,
+          "receiver_peak_rss_kib": 1404
+        }
+      },
+      {
+        "case": "source_fault_foreign",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 2
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1436,
+          "receiver_peak_rss_kib": 1396
+        }
+      },
+      {
+        "case": "source_fault_monitor",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 2
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1404,
+          "receiver_peak_rss_kib": 1268
+        }
+      },
+      {
+        "case": "source_fault_neighbor",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 2
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1372,
+          "receiver_peak_rss_kib": 1396
+        }
+      },
+      {
+        "case": "source_failed_copy_not_committed",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 2
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1432,
+          "receiver_peak_rss_kib": 1324
+        }
+      },
+      {
+        "case": "source_forged_callee_protocol",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 5
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1412,
+          "receiver_peak_rss_kib": 1324
+        }
+      },
+      {
+        "case": "source_bad_caller_pointer",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": false,
+          "rejected": 0,
+          "signal": 11,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 0
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 0,
+          "callee_launches": 0,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1432,
+          "receiver_peak_rss_kib": 0
+        }
+      },
+      {
+        "case": "source_cancel_none",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 4
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1296,
+          "receiver_peak_rss_kib": 1380
+        }
+      },
+      {
+        "case": "source_cancel_1000",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 4
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1436,
+          "receiver_peak_rss_kib": 1436
+        }
+      },
+      {
+        "case": "receiver_cannot_delegate",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": true,
+          "rejected": 0,
+          "signal": 0,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 0,
+          "value": 5
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 1,
+          "callee_launches": 1,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1348,
+          "receiver_peak_rss_kib": 1320
+        }
+      },
+      {
+        "case": "malicious_caller_bad_length",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": false,
+          "rejected": 0,
+          "signal": 9,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 1,
+          "value": 0
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 0,
+          "callee_launches": 0,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1416,
+          "receiver_peak_rss_kib": 0
+        }
+      },
+      {
+        "case": "malicious_caller_bad_version",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": false,
+          "rejected": 0,
+          "signal": 9,
+          "timeout": 0,
+          "cancelled": 0,
+          "protocol_rejected": 1,
+          "value": 0
+        },
+        "resources": {
+          "event": "program-result",
+          "requests": 0,
+          "callee_launches": 0,
+          "byte0": 1,
+          "neighbor": 1,
+          "neighbors_preserved": true,
+          "caller_peak_rss_kib": 1388,
+          "receiver_peak_rss_kib": 0
+        }
+      },
+      {
+        "case": "supervisor_death_stops_borrowers",
+        "pass": true
+      },
+      {
+        "case": "program_stop_reaps_both_workers",
+        "pass": true,
+        "result": {
+          "case": "program",
+          "pass": false,
+          "rejected": 0,
+          "signal": 9,
+          "timeout": 0,
+          "cancelled": 1,
+          "protocol_rejected": 0,
+          "value": 0
+        }
+      }
+    ]
+  },
+  "limits": [
+    "Linux x64 only",
+    "One supervisor-authorized target per caller",
+    "Dedicated copying; no shared caller/callee mappings",
+    "No receiver delegation",
+    "Native ARM fixture tests remain separate",
+    "Not a stable module ABI"
+  ],
+  "compilation": {
+    "mode": "precompiled-assembly-handoff",
+    "assembly_sha256": "d448bd5b2c83586fe9fe9ed154772695f0657173960e6cdc3161b232ad176c0c"
+  },
+  "artifacts_sha256": {
+    "bridge-attacks.elf": "086b62f6c861e53887584342f36fd1b079c2fcc314a1352ba12c719e01ecd5b9",
+    "bridge-attacks.o": "c17d3a363a6ed1073bb93b8858c352d3be827b3dcf566d30acf731d33bb50066",
+    "bridge-clang.o": "3754db5e61bfdfd039e224e1bf580b53eb0d5b2ae122745ad3e3ad1826afdb8e",
+    "bridge-gcc.o": "e264dd9452b4b7eb4260ec3c4bd30f5c078960c4fed6ff71cd429a600f349781",
+    "caller-clang.elf": "c77c7b079fa20394d9e91db8a5d5074e55ca9355973a74dca73f879bc2d69dbb",
+    "caller-gcc.elf": "1b466a6ec17793e8eb5095c96b6270e36cbef301026e3610b6d55274dbccae04",
+    "caller.nasm": "d448bd5b2c83586fe9fe9ed154772695f0657173960e6cdc3161b232ad176c0c",
+    "caller.o": "ea972bea8207b8559a41ca32a9bd7aeba6e9ea3ba4ac22355fb0860b8ca3c0da"
+  }
+}

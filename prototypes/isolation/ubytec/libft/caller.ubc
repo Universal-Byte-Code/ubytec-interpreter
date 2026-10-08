@@ -1,0 +1,130 @@
+import ReadLength from strings.Length (t_uint64,t_uint64,t_uint64,t_uint64) -> t_int64
+import CopyMemory from memory.Copy (t_uint64,t_uint64,t_uint64,t_uint64) -> t_int64
+import CopyHidden from memory.Copy (t_uint64,t_uint64,t_uint64,t_uint64) -> t_int64
+import EscapeMemory from memory.Escape (t_uint64,t_uint64,t_uint64,t_uint64) -> t_int64
+import Grouped from grouped.Pipeline (t_uint64,t_uint64,t_uint64,t_uint64) -> t_int64
+export Split as Split
+export Group as Group
+export Denied as Denied
+export ReadOnly as ReadOnly
+export Attack as Attack
+module (name:"chain_caller", version:"0.1", author:"Ubytec")
+{
+func Split(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64 {
+local { t_int64 status 0 }
+load @buffer
+push 16
+add
+load @buffer
+load t_uint64
+push 1
+push 1000
+load @buffer
+load @length
+add
+push 8
+sub
+call ReadLength
+store @status
+if @status != 0
+load @status
+return
+end
+load @buffer
+push 8
+add
+load @buffer
+load @length
+add
+push 8
+sub
+load t_uint64
+store t_uint64
+load @buffer
+load @length
+push 3
+push 1000
+load @buffer
+load @length
+add
+push 8
+sub
+call CopyMemory
+store @status
+if @status != 0
+load @status
+return
+end
+load @buffer
+load @length
+add
+push 8
+sub
+load t_int64
+return
+}
+func Group(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64 {
+local { t_int64 status 0 }
+load @buffer
+load @length
+push 3
+push 1000
+load @buffer
+load @length
+add
+push 8
+sub
+call Grouped
+store @status
+if @status != 0
+load @status
+return
+end
+load @buffer
+load @length
+add
+push 8
+sub
+load t_int64
+return
+}
+func Denied(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64 {
+load @buffer
+load @length
+push 3
+push 1000
+load @buffer
+load @length
+add
+push 8
+sub
+call CopyHidden
+return
+}
+func ReadOnly(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64 {
+load @buffer
+load @length
+push 1
+push 1000
+load @buffer
+load @length
+add
+push 8
+sub
+call CopyMemory
+return
+}
+func Attack(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64 {
+load @buffer
+load @length
+push 1
+push 1000
+load @buffer
+load @length
+add
+push 8
+sub
+call EscapeMemory
+return
+}
+}

@@ -1,0 +1,109 @@
+{
+  "accepted": true,
+  "dotnet": {
+    "total": "601",
+    "executed": "601",
+    "passed": "601",
+    "failed": "0",
+    "error": "0",
+    "timeout": "0",
+    "aborted": "0",
+    "inconclusive": "0",
+    "passedButRunAborted": "0",
+    "notRunnable": "0",
+    "notExecuted": "0",
+    "disconnected": "0",
+    "warning": "0",
+    "completed": "0",
+    "inProgress": "0",
+    "pending": "0"
+  },
+  "oracle_cases": {
+    "gcc": 38,
+    "clang": 38,
+    "sanitized": 38
+  },
+  "protected_cases": {
+    "gcc": 52,
+    "clang": 52
+  },
+  "io_tests": {
+    "gcc": {
+      "service": {
+        "accepted": true,
+        "checks": 84,
+        "denials": 7
+      },
+      "transport": {
+        "accepted": true,
+        "fragmented_cases": 12,
+        "local_rejections": 2
+      }
+    },
+    "clang": {
+      "service": {
+        "accepted": true,
+        "checks": 84,
+        "denials": 7
+      },
+      "transport": {
+        "accepted": true,
+        "fragmented_cases": 12,
+        "local_rejections": 2
+      }
+    },
+    "sanitized": {
+      "service": {
+        "accepted": true,
+        "checks": 84,
+        "denials": 7
+      },
+      "transport": {
+        "accepted": true,
+        "fragmented_cases": 12,
+        "local_rejections": 2
+      }
+    }
+  },
+  "typed_regression": {
+    "accepted": true,
+    "checks_per_variant": {
+      "gcc": 17,
+      "clang": 17,
+      "reference": 17,
+      "fallback": 17
+    },
+    "transport": {
+      "fragmented_io_eintr_full_size_atomic_copyback": 5,
+      "passed": true
+    },
+    "sanitizer": {
+      "malformed_requests": 10,
+      "passed": true,
+      "checks_worker_identity": true
+    }
+  },
+  "large_stream": {
+    "event": "text-result",
+    "accepted": true,
+    "completed": true,
+    "value": 0,
+    "bytes": 1150000,
+    "words": 250000,
+    "unique": 4,
+    "emitted": 43,
+    "arena_used_after": 0,
+    "read_calls": 282,
+    "write_calls": 16,
+    "denials": 0,
+    "read_bytes": 1150000,
+    "write_bytes": 43
+  },
+  "compiler_sha256": "37c2963c06fb90a720f67fe0ce2bd4d68ae5f1319c4de44b635ed35fb714374a",
+  "report_sha256": "38631c0e55ed966f6676a1eb901db026b4c29f13d3b66cc7f3075a05b8325ebb",
+  "trx_sha256": "9a10f72da75ad425c7457ecf60f97effc1c26ea37d5e4b82af1adae220130264",
+  "source_manifest_verified": true,
+  "assembly_manifest_verified": true,
+  "composed_source_manifest_verified": true,
+  "application_outputs_verified": true
+}

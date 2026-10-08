@@ -1,0 +1,102 @@
+{
+  "accepted": true,
+  "dotnet": {
+    "total": "553",
+    "executed": "553",
+    "passed": "553",
+    "failed": "0",
+    "error": "0",
+    "timeout": "0",
+    "aborted": "0",
+    "inconclusive": "0",
+    "passedButRunAborted": "0",
+    "notRunnable": "0",
+    "notExecuted": "0",
+    "disconnected": "0",
+    "warning": "0",
+    "completed": "0",
+    "inProgress": "0",
+    "pending": "0"
+  },
+  "native": {
+    "gcc": {
+      "accepted": true,
+      "random_steps": 20000,
+      "checks": 628292,
+      "rejections": 11421,
+      "histories": 10,
+      "state_depths": 6,
+      "text_batches": 128
+    },
+    "clang": {
+      "accepted": true,
+      "random_steps": 20000,
+      "checks": 628292,
+      "rejections": 11421,
+      "histories": 10,
+      "state_depths": 6,
+      "text_batches": 128
+    },
+    "sanitized": {
+      "accepted": true,
+      "random_steps": 20000,
+      "checks": 628292,
+      "rejections": 11421,
+      "histories": 10,
+      "state_depths": 6,
+      "text_batches": 128
+    }
+  },
+  "protected": {
+    "gcc": {
+      "pass": true,
+      "caller_invocations": 1,
+      "cycles": 64,
+      "successful_loans": 64,
+      "receiver_faults": 8,
+      "explicit_deadlines": 2,
+      "receiver_launches": 74,
+      "arena_used_after": 0,
+      "descriptor_and_packet_guards_preserved": true,
+      "metrics": {
+        "event": "program-result",
+        "requests": 74,
+        "callee_launches": 74,
+        "byte0": 64,
+        "neighbor": 2,
+        "neighbors_preserved": false,
+        "caller_peak_rss_kib": 1540,
+        "receiver_peak_rss_kib": 1508
+      },
+      "legacy_neighbor_metric_applicable": false
+    },
+    "clang": {
+      "pass": true,
+      "caller_invocations": 1,
+      "cycles": 64,
+      "successful_loans": 64,
+      "receiver_faults": 8,
+      "explicit_deadlines": 2,
+      "receiver_launches": 74,
+      "arena_used_after": 0,
+      "descriptor_and_packet_guards_preserved": true,
+      "metrics": {
+        "event": "program-result",
+        "requests": 74,
+        "callee_launches": 74,
+        "byte0": 64,
+        "neighbor": 2,
+        "neighbors_preserved": false,
+        "caller_peak_rss_kib": 1400,
+        "receiver_peak_rss_kib": 1448
+      },
+      "legacy_neighbor_metric_applicable": false
+    }
+  },
+  "compiler_sha256": "aab1ca0bc973d16d331a007c8394e21b4afd8a45346ad68a20e085d242271b66",
+  "report_sha256": "522b623afba459f832450a0e3a125aff3270dda65c5603a8f4bc7161255a47e2",
+  "trx_sha256": "e74e2ed9e99c63edec6c4f09aa44240056db7e4f90effa3f4bb1d768cf70f208",
+  "source_manifest_verified": true,
+  "assembly_manifest_verified": true,
+  "composed_source_manifest_verified": true
+}

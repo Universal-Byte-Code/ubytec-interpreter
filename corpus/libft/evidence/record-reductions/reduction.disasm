@@ -1,0 +1,282 @@
+
+/mnt/x/codex/projects/ubytec-interpreter/artifacts/record-reductions/measurements/reduction.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <func_446961674964656E74697479_3074135b61e4430599925782f7e32522_start>:
+   0:	55                   	push   rbp
+   1:	48 89 e5             	mov    rbp,rsp
+   4:	48 8b 45 10          	mov    rax,QWORD PTR [rbp+0x10]
+   8:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+   d:	eb 00                	jmp    f <func_446961674964656E74697479_3074135b61e4430599925782f7e32522_end>
+
+000000000000000f <func_446961674964656E74697479_3074135b61e4430599925782f7e32522_end>:
+   f:	48 89 ec             	mov    rsp,rbp
+  12:	5d                   	pop    rbp
+  13:	c3                   	ret    
+
+0000000000000014 <func_446961674279746573_14ff61d991444b9da44405a465a461fc_start>:
+  14:	55                   	push   rbp
+  15:	48 89 e5             	mov    rbp,rsp
+  18:	48 83 ec 10          	sub    rsp,0x10
+  1c:	b8 00 00 00 00       	mov    eax,0x0
+  21:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  25:	b8 00 00 00 00       	mov    eax,0x0
+  2a:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  2e:	4c 8b 55 10          	mov    r10,QWORD PTR [rbp+0x10]
+  32:	4c 8b 45 f8          	mov    r8,QWORD PTR [rbp-0x8]
+  36:	4c 8b 4d f0          	mov    r9,QWORD PTR [rbp-0x10]
+
+000000000000003a <while_0d504feea315498a9f66adcbb858a9aa>:
+  3a:	4c 89 d0             	mov    rax,r10
+  3d:	48 89 c1             	mov    rcx,rax
+  40:	4c 89 c0             	mov    rax,r8
+  43:	48 39 c8             	cmp    rax,rcx
+  46:	73 4c                	jae    94 <end_while_8d1873dfee7d4ee0975b03a9b8bac7bd>
+  48:	41 51                	push   r9
+  4a:	48 8b 45 18          	mov    rax,QWORD PTR [rbp+0x18]
+  4e:	50                   	push   rax
+  4f:	4c 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],r8
+  54:	4c 89 c1             	mov    rcx,r8
+  57:	58                   	pop    rax
+  58:	48 01 c8             	add    rax,rcx
+  5b:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+  60:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  63:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+  68:	48 89 c1             	mov    rcx,rax
+  6b:	58                   	pop    rax
+  6c:	48 01 c8             	add    rax,rcx
+  6f:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+  74:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  78:	49 89 c1             	mov    r9,rax
+  7b:	4c 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],r8
+  80:	4c 89 c0             	mov    rax,r8
+  83:	48 ff c0             	inc    rax
+  86:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+  8b:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  8f:	49 89 c0             	mov    r8,rax
+  92:	eb a6                	jmp    3a <while_0d504feea315498a9f66adcbb858a9aa>
+
+0000000000000094 <end_while_8d1873dfee7d4ee0975b03a9b8bac7bd>:
+  94:	4c 89 4c 24 f8       	mov    QWORD PTR [rsp-0x8],r9
+  99:	4c 89 c8             	mov    rax,r9
+  9c:	eb 00                	jmp    9e <func_446961674279746573_14ff61d991444b9da44405a465a461fc_end>
+
+000000000000009e <func_446961674279746573_14ff61d991444b9da44405a465a461fc_end>:
+  9e:	48 89 ec             	mov    rsp,rbp
+  a1:	5d                   	pop    rbp
+  a2:	c3                   	ret    
+
+00000000000000a3 <func_446961675265636F726473_7d372ef930514a3fa4ba94c9b4d0fdc5_start>:
+  a3:	55                   	push   rbp
+  a4:	48 89 e5             	mov    rbp,rsp
+  a7:	48 83 ec 10          	sub    rsp,0x10
+  ab:	b8 00 00 00 00       	mov    eax,0x0
+  b0:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  b4:	b8 00 00 00 00       	mov    eax,0x0
+  b9:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+  bd:	48 8b 55 18          	mov    rdx,QWORD PTR [rbp+0x18]
+  c1:	4c 8b 55 10          	mov    r10,QWORD PTR [rbp+0x10]
+  c5:	4c 8b 45 f8          	mov    r8,QWORD PTR [rbp-0x8]
+  c9:	4c 8b 4d f0          	mov    r9,QWORD PTR [rbp-0x10]
+  cd:	49 6b f8 18          	imul   rdi,r8,0x18
+  d1:	48 01 d7             	add    rdi,rdx
+  d4:	48 83 c7 10          	add    rdi,0x10
+
+00000000000000d8 <func_446961675265636F726473_7d372ef930514a3fa4ba94c9b4d0fdc5_start_record_reduce>:
+  d8:	4d 39 d0             	cmp    r8,r10
+  db:	73 47                	jae    124 <func_446961675265636F726473_7d372ef930514a3fa4ba94c9b4d0fdc5_start_record_reduce_done>
+  dd:	4c 89 4c 24 f8       	mov    QWORD PTR [rsp-0x8],r9
+  e2:	48 c7 44 24 e8 10 00 	mov    QWORD PTR [rsp-0x18],0x10
+  e9:	00 00 
+  eb:	48 c7 44 24 e0 18 00 	mov    QWORD PTR [rsp-0x20],0x18
+  f2:	00 00 
+  f4:	48 89 7c 24 f0       	mov    QWORD PTR [rsp-0x10],rdi
+  f9:	48 8d 64 24 f8       	lea    rsp,[rsp-0x8]
+  fe:	48 8b 07             	mov    rax,QWORD PTR [rdi]
+ 101:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+ 106:	49 01 c1             	add    r9,rax
+ 109:	4c 89 4d f0          	mov    QWORD PTR [rbp-0x10],r9
+ 10d:	49 ff c0             	inc    r8
+ 110:	4c 89 45 f8          	mov    QWORD PTR [rbp-0x8],r8
+ 114:	48 8d 64 24 08       	lea    rsp,[rsp+0x8]
+ 119:	4c 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],r8
+ 11e:	48 83 c7 18          	add    rdi,0x18
+ 122:	eb b4                	jmp    d8 <func_446961675265636F726473_7d372ef930514a3fa4ba94c9b4d0fdc5_start_record_reduce>
+
+0000000000000124 <func_446961675265636F726473_7d372ef930514a3fa4ba94c9b4d0fdc5_start_record_reduce_done>:
+ 124:	4c 89 c8             	mov    rax,r9
+ 127:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+ 12c:	eb 00                	jmp    12e <func_446961675265636F726473_7d372ef930514a3fa4ba94c9b4d0fdc5_end>
+
+000000000000012e <func_446961675265636F726473_7d372ef930514a3fa4ba94c9b4d0fdc5_end>:
+ 12e:	48 89 ec             	mov    rsp,rbp
+ 131:	5d                   	pop    rbp
+ 132:	c3                   	ret    
+
+0000000000000133 <func_446961674C6F6F6B7570_294e48065e574bb695629bfc18407a6a_start>:
+ 133:	55                   	push   rbp
+ 134:	48 89 e5             	mov    rbp,rsp
+ 137:	48 83 ec 20          	sub    rsp,0x20
+ 13b:	b8 00 00 00 00       	mov    eax,0x0
+ 140:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+ 144:	b8 00 00 00 00       	mov    eax,0x0
+ 149:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+ 14d:	b8 00 00 00 00       	mov    eax,0x0
+ 152:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
+ 156:	b8 00 00 00 00       	mov    eax,0x0
+ 15b:	48 89 45 e0          	mov    QWORD PTR [rbp-0x20],rax
+ 15f:	4c 8b 55 10          	mov    r10,QWORD PTR [rbp+0x10]
+ 163:	4c 8b 4d f8          	mov    r9,QWORD PTR [rbp-0x8]
+ 167:	4c 8b 45 f0          	mov    r8,QWORD PTR [rbp-0x10]
+
+000000000000016b <while_5c80543069d14bdaa0954f1cdc331fce>:
+ 16b:	48 8b 45 20          	mov    rax,QWORD PTR [rbp+0x20]
+ 16f:	48 89 c1             	mov    rcx,rax
+ 172:	4c 89 c8             	mov    rax,r9
+ 175:	48 39 c8             	cmp    rax,rcx
+ 178:	0f 83 41 01 00 00    	jae    2bf <end_while_8a91380b34294e6ea2a7a208ee629377>
+ 17e:	48 8b 45 28          	mov    rax,QWORD PTR [rbp+0x28]
+ 182:	50                   	push   rax
+ 183:	41 51                	push   r9
+ 185:	b8 18 00 00 00       	mov    eax,0x18
+ 18a:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+ 18f:	48 89 c1             	mov    rcx,rax
+ 192:	58                   	pop    rax
+ 193:	48 0f af c1          	imul   rax,rcx
+ 197:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+ 19c:	48 89 c1             	mov    rcx,rax
+ 19f:	58                   	pop    rax
+ 1a0:	48 01 c8             	add    rax,rcx
+ 1a3:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+ 1a8:	48 89 45 e8          	mov    QWORD PTR [rbp-0x18],rax
+ 1ac:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+ 1b0:	50                   	push   rax
+ 1b1:	b8 08 00 00 00       	mov    eax,0x8
+ 1b6:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+ 1bb:	48 89 c1             	mov    rcx,rax
+ 1be:	58                   	pop    rax
+ 1bf:	48 01 c8             	add    rax,rcx
+ 1c2:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+ 1c7:	48 8b 00             	mov    rax,QWORD PTR [rax]
+ 1ca:	50                   	push   rax
+ 1cb:	4c 89 54 24 f8       	mov    QWORD PTR [rsp-0x8],r10
+ 1d0:	4c 89 d1             	mov    rcx,r10
+ 1d3:	58                   	pop    rax
+ 1d4:	48 39 c8             	cmp    rax,rcx
+ 1d7:	0f 94 c0             	sete   al
+ 1da:	0f b6 c0             	movzx  eax,al
+ 1dd:	50                   	push   rax
+
+00000000000001de <if_123ae26b23324ba29a033330a98adb86>:
+ 1de:	58                   	pop    rax
+ 1df:	48 85 c0             	test   rax,rax
+ 1e2:	0f 84 bb 00 00 00    	je     2a3 <end_if_670047aa323840749ed6cd28975fb29a>
+ 1e8:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+ 1ec:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+ 1f1:	48 8b 00             	mov    rax,QWORD PTR [rax]
+ 1f4:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+ 1f9:	48 89 45 e0          	mov    QWORD PTR [rbp-0x20],rax
+ 1fd:	b8 00 00 00 00       	mov    eax,0x0
+ 202:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+ 207:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+ 20b:	49 89 c0             	mov    r8,rax
+
+000000000000020e <while_aa25bb22852f4858a6aaa225d4d5e41c>:
+ 20e:	4c 89 d0             	mov    rax,r10
+ 211:	48 89 c1             	mov    rcx,rax
+ 214:	4c 89 c0             	mov    rax,r8
+ 217:	48 39 c8             	cmp    rax,rcx
+ 21a:	73 67                	jae    283 <end_while_87662936fed840948a01124c7114b67d>
+ 21c:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]
+ 220:	50                   	push   rax
+ 221:	4c 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],r8
+ 226:	4c 89 c1             	mov    rcx,r8
+ 229:	58                   	pop    rax
+ 22a:	48 01 c8             	add    rax,rcx
+ 22d:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+ 232:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+ 235:	50                   	push   rax
+ 236:	48 8b 45 18          	mov    rax,QWORD PTR [rbp+0x18]
+ 23a:	50                   	push   rax
+ 23b:	4c 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],r8
+ 240:	4c 89 c1             	mov    rcx,r8
+ 243:	58                   	pop    rax
+ 244:	48 01 c8             	add    rax,rcx
+ 247:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+ 24c:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+ 24f:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+ 254:	48 89 c1             	mov    rcx,rax
+ 257:	58                   	pop    rax
+ 258:	48 39 c8             	cmp    rax,rcx
+ 25b:	0f 95 c0             	setne  al
+ 25e:	0f b6 c0             	movzx  eax,al
+ 261:	50                   	push   rax
+
+0000000000000262 <if_660e89c8bfca4369b47bc3d4007ba68e>:
+ 262:	58                   	pop    rax
+ 263:	48 85 c0             	test   rax,rax
+ 266:	74 02                	je     26a <end_if_8ca8bebf9a0d4c12b57b717f213116c0>
+ 268:	eb 19                	jmp    283 <end_while_87662936fed840948a01124c7114b67d>
+
+000000000000026a <end_if_8ca8bebf9a0d4c12b57b717f213116c0>:
+ 26a:	4c 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],r8
+ 26f:	4c 89 c0             	mov    rax,r8
+ 272:	48 ff c0             	inc    rax
+ 275:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+ 27a:	48 89 45 f0          	mov    QWORD PTR [rbp-0x10],rax
+ 27e:	49 89 c0             	mov    r8,rax
+ 281:	eb 8b                	jmp    20e <while_aa25bb22852f4858a6aaa225d4d5e41c>
+
+0000000000000283 <end_while_87662936fed840948a01124c7114b67d>:
+ 283:	4c 89 d0             	mov    rax,r10
+ 286:	48 89 c1             	mov    rcx,rax
+ 289:	4c 89 c0             	mov    rax,r8
+ 28c:	48 39 c8             	cmp    rax,rcx
+ 28f:	75 12                	jne    2a3 <end_if_670047aa323840749ed6cd28975fb29a>
+ 291:	4c 89 4c 24 f8       	mov    QWORD PTR [rsp-0x8],r9
+ 296:	4c 89 c8             	mov    rax,r9
+ 299:	48 ff c0             	inc    rax
+ 29c:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+ 2a1:	eb 28                	jmp    2cb <func_446961674C6F6F6B7570_294e48065e574bb695629bfc18407a6a_end>
+
+00000000000002a3 <end_if_670047aa323840749ed6cd28975fb29a>:
+ 2a3:	4c 89 4c 24 f8       	mov    QWORD PTR [rsp-0x8],r9
+ 2a8:	4c 89 c8             	mov    rax,r9
+ 2ab:	48 ff c0             	inc    rax
+ 2ae:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+ 2b3:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+ 2b7:	49 89 c1             	mov    r9,rax
+ 2ba:	e9 ac fe ff ff       	jmp    16b <while_5c80543069d14bdaa0954f1cdc331fce>
+
+00000000000002bf <end_while_8a91380b34294e6ea2a7a208ee629377>:
+ 2bf:	b8 00 00 00 00       	mov    eax,0x0
+ 2c4:	48 89 44 24 f8       	mov    QWORD PTR [rsp-0x8],rax
+ 2c9:	eb 00                	jmp    2cb <func_446961674C6F6F6B7570_294e48065e574bb695629bfc18407a6a_end>
+
+00000000000002cb <func_446961674C6F6F6B7570_294e48065e574bb695629bfc18407a6a_end>:
+ 2cb:	48 89 ec             	mov    rsp,rbp
+ 2ce:	5d                   	pop    rbp
+ 2cf:	c3                   	ret    
+
+00000000000002d0 <ubytec_host_reduction_DiagRecords>:
+ 2d0:	55                   	push   rbp
+ 2d1:	48 89 e5             	mov    rbp,rsp
+ 2d4:	53                   	push   rbx
+ 2d5:	41 54                	push   r12
+ 2d7:	41 55                	push   r13
+ 2d9:	41 56                	push   r14
+ 2db:	41 57                	push   r15
+ 2dd:	48 83 ec 08          	sub    rsp,0x8
+ 2e1:	57                   	push   rdi
+ 2e2:	56                   	push   rsi
+ 2e3:	e8 bb fd ff ff       	call   a3 <func_446961675265636F726473_7d372ef930514a3fa4ba94c9b4d0fdc5_start>
+ 2e8:	48 8d 65 d8          	lea    rsp,[rbp-0x28]
+ 2ec:	41 5f                	pop    r15
+ 2ee:	41 5e                	pop    r14
+ 2f0:	41 5d                	pop    r13
+ 2f2:	41 5c                	pop    r12
+ 2f4:	5b                   	pop    rbx
+ 2f5:	5d                   	pop    rbp
+ 2f6:	c3                   	ret    
