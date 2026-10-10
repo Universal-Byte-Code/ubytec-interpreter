@@ -1,0 +1,86 @@
+module (name:"recursion", version:"0.1", author:"Ubytec")
+{
+func Factorial(t_int64 n) -> t_int64
+{
+    if @n <= 1
+        push 1
+        return
+    end
+    load @n
+    load @n
+    dec
+    call Factorial
+    mul
+    return
+}
+func FactorialTail(t_int64 n, t_int64 accumulator) -> t_int64
+{
+    if @n <= 1
+        load @accumulator
+        return
+    end
+    load @n
+    dec
+    load @accumulator
+    load @n
+    mul
+    call FactorialTail
+    return
+}
+func FactorialExplicit(t_int64 n, t_uint64 frames, t_int64 capacity) -> t_int64
+{
+    local {
+        t_int64 current 0
+        t_int64 used 0
+        t_int64 result 1
+    }
+    if @n < 0
+        push -1
+        return
+    end
+    if @n > @capacity
+        push -1
+        return
+    end
+    load @n
+    store @current
+    while @current > 0
+        load @frames
+        load @used
+        push 8
+        mul
+        add
+        load @current
+        store t_int64
+        load @used
+        inc
+        store @used
+        load @current
+        dec
+        store @current
+    end
+    while @used > 0
+        load @used
+        dec
+        store @used
+        load @result
+        load @frames
+        load @used
+        push 8
+        mul
+        add
+        load t_int64
+        mul
+        store @result
+    end
+    load @result
+    return
+}
+func Main() -> t_int64
+{
+    push 6
+    push 1
+    call FactorialTail
+    return
+}
+}

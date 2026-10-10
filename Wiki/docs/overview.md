@@ -1,4 +1,8 @@
-﻿# Ubytec Language Overview
+> Control-flow descriptions on this historical overview may be outdated. For current executable behavior, use [Structured Control Flow](control-flow.md) and [Functions](functions.md).
+
+> For current data-opcode behavior and support status, use the [Data Opcode Reference](opcodes.md). The operator descriptions below also discuss planned typed behavior.
+
+# Ubytec Language Overview
 
 Ubytec is a structured, statically-typed language that compiles to a low-level bytecode (and currently to x86-64 assembly). It combines high-level constructs (modules, types, functions) with a stack-based instruction set. This overview describes the syntax, grammar, semantics, opcodes, and type rules as **implemented in the current codebase**. Features present in the grammar or schema but not fully functional in the interpreter are marked as *WIP* (work in progress) or planned for future support.
 
@@ -671,7 +675,7 @@ In summary, the runtime model currently is a straightforward stack machine execu
 * Ubytec grammar and token scopes define the syntax for all constructs (e.g., `keyword.control.flow.ubytec` covers `if`, `else`, `while`, `switch`, etc., and `storage.type.single.ubytec` covers basic types).
 * The interpreter’s parsing logic in `HighLevelParser.cs` shows how modules, contexts, and members are recognized and enforces certain rules (only one global/local context, etc.).
 * The AST schema (`.ubc.ast.json`) documents the structure of the syntax tree, including how expressions and operations are represented (e.g., `ConditionExpressionFragment` for binary conditions with `Operand` like "==" or "<", and the presence of fields like `BlockType`, `Condition`, and `LabelIDxs` in structured opcodes).
-* The bytecode mapping (`OpcodeFactory` and `ASTCompiler`) provides the opcode assignments and the intended behavior for each operation (for instance, mapping 0x04 to `IF`, 0x0C to `WHILE`, etc., and illustrating stack ops like `PUSH` 0x11, `POP` 0x12, etc.). Many opcodes are defined as placeholders and currently throw `NotImplementedException` if used (they exist so the design is visible, but not all produce assembly yet).
+* The bytecode mapping (`OpcodeFactory` and `ASTCompiler`) provides the opcode assignments and the intended behavior for each operation (for instance, mapping 0x04 to `IF`, 0x0C to `WHILE`, etc., and illustrating stack ops like `PUSH` 0x11, `POP` 0x12, etc.). All declared data opcodes now emit NASM x86-64. See the [Data Opcode Reference](opcodes.md) for their implemented integer semantics, limits, and tests.
 * The function compilation in `Func.Compile` demonstrates how local variables and the function body are compiled to assembly, including reserving stack space for locals and arguments and appending the assembled body instructions, with a final `ret`. Similarly, `Action.Compile` shows an approach for action (void function) which is simpler (no return value to handle, it just ensures a `ret`).
 * Module compilation in `Module.Compile` shows how different sections are laid out: data (.data for fields and global context fields), BSS for uninitialized props, text (.text for code), followed by global label `_start` which calls `Main` and exits. This illustrates the overall program structure the compiler produces.
 

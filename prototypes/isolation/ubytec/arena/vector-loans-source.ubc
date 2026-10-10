@@ -1,0 +1,487 @@
+import Copy from pair_receiver.Copy (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+import Partial from pair_receiver.Partial (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+import Spin from pair_receiver.Spin (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+export VectorLoans as VectorLoans
+module (name:"vector_loans",version:"0.1",author:"Ubytec") {
+func VectorLoans(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_uint64 arena 0 t_uint64 dst 0 t_uint64 src 0 t_uint64 data0 0 t_uint64 data1 0 t_uint64 i 0 t_uint64 round 0 t_uint64 tmp 0 t_uint64 node 0 t_uint64 byte 0 t_uint64 faults 0 t_uint64 deadlines 0 t_uint64 scratch 0 t_int64 status 0 }
+if @length != 8480
+push -10
+return
+end
+load @buffer
+push 256
+add
+store @arena
+load @buffer
+push 128
+add
+store @dst
+load @buffer
+push 176
+add
+store @src
+load @buffer
+push 80
+add
+store @scratch
+load @arena
+push 8192
+call ArenaInit
+store @tmp
+if @tmp != 1
+push -11
+return
+end
+while @round < 64
+load @dst
+load @arena
+push 1
+call VectorInit
+store @tmp
+if @tmp != 1
+push -12
+return
+end
+load @src
+load @arena
+push 1
+call VectorInit
+store @tmp
+if @tmp != 1
+push -12
+return
+end
+push 0
+store @i
+while @i < 32
+load @scratch
+push 17
+store t_byte
+load @dst
+load @scratch
+call VectorPush
+store @tmp
+if @tmp != 1
+push -13
+return
+end
+load @scratch
+load @round
+load @i
+add
+push 251
+umod
+store t_byte
+load @src
+load @scratch
+call VectorPush
+store @tmp
+if @tmp != 1
+push -14
+return
+end
+load @i
+inc
+store @i
+end
+load @dst
+push 8
+add
+load t_uint64
+store @data0
+load @src
+push 8
+add
+load t_uint64
+store @data1
+load @dst
+call VectorPin
+store @tmp
+if @tmp != 1
+push -15
+return
+end
+load @dst
+push 33
+call VectorReserve
+store @tmp
+if @tmp != 0
+push -16
+return
+end
+load @dst
+push 0
+push 1
+call VectorErase
+store @tmp
+if @tmp != 0
+push -16
+return
+end
+load @dst
+call VectorClear
+store @tmp
+if @tmp != 0
+push -16
+return
+end
+load @dst
+call VectorDestroy
+store @tmp
+if @tmp != 0
+push -16
+return
+end
+load @dst
+push 0
+load @scratch
+call VectorSet
+store @tmp
+if @tmp != 0
+push -16
+return
+end
+load @round
+push 8
+umod
+store @tmp
+if @tmp == 0
+load @arena
+load @data0
+push 0
+push 32
+load @arena
+load @data1
+push 0
+push 32
+push 32
+push 1000
+load @buffer
+push 96
+add
+call Arena_Partial
+store @status
+if @status != 2
+push -17
+return
+end
+load @arena
+load @data0
+call ArenaFind
+store @node
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 1
+push -22
+return
+end
+load @arena
+load @data1
+call ArenaFind
+store @node
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 0
+push -23
+return
+end
+push 0
+store @i
+while @i < 32
+load @round
+load @i
+add
+push 251
+umod
+store @byte
+load @data1
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != @byte
+push -24
+return
+end
+load @data0
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != 17
+push -25
+return
+end
+load @i
+inc
+store @i
+end
+load @faults
+inc
+store @faults
+end
+load @round
+push 32
+umod
+store @tmp
+if @tmp == 0
+load @arena
+load @data0
+push 0
+push 32
+load @arena
+load @data1
+push 0
+push 32
+push 32
+push 25
+load @buffer
+push 96
+add
+call Arena_Spin
+store @status
+if @status != 3
+push -18
+return
+end
+load @arena
+load @data0
+call ArenaFind
+store @node
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 1
+push -22
+return
+end
+load @arena
+load @data1
+call ArenaFind
+store @node
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 0
+push -23
+return
+end
+push 0
+store @i
+while @i < 32
+load @round
+load @i
+add
+push 251
+umod
+store @byte
+load @data1
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != @byte
+push -24
+return
+end
+load @data0
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != 17
+push -25
+return
+end
+load @i
+inc
+store @i
+end
+load @deadlines
+inc
+store @deadlines
+end
+load @arena
+load @data0
+push 0
+push 32
+load @arena
+load @data1
+push 0
+push 32
+push 32
+push 1000
+load @buffer
+push 96
+add
+call Arena_Copy
+store @status
+if @status != 0
+push -19
+return
+end
+load @arena
+load @data0
+call ArenaFind
+store @node
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 1
+push -22
+return
+end
+load @arena
+load @data1
+call ArenaFind
+store @node
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 0
+push -23
+return
+end
+push 0
+store @i
+while @i < 32
+load @round
+load @i
+add
+push 251
+umod
+store @byte
+load @data1
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != @byte
+push -24
+return
+end
+load @data0
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != @byte
+push -25
+return
+end
+load @i
+inc
+store @i
+end
+load @dst
+call VectorUnpin
+store @tmp
+if @tmp != 1
+push -20
+return
+end
+load @dst
+push 33
+call VectorReserve
+store @tmp
+if @tmp != 1
+push -21
+return
+end
+load @dst
+push 8
+add
+load t_uint64
+store @data0
+push 0
+store @i
+while @i < 32
+load @round
+load @i
+add
+push 251
+umod
+store @byte
+load @data1
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != @byte
+push -24
+return
+end
+load @data0
+load @i
+add
+load t_byte
+store @tmp
+if @tmp != @byte
+push -25
+return
+end
+load @i
+inc
+store @i
+end
+load @src
+call VectorDestroy
+store @tmp
+if @tmp != 1
+push -26
+return
+end
+load @dst
+call VectorDestroy
+store @tmp
+if @tmp != 1
+push -26
+return
+end
+load @arena
+push 8
+add
+load t_uint64
+store @tmp
+if @tmp != 0
+push -27
+return
+end
+load @round
+inc
+store @round
+end
+load @buffer
+push 0
+add
+load @round
+store t_uint64
+load @buffer
+push 8
+add
+load @faults
+store t_uint64
+load @buffer
+push 16
+add
+load @deadlines
+store t_uint64
+load @round
+return
+}
+}
