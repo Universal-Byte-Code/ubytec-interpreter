@@ -1,4 +1,4 @@
-﻿using static Ubytec.Language.Syntax.TypeSystem.Types;
+using static Ubytec.Language.Syntax.TypeSystem.Types;
 
 namespace Ubytec.Language.Syntax.Scopes.Contexts
 {
@@ -8,6 +8,21 @@ namespace Ubytec.Language.Syntax.Scopes.Contexts
     /// </summary>
     public class ScopeContext
     {
+        /// <summary>Symbols owned by this function frame.</summary>
+        public Dictionary<string, Ubytec.Language.Operations.StackBinding> Symbols { get; } = new(StringComparer.Ordinal);
+        /// <summary>Callables visible in this scope.</summary>
+        public Dictionary<string, Ubytec.Language.Operations.CallableBinding> Callables { get; } = new(StringComparer.Ordinal);
+        /// <summary>Local storage below RBP, in bytes.</summary>
+        public int FrameSize { get; set; }
+        /// <summary>Reload write-through copies after effects that may modify frame memory or volatile registers.</summary>
+        internal bool ReloadRegistersAfterEffects { get; set; }
+        /// <summary>Incoming argument-cell capacity of the current function.</summary>
+        public int ArgumentCount { get; set; }
+        public int? LabelIndex { get; set; }
+        public Queue<int> SwitchSlots { get; } = new();
+        public int? SwitchOffset { get; set; }
+        public bool HasDefault { get; set; }
+
         /// <summary>
         /// Gets or sets the unique label marking the start of this scope.
         /// </summary>
@@ -71,19 +86,22 @@ namespace Ubytec.Language.Syntax.Scopes.Contexts
         /// <summary>
         /// Gets a value indicating whether this scope represents a loop construct.
         /// </summary>
-        public bool IsLoop => StartLabel.StartsWith("loop", StringComparison.Ordinal)
-                           || StartLabel.StartsWith("while", StringComparison.Ordinal);
+        public bool IsLoop => DeclaredByKeyword is "loop" or "while"
+                           || (DeclaredByKeyword is null
+                               && (StartLabel.StartsWith("loop", StringComparison.Ordinal)
+                                   || StartLabel.StartsWith("while", StringComparison.Ordinal)));
 
         /// <summary>
         /// Gets a value indicating whether this scope represents a branch construct.
         /// </summary>
-        public bool IsBranch => StartLabel.StartsWith("branch", StringComparison.Ordinal);
+        public bool IsBranch => DeclaredByKeyword == "branch"
+                             || (DeclaredByKeyword is null
+                                 && StartLabel.StartsWith("branch", StringComparison.Ordinal));
 
         /// <summary>
-        /// Gets a value indicating whether this scope expects a return (function or generic block).
+        /// Gets a value indicating whether this scope represents a function that may require RETURN.
         /// </summary>
-        public bool IsReturnable => StartLabel.StartsWith("func_", StringComparison.Ordinal)
-                                 || StartLabel.StartsWith("block", StringComparison.Ordinal);
+        public bool IsReturnable => DeclaredByKeyword == "func";
 
         /// <summary>
         /// Returns a human-readable description of this scope context, including labels and flags.

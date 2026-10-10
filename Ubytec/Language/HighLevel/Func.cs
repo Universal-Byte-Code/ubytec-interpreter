@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using System.Text;
 using Ubytec.Language.AST;
 using Ubytec.Language.HighLevel.Interfaces;
@@ -66,102 +66,8 @@ namespace Ubytec.Language.HighLevel
 
         public string Compile(CompilationScopes scopes)
         {
-            scopes.Push(new ScopeContext
-            {
-                StartLabel         = $"func_{Name}_{ID}_start",
-                EndLabel           = $"func_{Name}_{ID}_end",
-                DeclaredByKeyword  = "func"
-            });
-
-            try
-            {
-                Validate();
-                var sb = new StringBuilder();
-
-                // etiqueta de entrada sin indent
-                sb.AppendLine($"{scopes.Peek().StartLabel}:");
-
-                // comentario de función al nivel 0
-                sb.Append(FormatCompiledLines($"; Function: {Name} (ID: {ID}), ReturnType: {ReturnType}", string.Empty));
-
-                if (Arguments.Length > 0)
-                    sb.Append(FormatCompiledLines(
-                        $"; Arguments: {string.Join(", ", Arguments.Select(a => $"{a.Name}:{a.Type}"))}",
-                        string.Empty
-                    ));
-
-                // cálculo de tamaño total de argumentos
-                var totalArgSize = 0;
-                foreach (var arg in Arguments)
-                {
-                    var size = arg.Type.Type switch
-                    {
-                        PrimitiveType.Bool or PrimitiveType.Char8 or PrimitiveType.SByte or PrimitiveType.Byte => 1,
-                        PrimitiveType.Int16 or PrimitiveType.UInt16 => 2,
-                        PrimitiveType.Int32 or PrimitiveType.UInt32 or PrimitiveType.Float32 => 4,
-                        PrimitiveType.Int64 or PrimitiveType.UInt64 or PrimitiveType.Float64 => 8,
-                        PrimitiveType.Int128 or PrimitiveType.UInt128 or PrimitiveType.Float128 => 16,
-                        _ => 8
-                    };
-                    totalArgSize += size;
-                }
-
-                // reserva de stack y compilación de cada argumento
-                if (totalArgSize > 0)
-                {
-                    sb.Append(FormatCompiledLines(
-                        $"sub rsp, {totalArgSize}  ; reserve {totalArgSize} bytes for all arguments",
-                        GetDepth()
-                    ));
-
-                    foreach (var arg in Arguments)
-                        sb.Append(FormatCompiledLines(arg.Compile(scopes), GetDepth()));
-                }
-
-                // variables locales (si existen)
-                if (Locals != null)
-                    sb.Append(FormatCompiledLines(Locals.Value.Compile(scopes), GetDepth()));
-
-                // cuerpo de la función
-                if (Definition != null)
-                {
-                    sb.Append(FormatCompiledLines("; Function body begin", GetDepth()));
-                    sb.Append(FormatCompiledLines(
-                        ASTCompiler.CompileAST(new SyntaxTree(Definition)),
-                        GetDepth()
-                    ));
-                    sb.Append(FormatCompiledLines("; Function body end", GetDepth()));
-                }
-
-                // instrucción de retorno
-                sb.Append(FormatCompiledLines("ret", GetDepth()));
-
-                // etiqueta de salida sin indent
-                sb.AppendLine($"{scopes.Peek().EndLabel}:");
-
-                return sb.ToString();
-            }
-            finally
-            {
-                scopes.Pop();
-            }
-
-            string GetDepth(int basis = 0)
-            {
-                var output = string.Empty;
-                var depth = scopes.Count + basis;
-                for (int i = 0; i < depth; i++)
-                    output += "  ";
-                return output;
-            }
-
-            string FormatCompiledLines(string? lines, string depth)
-            {
-                var final = string.Empty;
-                foreach (var line in lines?.Split('\n', StringSplitOptions.RemoveEmptyEntries) ?? [])
-                    final += depth + line + '\n';
-                return final;
-            }
+            Validate();
+            return Ubytec.Language.Operations.FunctionEmitter.Compile(Name, ID, "func", Arguments, Locals, Definition, ReturnType, scopes);
         }
     }
 }

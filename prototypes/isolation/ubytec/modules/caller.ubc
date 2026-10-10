@@ -1,0 +1,204 @@
+module (name:"supervised_caller", version:"0.1", author:"Ubytec")
+{
+func Value(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    push 1
+    load @buffer
+    push 16
+    push 1
+    push 1000
+    load @buffer
+    push 128
+    add
+    call ModuleInvoke
+    drop 0
+    load @buffer
+    push 128
+    add
+    load t_int64
+    return
+}
+
+func WriteValue(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    push 1
+    load @buffer
+    push 16
+    push 3
+    push 1000
+    load @buffer
+    push 128
+    add
+    call ModuleInvoke
+    drop 0
+    load @buffer
+    push 128
+    add
+    load t_int64
+    return
+}
+
+func Status(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    push 1
+    load @buffer
+    push 16
+    push 1
+    push 1000
+    load @buffer
+    push 128
+    add
+    call ModuleInvoke
+    return
+}
+
+func Copy(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    push 1
+    load @buffer
+    push 16
+    push 3
+    push 1000
+    load @buffer
+    push 128
+    add
+    call ModuleInvoke
+    return
+}
+
+func Partial(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    push 1
+    load @buffer
+    push 16
+    push 3
+    push 1000
+    load @buffer
+    push 128
+    add
+    call ModuleInvoke
+    return
+}
+
+func Unknown(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    push 99
+    load @buffer
+    push 16
+    push 1
+    push 1000
+    load @buffer
+    push 128
+    add
+    call ModuleInvoke
+    return
+}
+
+func ExcessRights(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    push 1
+    load @buffer
+    push 16
+    push 3
+    push 1000
+    load @buffer
+    push 128
+    add
+    call ModuleInvoke
+    return
+}
+
+func Oversize(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    push 1
+    load @buffer
+    push 32
+    push 1
+    push 1000
+    load @buffer
+    push 128
+    add
+    call ModuleInvoke
+    return
+}
+
+func Deadline(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    push 1
+    load @buffer
+    push 16
+    push 1
+    push 100
+    load @buffer
+    push 128
+    add
+    call ModuleInvoke
+    return
+}
+
+func Unlimited(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    push 1
+    load @buffer
+    push 16
+    push 1
+    push 0
+    load @buffer
+    push 128
+    add
+    call ModuleInvoke
+    return
+}
+
+func OverBudget(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    push 1
+    load @buffer
+    push 16
+    push 1
+    push 2000
+    load @buffer
+    push 128
+    add
+    call ModuleInvoke
+    return
+}
+
+func Repeat(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    push 1
+    load @buffer
+    push 16
+    push 1
+    push 1000
+    load @buffer
+    push 128
+    add
+    call ModuleInvoke
+    drop 0
+    push 1
+    load @buffer
+    push 16
+    push 1
+    push 1000
+    load @buffer
+    push 128
+    add
+    call ModuleInvoke
+    return
+}
+
+func BadPointer(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    push 1
+    push 87960930222080
+    push 16
+    push 1
+    push 1000
+    load @buffer
+    push 128
+    add
+    call ModuleInvoke
+    return
+}
+}

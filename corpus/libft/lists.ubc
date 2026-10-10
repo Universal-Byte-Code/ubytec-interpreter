@@ -1,0 +1,442 @@
+module (name:"lists",version:"0.1",author:"Ubytec") {
+func ListNodeCheck(t_uint64 arena,t_uint64 node,t_uint64 mutable) -> t_uint64 {
+local { t_uint64 nodeptr 0 }
+if @arena == 0
+push 0
+return
+end
+load @arena
+load @node
+call ArenaFind
+store @nodeptr
+if @nodeptr == 0
+push 0
+return
+end
+load @nodeptr
+push 8
+add
+load t_uint64
+push 16
+neq
+if
+push 0
+return
+end
+load @mutable
+if
+load @nodeptr
+push 24
+add
+load t_uint64
+if
+push 0
+return
+end
+end
+push 1
+return
+}
+func ListCheck(t_uint64 arena,t_uint64 head,t_uint64 mutable) -> t_uint64 {
+local { t_uint64 cursor 0 t_uint64 count 0 }
+load @head
+store @cursor
+while @cursor != 0
+load @count
+push 1365
+uge
+if
+push 0
+return
+end
+load @arena
+load @cursor
+load @mutable
+call ListNodeCheck
+if
+else
+push 0
+return
+end
+load @cursor
+push 8
+add
+load t_uint64
+store @cursor
+load @count
+inc
+store @count
+end
+push 1
+return
+}
+func ft_lstnew_arena(t_uint64 arena,t_uint64 content) -> t_uint64 {
+local { t_uint64 node 0 }
+if @arena == 0
+push 0
+return
+end
+load @arena
+push 16
+call ArenaAlloc
+store @node
+if @node == 0
+push 0
+return
+end
+load @node
+load @content
+store t_uint64
+load @node
+push 8
+add
+push 0
+store t_uint64
+load @node
+return
+}
+func ft_lstsize(t_uint64 head) -> t_uint64 {
+local { t_uint64 cursor 0 t_uint64 count 0 }
+load @head
+store @cursor
+while @cursor != 0
+load @count
+inc
+store @count
+load @cursor
+push 8
+add
+load t_uint64
+store @cursor
+end
+load @count
+return
+}
+func ft_lstlast(t_uint64 head) -> t_uint64 {
+local { t_uint64 cursor 0 t_uint64 next 0 }
+load @head
+store @cursor
+while @cursor != 0
+load @cursor
+push 8
+add
+load t_uint64
+store @next
+if @next == 0
+load @cursor
+return
+end
+load @next
+store @cursor
+end
+push 0
+return
+}
+func ft_lstadd_front_arena(t_uint64 arena,t_uint64 headref,t_uint64 node) -> t_uint64 {
+local { t_uint64 head 0 t_uint64 cursor 0 }
+if @headref == 0
+push 0
+return
+end
+load @headref
+load t_uint64
+store @head
+load @arena
+load @head
+push 1
+call ListCheck
+if
+else
+push 0
+return
+end
+load @arena
+load @node
+push 1
+call ListNodeCheck
+if
+else
+push 0
+return
+end
+load @node
+push 8
+add
+load t_uint64
+if
+push 0
+return
+end
+load @head
+store @cursor
+while @cursor != 0
+if @cursor == @node
+push 0
+return
+end
+load @cursor
+push 8
+add
+load t_uint64
+store @cursor
+end
+load @node
+push 8
+add
+load @head
+store t_uint64
+load @headref
+load @node
+store t_uint64
+push 1
+return
+}
+func ft_lstadd_back_arena(t_uint64 arena,t_uint64 headref,t_uint64 node) -> t_uint64 {
+local { t_uint64 head 0 t_uint64 cursor 0 }
+if @headref == 0
+push 0
+return
+end
+load @headref
+load t_uint64
+store @head
+load @arena
+load @head
+push 1
+call ListCheck
+if
+else
+push 0
+return
+end
+load @arena
+load @node
+push 1
+call ListNodeCheck
+if
+else
+push 0
+return
+end
+load @node
+push 8
+add
+load t_uint64
+if
+push 0
+return
+end
+load @head
+store @cursor
+while @cursor != 0
+if @cursor == @node
+push 0
+return
+end
+load @cursor
+push 8
+add
+load t_uint64
+store @cursor
+end
+if @head == 0
+load @headref
+load @node
+store t_uint64
+else
+load @head
+call ft_lstlast
+store @cursor
+load @cursor
+push 8
+add
+load @node
+store t_uint64
+end
+push 1
+return
+}
+func ft_lstdelone_arena(t_uint64 arena,t_uint64 node,t_uint64 destroy) -> t_uint64 {
+if @destroy == 0
+push 0
+return
+end
+load @arena
+load @node
+push 1
+call ListNodeCheck
+if
+else
+push 0
+return
+end
+load @node
+load t_uint64
+load @destroy
+calli 1 t_void
+load @arena
+load @node
+call ArenaFree
+return
+}
+func ft_lstclear_arena(t_uint64 arena,t_uint64 headref,t_uint64 destroy) -> t_uint64 {
+local { t_uint64 cursor 0 t_uint64 next 0 t_uint64 ignored 0 }
+if @headref == 0
+push 0
+return
+end
+load @headref
+load t_uint64
+store @cursor
+if @cursor == 0
+push 1
+return
+end
+if @destroy == 0
+push 0
+return
+end
+load @arena
+load @cursor
+push 1
+call ListCheck
+if
+else
+push 0
+return
+end
+load @headref
+push 0
+store t_uint64
+while @cursor != 0
+load @cursor
+push 8
+add
+load t_uint64
+store @next
+load @arena
+load @cursor
+load @destroy
+call ft_lstdelone_arena
+store @ignored
+load @next
+store @cursor
+end
+push 1
+return
+}
+func ft_lstiter(t_uint64 head,t_uint64 visit) -> t_uint64 {
+local { t_uint64 cursor 0 t_uint64 next 0 }
+if @head == 0
+push 1
+return
+end
+if @visit == 0
+push 0
+return
+end
+load @head
+store @cursor
+while @cursor != 0
+load @cursor
+push 8
+add
+load t_uint64
+store @next
+load @cursor
+load t_uint64
+load @visit
+calli 1 t_void
+load @next
+store @cursor
+end
+push 1
+return
+}
+func ft_lstmap_arena(t_uint64 arena,t_uint64 head,t_uint64 transform,t_uint64 destroy) -> t_uint64 {
+local { t_uint64 result 0 t_uint64 tail 0 t_uint64 cursor 0 t_uint64 content 0 t_uint64 node 0 t_uint64 ignored 0 }
+if @head == 0
+push 0
+return
+end
+if @transform == 0
+push 0
+return
+end
+if @destroy == 0
+push 0
+return
+end
+load @arena
+load @head
+push 0
+call ListCheck
+if
+else
+push 0
+return
+end
+load @head
+store @cursor
+while @cursor != 0
+load @cursor
+load t_uint64
+load @transform
+calli 1 t_uint64
+store @content
+if @content == 0
+break
+end
+load @arena
+load @content
+call ft_lstnew_arena
+store @node
+if @node == 0
+load @content
+load @destroy
+calli 1 t_void
+break
+end
+if @result == 0
+load @node
+store @result
+else
+load @tail
+push 8
+add
+load @node
+store t_uint64
+end
+load @node
+store @tail
+load @cursor
+push 8
+add
+load t_uint64
+store @cursor
+end
+if @cursor == 0
+load @result
+return
+end
+// Release every newly owned content and node after a failed map.
+load @result
+store @cursor
+while @cursor != 0
+load @cursor
+push 8
+add
+load t_uint64
+store @tail
+load @arena
+load @cursor
+load @destroy
+call ft_lstdelone_arena
+store @ignored
+load @tail
+store @cursor
+end
+push 0
+return
+}
+}

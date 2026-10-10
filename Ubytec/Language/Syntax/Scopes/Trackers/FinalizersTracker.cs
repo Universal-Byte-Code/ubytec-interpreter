@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using Ubytec.Language.Exceptions;
 using Ubytec.Language.Syntax.Scopes.Contexts;
 using static Ubytec.Language.Operations.CoreOperations;
@@ -131,24 +131,7 @@ namespace Ubytec.Language.Syntax.Scopes.Trackers
         /// </returns>
         public FinalizersContext? Find(Func<FinalizersContext, bool> predicate)
         {
-            var temp = new Stack<FinalizersContext>();
-            FinalizersContext? found = null;
-
-            while (_stack.Count > 0)
-            {
-                var ctx = _stack.Pop();
-                temp.Push(ctx);
-                if (predicate(ctx))
-                {
-                    found = ctx;
-                    break;
-                }
-            }
-
-            foreach (var ctx in temp.Reverse())
-                _stack.Push(ctx);
-
-            return found;
+            return _stack.FirstOrDefault(predicate);
         }
 
         /// <summary>
@@ -168,14 +151,14 @@ namespace Ubytec.Language.Syntax.Scopes.Trackers
                 var ctx = _stack.Pop();
                 if (predicate(ctx))
                 {
-                    foreach (var r in temp.Reverse())
+                    foreach (var r in temp)
                         _stack.Push(r);
                     return ctx;
                 }
                 temp.Push(ctx);
             }
 
-            foreach (var ctx in temp.Reverse())
+            foreach (var ctx in temp)
                 _stack.Push(ctx);
 
             return null;

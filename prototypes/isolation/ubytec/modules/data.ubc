@@ -1,0 +1,123 @@
+module (name:"independent_data", version:"0.1", author:"Ubytec")
+{
+func Read(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    local { t_uint64 index 0 t_int64 sum 0 }
+    while @index < @length
+        load @sum
+        load @buffer
+        load @index
+        add
+        load t_byte
+        add
+        store @sum
+        load @index
+        inc
+        store @index
+    end
+    load @sum
+    return
+}
+
+func Write(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    local { t_uint64 index 0 }
+    while @index < @length
+        load @buffer
+        load @index
+        add
+        push 90
+        store t_byte
+        load @index
+        inc
+        store @index
+    end
+    push 4294967297
+    return
+}
+
+func Copy(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    load @buffer
+    load @length
+    load @foreign
+    load @monitor
+    call Write
+    return
+}
+
+func ReadOwnData(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    push 70368745226240
+    load t_int64
+    return
+}
+func TailSelf(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    push 200000
+    push 0
+    push 0
+    push 0
+    call Accumulate
+    return
+}
+func Accumulate(t_int64 n, t_int64 acc, t_int64 unused, t_int64 extra) -> t_int64
+{
+    local { t_int64 step 7 }
+    if @n == 0
+        load @acc
+        return
+    end
+    load @n
+    dec
+    load @acc
+    load @step
+    add
+    load @unused
+    load @extra
+    call Accumulate
+    return
+}
+func TailMutual(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    push 200000
+    push 0
+    push 7
+    push 9
+    call Alternate
+    return
+}
+func Alternate(t_int64 n, t_int64 acc, t_int64 left, t_int64 right) -> t_int64
+{
+    if @n == 0
+        load @acc
+        return
+    end
+    load @n
+    dec
+    load @acc
+    inc
+    load @right
+    load @left
+    call Other
+    return
+}
+func Other(t_int64 n, t_int64 acc, t_int64 left, t_int64 right) -> t_int64
+{
+    load @n
+    load @acc
+    load @left
+    load @right
+    call Alternate
+    return
+}
+func TailInfinite(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    load @buffer
+    load @length
+    load @foreign
+    load @monitor
+    call TailInfinite
+    return
+}
+}

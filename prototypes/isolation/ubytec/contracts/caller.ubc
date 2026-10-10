@@ -1,0 +1,72 @@
+import ReadTool from tools.Read (t_uint64,t_uint64,t_uint64,t_uint64) -> t_int64
+import WriteMemory from memory.Write (t_uint64,t_uint64,t_uint64,t_uint64) -> t_int64
+import Forbidden from tools.Hidden (t_uint64,t_uint64,t_uint64,t_uint64) -> t_int64
+export Main as Main
+export Denied as Denied
+module (name:"client", version:"0.1", author:"Ubytec") {
+func Main(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64 {
+local { t_int64 sum 0 t_int64 status 0 }
+load @buffer
+push 16
+push 1
+push 1000
+load @buffer
+push 128
+add
+call ReadTool
+store @status
+if @status != 0
+load @status
+return
+end
+load @buffer
+push 128
+add
+load t_int64
+store @sum
+load @buffer
+push 16
+push 3
+push 1000
+load @buffer
+push 128
+add
+call WriteMemory
+store @status
+if @status != 0
+load @status
+return
+end
+load @buffer
+push 16
+push 1
+push 1000
+load @buffer
+push 128
+add
+call ReadTool
+store @status
+if @status != 0
+load @status
+return
+end
+load @sum
+load @buffer
+push 128
+add
+load t_int64
+add
+return
+}
+func Denied(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64 {
+load @buffer
+push 16
+push 1
+push 1000
+load @buffer
+push 128
+add
+call Forbidden
+return
+}
+}

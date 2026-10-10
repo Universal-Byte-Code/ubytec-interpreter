@@ -1,4 +1,4 @@
-﻿using Namotion.Reflection;
+using Namotion.Reflection;
 using System.Text;
 using Ubytec.Language.HighLevel.Interfaces;
 using Ubytec.Language.Syntax.Scopes;
@@ -26,7 +26,7 @@ namespace Ubytec.Language.HighLevel.NASM
                     throw new InvalidCastException($"Functions is not Func[] in {typeof(T).Name}.");
 
                 foreach (var fn in funcs.Where(f => f.Modifiers.HasFlag(TypeModifiers.Global)))
-                    sb.Append(FormatCompiledLines($"global func_{fn.Name}_{fn.ID}_start", scopes.GetDepth()));
+                    sb.Append(FormatCompiledLines($"global {Ubytec.Language.Operations.FunctionEmitter.Binding(fn).Label}", scopes.GetDepth()));
             }
 
             sb.AppendLine();

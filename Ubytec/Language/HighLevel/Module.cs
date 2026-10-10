@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Ubytec.Language.HighLevel.Interfaces;
 using Ubytec.Language.HighLevel.NASM;
 using Ubytec.Language.Syntax.Scopes;
@@ -124,14 +124,19 @@ namespace Ubytec.Language.HighLevel
         {
             scopes.Push(new ScopeContext
             {
-                StartLabel = $"module_{Name}_{ID}_{Utf64Codec.Encode(Version)}_{Utf64Codec.Encode(DateTime.UtcNow.ToString())}_{Author}_start",
-                EndLabel = $"module_{Name}_{ID}_{Utf64Codec.Encode(Version)}_{Utf64Codec.Encode(DateTime.UtcNow.ToString())}_{Author}_end",
+                StartLabel = Ubytec.Language.Operations.FunctionCode.Label("module", Name, ID, "start"),
+                EndLabel = Ubytec.Language.Operations.FunctionCode.Label("module", Name, ID, "end"),
                 DeclaredByKeyword = "module"
             });
 
             try
             {
                 Validate();
+                var moduleScope = scopes.Peek();
+                foreach (var fn in Functions)
+                    moduleScope.Callables.Add(fn.Name, Ubytec.Language.Operations.FunctionEmitter.Binding(fn));
+                foreach (var action in Actions)
+                    moduleScope.Callables.Add(action.Name, Ubytec.Language.Operations.FunctionEmitter.Binding(action));
                 var sb = new StringBuilder();
 
                 _ = new NASM_Header<Module>(scopes, sb, this);
@@ -145,7 +150,7 @@ namespace Ubytec.Language.HighLevel
                 _ = new NASM_FunctionsAndActions<Module>(scopes, sb, this);
                 _ = new NASM_LocalContext<Module>(scopes, sb, this, nullableLocalContext: true);
                 _ = new NASM_SubModules<Module>(scopes, sb, this);
-                _ = new NASM_EntryPoint<Module>(scopes, sb, this);
+                if (scopes.EmitProcessEntryPoint) _ = new NASM_EntryPoint<Module>(scopes, sb, this);
 
                 sb.AppendLine($"{scopes.Peek().EndLabel}:");
                 return sb.ToString();

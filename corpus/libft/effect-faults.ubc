@@ -1,0 +1,71 @@
+module (name:"effect_faults",version:"0.1",author:"Ubytec") {
+func EffectRead(t_uint64 pointer) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 value 7 t_uint64 a 9 t_uint64 b 11 }
+push 24
+push 25
+push 26
+pop
+pop
+pop
+load @pointer
+load t_uint64
+return
+}
+func EffectWrite(t_uint64 pointer) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 value 7 t_uint64 a 9 t_uint64 b 11 }
+while @i < 1
+push 24
+push 25
+push 26
+pop
+pop
+pop
+load @pointer
+load @value
+store t_uint64
+load @i
+inc
+store @i
+end
+load @value
+return
+}
+func EffectFault(t_uint64 pointer,t_uint64 count,t_uint64 mode,t_uint64 unused) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 value 7 t_uint64 seen 0 t_uint64 address 0 }
+while @i < @count
+load @pointer
+load @i
+push 8
+mul
+add
+store @address
+push 24
+push 25
+push 26
+pop
+pop
+pop
+if @mode == 0
+load @address
+load @value
+store t_uint64
+else
+if @mode == 1
+load @address
+call EffectRead
+pop
+else
+load @address
+fnaddr EffectWrite
+calli 1 t_uint64
+pop
+end
+end
+load @i
+inc
+store @i
+end
+load @i
+return
+}
+}

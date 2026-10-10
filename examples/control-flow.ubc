@@ -1,0 +1,53 @@
+module (name:"control_flow", version:"0.1", author:"Ubytec")
+{
+    func Twice(t_int64 value) -> t_int64
+    {
+        load @value
+        push 2
+        mul
+        return
+    }
+
+    func Main() -> t_int64
+    {
+        local
+        {
+            t_int64 counter 0
+            t_int64 total 0
+        }
+        while @counter < 7
+            load @counter
+            inc
+            store @counter
+            if @counter == 1
+                continue
+            end
+            if @counter == 7
+                break
+            end
+            load @total
+            load @counter
+            add
+            store @total
+        end
+        push 2
+        switch
+            branch 1
+                push 0
+                store @total
+            end
+            branch 2
+                load @total
+                call Twice
+                push 2
+                add
+                store @total
+            end
+            default
+                push 99
+                store @total
+        end
+        load @total
+        return
+    }
+}
