@@ -1,0 +1,74 @@
+export Copy as Copy (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+export SourceWrite as SourceWrite (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+export Escape as Escape (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+export Partial as Partial (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+export SumValues as SumValues
+export Spin as Spin
+module (name:"typed_memory", version:"0.1", author:"Ubytec") {
+func ft_memcpy(t_uint64 destination, t_uint64 source, t_uint64 count) -> t_uint64
+{
+    local { t_uint64 index 0 }
+    while @index < @count
+        load @destination
+        load @index
+        add
+        load @source
+        load @index
+        add
+        load t_byte
+        store t_byte
+        load @index
+        inc
+        store @index
+    end
+    load @destination
+    return
+}
+
+
+func Copy(t_uint64 destination,t_uint64 source,t_uint64 count) -> t_int64 {
+load @destination
+load @source
+load @count
+call ft_memcpy
+drop 0
+load @count
+return
+}
+func SourceWrite(t_uint64 destination,t_uint64 source,t_uint64 count) -> t_int64 {
+load @source
+push 255
+store t_byte
+load @count
+return
+}
+func Escape(t_uint64 destination,t_uint64 source,t_uint64 count) -> t_int64 {
+load @destination
+push 65536
+add
+push 255
+store t_byte
+load @count
+return
+}
+func Partial(t_uint64 destination,t_uint64 source,t_uint64 count) -> t_int64 {
+load @destination
+push 255
+store t_byte
+load @source
+push 255
+store t_byte
+load @count
+return
+}
+func SumValues(t_int64 first,t_uint64 second) -> t_int64 {
+load @first
+load @second
+add
+return
+}
+func Spin(t_int64 first) -> t_int64 {
+loop
+end
+}
+}

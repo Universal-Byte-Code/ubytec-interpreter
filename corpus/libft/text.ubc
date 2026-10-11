@@ -1,0 +1,515 @@
+module (name:"libft_text", version:"0.1", author:"Ubytec") {
+func ft_isspace(t_int32 c) -> t_int32
+{
+    if @c == 32
+        push 1
+        return
+    end
+    if @c < 9
+        push 0
+        return
+    end
+    if @c > 13
+        push 0
+        return
+    end
+    push 1
+    return
+}
+func ft_toupper(t_int32 c) -> t_int32
+{
+    if @c < 97
+        load @c
+        return
+    end
+    if @c > 122
+        load @c
+        return
+    end
+    load @c
+    push 32
+    sub
+    return
+}
+func ft_memcpy(t_uint64 destination, t_uint64 source, t_uint64 count) -> t_uint64
+{
+    local { t_uint64 index 0 }
+    while @index < @count
+        load @destination
+        load @index
+        add
+        load @source
+        load @index
+        add
+        load t_byte
+        store t_byte
+        load @index
+        inc
+        store @index
+    end
+    load @destination
+    return
+}
+func ScanFields(t_uint64 state,t_uint64 source,t_uint64 length,t_uint64 capacity,t_uint64 writing) -> t_int64 {
+local { t_uint64 cursor 0 t_uint64 first 0 t_uint64 last 0 t_uint64 count 0 t_int32 character 0 t_int32 whitespace 0 }
+loop
+if @cursor >= @length
+break
+end
+load @cursor
+store @first
+while @cursor < @length
+load @source
+load @cursor
+add
+load t_byte
+store @character
+if @character == 44
+break
+end
+load @cursor
+inc
+store @cursor
+end
+load @cursor
+store @last
+load @cursor
+inc
+store @cursor
+while @first < @last
+load @source
+load @first
+add
+load t_byte
+call ft_isspace
+store @whitespace
+if @whitespace == 0
+break
+end
+load @first
+inc
+store @first
+end
+while @first < @last
+load @source
+load @last
+add
+push 1
+sub
+load t_byte
+call ft_isspace
+store @whitespace
+if @whitespace == 0
+break
+end
+load @last
+dec
+store @last
+end
+if @first < @last
+if @count >= @capacity
+push -11
+return
+end
+if @writing != 0
+load @state
+push 32
+add
+load @count
+push 16
+mul
+add
+load @first
+store t_uint64
+load @state
+push 40
+add
+load @count
+push 16
+mul
+add
+load @last
+load @first
+sub
+store t_uint64
+end
+load @count
+inc
+store @count
+end
+end
+if @writing != 0
+load @state
+load @count
+store t_uint64
+end
+load @count
+return
+}
+func ParseFields(t_uint64 state,t_uint64 source,t_uint64 length,t_uint64 capacity) -> t_int64 {
+local { t_int64 count 0 }
+load @state
+load @source
+load @length
+load @capacity
+push 0
+call ScanFields
+store @count
+if @count < 0
+load @count
+return
+end
+load @state
+load @source
+load @length
+load @capacity
+push 1
+call ScanFields
+return
+}
+func UpperText(t_uint64 destination,t_uint64 source,t_uint64 length) -> t_int64 {
+local { t_uint64 index 0 }
+while @index < @length
+load @destination
+load @index
+add
+load @source
+load @index
+add
+load t_byte
+call ft_toupper
+store t_byte
+load @index
+inc
+store @index
+end
+load @length
+return
+}
+func BuildText(t_uint64 destination,t_uint64 workspace,t_uint64 workspace_length,t_uint64 output_capacity) -> t_int64 {
+local { t_uint64 count 0 t_uint64 capacity 0 t_uint64 length 0 t_uint64 bytes 0 t_uint64 table 0 t_uint64 text 0 t_uint64 needed 0 t_uint64 index 0 t_uint64 offset 0 t_uint64 size 0 t_uint64 position 0 }
+if @workspace_length < 32
+push -13
+return
+end
+load @workspace
+load t_uint64
+store @count
+load @workspace
+push 8
+add
+load t_uint64
+store @capacity
+load @workspace
+push 16
+add
+load t_uint64
+store @length
+load @workspace
+push 24
+add
+load t_uint64
+store @bytes
+if @capacity > 256
+push -13
+return
+end
+if @count > @capacity
+push -13
+return
+end
+if @bytes > 65536
+push -13
+return
+end
+if @length > @bytes
+push -13
+return
+end
+load @capacity
+push 16
+mul
+push 32
+add
+store @table
+if @table > @workspace_length
+push -13
+return
+end
+load @workspace_length
+load @table
+sub
+store @text
+if @bytes > @text
+push -13
+return
+end
+load @workspace
+load @table
+add
+store @text
+if @output_capacity == 0
+push -12
+return
+end
+if @output_capacity > 65536
+push -12
+return
+end
+if @count != 0
+load @count
+dec
+store @needed
+end
+while @index < @count
+load @workspace
+push 32
+add
+load @index
+push 16
+mul
+add
+load t_uint64
+store @offset
+load @workspace
+push 40
+add
+load @index
+push 16
+mul
+add
+load t_uint64
+store @size
+if @offset > @length
+push -13
+return
+end
+load @length
+load @offset
+sub
+store @position
+if @size > @position
+push -13
+return
+end
+load @needed
+load @size
+add
+store @needed
+load @index
+inc
+store @index
+end
+if @needed >= @output_capacity
+push -12
+return
+end
+push 0
+store @index
+push 0
+store @position
+while @index < @count
+if @index != 0
+load @destination
+load @position
+add
+push 124
+store t_byte
+load @position
+inc
+store @position
+end
+load @workspace
+push 32
+add
+load @index
+push 16
+mul
+add
+load t_uint64
+store @offset
+load @workspace
+push 40
+add
+load @index
+push 16
+mul
+add
+load t_uint64
+store @size
+load @destination
+load @position
+add
+load @text
+load @offset
+add
+load @size
+call ft_memcpy
+drop 0
+load @position
+load @size
+add
+store @position
+load @index
+inc
+store @index
+end
+load @destination
+load @position
+add
+push 0
+store t_byte
+load @needed
+return
+}
+func RunText(t_uint64 workspace,t_uint64 source,t_uint64 length,t_uint64 fields,t_uint64 output_capacity,t_uint64 corrupt) -> t_int64 {
+local { t_uint64 work 0 t_uint64 output 0 t_uint64 workspace_length 0 t_int64 result 0 }
+load @workspace
+push 32
+add
+load @fields
+push 16
+mul
+add
+store @work
+load @work
+load @workspace
+push 24
+add
+load t_uint64
+add
+store @output
+load @output
+load @workspace
+sub
+store @workspace_length
+load @workspace
+load @source
+load @length
+load @fields
+call ParseFields
+store @result
+if @result < 0
+load @result
+return
+end
+load @work
+load @source
+load @length
+call UpperText
+drop 0
+if @corrupt != 0
+if @result == 0
+push -13
+return
+end
+load @workspace
+push 32
+add
+load @length
+inc
+store t_uint64
+end
+load @output
+load @workspace
+load @workspace_length
+load @output_capacity
+call BuildText
+return
+}
+func ValidateText(t_uint64 buffer,t_uint64 length) -> t_int64 {
+local { t_uint64 count 0 t_uint64 capacity 0 t_uint64 fields 0 t_uint64 output 0 t_uint64 total 0 t_uint64 state 0 }
+if @length < 112
+push -10
+return
+end
+load @buffer
+load t_uint64
+store @count
+load @buffer
+push 8
+add
+load t_uint64
+store @capacity
+load @buffer
+push 16
+add
+load t_uint64
+store @fields
+load @buffer
+push 24
+add
+load t_uint64
+store @output
+if @capacity > 65536
+push -10
+return
+end
+if @count > @capacity
+push -10
+return
+end
+if @fields > 256
+push -10
+return
+end
+if @output > 65536
+push -10
+return
+end
+load @capacity
+push 2
+mul
+load @fields
+push 16
+mul
+add
+load @output
+add
+push 112
+add
+store @total
+if @total != @length
+push -10
+return
+end
+load @buffer
+push 64
+add
+load @capacity
+add
+store @state
+load @state
+push 8
+add
+load t_uint64
+load @fields
+sub
+if
+push -10
+return
+end
+load @state
+push 16
+add
+load t_uint64
+load @count
+sub
+if
+push -10
+return
+end
+load @state
+push 24
+add
+load t_uint64
+load @capacity
+sub
+if
+push -10
+return
+end
+push 0
+return
+}
+}

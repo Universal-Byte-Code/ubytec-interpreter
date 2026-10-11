@@ -1,0 +1,183 @@
+module (name:"list_fixtures",version:"0.1",author:"Ubytec") {
+func ListTransform(t_uint64 content) -> t_uint64 {
+local { t_uint64 arena 0 t_uint64 stats 0 t_uint64 fresh 0 t_uint64 value 0 t_uint64 count 0 }
+load @content
+load t_uint64
+store @arena
+load @content
+push 16
+add
+load t_uint64
+store @stats
+load @content
+push 8
+add
+load t_uint64
+store @value
+load @stats
+load t_uint64
+inc
+store @count
+load @stats
+load @count
+store t_uint64
+load @stats
+push 24
+add
+load t_uint64
+load @count
+eq
+if
+push 0
+return
+end
+load @arena
+push 24
+call ArenaAlloc
+store @fresh
+if @fresh == 0
+push 0
+return
+end
+load @fresh
+load @arena
+store t_uint64
+load @fresh
+push 8
+add
+load @value
+push 2
+mul
+push 7
+add
+store t_uint64
+load @fresh
+push 16
+add
+load @stats
+store t_uint64
+load @fresh
+return
+}
+func ListDestroy(t_uint64 content) -> t_void {
+local { t_uint64 arena 0 t_uint64 stats 0 t_uint64 value 0 t_uint64 ignored 0 }
+if @content == 0
+return
+end
+load @content
+load t_uint64
+store @arena
+load @content
+push 16
+add
+load t_uint64
+store @stats
+load @content
+push 8
+add
+load t_uint64
+store @value
+load @stats
+push 8
+add
+load @stats
+push 8
+add
+load t_uint64
+inc
+store t_uint64
+load @stats
+push 40
+add
+load @stats
+push 40
+add
+load t_uint64
+push 131
+mul
+load @value
+add
+store t_uint64
+load @arena
+load @content
+call ArenaFree
+store @ignored
+return
+}
+func ListVisit(t_uint64 content) -> t_void {
+local { t_uint64 stats 0 t_uint64 value 0 }
+load @content
+push 16
+add
+load t_uint64
+store @stats
+load @content
+push 8
+add
+load t_uint64
+push 3
+add
+store @value
+load @content
+push 8
+add
+load @value
+store t_uint64
+load @stats
+push 16
+add
+load @stats
+push 16
+add
+load t_uint64
+inc
+store t_uint64
+load @stats
+push 32
+add
+load @stats
+push 32
+add
+load t_uint64
+push 131
+mul
+load @value
+add
+store t_uint64
+return
+}
+func ListMap(t_uint64 arena,t_uint64 head) -> t_uint64 {
+load @arena
+load @head
+fnaddr ListTransform
+fnaddr ListDestroy
+call ft_lstmap_arena
+return
+}
+func ListClear(t_uint64 arena,t_uint64 headref) -> t_uint64 {
+load @arena
+load @headref
+fnaddr ListDestroy
+call ft_lstclear_arena
+return
+}
+func ListDelete(t_uint64 arena,t_uint64 node) -> t_uint64 {
+load @arena
+load @node
+fnaddr ListDestroy
+call ft_lstdelone_arena
+return
+}
+func ListIter(t_uint64 head) -> t_uint64 {
+load @head
+fnaddr ListVisit
+call ft_lstiter
+return
+}
+func ListCallRaw(t_uint64 target,t_uint64 value) -> t_uint64 {
+load @value
+load @target
+calli 1 t_uint64
+return
+}
+}

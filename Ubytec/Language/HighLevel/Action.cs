@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Ubytec.Language.AST;
 using Ubytec.Language.HighLevel.Interfaces;
 using Ubytec.Language.Syntax.Model;
@@ -63,39 +63,8 @@ namespace Ubytec.Language.HighLevel
 
         public string Compile(CompilationScopes scopes)
         {
-            scopes.Push(new ScopeContext
-            {
-                StartLabel = $"action_{Name}_{ID}_start",
-                EndLabel   = $"action_{Name}_{ID}_end",
-                DeclaredByKeyword = "action"
-            });
-            try
-            {
-                Validate();
-                var sb = new StringBuilder();
-
-                sb.AppendLine($"{scopes.Peek().StartLabel}:");
-                sb.AppendLine($"; Action: {Name} (ID: {ID})");
-                if (Arguments.Length > 0)
-                    sb.AppendLine($"; Arguments: {string.Join(", ", Arguments.Select(a => $"{a.Name}:{a.Type}"))}");
-
-                sb.Append(Locals?.Compile(scopes));
-
-                if (Definition != null)
-                {
-                    sb.AppendLine("; Action body begin");
-                    sb.AppendLine(ASTCompiler.CompileAST(new SyntaxTree(Definition)));
-                    sb.AppendLine("; Action body end");
-                }
-
-                sb.AppendLine("    ret");
-                sb.AppendLine($"{scopes.Peek().EndLabel}:");
-                return sb.ToString();
-            }
-            finally
-            {
-                scopes.Pop();
-            }
+            Validate();
+            return Ubytec.Language.Operations.FunctionEmitter.Compile(Name, ID, "action", Arguments, Locals, Definition, new UType(PrimitiveType.Void), scopes);
         }
     }
 }

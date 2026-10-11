@@ -1,0 +1,328 @@
+module (name:"libft_strings",version:"0.1",author:"Ubytec") {
+func StringLength(t_uint64 text) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 byte 0 }
+loop
+load @text
+load @i
+add
+load t_byte
+store @byte
+if @byte == 0
+load @i
+return
+end
+load @i
+inc
+store @i
+end
+}
+func ft_strnlen(t_uint64 text,t_uint64 count) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 byte 0 }
+loop
+load @i
+load @count
+uge
+if
+load @i
+return
+end
+load @text
+load @i
+add
+load t_byte
+store @byte
+if @byte == 0
+load @i
+return
+end
+load @i
+inc
+store @i
+end
+}
+func ft_strchr(t_uint64 text,t_int32 character) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 byte 0 t_uint64 needle 0 }
+load @character
+push 255
+and
+store @needle
+loop
+load @text
+load @i
+add
+load t_byte
+store @byte
+if @byte == @needle
+load @text
+load @i
+add
+return
+end
+if @byte == 0
+push 0
+return
+end
+load @i
+inc
+store @i
+end
+}
+func ft_strrchr(t_uint64 text,t_int32 character) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 byte 0 t_uint64 needle 0 t_uint64 found 0 }
+load @character
+push 255
+and
+store @needle
+loop
+load @text
+load @i
+add
+load t_byte
+store @byte
+if @byte == @needle
+load @text
+load @i
+add
+store @found
+end
+if @byte == 0
+load @found
+return
+end
+load @i
+inc
+store @i
+end
+}
+func ft_memchr(t_uint64 text,t_int32 character,t_uint64 count) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 byte 0 t_uint64 needle 0 }
+load @character
+push 255
+and
+store @needle
+loop
+load @i
+load @count
+uge
+if
+push 0
+return
+end
+load @text
+load @i
+add
+load t_byte
+store @byte
+if @byte == @needle
+load @text
+load @i
+add
+return
+end
+load @i
+inc
+store @i
+end
+}
+func ft_strncmp(t_uint64 left,t_uint64 right,t_uint64 count) -> t_int32 {
+local { t_uint64 i 0 t_uint64 first 0 t_uint64 second 0 }
+loop
+load @i
+load @count
+uge
+if
+push 0
+return
+end
+load @left
+load @i
+add
+load t_byte
+store @first
+load @right
+load @i
+add
+load t_byte
+store @second
+if @first != @second
+load @first
+load @second
+sub
+return
+end
+if @first == 0
+push 0
+return
+end
+load @i
+inc
+store @i
+end
+}
+func ft_strlcpy(t_uint64 destination,t_uint64 source,t_uint64 capacity) -> t_uint64 {
+local { t_uint64 length 0 t_uint64 copy 0 t_uint64 i 0 }
+load @source
+call StringLength
+store @length
+if @capacity == 0
+load @length
+return
+end
+load @capacity
+dec
+store @copy
+load @copy
+load @length
+ugt
+if
+load @length
+store @copy
+end
+while @i < @copy
+load @destination
+load @i
+add
+load @source
+load @i
+add
+load t_byte
+store t_byte
+load @i
+inc
+store @i
+end
+load @destination
+load @copy
+add
+push 0
+store t_byte
+load @length
+return
+}
+func ft_strlcat(t_uint64 destination,t_uint64 source,t_uint64 capacity) -> t_uint64 {
+local { t_uint64 length 0 t_uint64 used 0 t_uint64 available 0 t_uint64 i 0 }
+load @source
+call StringLength
+store @length
+load @destination
+load @capacity
+call ft_strnlen
+store @used
+if @used == @capacity
+load @capacity
+load @length
+add
+return
+end
+load @capacity
+load @used
+sub
+dec
+store @available
+load @available
+load @length
+ugt
+if
+load @length
+store @available
+end
+while @i < @available
+load @destination
+load @used
+add
+load @i
+add
+load @source
+load @i
+add
+load t_byte
+store t_byte
+load @i
+inc
+store @i
+end
+load @destination
+load @used
+add
+load @available
+add
+push 0
+store t_byte
+load @used
+load @length
+add
+return
+}
+func ft_strnstr(t_uint64 haystack,t_uint64 needle,t_uint64 count) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 j 0 t_uint64 at 0 t_uint64 first 0 t_uint64 second 0 }
+load @needle
+load t_byte
+store @second
+if @second == 0
+load @haystack
+return
+end
+loop
+load @i
+load @count
+uge
+if
+push 0
+return
+end
+load @haystack
+load @i
+add
+load t_byte
+store @first
+if @first == 0
+push 0
+return
+end
+push 0
+store @j
+loop
+load @needle
+load @j
+add
+load t_byte
+store @second
+if @second == 0
+load @haystack
+load @i
+add
+return
+end
+load @i
+load @j
+add
+store @at
+load @at
+load @count
+uge
+if
+push 0
+return
+end
+load @haystack
+load @at
+add
+load t_byte
+store @first
+if @first == 0
+push 0
+return
+end
+if @first != @second
+break
+end
+load @j
+inc
+store @j
+end
+load @i
+inc
+store @i
+end
+}
+}

@@ -1,0 +1,1052 @@
+module (name:"arena_vector",version:"0.1",author:"Ubytec") {
+func VectorInit(t_uint64 vec,t_uint64 arena,t_uint64 width) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 tmp 0 t_uint64 capacity 0 }
+if @vec == 0
+push 0
+return
+end
+if @arena == 0
+push 0
+return
+end
+if @width == 0
+push 0
+return
+end
+load @width
+push 65504
+ugt
+if
+push 0
+return
+end
+load @arena
+push 0
+add
+load t_uint64
+store @capacity
+load @capacity
+push 65536
+ugt
+if
+push 0
+return
+end
+while @i < 40
+load @vec
+load @i
+add
+load t_uint64
+store @tmp
+if @tmp != 0
+push 0
+return
+end
+load @i
+push 8
+add
+store @i
+end
+load @vec
+push 0
+add
+load @arena
+store t_uint64
+load @vec
+push 32
+add
+load @width
+store t_uint64
+push 1
+return
+}
+func VectorMaximum(t_uint64 vec) -> t_uint64 {
+local { t_uint64 arena 0 t_uint64 width 0 t_uint64 capacity 0 }
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+load @vec
+push 32
+add
+load t_uint64
+store @width
+load @arena
+push 0
+add
+load t_uint64
+store @capacity
+if @capacity < 32
+push 0
+return
+end
+load @capacity
+push 32
+sub
+load @width
+udiv
+return
+}
+func VectorValidate(t_uint64 vec) -> t_uint64 {
+local { t_uint64 arena 0 t_uint64 data 0 t_uint64 length 0 t_uint64 capacity 0 t_uint64 width 0 t_uint64 maximum 0 t_uint64 node 0 t_uint64 bytes 0 t_uint64 tmp 0 }
+if @vec == 0
+push 0
+return
+end
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+load @vec
+push 8
+add
+load t_uint64
+store @data
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @vec
+push 24
+add
+load t_uint64
+store @capacity
+load @vec
+push 32
+add
+load t_uint64
+store @width
+if @arena == 0
+push 0
+return
+end
+if @width == 0
+push 0
+return
+end
+load @width
+push 65504
+ugt
+if
+push 0
+return
+end
+load @arena
+push 0
+add
+load t_uint64
+store @tmp
+load @tmp
+push 65536
+ugt
+if
+push 0
+return
+end
+load @length
+load @capacity
+ugt
+if
+push 0
+return
+end
+load @vec
+call VectorMaximum
+store @maximum
+load @capacity
+load @maximum
+ugt
+if
+push 0
+return
+end
+if @capacity == 0
+if @data != 0
+push 0
+return
+end
+push 1
+return
+end
+if @data == 0
+push 0
+return
+end
+load @arena
+load @data
+call ArenaFind
+store @node
+if @node == 0
+push 0
+return
+end
+load @capacity
+load @width
+mul
+store @bytes
+load @node
+push 8
+add
+load t_uint64
+store @tmp
+if @tmp != @bytes
+push 0
+return
+end
+push 1
+return
+}
+func VectorMutable(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 arena 0 t_uint64 data 0 t_uint64 node 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+if @data == 0
+push 1
+return
+end
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+load @arena
+load @data
+call ArenaFind
+store @node
+load @node
+push 24
+add
+load t_uint64
+store @tmp
+if @tmp != 0
+push 0
+return
+end
+push 1
+return
+}
+func VectorReserve(t_uint64 vec,t_uint64 requested) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 maximum 0 t_uint64 capacity 0 t_uint64 width 0 t_uint64 data 0 t_uint64 arena 0 t_uint64 fresh 0 t_uint64 bytes 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 24
+add
+load t_uint64
+store @capacity
+load @requested
+load @capacity
+ule
+if
+push 1
+return
+end
+load @vec
+call VectorMaximum
+store @maximum
+load @requested
+load @maximum
+ugt
+if
+push 0
+return
+end
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 32
+add
+load t_uint64
+store @width
+load @vec
+push 8
+add
+load t_uint64
+store @data
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+load @requested
+load @width
+mul
+store @bytes
+if @data == 0
+load @arena
+load @bytes
+call ArenaAlloc
+store @fresh
+else
+load @arena
+load @data
+load @bytes
+call ArenaResize
+store @fresh
+end
+if @fresh == 0
+push 0
+return
+end
+load @vec
+push 8
+add
+load @fresh
+store t_uint64
+load @vec
+push 24
+add
+load @requested
+store t_uint64
+push 1
+return
+}
+func VectorEnsure(t_uint64 vec,t_uint64 requested) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 maximum 0 t_uint64 capacity 0 t_uint64 target 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 24
+add
+load t_uint64
+store @capacity
+load @requested
+load @capacity
+ule
+if
+push 1
+return
+end
+load @vec
+call VectorMaximum
+store @maximum
+load @requested
+load @maximum
+ugt
+if
+push 0
+return
+end
+load @capacity
+store @target
+if @target == 0
+push 1
+store @target
+end
+while @target < @requested
+load @target
+push 2
+mul
+store @target
+if @target > @maximum
+load @maximum
+store @target
+end
+end
+load @vec
+load @target
+call VectorReserve
+store @tmp
+load @tmp
+if
+push 1
+return
+end
+load @vec
+load @requested
+call VectorReserve
+store @tmp
+load @tmp
+return
+}
+func VectorSourceMode(t_uint64 vec,t_uint64 source) -> t_uint64 {
+local { t_uint64 width 0 t_uint64 finish 0 t_uint64 data 0 t_uint64 capacity 0 t_uint64 length 0 t_uint64 limit 0 t_uint64 offset 0 t_uint64 tmp 0 }
+if @source == 0
+push 0
+return
+end
+load @vec
+push 32
+add
+load t_uint64
+store @width
+load @source
+load @width
+add
+store @finish
+load @finish
+load @source
+ult
+if
+push 0
+return
+end
+load @source
+load @vec
+push 40
+add
+ult
+load @finish
+load @vec
+ugt
+and
+if
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+if @data == 0
+push 1
+return
+end
+load @vec
+push 24
+add
+load t_uint64
+store @capacity
+load @capacity
+load @width
+mul
+load @data
+add
+store @limit
+load @source
+load @limit
+ult
+load @finish
+load @data
+ugt
+and
+if
+load @source
+load @data
+ult
+if
+push 0
+return
+end
+load @source
+load @data
+sub
+store @offset
+load @offset
+load @width
+umod
+store @tmp
+if @tmp != 0
+push 0
+return
+end
+load @offset
+load @width
+udiv
+store @offset
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @offset
+load @length
+uge
+if
+push 0
+return
+end
+push 2
+return
+end
+push 1
+return
+}
+func VectorInsert(t_uint64 vec,t_uint64 index,t_uint64 source) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 length 0 t_uint64 width 0 t_uint64 data 0 t_uint64 mode 0 t_uint64 alias 0 t_uint64 need 0 t_uint64 i 0 t_uint64 endbytes 0 t_uint64 startbytes 0 t_uint64 target 0 }
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @index
+load @length
+ugt
+if
+push 0
+return
+end
+load @vec
+load @source
+call VectorSourceMode
+store @mode
+if @mode == 0
+push 0
+return
+end
+load @vec
+push 32
+add
+load t_uint64
+store @width
+load @vec
+push 8
+add
+load t_uint64
+store @data
+if @mode == 2
+load @source
+load @data
+sub
+load @width
+udiv
+store @alias
+end
+load @length
+inc
+store @need
+load @vec
+load @need
+call VectorEnsure
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+load @length
+load @width
+mul
+store @endbytes
+load @index
+load @width
+mul
+store @startbytes
+load @endbytes
+store @i
+while @i > @startbytes
+load @i
+dec
+store @i
+load @data
+load @i
+add
+load @width
+add
+load @data
+load @i
+add
+load t_byte
+store t_byte
+end
+if @mode == 2
+if @alias >= @index
+load @alias
+inc
+store @alias
+end
+load @data
+load @alias
+load @width
+mul
+add
+store @source
+end
+load @data
+load @startbytes
+add
+store @target
+push 0
+store @i
+while @i < @width
+load @target
+load @i
+add
+load @source
+load @i
+add
+load t_byte
+store t_byte
+load @i
+inc
+store @i
+end
+load @vec
+push 16
+add
+load @need
+store t_uint64
+push 1
+return
+}
+func VectorPush(t_uint64 vec,t_uint64 source) -> t_uint64 {
+local { t_uint64 length 0 t_uint64 tmp 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @vec
+load @length
+load @source
+call VectorInsert
+store @tmp
+load @tmp
+return
+}
+func VectorAt(t_uint64 vec,t_uint64 index) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 length 0 t_uint64 data 0 t_uint64 width 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @index
+load @length
+uge
+if
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+load @vec
+push 32
+add
+load t_uint64
+store @width
+load @data
+load @index
+load @width
+mul
+add
+return
+}
+func VectorSet(t_uint64 vec,t_uint64 index,t_uint64 element) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 target 0 t_uint64 width 0 t_uint64 i 0 t_uint64 source 0 t_uint64 mode 0 }
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+load @index
+call VectorAt
+store @target
+if @target == 0
+push 0
+return
+end
+load @vec
+load @element
+call VectorSourceMode
+store @mode
+if @mode == 0
+push 0
+return
+end
+load @element
+store @source
+load @vec
+push 32
+add
+load t_uint64
+store @width
+while @i < @width
+load @target
+load @i
+add
+load @source
+load @i
+add
+load t_byte
+store t_byte
+load @i
+inc
+store @i
+end
+push 1
+return
+}
+func VectorGet(t_uint64 vec,t_uint64 index,t_uint64 element) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 target 0 t_uint64 width 0 t_uint64 i 0 t_uint64 source 0 t_uint64 mode 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+load @index
+call VectorAt
+store @target
+if @target == 0
+push 0
+return
+end
+load @vec
+load @element
+call VectorSourceMode
+store @mode
+if @mode == 0
+push 0
+return
+end
+if @mode != 1
+push 0
+return
+end
+load @target
+store @source
+load @element
+store @target
+load @vec
+push 32
+add
+load t_uint64
+store @width
+while @i < @width
+load @target
+load @i
+add
+load @source
+load @i
+add
+load t_byte
+store t_byte
+load @i
+inc
+store @i
+end
+push 1
+return
+}
+func VectorLength(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 16
+add
+load t_uint64
+store @tmp
+load @tmp
+return
+}
+func VectorCapacity(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 24
+add
+load t_uint64
+store @tmp
+load @tmp
+return
+}
+func VectorErase(t_uint64 vec,t_uint64 index,t_uint64 count) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 length 0 t_uint64 remaining 0 t_uint64 width 0 t_uint64 data 0 t_uint64 startbytes 0 t_uint64 readbytes 0 t_uint64 endbytes 0 t_uint64 i 0 t_uint64 freshlength 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @index
+load @length
+ugt
+if
+push 0
+return
+end
+load @length
+load @index
+sub
+store @remaining
+load @count
+load @remaining
+ugt
+if
+push 0
+return
+end
+if @count == 0
+push 1
+return
+end
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 32
+add
+load t_uint64
+store @width
+load @vec
+push 8
+add
+load t_uint64
+store @data
+load @index
+load @width
+mul
+store @startbytes
+load @index
+load @count
+add
+load @width
+mul
+store @readbytes
+load @length
+load @width
+mul
+store @endbytes
+while @readbytes < @endbytes
+load @data
+load @startbytes
+add
+load @data
+load @readbytes
+add
+load t_byte
+store t_byte
+load @startbytes
+inc
+store @startbytes
+load @readbytes
+inc
+store @readbytes
+end
+load @length
+load @count
+sub
+store @freshlength
+load @freshlength
+load @width
+mul
+store @i
+while @i < @endbytes
+load @data
+load @i
+add
+push 0
+store t_byte
+load @i
+inc
+store @i
+end
+load @vec
+push 16
+add
+load @freshlength
+store t_uint64
+push 1
+return
+}
+func VectorClear(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 length 0 }
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 16
+add
+load t_uint64
+store @length
+load @vec
+push 0
+load @length
+call VectorErase
+store @tmp
+load @tmp
+return
+}
+func VectorPin(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 arena 0 t_uint64 data 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+if @data == 0
+push 0
+return
+end
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+load @arena
+load @data
+call ArenaPin
+store @tmp
+load @tmp
+return
+}
+func VectorUnpin(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 arena 0 t_uint64 data 0 }
+load @vec
+call VectorValidate
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+if @data == 0
+push 0
+return
+end
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+load @arena
+load @data
+call ArenaUnpin
+store @tmp
+load @tmp
+return
+}
+func VectorDestroy(t_uint64 vec) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 arena 0 t_uint64 data 0 t_uint64 i 0 }
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 8
+add
+load t_uint64
+store @data
+load @vec
+push 0
+add
+load t_uint64
+store @arena
+if @data != 0
+load @arena
+load @data
+call ArenaFree
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+end
+while @i < 40
+load @vec
+load @i
+add
+push 0
+store t_uint64
+load @i
+push 8
+add
+store @i
+end
+push 1
+return
+}
+}

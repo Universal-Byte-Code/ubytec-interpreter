@@ -1,0 +1,145 @@
+export ParseFields as ParseFields (t_loan_rw,t_loan_ro,t_uint64,t_uint64) -> t_int64
+export SourceWrite as SourceWrite (t_loan_ro,t_uint64) -> t_int64
+module (name:"text_lexer", version:"0.1", author:"Ubytec") {
+func ft_isspace(t_int32 c) -> t_int32
+{
+    if @c == 32
+        push 1
+        return
+    end
+    if @c < 9
+        push 0
+        return
+    end
+    if @c > 13
+        push 0
+        return
+    end
+    push 1
+    return
+}
+func ScanFields(t_uint64 state,t_uint64 source,t_uint64 length,t_uint64 capacity,t_uint64 writing) -> t_int64 {
+local { t_uint64 cursor 0 t_uint64 first 0 t_uint64 last 0 t_uint64 count 0 t_int32 character 0 t_int32 whitespace 0 }
+loop
+if @cursor >= @length
+break
+end
+load @cursor
+store @first
+while @cursor < @length
+load @source
+load @cursor
+add
+load t_byte
+store @character
+if @character == 44
+break
+end
+load @cursor
+inc
+store @cursor
+end
+load @cursor
+store @last
+load @cursor
+inc
+store @cursor
+while @first < @last
+load @source
+load @first
+add
+load t_byte
+call ft_isspace
+store @whitespace
+if @whitespace == 0
+break
+end
+load @first
+inc
+store @first
+end
+while @first < @last
+load @source
+load @last
+add
+push 1
+sub
+load t_byte
+call ft_isspace
+store @whitespace
+if @whitespace == 0
+break
+end
+load @last
+dec
+store @last
+end
+if @first < @last
+if @count >= @capacity
+push -11
+return
+end
+if @writing != 0
+load @state
+push 32
+add
+load @count
+push 16
+mul
+add
+load @first
+store t_uint64
+load @state
+push 40
+add
+load @count
+push 16
+mul
+add
+load @last
+load @first
+sub
+store t_uint64
+end
+load @count
+inc
+store @count
+end
+end
+if @writing != 0
+load @state
+load @count
+store t_uint64
+end
+load @count
+return
+}
+func ParseFields(t_uint64 state,t_uint64 source,t_uint64 length,t_uint64 capacity) -> t_int64 {
+local { t_int64 count 0 }
+load @state
+load @source
+load @length
+load @capacity
+push 0
+call ScanFields
+store @count
+if @count < 0
+load @count
+return
+end
+load @state
+load @source
+load @length
+load @capacity
+push 1
+call ScanFields
+return
+}
+func SourceWrite(t_uint64 source,t_uint64 length) -> t_int64 {
+load @source
+push 255
+store t_byte
+push 0
+return
+}
+}

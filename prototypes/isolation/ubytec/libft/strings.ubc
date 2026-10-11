@@ -1,0 +1,29 @@
+export Length as Length
+module (name:"chain_strings", version:"0.1", author:"Ubytec")
+{
+func ft_strlen(t_uint64 text) -> t_uint64
+{
+    local { t_uint64 index 0 }
+    loop
+        load @text
+        load @index
+        add
+        load t_byte
+        if
+            load @index
+            inc
+            store @index
+        else
+            load @index
+            return
+        end
+    end
+}
+
+func Length(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+load @buffer
+call ft_strlen
+return
+}
+}

@@ -1,0 +1,20 @@
+export Write as Write
+module (name:"memory", version:"0.1", author:"Ubytec")
+{
+func Write(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+local { t_uint64 index 0 }
+while @index < @length
+load @buffer
+load @index
+add
+push 90
+store t_byte
+load @index
+inc
+store @index
+end
+push 4294967297
+return
+}
+}

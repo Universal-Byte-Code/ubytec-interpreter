@@ -1,0 +1,117 @@
+export DualWrite as DualWrite (t_loan_rw,t_loan_rw,t_uint64) -> t_int64
+export Reverse as Reverse (t_loan_ro,t_loan_rw,t_uint64) -> t_int64
+export Mixed as Mixed (t_int64,t_loan_ro,t_uint64,t_loan_rw) -> t_int64
+export Scalar as Scalar (t_int64,t_uint64) -> t_int64
+export Empty as Empty () -> t_int64
+export Six as Six (t_int64,t_loan_rw,t_uint64,t_loan_ro,t_uint64,t_int64) -> t_int64
+export Copy as Copy (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+export Partial as Partial (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+export Spin as Spin (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+export Negative as Negative (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+module (name:"pair_receiver",version:"0.1",author:"Ubytec") {
+func Copy(t_uint64 dst,t_uint64 src,t_uint64 count) -> t_int64 {
+local { t_uint64 i 0 }
+while @i < @count
+load @dst
+load @i
+add
+load @src
+load @i
+add
+load t_byte
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @count
+return
+}
+func Partial(t_uint64 dst,t_uint64 src,t_uint64 count) -> t_int64 {
+local { t_uint64 i 0 }
+load @dst
+push 255
+store t_byte
+load @src
+push 255
+store t_byte
+load @count
+return
+}
+func Spin(t_uint64 dst,t_uint64 src,t_uint64 count) -> t_int64 {
+local { t_uint64 i 0 }
+load @dst
+push 255
+store t_byte
+loop
+end
+}
+func Negative(t_uint64 dst,t_uint64 src,t_uint64 count) -> t_int64 {
+local { t_uint64 i 0 }
+while @i < @count
+load @dst
+load @i
+add
+load @src
+load @i
+add
+load t_byte
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+push -77
+return
+}
+func DualWrite(t_uint64 dst,t_uint64 src,t_uint64 count) -> t_int64 {
+load @dst
+push 204
+store t_byte
+load @src
+push 221
+store t_byte
+load @count
+return
+}
+func Reverse(t_uint64 dst,t_uint64 src,t_uint64 count) -> t_int64 {
+load @src
+load @dst
+load t_byte
+store t_byte
+load @count
+return
+}
+func Mixed(t_int64 first,t_uint64 src,t_uint64 second,t_uint64 dst) -> t_int64 {
+load @dst
+load @src
+load t_byte
+store t_byte
+load @first
+load @second
+add
+return
+}
+func Scalar(t_int64 first,t_uint64 second) -> t_int64 {
+load @first
+load @second
+add
+return
+}
+func Empty() -> t_int64 {
+push 13
+return
+}
+func Six(t_int64 first,t_uint64 dst,t_uint64 second,t_uint64 src,t_uint64 third,t_int64 fourth) -> t_int64 {
+load @first
+load @second
+add
+load @third
+add
+load @fourth
+add
+return
+}
+}

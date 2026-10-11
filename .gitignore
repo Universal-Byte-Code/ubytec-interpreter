@@ -361,3 +361,13 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# ARM monitor sources are not Visual Studio ARM build outputs.
+!prototypes/isolation/arm/
+!prototypes/isolation/arm/linker.ld
+!prototypes/isolation/arm/monitor.c
+!prototypes/isolation/arm/startup.S
+
+# Generated validation/benchmark evidence
+corpus/libft/evidence/
+prototypes/isolation/evidence/

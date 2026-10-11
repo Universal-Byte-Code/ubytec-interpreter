@@ -37,7 +37,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Codacy Analysis CLI
-        uses: codacy/codacy-analysis-cli-action@d840f886c4bd4edc059706d09c6a1586111c540b
+        uses: codacy/codacy-analysis-cli-action@d43360362776a6789b47b99ae8973510854e2d3d
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           verbose: true
@@ -45,9 +45,42 @@ jobs:
           format: sarif
           gh-code-scanning-compat: true
           max-allowed-issues: 2147483647
+          skip-uncommitted-files-check: true
+
+      # Codacy CLI 7.10 honors the repository's .codacy.yml scope. Preserve the
+      # historical SonarC# tool identifier expected by the existing repository
+      # ruleset; newer CLI versions spell the identifier differently.
+      - name: Preserve SonarC# ruleset identifier
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          source_path = Path("results.sarif")
+          output_path = Path("github-results.sarif")
+          sarif = json.loads(source_path.read_text(encoding="utf-8"))
+
+          sonar_runs = 0
+          for run in sarif.get("runs", []):
+              driver = run.get("tool", {}).get("driver", {})
+              name = driver.get("name", "")
+              folded = name.casefold()
+              if "sonar" not in folded or not ("csharp" in folded or "c#" in folded):
+                  continue
+
+              print(f"Normalizing SonarC# SARIF tool identifier: {name!r} -> 'Sonarscharp (reported by Codacy)'")
+              driver["name"] = "Sonarscharp (reported by Codacy)"
+              sonar_runs += 1
+
+          if sonar_runs == 0:
+              raise SystemExit("No SonarC# SARIF run found; refusing to upload an unverified result set.")
+
+          output_path.write_text(json.dumps(sarif, separators=(",", ":")), encoding="utf-8")
+          PY
 
       - name: Upload SARIF results file
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: results.sarif
+          sarif_file: github-results.sarif
 

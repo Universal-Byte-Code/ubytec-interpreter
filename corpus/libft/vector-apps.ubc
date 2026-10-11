@@ -1,0 +1,176 @@
+module (name:"vector_apps",version:"0.1",author:"Ubytec") {
+func VectorStateSum(t_uint64 vec,t_uint64 scratch,t_uint64 depth) -> t_int64 {
+local { t_uint64 i 0 t_uint64 tmp 0 t_uint64 node 0 t_uint64 sum 0 t_uint64 value 0 }
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push -2
+return
+end
+load @vec
+push 32
+add
+load t_uint64
+store @tmp
+if @tmp != 16
+push -2
+return
+end
+load @vec
+call VectorLength
+store @tmp
+if @tmp != 0
+push -2
+return
+end
+loop
+load @i
+load @depth
+uge
+if
+break
+end
+load @scratch
+load @i
+store t_uint64
+load @scratch
+push 8
+add
+load @i
+push 3
+mul
+push 5
+add
+store t_uint64
+load @vec
+load @scratch
+call VectorPush
+store @tmp
+if @tmp == 0
+load @vec
+call VectorClear
+store @tmp
+push -1
+return
+end
+load @i
+inc
+store @i
+end
+while @i > 0
+load @i
+dec
+store @i
+load @vec
+load @i
+call VectorAt
+store @node
+load @node
+load t_uint64
+store @tmp
+if @tmp != @i
+push -3
+return
+end
+load @node
+push 8
+add
+load t_uint64
+store @value
+load @i
+push 3
+mul
+push 5
+add
+store @tmp
+if @value != @tmp
+push -3
+return
+end
+load @sum
+load @value
+add
+store @sum
+load @vec
+load @i
+push 1
+call VectorErase
+store @tmp
+if @tmp == 0
+push -3
+return
+end
+end
+load @sum
+return
+}
+func VectorAppendText(t_uint64 vec,t_uint64 scratch,t_uint64 source,t_uint64 count) -> t_uint64 {
+local { t_uint64 tmp 0 t_uint64 length 0 t_uint64 need 0 t_uint64 i 0 }
+load @vec
+call VectorMutable
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @vec
+push 32
+add
+load t_uint64
+store @tmp
+if @tmp != 1
+push 0
+return
+end
+load @vec
+call VectorLength
+store @length
+load @length
+load @count
+add
+store @need
+load @need
+load @length
+ult
+if
+push 0
+return
+end
+load @vec
+load @need
+call VectorEnsure
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+loop
+load @i
+load @count
+uge
+if
+push 1
+return
+end
+load @scratch
+load @source
+load @i
+add
+load t_byte
+call ft_toupper
+store t_byte
+load @vec
+load @scratch
+call VectorPush
+store @tmp
+if @tmp == 0
+push 0
+return
+end
+load @i
+inc
+store @i
+end
+}
+}

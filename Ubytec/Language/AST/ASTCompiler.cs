@@ -1,4 +1,4 @@
-﻿using NJsonSchema;
+using NJsonSchema;
 using System.Numerics;
 using System.Text;
 using Ubytec.Language.Exceptions;
@@ -36,7 +36,7 @@ namespace Ubytec.Language.AST
         /// The keys are the string names of the operations (e.g., <c>nameof(TRAP)</c>, <c>"EQ"</c>),
         /// and the values are the byte codes used in the Ubytec instruction set.
         /// </remarks>
-        private static readonly Dictionary<string, byte> OpcodeMap = new()
+        private static readonly Dictionary<string, byte> OpcodeMap = new(StringComparer.OrdinalIgnoreCase)
         {
             // Control Flow
             { nameof(TRAP),    TRAP.OP },
@@ -102,9 +102,28 @@ namespace Ubytec.Language.AST
             { "GT",            0x44 },
             { "GE",            0x45 },
         
+            { "UDIV", 0x29 },
+            { "UMOD", 0x2A },
+            { "LSHR", 0x36 },
+            { "ULT", 0x46 },
+            { "ULE", 0x47 },
+            { "UGT", 0x48 },
+            { "UGE", 0x49 },
+
             // Memory Operations (Optional)
             { "LOAD",          0x50 },
-            { "STORE",         0x51 }
+            { "STORE",         0x51 },
+            { "PUSH16",        0xFF },
+            { "DROP16",        0xFF },
+            { "PICK16",        0xFF },
+            { "ROLL16",        0xFF },
+            { "CALL",          FunctionOperations.CALL.OP },
+            { "FNADDR",        FunctionOperations.FNADDR.OP },
+            { "CALLI",         FunctionOperations.CALLI.OP },
+            { "2DUP",          TwoDUP.OP },
+            { "2SWAP",         TwoSWAP.OP },
+            { "2ROT",          TwoROT.OP },
+            { "2OVER",         TwoOVER.OP }
         };
 
         /// <summary>
@@ -131,23 +150,37 @@ namespace Ubytec.Language.AST
                 var currToken = code[y];
                 IBlockOpCode? currentBlock = blockStack.Count > 0 ? blockStack.Peek() : null;
 
-                if (string.IsNullOrWhiteSpace(currToken.Source) || currToken.Scopes.Length == 0 || currToken.Scopes.Length == 1 && currToken.Scopes.Helper.IsSource) continue;
+                if (string.IsNullOrWhiteSpace(currToken.Source) || currToken.Scopes.DataSource.Any(s => s.StartsWith("comment.")) || currToken.Source == ";") continue;
 
                 var currLineIndex = currToken.Line;
                 var currLine = new List<SyntaxToken>();
 
-                for (int i = y; i < code.Length && code[i].Line == currLineIndex; i++)
+                int lineEnd = y;
+                while (lineEnd < code.Length && code[lineEnd].Line == currLineIndex)
                 {
-                    if (!string.IsNullOrWhiteSpace(code[i].Source) || code[i].Scopes.Length == 0)
-                        currLine.Add(code[i]);
-
-                    if (i != y && currLine.Count > 0) y++;
+                    var token = code[lineEnd++];
+                    if (!string.IsNullOrWhiteSpace(token.Source) && token.Source != ";" &&
+                        !token.Scopes.DataSource.Any(s => s.StartsWith("comment.")))
+                        currLine.Add(token);
+                }
+                y = lineEnd - 1;
+                // TextMate separates unary signs from decimal literals.
+                for (int i = 1; i + 1 < currLine.Count; i++)
+                {
+                    if (currLine[i].Source is not ("-" or "+") || !currLine[i + 1].Scopes.Helper.IsNumericInt) continue;
+                    var sign = currLine[i];
+                    var number = currLine[i + 1];
+                    currLine[i] = new SyntaxToken(sign.Source + number.Source, sign.Line,
+                        sign.StartColumn, number.EndColumn, [.. number.Scopes.DataSource]);
+                    currLine.RemoveAt(i + 1);
                 }
 
                 if (currToken.Scopes.Helper.IsStorageType)
                 {
                     var labelToken = currLine[1];
-                    var valueToken = currLine[2];
+                    if (currLine.Count is < 2 or > 3)
+                        throw new SyntaxException(0xBAD06A, "Variable declaration expects a type, name, and optional initializer.");
+                    var valueToken = currLine.Count == 3 ? currLine[2] : null;
 
                     var typeModifiers = TypeModifiers.None;
 
@@ -198,9 +231,9 @@ namespace Ubytec.Language.AST
                         targetType == PrimitiveType.CustomType ? labelToken.Source : targetType.ToString()
                     );
 
-                    var variableFragment = new VariableExpressionFragment(ubytecType, labelToken.Source, valueToken.Source)
+                    var variableFragment = new VariableExpressionFragment(ubytecType, labelToken.Source, valueToken?.Source)
                     {
-                        Tokens = [currToken, labelToken, valueToken]
+                        Tokens = [.. currLine]
                     };
 
                     var varOp = new VAR(variableFragment);
@@ -218,9 +251,25 @@ namespace Ubytec.Language.AST
                 {
                     var instructionAndOperands = new Queue<ValueType>();
                     instructionAndOperands.Enqueue(byteCode);
+                    if (byteCode == 0xFF)
+                    {
+                        instructionAndOperands.Enqueue((byte)0x10);
+                        instructionAndOperands.Enqueue(currToken.Source.ToUpperInvariant() switch
+                        {
+                            "PUSH16" => (byte)0x11,
+                            "DROP16" => (byte)0x18,
+                            "PICK16" => (byte)0x1D,
+                            "ROLL16" => (byte)0x1E,
+                            _ => throw new InvalidOperationException("Unknown extended instruction.")
+                        });
+                    }
 
-                    // Process operands (assumes operands are hex or decimal values)
-                    for (int i = 1; i < currLine.Count; i++)
+                    bool namedInstruction = ((byteCode == IF.OP || byteCode == WHILE.OP) && currLine.Any(t => t.Source is "==" or "!=" or "<" or "<=" or ">" or ">=")) || byteCode == FunctionOperations.CALL.OP || byteCode == FunctionOperations.FNADDR.OP ||
+                        ((byteCode == MemoryOperations.LOAD.OP || byteCode == MemoryOperations.STORE.OP) &&
+                            currLine.Count > 1 && !currLine[1].Source.StartsWith("t_", StringComparison.OrdinalIgnoreCase) && !currLine[1].Scopes.DataSource.Any(s => s.StartsWith("constant.")));
+
+                    // Symbolic instructions keep their names in tokens; numeric instructions use operands.
+                    for (int i = 1; !namedInstruction && i < currLine.Count; i++)
                     {
                         var currLineToken = currLine[i];
                         if (string.IsNullOrWhiteSpace(currLineToken.Source) || currLineToken.Scopes.Length == 0 || currLineToken.Scopes.Length == 1 && currLineToken.Scopes.Helper.IsSource) continue;
@@ -316,7 +365,8 @@ namespace Ubytec.Language.AST
 
                         default:
                             {
-                                throw new InvalidOperationException($"Unhandled opcode in switch: {op.GetType().Name}");
+                                // Data operations do not change the structured block stack.
+                                break;
                             }
                     }
 
@@ -579,369 +629,106 @@ namespace Ubytec.Language.AST
             block.Variables?.Syntaxes.Add(varOp.Variable);
         }
 
-        /// <summary>
-        /// Builds a <see cref="SyntaxTree"/> from the provided opCodes and tokens.
-        /// <para>Assumes each row of tokens corresponds to one instruction and groups tokens by their line number.</para>
-        /// <para>Inserts nodes into the tree based on the structure of block-level opCodes
-        /// (e.g., BLOCK, IF, ELSE, LOOP, WHILE, SWITCH).</para>
-        /// </summary>
-        /// <param name="opCodes">
-        /// An array of <see cref="IOpCode"/> instances representing the parsed instructions.
-        /// </param>
-        /// <param name="tokens">
-        /// An array of <see cref="SyntaxToken"/> objects containing lexical details
-        /// (operands, symbols, etc.). May include more tokens than opCodes due to extra operands.
-        /// </param>
-        /// <returns>
-        /// A tuple of:
-        /// - <see cref="SyntaxTree"/>: the root of the constructed abstract syntax tree.
-        /// - <see cref="List{CompileSyntaxError}"/>: a list of errors encountered during tree building.
-        /// </returns>
+        /// <summary>Builds an ordered tree without moving statements ahead of nested blocks.</summary>
         public static (SyntaxTree tree, List<CompileSyntaxError> errors) CompileSyntax(IOpCode[] opCodes, SyntaxToken[] tokens)
         {
-            // Se crea el árbol raíz con una oración inicial.
-            var lastRoot = new SyntaxTree(new SyntaxSentence());
+            var root = new SyntaxSentence();
+            var container = new SyntaxNode((IOpCode?)null) { Children = [] };
+            root.Nodes.Push(container);
+            var tree = new SyntaxTree(root);
+            var active = new Stack<SyntaxNode>();
+            active.Push(container);
+            var elseSeen = new HashSet<SyntaxNode>();
             var errors = new List<CompileSyntaxError>();
+            var rows = tokens.Where(t => !string.IsNullOrWhiteSpace(t.Source) &&
+                    !t.Scopes.DataSource.Any(s => s.StartsWith("comment.")))
+                .GroupBy(t => t.Line).OrderBy(x => x.Key).ToArray();
 
-            var validTokens = new List<SyntaxToken>();
-
-            foreach (var token in tokens)
+            for (int i = 0; i < opCodes.Length; i++)
             {
-                if (string.IsNullOrWhiteSpace(token.Source) || token.Scopes.Length == 0 || token.Scopes.Length == 1 && token.Scopes.Helper.IsSource) continue;
-                validTokens.Add(token);
+                var op = opCodes[i];
+                int row = i < rows.Length ? rows[i].Key : i + 1;
+                var node = new SyntaxNode(op) { Children = [], Tokens = i < rows.Length ? rows[i].ToList() : [] };
+                if (op is END)
+                {
+                    if (active.Count == 1)
+                    {
+                        errors.Add(new(row, op, "END has no matching block."));
+                        continue;
+                    }
+                    active.Peek().Children!.Add(node);
+                    active.Pop();
+                    continue;
+                }
+                if (op is ELSE)
+                {
+                    if (active.Peek().Entity is not IF || !elseSeen.Add(active.Peek()))
+                    {
+                        errors.Add(new(row, op, "ELSE requires an open IF without another ELSE."));
+                        continue;
+                    }
+                }
+                active.Peek().Children!.Add(node);
+                if (op is IBlockOpCode && op is not ELSE)
+                    active.Push(node);
             }
-
-            // Agrupamos los tokens por la propiedad "Line" (suponiendo que cada grupo corresponde a una instrucción o línea).
-            var group = validTokens
-                .GroupBy(t => t.Line);
-            var tokensByRow = group
-                .OrderBy(g => g.Key)
-                .ToDictionary(g => g.Key, g => g.ToList());
-
-            var currentRow = 1;
-
-            foreach (var opCode in opCodes)
+            while (active.Count > 1)
             {
-                try
-                {
-                    // Si se encontraron tokens para la fila actual, se usan; si no, se pasa una lista vacía.
-                    BuildSyntaxTree(lastRoot, opCode, tokensByRow.TryGetValue(currentRow, out var rowTokens) ? rowTokens : []);
-                }
-                catch (Exception e)
-                {
-                    errors.Add(new(currentRow, opCode, "", e));
-                }
-
-                currentRow++;
+                var unclosed = active.Pop();
+                errors.Add(new(unclosed.Tokens?.FirstOrDefault()?.Line ?? 0,
+                    (IOpCode)unclosed.Entity!, "Block has no matching END."));
             }
-
-            return (lastRoot, errors);
+            return (tree, errors);
         }
 
-        /// <summary>
-        /// Adds a node for the given <paramref name="opCode"/> and its associated <paramref name="tokens"/>
-        /// to the <see cref="SyntaxTree"/> under construction.
-        /// <para>Handles entering new block scopes (BLOCK, IF, ELSE, LOOP, WHILE, SWITCH) by creating
-        /// new <see cref="SyntaxSentence"/> instances, and closes scopes (END, BREAK, RETURN) by
-        /// popping sentences and attaching end nodes.</para>
-        /// </summary>
-        /// <param name="tree">
-        /// The <see cref="SyntaxTree"/> currently being built; its <see cref="SyntaxTree.TreeSentenceStack"/>
-        /// must contain at least one active <see cref="SyntaxSentence"/>.
-        /// </param>
-        /// <param name="opCode">
-        /// The <see cref="IOpCode"/> instruction to insert into the tree.
-        /// May open a new scope, close an existing scope, or be added as a child of the current node.
-        /// </param>
-        /// <param name="tokens">
-        /// The list of <see cref="SyntaxToken"/> instances associated with this instruction,
-        /// typically grouped by their source-line number.
-        /// </param>
-        /// <exception cref="Exception">
-        /// Thrown if <paramref name="tree"/> has no active sentence to attach to,
-        /// or if a BRANCH appears without a surrounding SWITCH, or if an unsupported scope type is encountered.
-        /// </exception>
-        /// <exception cref="NotImplementedException">
-        /// Thrown if a scope-opening <paramref name="opCode"/> other than BLOCK, LOOP, IF, SWITCH, or WHILE
-        /// is encountered when determining the sentence type.
-        /// </exception>
-        static void BuildSyntaxTree(SyntaxTree tree, IOpCode opCode, List<SyntaxToken> tokens)
-        {
-            // Se asegura que haya una oración activa.
-            if (tree.TreeSentenceStack.Count == 0)
-                throw new Exception("The syntax tree has no active sentence.");
+        /// <summary>Compiles every statement in the tree using a fresh scope context.</summary>
+        public static string CompileAST(SyntaxTree tree) => CompileAST(tree, new CompilationScopes());
 
-            SyntaxSentence currentSentence = tree.TreeSentenceStack.Peek();
-
-            switch (opCode)
-            {
-                // Para opCodes que abren un nuevo scope, se crea una nueva oración y un nodo contenedor.
-                case BLOCK or LOOP or IF or SWITCH or WHILE:
-                    {
-                        // Se crea un nuevo nodo para el opCode y se asignan todos los tokens correspondientes.
-                        var newNode = new SyntaxNode(opCode)
-                        {
-                            Children = [],
-                            Tokens = tokens,
-                        };
-
-                        // Se crea una nueva oración para contener los nodos dentro de este scope.
-                        var newSentence = new SyntaxSentence()
-                        {
-                            Nodes = new(),
-                            Sentences = [],
-                        };
-
-                        string sentenceType = opCode switch
-                        {
-                            BLOCK => nameof(BLOCK).ToLower(),
-                            LOOP => nameof(LOOP).ToLower(),
-                            IF => nameof(IF).ToLower(),
-                            SWITCH => nameof(SWITCH).ToLower(),
-                            WHILE => nameof(WHILE).ToLower(),
-                            _ => throw new NotImplementedException(),
-                        };
-                        newSentence.Metadata.Add("type", sentenceType);
-
-                        // Se agrega la nueva oración como hija de la oración actual.
-                        currentSentence.Sentences.Add(newSentence);
-                        // En la nueva oración se empuja el nuevo nodo contenedor.
-                        newSentence.Nodes.Push(newNode);
-                        // Y se empuja la nueva oración a la pila del árbol.
-                        tree.TreeSentenceStack.Push(newSentence);
-                        break;
-                    }
-                // Para opCodes que abren un nuevo scope, se crea una nueva oración y un nodo contenedor.
-                case ELSE:
-                    {
-                        SyntaxSentence closedSentence = tree.TreeSentenceStack.Pop();
-                        SyntaxSentence parentSentence = tree.TreeSentenceStack.Peek();
-
-                        if (closedSentence.Nodes.Count > 1)
-                            closedSentence.Nodes.Pop();
-
-                        var newElseNode = new SyntaxNode(opCode)
-                        {
-                            Children = [],
-                            Tokens = tokens,
-                        };
-
-                        // Se crea una nueva oración para contener los nodos dentro de este scope.
-                        var newSentence = new SyntaxSentence()
-                        {
-                            Nodes = new(),
-                            Sentences = [],
-                        };
-                        newSentence.Metadata.Add("type", nameof(ELSE).ToLower());
-
-                        parentSentence.Sentences.Add(newSentence);
-                        newSentence.Nodes.Push(newElseNode);
-                        tree.TreeSentenceStack.Push(newSentence);
-                        break;
-                    }
-                case BRANCH:
-                    {
-                        if (tree.TreeSentenceStack.Count < 1)
-                            throw new Exception("Unexpected BRANCH without parent SWITCH.");
-
-                        SyntaxSentence branchParent = tree.TreeSentenceStack.Peek();
-
-                        if (!branchParent.Metadata.TryGetValue("type", out var parentType) || parentType?.ToString() != "switch")
-                        {
-                            throw new Exception("BRANCH must be inside a SWITCH block.");
-                        }
-
-                        // No hagas Pop si no es necesario, solo anida correctamente
-                        var newBranchNode = new SyntaxNode(opCode)
-                        {
-                            Children = [],
-                            Tokens = tokens,
-                        };
-
-                        SyntaxSentence newBranchSentence = new()
-                        {
-                            Nodes = new(),
-                            Sentences = [],
-                        };
-                        newBranchSentence.Metadata.Add("type", nameof(BRANCH).ToLower());
-
-                        branchParent.Sentences.Add(newBranchSentence);
-                        newBranchSentence.Nodes.Push(newBranchNode);
-                        tree.TreeSentenceStack.Push(newBranchSentence);
-
-                        break;
-                    }
-                // Para opCodes que cierran un scope (como END, BREAK o RETURN), se crea un nodo de cierre y se extrae la oración.
-                case END or BREAK or RETURN:
-                    {
-                        SyntaxSentence closedSentence = tree.TreeSentenceStack.Pop();
-                        var endNode = new SyntaxNode(opCode)
-                        {
-                            Tokens = tokens,
-                        };
-
-                        // Si el stack de nodos tiene más de un nodo, se descarta el tope para volver al contenedor.
-                        if (closedSentence.Nodes.Count > 1)
-                            closedSentence.Nodes.Pop();
-
-                        closedSentence.Nodes.Peek().Children?.Add(endNode);
-                        break;
-                    }
-                // Para cualquier otro opCode, se crea un nodo simple y se agrega como hijo del nodo activo.
-                default:
-                    {
-                        var newNode = new SyntaxNode(opCode)
-                        {
-                            Tokens = tokens,
-                        };
-
-                        currentSentence.Nodes.Peek().Children?.Add(newNode);
-                        break;
-                    }
-            }
-        }
-
-        /// <summary>
-        /// Compiles the given <see cref="SyntaxTree"/> into NASM assembly code.
-        /// <para>Begins with the first sentence under the root and recursively processes
-        /// all nested sentences and nodes.</para>
-        /// </summary>
-        /// <param name="tree">
-        /// The fully constructed <see cref="SyntaxTree"/> whose root sentence will be compiled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="string"/> containing the resulting NASM assembly code.
-        /// </returns>
-        public static string CompileAST(SyntaxTree tree) => CompileSentence(tree.RootSentence.Sentences.First(), new CompilationScopes());
-
-        /// <summary>
-        /// Recursively compiles a <see cref="SyntaxSentence"/> into NASM assembly code,
-        /// processing any nested sentences and nodes within it.
-        /// </summary>
-        /// <param name="sentence">
-        /// The <see cref="SyntaxSentence"/> to compile.
-        /// </param>
-        /// <param name="scopes">
-        /// The <see cref="CompilationScopes"/> used to manage indentation and control-flow context.
-        /// </param>
-        /// <returns>
-        /// A <see cref="string"/> fragment containing the NASM assembly code for the given sentence.
-        /// </returns>
-        private static string CompileSentence(SyntaxSentence sentence, CompilationScopes scopes)
+        /// <summary>Compiles an ordered tree in the caller's function and module context.</summary>
+        public static string CompileAST(SyntaxTree tree, CompilationScopes scopes)
         {
             var output = new StringBuilder();
-
-            // Si hay nodos, asumimos que el primero representa la estructura (apertura + cierre)
-            if (sentence.Nodes != null && sentence.Nodes.Count > 0)
+            void Node(SyntaxNode node)
             {
-                // Usamos Peek() para no alterar la pila
-                var node = sentence.Nodes.Peek();
-                output.Append(CompileBlockNode(sentence, node, scopes));
-            }
-            // Si no hay nodos, simplemente compilamos las oraciones anidadas (si las hubiera)
-            else if (sentence.Sentences != null)
-            {
-                foreach (var childSentence in sentence.Sentences)
-                    output.Append(CompileSentence(childSentence, scopes));
-            }
-
-            // Filtramos las líneas vacías o con solo espacios/tabs
-            var cleaned = string.Join(
-                Environment.NewLine,
-                output.ToString()
-                      .Split(["\r\n", "\r", "\n"], StringSplitOptions.None)
-                      .Where(line => !string.IsNullOrWhiteSpace(line))
-            );
-
-            return cleaned;
-
-        }
-
-        /// <summary>
-        /// Compiles a block-level <see cref="SyntaxNode"/> (e.g., BLOCK, IF, ELSE, LOOP, WHILE)
-        /// along with its opening, nested sentences, and closing operations into NASM assembly,
-        /// applying proper indentation and handling generated labels.
-        /// </summary>
-        /// <param name="sentence">
-        /// The <see cref="SyntaxSentence"/> containing the block’s child sentences to compile.
-        /// </param>
-        /// <param name="node">
-        /// The <see cref="SyntaxNode"/> representing the block opcode to compile
-        /// (including its metadata and any pre-collected children nodes).
-        /// </param>
-        /// <param name="scopes">
-        /// The <see cref="CompilationScopes"/> instance used to manage indentation levels
-        /// and control-flow context during code generation.
-        /// </param>
-        /// <returns>
-        /// A <see cref="string"/> containing the NASM assembly code for the block’s opening opcode,
-        /// its nested content, and the closing opcode.
-        /// </returns>
-        private static string CompileBlockNode(SyntaxSentence sentence, SyntaxNode node, CompilationScopes scopes)
-        {
-            var code = new StringBuilder();
-
-            var initialDepth = GetDepth();
-            node.Metadata.Add("initialDepth", initialDepth);
-            var depth = node.Entity is ELSE ? GetDepth(-1) : initialDepth;
-            node.Metadata.Add("depth", depth);
-
-            // Compilamos la operación de apertura
-            if (node.Entity != null)
-            {
-                var compiled = node.Entity.Compile(scopes);
-                code.AppendLine(FormatCompiledLines(compiled, depth));
-            }
-
-            // Compilamos el cuerpo del bloque: las sentencias anidadas se insertan justo aquí
-            if (sentence.Sentences != null)
-                foreach (var childSentence in sentence.Sentences)
+                if (node.Entity is not null)
                 {
-                    var compiled = CompileSentence(childSentence, scopes);
-                    code.Append(FormatCompiledLines(compiled, string.Empty));
+                    output.AppendLine(node.Entity.Compile(scopes));
+                    if (node.Entity is IOpCode op && Ubytec.Language.Tools.Optimization.FunctionValueIR.InvalidatesFrameCopies(op) &&
+                        scopes.All.FirstOrDefault(s => s.DeclaredByKeyword is "func" or "action") is { ReloadRegistersAfterEffects: true } frame)
+                    {
+                        // MOV does not change flags, return values, RSP or residual cells.
+                        // Executed only after the complete original operation returns/succeeds.
+                        output.AppendLine("; effect-registers: reload after " + op.GetType().Name);
+                        foreach (var binding in frame.Symbols.Values.Where(b => b.Register is not null))
+                            output.AppendLine($"mov {binding.Register}, qword {binding.Address}");
+                    }
                 }
-
-
-            if (node.Children == null || node.Children.Count == 0)
-                return code.ToString();
-
-            // Seleccionamos el nodo de cierre y lo eliminamos de los hijos
-            var closingNode = node.Children.Last();
-            var nodeActions = node.Children.GetRange(0, node.Children.Count - 1);
-
-            foreach (var n in nodeActions)
-                if (n.Entity != null)
+                Nodes(node.Children ?? []);
+            }
+            void Nodes(IEnumerable<SyntaxNode> sequence)
+            {
+                var nodes = sequence.ToArray();
+                for (int i = 0; i < nodes.Length; i++)
                 {
-                    var compiled = n.Entity.Compile(scopes);
-                    code.AppendLine(FormatCompiledLines(compiled, GetDepth()));
+                    if (nodes[i].Entity is FunctionOperations.CALL call && (nodes[i].Children?.Count ?? 0) == 0 &&
+                        i + 1 < nodes.Length && nodes[i+1].Entity is RETURN ret && (nodes[i+1].Children?.Count ?? 0) == 0 &&
+                        call.CompileTail(scopes) is string tail)
+                    {
+                        // Validate explicit RETURN types and mark enclosing scopes exactly as for a normal return.
+                        _ = ret.Compile(scopes);
+                        output.AppendLine(tail);
+                        i++;
+                    }
+                    else Node(nodes[i]);
                 }
-
-
-            // Finalmente, compilamos la operación de cierre, que asumimos es el último hijo del nodo
-            if (closingNode.Entity != null)
-            {
-                var compiled = closingNode.Entity.Compile(scopes);
-                code.AppendLine(FormatCompiledLines(compiled, GetDepth()));
             }
-
-            return code.ToString();
-
-            string GetDepth(int basis = 0)
+            void Sentence(SyntaxSentence sentence)
             {
-                var output = string.Empty;
-                var depth = scopes.Count + basis;
-                for (int i = 0; i < depth; i++)
-                    output += "  ";
-                return output;
+                Nodes(sentence.Nodes.Reverse());
+                foreach (var child in sentence.Sentences) Sentence(child);
             }
-
-            string FormatCompiledLines(string? lines, string depth)
-            {
-                var f_0x00 = string.Empty;
-                foreach (var l_0x00 in lines?.Split('\n', StringSplitOptions.RemoveEmptyEntries) ?? [])
-                    f_0x00 += depth + l_0x00 + '\n';
-                return f_0x00;
-            }
+            Sentence(tree.RootSentence);
+            return output.ToString();
         }
     }
 }

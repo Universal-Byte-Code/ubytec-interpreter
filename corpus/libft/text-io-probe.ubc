@@ -1,0 +1,286 @@
+export TextMain as TextMain
+module (name:"io_probe",version:"0.1",author:"Ubytec") {
+func ExpectDenied(t_uint64 mode,t_uint64 resource,t_uint64 offset,t_uint64 data,t_uint64 length,t_uint64 resultcell) -> t_uint64 {
+local { t_int64 status 0 }
+load @resource
+load @offset
+load @data
+load @length
+load @resultcell
+if @mode == 1
+call HostRead
+else
+call HostWrite
+end
+store @status
+if @status != 1
+push 0
+return
+end
+load @resultcell
+load t_uint64
+if
+push 0
+return
+end
+push 1
+return
+}
+func TextMain(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_uint64 i 0 t_uint64 data 0 t_uint64 resultcell 0 t_int64 status 0 }
+if @length != 65536
+push -1
+return
+end
+load @buffer
+push 512
+add
+store @data
+load @buffer
+push 72
+add
+store @resultcell
+while @i < 16
+load @data
+load @i
+add
+push 165
+store t_byte
+load @i
+inc
+store @i
+end
+push 1
+push 65535
+push 0
+load @data
+push 8
+load @resultcell
+call ExpectDenied
+if
+else
+push -2
+return
+end
+push 2
+push 257
+push 0
+load @data
+push 8
+load @resultcell
+call ExpectDenied
+if
+else
+push -2
+return
+end
+push 1
+push 258
+push 0
+load @data
+push 8
+load @resultcell
+call ExpectDenied
+if
+else
+push -2
+return
+end
+push 1
+push 257
+push 0
+load @data
+push 4097
+load @resultcell
+call ExpectDenied
+if
+else
+push -2
+return
+end
+push 1
+push 257
+push 18446744073709551615
+load @data
+push 8
+load @resultcell
+call ExpectDenied
+if
+else
+push -2
+return
+end
+push 2
+push 258
+push 18446744073709551615
+load @data
+push 8
+load @resultcell
+call ExpectDenied
+if
+else
+push -2
+return
+end
+push 1
+push 18446744073709551615
+push 0
+load @data
+push 8
+load @resultcell
+call ExpectDenied
+if
+else
+push -2
+return
+end
+push 0
+store @i
+while @i < 16
+load @data
+load @i
+add
+load t_byte
+push 165
+neq
+if
+push -3
+return
+end
+load @i
+inc
+store @i
+end
+push 257
+push 0
+load @data
+push 0
+load @resultcell
+call HostRead
+if
+push -4
+return
+end
+load @resultcell
+load t_uint64
+push 0
+neq
+if
+push -5
+return
+end
+push 257
+push 3
+load @data
+push 8
+load @resultcell
+call HostRead
+if
+push -4
+return
+end
+load @resultcell
+load t_uint64
+push 0
+neq
+if
+push -5
+return
+end
+push 257
+push 0
+load @data
+push 3
+load @resultcell
+call HostRead
+if
+push -4
+return
+end
+load @resultcell
+load t_uint64
+push 3
+neq
+if
+push -5
+return
+end
+load @data
+push 0
+add
+load t_byte
+push 97
+neq
+if
+push -6
+return
+end
+load @data
+push 1
+add
+load t_byte
+push 98
+neq
+if
+push -6
+return
+end
+load @data
+push 2
+add
+load t_byte
+push 99
+neq
+if
+push -6
+return
+end
+push 3
+store @i
+while @i < 16
+load @data
+load @i
+add
+load t_byte
+push 165
+neq
+if
+push -7
+return
+end
+load @i
+inc
+store @i
+end
+push 258
+push 0
+load @data
+push 3
+load @resultcell
+call HostWrite
+if
+push -8
+return
+end
+load @resultcell
+load t_uint64
+push 3
+neq
+if
+push -9
+return
+end
+load @buffer
+push 0
+add
+push 3
+store t_uint64
+load @buffer
+push 24
+add
+push 3
+store t_uint64
+push 0
+return
+}
+}

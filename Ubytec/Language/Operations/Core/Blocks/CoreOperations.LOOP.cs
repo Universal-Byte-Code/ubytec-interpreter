@@ -17,78 +17,30 @@ namespace Ubytec.Language.Operations
 
             public static IOpCode CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
             {
-                // Caso 1: LOOP sin tipo explícito
-                if (operands.Length == 0)
+                if (operands.Length == 0) return new LOOP { Variables = new([.. variables]) };
+                if (operands.Length == 1 && operands[0] is PrimitiveType typeByte)
+                    return new LOOP { BlockType = new(type: typeByte), Variables = new([.. variables]) };
+                if (operands.Length == 2 && operands[0] is PrimitiveType primitive && operands[1] is TypeModifiers flags)
                 {
-                    return new LOOP
-                    {
-                        Variables = new([.. variables])
-                    };
+                    var typeWithFlags = new UType(primitive, flags, Types.FromPrimitive(primitive), primitive.ToString());
+                    return new LOOP { BlockType = typeWithFlags, Variables = new([.. variables]) };
                 }
-
-                // Caso 2: LOOP con tipo de bloque explícito
-                if (operands.Length == 1)
+                if (operands.Length >= 2 && operands[^1] is TypeModifiers customFlags && operands[..^1].All(c => c is char))
                 {
-                    if (operands[0] is PrimitiveType typeByte)
-                    {
-                        return new LOOP
-                        {
-                            BlockType = new(type: typeByte),
-                            Variables = new([.. variables])
-                        };
-                    }
+                    var typeName = new string(operands[..^1].Cast<char>().ToArray());
+                    var typeWithFlags = new UType(PrimitiveType.CustomType, customFlags, UType.TypeIDLUT[typeName], typeName);
+                    return new LOOP { BlockType = typeWithFlags, Variables = new([.. variables]) };
                 }
-
-                // t_<tipo>: tipo primitivo codificado como byte + flags
-                if (operands.Length == 2)
-                {
-                    if (operands[0] is PrimitiveType typeByte &&
-                    operands[1] is TypeModifiers flagsByte)
-                    {
-                        var typeWithFlags = new UType(typeByte, flagsByte, Types.FromPrimitive(typeByte), typeByte.ToString());
-                        return new LOOP
-                        {
-                            BlockType = typeWithFlags,
-                            Variables = new([.. variables])
-                        };
-                    }
-                }
-
-                if (operands.Length >= 2)
-                {
-                    if (operands[^1] is TypeModifiers flagsByte &&
-                    operands[..^1].All(c => c is char))
-                    {
-                        var typeName = new string(operands[..^1].Cast<char>().ToArray());
-                        var typeWithFlags = new UType(PrimitiveType.CustomType, flagsByte, UType.TypeIDLUT[typeName], typeName);
-                        return new LOOP
-                        {
-                            BlockType = typeWithFlags,
-                            Variables = new([.. variables])
-                        };
-                    }
-                }
-
-
                 throw new SyntaxException(0x03BADBEEF, $"LOOP opcode received unexpected number of operands: {operands.Length}");
             }
 
+            public string Compile(CompilationScopes scopes) => ((IOpCode)this).Compile(scopes);
 
-            public string Compile(CompilationScopes scopes) =>
-                ((IOpCode)this).Compile(scopes);
             string IUbytecEntity.Compile(CompilationScopes scopes)
             {
-                string loopStartLabel = NextLabel("loop");
-                string loopEndLabel = NextLabel("end_loop");
-
-                scopes.Push(new() 
-                {
-                    StartLabel = loopStartLabel,
-                    EndLabel = loopEndLabel,
-                    ExpectedReturnType = BlockType,
-                    DeclaredByKeyword = "loop"
-                });
-
+                string loopStartLabel = NextLabel(scopes, "loop");
+                string loopEndLabel = NextLabel(scopes, "end_loop");
+                scopes.Push(new() { StartLabel = loopStartLabel, EndLabel = loopEndLabel, ExpectedReturnType = BlockType, DeclaredByKeyword = "loop" });
                 return $"{loopStartLabel}: ; LOOP start";
             }
         }

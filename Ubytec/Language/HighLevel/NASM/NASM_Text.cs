@@ -17,7 +17,7 @@ namespace Ubytec.Language.HighLevel.NASM
             if (nullable && contextEntity == null) return;
 
             sb.Append(FormatCompiledLines("section .text", scopes.GetDepth()));
-            sb.Append(FormatCompiledLines("global _start", scopes.GetDepth()));
+            if (scopes.EmitProcessEntryPoint) sb.Append(FormatCompiledLines("global _start", scopes.GetDepth()));
             sb.AppendLine();
         }
     }
