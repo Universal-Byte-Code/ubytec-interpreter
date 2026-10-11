@@ -1,0 +1,95 @@
+module (name:"diagnostic_kernels",version:"0.1",author:"Ubytec") {
+func DiagIdentity(t_uint64 value) -> t_uint64 {
+load @value
+return
+}
+func DiagBytes(t_uint64 data,t_uint64 length) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 sum 0 }
+while @i < @length
+load @sum
+load @data
+load @i
+add
+load t_byte
+add
+store @sum
+load @i
+inc
+store @i
+end
+load @sum
+return
+}
+func DiagRecords(t_uint64 records,t_uint64 count) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 sum 0 }
+while @i < @count
+load @sum
+load @records
+load @i
+push 24
+mul
+add
+push 16
+add
+load t_uint64
+add
+store @sum
+load @i
+inc
+store @i
+end
+load @sum
+return
+}
+func DiagLookup(t_uint64 records,t_uint64 count,t_uint64 key,t_uint64 length) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 j 0 t_uint64 entryptr 0 t_uint64 name 0 }
+while @i < @count
+load @records
+load @i
+push 24
+mul
+add
+store @entryptr
+load @entryptr
+push 8
+add
+load t_uint64
+load @length
+eq
+if
+load @entryptr
+load t_uint64
+store @name
+push 0
+store @j
+while @j < @length
+load @name
+load @j
+add
+load t_byte
+load @key
+load @j
+add
+load t_byte
+neq
+if
+break
+end
+load @j
+inc
+store @j
+end
+if @j == @length
+load @i
+inc
+return
+end
+end
+load @i
+inc
+store @i
+end
+push 0
+return
+}
+}

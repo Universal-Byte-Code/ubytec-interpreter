@@ -1,4 +1,4 @@
-﻿using Namotion.Reflection;
+using Namotion.Reflection;
 using System.Text;
 using Ubytec.Language.HighLevel.Interfaces;
 using Ubytec.Language.Syntax.Scopes;
@@ -21,10 +21,10 @@ namespace Ubytec.Language.HighLevel.NASM
             var tmpId = ((dynamic)contextEntity).ID;
             var tmpRequires = ((dynamic)contextEntity).Requires;
 
-            // always emit header; skip only requires loop if nullableRequires && null
+            // Canonical assembly contains semantic metadata only. Build/run provenance
+            // (timestamp, compilation UUID, host, hashes) belongs in the sidecar metadata file.
             sb.Append(FormatCompiledLines("; ---------------- Metadata ----------------", scopes.GetDepth()));
-            sb.Append(FormatCompiledLines($"; Compilation UTC Time: {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}Z", scopes.GetDepth()));
-            sb.Append(FormatCompiledLines($"; Module UUID: {tmpId}", scopes.GetDepth()));
+            sb.Append(FormatCompiledLines($"; Module Semantic UUID: {tmpId}", scopes.GetDepth()));
 
             if (!(nullableRequires && tmpRequires == null))
             {

@@ -1,0 +1,124 @@
+name: Isolation mechanism prototypes
+permissions:
+  contents: read
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+jobs:
+  linux-and-arm-mpu:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.0.x"
+      - name: Install native and ARM emulator tools
+        run: sudo apt-get update && sudo apt-get install -y gcc clang lld qemu-system-arm python3 nasm binutils
+      - name: Containment matrix and measurements
+        run: python3 prototypes/isolation/run.py --output artifacts/isolation
+      - name: Compiled Ubytec containment and measurements
+        run: python3 prototypes/isolation/run_ubytec.py --output artifacts/ubytec-isolation
+      - name: Independent module loading and contracts
+        run: python3 prototypes/isolation/run_modules.py --sanitizers --output artifacts/modules
+      - name: Calls originating in Ubytec modules
+        run: python3 prototypes/isolation/run_program.py --modules artifacts/modules --output artifacts/program
+      - name: Source imports, exports and independent permissions
+        run: python3 prototypes/isolation/run_contracts.py --output artifacts/contracts
+      - name: Libft application equivalence and grouping measurements
+        run: python3 prototypes/isolation/run_libft.py --output artifacts/libft-chain
+      - name: Typed scalars and independent loan permissions
+        run: python3 prototypes/isolation/run_typed.py --output artifacts/typed
+      - name: Stateful text application across trust boundaries
+        run: python3 prototypes/isolation/run_text.py --output artifacts/text
+      - name: Bounded source allocator and incremental text
+        run: python3 prototypes/isolation/run_arena.py --output artifacts/arena
+      - name: Scoped arena loans and same-worker recovery
+        run: python3 prototypes/isolation/run_arena_loans.py --output artifacts/arena-loans
+      - name: Generic arena wrappers and complete text application
+        run: python3 prototypes/isolation/run_generic_arena.py --output artifacts/generic-arena
+      - name: Arena space, copies and workload cost comparison
+        run: python3 prototypes/isolation/run_arena_benchmark.py --output artifacts/arena-benchmark
+      - name: Sustained arena and same-caller loan recovery
+        run: python3 prototypes/isolation/run_arena_stress.py --output artifacts/arena-stress
+      - name: Preserve evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: isolation-evidence
+          path: |
+            artifacts/isolation/report.json
+            artifacts/isolation/linux-tests.jsonl
+            artifacts/isolation/linux-benchmark.jsonl
+            artifacts/isolation/arm-tests.log
+            artifacts/isolation/arm.map
+            artifacts/ubytec-isolation/ubytec-report.json
+            artifacts/ubytec-isolation/ubytec-tests.jsonl
+            artifacts/ubytec-isolation/ubytec-benchmark.jsonl
+            artifacts/ubytec-isolation/attacks.nasm
+            artifacts/modules/modules-report.json
+            artifacts/modules/modules-tests-gcc.jsonl
+            artifacts/modules/modules-tests-clang.jsonl
+            artifacts/modules/execution-tests-gcc.jsonl
+            artifacts/modules/execution-tests-clang.jsonl
+            artifacts/modules/modules-malformed.jsonl
+            artifacts/modules/modules-sanitized.jsonl
+            artifacts/modules/modules-benchmark.jsonl
+            artifacts/modules/data.nasm
+            artifacts/modules/faults.nasm
+            artifacts/program/program-report.json
+            artifacts/program/program-tests-gcc.jsonl
+            artifacts/program/program-tests-clang.jsonl
+            artifacts/program/caller.nasm
+            artifacts/contracts/contracts-report.json
+            artifacts/contracts/contracts-tests-gcc.jsonl
+            artifacts/contracts/contracts-tests-clang.jsonl
+            artifacts/contracts/caller.nasm
+            artifacts/contracts/reader.nasm
+            artifacts/contracts/writer.nasm
+            artifacts/libft-chain/libft-report.json
+            artifacts/libft-chain/libft-tests-gcc.jsonl
+            artifacts/libft-chain/libft-tests-clang.jsonl
+            artifacts/libft-chain/libft-benchmark.jsonl
+            artifacts/typed/typed-report.json
+            artifacts/typed/caller.nasm
+            artifacts/typed/memory.nasm
+            artifacts/text/text-report.json
+            artifacts/text/mono.nasm
+            artifacts/text/caller.nasm
+            artifacts/text/lexer.nasm
+            artifacts/text/mapper.nasm
+            artifacts/text/writer.nasm
+            artifacts/text/grouped.nasm
+            artifacts/arena/arena-report.json
+            artifacts/arena/arena.nasm
+            artifacts/arena-loans/arena-loans-report.json
+            artifacts/arena-loans/loan-caller.nasm
+            artifacts/arena-loans/loan-receiver.nasm
+            artifacts/generic-arena/generic-arena-report.json
+            artifacts/generic-arena/pair-caller.nasm
+            artifacts/generic-arena/pair-receiver.nasm
+            artifacts/generic-arena/dynamic-text.nasm
+            artifacts/generic-arena/lexer.nasm
+            artifacts/generic-arena/mapper.nasm
+            artifacts/generic-arena/writer.nasm
+            artifacts/generic-arena/arena-cli-checks.json
+            artifacts/generic-arena/cli-pair-caller.ubc
+            artifacts/generic-arena/cli-dynamic-text.ubc
+            artifacts/arena-benchmark/arena-benchmark-report.json
+            artifacts/arena-benchmark/arena-benchmark.jsonl
+            artifacts/arena-benchmark/bench-baseline.nasm
+            artifacts/arena-benchmark/bench-current.nasm
+            artifacts/arena-stress/arena-stress-report.json
+            artifacts/arena-stress/native-gcc.jsonl
+            artifacts/arena-stress/native-clang.jsonl
+            artifacts/arena-stress/native-sanitized.jsonl
+            artifacts/arena-stress/protected-gcc.jsonl
+            artifacts/arena-stress/protected-clang.jsonl
+            artifacts/arena-stress/bench-current.nasm
+            artifacts/arena-stress/stress-caller.nasm
+            artifacts/arena-stress/pair-receiver.nasm
+            artifacts/arena-stress/stress-generated.ubc
+            artifacts/arena-stress/actual-gcc.bin
+            artifacts/arena-stress/actual-clang.bin

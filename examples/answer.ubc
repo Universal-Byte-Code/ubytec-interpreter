@@ -1,0 +1,25 @@
+module (name:"answer", version:"0.1", author:"Ubytec")
+{
+    func Twice(t_int64 value) -> t_int64
+    {
+        load @value
+        push 2
+        mul
+        return
+    }
+
+    func Main() -> t_int64
+    {
+        local
+        {
+            t_int64 counter 20
+        }
+        load @counter
+        push 1
+        add
+        store @counter
+        load @counter
+        call Twice
+        return
+    }
+}

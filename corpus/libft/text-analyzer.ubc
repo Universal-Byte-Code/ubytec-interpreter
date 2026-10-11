@@ -1,0 +1,802 @@
+export TextMain as TextMain
+module (name:"text_analyzer",version:"0.1",author:"Ubytec") {
+func TextIsWord(t_uint64 bytevalue) -> t_uint64 {
+if @bytevalue >= 48
+if @bytevalue <= 57
+push 1
+return
+end
+end
+if @bytevalue >= 65
+if @bytevalue <= 90
+push 1
+return
+end
+end
+if @bytevalue >= 97
+if @bytevalue <= 122
+push 1
+return
+end
+end
+if @bytevalue == 95
+push 1
+return
+end
+push 0
+return
+}
+func TextRecordCompare(t_uint64 left,t_uint64 right) -> t_int64 {
+local { t_uint64 a 0 t_uint64 b 0 t_uint64 alen 0 t_uint64 blen 0 t_uint64 size 0 t_int64 difference 0 }
+load @left
+load t_uint64
+store @a
+load @right
+load t_uint64
+store @b
+load @left
+push 8
+add
+load t_uint64
+store @alen
+load @right
+push 8
+add
+load t_uint64
+store @blen
+load @alen
+store @size
+if @blen < @size
+load @blen
+store @size
+end
+load @a
+load @b
+load @size
+call ft_memcmp
+store @difference
+if @difference != 0
+load @difference
+return
+end
+if @alen < @blen
+push -1
+return
+end
+if @alen > @blen
+push 1
+return
+end
+push 0
+return
+}
+func TextSort(t_uint64 vec,t_uint64 compare,t_uint64 scratch) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 j 0 t_uint64 count 0 t_uint64 left 0 t_int64 difference 0 }
+load @vec
+call VectorMutable
+if
+else
+push 0
+return
+end
+load @vec
+push 32
+add
+load t_uint64
+push 24
+neq
+if
+push 0
+return
+end
+if @compare == 0
+push 0
+return
+end
+load @vec
+call VectorLength
+store @count
+push 1
+store @i
+while @i < @count
+load @vec
+load @i
+load @scratch
+call VectorGet
+if
+else
+push 0
+return
+end
+load @i
+store @j
+while @j > 0
+load @vec
+load @j
+dec
+call VectorAt
+store @left
+load @left
+load @scratch
+load @compare
+calli 2 t_int64
+store @difference
+if @difference <= 0
+break
+end
+load @vec
+load @j
+load @left
+call VectorSet
+if
+else
+push 0
+return
+end
+load @j
+dec
+store @j
+end
+load @vec
+load @j
+load @scratch
+call VectorSet
+if
+else
+push 0
+return
+end
+load @i
+inc
+store @i
+end
+push 1
+return
+}
+func TextFlush(t_uint64 words,t_uint64 token,t_uint64 scratch) -> t_uint64 {
+local { t_uint64 size 0 t_uint64 data 0 t_uint64 count 0 t_uint64 i 0 t_uint64 entryptr 0 t_uint64 arena 0 t_uint64 name 0 t_uint64 frequency 0 t_uint64 status 0 t_uint64 records 0 }
+load @token
+call VectorMutable
+if
+else
+push 0
+return
+end
+load @token
+push 32
+add
+load t_uint64
+push 1
+eq
+if
+else
+push 0
+return
+end
+load @token
+push 16
+add
+load t_uint64
+store @size
+if @size == 0
+push 1
+return
+end
+load @words
+call VectorMutable
+if
+else
+push 0
+return
+end
+load @words
+push 32
+add
+load t_uint64
+push 24
+eq
+if
+else
+push 0
+return
+end
+load @token
+push 8
+add
+load t_uint64
+store @data
+load @words
+push 8
+add
+load t_uint64
+store @records
+load @words
+push 16
+add
+load t_uint64
+store @count
+while @i < @count
+load @records
+load @i
+push 24
+mul
+add
+store @entryptr
+load @entryptr
+push 8
+add
+load t_uint64
+load @size
+eq
+if
+load @entryptr
+load t_uint64
+load @data
+load @size
+call ft_memcmp
+if
+else
+load @entryptr
+push 16
+add
+load t_uint64
+store @frequency
+load @frequency
+push 18446744073709551615
+eq
+if
+push 0
+return
+end
+load @entryptr
+push 16
+add
+load @frequency
+inc
+store t_uint64
+load @token
+call VectorClear
+return
+end
+end
+load @i
+inc
+store @i
+end
+load @words
+load t_uint64
+store @arena
+load @arena
+load @size
+call ArenaAlloc
+store @name
+if @name == 0
+push 0
+return
+end
+load @name
+load @data
+load @size
+call ft_memcpy
+pop
+load @scratch
+load @name
+store t_uint64
+load @scratch
+push 8
+add
+load @size
+store t_uint64
+load @scratch
+push 16
+add
+push 1
+store t_uint64
+load @words
+load @scratch
+call VectorPush
+store @status
+if @status == 0
+load @arena
+load @name
+call ArenaFree
+pop
+push 0
+return
+end
+load @token
+call VectorClear
+return
+}
+func TextFeed(t_uint64 words,t_uint64 token,t_uint64 data,t_uint64 length,t_uint64 scratch) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 bytevalue 0 }
+while @i < @length
+load @data
+load @i
+add
+load t_byte
+store @bytevalue
+load @bytevalue
+call TextIsWord
+if
+load @scratch
+load @bytevalue
+call ft_tolower
+store t_byte
+load @token
+load @scratch
+call VectorPush
+if
+else
+push 0
+return
+end
+else
+load @words
+load @token
+load @scratch
+call TextFlush
+if
+else
+push 0
+return
+end
+end
+load @i
+inc
+store @i
+end
+push 1
+return
+}
+func TextTotal(t_uint64 words) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 count 0 t_uint64 entryptr 0 t_uint64 total 0 }
+load @words
+call VectorLength
+store @count
+while @i < @count
+load @words
+load @i
+call VectorAt
+store @entryptr
+load @entryptr
+push 16
+add
+load t_uint64
+load @total
+add
+store @total
+load @i
+inc
+store @i
+end
+load @total
+return
+}
+func TextDecimal(t_uint64 number,t_uint64 destination) -> t_uint64 {
+local { t_uint64 value 0 t_uint64 count 0 t_uint64 i 0 t_uint64 left 0 t_uint64 right 0 t_uint64 a 0 t_uint64 b 0 }
+load @number
+store @value
+loop
+load @destination
+load @count
+add
+load @value
+push 10
+umod
+push 48
+add
+store t_byte
+load @count
+inc
+store @count
+load @value
+push 10
+udiv
+store @value
+if @value == 0
+break
+end
+end
+load @count
+push 2
+udiv
+store @right
+while @i < @right
+load @destination
+load @i
+add
+store @left
+load @destination
+load @count
+dec
+load @i
+sub
+add
+store @a
+load @left
+load t_byte
+store @b
+load @left
+load @a
+load t_byte
+store t_byte
+load @a
+load @b
+store t_byte
+load @i
+inc
+store @i
+end
+load @count
+return
+}
+func TextWrite(t_uint64 resource,t_uint64 data,t_uint64 length,t_uint64 resultcell,t_uint64 offsetcell) -> t_uint64 {
+local { t_uint64 cursor 0 t_uint64 size 0 t_uint64 offset 0 t_uint64 status 0 t_uint64 count 0 }
+while @cursor < @length
+load @length
+load @cursor
+sub
+store @size
+if @size > 4096
+push 4096
+store @size
+end
+load @offsetcell
+load t_uint64
+store @offset
+load @resource
+load @offset
+load @data
+load @cursor
+add
+load @size
+load @resultcell
+call HostWrite
+store @status
+if @status != 0
+push 0
+return
+end
+load @resultcell
+load t_uint64
+store @count
+if @count == 0
+push 0
+return
+end
+load @count
+load @size
+ugt
+if
+push 0
+return
+end
+load @offsetcell
+load @offset
+load @count
+add
+store t_uint64
+load @cursor
+load @count
+add
+store @cursor
+end
+push 1
+return
+}
+func TextCleanup(t_uint64 words,t_uint64 token,t_uint64 io) -> t_uint64 {
+local { t_uint64 i 0 t_uint64 count 0 t_uint64 entryptr 0 t_uint64 arena 0 t_uint64 status 0 }
+load @words
+load t_uint64
+store @arena
+load @words
+call VectorLength
+store @count
+while @i < @count
+load @words
+load @i
+call VectorAt
+store @entryptr
+load @arena
+load @entryptr
+load t_uint64
+call ArenaFree
+pop
+load @i
+inc
+store @i
+end
+load @words
+call VectorDestroy
+pop
+load @token
+call VectorDestroy
+pop
+if @io != 0
+load @arena
+load @io
+call ArenaFree
+pop
+end
+push 1
+return
+}
+func TextMain(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_uint64 chunk 0 t_uint64 capacity 0 t_uint64 arena 0 t_uint64 words 0 t_uint64 token 0 t_uint64 scratch 0 t_uint64 digits 0 t_uint64 resultcell 0 t_uint64 offsetcell 0 t_uint64 reader 0 t_uint64 writer 0 t_uint64 io 0 t_uint64 offset 0 t_uint64 count 0 t_uint64 status 0 t_uint64 unique 0 t_uint64 i 0 t_uint64 entryptr 0 t_int64 outcome 0 }
+if @length != 65536
+push -1
+return
+end
+load @buffer
+push 40
+add
+load t_uint64
+store @chunk
+load @buffer
+push 48
+add
+load t_uint64
+store @capacity
+if @chunk == 0
+push -1
+return
+end
+if @chunk > 4096
+push -1
+return
+end
+if @capacity > 65248
+push -1
+return
+end
+load @buffer
+push 256
+add
+store @arena
+load @buffer
+push 80
+add
+store @words
+load @buffer
+push 120
+add
+store @token
+load @buffer
+push 160
+add
+store @scratch
+load @buffer
+push 208
+add
+store @digits
+load @buffer
+push 72
+add
+store @resultcell
+load @buffer
+push 24
+add
+store @offsetcell
+load @buffer
+push 56
+add
+load t_uint64
+store @reader
+load @buffer
+push 64
+add
+load t_uint64
+store @writer
+load @arena
+load @capacity
+call ArenaInit
+pop
+load @words
+load @arena
+push 24
+call VectorInit
+store @status
+if @status == 0
+push -1
+return
+end
+load @token
+load @arena
+push 1
+call VectorInit
+store @status
+if @status == 0
+load @words
+call VectorDestroy
+pop
+push -1
+return
+end
+loop
+load @arena
+load @chunk
+call ArenaAlloc
+store @io
+if @io == 0
+push -2
+store @outcome
+break
+end
+loop
+load @reader
+load @offset
+load @io
+load @chunk
+load @resultcell
+call HostRead
+store @status
+if @status != 0
+push -3
+store @outcome
+break
+end
+load @resultcell
+load t_uint64
+store @count
+if @count == 0
+break
+end
+load @buffer
+load @offset
+load @count
+add
+store t_uint64
+load @words
+load @token
+load @io
+load @count
+load @scratch
+call TextFeed
+store @status
+if @status == 0
+push -2
+store @outcome
+break
+end
+load @offset
+load @count
+add
+store @offset
+end
+if @outcome != 0
+break
+end
+load @words
+load @token
+load @scratch
+call TextFlush
+store @status
+if @status == 0
+push -2
+store @outcome
+break
+end
+load @words
+fnaddr TextRecordCompare
+load @scratch
+call TextSort
+store @status
+if @status == 0
+push -4
+store @outcome
+break
+end
+load @buffer
+push 240
+add
+push 9
+store t_byte
+load @buffer
+push 241
+add
+push 10
+store t_byte
+load @words
+call VectorLength
+store @unique
+while @i < @unique
+load @words
+load @i
+call VectorAt
+store @entryptr
+load @writer
+load @entryptr
+load t_uint64
+load @entryptr
+push 8
+add
+load t_uint64
+load @resultcell
+load @offsetcell
+call TextWrite
+store @status
+if @status == 0
+push -5
+store @outcome
+break
+end
+load @writer
+load @buffer
+push 240
+add
+push 1
+load @resultcell
+load @offsetcell
+call TextWrite
+store @status
+if @status == 0
+push -5
+store @outcome
+break
+end
+load @entryptr
+push 16
+add
+load t_uint64
+load @digits
+call TextDecimal
+store @count
+load @writer
+load @digits
+load @count
+load @resultcell
+load @offsetcell
+call TextWrite
+store @status
+if @status == 0
+push -5
+store @outcome
+break
+end
+load @writer
+load @buffer
+push 241
+add
+push 1
+load @resultcell
+load @offsetcell
+call TextWrite
+store @status
+if @status == 0
+push -5
+store @outcome
+break
+end
+load @i
+inc
+store @i
+end
+break
+end
+load @buffer
+push 8
+add
+load @words
+call TextTotal
+store t_uint64
+load @buffer
+push 16
+add
+load @words
+call VectorLength
+store t_uint64
+load @buffer
+push 32
+add
+load @outcome
+store t_uint64
+load @words
+load @token
+load @io
+call TextCleanup
+pop
+load @outcome
+return
+}
+}

@@ -1,0 +1,147 @@
+module (name:"libft_arena_strings",version:"0.1",author:"Ubytec") {
+func ft_strdup_arena(t_uint64 arena,t_uint64 source) -> t_uint64 {
+local { t_uint64 length 0 t_uint64 destination 0 t_uint64 ignored 0 }
+load @source
+call StringLength
+store @length
+load @length
+push 65536
+uge
+if
+push 0
+return
+end
+load @length
+inc
+store @length
+load @arena
+load @length
+call ArenaAlloc
+store @destination
+if @destination == 0
+push 0
+return
+end
+load @destination
+load @source
+load @length
+call ft_strlcpy
+store @ignored
+load @destination
+return
+}
+func ft_substr_arena(t_uint64 arena,t_uint64 source,t_uint64 start,t_uint64 count) -> t_uint64 {
+local { t_uint64 length 0 t_uint64 available 0 t_uint64 destination 0 t_uint64 i 0 }
+load @source
+call StringLength
+store @length
+load @start
+load @length
+uge
+if
+push 0
+store @count
+else
+load @length
+load @start
+sub
+store @available
+load @count
+load @available
+ugt
+if
+load @available
+store @count
+end
+end
+load @count
+push 65536
+uge
+if
+push 0
+return
+end
+load @arena
+load @count
+inc
+call ArenaAlloc
+store @destination
+if @destination == 0
+push 0
+return
+end
+while @i < @count
+load @destination
+load @i
+add
+load @source
+load @start
+add
+load @i
+add
+load t_byte
+store t_byte
+load @i
+inc
+store @i
+end
+load @destination
+load @count
+add
+push 0
+store t_byte
+load @destination
+return
+}
+func ft_strjoin_arena(t_uint64 arena,t_uint64 left,t_uint64 right) -> t_uint64 {
+local { t_uint64 first 0 t_uint64 second 0 t_uint64 total 0 t_uint64 destination 0 t_uint64 ignored 0 }
+load @left
+call StringLength
+store @first
+load @right
+call StringLength
+store @second
+load @first
+push 65536
+uge
+if
+push 0
+return
+end
+load @second
+push 65536
+uge
+if
+push 0
+return
+end
+load @first
+load @second
+add
+inc
+store @total
+load @arena
+load @total
+call ArenaAlloc
+store @destination
+if @destination == 0
+push 0
+return
+end
+load @destination
+load @left
+load @total
+call ft_strlcpy
+store @ignored
+load @destination
+load @first
+add
+load @right
+load @second
+inc
+call ft_strlcpy
+store @ignored
+load @destination
+return
+}
+}

@@ -1,0 +1,583 @@
+import DualWrite from pair_receiver.DualWrite (t_loan_rw,t_loan_rw,t_uint64) -> t_int64
+import Reverse from pair_receiver.Reverse (t_loan_ro,t_loan_rw,t_uint64) -> t_int64
+import Mixed from pair_receiver.Mixed (t_int64,t_loan_ro,t_uint64,t_loan_rw) -> t_int64
+import Scalar from pair_receiver.Scalar (t_int64,t_uint64) -> t_int64
+import Empty from pair_receiver.Empty () -> t_int64
+import Six from pair_receiver.Six (t_int64,t_loan_rw,t_uint64,t_loan_ro,t_uint64,t_int64) -> t_int64
+import Copy from pair_receiver.Copy (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+import Partial from pair_receiver.Partial (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+import Spin from pair_receiver.Spin (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+import Negative from pair_receiver.Negative (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+export PairMain as PairMain
+module (name:"generic_pair",version:"0.1",author:"Ubytec") {
+func PairMain(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_uint64 arena 0 t_uint64 dst 0 t_uint64 src 0 t_uint64 second 0 t_uint64 node0 0 t_uint64 node1 0 t_uint64 mode 0 t_uint64 i 0 t_uint64 off 4 t_uint64 sourceoff 2 t_uint64 span 8 t_uint64 count 8 t_uint64 budget 1000 t_uint64 ignored 0 t_int64 status 0 }
+if @length != 2208
+push -10
+return
+end
+load @buffer
+load t_uint64
+store @mode
+load @buffer
+push 128
+add
+store @arena
+load @arena
+push 2048
+call ArenaInit
+store @ignored
+load @arena
+push 16
+call ArenaAlloc
+store @dst
+load @arena
+push 16
+call ArenaAlloc
+store @src
+load @src
+store @second
+load @arena
+load @dst
+call ArenaFind
+store @node0
+load @arena
+load @src
+call ArenaFind
+store @node1
+while @i < 16
+load @dst
+load @i
+add
+load @i
+push 1
+add
+store t_byte
+load @src
+load @i
+add
+load @i
+push 97
+add
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+if @mode == 1
+load @src
+push 1
+add
+store @second
+end
+if @mode == 2
+load @node1
+push 24
+add
+push 65536
+store t_uint64
+end
+if @mode == 3
+load @arena
+load @dst
+call ArenaPin
+store @ignored
+load @arena
+load @src
+call ArenaPin
+store @ignored
+end
+if @mode == 20
+load @dst
+store @second
+load @node0
+push 24
+add
+push 65535
+store t_uint64
+end
+if @mode == 4
+load @dst
+store @second
+end
+if @mode == 6
+push 25
+store @budget
+end
+if @mode == 7
+push 0
+store @budget
+end
+if @mode == 10
+push 18446744073709551615
+store @off
+end
+if @mode == 11
+push 18446744073709551615
+store @span
+end
+if @mode == 12
+push 0
+store @span
+push 0
+store @count
+end
+if @mode == 0
+load @arena
+load @dst
+load @off
+load @span
+load @arena
+load @second
+load @sourceoff
+load @span
+load @count
+load @budget
+load @buffer
+push 16
+add
+call Arena_Copy
+store @status
+end
+if @mode == 1
+load @arena
+load @dst
+load @off
+load @span
+load @arena
+load @second
+load @sourceoff
+load @span
+load @count
+load @budget
+load @buffer
+push 16
+add
+call Arena_Copy
+store @status
+end
+if @mode == 2
+load @arena
+load @dst
+load @off
+load @span
+load @arena
+load @second
+load @sourceoff
+load @span
+load @count
+load @budget
+load @buffer
+push 16
+add
+call Arena_Copy
+store @status
+end
+if @mode == 3
+load @arena
+load @dst
+load @off
+load @span
+load @arena
+load @second
+load @sourceoff
+load @span
+load @count
+load @budget
+load @buffer
+push 16
+add
+call Arena_Copy
+store @status
+end
+if @mode == 4
+load @arena
+load @dst
+load @off
+load @span
+load @arena
+load @second
+load @sourceoff
+load @span
+load @count
+load @budget
+load @buffer
+push 16
+add
+call Arena_Copy
+store @status
+end
+if @mode == 5
+load @arena
+load @dst
+load @off
+load @span
+load @arena
+load @second
+load @sourceoff
+load @span
+load @count
+load @budget
+load @buffer
+push 16
+add
+call Arena_Partial
+store @status
+end
+if @mode == 6
+load @arena
+load @dst
+load @off
+load @span
+load @arena
+load @second
+load @sourceoff
+load @span
+load @count
+load @budget
+load @buffer
+push 16
+add
+call Arena_Spin
+store @status
+end
+if @mode == 7
+load @arena
+load @dst
+load @off
+load @span
+load @arena
+load @second
+load @sourceoff
+load @span
+load @count
+load @budget
+load @buffer
+push 16
+add
+call Arena_Spin
+store @status
+end
+if @mode == 8
+load @arena
+load @dst
+load @off
+load @span
+load @arena
+load @second
+load @sourceoff
+load @span
+load @count
+load @budget
+load @buffer
+push 16
+add
+call Arena_Negative
+store @status
+end
+if @mode == 9
+load @arena
+load @dst
+load @off
+load @span
+load @arena
+load @second
+load @sourceoff
+load @span
+load @count
+load @budget
+load @buffer
+push 16
+add
+call Arena_Partial
+store @status
+end
+if @mode == 10
+load @arena
+load @dst
+load @off
+load @span
+load @arena
+load @second
+load @sourceoff
+load @span
+load @count
+load @budget
+load @buffer
+push 16
+add
+call Arena_Copy
+store @status
+end
+if @mode == 11
+load @arena
+load @dst
+load @off
+load @span
+load @arena
+load @second
+load @sourceoff
+load @span
+load @count
+load @budget
+load @buffer
+push 16
+add
+call Arena_Copy
+store @status
+end
+if @mode == 12
+load @arena
+load @dst
+load @off
+load @span
+load @arena
+load @second
+load @sourceoff
+load @span
+load @count
+load @budget
+load @buffer
+push 16
+add
+call Arena_Copy
+store @status
+end
+if @mode == 13
+load @arena
+load @dst
+load @off
+load @span
+load @arena
+load @second
+load @sourceoff
+load @span
+load @count
+load @budget
+load @buffer
+push 16
+add
+call Arena_Copy
+store @status
+end
+if @mode == 14
+load @arena
+load @dst
+load @off
+load @span
+load @arena
+load @second
+load @sourceoff
+load @span
+load @count
+load @budget
+load @buffer
+push 16
+add
+call Arena_DualWrite
+store @status
+end
+if @mode == 15
+load @arena
+load @dst
+load @off
+load @span
+load @arena
+load @second
+load @sourceoff
+load @span
+load @count
+load @budget
+load @buffer
+push 16
+add
+call Arena_Reverse
+store @status
+end
+if @mode == 16
+push -17
+load @arena
+load @src
+load @sourceoff
+load @span
+push 4294967297
+load @arena
+load @dst
+load @off
+load @span
+load @budget
+load @buffer
+push 16
+add
+call Arena_Mixed
+store @status
+end
+if @mode == 17
+push -17
+push 4294967297
+load @budget
+load @buffer
+push 16
+add
+call Arena_Scalar
+store @status
+end
+if @mode == 18
+load @budget
+load @buffer
+push 16
+add
+call Arena_Empty
+store @status
+end
+if @mode == 19
+push -17
+load @arena
+load @dst
+load @off
+load @span
+push 4294967297
+load @arena
+load @src
+load @sourceoff
+load @span
+push 10
+push -3
+load @budget
+load @buffer
+push 16
+add
+call Arena_Six
+store @status
+end
+if @mode == 20
+load @arena
+load @dst
+load @off
+load @span
+load @arena
+load @second
+load @sourceoff
+load @span
+load @count
+load @budget
+load @buffer
+push 16
+add
+call Arena_Copy
+store @status
+end
+load @buffer
+push 8
+add
+load @status
+store t_uint64
+load @buffer
+push 24
+add
+load @node0
+push 24
+add
+load t_uint64
+store t_uint64
+load @buffer
+push 32
+add
+load @node1
+push 24
+add
+load t_uint64
+store t_uint64
+push 0
+store @i
+while @i < 16
+load @buffer
+push 80
+add
+load @i
+add
+load @dst
+load @i
+add
+load t_byte
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+if @mode == 20
+load @node0
+push 24
+add
+push 0
+store t_uint64
+end
+if @mode == 2
+load @node1
+push 24
+add
+push 0
+store t_uint64
+end
+if @mode == 3
+load @arena
+load @dst
+call ArenaUnpin
+store @ignored
+load @arena
+load @src
+call ArenaUnpin
+store @ignored
+end
+load @arena
+load @dst
+push 0
+push 16
+load @arena
+load @src
+push 0
+push 16
+push 16
+push 1000
+load @buffer
+push 56
+add
+call Arena_Copy
+store @ignored
+load @buffer
+push 48
+add
+load @ignored
+store t_uint64
+load @arena
+load @src
+call ArenaFree
+store @ignored
+load @buffer
+push 64
+add
+load @ignored
+store t_uint64
+load @arena
+load @dst
+call ArenaFree
+store @ignored
+load @buffer
+push 72
+add
+load @ignored
+store t_uint64
+load @buffer
+push 40
+add
+load @arena
+push 8
+add
+load t_uint64
+store t_uint64
+load @status
+return
+}
+}

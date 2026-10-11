@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using TextMateSharp.Internal.Grammars.Reader;
 using TextMateSharp.Internal.Themes.Reader;
 using TextMateSharp.Internal.Types;
@@ -16,6 +16,8 @@ namespace Ubytec.Language.Grammar
     public class UbytecRegistryOptions : IRegistryOptions
     {
         private static readonly HttpClient _httpClient = new();
+        /// <summary>Optional local grammar JSON, used without network access.</summary>
+        public string? GrammarJson { get; set; }
 
         /// <summary>
         /// URL of the TextMate grammar (lexicon) JSON file defining Ubytec syntax.
@@ -47,6 +49,12 @@ namespace Ubytec.Language.Grammar
         public IRawGrammar? GetGrammar(string scopeName)
 #nullable disable
         {
+            if (GrammarJson is not null)
+            {
+                using var stream = GetStreamWithStreamWriter(GrammarJson);
+                using var reader = new StreamReader(stream);
+                return GrammarReader.ReadGrammarSync(reader);
+            }
             var lexiconFetchTask = FetchLexicon(LexiconUrl?.AbsoluteUri);
             var lexiconReadTask = lexiconFetchTask.ContinueWith(task =>
             {

@@ -1,0 +1,22 @@
+---
+# Keep Codacy focused on the shipped interpreter. Runtime/test quality is
+# enforced separately by the .NET analyzers and the full GitHub Actions suite.
+# The corpus and isolation prototypes intentionally contain fault-injection,
+# hostile fixtures, reference implementations, and benchmark harnesses that
+# would otherwise dominate static-analysis results without representing the
+# shipped interpreter.
+exclude_paths:
+  - "README.md"
+  - "Ubytec.Tests/**"
+  - "Wiki/**"
+  - "corpus/**"
+  - "prototypes/**"
+
+# SonarC# design rules conflict with deliberate public bytecode/API contracts
+# in Ubytec (compile-time opcode constants, partial operation classes and
+# assembly-level interop attributes). Keep Ubytec visible to the other Codacy
+# analyzers instead of globally excluding production code.
+engines:
+  sonarcsharp:
+    exclude_paths:
+      - "Ubytec/**/*.cs"

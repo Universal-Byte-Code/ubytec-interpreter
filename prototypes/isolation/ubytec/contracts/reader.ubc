@@ -1,0 +1,23 @@
+export Read as Read
+export Read as Hidden
+module (name:"tools", version:"0.1", author:"Ubytec")
+{
+func Read(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+local { t_uint64 index 0 t_int64 sum 0 }
+while @index < @length
+load @sum
+load @buffer
+load @index
+add
+load t_byte
+add
+store @sum
+load @index
+inc
+store @index
+end
+load @sum
+return
+}
+}

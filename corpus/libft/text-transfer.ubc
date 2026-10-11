@@ -1,0 +1,82 @@
+export TextMain as TextMain
+module (name:"text_transfer_benchmark",version:"0.1",author:"Ubytec") {
+func TextMain(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_uint64 chunk 0 t_uint64 count 0 t_uint64 cursor 0 t_uint64 io 0 t_uint64 resultcell 0 t_uint64 offsetcell 0 }
+if @length != 65536
+push -1
+return
+end
+load @buffer
+push 40
+add
+load t_uint64
+store @chunk
+if @chunk == 0
+push -1
+return
+end
+if @chunk > 4096
+push -1
+return
+end
+load @buffer
+push 272
+add
+store @io
+load @buffer
+push 72
+add
+store @resultcell
+load @buffer
+push 24
+add
+store @offsetcell
+loop
+push 257
+load @cursor
+load @io
+load @chunk
+load @resultcell
+call HostRead
+if
+push -3
+return
+end
+load @resultcell
+load t_uint64
+store @count
+if @count == 0
+break
+end
+load @count
+load @chunk
+ugt
+if
+push -3
+return
+end
+load @buffer
+load @cursor
+load @count
+add
+store t_uint64
+push 258
+load @io
+load @count
+load @resultcell
+load @offsetcell
+call TextWrite
+if
+else
+push -5
+return
+end
+load @cursor
+load @count
+add
+store @cursor
+end
+push 0
+return
+}
+}

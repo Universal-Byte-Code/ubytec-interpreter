@@ -1,4 +1,4 @@
-﻿using Ubytec.Language.Exceptions;
+using Ubytec.Language.Exceptions;
 using Ubytec.Language.Operations.Interfaces;
 using Ubytec.Language.Syntax.ExpressionFragments;
 using Ubytec.Language.Syntax.Model;
@@ -40,12 +40,7 @@ namespace Ubytec.Language.Operations
                 switch (blockContext.DeclaredByKeyword)
                 {
                     case "while":
-                        sb.AppendLine("  pop rax       ; Load loop counter")
-                          .AppendLine("  dec rax       ; Decrement counter")
-                          .AppendLine("  push rax      ; Store updated counter")
-                          .AppendLine("  cmp rax, 0    ; Check if counter is zero")
-                          .AppendLine($"  je {blockContext.EndLabel} ; Exit loop if counter == 0")
-                          .AppendLine($"  jmp {blockContext.StartLabel} ; Continue loop if not zero");
+                        sb.AppendLine($"  jmp {blockContext.StartLabel} ; Reevaluate WHILE condition");
                         break;
 
                     case "loop":
@@ -53,6 +48,8 @@ namespace Ubytec.Language.Operations
                         break;
 
                     case "branch":
+                        sb.AppendLine($"jmp {scopes.Peek().EndLabel} ; Finish matched SWITCH branch");
+                        break;
                     case "switch":
                     case "block":
                     case "func":
@@ -66,6 +63,9 @@ namespace Ubytec.Language.Operations
                 }
 
                 sb.AppendLine($"{blockContext.EndLabel}: ; END of {blockContext.StartLabel}");
+                if (blockContext.DeclaredByKeyword == "block" && blockContext.ExpectedReturnType is { } resultType &&
+                    resultType.Type != Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Void)
+                    sb.AppendLine("pop rax\n  " + FunctionCode.Canonicalize(resultType) + "\n  push rax");
                 return sb.ToString();
             }
         }

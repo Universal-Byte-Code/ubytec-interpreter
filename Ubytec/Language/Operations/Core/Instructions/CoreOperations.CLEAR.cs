@@ -1,4 +1,3 @@
-﻿using Ubytec.Language.Exceptions;
 using Ubytec.Language.Operations.Interfaces;
 using Ubytec.Language.Syntax.ExpressionFragments;
 using Ubytec.Language.Syntax.Model;
@@ -13,17 +12,19 @@ namespace Ubytec.Language.Operations
             public const byte OP = 0x0D;
             public readonly byte OpCode => OP;
 
-            public static IOpCode CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands)
-            {
-                // CLEAR no acepta ningún operando
-                if (operands.Length > 0)
-                    throw new SyntaxException(0x0DBADBEEF, $"CLEAR opcode should not receive any operands, but received: {operands.Length}");
+            public static IOpCode CreateInstruction(VariableExpressionFragment[] variables, SyntaxToken[] tokens, params ValueType[] operands) =>
+                CreateOperandless(operands, 0x0DBADBEEF, nameof(CLEAR), static () => new CLEAR());
 
-                return new CLEAR();
+            string IUbytecEntity.Compile(CompilationScopes scopes)
+            {
+                var frame = scopes.All.FirstOrDefault(x => x.DeclaredByKeyword is "func" or "action");
+                return frame is null || frame.FrameSize == 0 ? "mov rsp, rbp" : $"lea rsp, [rbp - {frame.FrameSize}]";
             }
 
-            public string Compile(CompilationScopes scopes) => ((IOpCode)this).Compile(scopes);
-            string IUbytecEntity.Compile(CompilationScopes scopes) => "mov rsp, rbp   ; CLEAR - Reset stack pointer to base pointer\n  ; Stack is now empty";
+            public string Compile(CompilationScopes scopes)
+            {
+                return ((IOpCode)this).Compile(scopes);
+            }
         }
     }
 }

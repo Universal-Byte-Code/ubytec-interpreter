@@ -35,6 +35,16 @@ namespace Ubytec.Language.Operations.Extended
             ExtKey,
             IOpCodeFactory.OpCodeFactoryDelegate> _table = new();
 
+        static ExtendedOpcodeFactory()
+        {
+            // Value-type static constructors are not triggered by a factory lookup.
+            // Register built-ins here so their first use is through Create.
+            Register(ExtendedStackOperations.PUSH16.GROUP, ExtendedStackOperations.PUSH16.OP, ExtendedStackOperations.PUSH16.CreateInstruction);
+            Register(ExtendedStackOperations.DROP16.GROUP, ExtendedStackOperations.DROP16.OP, ExtendedStackOperations.DROP16.CreateInstruction);
+            Register(ExtendedStackOperations.PICK16.GROUP, ExtendedStackOperations.PICK16.OP, ExtendedStackOperations.PICK16.CreateInstruction);
+            Register(ExtendedStackOperations.ROLL16.GROUP, ExtendedStackOperations.ROLL16.OP, ExtendedStackOperations.ROLL16.CreateInstruction);
+        }
+
         /// <summary>Registers (or overwrites) an extended opcode.</summary>
         public static void Register(
             byte extensionGroup,

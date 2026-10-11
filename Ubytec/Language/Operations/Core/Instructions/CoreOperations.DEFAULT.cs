@@ -1,4 +1,4 @@
-﻿using Ubytec.Language.Exceptions;
+using Ubytec.Language.Exceptions;
 using Ubytec.Language.Operations.Interfaces;
 using Ubytec.Language.Syntax.ExpressionFragments;
 using Ubytec.Language.Syntax.Model;
@@ -23,7 +23,16 @@ namespace Ubytec.Language.Operations
             }
 
             public string Compile(CompilationScopes scopes) => ((IOpCode)this).Compile(scopes);
-            string IUbytecEntity.Compile(CompilationScopes scopes) => "mov rax, 1  ; DEFAULT non-null placeholder\n  push rax";
+            string IUbytecEntity.Compile(CompilationScopes scopes)
+            {
+                if (scopes.PeekOrDefault() is { DeclaredByKeyword: "switch" } selection)
+                {
+                    if (selection.HasDefault) throw new SyntaxStackException(0xBAD085, "Duplicate SWITCH DEFAULT.");
+                    selection.HasDefault = true;
+                    return "; SWITCH default";
+                }
+                return "mov rax, 1\n  push rax";
+            }
         }
     }
 }

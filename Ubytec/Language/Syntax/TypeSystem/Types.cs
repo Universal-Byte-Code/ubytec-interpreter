@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 
 namespace Ubytec.Language.Syntax.TypeSystem
 {
@@ -115,7 +115,7 @@ namespace Ubytec.Language.Syntax.TypeSystem
                 if (fTo && !explicitAllowed && !fFrom) return false;
 
                 // widening
-                if (rFrom <= rTo && (!sFrom || sTo) && (fFrom == fTo))
+                if (rFrom <= rTo && (sFrom == sTo || (!sFrom && sTo && rFrom < rTo)) && (fFrom == fTo))
                     return true;
 
                 // explicit cast path

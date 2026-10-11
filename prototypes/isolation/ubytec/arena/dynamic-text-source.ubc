@@ -1,0 +1,316 @@
+import Tokenize from lexer.ParseFields (t_loan_rw,t_loan_ro,t_uint64,t_uint64) -> t_int64
+import Normalize from mapper.UpperText (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+import Render from writer.BuildText (t_loan_rw,t_loan_ro,t_uint64,t_uint64) -> t_int64
+export DynamicText as DynamicText
+module (name:"dynamic_text",version:"0.1",author:"Ubytec") {
+func TextPipeline(t_uint64 buffer,t_uint64 arena,t_uint64 inputbuf,t_uint64 state,t_uint64 output,t_uint64 count,t_uint64 table,t_uint64 workspace,t_uint64 outcap,t_uint64 fields) -> t_int64 {
+local { t_int64 status 0 t_int64 result 0 }
+load @arena
+load @state
+push 0
+load @table
+load @arena
+load @inputbuf
+push 0
+load @count
+load @count
+load @fields
+push 1000
+load @buffer
+push 48
+add
+call Arena_Tokenize
+store @status
+if @status != 0
+load @buffer
+push 56
+add
+load @status
+store t_uint64
+push -100
+load @status
+sub
+return
+end
+load @buffer
+push 48
+add
+load t_uint64
+store @result
+if @result < 0
+load @result
+return
+end
+load @arena
+load @state
+load @table
+load @count
+load @arena
+load @inputbuf
+push 0
+load @count
+load @count
+push 1000
+load @buffer
+push 48
+add
+call Arena_Normalize
+store @status
+if @status != 0
+load @buffer
+push 56
+add
+load @status
+store t_uint64
+push -100
+load @status
+sub
+return
+end
+load @arena
+load @output
+push 0
+load @outcap
+load @arena
+load @state
+push 0
+load @workspace
+load @workspace
+load @outcap
+push 1000
+load @buffer
+push 48
+add
+call Arena_Render
+store @status
+if @status != 0
+load @buffer
+push 56
+add
+load @status
+store t_uint64
+push -100
+load @status
+sub
+return
+end
+load @buffer
+push 48
+add
+load t_uint64
+return
+}
+func DynamicText(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_uint64 count 0 t_uint64 capacity 0 t_uint64 fields 0 t_uint64 outcap 0 t_uint64 published 0 t_uint64 source 0 t_uint64 arena 0 t_uint64 inputbuf 0 t_uint64 state 0 t_uint64 output 0 t_uint64 reserve 0 t_uint64 table 0 t_uint64 workspace 0 t_uint64 i 0 t_uint64 ignored 0 t_int64 result -10 }
+if @length < 96
+push -10
+return
+end
+load @buffer
+load t_uint64
+store @count
+load @buffer
+push 8
+add
+load t_uint64
+store @capacity
+load @buffer
+push 16
+add
+load t_uint64
+store @fields
+load @buffer
+push 24
+add
+load t_uint64
+store @outcap
+if @count > 8192
+push -10
+return
+end
+if @capacity > 32768
+push -10
+return
+end
+if @fields > 256
+push -10
+return
+end
+if @outcap > 8193
+push -10
+return
+end
+load @count
+load @capacity
+add
+push 96
+add
+load @outcap
+add
+load @length
+sub
+if
+push -10
+return
+end
+load @buffer
+push 64
+add
+store @source
+load @source
+load @count
+add
+store @arena
+load @arena
+load @capacity
+call ArenaInit
+store @ignored
+load @arena
+push 16
+add
+load @capacity
+add
+store @published
+load @count
+store @reserve
+if @reserve == 0
+push 1
+store @reserve
+end
+load @fields
+push 16
+mul
+push 32
+add
+store @table
+load @table
+load @reserve
+add
+store @workspace
+load @arena
+load @reserve
+call ArenaAlloc
+store @inputbuf
+load @arena
+load @workspace
+call ArenaAlloc
+store @state
+load @outcap
+store @reserve
+if @reserve == 0
+push 1
+store @reserve
+end
+load @arena
+load @reserve
+call ArenaAlloc
+store @output
+push -20
+store @result
+if @inputbuf != 0
+if @state != 0
+if @output != 0
+while @i < @count
+load @inputbuf
+load @i
+add
+load @source
+load @i
+add
+load t_byte
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+load @state
+push 8
+add
+load @fields
+store t_uint64
+load @state
+push 16
+add
+load @count
+store t_uint64
+load @workspace
+load @table
+sub
+store @reserve
+load @state
+push 24
+add
+load @reserve
+store t_uint64
+load @buffer
+load @arena
+load @inputbuf
+load @state
+load @output
+load @count
+load @table
+load @workspace
+load @outcap
+load @fields
+call TextPipeline
+store @result
+if @result >= 0
+load @buffer
+push 32
+add
+load @result
+store t_uint64
+load @buffer
+push 40
+add
+load @state
+load t_uint64
+store t_uint64
+push 0
+store @i
+while @i < @outcap
+load @published
+load @i
+add
+load @output
+load @i
+add
+load t_byte
+store t_byte
+load @i
+push 1
+add
+store @i
+end
+end
+end
+end
+end
+if @output != 0
+load @arena
+load @output
+call ArenaFree
+store @ignored
+end
+if @state != 0
+load @arena
+load @state
+call ArenaFree
+store @ignored
+end
+if @inputbuf != 0
+load @arena
+load @inputbuf
+call ArenaFree
+store @ignored
+end
+load @buffer
+push 48
+add
+load @result
+store t_uint64
+load @result
+return
+}
+}

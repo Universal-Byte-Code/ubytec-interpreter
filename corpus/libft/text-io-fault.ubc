@@ -1,0 +1,32 @@
+export TextMain as TextMain
+module (name:"io_fault",version:"0.1",author:"Ubytec") {
+func TextMain(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+load @buffer
+push 512
+add
+push 98
+store t_byte
+load @buffer
+push 513
+add
+push 97
+store t_byte
+load @buffer
+push 514
+add
+push 100
+store t_byte
+push 258
+push 0
+load @buffer
+push 512
+add
+push 3
+load @buffer
+push 72
+add
+call HostWrite
+pop
+trap
+}
+}

@@ -1,0 +1,87 @@
+module (name:"independent_faults", version:"0.1", author:"Ubytec")
+{
+func ReadOnlyWrite(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    local { t_uint64 index 0 }
+    while @index < @length
+        load @buffer
+        load @index
+        add
+        push 90
+        store t_byte
+        load @index
+        inc
+        store @index
+    end
+    push 4294967297
+    return
+}
+
+func Foreign(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    load @foreign
+    load t_byte
+    return
+}
+
+func Monitor(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    load @monitor
+    push 255
+    store t_byte
+    push 0
+    return
+}
+
+func Neighbor(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    load @buffer
+    load @length
+    push 4095
+    add
+    push 4096
+    div
+    push 4096
+    mul
+    add
+    push 255
+    store t_byte
+    push 0
+    return
+}
+
+func StackOverflow(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    load @buffer
+    load @length
+    load @foreign
+    load @monitor
+    call StackOverflow
+    push 1
+    add
+    return
+}
+
+func Spin(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    loop
+    end
+}
+
+func Stale(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    load @buffer
+    load t_byte
+    return
+}
+
+func PartialFailure(t_uint64 buffer, t_uint64 length, t_uint64 foreign, t_uint64 monitor) -> t_int64
+{
+    load @buffer
+    push 90
+    store t_byte
+    load @foreign
+    load t_byte
+    return
+}
+}

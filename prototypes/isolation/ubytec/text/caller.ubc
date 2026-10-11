@@ -1,0 +1,1119 @@
+import StateAttack from mapper.EscapeState (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+export StateFault as StateFault
+import Tokenize from lexer.ParseFields (t_loan_rw,t_loan_ro,t_uint64,t_uint64) -> t_int64
+import Normalize from mapper.UpperText (t_loan_rw,t_loan_ro,t_uint64) -> t_int64
+import Render from writer.BuildText (t_loan_rw,t_loan_ro,t_uint64,t_uint64) -> t_int64
+import Pipeline from grouped.RunText (t_loan_rw,t_loan_ro,t_uint64,t_uint64,t_uint64,t_uint64) -> t_int64
+import SourceAttack from lexer.SourceWrite (t_loan_ro,t_uint64) -> t_int64
+import OutputAttack from writer.PartialBuild (t_loan_rw,t_loan_ro,t_uint64,t_uint64) -> t_int64
+export Split as Split
+export Group as Group
+export SplitCorrupt as SplitCorrupt
+export GroupCorrupt as GroupCorrupt
+export SourceFault as SourceFault
+export OutputFault as OutputFault
+module (name:"text_caller", version:"0.1", author:"Ubytec") {
+func ValidateText(t_uint64 buffer,t_uint64 length) -> t_int64 {
+local { t_uint64 count 0 t_uint64 capacity 0 t_uint64 fields 0 t_uint64 output 0 t_uint64 total 0 t_uint64 state 0 }
+if @length < 112
+push -10
+return
+end
+load @buffer
+load t_uint64
+store @count
+load @buffer
+push 8
+add
+load t_uint64
+store @capacity
+load @buffer
+push 16
+add
+load t_uint64
+store @fields
+load @buffer
+push 24
+add
+load t_uint64
+store @output
+if @capacity > 65536
+push -10
+return
+end
+if @count > @capacity
+push -10
+return
+end
+if @fields > 256
+push -10
+return
+end
+if @output > 65536
+push -10
+return
+end
+load @capacity
+push 2
+mul
+load @fields
+push 16
+mul
+add
+load @output
+add
+push 112
+add
+store @total
+if @total != @length
+push -10
+return
+end
+load @buffer
+push 64
+add
+load @capacity
+add
+store @state
+load @state
+push 8
+add
+load t_uint64
+load @fields
+sub
+if
+push -10
+return
+end
+load @state
+push 16
+add
+load t_uint64
+load @count
+sub
+if
+push -10
+return
+end
+load @state
+push 24
+add
+load t_uint64
+load @capacity
+sub
+if
+push -10
+return
+end
+push 0
+return
+}
+func Group(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_uint64 source 0 t_uint64 state 0 t_uint64 work 0 t_uint64 output 0 t_uint64 count 0 t_uint64 capacity 0 t_uint64 fields 0 t_uint64 output_capacity 0 t_uint64 table 0 t_uint64 workspace_length 0 t_int64 result 0 t_int64 status 0 }
+if @length < 64
+push -10
+return
+end
+load @buffer
+load @length
+call ValidateText
+store @result
+if @result == 0
+load @buffer
+push 64
+add
+store @source
+load @buffer
+load t_uint64
+store @count
+load @buffer
+push 8
+add
+load t_uint64
+store @capacity
+load @buffer
+push 16
+add
+load t_uint64
+store @fields
+load @buffer
+push 24
+add
+load t_uint64
+store @output_capacity
+load @source
+load @capacity
+add
+store @state
+load @fields
+push 16
+mul
+push 32
+add
+store @table
+load @state
+load @table
+add
+store @work
+load @work
+load @capacity
+add
+store @output
+load @table
+load @capacity
+add
+store @workspace_length
+load @state
+load @workspace_length
+load @output_capacity
+add
+load @source
+load @count
+load @count
+load @fields
+load @output_capacity
+push 0
+push 1000
+load @buffer
+push 48
+add
+call Pipeline
+store @status
+if @status != 0
+push -100
+load @status
+sub
+store @result
+else
+load @buffer
+push 48
+add
+load t_int64
+store @result
+end
+end
+load @buffer
+push 48
+add
+load @result
+store t_int64
+if @result < 0
+load @buffer
+push 56
+add
+load @result
+store t_int64
+else
+load @buffer
+push 32
+add
+load @result
+store t_uint64
+load @buffer
+push 40
+add
+load @state
+load t_uint64
+store t_uint64
+load @buffer
+push 56
+add
+push 0
+store t_int64
+end
+load @result
+return
+}
+func GroupCorrupt(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_uint64 source 0 t_uint64 state 0 t_uint64 work 0 t_uint64 output 0 t_uint64 count 0 t_uint64 capacity 0 t_uint64 fields 0 t_uint64 output_capacity 0 t_uint64 table 0 t_uint64 workspace_length 0 t_int64 result 0 t_int64 status 0 }
+if @length < 64
+push -10
+return
+end
+load @buffer
+load @length
+call ValidateText
+store @result
+if @result == 0
+load @buffer
+push 64
+add
+store @source
+load @buffer
+load t_uint64
+store @count
+load @buffer
+push 8
+add
+load t_uint64
+store @capacity
+load @buffer
+push 16
+add
+load t_uint64
+store @fields
+load @buffer
+push 24
+add
+load t_uint64
+store @output_capacity
+load @source
+load @capacity
+add
+store @state
+load @fields
+push 16
+mul
+push 32
+add
+store @table
+load @state
+load @table
+add
+store @work
+load @work
+load @capacity
+add
+store @output
+load @table
+load @capacity
+add
+store @workspace_length
+load @state
+load @workspace_length
+load @output_capacity
+add
+load @source
+load @count
+load @count
+load @fields
+load @output_capacity
+push 1
+push 1000
+load @buffer
+push 48
+add
+call Pipeline
+store @status
+if @status != 0
+push -100
+load @status
+sub
+store @result
+else
+load @buffer
+push 48
+add
+load t_int64
+store @result
+end
+end
+load @buffer
+push 48
+add
+load @result
+store t_int64
+if @result < 0
+load @buffer
+push 56
+add
+load @result
+store t_int64
+else
+load @buffer
+push 32
+add
+load @result
+store t_uint64
+load @buffer
+push 40
+add
+load @state
+load t_uint64
+store t_uint64
+load @buffer
+push 56
+add
+push 0
+store t_int64
+end
+load @result
+return
+}
+func Split(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_uint64 source 0 t_uint64 state 0 t_uint64 work 0 t_uint64 output 0 t_uint64 count 0 t_uint64 capacity 0 t_uint64 fields 0 t_uint64 output_capacity 0 t_uint64 table 0 t_uint64 workspace_length 0 t_int64 result 0 t_int64 status 0 }
+if @length < 64
+push -10
+return
+end
+load @buffer
+load @length
+call ValidateText
+store @result
+if @result == 0
+load @buffer
+push 64
+add
+store @source
+load @buffer
+load t_uint64
+store @count
+load @buffer
+push 8
+add
+load t_uint64
+store @capacity
+load @buffer
+push 16
+add
+load t_uint64
+store @fields
+load @buffer
+push 24
+add
+load t_uint64
+store @output_capacity
+load @source
+load @capacity
+add
+store @state
+load @fields
+push 16
+mul
+push 32
+add
+store @table
+load @state
+load @table
+add
+store @work
+load @work
+load @capacity
+add
+store @output
+load @table
+load @capacity
+add
+store @workspace_length
+load @state
+load @table
+load @source
+load @count
+load @count
+load @fields
+push 1000
+load @buffer
+push 48
+add
+call Tokenize
+store @status
+if @status != 0
+push -100
+load @status
+sub
+store @result
+else
+load @buffer
+push 48
+add
+load t_int64
+store @result
+end
+if @result >= 0
+load @work
+load @count
+load @source
+load @count
+load @count
+push 1000
+load @buffer
+push 48
+add
+call Normalize
+store @status
+if @status != 0
+push -100
+load @status
+sub
+store @result
+else
+load @buffer
+push 48
+add
+load t_int64
+store @result
+end
+if @result >= 0
+load @output
+load @output_capacity
+load @state
+load @workspace_length
+load @workspace_length
+load @output_capacity
+push 1000
+load @buffer
+push 48
+add
+call Render
+store @status
+if @status != 0
+push -100
+load @status
+sub
+store @result
+else
+load @buffer
+push 48
+add
+load t_int64
+store @result
+end
+end
+end
+end
+load @buffer
+push 48
+add
+load @result
+store t_int64
+if @result < 0
+load @buffer
+push 56
+add
+load @result
+store t_int64
+else
+load @buffer
+push 32
+add
+load @result
+store t_uint64
+load @buffer
+push 40
+add
+load @state
+load t_uint64
+store t_uint64
+load @buffer
+push 56
+add
+push 0
+store t_int64
+end
+load @result
+return
+}
+func SplitCorrupt(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_uint64 source 0 t_uint64 state 0 t_uint64 work 0 t_uint64 output 0 t_uint64 count 0 t_uint64 capacity 0 t_uint64 fields 0 t_uint64 output_capacity 0 t_uint64 table 0 t_uint64 workspace_length 0 t_int64 result 0 t_int64 status 0 }
+if @length < 64
+push -10
+return
+end
+load @buffer
+load @length
+call ValidateText
+store @result
+if @result == 0
+load @buffer
+push 64
+add
+store @source
+load @buffer
+load t_uint64
+store @count
+load @buffer
+push 8
+add
+load t_uint64
+store @capacity
+load @buffer
+push 16
+add
+load t_uint64
+store @fields
+load @buffer
+push 24
+add
+load t_uint64
+store @output_capacity
+load @source
+load @capacity
+add
+store @state
+load @fields
+push 16
+mul
+push 32
+add
+store @table
+load @state
+load @table
+add
+store @work
+load @work
+load @capacity
+add
+store @output
+load @table
+load @capacity
+add
+store @workspace_length
+load @state
+load @table
+load @source
+load @count
+load @count
+load @fields
+push 1000
+load @buffer
+push 48
+add
+call Tokenize
+store @status
+if @status != 0
+push -100
+load @status
+sub
+store @result
+else
+load @buffer
+push 48
+add
+load t_int64
+store @result
+end
+if @result >= 0
+load @work
+load @count
+load @source
+load @count
+load @count
+push 1000
+load @buffer
+push 48
+add
+call Normalize
+store @status
+if @status != 0
+push -100
+load @status
+sub
+store @result
+else
+load @buffer
+push 48
+add
+load t_int64
+store @result
+end
+if @result >= 0
+load @state
+load t_uint64
+if
+load @state
+push 32
+add
+load @count
+inc
+store t_uint64
+else
+push -13
+store @result
+end
+if @result >= 0
+load @output
+load @output_capacity
+load @state
+load @workspace_length
+load @workspace_length
+load @output_capacity
+push 1000
+load @buffer
+push 48
+add
+call Render
+store @status
+if @status != 0
+push -100
+load @status
+sub
+store @result
+else
+load @buffer
+push 48
+add
+load t_int64
+store @result
+end
+end
+end
+end
+end
+load @buffer
+push 48
+add
+load @result
+store t_int64
+if @result < 0
+load @buffer
+push 56
+add
+load @result
+store t_int64
+else
+load @buffer
+push 32
+add
+load @result
+store t_uint64
+load @buffer
+push 40
+add
+load @state
+load t_uint64
+store t_uint64
+load @buffer
+push 56
+add
+push 0
+store t_int64
+end
+load @result
+return
+}
+func OutputFault(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_uint64 source 0 t_uint64 state 0 t_uint64 work 0 t_uint64 output 0 t_uint64 count 0 t_uint64 capacity 0 t_uint64 fields 0 t_uint64 output_capacity 0 t_uint64 table 0 t_uint64 workspace_length 0 t_int64 result 0 t_int64 status 0 }
+if @length < 64
+push -10
+return
+end
+load @buffer
+load @length
+call ValidateText
+store @result
+if @result == 0
+load @buffer
+push 64
+add
+store @source
+load @buffer
+load t_uint64
+store @count
+load @buffer
+push 8
+add
+load t_uint64
+store @capacity
+load @buffer
+push 16
+add
+load t_uint64
+store @fields
+load @buffer
+push 24
+add
+load t_uint64
+store @output_capacity
+load @source
+load @capacity
+add
+store @state
+load @fields
+push 16
+mul
+push 32
+add
+store @table
+load @state
+load @table
+add
+store @work
+load @work
+load @capacity
+add
+store @output
+load @table
+load @capacity
+add
+store @workspace_length
+load @state
+load @table
+load @source
+load @count
+load @count
+load @fields
+push 1000
+load @buffer
+push 48
+add
+call Tokenize
+store @status
+if @status != 0
+push -100
+load @status
+sub
+store @result
+else
+load @buffer
+push 48
+add
+load t_int64
+store @result
+end
+if @result >= 0
+load @work
+load @count
+load @source
+load @count
+load @count
+push 1000
+load @buffer
+push 48
+add
+call Normalize
+store @status
+if @status != 0
+push -100
+load @status
+sub
+store @result
+else
+load @buffer
+push 48
+add
+load t_int64
+store @result
+end
+if @result >= 0
+load @output
+load @output_capacity
+load @state
+load @workspace_length
+load @workspace_length
+load @output_capacity
+push 1000
+load @buffer
+push 48
+add
+call OutputAttack
+store @status
+if @status != 0
+push -100
+load @status
+sub
+store @result
+else
+load @buffer
+push 48
+add
+load t_int64
+store @result
+end
+end
+end
+end
+load @buffer
+push 48
+add
+load @result
+store t_int64
+if @result < 0
+load @buffer
+push 56
+add
+load @result
+store t_int64
+else
+load @buffer
+push 32
+add
+load @result
+store t_uint64
+load @buffer
+push 40
+add
+load @state
+load t_uint64
+store t_uint64
+load @buffer
+push 56
+add
+push 0
+store t_int64
+end
+load @result
+return
+}
+func SourceFault(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_uint64 source 0 t_uint64 state 0 t_uint64 work 0 t_uint64 output 0 t_uint64 count 0 t_uint64 capacity 0 t_uint64 fields 0 t_uint64 output_capacity 0 t_uint64 table 0 t_uint64 workspace_length 0 t_int64 result 0 t_int64 status 0 }
+if @length < 64
+push -10
+return
+end
+load @buffer
+load @length
+call ValidateText
+store @result
+if @result == 0
+load @buffer
+push 64
+add
+store @source
+load @buffer
+load t_uint64
+store @count
+load @buffer
+push 8
+add
+load t_uint64
+store @capacity
+load @buffer
+push 16
+add
+load t_uint64
+store @fields
+load @buffer
+push 24
+add
+load t_uint64
+store @output_capacity
+load @source
+load @capacity
+add
+store @state
+load @fields
+push 16
+mul
+push 32
+add
+store @table
+load @state
+load @table
+add
+store @work
+load @work
+load @capacity
+add
+store @output
+load @table
+load @capacity
+add
+store @workspace_length
+load @source
+load @count
+load @count
+push 1000
+load @buffer
+push 48
+add
+call SourceAttack
+store @status
+if @status != 0
+push -100
+load @status
+sub
+store @result
+else
+load @buffer
+push 48
+add
+load t_int64
+store @result
+end
+end
+load @buffer
+push 48
+add
+load @result
+store t_int64
+if @result < 0
+load @buffer
+push 56
+add
+load @result
+store t_int64
+else
+load @buffer
+push 32
+add
+load @result
+store t_uint64
+load @buffer
+push 40
+add
+load @state
+load t_uint64
+store t_uint64
+load @buffer
+push 56
+add
+push 0
+store t_int64
+end
+load @result
+return
+}
+func StateFault(t_uint64 buffer,t_uint64 length,t_uint64 foreign,t_uint64 monitor) -> t_int64 {
+local { t_uint64 source 0 t_uint64 state 0 t_uint64 work 0 t_uint64 output 0 t_uint64 count 0 t_uint64 capacity 0 t_uint64 fields 0 t_uint64 output_capacity 0 t_uint64 table 0 t_uint64 workspace_length 0 t_int64 result 0 t_int64 status 0 }
+if @length < 64
+push -10
+return
+end
+load @buffer
+load @length
+call ValidateText
+store @result
+if @result == 0
+load @buffer
+push 64
+add
+store @source
+load @buffer
+load t_uint64
+store @count
+load @buffer
+push 8
+add
+load t_uint64
+store @capacity
+load @buffer
+push 16
+add
+load t_uint64
+store @fields
+load @buffer
+push 24
+add
+load t_uint64
+store @output_capacity
+load @source
+load @capacity
+add
+store @state
+load @fields
+push 16
+mul
+push 32
+add
+store @table
+load @state
+load @table
+add
+store @work
+load @work
+load @capacity
+add
+store @output
+load @table
+load @capacity
+add
+store @workspace_length
+load @state
+load @table
+load @source
+load @count
+load @count
+load @fields
+push 1000
+load @buffer
+push 48
+add
+call Tokenize
+store @status
+if @status != 0
+push -100
+load @status
+sub
+store @result
+else
+load @buffer
+push 48
+add
+load t_int64
+store @result
+end
+if @result >= 0
+load @work
+load @count
+load @source
+load @count
+load @count
+push 1000
+load @buffer
+push 48
+add
+call StateAttack
+store @status
+if @status != 0
+push -100
+load @status
+sub
+store @result
+else
+load @buffer
+push 48
+add
+load t_int64
+store @result
+end
+if @result >= 0
+load @output
+load @output_capacity
+load @state
+load @workspace_length
+load @workspace_length
+load @output_capacity
+push 1000
+load @buffer
+push 48
+add
+call Render
+store @status
+if @status != 0
+push -100
+load @status
+sub
+store @result
+else
+load @buffer
+push 48
+add
+load t_int64
+store @result
+end
+end
+end
+end
+load @buffer
+push 48
+add
+load @result
+store t_int64
+if @result < 0
+load @buffer
+push 56
+add
+load @result
+store t_int64
+else
+load @buffer
+push 32
+add
+load @result
+store t_uint64
+load @buffer
+push 40
+add
+load @state
+load t_uint64
+store t_uint64
+load @buffer
+push 56
+add
+push 0
+store t_int64
+end
+load @result
+return
+}
+}

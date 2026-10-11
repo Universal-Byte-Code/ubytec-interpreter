@@ -7,6 +7,8 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<EnableDocFxOnBuild>true</EnableDocFxOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<Deterministic>true</Deterministic>
+		<ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
 	</PropertyGroup>
 
 	<PropertyGroup>

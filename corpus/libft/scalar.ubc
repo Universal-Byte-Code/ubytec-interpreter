@@ -1,0 +1,196 @@
+module (name:"libft_scalar", version:"0.1", author:"Ubytec")
+{
+func ft_isdigit(t_int32 c) -> t_int32
+{
+    if @c < 48
+        push 0
+        return
+    end
+    if @c > 57
+        push 0
+        return
+    end
+    push 1
+    return
+}
+
+func ft_isalpha(t_int32 c) -> t_int32
+{
+    if @c < 65
+        push 0
+        return
+    end
+    if @c <= 90
+        push 1
+        return
+    end
+    if @c < 97
+        push 0
+        return
+    end
+    if @c <= 122
+        push 1
+        return
+    end
+    push 0
+    return
+}
+
+func ft_isalnum(t_int32 c) -> t_int32
+{
+    load @c
+    call ft_isalpha
+    if
+        push 1
+        return
+    end
+    load @c
+    call ft_isdigit
+    return
+}
+
+func ft_isascii(t_int32 c) -> t_int32
+{
+    if @c < 0
+        push 0
+        return
+    end
+    if @c > 127
+        push 0
+        return
+    end
+    push 1
+    return
+}
+
+func ft_isprint(t_int32 c) -> t_int32
+{
+    if @c < 32
+        push 0
+        return
+    end
+    if @c > 126
+        push 0
+        return
+    end
+    push 1
+    return
+}
+
+func ft_toupper(t_int32 c) -> t_int32
+{
+    if @c < 97
+        load @c
+        return
+    end
+    if @c > 122
+        load @c
+        return
+    end
+    load @c
+    push 32
+    sub
+    return
+}
+
+func ft_tolower(t_int32 c) -> t_int32
+{
+    if @c < 65
+        load @c
+        return
+    end
+    if @c > 90
+        load @c
+        return
+    end
+    load @c
+    push 32
+    add
+    return
+}
+
+func ft_isspace(t_int32 c) -> t_int32
+{
+    if @c == 32
+        push 1
+        return
+    end
+    if @c < 9
+        push 0
+        return
+    end
+    if @c > 13
+        push 0
+        return
+    end
+    push 1
+    return
+}
+
+func ft_atoi(t_uint64 text) -> t_int32
+{
+    local
+    {
+        t_int64 result 0
+        t_int64 polarity 1
+        t_int32 current 0
+    }
+    load @text
+    load t_byte
+    store @current
+
+    load @current
+    call ft_isspace
+    while
+        load @text
+        inc
+        store @text
+        load @text
+        load t_byte
+        store @current
+        load @current
+        call ft_isspace
+    end
+
+    if @current == 45
+        push -1
+        store @polarity
+        load @text
+        inc
+        store @text
+    end
+    if @current == 43
+        load @text
+        inc
+        store @text
+    end
+
+    load @text
+    load t_byte
+    store @current
+    load @current
+    call ft_isdigit
+    while
+        load @result
+        push 10
+        mul
+        load @current
+        push 48
+        sub
+        add
+        store @result
+        load @text
+        inc
+        store @text
+        load @text
+        load t_byte
+        store @current
+        load @current
+        call ft_isdigit
+    end
+    load @result
+    load @polarity
+    mul
+    return
+}
+}

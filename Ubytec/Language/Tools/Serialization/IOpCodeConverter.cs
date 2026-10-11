@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Ubytec.Language.Operations;
 using Ubytec.Language.Operations.Interfaces;
@@ -35,10 +35,9 @@ namespace Ubytec.Language.Tools.Serialization
 
             string? typeDiscriminator = typeElement.GetString();
 
-            // Gather opcode types from CoreOperations and StackOperations
-            var coreTypes = typeof(CoreOperations).GetNestedTypes();
-            var stackTypes = typeof(StackOperations).GetNestedTypes();
-            var opCodeTypes = coreTypes.Concat(stackTypes);
+            // Include arithmetic, comparison, memory, extended and function instructions.
+            var opCodeTypes = typeof(IOpCode).Assembly.GetTypes()
+                .Where(t => !t.IsAbstract && typeof(IOpCode).IsAssignableFrom(t));
 
             Type? targetType = opCodeTypes.FirstOrDefault(t => t.Name == typeDiscriminator)??throw new JsonException($"Unknown $type discriminator '{typeDiscriminator}'.");
             string json = root.GetRawText();

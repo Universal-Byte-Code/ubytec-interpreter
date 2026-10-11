@@ -1,4 +1,4 @@
-﻿using Ubytec.Language.Exceptions;
+using Ubytec.Language.Exceptions;
 using Ubytec.Language.Operations.Interfaces;
 using Ubytec.Language.Syntax.ExpressionFragments;
 using Ubytec.Language.Syntax.Model;
@@ -24,7 +24,12 @@ namespace Ubytec.Language.Operations
 
             public string Compile(CompilationScopes scopes) => ((IOpCode)this).Compile(scopes);
 
-            string IUbytecEntity.Compile(CompilationScopes scopes) => _ = string.Empty;
+            string IUbytecEntity.Compile(CompilationScopes scopes)
+            {
+                var binding = scopes.ResolveSymbol(Variable.Name);
+                long value = FunctionCode.InitialValue(Variable.Type, Variable.Value);
+                return $"mov rax, 0x{unchecked((ulong)value):X16}\n  mov qword {binding.Address}, rax";
+            }
         }
     }
 }

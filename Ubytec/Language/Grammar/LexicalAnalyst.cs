@@ -1,4 +1,4 @@
-﻿using TextMateSharp.Grammars;
+using TextMateSharp.Grammars;
 using Ubytec.Language.Exceptions;
 using Ubytec.Language.Syntax.Model;
 
@@ -15,19 +15,28 @@ public static class LexicalAnalyst
     private static readonly UbytecRegistryOptions _options = new();
 
     /// <summary>
-    /// Initializes the Ubytec grammar from the remote lexicon.
+    /// Initializes the bundled Ubytec grammar or an explicitly supplied JSON grammar.
     /// </summary>
+    /// <param name="grammarJson">Optional local TextMate grammar JSON.</param>
     /// <exception cref="FetchLexiconException">Thrown when the grammar could not be loaded.</exception>
-    public static void InitializeGrammar()
+    public static void InitializeGrammar(string? grammarJson = null)
     {
         try
         {
+            if (grammarJson is null)
+            {
+                using var stream = typeof(LexicalAnalyst).Assembly.GetManifestResourceStream("Ubytec.Language.Grammar.ubytec.tmLanguage.json")
+                    ?? throw new InvalidOperationException("Bundled Ubytec grammar is missing.");
+                using var reader = new StreamReader(stream);
+                grammarJson = reader.ReadToEnd();
+            }
+            _options.GrammarJson = grammarJson;
             _registry = new TextMateSharp.Registry.Registry(_options);
             _grammar = _registry.LoadGrammar(UBYTEC_SOURCE) ?? throw new FetchLexiconException(0x9E1B2DAEBFC4E73B, "Ubytec lexicon was not correctly loaded.");
         }
         catch (Exception ex)
         {
-            Console.Error.WriteLine(ex);
+            throw new FetchLexiconException(0xBAD075, $"Cannot initialize Ubytec grammar: {ex.Message}");
         }
     }
 
