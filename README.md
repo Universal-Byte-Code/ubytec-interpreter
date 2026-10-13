@@ -30,13 +30,20 @@ x86-64 backend output:
 
     dotnet run --project Ubytec/Ubytec.csproj -- examples/answer.ubc -o answer.nasm --portable-module answer.ubcm
 
-Verify framing and canonical payloads without compiling the module:
+Add the architecture-neutral indexed executable tables and opcode stream:
+
+    dotnet run --project Ubytec/Ubytec.csproj -- examples/answer.ubc -o answer.nasm --portable-module answer.ubcm --indexed-executable
+
+Verify framing, canonical payloads and the indexed executable profile when present
+without compiling the module:
 
     dotnet run --project Ubytec/Ubytec.csproj -- --verify-module answer.ubcm
 
 PMF v0 serializes the normalized semantic AST and portable contract/capability
-metadata with deterministic binary framing. It intentionally remains upstream of
-backend-specific machine code. See [Portable Module Format](Wiki/docs/portable-module-format.md).
+metadata with deterministic binary framing. `--indexed-executable` additionally
+lowers supported function, frame, type and module-boundary references to canonical
+indices while remaining architecture-neutral. AST-only PMF output remains the
+default. See [Portable Module Format](Wiki/docs/portable-module-format.md).
 
 ## Tests and supported subset
 
