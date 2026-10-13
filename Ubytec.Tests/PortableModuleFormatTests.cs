@@ -35,6 +35,7 @@ public class PortableModuleFormatTests
             image.GetRequiredSection(PortableModuleSectionKind.SemanticAst).Payload.Span);
         Assert.StartsWith("{", ast);
         Assert.Contains("portable", ast);
+        Assert.DoesNotContain("\"guid\"", ast);
         Assert.DoesNotContain("\r", ast);
         Assert.DoesNotContain("\n", ast);
     }
