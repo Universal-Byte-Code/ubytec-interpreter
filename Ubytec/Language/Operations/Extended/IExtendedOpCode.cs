@@ -40,6 +40,10 @@ namespace Ubytec.Language.Operations.Extended
         /// <summary>Returns the canonical wire prefix for this opcode identity.</summary>
         public byte[] Encode()
         {
+            if (EscapeDepth > ExtendedOpcodeFactory.MAX_SUPPORTED_ESCAPE_DEPTH)
+                throw new NotSupportedException(
+                    $"Escape depth {EscapeDepth} exceeds this runtime's supported maximum of {ExtendedOpcodeFactory.MAX_SUPPORTED_ESCAPE_DEPTH}.");
+
             byte[] bytes = new byte[EscapeDepth + 2];
             Array.Fill(bytes, ESCAPE, 0, EscapeDepth);
             bytes[EscapeDepth] = ExtensionGroup;
@@ -58,8 +62,11 @@ namespace Ubytec.Language.Operations.Extended
     /// </summary>
     public interface IExtendedOpCode : IOpCode
     {
-        /// <summary>Number of consecutive leading <c>0xFF</c> escape bytes.</summary>
-        public int EscapeDepth { get; }
+        /// <summary>
+        /// Number of consecutive leading <c>0xFF</c> escape bytes.
+        /// Existing implementations default to the historical depth-1 namespace.
+        /// </summary>
+        public int EscapeDepth => 1;
 
         /// <summary>Byte that identifies the extension group.</summary>
         public byte ExtensionGroup { get; }
