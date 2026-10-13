@@ -244,7 +244,7 @@ internal static class Program
             {
                 byte[] portableModule = PortableModuleFormat.Encode(
                     compilation.Module,
-                    compilation.ContractManifest,
+                    options.IndexedExecutable ? null : compilation.ContractManifest,
                     includeIndexedExecutable: options.IndexedExecutable,
                     portableContracts: options.IndexedExecutable ? compilation.PortableContracts : null);
                 File.WriteAllBytes(options.PortableModulePath, portableModule);
@@ -365,7 +365,7 @@ internal static class Program
             Console.WriteLine("       ubytec --verify-module <module.ubcm>");
             Console.WriteLine("       ubytec --format-stdin < input.ubc > output.ubc");
             Console.WriteLine("--portable-module emits canonical architecture-neutral Portable Module Format v0 alongside NASM.");
-            Console.WriteLine("--indexed-executable adds the verified indexed executable section group to --portable-module output.");
+            Console.WriteLine("--indexed-executable adds the verified indexed executable section group to --portable-module output and omits the native-runtime contract manifest.");
             Console.WriteLine("--verify-module validates PMF framing, canonical sections, indexed executable tables/code when present, and runtime resource limits without compiling it.");
             Console.WriteLine("--format-stdin canonicalizes UBC from standard input to standard output without compiling it.");
             Console.WriteLine("--metadata writes build provenance separately from canonical NASM; by default <output>.metadata.json is written.");
