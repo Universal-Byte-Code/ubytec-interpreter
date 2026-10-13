@@ -18,7 +18,7 @@ namespace Ubytec.Language.Operations.Extended
             /// <summary>Encoded instruction byte within the group.</summary>
             public const byte OP = 0x11;
             /// <inheritdoc/>
-            public byte OpCode => OpcodeId.ESCAPE;
+            public byte OpCode => 0xFF;
             /// <inheritdoc/>
             public int EscapeDepth => 1;
             /// <inheritdoc/>
@@ -50,7 +50,7 @@ namespace Ubytec.Language.Operations.Extended
             /// <summary>Encoded instruction byte within the group.</summary>
             public const byte OP = 0x18;
             /// <inheritdoc/>
-            public byte OpCode => OpcodeId.ESCAPE;
+            public byte OpCode => 0xFF;
             /// <inheritdoc/>
             public int EscapeDepth => 1;
             /// <inheritdoc/>
@@ -84,7 +84,7 @@ namespace Ubytec.Language.Operations.Extended
             /// <summary>Encoded instruction byte within the group.</summary>
             public const byte OP = 0x1D;
             /// <inheritdoc/>
-            public byte OpCode => OpcodeId.ESCAPE;
+            public byte OpCode => 0xFF;
             /// <inheritdoc/>
             public int EscapeDepth => 1;
             /// <inheritdoc/>
@@ -116,7 +116,7 @@ namespace Ubytec.Language.Operations.Extended
             /// <summary>Encoded instruction byte within the group.</summary>
             public const byte OP = 0x1E;
             /// <inheritdoc/>
-            public byte OpCode => OpcodeId.ESCAPE;
+            public byte OpCode => 0xFF;
             /// <inheritdoc/>
             public int EscapeDepth => 1;
             /// <inheritdoc/>
