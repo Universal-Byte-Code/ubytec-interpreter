@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Stateful text application: C oracle, domain variants, capacity failures and timings."""
-import argparse,hashlib,json,platform,random,shutil,struct,subprocess,sys,time
+import argparse,hashlib,json,platform,random,re,shutil,struct,subprocess,sys,time
 from pathlib import Path
 from run import command,records
 ROOT=Path(__file__).resolve().parent
@@ -35,8 +35,11 @@ def main():
     try:
         canonical=(REPO/"corpus/libft/text.ubc").read_text()
         def body(name):
-            start=canonical.index("func "+name);end=canonical.find("\nfunc ",start+1)
-            return canonical[start:end if end!=-1 else canonical.rfind("}")].strip()
+            start=canonical.index("func "+name)
+            following=canonical[start+1:]
+            match=re.search(r"(?m)^\s*func\s+",following)
+            end=start+1+match.start() if match else canonical.rfind("}")
+            return canonical[start:end].strip()
         for function,providers in (("ScanFields",("mono","lexer","grouped")),("ParseFields",("mono","lexer","grouped")),
             ("UpperText",("mono","mapper","grouped")),("BuildText",("mono","writer","grouped")),("RunText",("mono","grouped")),("ValidateText",("mono","caller"))):
             for name in providers:

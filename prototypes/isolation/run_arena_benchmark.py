@@ -2,13 +2,15 @@
 """Native allocator workload comparison with preserved v1 source baseline."""
 import argparse,hashlib,json,platform,shutil,statistics,subprocess
 from pathlib import Path
+from generate_arena_imports import format_ubc
 from run import command,records
 ROOT=Path(__file__).resolve().parent;REPO=ROOT.parents[1]
 NAMES=('bench-baseline','bench-current')
 EXPORTS=('ArenaInit','ArenaAlloc','ArenaFree','ArenaResize','ArenaAppendUpper','ArenaFind','ArenaPin','ArenaUnpin')
 def benchmark_source(library):
     body=library.split('{',1)[1].rsplit('}',1)[0]
-    return ''.join('export '+n+' as '+n+'\n' for n in EXPORTS)+'module (name:"arena_bench",version:"0.1",author:"Ubytec") {'+body+'}\n'
+    source=''.join('export '+n+' as '+n+'\n' for n in EXPORTS)+'module (name:"arena_bench",version:"0.1",author:"Ubytec") {'+body+'}\n'
+    return format_ubc(source)
 def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
     p=argparse.ArgumentParser();p.add_argument('--assembly-directory',type=Path);p.add_argument('--output',type=Path,default=ROOT/'build/arena-benchmark');a=p.parse_args();out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)

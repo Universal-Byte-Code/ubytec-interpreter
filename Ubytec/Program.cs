@@ -19,6 +19,7 @@
 using System.Text;
 using System.Text.Json;
 using Ubytec.Language.AST;
+using Ubytec.Language.Tools;
 
 [assembly: System.CLSCompliant(true)]
 [assembly: System.Runtime.InteropServices.ComVisible(true)]
@@ -55,6 +56,12 @@ internal static class Program
 
         internal static int Run(string[] args)
         {
+            if (args.Length == 1 && string.Equals(args[0], "--format-stdin", StringComparison.Ordinal))
+            {
+                Console.Write(UbcFormatter.Format(Console.In.ReadToEnd()));
+                return 0;
+            }
+
             if (NeedsHelp(args))
             {
                 PrintHelp();
@@ -291,6 +298,8 @@ internal static class Program
         private static void PrintHelp()
         {
             Console.WriteLine("Usage: ubytec <source.ubc> [-o <output.nasm>] [--grammar <grammar.json>] [--json <module.json>] [--metadata <metadata.json>] [--no-metadata] [--library] [--tail-calls] [--stack-transfers] [--frame-values] [--frame-registers] [--loop-reductions] [--block-reductions] [--block-reductions-native] [--record-reductions] [--lookup-reductions] [--effect-registers] [--module-calls] [--host-io] [--arena-imports] [--generated-source <source.ubc>] [--host-export Function=ubytec_host_symbol]");
+            Console.WriteLine("       ubytec --format-stdin < input.ubc > output.ubc");
+            Console.WriteLine("--format-stdin canonicalizes UBC from standard input to standard output without compiling it.");
             Console.WriteLine("--metadata writes build provenance separately from canonical NASM; by default <output>.metadata.json is written.");
             Console.WriteLine("--no-metadata disables the provenance sidecar.");
             Console.WriteLine("--arena-imports bundles the arena and scoped import wrappers; implies --library --module-calls.");

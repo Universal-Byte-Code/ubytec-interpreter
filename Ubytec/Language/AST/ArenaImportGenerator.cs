@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using Ubytec.Language.Tools;
 
 namespace Ubytec.Language.AST;
 
@@ -98,6 +99,7 @@ public static class ArenaImportGenerator
             wrappers.Add($"func {name}({string.Join(',', parameters)}) -> t_int64 {{\nlocal {{ {string.Join(' ', locals)} }}\n{string.Join('\n', body)}\n}}\n");
         }
         string generated = marker + "\n" + string.Concat(wrappers) + "// END GENERATED ARENA IMPORTS\n";
-        return source.TrimEnd()[..^1] + (includeArenaLibrary ? arena + "\n" : "") + generated + "}\n";
+        string composed = source.TrimEnd()[..^1] + (includeArenaLibrary ? arena + "\n" : "") + generated + "}\n";
+        return UbcFormatter.Format(composed);
     }
 }
