@@ -89,7 +89,10 @@ public static class PortableModuleFormat
         IEnumerable<string>? capabilities = null)
     {
         byte[] serializedAst = JsonSerializer.SerializeToUtf8Bytes(module, global::SerializerOptionsHelper.Options);
-        byte[] canonicalAst = CanonicalizeJson(serializedAst, requireObject: true);
+        byte[] canonicalAst = CanonicalizeJson(
+            serializedAst,
+            requireObject: true,
+            stripVolatileSyntaxMetadata: true);
 
         var sections = new List<EncodedSection>
         {
@@ -236,7 +239,11 @@ public static class PortableModuleFormat
             case PortableModuleSectionKind.SemanticAst:
                 if (!critical)
                     throw new InvalidDataException("Semantic AST section must be critical.");
-                VerifyCanonicalJson(payload, requireObject: true, "Semantic AST");
+                VerifyCanonicalJson(
+                    payload,
+                    requireObject: true,
+                    "Semantic AST",
+                    stripVolatileSyntaxMetadata: true);
                 break;
 
             case PortableModuleSectionKind.ContractManifest:
@@ -258,12 +265,19 @@ public static class PortableModuleFormat
         }
     }
 
-    private static void VerifyCanonicalJson(ReadOnlySpan<byte> payload, bool requireObject, string name)
+    private static void VerifyCanonicalJson(
+        ReadOnlySpan<byte> payload,
+        bool requireObject,
+        string name,
+        bool stripVolatileSyntaxMetadata = false)
     {
         byte[] canonical;
         try
         {
-            canonical = CanonicalizeJson(payload, requireObject);
+            canonical = CanonicalizeJson(
+                payload,
+                requireObject,
+                stripVolatileSyntaxMetadata);
         }
         catch (JsonException error)
         {
@@ -323,7 +337,10 @@ public static class PortableModuleFormat
         return text;
     }
 
-    private static byte[] CanonicalizeJson(ReadOnlySpan<byte> utf8, bool requireObject)
+    private static byte[] CanonicalizeJson(
+        ReadOnlySpan<byte> utf8,
+        bool requireObject,
+        bool stripVolatileSyntaxMetadata = false)
     {
         using JsonDocument document = JsonDocument.Parse(utf8.ToArray(), new JsonDocumentOptions
         {
@@ -341,12 +358,20 @@ public static class PortableModuleFormat
             SkipValidation = false
         }))
         {
-            WriteCanonicalJson(writer, document.RootElement);
+            WriteCanonicalJson(
+                writer,
+                document.RootElement,
+                stripVolatileSyntaxMetadata,
+                metadataObject: false);
         }
         return stream.ToArray();
     }
 
-    private static void WriteCanonicalJson(Utf8JsonWriter writer, JsonElement element)
+    private static void WriteCanonicalJson(
+        Utf8JsonWriter writer,
+        JsonElement element,
+        bool stripVolatileSyntaxMetadata,
+        bool metadataObject)
     {
         switch (element.ValueKind)
         {
@@ -359,8 +384,16 @@ public static class PortableModuleFormat
                         throw new JsonException($"Duplicate JSON property '{property.Name}'.");
                 foreach (JsonProperty property in properties.OrderBy(property => property.Name, StringComparer.Ordinal))
                 {
+                    if (stripVolatileSyntaxMetadata && metadataObject &&
+                        string.Equals(property.Name, "guid", StringComparison.Ordinal))
+                        continue;
+
                     writer.WritePropertyName(property.Name);
-                    WriteCanonicalJson(writer, property.Value);
+                    WriteCanonicalJson(
+                        writer,
+                        property.Value,
+                        stripVolatileSyntaxMetadata,
+                        string.Equals(property.Name, "Metadata", StringComparison.Ordinal));
                 }
                 writer.WriteEndObject();
                 break;
@@ -368,7 +401,11 @@ public static class PortableModuleFormat
             case JsonValueKind.Array:
                 writer.WriteStartArray();
                 foreach (JsonElement item in element.EnumerateArray())
-                    WriteCanonicalJson(writer, item);
+                    WriteCanonicalJson(
+                        writer,
+                        item,
+                        stripVolatileSyntaxMetadata,
+                        metadataObject: false);
                 writer.WriteEndArray();
                 break;
 
