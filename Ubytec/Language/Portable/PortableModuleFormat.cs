@@ -104,13 +104,16 @@ public static class PortableModuleFormat
     /// Encodes a normalized semantic module using deterministic PMF v0 framing.
     /// Contract metadata is included when non-empty; capabilities are sorted and deduplicated.
     /// Set <paramref name="includeIndexedExecutable"/> to lower the supported executable subset
-    /// into architecture-neutral indexed tables and opcode streams.
+    /// into architecture-neutral indexed tables and opcode streams. When supplied,
+    /// <paramref name="portableContracts"/> provides the semantic module-boundary identities and
+    /// signatures used to populate indexed import/export tables.
     /// </summary>
     public static byte[] Encode(
         Module module,
         string? contractManifest = null,
         IEnumerable<string>? capabilities = null,
-        bool includeIndexedExecutable = false)
+        bool includeIndexedExecutable = false,
+        PortableModuleContracts? portableContracts = null)
     {
         byte[] serializedAst = JsonSerializer.SerializeToUtf8Bytes(module, global::SerializerOptionsHelper.Options);
         byte[] canonicalAst = CanonicalizeJson(
@@ -154,7 +157,8 @@ public static class PortableModuleFormat
 
         if (includeIndexedExecutable)
         {
-            foreach (IndexedExecutableFormat.IndexedSectionPayload section in IndexedExecutableFormat.EncodeSections(module))
+            foreach (IndexedExecutableFormat.IndexedSectionPayload section in
+                IndexedExecutableFormat.EncodeSections(module, portableContracts))
             {
                 sections.Add(new(
                     (ushort)section.Kind,
@@ -304,7 +308,6 @@ public static class PortableModuleFormat
             case PortableModuleSectionKind.IndexedCode:
                 if (!critical)
                     throw new InvalidDataException($"Indexed executable section 0x{kind:X4} must be critical.");
-                // Cross-section validation is performed after all sections have been decoded.
                 break;
 
             default:
