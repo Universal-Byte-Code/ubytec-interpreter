@@ -20,8 +20,9 @@ public class RecursiveOpcodeTests
     public void ExistingDepthOneEncodingRemainsCompatible()
     {
         var op = Assert.IsType<ExtendedStackOperations.PUSH16>(Ext(1, 0x10, 0x11, (ushort)2));
-        Assert.Equal(1, op.EscapeDepth);
-        Assert.Equal(new byte[] { 0xFF, 0x10, 0x11 }, op.OpcodeId.Encode());
+        IExtendedOpCode extended = op;
+        Assert.Equal(1, extended.EscapeDepth);
+        Assert.Equal(new byte[] { 0xFF, 0x10, 0x11 }, extended.OpcodeId.Encode());
     }
 
     [Fact]
@@ -39,12 +40,15 @@ public class RecursiveOpcodeTests
     }
 
     [Theory]
-    [InlineData(1, new byte[] { 0xFF, 0x20, 0x01 })]
-    [InlineData(2, new byte[] { 0xFF, 0xFF, 0x20, 0x01 })]
-    [InlineData(3, new byte[] { 0xFF, 0xFF, 0xFF, 0x20, 0x01 })]
-    public void OpcodeIdProducesCanonicalWirePrefix(int escapeDepth, byte[] expected)
+    [InlineData(1)]
+    [InlineData(2)]
+    [InlineData(3)]
+    public void OpcodeIdProducesCanonicalWirePrefix(int escapeDepth)
     {
         var id = new OpcodeId(escapeDepth, 0x20, 0x01);
+        byte[] expected = Enumerable.Repeat((byte)0xFF, escapeDepth)
+            .Concat(new byte[] { 0x20, 0x01 })
+            .ToArray();
         Assert.Equal(expected, id.Encode());
     }
 
