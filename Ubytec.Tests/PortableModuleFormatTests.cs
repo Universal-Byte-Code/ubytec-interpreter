@@ -33,10 +33,10 @@ public class PortableModuleFormatTests
         Assert.Single(image.Sections);
         string ast = Encoding.UTF8.GetString(
             image.GetRequiredSection(PortableModuleSectionKind.SemanticAst).Payload.Span);
-        Assert.StartsWith("{", ast, StringComparison.Ordinal);
-        Assert.Contains("portable", ast, StringComparison.Ordinal);
-        Assert.DoesNotContain("\r", ast, StringComparison.Ordinal);
-        Assert.DoesNotContain("\n", ast, StringComparison.Ordinal);
+        Assert.StartsWith("{", ast);
+        Assert.Contains("portable", ast);
+        Assert.DoesNotContain("\r", ast);
+        Assert.DoesNotContain("\n", ast);
     }
 
     [Fact]
