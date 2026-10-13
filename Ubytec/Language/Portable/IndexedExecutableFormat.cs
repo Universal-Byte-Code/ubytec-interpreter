@@ -322,25 +322,18 @@ public static class IndexedExecutableFormat
             .OrderBy(candidate => candidate.Bytes, ByteArrayComparer.Instance)
             .ToArray();
 
-        var uniqueEntries = new List<byte[]>(candidates.Length);
+        var entries = new List<byte[]>(candidates.Length);
         var aliasIndices = new Dictionary<string, uint>(StringComparer.Ordinal);
-        byte[]? previous = null;
-        uint currentIndex = NoIndex;
 
         foreach (ImportCandidate candidate in candidates)
         {
-            if (previous is null || ByteArrayComparer.Instance.Compare(previous, candidate.Bytes) != 0)
-            {
-                currentIndex = checked((uint)uniqueEntries.Count);
-                uniqueEntries.Add(candidate.Bytes);
-                previous = candidate.Bytes;
-            }
-
+            uint currentIndex = checked((uint)entries.Count);
+            entries.Add(candidate.Bytes);
             if (!aliasIndices.TryAdd(candidate.Contract.SourceAlias, currentIndex))
                 throw new InvalidDataException($"Duplicate portable import alias '{candidate.Contract.SourceAlias}'.");
         }
 
-        return new ImportEncoding(EncodeEntryTable(uniqueEntries), aliasIndices);
+        return new ImportEncoding(EncodeEntryTable(entries), aliasIndices);
     }
 
     private static byte[] EncodeImportEntry(
@@ -772,7 +765,7 @@ public static class IndexedExecutableFormat
         if (!Enum.IsDefined(typeof(PortablePassingMode), parameter.PassingMode))
             throw new InvalidDataException($"{field} uses an undefined passing mode.");
         ValidateBoundaryType(parameter.CarrierType, allowVoid: false, field);
-        if (parameter.PassingMode is PortablePassingMode.LoanRead or PortablePassingMode.LoanWrite &&
+        if ((parameter.PassingMode is PortablePassingMode.LoanRead or PortablePassingMode.LoanWrite) &&
             parameter.CarrierType != PrimitiveType.UInt64)
             throw new InvalidDataException($"{field} loan passing modes require a UInt64 carrier.");
     }
@@ -933,8 +926,8 @@ public static class IndexedExecutableFormat
             for (int argument = 0; argument < parameters.Length; argument++)
                 parameters[argument] = ReadBoundaryDescriptor(ref reader, types, "Import argument");
             byte[] encoded = reader.CopyRange(start, reader.Position - start);
-            if (previous is not null && ByteArrayComparer.Instance.Compare(previous, encoded) >= 0)
-                throw new InvalidDataException("Imports must be unique and sorted by their encoded bytes.");
+            if (previous is not null && ByteArrayComparer.Instance.Compare(previous, encoded) > 0)
+                throw new InvalidDataException("Imports must be sorted by their encoded bytes; equal rows remain distinct authority slots.");
             previous = encoded;
             result.Add(new ImportEntry(module, symbol, returnType, parameters));
         }
@@ -999,7 +992,7 @@ public static class IndexedExecutableFormat
         TypeEntry type = types[checked((int)typeIndex)];
         RequireBoundaryCarrierType(type, field);
         var mode = (PortablePassingMode)rawMode;
-        if (mode is PortablePassingMode.LoanRead or PortablePassingMode.LoanWrite &&
+        if ((mode is PortablePassingMode.LoanRead or PortablePassingMode.LoanWrite) &&
             type.Primitive != PrimitiveType.UInt64)
             throw new InvalidDataException($"{field} loan passing modes require a UInt64 carrier.");
         return new BoundaryDescriptor(mode, typeIndex);
