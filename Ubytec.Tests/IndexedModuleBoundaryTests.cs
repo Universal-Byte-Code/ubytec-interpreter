@@ -87,7 +87,7 @@ public class IndexedModuleBoundaryTests
     public void IndexedImageOmitsLegacyNativeContractManifest()
     {
         SourceCompilation compilation = Compile(BoundarySource);
-        Assert.Contains("ubytec_host_contract_Execute", compilation.ContractManifest, StringComparison.Ordinal);
+        Assert.Contains("ubytec_host_contract_Execute", compilation.ContractManifest);
 
         PortableModuleImage image = PortableModuleFormat.Decode(Encode(compilation));
 
