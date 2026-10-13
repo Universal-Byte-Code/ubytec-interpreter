@@ -38,6 +38,7 @@ internal static class Program
         private static readonly IReadOnlyDictionary<string, Action<Options>> FlagSetters =
             new Dictionary<string, Action<Options>>(StringComparer.Ordinal)
             {
+                ["--indexed-executable"] = options => options.IndexedExecutable = true,
                 ["--arena-imports"] = options => options.ArenaImports = true,
                 ["--host-io"] = options => options.HostIo = true,
                 ["--module-calls"] = options => options.ModuleCalls = true,
@@ -173,6 +174,8 @@ internal static class Program
                 ValidateGeneratedSource(options);
             if (options.PortableModulePath is not null)
                 ValidatePortableModulePath(options);
+            if (options.IndexedExecutable && options.PortableModulePath is null)
+                throw new ArgumentException("--indexed-executable requires --portable-module.");
             if (options.ModuleCalls && !options.Library)
                 throw new ArgumentException("--module-calls requires --library.");
             if (options.Exports.Count != 0 && !options.Library)
@@ -241,7 +244,9 @@ internal static class Program
             {
                 byte[] portableModule = PortableModuleFormat.Encode(
                     compilation.Module,
-                    compilation.ContractManifest);
+                    compilation.ContractManifest,
+                    includeIndexedExecutable: options.IndexedExecutable,
+                    portableContracts: options.IndexedExecutable ? compilation.PortableContracts : null);
                 File.WriteAllBytes(options.PortableModulePath, portableModule);
             }
             if (options.GeneratedSourcePath is not null)
@@ -348,18 +353,20 @@ internal static class Program
                 (options.ModuleCalls, "module-calls"),
                 (options.HostIo, "host-io"),
                 (options.ArenaImports, "arena-imports"),
-                (options.PortableModulePath is not null, "portable-module-v0")
+                (options.PortableModulePath is not null, "portable-module-v0"),
+                (options.IndexedExecutable, "indexed-executable-v0")
             ];
             return features.Where(feature => feature.Enabled).Select(feature => feature.Name).ToArray();
         }
 
         private static void PrintHelp()
         {
-            Console.WriteLine("Usage: ubytec <source.ubc> [-o <output.nasm>] [--portable-module <module.ubcm>] [--grammar <grammar.json>] [--json <module.json>] [--metadata <metadata.json>] [--no-metadata] [--library] [--tail-calls] [--stack-transfers] [--frame-values] [--frame-registers] [--loop-reductions] [--block-reductions] [--block-reductions-native] [--record-reductions] [--lookup-reductions] [--effect-registers] [--module-calls] [--host-io] [--arena-imports] [--generated-source <source.ubc>] [--host-export Function=ubytec_host_symbol]");
+            Console.WriteLine("Usage: ubytec <source.ubc> [-o <output.nasm>] [--portable-module <module.ubcm>] [--indexed-executable] [--grammar <grammar.json>] [--json <module.json>] [--metadata <metadata.json>] [--no-metadata] [--library] [--tail-calls] [--stack-transfers] [--frame-values] [--frame-registers] [--loop-reductions] [--block-reductions] [--block-reductions-native] [--record-reductions] [--lookup-reductions] [--effect-registers] [--module-calls] [--host-io] [--arena-imports] [--generated-source <source.ubc>] [--host-export Function=ubytec_host_symbol]");
             Console.WriteLine("       ubytec --verify-module <module.ubcm>");
             Console.WriteLine("       ubytec --format-stdin < input.ubc > output.ubc");
             Console.WriteLine("--portable-module emits canonical architecture-neutral Portable Module Format v0 alongside NASM.");
-            Console.WriteLine("--verify-module validates PMF framing, canonical sections and runtime resource limits without compiling it.");
+            Console.WriteLine("--indexed-executable adds the verified indexed executable section group to --portable-module output.");
+            Console.WriteLine("--verify-module validates PMF framing, canonical sections, indexed executable tables/code when present, and runtime resource limits without compiling it.");
             Console.WriteLine("--format-stdin canonicalizes UBC from standard input to standard output without compiling it.");
             Console.WriteLine("--metadata writes build provenance separately from canonical NASM; by default <output>.metadata.json is written.");
             Console.WriteLine("--no-metadata disables the provenance sidecar.");
@@ -379,6 +386,7 @@ internal static class Program
             internal string? GeneratedSourcePath { get; set; }
             internal string? PortableModulePath { get; set; }
             internal bool EmitMetadata { get; set; } = true;
+            internal bool IndexedExecutable { get; set; }
             internal bool Library { get; set; }
             internal bool TailCalls { get; set; }
             internal bool StackTransfers { get; set; }
