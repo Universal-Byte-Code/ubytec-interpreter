@@ -135,12 +135,12 @@ public class IndexedModuleBoundaryTests
     }
 
     [Fact]
-    public void IdenticalPortableImportsShareOneImportIndex()
+    public void IdenticalPortableImportsRemainDistinctAuthoritySlots()
     {
         const string source = """
             import First from math.Twice (t_int64) -> t_int64
             import Second from math.Twice (t_int64) -> t_int64
-            module (name:"dedupe", version:"0.1", author:"Ubytec")
+            module (name:"authority-slots", version:"0.1", author:"Ubytec")
             {
                 func Main(t_int64 value) -> t_int64
                 {
@@ -168,8 +168,9 @@ public class IndexedModuleBoundaryTests
             .GetRequiredSection(PortableModuleSectionKind.IndexedCode)
             .Payload.Span;
 
-        Assert.Equal(1u, BinaryPrimitives.ReadUInt32LittleEndian(imports[..4]));
-        Assert.Equal(2, Count(code, [0x60, 0x01, 0x00, 0x00, 0x00, 0x00]));
+        Assert.Equal(2u, BinaryPrimitives.ReadUInt32LittleEndian(imports[..4]));
+        Assert.Equal(1, Count(code, [0x60, 0x01, 0x00, 0x00, 0x00, 0x00]));
+        Assert.Equal(1, Count(code, [0x60, 0x01, 0x01, 0x00, 0x00, 0x00]));
     }
 
     private static SourceCompilation Compile(string source) =>
