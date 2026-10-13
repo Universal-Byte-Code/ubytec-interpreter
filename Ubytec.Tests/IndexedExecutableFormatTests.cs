@@ -71,8 +71,8 @@ public class IndexedExecutableFormatTests
         byte[] code = image.GetRequiredSection(PortableModuleSectionKind.IndexedCode).Payload.ToArray();
         string lossyAscii = Encoding.ASCII.GetString(code);
 
-        Assert.DoesNotContain("Twice", lossyAscii, StringComparison.Ordinal);
-        Assert.DoesNotContain("counter", lossyAscii, StringComparison.Ordinal);
+        Assert.DoesNotContain("Twice", lossyAscii);
+        Assert.DoesNotContain("counter", lossyAscii);
         Assert.True(Contains(code, [0x60, 0x00, 0x00, 0x00, 0x00, 0x00]));
         Assert.True(Contains(code, [0x50, 0x02, 0x00, 0x00, 0x00, 0x00]));
         Assert.True(Contains(code, [0x51, 0x02, 0x00, 0x00, 0x00, 0x00]));
