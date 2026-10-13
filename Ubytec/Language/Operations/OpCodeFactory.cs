@@ -9,17 +9,14 @@ namespace Ubytec.Language.Operations
     /// <summary>
     /// Central factory responsible for instantiating <see cref="IOpCode"/> objects from raw <c>ValueType</c> op-codes.
     /// <para>
-    /// The factory supports two categories of instructions:
-    /// <list type="bullet">
-    /// <item><description><strong>Core op-codes</strong> (byte value ≠ <c>0xFF</c>): created via a fast lookup table.</description></item>
-    /// <item><description><strong>Extended op-codes</strong> (byte value <c>0xFF</c>): routed to <see cref="ExtendedOpcodeFactory"/> using the next two operand bytes <c>ExtensionGroup</c> and <c>ExtendedOpCode</c>.</description></item>
-    /// </list>
+    /// Core opcodes use one byte in <c>0x00..0xFE</c>. <c>0xFF</c> is a recursive escape:
+    /// one or more consecutive escape bytes are followed by an ExtensionGroup and ExtendedOpCode.
     /// </para>
     /// </summary>
     public static class OpcodeFactory
     {
         /// <summary>
-        /// Maps a core <c>ValueType</c> op‑code to its delegate constructor.
+        /// Maps a core <c>ValueType</c> op-code to its delegate constructor.
         /// </summary>
         private static readonly Dictionary<ValueType, IOpCodeFactory.OpCodeFactoryDelegate> _factory =
             new()
@@ -91,28 +88,21 @@ namespace Ubytec.Language.Operations
             };
 
         /// <summary>
-        /// Creates the concrete <see cref="IOpCode"/> instance that represents the supplied <paramref name="opcode"/>.
+        /// Creates the concrete <see cref="IOpCode"/> represented by the supplied opcode and operands.
         /// </summary>
-        /// <param name="opcode">The raw <c>ValueType</c> identifying the instruction to instantiate.</param>
-        /// <param name="variables">Array of variable‑reference fragments passed to the constructor of the instruction.</param>
-        /// <param name="tokens">Full token stream for the instruction; used for diagnostics and location mapping.</param>
-        /// <param name="operands">Optional trailing operands. For core op‑codes these are forwarded untouched; for extended op‑codes the first two operands are interpreted as <c>ExtensionGroup</c> and <c>ExtendedOpCode</c>.</param>
-        /// <returns>The fully‑constructed <see cref="IOpCode"/> implementation.</returns>
-        /// <exception cref="NotSupportedException">
-        /// Thrown when:
-        /// <list type="bullet">
-        /// <item><description>The supplied <paramref name="opcode"/> is not recognised by the factory.</description></item>
-        /// <item><description>The op‑code is <c>0xFF</c> (extended) but fewer than two operand bytes were provided.</description></item>
-        /// </list>
-        /// </exception>
+        /// <remarks>
+        /// For a core opcode, operands are forwarded unchanged. For an extended opcode the caller supplies
+        /// the first <c>0xFF</c> as <paramref name="opcode"/>. Any immediately following <c>0xFF</c> operands
+        /// increase the escape depth. The next two bytes are ExtensionGroup and ExtendedOpCode.
+        /// </remarks>
         public static IOpCode Create(
             ValueType opcode,
             VariableExpressionFragment[] variables,
             SyntaxToken[] tokens,
             params ValueType[] operands)
         {
-            // Fast path: standard opcode (≠ 0xFF)
-            if ((byte)opcode != 0xFF)
+            // Fast path: standard opcode (0x00..0xFE).
+            if ((byte)opcode != OpcodeId.ESCAPE)
             {
                 if (_factory.TryGetValue(opcode, out var ctor))
                     return ctor(variables, tokens, operands);
@@ -120,15 +110,35 @@ namespace Ubytec.Language.Operations
                 throw new NotSupportedException($"Opcode 0x{opcode:X2} is not supported.");
             }
 
-            // Extended path: need at least 2 extra bytes
-            if (operands.Length < 2)
-                throw new NotSupportedException("Extended opcode requires ExtensionGroup + ExtendedOpCode bytes.");
+            int escapeDepth = 1;
+            int cursor = 0;
 
-            var extGroup = (byte)operands[0];
-            var extOpCode = (byte)operands[1];
-            var tail = operands.Length > 2 ? operands[2..] : [];
+            // The initial 0xFF is supplied as opcode. Additional consecutive 0xFF bytes
+            // in the operand stream recursively select deeper namespaces.
+            while (cursor < operands.Length && operands[cursor] is byte next && next == OpcodeId.ESCAPE)
+            {
+                escapeDepth++;
+                cursor++;
+                if (escapeDepth > ExtendedOpcodeFactory.MAX_SUPPORTED_ESCAPE_DEPTH)
+                    throw new NotSupportedException(
+                        $"Escape depth {escapeDepth} exceeds this runtime's supported maximum of {ExtendedOpcodeFactory.MAX_SUPPORTED_ESCAPE_DEPTH}.");
+            }
 
-            return ExtendedOpcodeFactory.Create(extGroup, extOpCode, variables, tokens, tail);
+            if (operands.Length - cursor < 2)
+                throw new NotSupportedException(
+                    $"Incomplete extended opcode prefix at escape depth {escapeDepth}; ExtensionGroup + ExtendedOpCode are required.");
+
+            byte extGroup = RequireByte(operands[cursor], "ExtensionGroup");
+            byte extOpCode = RequireByte(operands[cursor + 1], "ExtendedOpCode");
+            if (extGroup == OpcodeId.ESCAPE || extOpCode == OpcodeId.ESCAPE)
+                throw new NotSupportedException("0xFF is reserved for recursive opcode escaping and cannot be allocated as an extension group or extended opcode.");
+
+            var tail = operands.Length > cursor + 2 ? operands[(cursor + 2)..] : [];
+            return ExtendedOpcodeFactory.Create(escapeDepth, extGroup, extOpCode, variables, tokens, tail);
         }
+
+        private static byte RequireByte(ValueType value, string role) => value is byte result
+            ? result
+            : throw new NotSupportedException($"{role} must be encoded as a byte.");
     }
 }
