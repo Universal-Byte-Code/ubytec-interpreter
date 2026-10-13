@@ -37,7 +37,14 @@ current Linux x86-64 NASM output.
 For modules with source-level imports/exports, the indexed profile consumes the
 semantic portable contract view produced during compilation. Source aliases,
 runtime bridge handles, generated host adapter symbols and process addresses are
-not serialized.
+not serialized into the indexed tables.
+
+The existing textual `UBC1` contract manifest remains a native module-isolation
+artifact: it contains runtime bridge handles and generated host adapter symbols.
+The CLI therefore omits that legacy manifest from `--indexed-executable` PMF output;
+portable module-boundary contracts are represented by indexed Import/Export tables
+instead. Native ELF generation and isolation continue to use the legacy manifest
+unchanged.
 
 ## Verify a portable module
 
@@ -82,7 +89,7 @@ Current standard section kinds are:
 | Kind | Payload |
 | ---: | --- |
 | `0x0001` | normalized Semantic AST (required, critical) |
-| `0x0002` | import/export Contract manifest (optional, critical) |
+| `0x0002` | portable Contract manifest when independently available (optional, critical) |
 | `0x0003` | execution Capability manifest (optional, critical) |
 | `0x0010` | indexed String table (profile-critical) |
 | `0x0011` | indexed Type table (profile-critical) |
@@ -118,7 +125,7 @@ The indexed profile removes source names from executable references:
 Every import declaration remains a distinct authority slot. Two imports may have
 byte-identical module/symbol/signature rows but still occupy different
 `ImportIndex` values so a loader can grant one and deny the other. Their source
-aliases are used only during lowering and are not part of the portable bytes.
+aliases are used only during lowering and are not part of the indexed table bytes.
 
 For supervised import calls, value arguments consume one caller cell and loan
 arguments consume `(local_address, logical_length)`, followed by `budget_ms` and
