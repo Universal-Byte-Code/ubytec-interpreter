@@ -25,6 +25,8 @@ public class IndexedModuleBoundaryTests
             {
                 load @value
                 call Local
+                push 1000
+                push 16384
                 call Remote
                 return
             }
@@ -63,7 +65,7 @@ public class IndexedModuleBoundaryTests
         Assert.Contains("Twice", strings);
         Assert.Contains("Execute", strings);
         Assert.DoesNotContain("Remote", strings);
-        Assert.DoesNotContain(strings, value => value.StartsWith("ubytec_host_contract_", StringComparison.Ordinal));
+        Assert.False(strings.Any(value => value.StartsWith("ubytec_host_contract_", StringComparison.Ordinal)));
 
         ReadOnlySpan<byte> imports = image
             .GetRequiredSection(PortableModuleSectionKind.IndexedImportTable)
@@ -143,7 +145,13 @@ public class IndexedModuleBoundaryTests
                 func Main(t_int64 value) -> t_int64
                 {
                     load @value
+                    push 1000
+                    push 16384
                     call First
+                    drop 0
+                    load @value
+                    push 1000
+                    push 16384
                     call Second
                     return
                 }
