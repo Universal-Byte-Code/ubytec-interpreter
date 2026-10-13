@@ -4,10 +4,45 @@
 Each loan becomes (arena, allocation, offset, length); scalars keep their type.
 Budget and native-result pointer follow the declared arguments. Wrapper result
 is the existing bridge status. No monitor authority resides in this generator.
+
+Arena wrapper generation remains an independent Python reference implementation.
+Canonical UBC layout is intentionally delegated to the production C# formatter
+so formatting rules have one source of truth.
 """
-import argparse,re
+import argparse,re,subprocess
 from pathlib import Path
 IMPORT=re.compile(r'^\s*import\s+(\w+)\s+from\s+\w+\.\w+\s*\(([^)]*)\)\s*->\s*(\w+)\s*$',re.M)
+REPO=Path(__file__).resolve().parents[2]
+FORMATTER_DLL=REPO/'Ubytec/bin/Release/net9.0/Ubytec.dll'
+FORMATTER_INPUTS=(
+    REPO/'Directory.Build.props',
+    REPO/'Ubytec/Ubytec.csproj',
+    REPO/'Ubytec/Program.cs',
+    REPO/'Ubytec/Language/Tools/UbcFormatter.cs',
+)
+
+def _ensure_formatter():
+    if FORMATTER_DLL.exists():
+        built=FORMATTER_DLL.stat().st_mtime_ns
+        if all(path.exists() and path.stat().st_mtime_ns<=built for path in FORMATTER_INPUTS):return
+    result=subprocess.run([
+        'dotnet','build',REPO/'Ubytec/Ubytec.csproj','-c','Release',
+        '-p:EnableDocFxOnBuild=false','-p:GenerateDocumentationFile=false','--nologo'
+    ],capture_output=True,text=True)
+    if result.returncode:
+        raise RuntimeError('Unable to build canonical UBC formatter:\n'+result.stdout+result.stderr)
+
+def format_ubc(source):
+    """Canonicalize source through Ubytec.Language.Tools.UbcFormatter."""
+    if not source:return ''
+    _ensure_formatter()
+    result=subprocess.run(
+        ['dotnet',FORMATTER_DLL,'--format-stdin'],
+        input=source,capture_output=True,text=True)
+    if result.returncode:
+        raise RuntimeError('Canonical UBC formatter failed:\n'+result.stdout+result.stderr)
+    return result.stdout
+
 def emit_wrappers(source):
     if '// BEGIN GENERATED ARENA IMPORTS' in source:raise ValueError('Source already contains generated wrappers')
     out=[];names=set(re.findall(r'\bfunc\s+(\w+)',source))|{m.group(1) for m in IMPORT.finditer(source)}
@@ -58,10 +93,10 @@ def generate(source,arena_library=None):
         for name in ('ArenaFind','ArenaPin','ArenaUnpin'):
             if re.search(r'\bfunc\s+'+name+r'\b',source):raise ValueError('Arena already defined in source')
         wrappers=body+'\n'+wrappers
-    return source.rstrip()[:-1]+wrappers+'}\n'
+    return format_ubc(source.rstrip()[:-1]+wrappers+'}\n')
 def main():
     p=argparse.ArgumentParser();p.add_argument('source',type=Path);p.add_argument('-o','--output',type=Path,required=True);p.add_argument('--arena-library',type=Path);a=p.parse_args()
     try:result=generate(a.source.read_text(encoding='utf-8'),a.arena_library.read_text(encoding='utf-8') if a.arena_library else None)
-    except ValueError as e:p.error(str(e))
+    except (ValueError,RuntimeError) as e:p.error(str(e))
     a.output.write_text(result,encoding='utf-8')
 if __name__=='__main__':main()
