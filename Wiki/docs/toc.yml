@@ -6,6 +6,8 @@
   href: overview.md
 - name: Data Opcode Reference
   href: opcodes.md
+- name: Portable Module Format
+  href: portable-module-format.md
 
 - name: Functions and Remaining Work
   href: functions.md
