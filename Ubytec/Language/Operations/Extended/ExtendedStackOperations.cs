@@ -20,6 +20,8 @@ namespace Ubytec.Language.Operations.Extended
             /// <inheritdoc/>
             public byte OpCode => 0xFF;
             /// <inheritdoc/>
+            public int EscapeDepth => 1;
+            /// <inheritdoc/>
             public byte ExtensionGroup => GROUP;
             /// <inheritdoc/>
             public byte ExtendedOpCode => OP;
@@ -49,6 +51,8 @@ namespace Ubytec.Language.Operations.Extended
             public const byte OP = 0x18;
             /// <inheritdoc/>
             public byte OpCode => 0xFF;
+            /// <inheritdoc/>
+            public int EscapeDepth => 1;
             /// <inheritdoc/>
             public byte ExtensionGroup => GROUP;
             /// <inheritdoc/>
@@ -82,6 +86,8 @@ namespace Ubytec.Language.Operations.Extended
             /// <inheritdoc/>
             public byte OpCode => 0xFF;
             /// <inheritdoc/>
+            public int EscapeDepth => 1;
+            /// <inheritdoc/>
             public byte ExtensionGroup => GROUP;
             /// <inheritdoc/>
             public byte ExtendedOpCode => OP;
@@ -111,6 +117,8 @@ namespace Ubytec.Language.Operations.Extended
             public const byte OP = 0x1E;
             /// <inheritdoc/>
             public byte OpCode => 0xFF;
+            /// <inheritdoc/>
+            public int EscapeDepth => 1;
             /// <inheritdoc/>
             public byte ExtensionGroup => GROUP;
             /// <inheritdoc/>
