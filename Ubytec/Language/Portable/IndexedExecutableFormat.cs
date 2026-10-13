@@ -1,0 +1,1004 @@
+using System.Buffers.Binary;
+using System.Reflection;
+using System.Text;
+using Ubytec.Language.HighLevel;
+using Ubytec.Language.Operations;
+using Ubytec.Language.Operations.Extended;
+using Ubytec.Language.Operations.Interfaces;
+using Ubytec.Language.Syntax.Model;
+using static Ubytec.Language.Operations.CoreOperations;
+using static Ubytec.Language.Syntax.TypeSystem.Types;
+
+namespace Ubytec.Language.Portable;
+
+/// <summary>
+/// Architecture-neutral indexed executable profile for Portable Module Format v0.
+/// Symbolic function and frame references are lowered to fixed-width table indices.
+/// </summary>
+public static class IndexedExecutableFormat
+{
+    /// <summary>Sentinel used only by table fields whose specification permits an absent index.</summary>
+    public const uint NoIndex = uint.MaxValue;
+
+    private static readonly UTF8Encoding StrictUtf8 = new(false, true);
+    private static readonly HashSet<byte> OperandFreeCoreOpcodes = DiscoverOperandFreeCoreOpcodes();
+
+    private static readonly PortableModuleSectionKind[] SectionKinds =
+    [
+        PortableModuleSectionKind.IndexedStringTable,
+        PortableModuleSectionKind.IndexedTypeTable,
+        PortableModuleSectionKind.IndexedFunctionTable,
+        PortableModuleSectionKind.IndexedImportTable,
+        PortableModuleSectionKind.IndexedExportTable,
+        PortableModuleSectionKind.IndexedConstantTable,
+        PortableModuleSectionKind.IndexedCode
+    ];
+
+    /// <summary>Returns true when the decoded PMF image carries the complete indexed profile.</summary>
+    public static bool IsPresent(PortableModuleImage image) =>
+        SectionKinds.All(kind => image.GetSection(kind) is not null);
+
+    internal static IReadOnlyList<IndexedSectionPayload> EncodeSections(Module module)
+    {
+        ArgumentNullException.ThrowIfNull(module);
+
+        List<CallableInfo> callables = FlattenCallables(module);
+        foreach (CallableInfo callable in callables)
+            BuildBindings(callable);
+
+        HashSet<TypeKey> typeKeys = CollectTypes(callables);
+        string[] strings = typeKeys
+            .Where(type => type.Primitive == PrimitiveType.CustomType)
+            .Select(type => type.Name ?? string.Empty)
+            .Distinct(StringComparer.Ordinal)
+            .OrderBy(static value => StrictUtf8.GetBytes(value), ByteArrayComparer.Instance)
+            .ToArray();
+
+        var stringIndices = strings
+            .Select((value, index) => (value, index))
+            .ToDictionary(item => item.value, item => checked((uint)item.index), StringComparer.Ordinal);
+
+        var encodedTypes = typeKeys
+            .Select(type => (Type: type, Bytes: EncodeTypeEntry(type, stringIndices)))
+            .OrderBy(item => item.Bytes, ByteArrayComparer.Instance)
+            .ToArray();
+        var typeIndices = encodedTypes
+            .Select((item, index) => (item.Type, Index: checked((uint)index)))
+            .ToDictionary(item => item.Type, item => item.Index);
+
+        var functionIndices = callables
+            .Select((callable, index) => (callable, index))
+            .ToDictionary(item => item.callable, item => checked((uint)item.index));
+        var topLevel = callables
+            .Where(callable => callable.Parent is null)
+            .ToDictionary(callable => callable.Name, callable => callable, StringComparer.Ordinal);
+
+        using var codeStream = new MemoryStream();
+        var functionEntries = new List<FunctionEncoding>(callables.Count);
+        foreach (CallableInfo callable in callables)
+        {
+            uint offset = checked((uint)codeStream.Length);
+            byte[] code = EncodeFunction(callable, typeIndices, functionIndices, topLevel);
+            codeStream.Write(code);
+            functionEntries.Add(new FunctionEncoding(callable, offset, checked((uint)code.Length)));
+        }
+
+        byte[] stringTable = EncodeStringTable(strings);
+        byte[] typeTable = EncodeTypeTable(encodedTypes.Select(item => item.Bytes).ToArray());
+        byte[] functionTable = EncodeFunctionTable(functionEntries, typeIndices);
+        byte[] emptyTable = EmptyTable();
+        byte[] codeSection = codeStream.ToArray();
+
+        return
+        [
+            new(PortableModuleSectionKind.IndexedStringTable, stringTable),
+            new(PortableModuleSectionKind.IndexedTypeTable, typeTable),
+            new(PortableModuleSectionKind.IndexedFunctionTable, functionTable),
+            new(PortableModuleSectionKind.IndexedImportTable, emptyTable),
+            new(PortableModuleSectionKind.IndexedExportTable, emptyTable),
+            new(PortableModuleSectionKind.IndexedConstantTable, emptyTable),
+            new(PortableModuleSectionKind.IndexedCode, codeSection)
+        ];
+    }
+
+    /// <summary>
+    /// Verifies the indexed executable section group in a decoded PMF image. If none of the
+    /// indexed sections is present this method succeeds without changing the base PMF contract.
+    /// </summary>
+    public static void Verify(PortableModuleImage image)
+    {
+        ArgumentNullException.ThrowIfNull(image);
+        VerifySections(image.Sections);
+    }
+
+    internal static void VerifySections(IReadOnlyList<PortableModuleSection> sections)
+    {
+        int present = SectionKinds.Count(kind => sections.Any(section => section.Kind == (ushort)kind));
+        if (present == 0) return;
+        if (present != SectionKinds.Length)
+            throw new InvalidDataException("Indexed executable PMF sections 0x0010..0x0016 must be present as a complete group.");
+
+        foreach (PortableModuleSectionKind kind in SectionKinds)
+        {
+            PortableModuleSection section = sections.Single(item => item.Kind == (ushort)kind);
+            if ((section.Flags & PortableModuleSectionFlags.Critical) == 0)
+                throw new InvalidDataException($"Indexed executable section 0x{(ushort)kind:X4} must be critical.");
+        }
+
+        ReadOnlyMemory<byte> stringsPayload = Required(sections, PortableModuleSectionKind.IndexedStringTable).Payload;
+        ReadOnlyMemory<byte> typesPayload = Required(sections, PortableModuleSectionKind.IndexedTypeTable).Payload;
+        ReadOnlyMemory<byte> functionsPayload = Required(sections, PortableModuleSectionKind.IndexedFunctionTable).Payload;
+        ReadOnlyMemory<byte> importsPayload = Required(sections, PortableModuleSectionKind.IndexedImportTable).Payload;
+        ReadOnlyMemory<byte> exportsPayload = Required(sections, PortableModuleSectionKind.IndexedExportTable).Payload;
+        ReadOnlyMemory<byte> constantsPayload = Required(sections, PortableModuleSectionKind.IndexedConstantTable).Payload;
+        ReadOnlyMemory<byte> codePayload = Required(sections, PortableModuleSectionKind.IndexedCode).Payload;
+
+        List<byte[]> strings = ParseStringTable(stringsPayload.Span);
+        List<TypeEntry> types = ParseTypeTable(typesPayload.Span, strings.Count);
+        List<FunctionEntry> functions = ParseFunctionTable(functionsPayload.Span, types.Count);
+        ParseImportTable(importsPayload.Span, strings.Count, types.Count);
+        ParseExportTable(exportsPayload.Span, strings, functions.Count);
+        ParseConstantTable(constantsPayload.Span);
+        VerifyFunctionRanges(functions, codePayload.Length);
+        VerifyCode(functions, types, codePayload.Span);
+    }
+
+    private static PortableModuleSection Required(
+        IReadOnlyList<PortableModuleSection> sections,
+        PortableModuleSectionKind kind) =>
+        sections.Single(section => section.Kind == (ushort)kind);
+
+    private static List<CallableInfo> FlattenCallables(Module module)
+    {
+        var result = new List<CallableInfo>();
+
+        void AddFunction(Ubytec.Language.HighLevel.Func function, CallableInfo? parent)
+        {
+            if (function.Definition is null)
+                throw new InvalidDataException($"Function '{function.Name}' has no executable body.");
+            var info = new CallableInfo(
+                function.Name,
+                function.ReturnType,
+                function.Arguments,
+                function.Locals,
+                function.Definition,
+                parent);
+            result.Add(info);
+            parent?.Nested.Add(function.Name, info);
+            foreach (Ubytec.Language.HighLevel.Func nested in function.Locals?.Functions ?? [])
+                AddFunction(nested, info);
+            foreach (Ubytec.Language.HighLevel.Action nested in function.Locals?.Actions ?? [])
+                AddAction(nested, info);
+        }
+
+        void AddAction(Ubytec.Language.HighLevel.Action action, CallableInfo? parent)
+        {
+            if (action.Definition is null)
+                throw new InvalidDataException($"Action '{action.Name}' has no executable body.");
+            var info = new CallableInfo(
+                action.Name,
+                new UType(PrimitiveType.Void),
+                action.Arguments,
+                action.Locals,
+                action.Definition,
+                parent);
+            result.Add(info);
+            parent?.Nested.Add(action.Name, info);
+            foreach (Ubytec.Language.HighLevel.Func nested in action.Locals?.Functions ?? [])
+                AddFunction(nested, info);
+            foreach (Ubytec.Language.HighLevel.Action nested in action.Locals?.Actions ?? [])
+                AddAction(nested, info);
+        }
+
+        foreach (Ubytec.Language.HighLevel.Func function in module.Functions)
+            AddFunction(function, null);
+        foreach (Ubytec.Language.HighLevel.Action action in module.Actions)
+            AddAction(action, null);
+
+        var topLevelNames = new HashSet<string>(StringComparer.Ordinal);
+        foreach (CallableInfo callable in result.Where(item => item.Parent is null))
+            if (!topLevelNames.Add(callable.Name))
+                throw new InvalidDataException($"Duplicate top-level callable '{callable.Name}'.");
+
+        return result;
+    }
+
+    private static void BuildBindings(CallableInfo callable)
+    {
+        uint next = 0;
+        foreach (Argument argument in callable.Arguments)
+            Add(argument.Name, argument.Type, isLocal: false, value: null);
+
+        foreach (Variable variable in callable.Locals?.Variables ?? [])
+            Add(variable.Name, variable.Type, isLocal: true, variable.Value);
+
+        foreach (VAR declaration in FunctionEmitter.Instructions(callable.Definition).OfType<VAR>())
+            Add(declaration.Variable.Name, declaration.Variable.Type, isLocal: true, declaration.Variable.Value, fromBodyVar: true);
+
+        void Add(string name, UType type, bool isLocal, object? value, bool fromBodyVar = false)
+        {
+            if (!callable.BindingIndices.TryAdd(name, next))
+                throw new InvalidDataException($"Duplicate frame binding '{name}' in '{callable.Name}'.");
+            callable.Bindings.Add(new BindingInfo(name, type, next, isLocal, value, fromBodyVar));
+            next++;
+        }
+    }
+
+    private static HashSet<TypeKey> CollectTypes(IEnumerable<CallableInfo> callables)
+    {
+        var result = new HashSet<TypeKey>();
+        foreach (CallableInfo callable in callables)
+        {
+            result.Add(TypeKey.From(callable.ReturnType));
+            foreach (Argument argument in callable.Arguments)
+                result.Add(TypeKey.From(argument.Type));
+            foreach (BindingInfo binding in callable.Bindings.Where(binding => binding.IsLocal))
+                result.Add(TypeKey.From(binding.Type));
+        }
+        return result;
+    }
+
+    private static byte[] EncodeFunction(
+        CallableInfo callable,
+        IReadOnlyDictionary<TypeKey, uint> typeIndices,
+        IReadOnlyDictionary<CallableInfo, uint> functionIndices,
+        IReadOnlyDictionary<string, CallableInfo> topLevel)
+    {
+        using var stream = new MemoryStream();
+
+        // Locals declared in the function's local context are initialized at function entry by
+        // the native backend. Represent that semantic step explicitly in portable code.
+        foreach (BindingInfo local in callable.Bindings.Where(binding => binding.IsLocal && !binding.FromBodyVar))
+        {
+            stream.WriteByte(VAR_OPCODE);
+            WriteUInt32(stream, local.Index);
+            WriteUInt64(stream, unchecked((ulong)FunctionCode.InitialValue(local.Type, local.InitialValue)));
+        }
+
+        foreach (IOpCode operation in FunctionEmitter.Instructions(callable.Definition))
+            EncodeInstruction(stream, operation, callable, typeIndices, functionIndices, topLevel);
+
+        return stream.ToArray();
+    }
+
+    private static void EncodeInstruction(
+        Stream stream,
+        IOpCode operation,
+        CallableInfo callable,
+        IReadOnlyDictionary<TypeKey, uint> typeIndices,
+        IReadOnlyDictionary<CallableInfo, uint> functionIndices,
+        IReadOnlyDictionary<string, CallableInfo> topLevel)
+    {
+        if (operation is IExtendedOpCode extended)
+            throw new NotSupportedException(
+                $"Indexed executable v0 reference lowering does not yet define operands for extended opcode " +
+                $"depth={extended.EscapeDepth}, group=0x{extended.ExtensionGroup:X2}, opcode=0x{extended.ExtendedOpCode:X2}.");
+
+        switch (operation)
+        {
+            case RETURN ret:
+                if (ret.Variables is not null)
+                    throw Unsupported(operation, "RETURN expression metadata has no portable v0 wire contract");
+                stream.WriteByte(RETURN.OP);
+                if (ret.BlockType is null)
+                {
+                    stream.WriteByte(0);
+                }
+                else
+                {
+                    stream.WriteByte(1);
+                    WriteUInt32(stream, TypeIndex(ret.BlockType.Value, typeIndices));
+                }
+                return;
+
+            case VAR declaration:
+                stream.WriteByte(VAR_OPCODE);
+                WriteUInt32(stream, BindingIndex(callable, declaration.Variable.Name));
+                WriteUInt64(stream, unchecked((ulong)FunctionCode.InitialValue(
+                    declaration.Variable.Type,
+                    declaration.Variable.Value)));
+                return;
+
+            case StackOperations.PUSH push:
+                if (push.operands.Length is < 1 or > 8)
+                    throw new InvalidDataException("PUSH portable immediate must contain 1..8 bytes.");
+                stream.WriteByte(StackOperations.PUSH.OP);
+                stream.WriteByte(checked((byte)push.operands.Length));
+                stream.Write(push.operands);
+                return;
+
+            case StackOperations.DROP drop:
+                stream.WriteByte(StackOperations.DROP.OP);
+                stream.WriteByte(drop.stackIndex);
+                return;
+
+            case StackOperations.PICK pick:
+                stream.WriteByte(StackOperations.PICK.OP);
+                stream.WriteByte(pick.n);
+                return;
+
+            case StackOperations.ROLL roll:
+                stream.WriteByte(StackOperations.ROLL.OP);
+                stream.WriteByte(roll.n);
+                return;
+
+            case FunctionOperations.CALL call:
+                stream.WriteByte(FunctionOperations.CALL.OP);
+                WriteUInt32(stream, functionIndices[ResolveCallable(callable, call.FunctionName, topLevel)]);
+                return;
+
+            case FunctionOperations.FNADDR address:
+                stream.WriteByte(FunctionOperations.FNADDR.OP);
+                WriteUInt32(stream, functionIndices[ResolveCallable(callable, address.FunctionName, topLevel)]);
+                return;
+
+            case FunctionOperations.CALLI indirect:
+                indirect.Validate();
+                stream.WriteByte(FunctionOperations.CALLI.OP);
+                stream.WriteByte(checked((byte)indirect.ArgumentCount));
+                stream.WriteByte((byte)indirect.ReturnType);
+                return;
+
+            case MemoryOperations.LOAD load:
+                EncodeMemory(stream, MemoryOperations.LOAD.OP, load.VariableName, load.AccessType, callable);
+                return;
+
+            case MemoryOperations.STORE store:
+                EncodeMemory(stream, MemoryOperations.STORE.OP, store.VariableName, store.AccessType, callable);
+                return;
+
+            default:
+                if (IsOperandFreeCore(operation))
+                {
+                    stream.WriteByte(operation.OpCode);
+                    return;
+                }
+                throw Unsupported(operation, "opcode has semantic fields but no indexed executable v0 operand contract");
+        }
+    }
+
+    private static void EncodeMemory(
+        Stream stream,
+        byte opcode,
+        string? variableName,
+        PrimitiveType? accessType,
+        CallableInfo callable)
+    {
+        stream.WriteByte(opcode);
+        if (variableName is not null)
+        {
+            if (accessType is not null)
+                throw new InvalidDataException("Named LOAD/STORE cannot also carry a raw access type.");
+            stream.WriteByte(2);
+            WriteUInt32(stream, BindingIndex(callable, variableName));
+            return;
+        }
+
+        if (accessType is null)
+        {
+            stream.WriteByte(0);
+            return;
+        }
+
+        var type = new UType(accessType.Value);
+        if (!FunctionCode.IsCellType(type))
+            throw new InvalidDataException($"Raw memory access type {accessType} is not a supported scalar cell type.");
+        stream.WriteByte(1);
+        stream.WriteByte((byte)accessType.Value);
+    }
+
+    private static CallableInfo ResolveCallable(
+        CallableInfo current,
+        string name,
+        IReadOnlyDictionary<string, CallableInfo> topLevel)
+    {
+        if (string.Equals(current.Name, name, StringComparison.Ordinal))
+            return current;
+
+        for (CallableInfo? scope = current; scope is not null; scope = scope.Parent)
+            if (scope.Nested.TryGetValue(name, out CallableInfo? nested))
+                return nested;
+
+        if (topLevel.TryGetValue(name, out CallableInfo? top))
+            return top;
+
+        throw new NotSupportedException(
+            $"CALL/FNADDR target '{name}' is not an indexed local function. Import lowering is not implemented yet.");
+    }
+
+    private static uint BindingIndex(CallableInfo callable, string name) =>
+        callable.BindingIndices.TryGetValue(name, out uint index)
+            ? index
+            : throw new InvalidDataException($"Unknown frame binding '{name}' in '{callable.Name}'.");
+
+    private static uint TypeIndex(UType type, IReadOnlyDictionary<TypeKey, uint> typeIndices) =>
+        typeIndices.TryGetValue(TypeKey.From(type), out uint index)
+            ? index
+            : throw new InvalidDataException($"Type '{type}' is missing from the indexed type table.");
+
+    private static NotSupportedException Unsupported(IOpCode operation, string reason) =>
+        new($"Opcode 0x{operation.OpCode:X2} ({operation.GetType().Name}) cannot be lowered: {reason}.");
+
+    private static bool IsOperandFreeCore(IOpCode operation) =>
+        operation.OpCode != 0xFF && OperandFreeCoreOpcodes.Contains(operation.OpCode);
+
+    private static HashSet<byte> DiscoverOperandFreeCoreOpcodes()
+    {
+        var result = new HashSet<byte>();
+        foreach (Type type in typeof(IOpCode).Assembly.GetTypes())
+        {
+            if (!type.IsValueType || type.IsAbstract || !typeof(IOpCode).IsAssignableFrom(type) ||
+                typeof(IExtendedOpCode).IsAssignableFrom(type))
+                continue;
+            if (type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).Length != 0)
+                continue;
+            if (Activator.CreateInstance(type) is not IOpCode operation || operation.OpCode == 0xFF)
+                continue;
+            result.Add(operation.OpCode);
+        }
+
+        // These have explicit wire contracts even if their implementation shape changes.
+        result.Remove(RETURN.OP);
+        result.Remove(VAR_OPCODE);
+        result.Remove(StackOperations.PUSH.OP);
+        result.Remove(StackOperations.DROP.OP);
+        result.Remove(StackOperations.PICK.OP);
+        result.Remove(StackOperations.ROLL.OP);
+        result.Remove(MemoryOperations.LOAD.OP);
+        result.Remove(MemoryOperations.STORE.OP);
+        result.Remove(FunctionOperations.CALL.OP);
+        result.Remove(FunctionOperations.FNADDR.OP);
+        result.Remove(FunctionOperations.CALLI.OP);
+        return result;
+    }
+
+    private static byte[] EncodeStringTable(IReadOnlyList<string> strings)
+    {
+        using var stream = new MemoryStream();
+        WriteUInt32(stream, checked((uint)strings.Count));
+        foreach (string value in strings)
+        {
+            byte[] bytes = StrictUtf8.GetBytes(value);
+            WriteUInt32(stream, checked((uint)bytes.Length));
+            stream.Write(bytes);
+        }
+        return stream.ToArray();
+    }
+
+    private static byte[] EncodeTypeTable(IReadOnlyList<byte[]> entries)
+    {
+        using var stream = new MemoryStream();
+        WriteUInt32(stream, checked((uint)entries.Count));
+        foreach (byte[] entry in entries)
+            stream.Write(entry);
+        return stream.ToArray();
+    }
+
+    private static byte[] EncodeFunctionTable(
+        IReadOnlyList<FunctionEncoding> functions,
+        IReadOnlyDictionary<TypeKey, uint> typeIndices)
+    {
+        using var stream = new MemoryStream();
+        WriteUInt32(stream, checked((uint)functions.Count));
+        foreach (FunctionEncoding encoded in functions)
+        {
+            CallableInfo function = encoded.Callable;
+            BindingInfo[] locals = function.Bindings.Where(binding => binding.IsLocal).ToArray();
+            WriteUInt32(stream, TypeIndex(function.ReturnType, typeIndices));
+            WriteUInt32(stream, checked((uint)function.Arguments.Length));
+            WriteUInt32(stream, checked((uint)locals.Length));
+            WriteUInt32(stream, encoded.CodeOffset);
+            WriteUInt32(stream, encoded.CodeLength);
+            WriteUInt32(stream, 0);
+            foreach (Argument argument in function.Arguments)
+                WriteUInt32(stream, TypeIndex(argument.Type, typeIndices));
+            foreach (BindingInfo local in locals)
+                WriteUInt32(stream, TypeIndex(local.Type, typeIndices));
+        }
+        return stream.ToArray();
+    }
+
+    private static byte[] EncodeTypeEntry(TypeKey type, IReadOnlyDictionary<string, uint> stringIndices)
+    {
+        byte[] entry = new byte[25];
+        entry[0] = (byte)type.Primitive;
+        BinaryPrimitives.WriteUInt32LittleEndian(entry.AsSpan(1, 4), unchecked((uint)type.Modifiers));
+        BinaryPrimitives.WriteUInt64LittleEndian(entry.AsSpan(5, 8), type.FixedArraySize);
+        uint nameIndex = type.Primitive == PrimitiveType.CustomType
+            ? stringIndices[type.Name ?? string.Empty]
+            : NoIndex;
+        BinaryPrimitives.WriteUInt32LittleEndian(entry.AsSpan(13, 4), nameIndex);
+        // bytes 17..24 are reserved and already zero.
+        return entry;
+    }
+
+    private static byte[] EmptyTable()
+    {
+        byte[] bytes = new byte[4];
+        BinaryPrimitives.WriteUInt32LittleEndian(bytes, 0);
+        return bytes;
+    }
+
+    private static List<byte[]> ParseStringTable(ReadOnlySpan<byte> payload)
+    {
+        var reader = new SpanReader(payload);
+        uint count = reader.ReadUInt32("String table entry count");
+        if (count > int.MaxValue)
+            throw new InvalidDataException("String table entry count is too large.");
+        var result = new List<byte[]>(checked((int)count));
+        byte[]? previous = null;
+        for (uint i = 0; i < count; i++)
+        {
+            uint rawLength = reader.ReadUInt32("String byte length");
+            if (rawLength > int.MaxValue)
+                throw new InvalidDataException("Indexed string is too large.");
+            byte[] bytes = reader.ReadBytes(checked((int)rawLength), "Indexed string").ToArray();
+            string value;
+            try
+            {
+                value = StrictUtf8.GetString(bytes);
+            }
+            catch (DecoderFallbackException error)
+            {
+                throw new InvalidDataException("Indexed string is not valid UTF-8.", error);
+            }
+            if (value.Length != 0 && value[0] == '\uFEFF')
+                throw new InvalidDataException("Indexed string must not contain a BOM.");
+            if (previous is not null && ByteArrayComparer.Instance.Compare(previous, bytes) >= 0)
+                throw new InvalidDataException("Indexed strings must be unique and sorted by UTF-8 bytes.");
+            previous = bytes;
+            result.Add(bytes);
+        }
+        reader.RequireEnd("String table");
+        return result;
+    }
+
+    private static List<TypeEntry> ParseTypeTable(ReadOnlySpan<byte> payload, int stringCount)
+    {
+        var reader = new SpanReader(payload);
+        uint count = reader.ReadUInt32("Type table entry count");
+        if (count > int.MaxValue)
+            throw new InvalidDataException("Type table entry count is too large.");
+        var result = new List<TypeEntry>(checked((int)count));
+        byte[]? previous = null;
+        for (uint i = 0; i < count; i++)
+        {
+            int start = reader.Position;
+            byte primitiveRaw = reader.ReadByte("Primitive type");
+            if (!Enum.IsDefined(typeof(PrimitiveType), (PrimitiveType)primitiveRaw))
+                throw new InvalidDataException($"Undefined primitive type 0x{primitiveRaw:X2} in indexed type table.");
+            var primitive = (PrimitiveType)primitiveRaw;
+            uint modifiers = reader.ReadUInt32("Type modifiers");
+            ulong fixedSize = reader.ReadUInt64("Fixed array size");
+            uint nameIndex = reader.ReadUInt32("Type name string index");
+            ulong reserved = reader.ReadUInt64("Type reserved bytes");
+            if (reserved != 0)
+                throw new InvalidDataException("Indexed type reserved bytes must be zero.");
+            if (primitive == PrimitiveType.CustomType)
+            {
+                if (nameIndex >= stringCount)
+                    throw new InvalidDataException("Custom indexed type requires a valid name StringIndex.");
+            }
+            else if (nameIndex != NoIndex)
+            {
+                throw new InvalidDataException("Primitive indexed type must use NoIndex for its name.");
+            }
+            byte[] encoded = reader.CopyRange(start, 25);
+            if (previous is not null && ByteArrayComparer.Instance.Compare(previous, encoded) >= 0)
+                throw new InvalidDataException("Indexed types must be unique and sorted by their encoded bytes.");
+            previous = encoded;
+            result.Add(new TypeEntry(primitive, modifiers, fixedSize, nameIndex));
+        }
+        reader.RequireEnd("Type table");
+        return result;
+    }
+
+    private static List<FunctionEntry> ParseFunctionTable(ReadOnlySpan<byte> payload, int typeCount)
+    {
+        var reader = new SpanReader(payload);
+        uint count = reader.ReadUInt32("Function table entry count");
+        if (count > int.MaxValue)
+            throw new InvalidDataException("Function table entry count is too large.");
+        var result = new List<FunctionEntry>(checked((int)count));
+        for (uint i = 0; i < count; i++)
+        {
+            uint returnType = reader.ReadUInt32("Function return TypeIndex");
+            uint argumentCount = reader.ReadUInt32("Function argument count");
+            uint localCount = reader.ReadUInt32("Function local count");
+            uint codeOffset = reader.ReadUInt32("Function code offset");
+            uint codeLength = reader.ReadUInt32("Function code length");
+            uint flags = reader.ReadUInt32("Function flags");
+            RequireIndex(returnType, typeCount, "Function return TypeIndex");
+            if (flags != 0)
+                throw new InvalidDataException("Indexed function flags are reserved in v0 and must be zero.");
+            if (argumentCount > int.MaxValue || localCount > int.MaxValue)
+                throw new InvalidDataException("Indexed function binding count is too large.");
+
+            for (uint argument = 0; argument < argumentCount; argument++)
+                RequireIndex(reader.ReadUInt32("Function argument TypeIndex"), typeCount, "Function argument TypeIndex");
+            for (uint local = 0; local < localCount; local++)
+                RequireIndex(reader.ReadUInt32("Function local TypeIndex"), typeCount, "Function local TypeIndex");
+
+            result.Add(new FunctionEntry(returnType, argumentCount, localCount, codeOffset, codeLength));
+        }
+        reader.RequireEnd("Function table");
+        return result;
+    }
+
+    private static void ParseImportTable(ReadOnlySpan<byte> payload, int stringCount, int typeCount)
+    {
+        var reader = new SpanReader(payload);
+        uint count = reader.ReadUInt32("Import table entry count");
+        if (count > int.MaxValue)
+            throw new InvalidDataException("Import table entry count is too large.");
+        byte[]? previous = null;
+        for (uint i = 0; i < count; i++)
+        {
+            int start = reader.Position;
+            RequireIndex(reader.ReadUInt32("Import module StringIndex"), stringCount, "Import module StringIndex");
+            RequireIndex(reader.ReadUInt32("Import symbol StringIndex"), stringCount, "Import symbol StringIndex");
+            RequireIndex(reader.ReadUInt32("Import return TypeIndex"), typeCount, "Import return TypeIndex");
+            uint arguments = reader.ReadUInt32("Import argument count");
+            if (arguments > int.MaxValue)
+                throw new InvalidDataException("Import argument count is too large.");
+            for (uint argument = 0; argument < arguments; argument++)
+                RequireIndex(reader.ReadUInt32("Import argument TypeIndex"), typeCount, "Import argument TypeIndex");
+            byte[] encoded = reader.CopyRange(start, reader.Position - start);
+            if (previous is not null && ByteArrayComparer.Instance.Compare(previous, encoded) >= 0)
+                throw new InvalidDataException("Imports must be unique and sorted by their encoded bytes.");
+            previous = encoded;
+        }
+        reader.RequireEnd("Import table");
+    }
+
+    private static void ParseExportTable(ReadOnlySpan<byte> payload, IReadOnlyList<byte[]> strings, int functionCount)
+    {
+        var reader = new SpanReader(payload);
+        uint count = reader.ReadUInt32("Export table entry count");
+        if (count > int.MaxValue)
+            throw new InvalidDataException("Export table entry count is too large.");
+        byte[]? previousName = null;
+        for (uint i = 0; i < count; i++)
+        {
+            uint symbol = reader.ReadUInt32("Export symbol StringIndex");
+            RequireIndex(symbol, strings.Count, "Export symbol StringIndex");
+            RequireIndex(reader.ReadUInt32("Export FunctionIndex"), functionCount, "Export FunctionIndex");
+            byte[] name = strings[checked((int)symbol)];
+            if (previousName is not null && ByteArrayComparer.Instance.Compare(previousName, name) >= 0)
+                throw new InvalidDataException("Export names must be unique and sorted by UTF-8 bytes.");
+            previousName = name;
+        }
+        reader.RequireEnd("Export table");
+    }
+
+    private static void ParseConstantTable(ReadOnlySpan<byte> payload)
+    {
+        var reader = new SpanReader(payload);
+        uint count = reader.ReadUInt32("Constant table entry count");
+        if (count > int.MaxValue)
+            throw new InvalidDataException("Constant table entry count is too large.");
+        byte[]? previous = null;
+        int previousLength = -1;
+        for (uint i = 0; i < count; i++)
+        {
+            uint rawLength = reader.ReadUInt32("Constant byte length");
+            if (rawLength > int.MaxValue)
+                throw new InvalidDataException("Indexed constant is too large.");
+            byte[] bytes = reader.ReadBytes(checked((int)rawLength), "Indexed constant").ToArray();
+            if (previous is not null &&
+                (bytes.Length < previousLength ||
+                 (bytes.Length == previousLength && ByteArrayComparer.Instance.Compare(previous, bytes) >= 0)))
+                throw new InvalidDataException("Constants must be unique and sorted by length then payload bytes.");
+            previous = bytes;
+            previousLength = bytes.Length;
+        }
+        reader.RequireEnd("Constant table");
+    }
+
+    private static void VerifyFunctionRanges(IReadOnlyList<FunctionEntry> functions, int codeLength)
+    {
+        ulong expectedOffset = 0;
+        foreach (FunctionEntry function in functions)
+        {
+            if (function.CodeOffset != expectedOffset)
+                throw new InvalidDataException("Indexed function code ranges must be consecutively packed in FunctionIndex order.");
+            ulong end = (ulong)function.CodeOffset + function.CodeLength;
+            if (end > (ulong)codeLength)
+                throw new InvalidDataException("Indexed function code range exceeds the Code section.");
+            expectedOffset = end;
+        }
+        if (expectedOffset != (ulong)codeLength)
+            throw new InvalidDataException("Indexed Code section contains bytes outside declared function ranges.");
+    }
+
+    private static void VerifyCode(
+        IReadOnlyList<FunctionEntry> functions,
+        IReadOnlyList<TypeEntry> types,
+        ReadOnlySpan<byte> code)
+    {
+        for (int functionIndex = 0; functionIndex < functions.Count; functionIndex++)
+        {
+            FunctionEntry function = functions[functionIndex];
+            ReadOnlySpan<byte> body = code.Slice(checked((int)function.CodeOffset), checked((int)function.CodeLength));
+            var reader = new SpanReader(body);
+            ulong bindingCount = (ulong)function.ArgumentCount + function.LocalCount;
+
+            while (!reader.AtEnd)
+            {
+                byte opcode = reader.ReadByte("Opcode");
+                if (opcode == 0xFF)
+                {
+                    int depth = 1;
+                    while (!reader.AtEnd && reader.PeekByte() == 0xFF)
+                    {
+                        reader.ReadByte("Opcode escape");
+                        depth++;
+                    }
+                    byte group = reader.ReadByte("Extended opcode group");
+                    byte extendedOpcode = reader.ReadByte("Extended opcode number");
+                    if (group == 0xFF || extendedOpcode == 0xFF)
+                        throw new InvalidDataException("0xFF is reserved in extended opcode group/code positions.");
+                    throw new NotSupportedException(
+                        $"Indexed executable v0 reference verifier does not yet support extended opcode " +
+                        $"depth={depth}, group=0x{group:X2}, opcode=0x{extendedOpcode:X2}.");
+                }
+
+                switch (opcode)
+                {
+                    case RETURN.OP:
+                    {
+                        byte mode = reader.ReadByte("RETURN mode");
+                        if (mode == 0) break;
+                        if (mode != 1)
+                            throw new InvalidDataException($"Unknown RETURN mode {mode}.");
+                        uint typeIndex = reader.ReadUInt32("RETURN TypeIndex");
+                        RequireIndex(typeIndex, types.Count, "RETURN TypeIndex");
+                        if (typeIndex != function.ReturnType)
+                            throw new InvalidDataException("Explicit RETURN TypeIndex must match the enclosing function return type.");
+                        break;
+                    }
+
+                    case VAR_OPCODE:
+                    {
+                        uint binding = reader.ReadUInt32("VAR BindingIndex");
+                        if (binding >= bindingCount)
+                            throw new InvalidDataException("VAR BindingIndex is outside the current function frame.");
+                        _ = reader.ReadUInt64("VAR initial cell");
+                        break;
+                    }
+
+                    case StackOperations.PUSH.OP:
+                    {
+                        byte length = reader.ReadByte("PUSH byte count");
+                        if (length is < 1 or > 8)
+                            throw new InvalidDataException("PUSH portable immediate must contain 1..8 bytes.");
+                        _ = reader.ReadBytes(length, "PUSH immediate");
+                        break;
+                    }
+
+                    case StackOperations.DROP.OP:
+                    case StackOperations.PICK.OP:
+                    case StackOperations.ROLL.OP:
+                        _ = reader.ReadByte("Stack index");
+                        break;
+
+                    case FunctionOperations.CALL.OP:
+                    case FunctionOperations.FNADDR.OP:
+                        RequireIndex(reader.ReadUInt32("FunctionIndex"), functions.Count, "FunctionIndex");
+                        break;
+
+                    case FunctionOperations.CALLI.OP:
+                    {
+                        _ = reader.ReadByte("CALLI argument count");
+                        byte returnType = reader.ReadByte("CALLI return primitive type");
+                        if (!Enum.IsDefined(typeof(PrimitiveType), (PrimitiveType)returnType))
+                            throw new InvalidDataException($"CALLI uses undefined primitive return type 0x{returnType:X2}.");
+                        var type = new UType((PrimitiveType)returnType);
+                        if (type.Type != PrimitiveType.Void && !FunctionCode.IsCellType(type))
+                            throw new InvalidDataException("CALLI return type is not void or a scalar cell type.");
+                        break;
+                    }
+
+                    case MemoryOperations.LOAD.OP:
+                    case MemoryOperations.STORE.OP:
+                    {
+                        byte mode = reader.ReadByte("LOAD/STORE mode");
+                        switch (mode)
+                        {
+                            case 0:
+                                break;
+                            case 1:
+                            {
+                                byte primitive = reader.ReadByte("LOAD/STORE primitive type");
+                                if (!Enum.IsDefined(typeof(PrimitiveType), (PrimitiveType)primitive) ||
+                                    !FunctionCode.IsCellType(new UType((PrimitiveType)primitive)))
+                                    throw new InvalidDataException("LOAD/STORE raw type is not a supported scalar cell type.");
+                                break;
+                            }
+                            case 2:
+                            {
+                                uint binding = reader.ReadUInt32("LOAD/STORE BindingIndex");
+                                if (binding >= bindingCount)
+                                    throw new InvalidDataException("LOAD/STORE BindingIndex is outside the current function frame.");
+                                break;
+                            }
+                            default:
+                                throw new InvalidDataException($"Unknown LOAD/STORE mode {mode}.");
+                        }
+                        break;
+                    }
+
+                    default:
+                        if (!OperandFreeCoreOpcodes.Contains(opcode))
+                            throw new InvalidDataException($"Core opcode 0x{opcode:X2} has no supported indexed executable v0 wire contract.");
+                        break;
+                }
+            }
+
+            reader.RequireEnd($"Function {functionIndex} code");
+        }
+    }
+
+    private static void RequireIndex(uint index, int count, string name)
+    {
+        if (index >= (uint)count)
+            throw new InvalidDataException($"{name} {index} is outside table size {count}.");
+    }
+
+    private static void WriteUInt32(Stream stream, uint value)
+    {
+        Span<byte> bytes = stackalloc byte[4];
+        BinaryPrimitives.WriteUInt32LittleEndian(bytes, value);
+        stream.Write(bytes);
+    }
+
+    private static void WriteUInt64(Stream stream, ulong value)
+    {
+        Span<byte> bytes = stackalloc byte[8];
+        BinaryPrimitives.WriteUInt64LittleEndian(bytes, value);
+        stream.Write(bytes);
+    }
+
+    private const byte VAR_OPCODE = 0x10;
+
+    internal sealed record IndexedSectionPayload(PortableModuleSectionKind Kind, byte[] Payload);
+
+    private sealed class CallableInfo(
+        string name,
+        UType returnType,
+        Argument[] arguments,
+        LocalContext? locals,
+        SyntaxSentence definition,
+        CallableInfo? parent)
+    {
+        internal string Name { get; } = name;
+        internal UType ReturnType { get; } = returnType;
+        internal Argument[] Arguments { get; } = arguments;
+        internal LocalContext? Locals { get; } = locals;
+        internal SyntaxSentence Definition { get; } = definition;
+        internal CallableInfo? Parent { get; } = parent;
+        internal Dictionary<string, CallableInfo> Nested { get; } = new(StringComparer.Ordinal);
+        internal Dictionary<string, uint> BindingIndices { get; } = new(StringComparer.Ordinal);
+        internal List<BindingInfo> Bindings { get; } = [];
+    }
+
+    private sealed record BindingInfo(
+        string Name,
+        UType Type,
+        uint Index,
+        bool IsLocal,
+        object? InitialValue,
+        bool FromBodyVar);
+
+    private readonly record struct FunctionEncoding(CallableInfo Callable, uint CodeOffset, uint CodeLength);
+
+    private readonly record struct FunctionEntry(
+        uint ReturnType,
+        uint ArgumentCount,
+        uint LocalCount,
+        uint CodeOffset,
+        uint CodeLength);
+
+    private readonly record struct TypeEntry(
+        PrimitiveType Primitive,
+        uint Modifiers,
+        ulong FixedArraySize,
+        uint NameStringIndex);
+
+    private readonly record struct TypeKey(
+        PrimitiveType Primitive,
+        TypeModifiers Modifiers,
+        ulong FixedArraySize,
+        string? Name)
+    {
+        internal static TypeKey From(UType type) => new(
+            type.Type,
+            type.Modifiers,
+            type.FixedArraySize,
+            type.Type == PrimitiveType.CustomType ? type.Name : null);
+    }
+
+    private sealed class ByteArrayComparer : IComparer<byte[]>
+    {
+        internal static ByteArrayComparer Instance { get; } = new();
+
+        public int Compare(byte[]? left, byte[]? right)
+        {
+            if (ReferenceEquals(left, right)) return 0;
+            if (left is null) return -1;
+            if (right is null) return 1;
+            int common = Math.Min(left.Length, right.Length);
+            for (int index = 0; index < common; index++)
+            {
+                int comparison = left[index].CompareTo(right[index]);
+                if (comparison != 0) return comparison;
+            }
+            return left.Length.CompareTo(right.Length);
+        }
+    }
+
+    private ref struct SpanReader(ReadOnlySpan<byte> data)
+    {
+        private readonly ReadOnlySpan<byte> _data = data;
+        private int _position;
+
+        internal int Position => _position;
+        internal bool AtEnd => _position == _data.Length;
+
+        internal byte PeekByte()
+        {
+            if (_position >= _data.Length)
+                throw new InvalidDataException("Indexed executable payload is truncated.");
+            return _data[_position];
+        }
+
+        internal byte ReadByte(string field)
+        {
+            Ensure(1, field);
+            return _data[_position++];
+        }
+
+        internal uint ReadUInt32(string field)
+        {
+            Ensure(4, field);
+            uint value = BinaryPrimitives.ReadUInt32LittleEndian(_data.Slice(_position, 4));
+            _position += 4;
+            return value;
+        }
+
+        internal ulong ReadUInt64(string field)
+        {
+            Ensure(8, field);
+            ulong value = BinaryPrimitives.ReadUInt64LittleEndian(_data.Slice(_position, 8));
+            _position += 8;
+            return value;
+        }
+
+        internal ReadOnlySpan<byte> ReadBytes(int length, string field)
+        {
+            Ensure(length, field);
+            ReadOnlySpan<byte> value = _data.Slice(_position, length);
+            _position += length;
+            return value;
+        }
+
+        internal byte[] CopyRange(int start, int length)
+        {
+            if (start < 0 || length < 0 || start > _data.Length - length)
+                throw new InvalidDataException("Indexed executable range is invalid.");
+            return _data.Slice(start, length).ToArray();
+        }
+
+        internal void RequireEnd(string name)
+        {
+            if (!AtEnd)
+                throw new InvalidDataException($"{name} contains trailing bytes.");
+        }
+
+        private void Ensure(int length, string field)
+        {
+            if (length < 0 || _position > _data.Length - length)
+                throw new InvalidDataException($"{field} is truncated.");
+        }
+    }
+}
