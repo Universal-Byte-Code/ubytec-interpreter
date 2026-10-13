@@ -13,12 +13,13 @@
 //  1.  LexicalAnalyst  →  SyntaxToken[]
 //  2.  HighLevelParser →  Module  (+ collected ParseErrors)
 //  3.  `module.Compile(scopes)`  →  NASM
-//  4.  JSON  +  UTF-64 dumps
+//  4.  JSON  +  portable-module + provenance dumps
 // ────────────────────────────────────────────────────────────────
 
 using System.Text;
 using System.Text.Json;
 using Ubytec.Language.AST;
+using Ubytec.Language.Portable;
 using Ubytec.Language.Tools;
 
 [assembly: System.CLSCompliant(true)]
@@ -62,6 +63,9 @@ internal static class Program
                 return 0;
             }
 
+            if (args.Length == 2 && string.Equals(args[0], "--verify-module", StringComparison.Ordinal))
+                return VerifyPortableModule(args[1]);
+
             if (NeedsHelp(args))
             {
                 PrintHelp();
@@ -74,6 +78,24 @@ internal static class Program
                 ApplyImplications(options);
                 Validate(options);
                 Execute(options);
+                return 0;
+            }
+            catch (Exception error)
+            {
+                Console.Error.WriteLine(error.Message);
+                return 1;
+            }
+        }
+
+        private static int VerifyPortableModule(string path)
+        {
+            try
+            {
+                byte[] bytes = File.ReadAllBytes(path);
+                PortableModuleImage image = PortableModuleFormat.Decode(bytes);
+                Console.WriteLine(
+                    $"Valid Ubytec portable module v{image.MajorVersion}.{image.MinorVersion}: " +
+                    $"{image.Sections.Count} section(s), {bytes.Length} bytes.");
                 return 0;
             }
             catch (Exception error)
@@ -124,6 +146,7 @@ internal static class Program
                 case "--generated-source": options.GeneratedSourcePath = value; break;
                 case "--json": options.JsonPath = value; break;
                 case "--metadata": SetMetadataPath(options, value); break;
+                case "--portable-module": options.PortableModulePath = value; break;
                 case "--host-export": options.Exports.Add(value); break;
                 default: throw new ArgumentException($"Unknown option '{option}'.", nameof(option));
             }
@@ -148,6 +171,8 @@ internal static class Program
         {
             if (options.GeneratedSourcePath is not null)
                 ValidateGeneratedSource(options);
+            if (options.PortableModulePath is not null)
+                ValidatePortableModulePath(options);
             if (options.ModuleCalls && !options.Library)
                 throw new ArgumentException("--module-calls requires --library.");
             if (options.Exports.Count != 0 && !options.Library)
@@ -168,7 +193,8 @@ internal static class Program
                 options.SourcePath,
                 options.OutputPath,
                 options.JsonPath ?? string.Empty,
-                options.EmitMetadata ? options.MetadataPath ?? string.Empty : string.Empty
+                options.EmitMetadata ? options.MetadataPath ?? string.Empty : string.Empty,
+                options.PortableModulePath ?? string.Empty
             ];
             bool conflict = candidates
                 .Where(path => path.Length != 0)
@@ -176,6 +202,28 @@ internal static class Program
                 .Any(path => string.Equals(path, generatedPath, comparison));
             if (conflict)
                 throw new ArgumentException("Generated source must use a distinct path from input and other outputs.");
+        }
+
+        private static void ValidatePortableModulePath(Options options)
+        {
+            StringComparison comparison = OperatingSystem.IsWindows()
+                ? StringComparison.OrdinalIgnoreCase
+                : StringComparison.Ordinal;
+            string modulePath = Path.GetFullPath(options.PortableModulePath!);
+            string[] candidates =
+            [
+                options.SourcePath,
+                options.OutputPath,
+                options.JsonPath ?? string.Empty,
+                options.EmitMetadata ? options.MetadataPath ?? string.Empty : string.Empty,
+                options.GeneratedSourcePath ?? string.Empty
+            ];
+            bool conflict = candidates
+                .Where(path => path.Length != 0)
+                .Select(Path.GetFullPath)
+                .Any(path => string.Equals(path, modulePath, comparison));
+            if (conflict)
+                throw new ArgumentException("Portable module must use a distinct path from input and other outputs.");
         }
 
         private static void Execute(Options options)
@@ -189,6 +237,13 @@ internal static class Program
             var utf8NoBom = new UTF8Encoding(false);
             File.WriteAllText(options.OutputPath, finalAssembly, utf8NoBom);
 
+            if (options.PortableModulePath is not null)
+            {
+                byte[] portableModule = PortableModuleFormat.Encode(
+                    compilation.Module,
+                    compilation.ContractManifest);
+                File.WriteAllBytes(options.PortableModulePath, portableModule);
+            }
             if (options.GeneratedSourcePath is not null)
                 File.WriteAllText(options.GeneratedSourcePath, source, utf8NoBom);
             if (options.JsonPath is not null)
@@ -197,6 +252,8 @@ internal static class Program
                 WriteMetadata(compilation, source, finalAssembly, options, utf8NoBom);
 
             Console.WriteLine($"NASM written to {Path.GetFullPath(options.OutputPath)}");
+            if (options.PortableModulePath is not null)
+                Console.WriteLine($"Portable module written to {Path.GetFullPath(options.PortableModulePath)}");
             if (options.EmitMetadata)
                 Console.WriteLine($"Metadata written to {Path.GetFullPath(options.MetadataPath!)}");
         }
@@ -290,22 +347,26 @@ internal static class Program
                 (options.EffectRegisters, "effect-registers"),
                 (options.ModuleCalls, "module-calls"),
                 (options.HostIo, "host-io"),
-                (options.ArenaImports, "arena-imports")
+                (options.ArenaImports, "arena-imports"),
+                (options.PortableModulePath is not null, "portable-module-v0")
             ];
             return features.Where(feature => feature.Enabled).Select(feature => feature.Name).ToArray();
         }
 
         private static void PrintHelp()
         {
-            Console.WriteLine("Usage: ubytec <source.ubc> [-o <output.nasm>] [--grammar <grammar.json>] [--json <module.json>] [--metadata <metadata.json>] [--no-metadata] [--library] [--tail-calls] [--stack-transfers] [--frame-values] [--frame-registers] [--loop-reductions] [--block-reductions] [--block-reductions-native] [--record-reductions] [--lookup-reductions] [--effect-registers] [--module-calls] [--host-io] [--arena-imports] [--generated-source <source.ubc>] [--host-export Function=ubytec_host_symbol]");
+            Console.WriteLine("Usage: ubytec <source.ubc> [-o <output.nasm>] [--portable-module <module.ubcm>] [--grammar <grammar.json>] [--json <module.json>] [--metadata <metadata.json>] [--no-metadata] [--library] [--tail-calls] [--stack-transfers] [--frame-values] [--frame-registers] [--loop-reductions] [--block-reductions] [--block-reductions-native] [--record-reductions] [--lookup-reductions] [--effect-registers] [--module-calls] [--host-io] [--arena-imports] [--generated-source <source.ubc>] [--host-export Function=ubytec_host_symbol]");
+            Console.WriteLine("       ubytec --verify-module <module.ubcm>");
             Console.WriteLine("       ubytec --format-stdin < input.ubc > output.ubc");
+            Console.WriteLine("--portable-module emits canonical architecture-neutral Portable Module Format v0 alongside NASM.");
+            Console.WriteLine("--verify-module validates PMF framing, canonical sections and runtime resource limits without compiling it.");
             Console.WriteLine("--format-stdin canonicalizes UBC from standard input to standard output without compiling it.");
             Console.WriteLine("--metadata writes build provenance separately from canonical NASM; by default <output>.metadata.json is written.");
             Console.WriteLine("--no-metadata disables the provenance sidecar.");
             Console.WriteLine("--arena-imports bundles the arena and scoped import wrappers; implies --library --module-calls.");
             Console.WriteLine("--host-io enables supervised resource reads/writes; implies --library --module-calls.");
             Console.WriteLine("--block-reductions-native selects AVX2 on this CPU/OS, otherwise SSE2. Output requires the selected ISA; use --block-reductions for portable x64.");
-            Console.WriteLine("Target: Linux x86-64 NASM. The default grammar is bundled locally.");
+            Console.WriteLine("Target: Linux x86-64 NASM. Portable modules are target-independent.");
         }
 
         private sealed class Options(string sourcePath)
@@ -316,6 +377,7 @@ internal static class Program
             internal string? JsonPath { get; set; }
             internal string? MetadataPath { get; set; }
             internal string? GeneratedSourcePath { get; set; }
+            internal string? PortableModulePath { get; set; }
             internal bool EmitMetadata { get; set; } = true;
             internal bool Library { get; set; }
             internal bool TailCalls { get; set; }
