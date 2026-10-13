@@ -84,6 +84,19 @@ public class IndexedModuleBoundaryTests
     }
 
     [Fact]
+    public void IndexedImageOmitsLegacyNativeContractManifest()
+    {
+        SourceCompilation compilation = Compile(BoundarySource);
+        Assert.Contains("ubytec_host_contract_Execute", compilation.ContractManifest, StringComparison.Ordinal);
+
+        PortableModuleImage image = PortableModuleFormat.Decode(Encode(compilation));
+
+        Assert.Null(image.GetSection(PortableModuleSectionKind.ContractManifest));
+        Assert.NotNull(image.GetSection(PortableModuleSectionKind.IndexedImportTable));
+        Assert.NotNull(image.GetSection(PortableModuleSectionKind.IndexedExportTable));
+    }
+
+    [Fact]
     public void ReservedCallTargetKindIsRejected()
     {
         SourceCompilation compilation = Compile(BoundarySource);
@@ -182,7 +195,7 @@ public class IndexedModuleBoundaryTests
     private static byte[] Encode(SourceCompilation compilation) =>
         PortableModuleFormat.Encode(
             compilation.Module,
-            compilation.ContractManifest,
+            contractManifest: null,
             includeIndexedExecutable: true,
             portableContracts: compilation.PortableContracts);
 
