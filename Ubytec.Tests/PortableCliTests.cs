@@ -98,6 +98,27 @@ public sealed class PortableCliTests
     }
 
     [Fact]
+    public void PortableX64CliRejectsLegacyHostExportAdapters()
+    {
+        using var fixture = new TempFixture();
+        string source = fixture.Write("host-export.ubc", Source);
+        string nasm = fixture.PathOf("host-export.nasm");
+
+        int status = CommandLineDriver.Run(
+        [
+            source,
+            "-o", nasm,
+            "--portable-x64",
+            "--library",
+            "--host-export", "Main=ubytec_host_main",
+            "--no-metadata"
+        ]);
+
+        Assert.Equal(1, status);
+        Assert.False(File.Exists(nasm));
+    }
+
+    [Fact]
     public void LegacyCliPathRemainsAvailableDuringMigration()
     {
         using var fixture = new TempFixture();
