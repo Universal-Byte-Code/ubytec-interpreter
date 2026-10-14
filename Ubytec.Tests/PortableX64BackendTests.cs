@@ -1,6 +1,7 @@
 using Ubytec.Language.AST;
 using Ubytec.Language.Portable;
 using Xunit;
+using static Ubytec.Language.Syntax.TypeSystem.Types;
 
 namespace Ubytec.Tests;
 
@@ -71,8 +72,9 @@ public class PortableX64BackendTests
     {
         string sourceText = ExportedMain(body);
         SourceCompilation source = SourceCompiler.Compile(sourceText, emitProcessEntryPoint: false);
-        PortableX64Compilation portable = PortableX64Backend.Compile(EncodeIndexed(source));
-        PortableExecutableExport export = Assert.Single(PortableBinaryCodec.Decode(EncodeIndexed(source)).Executable!.Exports);
+        byte[] bytes = EncodeIndexed(source);
+        PortableX64Compilation portable = PortableX64Backend.Compile(bytes);
+        PortableExecutableExport export = Assert.Single(PortableBinaryCodec.Decode(bytes).Executable!.Exports);
 
         long sourceResult = RunNoArguments(source.Assembly, source.GetFunctionLabel("Main"));
         long portableResult = RunNoArguments(
@@ -150,6 +152,25 @@ public class PortableX64BackendTests
         Assert.Contains("call ubytec_binary_import_0", portable.Assembly);
         Assert.DoesNotContain("math", portable.Assembly);
         Assert.DoesNotContain("Remote", portable.Assembly);
+    }
+
+    [Fact]
+    public void TypedPortableInputStillPassesIndependentVerifier()
+    {
+        SourceCompilation source = SourceCompiler.Compile(LocalCallSource, emitProcessEntryPoint: false);
+        PortableBinaryModule binary = PortableBinaryCodec.Decode(EncodeIndexed(source));
+        PortableExecutableModule executable = binary.Executable!;
+        PortableExecutableType[] types = executable.Types.ToArray();
+        types[0] = types[0] with
+        {
+            Modifiers = types[0].Modifiers | (TypeModifiers)unchecked((int)0x80000000u)
+        };
+        PortableBinaryModule malformed = binary with
+        {
+            Executable = executable with { Types = types }
+        };
+
+        Assert.Throws<InvalidDataException>(() => PortableX64Backend.Compile(malformed));
     }
 
     [Fact]
