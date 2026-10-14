@@ -65,6 +65,15 @@ public class PortableBinaryVerifierTests
     }
 
     [Fact]
+    public void IndependentVerifierRejectsUnsupportedVersion()
+    {
+        byte[] bytes = BuildIndexed();
+        BinaryPrimitives.WriteUInt16LittleEndian(bytes.AsSpan(4, 2), 1);
+
+        Assert.Throws<InvalidDataException>(() => PortableBinaryVerifier.Verify(bytes));
+    }
+
+    [Fact]
     public void IndependentVerifierRejectsReservedTypeModifierBits()
     {
         byte[] bytes = BuildIndexed();
