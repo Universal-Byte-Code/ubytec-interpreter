@@ -11,6 +11,7 @@ public sealed record PortableSourceX64Result(
 /// <summary>
 /// Transitional canonical pipeline that derives final x64 solely from indexed UBCM bytes.
 /// SourceCompiler still computes its legacy NASM internally; this pipeline deliberately discards it.
+/// No legacy assembly contributes to <see cref="PortableSourceX64Result.NativeCompilation"/>.
 /// </summary>
 public static class PortableSourceX64Pipeline
 {
