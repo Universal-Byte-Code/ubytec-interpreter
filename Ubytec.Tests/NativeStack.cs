@@ -112,6 +112,140 @@ internal static class NativeStack
         finally { Directory.Delete(directory, true); }
     }
 
+    /// <summary>
+    /// Executes two code-generation variants from the same absolute private stack address.
+    /// This is required when unsafe input aliases stack cells whose contents include stack
+    /// addresses: separate managed/unmanaged transitions are not required to reuse one RSP.
+    /// </summary>
+    internal static (long[] First, long[] Second) RunPairSameStack(
+        (string Body, string? Definitions) first,
+        (string Body, string? Definitions) second,
+        int cells)
+    {
+        const int stackSize = 64 * 1024;
+        nint stack = Marshal.AllocHGlobal(stackSize);
+        byte[] zero = new byte[stackSize];
+        try
+        {
+            nuint rawTop = checked((nuint)stack + (nuint)(stackSize - 4096));
+            nint stackTop = (nint)(rawTop & ~(nuint)0xF);
+
+            Marshal.Copy(zero, 0, stack, stackSize);
+            long[] firstState = RunAtFixedStack(first.Body, cells, stackTop, first.Definitions);
+
+            Marshal.Copy(zero, 0, stack, stackSize);
+            long[] secondState = RunAtFixedStack(second.Body, cells, stackTop, second.Definitions);
+            return (firstState, secondState);
+        }
+        finally { Marshal.FreeHGlobal(stack); }
+    }
+
+    private static long[] RunAtFixedStack(string body, int cells, nint stackTop, string? definitions)
+    {
+        if (RuntimeInformation.ProcessArchitecture != Architecture.X64 ||
+            !(OperatingSystem.IsWindows() || OperatingSystem.IsLinux()))
+            throw new PlatformNotSupportedException("Native opcode tests require Windows/Linux x64.");
+
+        string directory = Path.Combine(Path.GetTempPath(), "ubytec-fixed-stack-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(directory);
+        nint output = Marshal.AllocHGlobal((cells + 1) * 8);
+        nint hostStackSlot = Marshal.AllocHGlobal(IntPtr.Size);
+        try
+        {
+            string source = Path.Combine(directory, "test.asm");
+            string binary = Path.Combine(directory, "test.bin");
+            string outputAddress = Address(output);
+            string hostStackAddress = Address(hostStackSlot);
+            string guestStackAddress = Address(stackTop);
+            var asm = new StringBuilder("bits 64\n");
+
+            asm.AppendLine("  push rbp");
+            asm.AppendLine("  push rbx");
+            asm.AppendLine("  push rdi");
+            asm.AppendLine("  push rsi");
+            asm.AppendLine("  push r12");
+            asm.AppendLine("  push r13");
+            asm.AppendLine("  push r14");
+            asm.AppendLine("  push r15");
+            if (OperatingSystem.IsWindows())
+            {
+                asm.AppendLine("  sub rsp, 160");
+                for (int i = 6; i <= 15; i++)
+                    asm.AppendLine($"  movdqu [rsp + {(i - 6) * 16}], xmm{i}");
+            }
+
+            asm.AppendLine($"  mov rax, {hostStackAddress}");
+            asm.AppendLine("  mov [rax], rsp");
+            asm.AppendLine($"  mov rsp, {guestStackAddress}");
+            asm.AppendLine(body);
+
+            asm.AppendLine($"  mov r11, {outputAddress}");
+            asm.AppendLine($"  mov rax, {guestStackAddress}");
+            asm.AppendLine("  sub rax, rsp");
+            asm.AppendLine("  mov [r11], rax");
+            for (int i = cells; i > 0; i--)
+                asm.AppendLine($"  pop rax\n  mov [r11 + {i * 8}], rax");
+
+            asm.AppendLine($"  mov rax, {hostStackAddress}");
+            asm.AppendLine("  mov rsp, [rax]");
+            if (OperatingSystem.IsWindows())
+            {
+                for (int i = 6; i <= 15; i++)
+                    asm.AppendLine($"  movdqu xmm{i}, [rsp + {(i - 6) * 16}]");
+                asm.AppendLine("  add rsp, 160");
+            }
+            asm.AppendLine("  pop r15");
+            asm.AppendLine("  pop r14");
+            asm.AppendLine("  pop r13");
+            asm.AppendLine("  pop r12");
+            asm.AppendLine("  pop rsi");
+            asm.AppendLine("  pop rdi");
+            asm.AppendLine("  pop rbx");
+            asm.AppendLine("  pop rbp");
+            asm.AppendLine("  ret");
+
+            if (definitions is not null) asm.AppendLine(definitions);
+            File.WriteAllText(source, asm.ToString());
+            var start = new ProcessStartInfo(Environment.GetEnvironmentVariable("UBYTEC_NASM") ?? "nasm")
+            {
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+            foreach (string arg in new[] { "-f", "bin", "-o", binary, source }) start.ArgumentList.Add(arg);
+            using (var process = Process.Start(start)!)
+            {
+                string error = process.StandardError.ReadToEnd();
+                Assert.True(process.WaitForExit(30000), "NASM did not finish.");
+                Assert.True(process.ExitCode == 0, error);
+            }
+
+            byte[] code = File.ReadAllBytes(binary);
+            nint executable = Allocate(code.Length);
+            try
+            {
+                Marshal.Copy(code, 0, executable, code.Length);
+                Protect(executable, code.Length);
+                Marshal.GetDelegateForFunctionPointer<Entry>(executable)(output);
+                Assert.Equal((long)cells * 8, Marshal.ReadInt64(output));
+                return Enumerable.Range(1, cells).Select(i => Marshal.ReadInt64(output, i * 8)).ToArray();
+            }
+            finally
+            {
+                if (OperatingSystem.IsWindows()) Assert.True(VirtualFree(executable, 0, 0x8000));
+                else Assert.Equal(0, munmap(executable, (nuint)code.Length));
+            }
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(hostStackSlot);
+            Marshal.FreeHGlobal(output);
+            Directory.Delete(directory, true);
+        }
+    }
+
+    private static string Address(nint value) => $"0x{unchecked((ulong)(nuint)value):X16}";
+
     private static nint Allocate(int size)
     {
         nint ptr = OperatingSystem.IsWindows()
