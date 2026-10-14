@@ -63,6 +63,65 @@ public class PortableX64BackendTests
         Assert.Equal(sourceResult, portableResult);
     }
 
+    [Theory]
+    [InlineData("push 10\npush 3\nswap\nsub\npush 2\nmul\nreturn", -14L)]
+    [InlineData("t_int64 value 5\nload @value\npush 7\nadd\nstore @value\nload @value\nreturn", 12L)]
+    [InlineData("push 11\npush 22\npush 33\npick 2\nadd\nroll 2\nsub\nreturn", 22L)]
+    public void PortableBinaryBackendMatchesSourceForStackAndFrameSemantics(string body, long expected)
+    {
+        string sourceText = ExportedMain(body);
+        SourceCompilation source = SourceCompiler.Compile(sourceText, emitProcessEntryPoint: false);
+        PortableX64Compilation portable = PortableX64Backend.Compile(EncodeIndexed(source));
+        PortableExecutableExport export = Assert.Single(PortableBinaryCodec.Decode(EncodeIndexed(source)).Executable!.Exports);
+
+        long sourceResult = RunNoArguments(source.Assembly, source.GetFunctionLabel("Main"));
+        long portableResult = RunNoArguments(
+            portable.Assembly,
+            portable.GetFunctionLabel(checked((int)export.FunctionIndex)));
+
+        Assert.Equal(expected, sourceResult);
+        Assert.Equal(sourceResult, portableResult);
+    }
+
+    [Fact]
+    public void PortableBinaryBackendMatchesSourceForFunctionAddressAndIndirectCall()
+    {
+        const string sourceText = """
+            export Main as Execute () -> t_int64
+            module (name:"portable-calli", version:"0.1", author:"Ubytec")
+            {
+                func Difference(t_int64 left, t_int64 right) -> t_int64
+                {
+                    load @left
+                    load @right
+                    sub
+                    return
+                }
+
+                func Main() -> t_int64
+                {
+                    push 20
+                    push 3
+                    fnaddr Difference
+                    calli 2 t_int64
+                    return
+                }
+            }
+            """;
+        SourceCompilation source = SourceCompiler.Compile(sourceText, emitProcessEntryPoint: false);
+        byte[] bytes = EncodeIndexed(source);
+        PortableExecutableExport export = Assert.Single(PortableBinaryCodec.Decode(bytes).Executable!.Exports);
+        PortableX64Compilation portable = PortableX64Backend.Compile(bytes);
+
+        long sourceResult = RunNoArguments(source.Assembly, source.GetFunctionLabel("Main"));
+        long portableResult = RunNoArguments(
+            portable.Assembly,
+            portable.GetFunctionLabel(checked((int)export.FunctionIndex)));
+
+        Assert.Equal(17, sourceResult);
+        Assert.Equal(sourceResult, portableResult);
+    }
+
     [Fact]
     public void PortableBinaryBackendUsesOnlyIndexDerivedNativeIdentity()
     {
@@ -112,6 +171,17 @@ public class PortableX64BackendTests
         Assert.Throws<NotSupportedException>(() => PortableX64Backend.Compile(bytes));
     }
 
+    private static string ExportedMain(string body) => $$"""
+        export Main as Execute () -> t_int64
+        module (name:"portable-differential", version:"0.1", author:"Ubytec")
+        {
+            func Main() -> t_int64
+            {
+                {{body}}
+            }
+        }
+        """;
+
     private static byte[] EncodeIndexed(SourceCompilation source) =>
         PortableModuleFormat.Encode(
             source.Module,
@@ -125,4 +195,7 @@ public class PortableX64BackendTests
             $"call {label}\nadd rsp, 8\npush rax";
         return Assert.Single(NativeStack.Run(body, 1, assembly));
     }
+
+    private static long RunNoArguments(string assembly, string label) =>
+        Assert.Single(NativeStack.Run($"call {label}\npush rax", 1, assembly));
 }
