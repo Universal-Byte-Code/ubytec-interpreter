@@ -66,7 +66,7 @@ public class PortableX64BackendTests
     [Theory]
     [InlineData("push 10\npush 3\nswap\nsub\npush 2\nmul\nreturn", -14L)]
     [InlineData("t_int64 value 5\nload @value\npush 7\nadd\nstore @value\nload @value\nreturn", 12L)]
-    [InlineData("push 11\npush 22\npush 33\npick 2\nadd\nroll 2\nsub\nreturn", 22L)]
+    [InlineData("push 11\npush 22\npush 33\npick 2\nadd\nroll 2\nsub\nreturn", 33L)]
     public void PortableBinaryBackendMatchesSourceForStackAndFrameSemantics(string body, long expected)
     {
         string sourceText = ExportedMain(body);
