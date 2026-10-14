@@ -58,7 +58,8 @@ public static class PortableX64Backend
             throw new NotSupportedException("x64 code generation requires the indexed executable PMF profile.");
 
         // Re-encoding validates caller-constructed typed models without consulting source state.
-        _ = PortableBinaryCodec.Encode(module);
+        byte[] canonical = PortableBinaryCodec.Encode(module);
+        PortableBinaryVerifier.Verify(canonical);
 
         string[] functionLabels = Enumerable.Range(0, executable.Functions.Count)
             .Select(FunctionLabel)
