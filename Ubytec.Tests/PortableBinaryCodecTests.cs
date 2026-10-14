@@ -51,6 +51,9 @@ public class PortableBinaryCodecTests
         Assert.NotNull(decoded.Executable);
         Assert.Single(decoded.Executable!.Imports);
         Assert.Single(decoded.Executable.Exports);
+        Assert.All(
+            decoded.Executable.Types.Where(type => type.Modifiers == 0),
+            type => Assert.Equal(1UL, type.FixedArraySize));
         Assert.Contains(
             decoded.Executable.Functions.SelectMany(function => function.Instructions),
             instruction => instruction is PortableCallInstruction
