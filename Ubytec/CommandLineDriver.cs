@@ -5,6 +5,8 @@
  * Please configure this header in your SonarCloud/SonarQube quality profile.
  * You can also set it in SonarLint.xml additional file for SonarLint or standalone NuGet analyzer.
  */
+#pragma warning disable S3990 // Codacy analyzes this new file in a synthetic assembly; the real assembly is marked CLSCompliant in Program.cs.
+#pragma warning disable S3992 // Codacy analyzes this new file in a synthetic assembly; the real assembly is marked ComVisible in Program.cs.
 using System.Text;
 using System.Text.Json;
 using Ubytec.Language.AST;
