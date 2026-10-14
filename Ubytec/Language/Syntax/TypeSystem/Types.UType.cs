@@ -11,10 +11,10 @@ namespace Ubytec.Language.Syntax.TypeSystem
         /// </summary>
         /// <param name="type">Base <see cref="PrimitiveType"/> of the type.</param>
         /// <param name="modifiers">Flags indicating array, nullability, or other modifiers.</param>
-        /// <param name="id">Optional unique identifier associated with the type.</param>
+        /// <param name="id">Optional unique identifier for the type.</param>
         /// <param name="name">Optional custom name; defaults to the <paramref name="type"/> name.</param>
         /// <param name="fixedArraySize">If <paramref name="modifiers"/> includes <c>TypeModifiers.IsArray</c>, this
-        /// specifies the fixed size of the array; ignored for non-array types.</param>
+        /// specifies the fixed size of the array; defaults to 1 for non-array types.</param>
         /// <remarks>
         /// <para>
         /// Use <see cref="FromOperands(byte, int)"/> to reconstruct a <see cref="UType"/> from
@@ -76,12 +76,10 @@ namespace Ubytec.Language.Syntax.TypeSystem
             public TypeModifiers Modifiers { get; } = modifiers;
 
             /// <summary>
-            /// Gets the fixed size for array types; returns 0 for non-array types.
+            /// Gets the fixed size for array types; defaults to 1 for non-array types.
             /// </summary>
             [CLSCompliant(false)]
-            public ulong FixedArraySize { get; } = modifiers.HasFlag(TypeModifiers.IsArray)
-                ? fixedArraySize
-                : 0;
+            public ulong FixedArraySize { get; } = fixedArraySize;
 
             /// <summary>True if this type represents an array.</summary>
             public bool IsArray => Modifiers.HasFlag(TypeModifiers.IsArray);
@@ -98,8 +96,8 @@ namespace Ubytec.Language.Syntax.TypeSystem
             /// Constructs a <see cref="UType"/> from raw operand bytes representing
             /// <see cref="PrimitiveType"/> and <see cref="TypeModifiers"/> flags.
             /// </summary>
-            /// <param name="typeByte">Underlying byte value for <see cref="PrimitiveType"/>.</param>
-            /// <param name="flagsInt">Underlying byte value for <see cref="TypeModifiers"/>.</param>
+            /// <param name="typeByte">Underlying byte value of <see cref="PrimitiveType"/>.</param>
+            /// <param name="flagsInt">Underlying byte value of <see cref="TypeModifiers"/> flags.</param>
             /// <returns>A new <see cref="UType"/> instance.</returns>
             public static UType FromOperands(byte typeByte, int flagsInt)
             {
