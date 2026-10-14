@@ -1,3 +1,10 @@
+/*
+ * <Your-Product-Name>
+ * Copyright (c) <Year-From>-<Year-To> <Your-Company-Name>
+ *
+ * Please configure this header in your SonarCloud/SonarQube quality profile.
+ * You can also set it in SonarLint.xml additional file for SonarLint or standalone NuGet analyzer.
+ */
 using System.Text;
 using System.Text.Json;
 using Ubytec.Language.AST;
@@ -152,18 +159,28 @@ internal static class CommandLineDriver
 
     private static void Validate(Options options)
     {
+        ValidateOutputPaths(options);
+        ValidateModeDependencies(options);
+        if (options.PortableX64)
+            ValidatePortableX64(options);
+    }
+
+    private static void ValidateOutputPaths(Options options)
+    {
         if (options.GeneratedSourcePath is not null)
             ValidateGeneratedSource(options);
         if (options.PortableModulePath is not null)
             ValidatePortableModulePath(options);
+    }
+
+    private static void ValidateModeDependencies(Options options)
+    {
         if (options.IndexedExecutable && options.PortableModulePath is null && !options.PortableX64)
             throw new ArgumentException("--indexed-executable requires --portable-module unless --portable-x64 is selected.");
         if (options.ModuleCalls && !options.Library)
             throw new ArgumentException("--module-calls requires --library.");
         if (options.Exports.Count != 0 && !options.Library)
             throw new ArgumentException("--host-export requires --library.");
-        if (options.PortableX64)
-            ValidatePortableX64(options);
     }
 
     private static void ValidatePortableX64(Options options)
