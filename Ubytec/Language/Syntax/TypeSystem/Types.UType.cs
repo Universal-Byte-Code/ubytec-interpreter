@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 
 namespace Ubytec.Language.Syntax.TypeSystem
 {
@@ -11,10 +11,10 @@ namespace Ubytec.Language.Syntax.TypeSystem
         /// </summary>
         /// <param name="type">Base <see cref="PrimitiveType"/> of the type.</param>
         /// <param name="modifiers">Flags indicating array, nullability, or other modifiers.</param>
-        /// <param name="id">Optional unique identifier for the type.</param>
+        /// <param name="id">Optional unique identifier associated with the type.</param>
         /// <param name="name">Optional custom name; defaults to the <paramref name="type"/> name.</param>
         /// <param name="fixedArraySize">If <paramref name="modifiers"/> includes <c>TypeModifiers.IsArray</c>, this
-        /// specifies the fixed size of the array; defaults to 1 for non-array types.</param>
+        /// specifies the fixed size of the array; ignored for non-array types.</param>
         /// <remarks>
         /// <para>
         /// Use <see cref="FromOperands(byte, int)"/> to reconstruct a <see cref="UType"/> from
@@ -76,10 +76,12 @@ namespace Ubytec.Language.Syntax.TypeSystem
             public TypeModifiers Modifiers { get; } = modifiers;
 
             /// <summary>
-            /// Gets the fixed size for array types; defaults to 1 for non-array types.
+            /// Gets the fixed size for array types; returns 0 for non-array types.
             /// </summary>
             [CLSCompliant(false)]
-            public ulong FixedArraySize { get; } = fixedArraySize;
+            public ulong FixedArraySize { get; } = modifiers.HasFlag(TypeModifiers.IsArray)
+                ? fixedArraySize
+                : 0;
 
             /// <summary>True if this type represents an array.</summary>
             public bool IsArray => Modifiers.HasFlag(TypeModifiers.IsArray);
