@@ -1,0 +1,7 @@
+# Codacy/Sonar analyzes newly added C# files in an isolated synthetic assembly.
+# The real Ubytec assembly already declares CLSCompliant and ComVisible in Program.cs,
+# so suppress only the resulting duplicate assembly-level diagnostics for this file.
+
+[CommandLineDriver.cs]
+dotnet_diagnostic.S3990.severity = none
+dotnet_diagnostic.S3992.severity = none
