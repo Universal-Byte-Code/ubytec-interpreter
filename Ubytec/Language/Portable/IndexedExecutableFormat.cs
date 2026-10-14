@@ -1005,7 +1005,7 @@ public static class IndexedExecutableFormat
     {
         RequireIndex(typeIndex, types.Count, field);
         TypeEntry type = types[checked((int)typeIndex)];
-        if (type.Modifiers != 0 || type.FixedArraySize != 0 ||
+        if (type.Modifiers != 0 || type.FixedArraySize != 1 ||
             type.Primitive is not (PrimitiveType.Void or PrimitiveType.Byte or PrimitiveType.UInt32 or
                 PrimitiveType.Int32 or PrimitiveType.UInt64 or PrimitiveType.Int64))
             throw new InvalidDataException($"{field} is not a supported portable boundary return type.");
@@ -1013,7 +1013,7 @@ public static class IndexedExecutableFormat
 
     private static void RequireBoundaryCarrierType(TypeEntry type, string field)
     {
-        if (type.Modifiers != 0 || type.FixedArraySize != 0 ||
+        if (type.Modifiers != 0 || type.FixedArraySize != 1 ||
             type.Primitive is not (PrimitiveType.Byte or PrimitiveType.UInt32 or PrimitiveType.Int32 or
                 PrimitiveType.UInt64 or PrimitiveType.Int64))
             throw new InvalidDataException($"{field} is not a supported portable boundary carrier type.");
@@ -1319,7 +1319,7 @@ public static class IndexedExecutableFormat
         internal static TypeKey From(PrimitiveType type) => new(
             type,
             TypeModifiers.None,
-            0,
+            1,
             null);
     }
 
