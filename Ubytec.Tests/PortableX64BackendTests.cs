@@ -69,11 +69,11 @@ public class PortableX64BackendTests
         SourceCompilation source = SourceCompiler.Compile(LocalCallSource, emitProcessEntryPoint: false);
         PortableX64Compilation portable = PortableX64Backend.Compile(EncodeIndexed(source));
 
-        Assert.DoesNotContain("Main", portable.Assembly, StringComparison.Ordinal);
-        Assert.DoesNotContain("Twice", portable.Assembly, StringComparison.Ordinal);
-        Assert.DoesNotContain("Execute", portable.Assembly, StringComparison.Ordinal);
-        Assert.Contains("ubytec_binary_f_", portable.Assembly, StringComparison.Ordinal);
-        Assert.Contains("ubytec_binary_export_0", portable.Assembly, StringComparison.Ordinal);
+        Assert.DoesNotContain("Main", portable.Assembly);
+        Assert.DoesNotContain("Twice", portable.Assembly);
+        Assert.DoesNotContain("Execute", portable.Assembly);
+        Assert.Contains("ubytec_binary_f_", portable.Assembly);
+        Assert.Contains("ubytec_binary_export_0", portable.Assembly);
     }
 
     [Fact]
@@ -87,10 +87,10 @@ public class PortableX64BackendTests
 
         string import = Assert.Single(portable.ImportLabels);
         Assert.Equal("ubytec_binary_import_0", import);
-        Assert.Contains("extern ubytec_binary_import_0", portable.Assembly, StringComparison.Ordinal);
-        Assert.Contains("call ubytec_binary_import_0", portable.Assembly, StringComparison.Ordinal);
-        Assert.DoesNotContain("math", portable.Assembly, StringComparison.Ordinal);
-        Assert.DoesNotContain("Remote", portable.Assembly, StringComparison.Ordinal);
+        Assert.Contains("extern ubytec_binary_import_0", portable.Assembly);
+        Assert.Contains("call ubytec_binary_import_0", portable.Assembly);
+        Assert.DoesNotContain("math", portable.Assembly);
+        Assert.DoesNotContain("Remote", portable.Assembly);
     }
 
     [Fact]
