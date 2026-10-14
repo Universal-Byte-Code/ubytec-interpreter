@@ -1,4 +1,4 @@
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace Ubytec.Language.Syntax.TypeSystem
 {
@@ -96,8 +96,8 @@ namespace Ubytec.Language.Syntax.TypeSystem
             /// Constructs a <see cref="UType"/> from raw operand bytes representing
             /// <see cref="PrimitiveType"/> and <see cref="TypeModifiers"/> flags.
             /// </summary>
-            /// <param name="typeByte">Underlying byte value of <see cref="PrimitiveType"/>.</param>
-            /// <param name="flagsInt">Underlying byte value of <see cref="TypeModifiers"/> flags.</param>
+            /// <param name="typeByte">Underlying byte value for <see cref="PrimitiveType"/>.</param>
+            /// <param name="flagsInt">Underlying byte value for <see cref="TypeModifiers"/>.</param>
             /// <returns>A new <see cref="UType"/> instance.</returns>
             public static UType FromOperands(byte typeByte, int flagsInt)
             {
