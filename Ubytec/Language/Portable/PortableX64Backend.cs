@@ -205,6 +205,10 @@ public static class PortableX64Backend
             AppendIndented(output, assembly);
         }
 
+        if (scopes.Count != 2)
+            throw new InvalidDataException(
+                $"FunctionIndex {functionIndex} ended with {scopes.Count - 2} unterminated portable control scope(s).");
+
         if (returnType.Type == PrimitiveType.Void)
             output.AppendLine("  xor eax, eax");
         output.AppendLine(frame.EndLabel + ":");
@@ -324,6 +328,9 @@ public static class PortableX64Backend
 
     private static string CompileOperandFree(byte opcode, CompilationScopes scopes)
     {
+        if (opcode is BLOCK.OP or LOOP.OP or IF.OP or ELSE.OP or END.OP or BREAK.OP or CONTINUE.OP or WHILE.OP)
+            return CompileStructuredOperandFree(opcode, scopes);
+
         if (!OperandFreeOperations.TryGetValue(opcode, out Type? type) ||
             Activator.CreateInstance(type) is not IOpCode operation)
             throw new NotSupportedException($"Opcode 0x{opcode:X2} has no operand-free x64 lowering contract.");
@@ -331,8 +338,40 @@ public static class PortableX64Backend
         int depth = scopes.Count;
         string assembly = operation.Compile(scopes);
         if (scopes.Count != depth)
-            throw new NotSupportedException(
-                $"Opcode 0x{opcode:X2} requires structured scope state that indexed executable v0 does not encode.");
+            throw new InvalidDataException(
+                $"Opcode 0x{opcode:X2} unexpectedly changed portable structured scope state.");
+        return assembly;
+    }
+
+    private static string CompileStructuredOperandFree(byte opcode, CompilationScopes scopes)
+    {
+        if (opcode == END.OP && scopes.Count <= 2)
+            throw new InvalidDataException("Portable END cannot close the function or module scope.");
+
+        int depth = scopes.Count;
+        IOpCode operation = opcode switch
+        {
+            BLOCK.OP => new BLOCK(),
+            LOOP.OP => new LOOP(),
+            IF.OP => new IF(),
+            ELSE.OP => new ELSE(),
+            END.OP => new END(),
+            BREAK.OP => new BREAK(null),
+            CONTINUE.OP => new CONTINUE(null),
+            WHILE.OP => new WHILE(),
+            _ => throw new InvalidDataException($"Opcode 0x{opcode:X2} is not normalized structured control flow.")
+        };
+
+        string assembly = operation.Compile(scopes);
+        int expectedDepth = opcode switch
+        {
+            BLOCK.OP or LOOP.OP or IF.OP or WHILE.OP => depth + 1,
+            END.OP => depth - 1,
+            _ => depth
+        };
+        if (scopes.Count != expectedDepth)
+            throw new InvalidDataException(
+                $"Opcode 0x{opcode:X2} produced an invalid portable scope transition {depth}->{scopes.Count}; expected {expectedDepth}.");
         return assembly;
     }
 

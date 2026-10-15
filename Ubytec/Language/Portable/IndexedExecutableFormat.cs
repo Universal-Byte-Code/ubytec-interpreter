@@ -1,10 +1,12 @@
 using System.Buffers.Binary;
+using System.Globalization;
 using System.Reflection;
 using System.Text;
 using Ubytec.Language.HighLevel;
 using Ubytec.Language.Operations;
 using Ubytec.Language.Operations.Extended;
 using Ubytec.Language.Operations.Interfaces;
+using Ubytec.Language.Syntax.ExpressionFragments;
 using Ubytec.Language.Syntax.Model;
 using static Ubytec.Language.Operations.CoreOperations;
 using static Ubytec.Language.Syntax.TypeSystem.Types;
@@ -573,6 +575,64 @@ public static class IndexedExecutableFormat
                 EncodeMemory(stream, MemoryOperations.STORE.OP, store.VariableName, store.AccessType, callable);
                 return;
 
+            case BLOCK block:
+                RequireDefaultBlockType(block.BlockType, operation);
+                stream.WriteByte(BLOCK.OP);
+                return;
+
+            case LOOP loopBlock:
+                RequireDefaultBlockType(loopBlock.BlockType, operation);
+                stream.WriteByte(LOOP.OP);
+                return;
+
+            case IF conditional:
+                if (conditional.Condition is null)
+                {
+                    RequireDefaultBlockType(conditional.BlockType, operation);
+                    stream.WriteByte(IF.OP);
+                    return;
+                }
+                EncodeCondition(stream, conditional.Condition, conditional.BlockType, callable);
+                stream.WriteByte(IF.OP);
+                return;
+
+            case WHILE whileBlock:
+                if (whileBlock.LabelIDxs is { Length: > 0 })
+                    throw Unsupported(operation, "labeled WHILE has no indexed executable v0 wire contract");
+                if (whileBlock.Condition is null)
+                {
+                    RequireDefaultBlockType(whileBlock.BlockType, operation);
+                    stream.WriteByte(WHILE.OP);
+                    return;
+                }
+                // Normalize source WHILE into LOOP + an architecture-neutral guard. The guard lives
+                // inside the LOOP so CONTINUE/END reevaluate it on every iteration.
+                stream.WriteByte(LOOP.OP);
+                EncodeCondition(stream, whileBlock.Condition, whileBlock.BlockType, callable);
+                EncodePushCell(stream, 0);
+                stream.WriteByte(ComparisonOperations.EQ.OP);
+                stream.WriteByte(IF.OP);
+                stream.WriteByte(BREAK.OP);
+                stream.WriteByte(END.OP);
+                return;
+
+            case ELSE alternate:
+                RequireDefaultBlockType(alternate.BlockType, operation);
+                stream.WriteByte(ELSE.OP);
+                return;
+
+            case BREAK breakOperation when breakOperation.LabelIDx is null:
+                stream.WriteByte(BREAK.OP);
+                return;
+
+            case CONTINUE continueOperation when continueOperation.LabelIDx is null:
+                stream.WriteByte(CONTINUE.OP);
+                return;
+
+            case END _:
+                stream.WriteByte(END.OP);
+                return;
+
             default:
                 if (IsOperandFreeCore(operation))
                 {
@@ -611,6 +671,110 @@ public static class IndexedExecutableFormat
             throw new InvalidDataException($"Raw memory access type {accessType} is not a supported scalar cell type.");
         stream.WriteByte(1);
         stream.WriteByte((byte)accessType.Value);
+    }
+
+    private static void EncodeCondition(
+        Stream stream,
+        SyntaxExpression expression,
+        UType? explicitComparisonType,
+        CallableInfo callable)
+    {
+        ConditionExpressionFragment[] conditions = expression.Syntaxes
+            .OfType<ConditionExpressionFragment>()
+            .ToArray();
+        if (conditions.Length == 0 || conditions.Length != expression.Syntaxes.Count)
+            throw new NotSupportedException("Portable structured conditions must contain only comparison fragments.");
+
+        for (int index = 0; index < conditions.Length; index++)
+        {
+            ConditionExpressionFragment condition = conditions[index];
+            EncodeConditionValue(stream, condition.Left, callable);
+            EncodeConditionValue(stream, condition.Right, callable);
+            stream.WriteByte(ComparisonOpcode(condition, explicitComparisonType, callable));
+            if (index != 0)
+                stream.WriteByte(BitwiseOperations.AND.OP);
+        }
+    }
+
+    private static void EncodeConditionValue(Stream stream, object? rawValue, CallableInfo callable)
+    {
+        string value = Convert.ToString(rawValue, CultureInfo.InvariantCulture) ?? string.Empty;
+        if (value.StartsWith('@'))
+        {
+            EncodeMemory(
+                stream,
+                MemoryOperations.LOAD.OP,
+                FunctionCode.Identifier(value),
+                null,
+                callable);
+            return;
+        }
+
+        EncodePushCell(stream, unchecked((ulong)FunctionCode.InitialValue(new UType(PrimitiveType.Int64), rawValue)));
+    }
+
+    private static void EncodePushCell(Stream stream, ulong value)
+    {
+        stream.WriteByte(StackOperations.PUSH.OP);
+        stream.WriteByte(8);
+        WriteUInt64(stream, value);
+    }
+
+    private static byte ComparisonOpcode(
+        ConditionExpressionFragment condition,
+        UType? explicitComparisonType,
+        CallableInfo callable)
+    {
+        PrimitiveType? explicitType = explicitComparisonType?.Type == PrimitiveType.Default
+            ? null
+            : explicitComparisonType?.Type;
+        if (explicitType is { } selected && !FunctionCode.IsCellType(new UType(selected)))
+            throw new InvalidDataException($"Condition type {selected} is not supported by the portable cell backend.");
+
+        PrimitiveType[] namedTypes = new[] { condition.Left, condition.Right }
+            .Select(value => Convert.ToString(value, CultureInfo.InvariantCulture) ?? string.Empty)
+            .Where(value => value.StartsWith('@'))
+            .Select(value => BindingType(callable, FunctionCode.Identifier(value)))
+            .Where(type => type.IsNumeric())
+            .ToArray();
+
+        bool useUnsigned;
+        if (explicitType is { } explicitPrimitive)
+        {
+            useUnsigned = explicitPrimitive.IsUnsigned();
+        }
+        else
+        {
+            bool anyUnsigned = namedTypes.Any(type => type.IsUnsigned());
+            bool anySigned = namedTypes.Any(type => type.IsSigned());
+            if (anyUnsigned && anySigned)
+                throw new InvalidDataException(
+                    "Mixed signed/unsigned condition operands require an explicit comparison type.");
+            useUnsigned = anyUnsigned;
+        }
+
+        return condition.Operand switch
+        {
+            "==" => ComparisonOperations.EQ.OP,
+            "!=" => ComparisonOperations.NEQ.OP,
+            "<" => useUnsigned ? ComparisonOperations.ULT.OP : ComparisonOperations.LT.OP,
+            "<=" => useUnsigned ? ComparisonOperations.ULE.OP : ComparisonOperations.LE.OP,
+            ">" => useUnsigned ? ComparisonOperations.UGT.OP : ComparisonOperations.GT.OP,
+            ">=" => useUnsigned ? ComparisonOperations.UGE.OP : ComparisonOperations.GE.OP,
+            _ => throw new InvalidDataException($"Unsupported portable condition operator '{condition.Operand}'.")
+        };
+    }
+
+    private static PrimitiveType BindingType(CallableInfo callable, string name)
+    {
+        uint index = BindingIndex(callable, name);
+        return callable.Bindings[checked((int)index)].Type.Type;
+    }
+
+    private static void RequireDefaultBlockType(UType? type, IOpCode operation)
+    {
+        if (type is { } blockType && blockType.Type != PrimitiveType.Default)
+            throw Unsupported(operation, "typed structured block metadata has no indexed executable v0 wire contract");
     }
 
     private static bool TryResolveCallable(
@@ -1113,6 +1277,7 @@ public static class IndexedExecutableFormat
             ReadOnlySpan<byte> body = code.Slice(checked((int)function.CodeOffset), checked((int)function.CodeLength));
             var reader = new SpanReader(body);
             ulong bindingCount = (ulong)function.ArgumentCount + function.LocalCount;
+            var controls = new Stack<byte>();
 
             while (!reader.AtEnd)
             {
@@ -1236,6 +1401,32 @@ public static class IndexedExecutableFormat
                         break;
                     }
 
+                    case BLOCK.OP:
+                    case LOOP.OP:
+                    case IF.OP:
+                    case WHILE.OP:
+                        controls.Push(opcode);
+                        break;
+
+                    case ELSE.OP:
+                        if (controls.Count == 0 || controls.Pop() != IF.OP)
+                            throw new InvalidDataException("Portable ELSE requires a directly enclosing IF.");
+                        controls.Push(ELSE.OP);
+                        break;
+
+                    case END.OP:
+                        if (controls.Count == 0)
+                            throw new InvalidDataException("Portable END has no matching structured control opener.");
+                        controls.Pop();
+                        break;
+
+                    case BREAK.OP:
+                    case CONTINUE.OP:
+                        if (!controls.Any(control => control == LOOP.OP || control == WHILE.OP))
+                            throw new InvalidDataException(
+                                $"Portable opcode 0x{opcode:X2} requires an enclosing LOOP or WHILE.");
+                        break;
+
                     default:
                         if (!OperandFreeCoreOpcodes.Contains(opcode))
                             throw new InvalidDataException($"Core opcode 0x{opcode:X2} has no supported indexed executable v0 wire contract.");
@@ -1244,6 +1435,9 @@ public static class IndexedExecutableFormat
             }
 
             reader.RequireEnd($"Function {functionIndex} code");
+            if (controls.Count != 0)
+                throw new InvalidDataException(
+                    $"FunctionIndex {functionIndex} contains {controls.Count} unterminated structured control scope(s).");
         }
     }
 

@@ -60,13 +60,49 @@ internal sealed class ModuleContracts
            halves[1] is not ("Int64" or "UInt64"))
             throw new ArgumentException("Typed calls support up to six 64-bit arguments and two loans.");
     }
+
+    /// <summary>
+    /// Builds the canonical loader contract independently of native code generation. Portable compilation
+    /// embeds this exact text in the critical UBCM ContractManifest section so aliases and authority-slot
+    /// names cross the verifier boundary instead of being recovered from source after code generation.
+    /// </summary>
+    internal string BuildManifest(Module module)
+    {
+        if (Imports.Count == 0 && Exports.Count == 0) return string.Empty;
+        var manifest=new StringBuilder("UBC1\n");
+        foreach(var import in Imports)
+            manifest.AppendLine($"I|{import.Handle}|{import.Alias}|{import.Module}|{import.Export}|{import.Signature}");
+        foreach(var export in Exports)
+        {
+            string signature=ExportSignature(module,export);
+            string symbol="ubytec_host_contract_"+export.Name;
+            if(symbol.Length>=64) throw new ArgumentException("Public export name exceeds the adapter symbol limit.");
+            manifest.AppendLine($"E|{export.Name}|{symbol}|{signature}");
+        }
+        manifest.AppendLine("END");
+        string text=manifest.ToString().Replace("\r\n","\n");
+        if(Encoding.ASCII.GetByteCount(text)>4096) throw new ArgumentException("Contract too large.");
+        return text;
+    }
+
+    private static string ExportSignature(Module module,(string Function,string Name,string? Signature) export)
+    {
+        var fn=module.Functions.FirstOrDefault(f=>f.Name==export.Function);
+        if(string.IsNullOrEmpty(fn.Name)) throw new ArgumentException("Unknown exported function.");
+        string signature=string.Join(",",fn.Arguments.Select(a=>a.Type.Type.ToString()))+":"+fn.ReturnType.Type;
+        if(export.Signature is { } declared) {
+            string actual=declared.Replace("LoanRead","UInt64").Replace("LoanWrite","UInt64");
+            if(actual!=signature) throw new ArgumentException("Export loan annotations must match its scalar ABI.");
+            signature=declared;
+        }
+        return signature;
+    }
+
     internal string Emit(SourceCompilation compilation)
     {
-        var manifest=new StringBuilder("UBC1\n");
         var assembly=new StringBuilder();
         foreach(var import in Imports)
         {
-            manifest.AppendLine($"I|{import.Handle}|{import.Alias}|{import.Module}|{import.Export}|{import.Signature}");
             assembly.AppendLine($"section .text\nubytec_import_{import.Alias}:\n push rbp\n mov rbp,rsp\n push {import.Handle}");
             if(import.Signature==BufferSignature) {
                 foreach(int offset in new[]{48,40,32,24,16}) assembly.AppendLine($" push qword [rbp+{offset}]");
@@ -89,23 +125,12 @@ internal sealed class ModuleContracts
         }
         foreach(var export in Exports)
         {
-            var fn=compilation.Module.Functions.FirstOrDefault(f=>f.Name==export.Function);
-            if(string.IsNullOrEmpty(fn.Name)) throw new ArgumentException("Unknown exported function.");
-            string signature=string.Join(",",fn.Arguments.Select(a=>a.Type.Type.ToString()))+":"+fn.ReturnType.Type;
-            if(export.Signature is { } declared) {
-                string actual=declared.Replace("LoanRead","UInt64").Replace("LoanWrite","UInt64");
-                if(actual!=signature) throw new ArgumentException("Export loan annotations must match its scalar ABI.");
-                signature=declared;
-            }
+            _=ExportSignature(compilation.Module,export);
             string symbol="ubytec_host_contract_"+export.Name;
-            if(symbol.Length>=64) throw new ArgumentException("Public export name exceeds the adapter symbol limit.");
-            manifest.AppendLine($"E|{export.Name}|{symbol}|{signature}");
             assembly.Append(compilation.GetLinuxSystemVAdapter(export.Function,symbol));
         }
-        manifest.AppendLine("END");
-        compilation.ContractManifest=manifest.ToString().Replace("\r\n","\n");
+        compilation.ContractManifest=BuildManifest(compilation.Module);
         var bytes=Encoding.ASCII.GetBytes(compilation.ContractManifest);
-        if(bytes.Length>4096) throw new ArgumentException("Contract too large.");
         assembly.AppendLine("section .ubytec_contract alloc noexec nowrite progbits");
         assembly.AppendLine("db "+string.Join(",",bytes));
         return assembly.ToString();
