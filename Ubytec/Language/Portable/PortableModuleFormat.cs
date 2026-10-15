@@ -15,7 +15,28 @@ public enum PortableModuleSectionKind : ushort
     ContractManifest = 0x0002,
 
     /// <summary>Portable execution-environment capability requirements.</summary>
-    CapabilityManifest = 0x0003
+    CapabilityManifest = 0x0003,
+
+    /// <summary>Indexed executable UTF-8 string table.</summary>
+    IndexedStringTable = 0x0010,
+
+    /// <summary>Indexed executable type table.</summary>
+    IndexedTypeTable = 0x0011,
+
+    /// <summary>Indexed executable function table.</summary>
+    IndexedFunctionTable = 0x0012,
+
+    /// <summary>Indexed executable import table.</summary>
+    IndexedImportTable = 0x0013,
+
+    /// <summary>Indexed executable export table.</summary>
+    IndexedExportTable = 0x0014,
+
+    /// <summary>Indexed executable constant table.</summary>
+    IndexedConstantTable = 0x0015,
+
+    /// <summary>Indexed executable Ubytec opcode stream.</summary>
+    IndexedCode = 0x0016
 }
 
 /// <summary>Section behavior flags in Portable Module Format v0.</summary>
@@ -82,11 +103,14 @@ public static class PortableModuleFormat
     /// <summary>
     /// Encodes a normalized semantic module using deterministic PMF v0 framing.
     /// Contract metadata is included when non-empty; capabilities are sorted and deduplicated.
+    /// Set <paramref name="includeIndexedExecutable"/> to lower the supported executable subset
+    /// into architecture-neutral indexed tables and opcode streams.
     /// </summary>
     public static byte[] Encode(
         Module module,
         string? contractManifest = null,
-        IEnumerable<string>? capabilities = null)
+        IEnumerable<string>? capabilities = null,
+        bool includeIndexedExecutable = false)
     {
         byte[] serializedAst = JsonSerializer.SerializeToUtf8Bytes(module, global::SerializerOptionsHelper.Options);
         byte[] canonicalAst = CanonicalizeJson(
@@ -125,6 +149,17 @@ public static class PortableModuleFormat
                     (ushort)PortableModuleSectionKind.CapabilityManifest,
                     PortableModuleSectionFlags.Critical,
                     CanonicalizeJson(capabilityJson, requireObject: false)));
+            }
+        }
+
+        if (includeIndexedExecutable)
+        {
+            foreach (IndexedExecutableFormat.IndexedSectionPayload section in IndexedExecutableFormat.EncodeSections(module))
+            {
+                sections.Add(new(
+                    (ushort)section.Kind,
+                    PortableModuleSectionFlags.Critical,
+                    section.Payload));
             }
         }
 
@@ -194,7 +229,9 @@ public static class PortableModuleFormat
         if ((ast.Flags & PortableModuleSectionFlags.Critical) == 0)
             throw new InvalidDataException("Semantic AST section must be critical.");
 
-        return new PortableModuleImage(major, minor, sections);
+        var image = new PortableModuleImage(major, minor, sections);
+        IndexedExecutableFormat.Verify(image);
+        return image;
     }
 
     /// <summary>Verifies a module and discards the decoded view.</summary>
@@ -256,6 +293,18 @@ public static class PortableModuleFormat
                 if (!critical)
                     throw new InvalidDataException("Capability manifest section must be critical.");
                 VerifyCapabilityManifest(payload);
+                break;
+
+            case PortableModuleSectionKind.IndexedStringTable:
+            case PortableModuleSectionKind.IndexedTypeTable:
+            case PortableModuleSectionKind.IndexedFunctionTable:
+            case PortableModuleSectionKind.IndexedImportTable:
+            case PortableModuleSectionKind.IndexedExportTable:
+            case PortableModuleSectionKind.IndexedConstantTable:
+            case PortableModuleSectionKind.IndexedCode:
+                if (!critical)
+                    throw new InvalidDataException($"Indexed executable section 0x{kind:X4} must be critical.");
+                // Cross-section validation is performed after all sections have been decoded.
                 break;
 
             default:
