@@ -20,6 +20,13 @@ public sealed record SourceCompilation(Module Module, string Assembly, string? E
     /// <summary>Embedded experimental import/export contracts; never an authority grant.</summary>
     public string ContractManifest { get; internal set; } = "";
 
+    /// <summary>
+    /// Semantic import/export contracts retained before host handles and adapter symbols are introduced.
+    /// Portable lowering uses this view instead of reverse-engineering the legacy textual manifest.
+    /// </summary>
+    public Ubytec.Language.Portable.PortableModuleContracts PortableContracts { get; internal set; } =
+        Ubytec.Language.Portable.PortableModuleContracts.Empty;
+
     /// <summary>Adapts up to six integer scalar arguments from Linux System V to the Ubytec stack ABI.</summary>
     public string GetLinuxSystemVAdapter(string functionName, string exportedName)
     {
@@ -203,6 +210,7 @@ public static class SourceCompiler
                     result = result with { Assembly = (assembly + extra).ReplaceLineEndings("\n") };
                 }
 
+                result.PortableContracts = Ubytec.Language.Portable.PortableModuleContracts.From(contracts, module);
                 return result;
             }
             finally
