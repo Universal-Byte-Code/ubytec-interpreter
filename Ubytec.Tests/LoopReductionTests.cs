@@ -72,9 +72,9 @@ public class LoopReductionTests
     {
         var reference = Compile(Source("0", "42"), profile, reduce: false);
         var optimized = Compile(Source("0", "42"), profile);
-        // Both variants run from the same relative stack layout with the same seeded
-        // residual cells. Keeping them in separate NASM units is intentional: they
-        // are two code-generation variants of the same stable semantic identity.
+        // The input deliberately aliases cells whose observable contents can contain an
+        // absolute stack address. Execute both code-generation variants from one private
+        // stack address so equivalence is tested against identical unsafe input bytes.
         foreach (var (offset, count) in new[] { (-48, 8), (-40, 8), (-56, 8), (-64, 8),
                      (-72, 8), (-69, 17), (-160, 128), (-48, 1), (-56, 1), (-72, 1) })
         {
@@ -85,8 +85,10 @@ public class LoopReductionTests
                 $"call {compilation.GetFunctionLabel("Fold")}\nadd rsp, 16\nmov [rsp], rax\n" +
                 Snapshot(new[] { -40, -48, -56, -64, -72 }, 8);
 
-            long[] referenceState = NativeStack.Run(Body(reference), 6, reference.Assembly);
-            long[] optimizedState = NativeStack.Run(Body(optimized), 6, optimized.Assembly);
+            var (referenceState, optimizedState) = NativeStack.RunPairSameStack(
+                (Body(reference), reference.Assembly),
+                (Body(optimized), optimized.Assembly),
+                6);
             Assert.Equal(referenceState, optimizedState);
         }
     }
