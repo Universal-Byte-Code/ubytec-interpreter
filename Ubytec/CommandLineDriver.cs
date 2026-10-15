@@ -12,12 +12,9 @@ using Ubytec.Language.HighLevel;
 using Ubytec.Language.Portable;
 using Ubytec.Language.Tools;
 
-[assembly: System.CLSCompliant(true)]
-[assembly: System.Runtime.InteropServices.ComVisible(true)]
-
 namespace Ubytec;
 
-/// <summary>End-to-end command-line driver for legacy and portable-native compilation paths.</summary>
+/// <summary>End-to-end command-line driver for canonical portable and legacy source-native compilation paths.</summary>
 internal static class CommandLineDriver
 {
     private static readonly string CanonicalLineEnding = ((char)10).ToString();
@@ -25,7 +22,16 @@ internal static class CommandLineDriver
     private static readonly IReadOnlyDictionary<string, Action<Options>> FlagSetters =
         new Dictionary<string, Action<Options>>(StringComparer.Ordinal)
         {
-            ["--portable-x64"] = options => options.PortableX64 = true,
+            ["--portable-x64"] = options =>
+            {
+                options.PortableX64 = true;
+                options.PortableX64Requested = true;
+            },
+            ["--legacy-source-x64"] = options =>
+            {
+                options.PortableX64 = false;
+                options.LegacySourceX64Requested = true;
+            },
             ["--indexed-executable"] = options => options.IndexedExecutable = true,
             ["--arena-imports"] = options => options.ArenaImports = true,
             ["--host-io"] = options => options.HostIo = true,
@@ -162,10 +168,20 @@ internal static class CommandLineDriver
 
     private static void Validate(Options options)
     {
+        ValidatePipelineSelection(options);
         ValidateOutputPaths(options);
         ValidateModeDependencies(options);
         if (options.PortableX64)
             ValidatePortableX64(options);
+    }
+
+    private static void ValidatePipelineSelection(Options options)
+    {
+        if (options.PortableX64Requested && options.LegacySourceX64Requested)
+        {
+            throw new ArgumentException(
+                "--portable-x64 and --legacy-source-x64 select mutually exclusive native compilation pipelines.");
+        }
     }
 
     private static void ValidateOutputPaths(Options options)
@@ -179,7 +195,7 @@ internal static class CommandLineDriver
     private static void ValidateModeDependencies(Options options)
     {
         if (options.IndexedExecutable && options.PortableModulePath is null && !options.PortableX64)
-            throw new ArgumentException("--indexed-executable requires --portable-module unless --portable-x64 is selected.");
+            throw new ArgumentException("--indexed-executable requires --portable-module on the legacy source-to-x64 path.");
         if (options.ModuleCalls && !options.Library)
             throw new ArgumentException("--module-calls requires --library.");
         if (options.Exports.Count != 0 && !options.Library)
@@ -188,12 +204,10 @@ internal static class CommandLineDriver
 
     private static void ValidatePortableX64(Options options)
     {
-        if (options.Exports.Count != 0)
-            throw new ArgumentException("--portable-x64 does not yet support --host-export; portable exports must come from the Ubytec module contract.");
-
+        // Host exports and tail-call selection now have portable contracts. The remaining switches below
+        // still belong to the deprecated direct source backend and remain explicit legacy-only requests.
         (bool Enabled, string Name)[] legacyNativeFeatures =
         [
-            (options.TailCalls, "--tail-calls"),
             (options.StackTransfers, "--stack-transfers"),
             (options.FrameValues, "--frame-values"),
             (options.FrameRegisters, "--frame-registers"),
@@ -211,8 +225,9 @@ internal static class CommandLineDriver
         if (unsupported.Length != 0)
         {
             throw new ArgumentException(
-                "--portable-x64 rejects legacy source-to-x64 optimization flags until they have a binary-backend contract: " +
-                string.Join(", ", unsupported) + ".");
+                "The canonical portable x64 pipeline rejects legacy source-to-x64 optimization flags until they have a binary-backend contract: " +
+                string.Join(", ", unsupported) +
+                ". Use --legacy-source-x64 to opt into deprecated direct source-to-x64 compilation.");
         }
     }
 
@@ -278,12 +293,17 @@ internal static class CommandLineDriver
 
     private static void ExecutePortable(string source, Options options, Encoding encoding)
     {
+        PortableRequestedExport[] requestedExports = options.Exports
+            .Select(ParsePortableRequestedExport)
+            .ToArray();
         PortableSourceX64Result result = PortableSourceX64Pipeline.Compile(
             source,
             options.GrammarPath is null ? null : File.ReadAllText(options.GrammarPath),
             processImage: !options.Library,
             enableModuleCalls: options.ModuleCalls,
-            enableHostIO: options.HostIo);
+            enableHostIO: options.HostIo,
+            optimizeTailCalls: options.TailCalls,
+            requestedExports: requestedExports);
 
         string finalAssembly = result.NativeCompilation.Assembly.ReplaceLineEndings(CanonicalLineEnding);
         File.WriteAllText(options.OutputPath, finalAssembly, encoding);
@@ -291,6 +311,19 @@ internal static class CommandLineDriver
             File.WriteAllBytes(options.PortableModulePath, result.ModuleBytes);
         WriteOptionalSidecars(result.SemanticModule, source, finalAssembly, options, encoding);
         PrintOutputs(options);
+    }
+
+    private static PortableRequestedExport ParsePortableRequestedExport(string value)
+    {
+        int separator = value.IndexOf('=');
+        if (separator <= 0 || separator == value.Length - 1 ||
+            value.IndexOf('=', separator + 1) >= 0)
+        {
+            throw new ArgumentException(
+                "Invalid host export; expected Function=ubytec_host_symbol.");
+        }
+
+        return new PortableRequestedExport(value[..separator], value[(separator + 1)..]);
     }
 
     private static void ExecuteLegacy(string source, Options options, Encoding encoding)
@@ -418,6 +451,7 @@ internal static class CommandLineDriver
             (options.Library, "library"),
             (options.PortableX64, "portable-x64-pipeline-v0"),
             (options.PortableX64 && !options.Library, "process-entrypoint-v0"),
+            (options.LegacySourceX64Requested, "legacy-source-x64"),
             (options.TailCalls, "tail-calls"),
             (options.StackTransfers, "stack-transfers"),
             (options.FrameValues, "frame-values"),
@@ -439,14 +473,18 @@ internal static class CommandLineDriver
 
     private static void PrintHelp()
     {
-        Console.WriteLine("Usage: ubytec <source.ubc> [-o <output.nasm>] [--portable-x64] [--portable-module <module.ubcm>] [--indexed-executable] [--grammar <grammar.json>] [--json <module.json>] [--metadata <metadata.json>] [--no-metadata] [--library] [--tail-calls] [--stack-transfers] [--frame-values] [--frame-registers] [--loop-reductions] [--block-reductions] [--block-reductions-native] [--record-reductions] [--lookup-reductions] [--effect-registers] [--module-calls] [--host-io] [--arena-imports] [--generated-source <source.ubc>] [--host-export Function=ubytec_host_symbol]");
+        Console.WriteLine("Usage: ubytec <source.ubc> [-o <output.nasm>] [--portable-x64] [--legacy-source-x64] [--portable-module <module.ubcm>] [--indexed-executable] [--grammar <grammar.json>] [--json <module.json>] [--metadata <metadata.json>] [--no-metadata] [--library] [--tail-calls] [--stack-transfers] [--frame-values] [--frame-registers] [--loop-reductions] [--block-reductions] [--block-reductions-native] [--record-reductions] [--lookup-reductions] [--effect-registers] [--module-calls] [--host-io] [--arena-imports] [--generated-source <source.ubc>] [--host-export Function=ubytec_host_symbol]");
         Console.WriteLine("       ubytec --verify-module <module.ubcm>");
         Console.WriteLine("       ubytec --format-stdin < input.ubc > output.ubc");
-        Console.WriteLine("--portable-x64 routes final NASM through indexed UBCM -> independent verifier -> typed decoder -> x64; legacy source-to-x64 assembly is discarded.");
-        Console.WriteLine("--portable-module emits canonical architecture-neutral Portable Module Format v0; with --portable-x64 it is the exact UBCM consumed by native codegen.");
-        Console.WriteLine("--indexed-executable adds the verified indexed executable section group to legacy --portable-module output; --portable-x64 implies it.");
+        Console.WriteLine("Portable x64 is the default native path: source -> semantic frontend -> indexed UBCM -> independent verifier -> typed decoder -> x64.");
+        Console.WriteLine("--portable-x64 is retained as a compatibility alias for the canonical default pipeline.");
+        Console.WriteLine("--legacy-source-x64 opts into the deprecated direct source -> x64 path during migration; it bypasses the canonical UBCM backend boundary.");
+        Console.WriteLine("--portable-module emits canonical architecture-neutral Portable Module Format v0; on the canonical path it is the exact UBCM consumed by native codegen.");
+        Console.WriteLine("--indexed-executable adds the indexed executable section group to legacy --portable-module output; the canonical portable path always includes it.");
         Console.WriteLine("--verify-module validates PMF framing, indexed executable tables/code and optional process-entry metadata without compiling source.");
-        Console.WriteLine("--portable-x64 currently rejects legacy backend optimization flags and --host-export rather than silently changing semantics.");
+        Console.WriteLine("--host-export adds a host-facing System V export contract before UBCM serialization; the canonical path verifies that export before emitting its adapter.");
+        Console.WriteLine("--tail-calls is supported by the canonical x64 path as an explicit post-verification UBCM optimization; it changes physical frame lifetime and remains opt-in.");
+        Console.WriteLine("The canonical portable path rejects remaining legacy backend optimization flags rather than silently selecting the legacy compiler.");
         Console.WriteLine("--format-stdin canonicalizes UBC from standard input to standard output without compiling it.");
         Console.WriteLine("--metadata writes build provenance separately from canonical NASM; by default <output>.metadata.json is written.");
         Console.WriteLine("--no-metadata disables the provenance sidecar.");
@@ -466,7 +504,9 @@ internal static class CommandLineDriver
         internal string? GeneratedSourcePath { get; set; }
         internal string? PortableModulePath { get; set; }
         internal bool EmitMetadata { get; set; } = true;
-        internal bool PortableX64 { get; set; }
+        internal bool PortableX64 { get; set; } = true;
+        internal bool PortableX64Requested { get; set; }
+        internal bool LegacySourceX64Requested { get; set; }
         internal bool IndexedExecutable { get; set; }
         internal bool Library { get; set; }
         internal bool TailCalls { get; set; }

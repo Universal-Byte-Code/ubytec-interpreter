@@ -17,15 +17,18 @@ public static class PortableSourceX64Pipeline
 {
     /// <summary>
     /// Compiles source semantically to indexed PMF and then generates x64 only from the resulting verified binary.
-    /// The returned semantic module is exposed only for diagnostics and sidecars; native code generation
-    /// depends exclusively on <see cref="PortableSourceX64Result.ModuleBytes"/>.
+    /// Requested host exports, source loader contracts and reserved supervisor imports are serialized before the
+    /// verifier boundary. Tail-call optimization, runtime bindings and native ABI projections run only afterward
+    /// and are driven by the verified UBCM representation rather than source or AST identity.
     /// </summary>
     public static PortableSourceX64Result Compile(
         string source,
         string? grammarJson = null,
         bool processImage = true,
         bool enableModuleCalls = false,
-        bool enableHostIO = false)
+        bool enableHostIO = false,
+        bool optimizeTailCalls = false,
+        IReadOnlyList<PortableRequestedExport>? requestedExports = null)
     {
         SourceSemanticCompilation frontend = SourceCompiler.CompileSemantic(
             source,
@@ -33,12 +36,25 @@ public static class PortableSourceX64Pipeline
             processImage: processImage,
             enableModuleCalls: enableModuleCalls,
             enableHostIO: enableHostIO);
+        PortableModuleContracts portableContracts =
+            PortableSystemVLibraryAbi.AddRequestedExports(frontend, requestedExports);
+        portableContracts = PortableX64RuntimeImports.AddContracts(
+            portableContracts,
+            enableModuleCalls,
+            enableHostIO);
+
+        // The source contract parser is deterministic and is reused here only before serialization.
+        // Its loader-facing alias/slot names are embedded in the critical UBCM ContractManifest;
+        // no source contract state is consulted after the verifier boundary.
+        var sourceContracts = new ModuleContracts();
+        _ = sourceContracts.Read(source);
+        string contractManifest = sourceContracts.BuildManifest(frontend.Module);
 
         byte[] moduleBytes = PortableModuleFormat.Encode(
             frontend.Module,
-            contractManifest: null,
+            contractManifest: string.IsNullOrEmpty(contractManifest) ? null : contractManifest,
             includeIndexedExecutable: true,
-            portableContracts: frontend.PortableContracts);
+            portableContracts: portableContracts);
 
         if (processImage)
         {
@@ -59,6 +75,17 @@ public static class PortableSourceX64Pipeline
 
         PortableProcessEntrypoint.Verify(moduleBytes);
         PortableX64Compilation native = PortableProcessX64Backend.Compile(moduleBytes);
+        if (optimizeTailCalls)
+            native = PortableX64TailCallOptimizer.Apply(moduleBytes, native);
+        native = PortableX64RuntimeImports.Attach(moduleBytes, native);
+        if (!processImage)
+        {
+            native = PortableX64ModuleContractAbi.Attach(moduleBytes, native);
+            native = native with
+            {
+                Assembly = PortableSystemVLibraryAbi.Attach(moduleBytes, native)
+            };
+        }
         return new PortableSourceX64Result(moduleBytes, native, frontend.Module);
     }
 
