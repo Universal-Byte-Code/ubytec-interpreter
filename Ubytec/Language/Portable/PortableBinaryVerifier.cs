@@ -173,7 +173,7 @@ public static class PortableBinaryVerifier
         ParseExportTable(exportsPayload, strings, functions, types);
         ParseConstantTable(constantsPayload);
         VerifyFunctionRanges(functions, codePayload.Length);
-        VerifyCode(functions, imports.Count, types, codePayload);
+        VerifyCode(functions, imports, types, codePayload);
     }
 
     private static RawSection Required(
@@ -383,9 +383,11 @@ public static class PortableBinaryVerifier
             for (int argument = 0; argument < checked((int)argumentCount); argument++)
             {
                 BoundaryDescriptor descriptor = ReadBoundaryDescriptor(ref reader, types, "Export argument");
-                if (descriptor.TypeIndex != function.ArgumentTypes[argument])
+                TypeEntry carrier = types[checked((int)descriptor.TypeIndex)];
+                TypeEntry internalType = types[checked((int)function.ArgumentTypes[argument])];
+                if (!MatchesBoundaryCarrier(internalType, carrier))
                     throw new InvalidDataException(
-                        "Export argument carrier TypeIndex must match its FunctionIndex signature.");
+                        "Export argument carrier type must match its FunctionIndex signature modulo binding mutability.");
             }
 
             byte[] name = strings[checked((int)symbol)];
@@ -395,6 +397,12 @@ public static class PortableBinaryVerifier
         }
         reader.RequireEnd("Export table");
     }
+
+    private static bool MatchesBoundaryCarrier(TypeEntry internalType, TypeEntry carrier) =>
+        internalType.Primitive == carrier.Primitive &&
+        internalType.FixedArraySize == carrier.FixedArraySize &&
+        carrier.Modifiers == 0 &&
+        (internalType.Modifiers & ~(uint)(TypeModifiers.ReadOnly | TypeModifiers.Const)) == 0;
 
     private static BoundaryDescriptor ReadBoundaryDescriptor(
         ref RawReader reader,
@@ -491,10 +499,12 @@ public static class PortableBinaryVerifier
 
     private static void VerifyCode(
         IReadOnlyList<FunctionEntry> functions,
-        int importCount,
+        IReadOnlyList<ImportEntry> imports,
         IReadOnlyList<TypeEntry> types,
         ReadOnlySpan<byte> code)
     {
+        VerifyFunctionTypes(functions, types);
+
         for (int functionIndex = 0; functionIndex < functions.Count; functionIndex++)
         {
             FunctionEntry function = functions[functionIndex];
@@ -502,17 +512,35 @@ public static class PortableBinaryVerifier
                 checked((int)function.CodeOffset), checked((int)function.CodeLength));
             var reader = new RawReader(body);
             ulong bindingCount = (ulong)function.ArgumentCount + function.LocalCount;
+            var initializedLocals = new bool[checked((int)function.LocalCount)];
+            int stackDepth = 0;
+            bool reachable = true;
+
+            void Need(int cells, byte opcode)
+            {
+                if (reachable && stackDepth < cells)
+                    throw new InvalidDataException(
+                        $"FunctionIndex {functionIndex} opcode 0x{opcode:X2} needs {cells} evaluation stack cell(s), " +
+                        $"but only {stackDepth} are available.");
+            }
+
+            void Apply(int required, int delta, byte opcode)
+            {
+                Need(required, opcode);
+                if (reachable)
+                    stackDepth = checked(stackDepth + delta);
+            }
 
             while (!reader.AtEnd)
             {
                 byte opcode = reader.ReadByte("Opcode");
                 if (opcode == 0xFF)
                 {
-                    int depth = 1;
+                    int escapeDepth = 1;
                     while (!reader.AtEnd && reader.PeekByte() == 0xFF)
                     {
                         reader.ReadByte("Opcode escape");
-                        depth++;
+                        escapeDepth++;
                     }
                     byte group = reader.ReadByte("Extended opcode group");
                     byte extendedOpcode = reader.ReadByte("Extended opcode number");
@@ -521,7 +549,7 @@ public static class PortableBinaryVerifier
                             "0xFF is reserved in extended opcode group/code positions.");
                     throw new NotSupportedException(
                         $"Portable binary verifier does not yet support extended opcode " +
-                        $"depth={depth}, group=0x{group:X2}, opcode=0x{extendedOpcode:X2}.");
+                        $"depth={escapeDepth}, group=0x{group:X2}, opcode=0x{extendedOpcode:X2}.");
                 }
 
                 switch (opcode)
@@ -529,14 +557,23 @@ public static class PortableBinaryVerifier
                     case RETURN.OP:
                     {
                         byte mode = reader.ReadByte("RETURN mode");
-                        if (mode == 0) break;
-                        if (mode != 1)
+                        if (mode == 1)
+                        {
+                            uint typeIndex = reader.ReadUInt32("RETURN TypeIndex");
+                            RequireIndex(typeIndex, types.Count, "RETURN TypeIndex");
+                            if (typeIndex != function.ReturnType)
+                                throw new InvalidDataException(
+                                    "Explicit RETURN TypeIndex must match the enclosing function return type.");
+                        }
+                        else if (mode != 0)
+                        {
                             throw new InvalidDataException($"Unknown RETURN mode {mode}.");
-                        uint typeIndex = reader.ReadUInt32("RETURN TypeIndex");
-                        RequireIndex(typeIndex, types.Count, "RETURN TypeIndex");
-                        if (typeIndex != function.ReturnType)
-                            throw new InvalidDataException(
-                                "Explicit RETURN TypeIndex must match the enclosing function return type.");
+                        }
+
+                        int resultCells = IsVoid(types[checked((int)function.ReturnType)]) ? 0 : 1;
+                        Need(resultCells, opcode);
+                        if (reachable)
+                            reachable = false;
                         break;
                     }
 
@@ -545,6 +582,13 @@ public static class PortableBinaryVerifier
                         uint binding = reader.ReadUInt32("VAR BindingIndex");
                         if (binding >= bindingCount)
                             throw new InvalidDataException("VAR BindingIndex is outside the current function frame.");
+                        if (binding < function.ArgumentCount)
+                            throw new InvalidDataException("VAR cannot initialize an argument BindingIndex.");
+                        int localIndex = checked((int)(binding - function.ArgumentCount));
+                        if (initializedLocals[localIndex])
+                            throw new InvalidDataException(
+                                $"FunctionIndex {functionIndex} local BindingIndex {binding} is initialized more than once.");
+                        initializedLocals[localIndex] = true;
                         _ = reader.ReadUInt64("VAR initial cell");
                         break;
                     }
@@ -555,14 +599,30 @@ public static class PortableBinaryVerifier
                         if (length is < 1 or > 8)
                             throw new InvalidDataException("PUSH portable immediate must contain 1..8 bytes.");
                         _ = reader.ReadBytes(length, "PUSH immediate");
+                        Apply(0, 1, opcode);
                         break;
                     }
 
                     case StackOperations.DROP.OP:
-                    case StackOperations.PICK.OP:
-                    case StackOperations.ROLL.OP:
-                        _ = reader.ReadByte("Stack index");
+                    {
+                        byte index = reader.ReadByte("Stack index");
+                        Apply(index + 1, -1, opcode);
                         break;
+                    }
+
+                    case StackOperations.PICK.OP:
+                    {
+                        byte index = reader.ReadByte("Stack index");
+                        Apply(index + 1, 1, opcode);
+                        break;
+                    }
+
+                    case StackOperations.ROLL.OP:
+                    {
+                        byte index = reader.ReadByte("Stack index");
+                        Apply(index + 1, 0, opcode);
+                        break;
+                    }
 
                     case FunctionOperations.CALL.OP:
                     {
@@ -571,11 +631,22 @@ public static class PortableBinaryVerifier
                         switch (targetKind)
                         {
                             case 0:
+                            {
                                 RequireIndex(targetIndex, functions.Count, "CALL FunctionIndex");
+                                FunctionEntry target = functions[checked((int)targetIndex)];
+                                int arguments = checked((int)target.ArgumentCount);
+                                int results = IsVoid(types[checked((int)target.ReturnType)]) ? 0 : 1;
+                                Apply(arguments, results - arguments, opcode);
                                 break;
+                            }
                             case 1:
-                                RequireIndex(targetIndex, importCount, "CALL ImportIndex");
+                            {
+                                RequireIndex(targetIndex, imports.Count, "CALL ImportIndex");
+                                int consumed = ImportCallCellCount(
+                                    imports[checked((int)targetIndex)], types);
+                                Apply(consumed, 1 - consumed, opcode);
                                 break;
+                            }
                             default:
                                 throw new InvalidDataException(
                                     $"CALL uses reserved TargetKind 0x{targetKind:X2}.");
@@ -585,19 +656,23 @@ public static class PortableBinaryVerifier
 
                     case FunctionOperations.FNADDR.OP:
                         RequireIndex(reader.ReadUInt32("FunctionIndex"), functions.Count, "FunctionIndex");
+                        Apply(0, 1, opcode);
                         break;
 
                     case FunctionOperations.CALLI.OP:
                     {
-                        _ = reader.ReadByte("CALLI argument count");
-                        byte returnType = reader.ReadByte("CALLI return primitive type");
-                        if (!Enum.IsDefined(typeof(PrimitiveType), (PrimitiveType)returnType))
+                        byte argumentCount = reader.ReadByte("CALLI argument count");
+                        byte returnTypeRaw = reader.ReadByte("CALLI return primitive type");
+                        if (!Enum.IsDefined(typeof(PrimitiveType), (PrimitiveType)returnTypeRaw))
                             throw new InvalidDataException(
-                                $"CALLI uses undefined primitive return type 0x{returnType:X2}.");
-                        var type = new UType((PrimitiveType)returnType);
-                        if (type.Type != PrimitiveType.Void && !FunctionCode.IsCellType(type))
+                                $"CALLI uses undefined primitive return type 0x{returnTypeRaw:X2}.");
+                        var returnType = (PrimitiveType)returnTypeRaw;
+                        if (returnType != PrimitiveType.Void && !IsCellPrimitive(returnType))
                             throw new InvalidDataException(
                                 "CALLI return type is not void or a scalar cell type.");
+                        int consumed = argumentCount + 1;
+                        int results = returnType == PrimitiveType.Void ? 0 : 1;
+                        Apply(consumed, results - consumed, opcode);
                         break;
                     }
 
@@ -611,9 +686,9 @@ public static class PortableBinaryVerifier
                                 break;
                             case 1:
                             {
-                                byte primitive = reader.ReadByte("LOAD/STORE primitive type");
-                                if (!Enum.IsDefined(typeof(PrimitiveType), (PrimitiveType)primitive) ||
-                                    !FunctionCode.IsCellType(new UType((PrimitiveType)primitive)))
+                                byte primitiveRaw = reader.ReadByte("LOAD/STORE primitive type");
+                                if (!Enum.IsDefined(typeof(PrimitiveType), (PrimitiveType)primitiveRaw) ||
+                                    !IsCellPrimitive((PrimitiveType)primitiveRaw))
                                     throw new InvalidDataException(
                                         "LOAD/STORE raw type is not a supported scalar cell type.");
                                 break;
@@ -624,11 +699,20 @@ public static class PortableBinaryVerifier
                                 if (binding >= bindingCount)
                                     throw new InvalidDataException(
                                         "LOAD/STORE BindingIndex is outside the current function frame.");
+                                if (opcode == MemoryOperations.STORE.OP &&
+                                    IsReadOnly(BindingType(function, binding, types)))
+                                    throw new InvalidDataException(
+                                        $"FunctionIndex {functionIndex} cannot STORE to readonly/const BindingIndex {binding}.");
                                 break;
                             }
                             default:
                                 throw new InvalidDataException($"Unknown LOAD/STORE mode {mode}.");
                         }
+
+                        if (opcode == MemoryOperations.LOAD.OP)
+                            Apply(mode == 2 ? 0 : 1, mode == 2 ? 1 : 0, opcode);
+                        else
+                            Apply(mode == 2 ? 1 : 2, mode == 2 ? -1 : -2, opcode);
                         break;
                     }
 
@@ -636,13 +720,210 @@ public static class PortableBinaryVerifier
                         if (!OperandFreeCoreOpcodes.Contains(opcode))
                             throw new InvalidDataException(
                                 $"Core opcode 0x{opcode:X2} has no supported indexed executable v0 wire contract.");
+                        ApplyOperandFreeStackEffect(opcode, ref stackDepth, ref reachable, functionIndex);
                         break;
                 }
             }
 
             reader.RequireEnd($"Function {functionIndex} code");
+
+            for (int local = 0; local < initializedLocals.Length; local++)
+            {
+                if (!initializedLocals[local])
+                    throw new InvalidDataException(
+                        $"FunctionIndex {functionIndex} local BindingIndex {function.ArgumentCount + (uint)local} has no VAR initialization.");
+            }
+
+            if (!IsVoid(types[checked((int)function.ReturnType)]) && reachable)
+                throw new InvalidDataException(
+                    $"FunctionIndex {functionIndex} has a reachable path without RETURN.");
         }
     }
+
+    private static void VerifyFunctionTypes(
+        IReadOnlyList<FunctionEntry> functions,
+        IReadOnlyList<TypeEntry> types)
+    {
+        for (int functionIndex = 0; functionIndex < functions.Count; functionIndex++)
+        {
+            FunctionEntry function = functions[functionIndex];
+            TypeEntry returnType = types[checked((int)function.ReturnType)];
+            if (IsVoid(returnType))
+            {
+                if (returnType.Modifiers != 0 || returnType.FixedArraySize != 1)
+                    throw new InvalidDataException(
+                        $"FunctionIndex {functionIndex} void return type must be an unmodified one-cell type entry.");
+            }
+            else if (!IsCellType(returnType))
+            {
+                throw new InvalidDataException(
+                    $"FunctionIndex {functionIndex} return type is not supported by the portable cell ABI.");
+            }
+
+            for (int argument = 0; argument < function.ArgumentTypes.Length; argument++)
+            {
+                TypeEntry type = types[checked((int)function.ArgumentTypes[argument])];
+                if (!IsCellType(type))
+                    throw new InvalidDataException(
+                        $"FunctionIndex {functionIndex} argument BindingIndex {argument} is not a scalar cell type.");
+            }
+
+            for (int local = 0; local < function.LocalTypes.Length; local++)
+            {
+                TypeEntry type = types[checked((int)function.LocalTypes[local])];
+                if (!IsCellType(type))
+                    throw new InvalidDataException(
+                        $"FunctionIndex {functionIndex} local BindingIndex {function.ArgumentCount + (uint)local} is not a scalar cell type.");
+            }
+        }
+    }
+
+    private static void ApplyOperandFreeStackEffect(
+        byte opcode,
+        ref int stackDepth,
+        ref bool reachable,
+        int functionIndex)
+    {
+        if (!reachable)
+            return;
+
+        if (opcode == TRAP.OP)
+        {
+            reachable = false;
+            return;
+        }
+
+        if (opcode == CLEAR.OP)
+        {
+            stackDepth = 0;
+            return;
+        }
+
+        int required;
+        int delta;
+        if (opcode == NULL.OP || opcode == DEFAULT.OP)
+        {
+            required = 0;
+            delta = 1;
+        }
+        else if (opcode == StackOperations.POP.OP)
+        {
+            required = 1;
+            delta = -1;
+        }
+        else if (opcode == StackOperations.DUP.OP)
+        {
+            required = 1;
+            delta = 1;
+        }
+        else if (opcode == StackOperations.SWAP.OP)
+        {
+            required = 2;
+            delta = 0;
+        }
+        else if (opcode == StackOperations.ROT.OP)
+        {
+            required = 3;
+            delta = 0;
+        }
+        else if (opcode == StackOperations.OVER.OP)
+        {
+            required = 2;
+            delta = 1;
+        }
+        else if (opcode == StackOperations.NIP.OP)
+        {
+            required = 2;
+            delta = -1;
+        }
+        else if (opcode == StackOperations.TwoDUP.OP)
+        {
+            required = 2;
+            delta = 2;
+        }
+        else if (opcode == StackOperations.TwoSWAP.OP)
+        {
+            required = 4;
+            delta = 0;
+        }
+        else if (opcode == StackOperations.TwoROT.OP)
+        {
+            required = 6;
+            delta = 0;
+        }
+        else if (opcode == StackOperations.TwoOVER.OP)
+        {
+            required = 4;
+            delta = 2;
+        }
+        else if (opcode is >= 0x20 and <= 0x24 or >= 0x30 and <= 0x32 or 0x29 or 0x2A or
+                 >= 0x34 and <= 0x36 or >= 0x40 and <= 0x49)
+        {
+            required = 2;
+            delta = -1;
+        }
+        else if (opcode is >= 0x25 and <= 0x28 or 0x33)
+        {
+            required = 1;
+            delta = 0;
+        }
+        else
+        {
+            required = 0;
+            delta = 0;
+        }
+
+        if (stackDepth < required)
+            throw new InvalidDataException(
+                $"FunctionIndex {functionIndex} opcode 0x{opcode:X2} needs {required} evaluation stack cell(s), " +
+                $"but only {stackDepth} are available.");
+        stackDepth = checked(stackDepth + delta);
+    }
+
+    private static int ImportCallCellCount(
+        ImportEntry import,
+        IReadOnlyList<TypeEntry> types)
+    {
+        bool legacyBuffer = import.Arguments.Length == 4 &&
+            import.Arguments.All(argument =>
+                argument.PassingMode == PortablePassingMode.Value &&
+                types[checked((int)argument.TypeIndex)].Primitive == PrimitiveType.UInt64) &&
+            types[checked((int)import.ReturnType)].Primitive == PrimitiveType.Int64;
+        if (legacyBuffer)
+            return 5;
+
+        int cells = 2; // budget_ms + result_address
+        foreach (BoundaryDescriptor argument in import.Arguments)
+            cells = checked(cells +
+                (argument.PassingMode is PortablePassingMode.LoanRead or PortablePassingMode.LoanWrite ? 2 : 1));
+        return cells;
+    }
+
+    private static TypeEntry BindingType(
+        FunctionEntry function,
+        uint binding,
+        IReadOnlyList<TypeEntry> types)
+    {
+        uint typeIndex = binding < function.ArgumentCount
+            ? function.ArgumentTypes[checked((int)binding)]
+            : function.LocalTypes[checked((int)(binding - function.ArgumentCount))];
+        return types[checked((int)typeIndex)];
+    }
+
+    private static bool IsVoid(TypeEntry type) => type.Primitive == PrimitiveType.Void;
+
+    private static bool IsReadOnly(TypeEntry type) =>
+        (type.Modifiers & (uint)(TypeModifiers.ReadOnly | TypeModifiers.Const)) != 0;
+
+    private static bool IsCellType(TypeEntry type) =>
+        type.FixedArraySize == 1 &&
+        (type.Modifiers & ~(uint)(TypeModifiers.Const | TypeModifiers.ReadOnly)) == 0 &&
+        IsCellPrimitive(type.Primitive);
+
+    private static bool IsCellPrimitive(PrimitiveType primitive) =>
+        primitive is PrimitiveType.Bool or PrimitiveType.Char8 or PrimitiveType.Char16 or PrimitiveType.Byte or
+            PrimitiveType.SByte or PrimitiveType.Int16 or PrimitiveType.UInt16 or PrimitiveType.Int32 or
+            PrimitiveType.UInt32 or PrimitiveType.Int64 or PrimitiveType.UInt64;
 
     private static HashSet<byte> DiscoverOperandFreeCoreOpcodes()
     {

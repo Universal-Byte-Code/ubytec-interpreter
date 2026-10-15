@@ -228,10 +228,18 @@ public static class IndexedExecutableFormat
     {
         uint next = 0;
         foreach (Argument argument in callable.Arguments)
-            Add(argument.Name, argument.Type, isLocal: false, value: null);
+            Add(
+                argument.Name,
+                WithBindingModifiers(argument.Type, argument.Modifiers),
+                isLocal: false,
+                value: null);
 
         foreach (Variable variable in callable.Locals?.Variables ?? [])
-            Add(variable.Name, variable.Type, isLocal: true, variable.Value);
+            Add(
+                variable.Name,
+                WithBindingModifiers(variable.Type, variable.Modifiers),
+                isLocal: true,
+                variable.Value);
 
         foreach (VAR declaration in FunctionEmitter.Instructions(callable.Definition).OfType<VAR>())
             Add(declaration.Variable.Name, declaration.Variable.Type, isLocal: true, declaration.Variable.Value, fromBodyVar: true);
@@ -245,6 +253,18 @@ public static class IndexedExecutableFormat
         }
     }
 
+    private static UType WithBindingModifiers(UType type, TypeModifiers modifiers)
+    {
+        const TypeModifiers bindingModifiers = TypeModifiers.ReadOnly | TypeModifiers.Const;
+        TypeModifiers merged = type.Modifiers | (modifiers & bindingModifiers);
+        return new UType(
+            type.Type,
+            merged,
+            type.ID,
+            type.Type == PrimitiveType.CustomType ? type.Name : null,
+            checked((nuint)type.FixedArraySize));
+    }
+
     private static HashSet<TypeKey> CollectTypes(
         IEnumerable<CallableInfo> callables,
         PortableModuleContracts contracts)
@@ -253,9 +273,7 @@ public static class IndexedExecutableFormat
         foreach (CallableInfo callable in callables)
         {
             result.Add(TypeKey.From(callable.ReturnType));
-            foreach (Argument argument in callable.Arguments)
-                result.Add(TypeKey.From(argument.Type));
-            foreach (BindingInfo binding in callable.Bindings.Where(binding => binding.IsLocal))
+            foreach (BindingInfo binding in callable.Bindings)
                 result.Add(TypeKey.From(binding.Type));
         }
 
@@ -404,6 +422,7 @@ public static class IndexedExecutableFormat
         if (export.Arguments.Count != callable.Arguments.Length)
             throw new InvalidDataException($"Portable export '{export.Symbol}' argument count does not match '{callable.Name}'.");
 
+        BindingInfo[] internalArguments = callable.Bindings.Where(binding => !binding.IsLocal).ToArray();
         using var stream = new MemoryStream();
         WriteUInt32(stream, StringIndex(export.Symbol, stringIndices, "export symbol"));
         WriteUInt32(stream, functionIndices[callable]);
@@ -414,8 +433,7 @@ public static class IndexedExecutableFormat
             PortableBoundaryParameter argument = export.Arguments[index];
             ValidateBoundaryParameter(argument, "export argument");
             uint carrier = TypeIndex(argument.CarrierType, typeIndices);
-            uint internalType = TypeIndex(callable.Arguments[index].Type, typeIndices);
-            if (carrier != internalType)
+            if (!MatchesBoundaryCarrier(internalArguments[index].Type, argument.CarrierType))
                 throw new InvalidDataException(
                     $"Portable export '{export.Symbol}' argument {index} does not match '{callable.Name}'.");
             stream.WriteByte((byte)argument.PassingMode);
@@ -423,6 +441,11 @@ public static class IndexedExecutableFormat
         }
         return stream.ToArray();
     }
+
+    private static bool MatchesBoundaryCarrier(UType internalType, PrimitiveType carrier) =>
+        internalType.Type == carrier &&
+        internalType.FixedArraySize == 1 &&
+        (internalType.Modifiers & ~(TypeModifiers.ReadOnly | TypeModifiers.Const)) == TypeModifiers.None;
 
     private static byte[] EncodeFunction(
         CallableInfo callable,
@@ -710,14 +733,15 @@ public static class IndexedExecutableFormat
         foreach (FunctionEncoding encoded in functions)
         {
             CallableInfo function = encoded.Callable;
+            BindingInfo[] arguments = function.Bindings.Where(binding => !binding.IsLocal).ToArray();
             BindingInfo[] locals = function.Bindings.Where(binding => binding.IsLocal).ToArray();
             WriteUInt32(stream, TypeIndex(function.ReturnType, typeIndices));
-            WriteUInt32(stream, checked((uint)function.Arguments.Length));
+            WriteUInt32(stream, checked((uint)arguments.Length));
             WriteUInt32(stream, checked((uint)locals.Length));
             WriteUInt32(stream, encoded.CodeOffset);
             WriteUInt32(stream, encoded.CodeLength);
             WriteUInt32(stream, 0);
-            foreach (Argument argument in function.Arguments)
+            foreach (BindingInfo argument in arguments)
                 WriteUInt32(stream, TypeIndex(argument.Type, typeIndices));
             foreach (BindingInfo local in locals)
                 WriteUInt32(stream, TypeIndex(local.Type, typeIndices));
@@ -967,8 +991,10 @@ public static class IndexedExecutableFormat
             for (int argument = 0; argument < checked((int)arguments); argument++)
             {
                 BoundaryDescriptor descriptor = ReadBoundaryDescriptor(ref reader, types, "Export argument");
-                if (descriptor.TypeIndex != function.ArgumentTypes[argument])
-                    throw new InvalidDataException("Export argument carrier TypeIndex must match its FunctionIndex signature.");
+                TypeEntry carrier = types[checked((int)descriptor.TypeIndex)];
+                TypeEntry internalType = types[checked((int)function.ArgumentTypes[argument])];
+                if (!MatchesBoundaryCarrier(internalType, carrier))
+                    throw new InvalidDataException("Export argument carrier type must match its FunctionIndex signature modulo binding mutability.");
             }
 
             byte[] name = strings[checked((int)symbol)];
@@ -978,6 +1004,12 @@ public static class IndexedExecutableFormat
         }
         reader.RequireEnd("Export table");
     }
+
+    private static bool MatchesBoundaryCarrier(TypeEntry internalType, TypeEntry carrier) =>
+        internalType.Primitive == carrier.Primitive &&
+        internalType.FixedArraySize == carrier.FixedArraySize &&
+        carrier.Modifiers == 0 &&
+        (internalType.Modifiers & ~(uint)(TypeModifiers.ReadOnly | TypeModifiers.Const)) == 0;
 
     private static BoundaryDescriptor ReadBoundaryDescriptor(
         ref SpanReader reader,
