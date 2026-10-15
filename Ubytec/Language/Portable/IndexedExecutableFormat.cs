@@ -13,7 +13,7 @@ namespace Ubytec.Language.Portable;
 
 /// <summary>
 /// Architecture-neutral indexed executable profile for Portable Module Format v0.
-/// Symbolic function and frame references are lowered to fixed-width table indices.
+/// Symbolic function, frame and module-boundary references are lowered to fixed-width table indices.
 /// </summary>
 public static class IndexedExecutableFormat
 {
@@ -38,21 +38,22 @@ public static class IndexedExecutableFormat
     public static bool IsPresent(PortableModuleImage image) =>
         SectionKinds.All(kind => image.GetSection(kind) is not null);
 
-    internal static IReadOnlyList<IndexedSectionPayload> EncodeSections(Module module)
+    internal static IReadOnlyList<IndexedSectionPayload> EncodeSections(Module module) =>
+        EncodeSections(module, PortableModuleContracts.Empty);
+
+    internal static IReadOnlyList<IndexedSectionPayload> EncodeSections(
+        Module module,
+        PortableModuleContracts? contracts)
     {
         ArgumentNullException.ThrowIfNull(module);
+        contracts ??= PortableModuleContracts.Empty;
 
         List<CallableInfo> callables = FlattenCallables(module);
         foreach (CallableInfo callable in callables)
             BuildBindings(callable);
 
-        HashSet<TypeKey> typeKeys = CollectTypes(callables);
-        string[] strings = typeKeys
-            .Where(type => type.Primitive == PrimitiveType.CustomType)
-            .Select(type => type.Name ?? string.Empty)
-            .Distinct(StringComparer.Ordinal)
-            .OrderBy(static value => StrictUtf8.GetBytes(value), ByteArrayComparer.Instance)
-            .ToArray();
+        HashSet<TypeKey> typeKeys = CollectTypes(callables, contracts);
+        string[] strings = CollectStrings(typeKeys, contracts);
 
         var stringIndices = strings
             .Select((value, index) => (value, index))
@@ -72,13 +73,28 @@ public static class IndexedExecutableFormat
         var topLevel = callables
             .Where(callable => callable.Parent is null)
             .ToDictionary(callable => callable.Name, callable => callable, StringComparer.Ordinal);
+        var exportableFunctions = module.Functions
+            .ToDictionary(
+                function => function.Name,
+                function => topLevel[function.Name],
+                StringComparer.Ordinal);
+
+        ImportEncoding importEncoding = EncodeImportTable(
+            contracts.Imports,
+            stringIndices,
+            typeIndices);
 
         using var codeStream = new MemoryStream();
         var functionEntries = new List<FunctionEncoding>(callables.Count);
         foreach (CallableInfo callable in callables)
         {
             uint offset = checked((uint)codeStream.Length);
-            byte[] code = EncodeFunction(callable, typeIndices, functionIndices, topLevel);
+            byte[] code = EncodeFunction(
+                callable,
+                typeIndices,
+                functionIndices,
+                topLevel,
+                importEncoding.AliasIndices);
             codeStream.Write(code);
             functionEntries.Add(new FunctionEncoding(callable, offset, checked((uint)code.Length)));
         }
@@ -86,7 +102,12 @@ public static class IndexedExecutableFormat
         byte[] stringTable = EncodeStringTable(strings);
         byte[] typeTable = EncodeTypeTable(encodedTypes.Select(item => item.Bytes).ToArray());
         byte[] functionTable = EncodeFunctionTable(functionEntries, typeIndices);
-        byte[] emptyTable = EmptyTable();
+        byte[] exportTable = EncodeExportTable(
+            contracts.Exports,
+            stringIndices,
+            typeIndices,
+            functionIndices,
+            exportableFunctions);
         byte[] codeSection = codeStream.ToArray();
 
         return
@@ -94,9 +115,9 @@ public static class IndexedExecutableFormat
             new(PortableModuleSectionKind.IndexedStringTable, stringTable),
             new(PortableModuleSectionKind.IndexedTypeTable, typeTable),
             new(PortableModuleSectionKind.IndexedFunctionTable, functionTable),
-            new(PortableModuleSectionKind.IndexedImportTable, emptyTable),
-            new(PortableModuleSectionKind.IndexedExportTable, emptyTable),
-            new(PortableModuleSectionKind.IndexedConstantTable, emptyTable),
+            new(PortableModuleSectionKind.IndexedImportTable, importEncoding.Table),
+            new(PortableModuleSectionKind.IndexedExportTable, exportTable),
+            new(PortableModuleSectionKind.IndexedConstantTable, EmptyTable()),
             new(PortableModuleSectionKind.IndexedCode, codeSection)
         ];
     }
@@ -136,11 +157,11 @@ public static class IndexedExecutableFormat
         List<byte[]> strings = ParseStringTable(stringsPayload.Span);
         List<TypeEntry> types = ParseTypeTable(typesPayload.Span, strings.Count);
         List<FunctionEntry> functions = ParseFunctionTable(functionsPayload.Span, types.Count);
-        ParseImportTable(importsPayload.Span, strings.Count, types.Count);
-        ParseExportTable(exportsPayload.Span, strings, functions.Count);
+        List<ImportEntry> imports = ParseImportTable(importsPayload.Span, strings, types);
+        ParseExportTable(exportsPayload.Span, strings, functions, types);
         ParseConstantTable(constantsPayload.Span);
         VerifyFunctionRanges(functions, codePayload.Length);
-        VerifyCode(functions, types, codePayload.Span);
+        VerifyCode(functions, imports.Count, types, codePayload.Span);
     }
 
     private static PortableModuleSection Required(
@@ -224,7 +245,9 @@ public static class IndexedExecutableFormat
         }
     }
 
-    private static HashSet<TypeKey> CollectTypes(IEnumerable<CallableInfo> callables)
+    private static HashSet<TypeKey> CollectTypes(
+        IEnumerable<CallableInfo> callables,
+        PortableModuleContracts contracts)
     {
         var result = new HashSet<TypeKey>();
         foreach (CallableInfo callable in callables)
@@ -235,19 +258,181 @@ public static class IndexedExecutableFormat
             foreach (BindingInfo binding in callable.Bindings.Where(binding => binding.IsLocal))
                 result.Add(TypeKey.From(binding.Type));
         }
+
+        foreach (PortableImportContract import in contracts.Imports)
+        {
+            ValidateBoundaryType(import.ReturnType, allowVoid: true, "import return");
+            result.Add(TypeKey.From(import.ReturnType));
+            foreach (PortableBoundaryParameter argument in import.Arguments)
+            {
+                ValidateBoundaryParameter(argument, "import argument");
+                result.Add(TypeKey.From(argument.CarrierType));
+            }
+        }
+
+        foreach (PortableExportContract export in contracts.Exports)
+        {
+            ValidateBoundaryType(export.ReturnType, allowVoid: true, "export return");
+            result.Add(TypeKey.From(export.ReturnType));
+            foreach (PortableBoundaryParameter argument in export.Arguments)
+            {
+                ValidateBoundaryParameter(argument, "export argument");
+                result.Add(TypeKey.From(argument.CarrierType));
+            }
+        }
         return result;
+    }
+
+    private static string[] CollectStrings(
+        IEnumerable<TypeKey> types,
+        PortableModuleContracts contracts)
+    {
+        var strings = new HashSet<string>(StringComparer.Ordinal);
+        foreach (TypeKey type in types.Where(type => type.Primitive == PrimitiveType.CustomType))
+            Add(type.Name ?? string.Empty, "custom type name");
+        foreach (PortableImportContract import in contracts.Imports)
+        {
+            Add(import.Module, "import module");
+            Add(import.Symbol, "import symbol");
+        }
+        foreach (PortableExportContract export in contracts.Exports)
+            Add(export.Symbol, "export symbol");
+
+        return strings
+            .OrderBy(static value => StrictUtf8.GetBytes(value), ByteArrayComparer.Instance)
+            .ToArray();
+
+        void Add(string value, string field)
+        {
+            if (string.IsNullOrEmpty(value))
+                throw new InvalidDataException($"Indexed executable {field} must not be empty.");
+            strings.Add(value);
+        }
+    }
+
+    private static ImportEncoding EncodeImportTable(
+        IReadOnlyList<PortableImportContract> imports,
+        IReadOnlyDictionary<string, uint> stringIndices,
+        IReadOnlyDictionary<TypeKey, uint> typeIndices)
+    {
+        ImportCandidate[] candidates = imports
+            .Select(contract => new ImportCandidate(
+                contract,
+                EncodeImportEntry(contract, stringIndices, typeIndices)))
+            .OrderBy(candidate => candidate.Bytes, ByteArrayComparer.Instance)
+            .ToArray();
+
+        var entries = new List<byte[]>(candidates.Length);
+        var aliasIndices = new Dictionary<string, uint>(StringComparer.Ordinal);
+
+        foreach (ImportCandidate candidate in candidates)
+        {
+            uint currentIndex = checked((uint)entries.Count);
+            entries.Add(candidate.Bytes);
+            if (!aliasIndices.TryAdd(candidate.Contract.SourceAlias, currentIndex))
+                throw new InvalidDataException($"Duplicate portable import alias '{candidate.Contract.SourceAlias}'.");
+        }
+
+        return new ImportEncoding(EncodeEntryTable(entries), aliasIndices);
+    }
+
+    private static byte[] EncodeImportEntry(
+        PortableImportContract import,
+        IReadOnlyDictionary<string, uint> stringIndices,
+        IReadOnlyDictionary<TypeKey, uint> typeIndices)
+    {
+        if (string.IsNullOrEmpty(import.SourceAlias))
+            throw new InvalidDataException("Portable import source alias must not be empty.");
+        ValidateBoundaryType(import.ReturnType, allowVoid: true, "import return");
+
+        using var stream = new MemoryStream();
+        WriteUInt32(stream, StringIndex(import.Module, stringIndices, "import module"));
+        WriteUInt32(stream, StringIndex(import.Symbol, stringIndices, "import symbol"));
+        WriteUInt32(stream, TypeIndex(import.ReturnType, typeIndices));
+        WriteUInt32(stream, checked((uint)import.Arguments.Count));
+        foreach (PortableBoundaryParameter argument in import.Arguments)
+            EncodeBoundaryParameter(stream, argument, typeIndices, "import argument");
+        return stream.ToArray();
+    }
+
+    private static byte[] EncodeExportTable(
+        IReadOnlyList<PortableExportContract> exports,
+        IReadOnlyDictionary<string, uint> stringIndices,
+        IReadOnlyDictionary<TypeKey, uint> typeIndices,
+        IReadOnlyDictionary<CallableInfo, uint> functionIndices,
+        IReadOnlyDictionary<string, CallableInfo> exportableFunctions)
+    {
+        ExportCandidate[] candidates = exports
+            .Select(contract =>
+            {
+                if (!exportableFunctions.TryGetValue(contract.FunctionName, out CallableInfo? callable))
+                    throw new InvalidDataException($"Portable export references unknown top-level function '{contract.FunctionName}'.");
+                return new ExportCandidate(
+                    contract,
+                    StrictUtf8.GetBytes(contract.Symbol),
+                    EncodeExportEntry(contract, callable, stringIndices, typeIndices, functionIndices));
+            })
+            .OrderBy(candidate => candidate.SymbolBytes, ByteArrayComparer.Instance)
+            .ToArray();
+
+        byte[]? previousSymbol = null;
+        foreach (ExportCandidate candidate in candidates)
+        {
+            if (candidate.SymbolBytes.Length == 0)
+                throw new InvalidDataException("Portable export symbol must not be empty.");
+            if (previousSymbol is not null &&
+                ByteArrayComparer.Instance.Compare(previousSymbol, candidate.SymbolBytes) >= 0)
+                throw new InvalidDataException("Portable export symbols must be unique.");
+            previousSymbol = candidate.SymbolBytes;
+        }
+
+        return EncodeEntryTable(candidates.Select(candidate => candidate.Bytes).ToArray());
+    }
+
+    private static byte[] EncodeExportEntry(
+        PortableExportContract export,
+        CallableInfo callable,
+        IReadOnlyDictionary<string, uint> stringIndices,
+        IReadOnlyDictionary<TypeKey, uint> typeIndices,
+        IReadOnlyDictionary<CallableInfo, uint> functionIndices)
+    {
+        ValidateBoundaryType(export.ReturnType, allowVoid: true, "export return");
+        uint boundaryReturn = TypeIndex(export.ReturnType, typeIndices);
+        uint functionReturn = TypeIndex(callable.ReturnType, typeIndices);
+        if (boundaryReturn != functionReturn)
+            throw new InvalidDataException($"Portable export '{export.Symbol}' return type does not match '{callable.Name}'.");
+        if (export.Arguments.Count != callable.Arguments.Length)
+            throw new InvalidDataException($"Portable export '{export.Symbol}' argument count does not match '{callable.Name}'.");
+
+        using var stream = new MemoryStream();
+        WriteUInt32(stream, StringIndex(export.Symbol, stringIndices, "export symbol"));
+        WriteUInt32(stream, functionIndices[callable]);
+        WriteUInt32(stream, boundaryReturn);
+        WriteUInt32(stream, checked((uint)export.Arguments.Count));
+        for (int index = 0; index < export.Arguments.Count; index++)
+        {
+            PortableBoundaryParameter argument = export.Arguments[index];
+            ValidateBoundaryParameter(argument, "export argument");
+            uint carrier = TypeIndex(argument.CarrierType, typeIndices);
+            uint internalType = TypeIndex(callable.Arguments[index].Type, typeIndices);
+            if (carrier != internalType)
+                throw new InvalidDataException(
+                    $"Portable export '{export.Symbol}' argument {index} does not match '{callable.Name}'.");
+            stream.WriteByte((byte)argument.PassingMode);
+            WriteUInt32(stream, carrier);
+        }
+        return stream.ToArray();
     }
 
     private static byte[] EncodeFunction(
         CallableInfo callable,
         IReadOnlyDictionary<TypeKey, uint> typeIndices,
         IReadOnlyDictionary<CallableInfo, uint> functionIndices,
-        IReadOnlyDictionary<string, CallableInfo> topLevel)
+        IReadOnlyDictionary<string, CallableInfo> topLevel,
+        IReadOnlyDictionary<string, uint> importIndices)
     {
         using var stream = new MemoryStream();
 
-        // Locals declared in the function's local context are initialized at function entry by
-        // the native backend. Represent that semantic step explicitly in portable code.
         foreach (BindingInfo local in callable.Bindings.Where(binding => binding.IsLocal && !binding.FromBodyVar))
         {
             stream.WriteByte(VAR_OPCODE);
@@ -256,7 +441,7 @@ public static class IndexedExecutableFormat
         }
 
         foreach (IOpCode operation in FunctionEmitter.Instructions(callable.Definition))
-            EncodeInstruction(stream, operation, callable, typeIndices, functionIndices, topLevel);
+            EncodeInstruction(stream, operation, callable, typeIndices, functionIndices, topLevel, importIndices);
 
         return stream.ToArray();
     }
@@ -267,7 +452,8 @@ public static class IndexedExecutableFormat
         CallableInfo callable,
         IReadOnlyDictionary<TypeKey, uint> typeIndices,
         IReadOnlyDictionary<CallableInfo, uint> functionIndices,
-        IReadOnlyDictionary<string, CallableInfo> topLevel)
+        IReadOnlyDictionary<string, CallableInfo> topLevel,
+        IReadOnlyDictionary<string, uint> importIndices)
     {
         if (operation is IExtendedOpCode extended)
             throw new NotSupportedException(
@@ -324,13 +510,30 @@ public static class IndexedExecutableFormat
 
             case FunctionOperations.CALL call:
                 stream.WriteByte(FunctionOperations.CALL.OP);
-                WriteUInt32(stream, functionIndices[ResolveCallable(callable, call.FunctionName, topLevel)]);
-                return;
+                if (TryResolveCallable(callable, call.FunctionName, topLevel, out CallableInfo target))
+                {
+                    stream.WriteByte(0);
+                    WriteUInt32(stream, functionIndices[target]);
+                    return;
+                }
+                if (importIndices.TryGetValue(call.FunctionName, out uint importIndex))
+                {
+                    stream.WriteByte(1);
+                    WriteUInt32(stream, importIndex);
+                    return;
+                }
+                throw new NotSupportedException($"CALL target '{call.FunctionName}' is neither a local function nor a portable import.");
 
             case FunctionOperations.FNADDR address:
                 stream.WriteByte(FunctionOperations.FNADDR.OP);
-                WriteUInt32(stream, functionIndices[ResolveCallable(callable, address.FunctionName, topLevel)]);
-                return;
+                if (TryResolveCallable(callable, address.FunctionName, topLevel, out CallableInfo addressTarget))
+                {
+                    WriteUInt32(stream, functionIndices[addressTarget]);
+                    return;
+                }
+                if (importIndices.ContainsKey(address.FunctionName))
+                    throw new NotSupportedException("FNADDR cannot target a portable import in indexed executable v0.");
+                throw new NotSupportedException($"FNADDR target '{address.FunctionName}' is not an indexed local function.");
 
             case FunctionOperations.CALLI indirect:
                 indirect.Validate();
@@ -387,23 +590,35 @@ public static class IndexedExecutableFormat
         stream.WriteByte((byte)accessType.Value);
     }
 
-    private static CallableInfo ResolveCallable(
+    private static bool TryResolveCallable(
         CallableInfo current,
         string name,
-        IReadOnlyDictionary<string, CallableInfo> topLevel)
+        IReadOnlyDictionary<string, CallableInfo> topLevel,
+        out CallableInfo target)
     {
         if (string.Equals(current.Name, name, StringComparison.Ordinal))
-            return current;
+        {
+            target = current;
+            return true;
+        }
 
         for (CallableInfo? scope = current; scope is not null; scope = scope.Parent)
+        {
             if (scope.Nested.TryGetValue(name, out CallableInfo? nested))
-                return nested;
+            {
+                target = nested;
+                return true;
+            }
+        }
 
         if (topLevel.TryGetValue(name, out CallableInfo? top))
-            return top;
+        {
+            target = top;
+            return true;
+        }
 
-        throw new NotSupportedException(
-            $"CALL/FNADDR target '{name}' is not an indexed local function. Import lowering is not implemented yet.");
+        target = null!;
+        return false;
     }
 
     private static uint BindingIndex(CallableInfo callable, string name) =>
@@ -411,10 +626,23 @@ public static class IndexedExecutableFormat
             ? index
             : throw new InvalidDataException($"Unknown frame binding '{name}' in '{callable.Name}'.");
 
+    private static uint StringIndex(
+        string value,
+        IReadOnlyDictionary<string, uint> stringIndices,
+        string field) =>
+        stringIndices.TryGetValue(value, out uint index)
+            ? index
+            : throw new InvalidDataException($"{field} '{value}' is missing from the indexed string table.");
+
     private static uint TypeIndex(UType type, IReadOnlyDictionary<TypeKey, uint> typeIndices) =>
         typeIndices.TryGetValue(TypeKey.From(type), out uint index)
             ? index
             : throw new InvalidDataException($"Type '{type}' is missing from the indexed type table.");
+
+    private static uint TypeIndex(PrimitiveType type, IReadOnlyDictionary<TypeKey, uint> typeIndices) =>
+        typeIndices.TryGetValue(TypeKey.From(type), out uint index)
+            ? index
+            : throw new InvalidDataException($"Boundary type '{type}' is missing from the indexed type table.");
 
     private static NotSupportedException Unsupported(IOpCode operation, string reason) =>
         new($"Opcode 0x{operation.OpCode:X2} ({operation.GetType().Name}) cannot be lowered: {reason}.");
@@ -437,7 +665,6 @@ public static class IndexedExecutableFormat
             result.Add(operation.OpCode);
         }
 
-        // These have explicit wire contracts even if their implementation shape changes.
         result.Remove(RETURN.OP);
         result.Remove(VAR_OPCODE);
         result.Remove(StackOperations.PUSH.OP);
@@ -508,15 +735,47 @@ public static class IndexedExecutableFormat
             ? stringIndices[type.Name ?? string.Empty]
             : NoIndex;
         BinaryPrimitives.WriteUInt32LittleEndian(entry.AsSpan(13, 4), nameIndex);
-        // bytes 17..24 are reserved and already zero.
         return entry;
     }
 
-    private static byte[] EmptyTable()
+    private static byte[] EncodeEntryTable(IReadOnlyList<byte[]> entries)
     {
-        byte[] bytes = new byte[4];
-        BinaryPrimitives.WriteUInt32LittleEndian(bytes, 0);
-        return bytes;
+        using var stream = new MemoryStream();
+        WriteUInt32(stream, checked((uint)entries.Count));
+        foreach (byte[] entry in entries)
+            stream.Write(entry);
+        return stream.ToArray();
+    }
+
+    private static byte[] EmptyTable() => EncodeEntryTable([]);
+
+    private static void EncodeBoundaryParameter(
+        Stream stream,
+        PortableBoundaryParameter parameter,
+        IReadOnlyDictionary<TypeKey, uint> typeIndices,
+        string field)
+    {
+        ValidateBoundaryParameter(parameter, field);
+        stream.WriteByte((byte)parameter.PassingMode);
+        WriteUInt32(stream, TypeIndex(parameter.CarrierType, typeIndices));
+    }
+
+    private static void ValidateBoundaryParameter(PortableBoundaryParameter parameter, string field)
+    {
+        if (!Enum.IsDefined(typeof(PortablePassingMode), parameter.PassingMode))
+            throw new InvalidDataException($"{field} uses an undefined passing mode.");
+        ValidateBoundaryType(parameter.CarrierType, allowVoid: false, field);
+        if ((parameter.PassingMode is PortablePassingMode.LoanRead or PortablePassingMode.LoanWrite) &&
+            parameter.CarrierType != PrimitiveType.UInt64)
+            throw new InvalidDataException($"{field} loan passing modes require a UInt64 carrier.");
+    }
+
+    private static void ValidateBoundaryType(PrimitiveType type, bool allowVoid, string field)
+    {
+        bool supported = type is PrimitiveType.Byte or PrimitiveType.UInt32 or PrimitiveType.Int32 or
+            PrimitiveType.UInt64 or PrimitiveType.Int64 || (allowVoid && type == PrimitiveType.Void);
+        if (!supported)
+            throw new InvalidDataException($"{field} uses unsupported portable carrier type '{type}'.");
     }
 
     private static List<byte[]> ParseStringTable(ReadOnlySpan<byte> payload)
@@ -614,44 +873,73 @@ public static class IndexedExecutableFormat
             if (argumentCount > int.MaxValue || localCount > int.MaxValue)
                 throw new InvalidDataException("Indexed function binding count is too large.");
 
-            for (uint argument = 0; argument < argumentCount; argument++)
-                RequireIndex(reader.ReadUInt32("Function argument TypeIndex"), typeCount, "Function argument TypeIndex");
-            for (uint local = 0; local < localCount; local++)
-                RequireIndex(reader.ReadUInt32("Function local TypeIndex"), typeCount, "Function local TypeIndex");
+            var argumentTypes = new uint[checked((int)argumentCount)];
+            var localTypes = new uint[checked((int)localCount)];
+            for (int argument = 0; argument < argumentTypes.Length; argument++)
+            {
+                argumentTypes[argument] = reader.ReadUInt32("Function argument TypeIndex");
+                RequireIndex(argumentTypes[argument], typeCount, "Function argument TypeIndex");
+            }
+            for (int local = 0; local < localTypes.Length; local++)
+            {
+                localTypes[local] = reader.ReadUInt32("Function local TypeIndex");
+                RequireIndex(localTypes[local], typeCount, "Function local TypeIndex");
+            }
 
-            result.Add(new FunctionEntry(returnType, argumentCount, localCount, codeOffset, codeLength));
+            result.Add(new FunctionEntry(
+                returnType,
+                argumentCount,
+                localCount,
+                codeOffset,
+                codeLength,
+                argumentTypes,
+                localTypes));
         }
         reader.RequireEnd("Function table");
         return result;
     }
 
-    private static void ParseImportTable(ReadOnlySpan<byte> payload, int stringCount, int typeCount)
+    private static List<ImportEntry> ParseImportTable(
+        ReadOnlySpan<byte> payload,
+        IReadOnlyList<byte[]> strings,
+        IReadOnlyList<TypeEntry> types)
     {
         var reader = new SpanReader(payload);
         uint count = reader.ReadUInt32("Import table entry count");
         if (count > int.MaxValue)
             throw new InvalidDataException("Import table entry count is too large.");
+        var result = new List<ImportEntry>(checked((int)count));
         byte[]? previous = null;
         for (uint i = 0; i < count; i++)
         {
             int start = reader.Position;
-            RequireIndex(reader.ReadUInt32("Import module StringIndex"), stringCount, "Import module StringIndex");
-            RequireIndex(reader.ReadUInt32("Import symbol StringIndex"), stringCount, "Import symbol StringIndex");
-            RequireIndex(reader.ReadUInt32("Import return TypeIndex"), typeCount, "Import return TypeIndex");
+            uint module = reader.ReadUInt32("Import module StringIndex");
+            uint symbol = reader.ReadUInt32("Import symbol StringIndex");
+            uint returnType = reader.ReadUInt32("Import return TypeIndex");
+            RequireNonEmptyString(module, strings, "Import module StringIndex");
+            RequireNonEmptyString(symbol, strings, "Import symbol StringIndex");
+            RequireBoundaryReturnType(returnType, types, "Import return TypeIndex");
             uint arguments = reader.ReadUInt32("Import argument count");
             if (arguments > int.MaxValue)
                 throw new InvalidDataException("Import argument count is too large.");
-            for (uint argument = 0; argument < arguments; argument++)
-                RequireIndex(reader.ReadUInt32("Import argument TypeIndex"), typeCount, "Import argument TypeIndex");
+            var parameters = new BoundaryDescriptor[checked((int)arguments)];
+            for (int argument = 0; argument < parameters.Length; argument++)
+                parameters[argument] = ReadBoundaryDescriptor(ref reader, types, "Import argument");
             byte[] encoded = reader.CopyRange(start, reader.Position - start);
-            if (previous is not null && ByteArrayComparer.Instance.Compare(previous, encoded) >= 0)
-                throw new InvalidDataException("Imports must be unique and sorted by their encoded bytes.");
+            if (previous is not null && ByteArrayComparer.Instance.Compare(previous, encoded) > 0)
+                throw new InvalidDataException("Imports must be sorted by their encoded bytes; equal rows remain distinct authority slots.");
             previous = encoded;
+            result.Add(new ImportEntry(module, symbol, returnType, parameters));
         }
         reader.RequireEnd("Import table");
+        return result;
     }
 
-    private static void ParseExportTable(ReadOnlySpan<byte> payload, IReadOnlyList<byte[]> strings, int functionCount)
+    private static void ParseExportTable(
+        ReadOnlySpan<byte> payload,
+        IReadOnlyList<byte[]> strings,
+        IReadOnlyList<FunctionEntry> functions,
+        IReadOnlyList<TypeEntry> types)
     {
         var reader = new SpanReader(payload);
         uint count = reader.ReadUInt32("Export table entry count");
@@ -661,14 +949,84 @@ public static class IndexedExecutableFormat
         for (uint i = 0; i < count; i++)
         {
             uint symbol = reader.ReadUInt32("Export symbol StringIndex");
-            RequireIndex(symbol, strings.Count, "Export symbol StringIndex");
-            RequireIndex(reader.ReadUInt32("Export FunctionIndex"), functionCount, "Export FunctionIndex");
+            RequireNonEmptyString(symbol, strings, "Export symbol StringIndex");
+            uint functionIndex = reader.ReadUInt32("Export FunctionIndex");
+            RequireIndex(functionIndex, functions.Count, "Export FunctionIndex");
+            uint returnType = reader.ReadUInt32("Export return TypeIndex");
+            RequireBoundaryReturnType(returnType, types, "Export return TypeIndex");
+            uint arguments = reader.ReadUInt32("Export argument count");
+            if (arguments > int.MaxValue)
+                throw new InvalidDataException("Export argument count is too large.");
+
+            FunctionEntry function = functions[checked((int)functionIndex)];
+            if (returnType != function.ReturnType)
+                throw new InvalidDataException("Export return TypeIndex must match its FunctionIndex signature.");
+            if (arguments != function.ArgumentCount)
+                throw new InvalidDataException("Export argument count must match its FunctionIndex signature.");
+
+            for (int argument = 0; argument < checked((int)arguments); argument++)
+            {
+                BoundaryDescriptor descriptor = ReadBoundaryDescriptor(ref reader, types, "Export argument");
+                if (descriptor.TypeIndex != function.ArgumentTypes[argument])
+                    throw new InvalidDataException("Export argument carrier TypeIndex must match its FunctionIndex signature.");
+            }
+
             byte[] name = strings[checked((int)symbol)];
             if (previousName is not null && ByteArrayComparer.Instance.Compare(previousName, name) >= 0)
                 throw new InvalidDataException("Export names must be unique and sorted by UTF-8 bytes.");
             previousName = name;
         }
         reader.RequireEnd("Export table");
+    }
+
+    private static BoundaryDescriptor ReadBoundaryDescriptor(
+        ref SpanReader reader,
+        IReadOnlyList<TypeEntry> types,
+        string field)
+    {
+        byte rawMode = reader.ReadByte($"{field} passing mode");
+        if (rawMode > (byte)PortablePassingMode.LoanWrite)
+            throw new InvalidDataException($"{field} uses reserved passing mode 0x{rawMode:X2}.");
+        uint typeIndex = reader.ReadUInt32($"{field} carrier TypeIndex");
+        RequireIndex(typeIndex, types.Count, $"{field} carrier TypeIndex");
+        TypeEntry type = types[checked((int)typeIndex)];
+        RequireBoundaryCarrierType(type, field);
+        var mode = (PortablePassingMode)rawMode;
+        if ((mode is PortablePassingMode.LoanRead or PortablePassingMode.LoanWrite) &&
+            type.Primitive != PrimitiveType.UInt64)
+            throw new InvalidDataException($"{field} loan passing modes require a UInt64 carrier.");
+        return new BoundaryDescriptor(mode, typeIndex);
+    }
+
+    private static void RequireBoundaryReturnType(
+        uint typeIndex,
+        IReadOnlyList<TypeEntry> types,
+        string field)
+    {
+        RequireIndex(typeIndex, types.Count, field);
+        TypeEntry type = types[checked((int)typeIndex)];
+        if (type.Modifiers != 0 || type.FixedArraySize != 1 ||
+            type.Primitive is not (PrimitiveType.Void or PrimitiveType.Byte or PrimitiveType.UInt32 or
+                PrimitiveType.Int32 or PrimitiveType.UInt64 or PrimitiveType.Int64))
+            throw new InvalidDataException($"{field} is not a supported portable boundary return type.");
+    }
+
+    private static void RequireBoundaryCarrierType(TypeEntry type, string field)
+    {
+        if (type.Modifiers != 0 || type.FixedArraySize != 1 ||
+            type.Primitive is not (PrimitiveType.Byte or PrimitiveType.UInt32 or PrimitiveType.Int32 or
+                PrimitiveType.UInt64 or PrimitiveType.Int64))
+            throw new InvalidDataException($"{field} is not a supported portable boundary carrier type.");
+    }
+
+    private static void RequireNonEmptyString(
+        uint index,
+        IReadOnlyList<byte[]> strings,
+        string field)
+    {
+        RequireIndex(index, strings.Count, field);
+        if (strings[checked((int)index)].Length == 0)
+            throw new InvalidDataException($"{field} must not reference an empty string.");
     }
 
     private static void ParseConstantTable(ReadOnlySpan<byte> payload)
@@ -713,6 +1071,7 @@ public static class IndexedExecutableFormat
 
     private static void VerifyCode(
         IReadOnlyList<FunctionEntry> functions,
+        int importCount,
         IReadOnlyList<TypeEntry> types,
         ReadOnlySpan<byte> code)
     {
@@ -783,6 +1142,23 @@ public static class IndexedExecutableFormat
                         break;
 
                     case FunctionOperations.CALL.OP:
+                    {
+                        byte targetKind = reader.ReadByte("CALL target kind");
+                        uint targetIndex = reader.ReadUInt32("CALL target index");
+                        switch (targetKind)
+                        {
+                            case 0:
+                                RequireIndex(targetIndex, functions.Count, "CALL FunctionIndex");
+                                break;
+                            case 1:
+                                RequireIndex(targetIndex, importCount, "CALL ImportIndex");
+                                break;
+                            default:
+                                throw new InvalidDataException($"CALL uses reserved TargetKind 0x{targetKind:X2}.");
+                        }
+                        break;
+                    }
+
                     case FunctionOperations.FNADDR.OP:
                         RequireIndex(reader.ReadUInt32("FunctionIndex"), functions.Count, "FunctionIndex");
                         break;
@@ -890,6 +1266,17 @@ public static class IndexedExecutableFormat
         object? InitialValue,
         bool FromBodyVar);
 
+    private sealed record ImportCandidate(PortableImportContract Contract, byte[] Bytes);
+
+    private sealed record ImportEncoding(
+        byte[] Table,
+        IReadOnlyDictionary<string, uint> AliasIndices);
+
+    private sealed record ExportCandidate(
+        PortableExportContract Contract,
+        byte[] SymbolBytes,
+        byte[] Bytes);
+
     private readonly record struct FunctionEncoding(CallableInfo Callable, uint CodeOffset, uint CodeLength);
 
     private readonly record struct FunctionEntry(
@@ -897,7 +1284,19 @@ public static class IndexedExecutableFormat
         uint ArgumentCount,
         uint LocalCount,
         uint CodeOffset,
-        uint CodeLength);
+        uint CodeLength,
+        uint[] ArgumentTypes,
+        uint[] LocalTypes);
+
+    private readonly record struct ImportEntry(
+        uint ModuleStringIndex,
+        uint SymbolStringIndex,
+        uint ReturnType,
+        BoundaryDescriptor[] Arguments);
+
+    private readonly record struct BoundaryDescriptor(
+        PortablePassingMode PassingMode,
+        uint TypeIndex);
 
     private readonly record struct TypeEntry(
         PrimitiveType Primitive,
@@ -916,6 +1315,12 @@ public static class IndexedExecutableFormat
             type.Modifiers,
             type.FixedArraySize,
             type.Type == PrimitiveType.CustomType ? type.Name : null);
+
+        internal static TypeKey From(PrimitiveType type) => new(
+            type,
+            TypeModifiers.None,
+            1,
+            null);
     }
 
     private sealed class ByteArrayComparer : IComparer<byte[]>

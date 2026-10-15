@@ -10,15 +10,41 @@ target-specific code.
 
 ## Emit a portable module
 
+Emit the canonical AST-based PMF container:
+
 ```text
 dotnet run --project Ubytec/Ubytec.csproj -- examples/answer.ubc \
   -o answer.nasm \
   --portable-module answer.ubcm
 ```
 
+Emit the same PMF container with the indexed executable profile as well:
+
+```text
+dotnet run --project Ubytec/Ubytec.csproj -- examples/answer.ubc \
+  -o answer.nasm \
+  --portable-module answer.ubcm \
+  --indexed-executable
+```
+
+`--indexed-executable` requires `--portable-module`. The AST-only PMF form remains
+the default so existing portable artifacts are not silently changed.
+
 The normal source compilation and semantic validation still run. The compiler then
 encodes the normalized module into `answer.ubcm` while independently producing the
 current Linux x86-64 NASM output.
+
+For modules with source-level imports/exports, the indexed profile consumes the
+semantic portable contract view produced during compilation. Source aliases,
+runtime bridge handles, generated host adapter symbols and process addresses are
+not serialized into the indexed tables.
+
+The existing textual `UBC1` contract manifest remains a native module-isolation
+artifact: it contains runtime bridge handles and generated host adapter symbols.
+The CLI therefore omits that legacy manifest from `--indexed-executable` PMF output;
+portable module-boundary contracts are represented by indexed Import/Export tables
+instead. Native ELF generation and isolation continue to use the legacy manifest
+unchanged.
 
 ## Verify a portable module
 
@@ -36,7 +62,14 @@ Verification is bounded and does not compile the file. The v0 verifier checks:
 - required critical Semantic AST presence;
 - canonical UTF-8 JSON for semantic AST and capability payloads;
 - canonical UTF-8/LF contract-manifest text;
-- sorted unique capability names.
+- sorted unique capability names;
+- all-or-none indexed executable section presence when that profile is included;
+- canonical indexed String/Type/Import/Export/Constant tables;
+- function code ranges and referenced table-index bounds;
+- `CALL` target kinds and local/import target indices;
+- frame binding references and supported opcode operand widths;
+- module-boundary passing modes and loan carrier types;
+- export boundary signatures against their referenced function signatures.
 
 Unknown non-critical sections are retained in the decoded image and may be skipped
 by consumers.
@@ -56,18 +89,61 @@ Current standard section kinds are:
 | Kind | Payload |
 | ---: | --- |
 | `0x0001` | normalized Semantic AST (required, critical) |
-| `0x0002` | import/export Contract manifest (optional, critical) |
+| `0x0002` | portable Contract manifest when independently available (optional, critical) |
 | `0x0003` | execution Capability manifest (optional, critical) |
+| `0x0010` | indexed String table (profile-critical) |
+| `0x0011` | indexed Type table (profile-critical) |
+| `0x0012` | indexed Function table (profile-critical) |
+| `0x0013` | indexed Import table (profile-critical) |
+| `0x0014` | indexed Export table (profile-critical) |
+| `0x0015` | indexed Constant table (profile-critical) |
+| `0x0016` | indexed Code stream (profile-critical) |
 
-The authoritative framing rules are in `schema/docs/portable-module-format.md`.
+The seven indexed sections are present as a complete group or absent as a complete
+group. The authoritative framing rules are in `schema/docs/portable-module-format.md`;
+the executable wire contract is in `schema/docs/indexed-executable-v0.md`.
+
+## Indexed executable profile
+
+The indexed profile removes source names from executable references:
+
+- functions use `FunctionIndex`;
+- frame arguments/locals use per-function `BindingIndex`;
+- language types use `TypeIndex`;
+- module imports use `ImportIndex`;
+- exported public symbols are resolved through the Export table.
+
+`CALL` keeps core opcode `0x60` and carries an explicit target kind:
+
+```text
+60 00 <u32 FunctionIndex>   local call
+60 01 <u32 ImportIndex>     supervised module-boundary call
+```
+
+`FNADDR` remains local-only. An import is not a portable process address.
+
+Every import declaration remains a distinct authority slot. Two imports may have
+byte-identical module/symbol/signature rows but still occupy different
+`ImportIndex` values so a loader can grant one and deny the other. Their source
+aliases are used only during lowering and are not part of the indexed table bytes.
+
+For supervised import calls, value arguments consume one caller cell and loan
+arguments consume `(local_address, logical_length)`, followed by `budget_ms` and
+`result_address`. The imported `CALL` pushes supervisor status; the receiver return
+value is written to `result_address`. The exact legacy four-`UInt64`/`Int64` bridge
+retains its existing five-control-cell calling form.
 
 ## Scope of v0
 
-PMF v0 establishes portable framing and verification but does not pretend that the
-existing symbolic AST is already the final executable bytecode. Function names,
-local names and other symbolic operands are still represented in the Semantic AST.
+The indexed profile is architecture-neutral executable Ubytec, not native code. It
+contains no x86-64/ARM64 instructions, target relocations, process addresses or host
+ABI bindings.
 
-The next lowering milestone is an indexed executable section with canonical type,
-function, local, import/export and constant tables. That representation can be
-added without changing the outer PMF framing or introducing target addresses into
-the portable module.
+The reference lowerer currently covers the scalar executable subset whose operand
+wire contracts are explicitly defined. An opcode or source metadata shape without a
+v0 binary contract is rejected rather than silently discarded. Extended opcode
+identities remain reserved by the recursive `0xFF` scheme but their profile-specific
+operand contracts must be defined before this lowerer accepts them.
+
+Unsafe raw memory operations remain unsafe. Structural verification establishes
+framing, reference and operand integrity; it does not claim memory safety.

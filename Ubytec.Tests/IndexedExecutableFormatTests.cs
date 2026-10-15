@@ -71,9 +71,9 @@ public class IndexedExecutableFormatTests
         byte[] code = image.GetRequiredSection(PortableModuleSectionKind.IndexedCode).Payload.ToArray();
         string lossyAscii = Encoding.ASCII.GetString(code);
 
-        Assert.DoesNotContain("Twice", lossyAscii, StringComparison.Ordinal);
-        Assert.DoesNotContain("counter", lossyAscii, StringComparison.Ordinal);
-        Assert.True(Contains(code, [0x60, 0x00, 0x00, 0x00, 0x00]));
+        Assert.DoesNotContain("Twice", lossyAscii);
+        Assert.DoesNotContain("counter", lossyAscii);
+        Assert.True(Contains(code, [0x60, 0x00, 0x00, 0x00, 0x00, 0x00]));
         Assert.True(Contains(code, [0x50, 0x02, 0x00, 0x00, 0x00, 0x00]));
         Assert.True(Contains(code, [0x51, 0x02, 0x00, 0x00, 0x00, 0x00]));
     }
@@ -88,9 +88,9 @@ public class IndexedExecutableFormatTests
 
         int codeOffset = FindSectionPayloadOffset(bytes, PortableModuleSectionKind.IndexedCode, out int codeLength);
         Span<byte> code = bytes.AsSpan(codeOffset, codeLength);
-        int call = Find(code, [0x60, 0x00, 0x00, 0x00, 0x00]);
+        int call = Find(code, [0x60, 0x00, 0x00, 0x00, 0x00, 0x00]);
         Assert.True(call >= 0);
-        code.Slice(call + 1, 4).Fill(0xFF);
+        code.Slice(call + 2, 4).Fill(0xFF);
 
         Assert.Throws<InvalidDataException>(() => PortableModuleFormat.Verify(bytes));
     }
