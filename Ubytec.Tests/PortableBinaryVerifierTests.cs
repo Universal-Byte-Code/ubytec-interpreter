@@ -117,17 +117,272 @@ public class PortableBinaryVerifierTests
         Assert.Throws<InvalidDataException>(() => PortableBinaryVerifier.Verify(bytes));
     }
 
-    private static byte[] BuildIndexed()
+    [Fact]
+    public void IndependentVerifierRejectsMutatedAluUnderflowWithoutFrontend()
     {
-        SourceCompilation compilation = SourceCompiler.Compile(
-            BoundarySource,
-            emitProcessEntryPoint: false,
-            enableModuleCalls: true);
+        const string source = """
+            module (name:"binary-underflow", version:"0.1", author:"Ubytec")
+            {
+                func Main() -> t_int64
+                {
+                    push 1
+                    dup
+                    add
+                    return
+                }
+            }
+            """;
+        byte[] bytes = BuildIndexed(source);
+        Span<byte> code = Code(bytes);
+        int duplicate = FindOpcode(code, StackOperations.DUP.OP);
+        code[duplicate] = ArithmeticOperations.ADD.OP;
+
+        InvalidDataException error = Assert.Throws<InvalidDataException>(() =>
+            PortableBinaryVerifier.Verify(bytes));
+
+        Assert.Contains("evaluation stack cell", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void IndependentVerifierUsesLocalFunctionArityForCallStackEffects()
+    {
+        const string source = """
+            module (name:"binary-local-call", version:"0.1", author:"Ubytec")
+            {
+                func Pair(t_int64 left, t_int64 right) -> t_int64
+                {
+                    load @left
+                    load @right
+                    add
+                    return
+                }
+
+                func Main() -> t_int64
+                {
+                    push 1
+                    dup
+                    call Pair
+                    return
+                }
+            }
+            """;
+        byte[] bytes = BuildIndexed(source);
+        Span<byte> code = Code(bytes);
+        int duplicate = FindOpcode(code, StackOperations.DUP.OP);
+        code[duplicate] = CoreOperations.NOP.OP;
+
+        InvalidDataException error = Assert.Throws<InvalidDataException>(() =>
+            PortableBinaryVerifier.Verify(bytes));
+
+        Assert.Contains("evaluation stack cell", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void IndependentVerifierUsesImportLoanCellCountForCallStackEffects()
+    {
+        const string source = """
+            import Remote from math.Read (t_uint64) -> t_int64
+            module (name:"binary-import-call", version:"0.1", author:"Ubytec")
+            {
+                func Main() -> t_int64
+                {
+                    push 4096
+                    push 1000
+                    push 16384
+                    call Remote
+                    return
+                }
+            }
+            """;
+        byte[] bytes = BuildIndexed(source, enableModuleCalls: true);
+        var (importsOffset, _) = FindSection(bytes, PortableModuleSectionKind.IndexedImportTable);
+        int firstArgumentMode = importsOffset + 4 + 16;
+        Assert.Equal((byte)PortablePassingMode.Value, bytes[firstArgumentMode]);
+        bytes[firstArgumentMode] = (byte)PortablePassingMode.LoanRead;
+
+        InvalidDataException error = Assert.Throws<InvalidDataException>(() =>
+            PortableBinaryVerifier.Verify(bytes));
+
+        Assert.Contains("evaluation stack cell", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void IndependentVerifierRejectsStoreToReadonlyBindingFromMutatedBytes()
+    {
+        const string source = """
+            module (name:"binary-readonly", version:"0.1", author:"Ubytec")
+            {
+                func Main() -> t_int64
+                {
+                    local
+                    {
+                        readonly t_int64 value 1
+                    }
+                    push 2
+                    load @value
+                    add
+                    return
+                }
+            }
+            """;
+        byte[] bytes = BuildIndexed(source);
+        Span<byte> code = Code(bytes);
+        int load = FindSequence(code, new byte[] { MemoryOperations.LOAD.OP, 2 });
+        code[load] = MemoryOperations.STORE.OP;
+
+        InvalidDataException error = Assert.Throws<InvalidDataException>(() =>
+            PortableBinaryVerifier.Verify(bytes));
+
+        Assert.Contains("readonly/const", error.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void IndependentVerifierRejectsNonVoidReachableFallthroughFromMutatedBytes()
+    {
+        const string source = """
+            module (name:"binary-fallthrough", version:"0.1", author:"Ubytec")
+            {
+                func Main() -> t_int64
+                {
+                    push 42
+                    return
+                }
+            }
+            """;
+        byte[] bytes = BuildIndexed(source);
+        Span<byte> code = Code(bytes);
+        int ret = FindSequence(code, new byte[] { CoreOperations.RETURN.OP, 0 });
+        code[ret] = CoreOperations.NOP.OP;
+        code[ret + 1] = CoreOperations.NOP.OP;
+
+        InvalidDataException error = Assert.Throws<InvalidDataException>(() =>
+            PortableBinaryVerifier.Verify(bytes));
+
+        Assert.Contains("reachable path without RETURN", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void IndependentVerifierRejectsReturnUnderflowAfterSignatureMutation()
+    {
+        const string source = """
+            module (name:"binary-return", version:"0.1", author:"Ubytec")
+            {
+                func Anchor() -> t_int64
+                {
+                    push 1
+                    return
+                }
+
+                action Stop()
+                {
+                    return
+                }
+            }
+            """;
+        byte[] bytes = BuildIndexed(source);
+        FunctionRow[] functions = ReadFunctionRows(bytes);
+        Assert.Equal(2, functions.Length);
+        BinaryPrimitives.WriteUInt32LittleEndian(
+            bytes.AsSpan(functions[1].Offset, 4),
+            functions[0].ReturnType);
+
+        InvalidDataException error = Assert.Throws<InvalidDataException>(() =>
+            PortableBinaryVerifier.Verify(bytes));
+
+        Assert.Contains("evaluation stack cell", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void IndependentVerifierRejectsNonCellBindingTypeFromMutatedFunctionTable()
+    {
+        const string source = """
+            module (name:"binary-binding-type", version:"0.1", author:"Ubytec")
+            {
+                func Main() -> t_int64
+                {
+                    local
+                    {
+                        t_int64 value 1
+                    }
+                    load @value
+                    return
+                }
+
+                action Marker()
+                {
+                    return
+                }
+            }
+            """;
+        byte[] bytes = BuildIndexed(source);
+        FunctionRow[] functions = ReadFunctionRows(bytes);
+        Assert.Equal(2, functions.Length);
+        uint voidType = functions[1].ReturnType;
+        BinaryPrimitives.WriteUInt32LittleEndian(
+            bytes.AsSpan(functions[0].BindingTypesOffset, 4),
+            voidType);
+
+        InvalidDataException error = Assert.Throws<InvalidDataException>(() =>
+            PortableBinaryVerifier.Verify(bytes));
+
+        Assert.Contains("scalar cell type", error.Message, StringComparison.Ordinal);
+    }
+
+    private static byte[] BuildIndexed() => BuildIndexed(BoundarySource, enableModuleCalls: true);
+
+    private static byte[] BuildIndexed(string source, bool enableModuleCalls = false)
+    {
+        SourceSemanticCompilation compilation = SourceCompiler.CompileSemantic(
+            source,
+            processImage: false,
+            enableModuleCalls: enableModuleCalls);
         return PortableModuleFormat.Encode(
             compilation.Module,
             contractManifest: null,
             includeIndexedExecutable: true,
             portableContracts: compilation.PortableContracts);
+    }
+
+    private static Span<byte> Code(byte[] bytes)
+    {
+        var (offset, length) = FindSection(bytes, PortableModuleSectionKind.IndexedCode);
+        return bytes.AsSpan(offset, length);
+    }
+
+    private static int FindOpcode(ReadOnlySpan<byte> code, byte opcode)
+    {
+        int index = code.IndexOf(opcode);
+        Assert.True(index >= 0, $"Expected opcode 0x{opcode:X2} in portable code.");
+        return index;
+    }
+
+    private static int FindSequence(ReadOnlySpan<byte> code, ReadOnlySpan<byte> sequence)
+    {
+        int index = code.IndexOf(sequence);
+        Assert.True(index >= 0, "Expected instruction byte sequence in portable code.");
+        return index;
+    }
+
+    private static FunctionRow[] ReadFunctionRows(byte[] bytes)
+    {
+        var (offset, length) = FindSection(bytes, PortableModuleSectionKind.IndexedFunctionTable);
+        ReadOnlySpan<byte> table = bytes.AsSpan(offset, length);
+        uint count = BinaryPrimitives.ReadUInt32LittleEndian(table[..4]);
+        var result = new FunctionRow[checked((int)count)];
+        int cursor = 4;
+        for (int index = 0; index < result.Length; index++)
+        {
+            int rowOffset = offset + cursor;
+            uint returnType = BinaryPrimitives.ReadUInt32LittleEndian(table.Slice(cursor, 4));
+            uint argumentCount = BinaryPrimitives.ReadUInt32LittleEndian(table.Slice(cursor + 4, 4));
+            uint localCount = BinaryPrimitives.ReadUInt32LittleEndian(table.Slice(cursor + 8, 4));
+            cursor += 24;
+            int bindingTypesOffset = offset + cursor;
+            cursor = checked(cursor + (int)(argumentCount + localCount) * 4);
+            result[index] = new FunctionRow(rowOffset, returnType, bindingTypesOffset);
+        }
+        Assert.Equal(table.Length, cursor);
+        return result;
     }
 
     private static (int Offset, int Length) FindSection(
@@ -148,4 +403,9 @@ public class PortableBinaryVerifierTests
         }
         throw new InvalidOperationException($"Section {target} was not found.");
     }
+
+    private readonly record struct FunctionRow(
+        int Offset,
+        uint ReturnType,
+        int BindingTypesOffset);
 }
