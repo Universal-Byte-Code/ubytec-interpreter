@@ -10,16 +10,15 @@ public sealed record PortableSourceX64Result(
     Module SemanticModule);
 
 /// <summary>
-/// Transitional canonical pipeline that derives final x64 solely from indexed UBCM bytes.
-/// SourceCompiler still computes its legacy NASM internally; this pipeline deliberately discards it.
-/// No legacy assembly contributes to <see cref="PortableSourceX64Result.NativeCompilation"/>.
+/// Canonical source -> portable binary -> x64 pipeline. The source phase is semantic only:
+/// no legacy NASM is generated before the verified UBCM boundary is crossed.
 /// </summary>
 public static class PortableSourceX64Pipeline
 {
     /// <summary>
-    /// Compiles source to indexed PMF and then generates x64 only from the resulting verified binary.
+    /// Compiles source semantically to indexed PMF and then generates x64 only from the resulting verified binary.
     /// The returned semantic module is exposed only for diagnostics and sidecars; native code generation
-    /// has already crossed the verified UBCM boundary before this method returns.
+    /// depends exclusively on <see cref="PortableSourceX64Result.ModuleBytes"/>.
     /// </summary>
     public static PortableSourceX64Result Compile(
         string source,
@@ -28,10 +27,10 @@ public static class PortableSourceX64Pipeline
         bool enableModuleCalls = false,
         bool enableHostIO = false)
     {
-        SourceCompilation frontend = SourceCompiler.Compile(
+        SourceSemanticCompilation frontend = SourceCompiler.CompileSemantic(
             source,
             grammarJson,
-            emitProcessEntryPoint: false,
+            processImage: processImage,
             enableModuleCalls: enableModuleCalls,
             enableHostIO: enableHostIO);
 
