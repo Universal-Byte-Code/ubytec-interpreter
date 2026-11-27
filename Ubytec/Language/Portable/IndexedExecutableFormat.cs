@@ -146,9 +146,11 @@ public static class IndexedExecutableFormat
         int present = SectionKinds.Count(kind => sections.Any(section => section.Kind == (ushort)kind));
         PortableModuleSection? callableSection = sections.SingleOrDefault(section =>
             section.Kind == (ushort)PortableModuleSectionKind.IndexedCallableSlots);
+        PortableModuleSection? entry = sections.FirstOrDefault(section => section.Kind == 0x0017);
         if (present == 0)
         {
-            if (callableSection is not null) throw new InvalidDataException("Callable slot section requires indexed executable sections.");
+            if (callableSection is not null || entry is not null)
+                throw new InvalidDataException("Callable slots or process entrypoint require indexed executable sections.");
             return;
         }
         if (present != SectionKinds.Length)
@@ -186,6 +188,18 @@ public static class IndexedExecutableFormat
         ParseConstantTable(constantsPayload.Span);
         VerifyFunctionRanges(functions, codePayload.Length);
         VerifyCode(functions, imports.Count, types, codePayload.Span, contexts, callables);
+        if (entry is not null)
+        {
+            if (entry.Flags != PortableModuleSectionFlags.None || entry.Payload.Length != 4)
+                throw new InvalidDataException("Invalid process entrypoint section.");
+            uint index = BinaryPrimitives.ReadUInt32LittleEndian(entry.Payload.Span);
+            if (index != uint.MaxValue)
+            {
+                contexts.RequireTopLevel(index, "Process entrypoint");
+                if (functions[(int)index].ArgumentCount != 0)
+                    throw new InvalidDataException("Process entry function must have zero arguments.");
+            }
+        }
     }
 
     private static PortableModuleSection Required(
