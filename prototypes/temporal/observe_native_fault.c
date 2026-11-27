@@ -7,6 +7,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/ptrace.h>
 #include <sys/stat.h>
 #include <sys/sysmacros.h>
@@ -85,8 +86,10 @@ static int image_offset(pid_t pid, int fd, uint64_t rip, uint64_t *out) {
 }
 
 int main(int argc, char **argv) {
-    if (argc != 2) return 2;
-    int fd = open(argv[1], O_RDONLY | O_CLOEXEC);
+    int trace = argc == 3 && strcmp(argv[1], "--activations") == 0;
+    if (argc != 2 && !trace) return 2;
+    const char *executable = argv[trace ? 2 : 1];
+    int fd = open(executable, O_RDONLY | O_CLOEXEC);
     if (fd < 0) return 2;
     pid_t pid = fork();
     if (pid < 0) { close(fd); return 2; }
@@ -96,7 +99,7 @@ int main(int argc, char **argv) {
             dup2(nullfd, STDERR_FILENO) < 0) _exit(125);
         if (nullfd > STDERR_FILENO) close(nullfd);
         if (ptrace(PTRACE_TRACEME, 0, NULL, NULL) < 0) _exit(125);
-        char *const args[] = {argv[1], NULL};
+        char *const args[] = {(char *)executable, NULL};
         char *const env[] = {NULL};
         fexecve(fd, args, env);
         _exit(126);
@@ -105,8 +108,10 @@ int main(int argc, char **argv) {
     if (wait_bounded(pid, &status)) goto cleanup;
     if (WIFEXITED(status) || WIFSIGNALED(status)) goto reaped;
     if (!WIFSTOPPED(status) || WSTOPSIG(status) != SIGTRAP) goto cleanup;
-    if (ptrace(PTRACE_SETOPTIONS, pid, NULL, (void *)(uintptr_t)PTRACE_O_EXITKILL) < 0 ||
-        ptrace(PTRACE_CONT, pid, NULL, NULL) < 0 || wait_bounded(pid, &status)) goto cleanup;
+    if (ptrace(PTRACE_SETOPTIONS, pid, NULL, (void *)(uintptr_t)PTRACE_O_EXITKILL) < 0) goto cleanup;
+    unsigned marker_count = 0;
+resume:
+    if (ptrace(PTRACE_CONT, pid, NULL, NULL) < 0 || wait_bounded(pid, &status)) goto cleanup;
     if (WIFEXITED(status)) {
         printf("{\"kind\":\"exit\",\"code\":%d}\n", WEXITSTATUS(status));
         rc = 0; goto reaped;
@@ -114,12 +119,27 @@ int main(int argc, char **argv) {
     if (WIFSIGNALED(status)) goto reaped;
     if (!WIFSTOPPED(status)) goto cleanup;
     int sig = WSTOPSIG(status);
-    if (sig != SIGILL && sig != SIGFPE && sig != SIGSEGV && sig != SIGBUS) goto cleanup;
+    if (sig != SIGILL && sig != SIGFPE && sig != SIGSEGV && sig != SIGBUS && !(trace && sig == SIGTRAP))
+        goto cleanup;
     siginfo_t info;
     struct user_regs_struct regs;
     if (ptrace(PTRACE_GETSIGINFO, pid, NULL, &info) < 0 || info.si_signo != sig || info.si_code <= 0 ||
         ptrace(PTRACE_GETREGS, pid, NULL, &regs) < 0) goto cleanup;
     uint64_t rip = regs.rip, relative;
+    if (sig == SIGTRAP) {
+        /* INT3 advances RIP by one. Do not confuse it with the faulting RIP of UD2.
+           Check actual tracee byte and file-backed mapping; managed consumer validates symbol. */
+        if (++marker_count > 4096 || !rip || (info.si_code != SI_KERNEL && info.si_code != TRAP_BRKPT) ||
+            !image_offset(pid, fd, rip - 1, &relative)) goto cleanup;
+        uint64_t address = rip - 1;
+        errno = 0;
+        unsigned long word = (unsigned long)ptrace(PTRACE_PEEKTEXT, pid,
+            (void *)(uintptr_t)(address & ~(uint64_t)(sizeof(long) - 1)), NULL);
+        if (errno || ((word >> (8 * (address % sizeof(long)))) & 0xff) != 0xcc) goto cleanup;
+        printf("{\"kind\":\"activation\",\"image_offset\":%" PRIu64 ",\"rsp\":%" PRIu64 "}\n",
+               relative, (uint64_t)regs.rsp);
+        goto resume;
+    }
     printf("{\"kind\":\"fault\",\"signal\":%d,\"code\":%d,\"rip\":%" PRIu64 ",\"image_offset\":", sig, info.si_code, rip);
     if (image_offset(pid, fd, rip, &relative)) printf("%" PRIu64, relative);
     else printf("null");

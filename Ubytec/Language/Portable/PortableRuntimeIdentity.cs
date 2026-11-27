@@ -15,6 +15,12 @@ public readonly record struct PortableRuntimeEvent(
     PortableRuntimeEventId Id, PortableActivationId Activation,
     PortableLoadedInstanceId Instance, PortableInstructionOccurrence Occurrence);
 
+/// <summary>Observed activation lifecycle transition. Leave denotes reaching the pre-RET marker,
+/// not independent proof that RET completed; Abort is coordinator cleanup, not a normal return.</summary>
+public enum PortableLifecycleKind { Enter, Leave, Abort }
+public readonly record struct PortableLifecycleEvent(PortableRuntimeEventId Id, PortableActivationId Activation,
+    PortableLoadedInstanceId Instance, uint FunctionIndex, PortableLifecycleKind Kind);
+
 /// <summary>Conservative classification of a Linux synchronous signal observation.</summary>
 public enum PortableFaultCategory { Unclassified, IntentionalTrap, ArithmeticSignal, MemorySignal }
 
@@ -130,6 +136,28 @@ public sealed class PortableRuntimeIdentity
         return activation;
     }
 
+    /// <summary>Allocate an activation and publish its entry in the context-local event namespace.</summary>
+    public PortableLifecycleEvent EnterObserved(PortableRuntimeContextId id, PortableLoadedInstanceId instance, uint function)
+    {
+        Context context = GetContext(id);
+        EnsureAvailable(context.LastEvent);
+        var activation = Enter(id, instance, function);
+        return new PortableLifecycleEvent(new PortableRuntimeEventId(id, Next(ref context.LastEvent)),
+            activation, instance, function, PortableLifecycleKind.Enter);
+    }
+
+    /// <summary>Close the current activation with an observed leave or explicit abort event.</summary>
+    public PortableLifecycleEvent CloseObserved(PortableActivationId id, bool aborted = false)
+    {
+        Context context = GetContext(id.Context);
+        if (!context.Stack.TryPeek(out var active) || active.Id != id)
+            throw new InvalidOperationException("Activation is not the current invocation.");
+        EnsureAvailable(context.LastEvent);
+        context.Stack.Pop();
+        return new PortableLifecycleEvent(new PortableRuntimeEventId(id.Context, Next(ref context.LastEvent)),
+            id, active.Instance, active.Function, aborted ? PortableLifecycleKind.Abort : PortableLifecycleKind.Leave);
+    }
+
     /// <summary>Record invocation exit in strict LIFO order.</summary>
     public void Leave(PortableActivationId id)
     {
@@ -179,10 +207,15 @@ public sealed class PortableRuntimeIdentity
     private Context GetContext(PortableRuntimeContextId id) =>
         _contexts.TryGetValue(id, out var context) ? context : throw new InvalidOperationException("Unknown runtime context.");
 
-    private static ulong Next(ref ulong last)
+    private static void EnsureAvailable(ulong last)
     {
         if (last == ulong.MaxValue)
             throw new InvalidOperationException("Identity namespace exhausted; cannot wrap.");
+    }
+
+    private static ulong Next(ref ulong last)
+    {
+        EnsureAvailable(last);
         return ++last;
     }
 }

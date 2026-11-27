@@ -48,9 +48,16 @@ public sealed record PortableNativeSite(PortableInstructionOccurrence Occurrence
     public IReadOnlyList<PortableNativeTrap> Traps { get; init; } = Array.Empty<PortableNativeTrap>();
 }
 
+/// <summary>Optional observer-only INT3 at the entry or normal exit of a portable function.</summary>
+public sealed record PortableNativeActivationMarker(uint FunctionIndex, bool Enter, string Label);
+
 /// <summary>Provenance candidate for emitted NASM, not a resolved or authenticated ELF address map.</summary>
 public sealed record PortableX64Provenance(PortableX64Compilation Compilation,
-    string AssemblyDigest, IReadOnlyList<PortableNativeSite> Sites);
+    string AssemblyDigest, IReadOnlyList<PortableNativeSite> Sites)
+{
+    public IReadOnlyList<PortableNativeActivationMarker> ActivationMarkers { get; init; } =
+        Array.Empty<PortableNativeActivationMarker>();
+}
 
 /// <summary>
 /// Reference x64 backend for indexed Portable Module Format v0.
@@ -74,22 +81,26 @@ public static class PortableX64Backend
 
     /// <summary>Compiles a typed portable module to Linux x86-64 NASM.</summary>
     public static PortableX64Compilation Compile(PortableBinaryModule module, bool optimizeTailCalls = false) =>
-        CompileCore(module, optimizeTailCalls, null, 0);
+        CompileCore(module, optimizeTailCalls, null, 0, null);
 
     /// <summary>Emit unoptimized NASM with object-local marker symbols for each verified instruction
     /// and each emitted UD2. The returned map must still be resolved and bound to the assembled artifact.</summary>
     public static PortableX64Provenance CompileWithProvenance(ReadOnlySpan<byte> bytes,
-        int maxInstructions = 1_000_000)
+        int maxInstructions = 1_000_000, bool traceActivations = false)
     {
         PortableBinaryVerifier.Verify(bytes);
         var sites = new List<PortableNativeSite>();
-        var compilation = CompileCore(PortableBinaryCodec.Decode(bytes), false, sites, maxInstructions);
+        var markers = traceActivations ? new List<PortableNativeActivationMarker>() : null;
+        var compilation = CompileCore(PortableBinaryCodec.Decode(bytes), false, sites, maxInstructions, markers);
         string digest = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(compilation.Assembly)));
-        return new PortableX64Provenance(compilation, digest, sites.AsReadOnly());
+        return new PortableX64Provenance(compilation, digest, sites.AsReadOnly())
+        {
+            ActivationMarkers = markers is null ? Array.Empty<PortableNativeActivationMarker>() : markers.AsReadOnly()
+        };
     }
 
     private static PortableX64Compilation CompileCore(PortableBinaryModule module, bool optimizeTailCalls,
-        List<PortableNativeSite>? sites, int maxInstructions)
+        List<PortableNativeSite>? sites, int maxInstructions, List<PortableNativeActivationMarker>? markers)
     {
         ArgumentNullException.ThrowIfNull(module);
         if (module.Executable is not { } executable)
@@ -129,7 +140,7 @@ public static class PortableX64Backend
 
         for (int index = 0; index < executable.Functions.Count; index++)
             EmitFunction(output, executable, index, functionLabels, moduleScope, optimizeTailCalls, ref dispatchBudget,
-                occurrences?.GetValueOrDefault((uint)index) ?? Array.Empty<PortableInstructionOccurrence>(), sites);
+                occurrences?.GetValueOrDefault((uint)index) ?? Array.Empty<PortableInstructionOccurrence>(), sites, markers);
 
         for (int index = 0; index < executable.Exports.Count; index++)
         {
@@ -198,7 +209,7 @@ public static class PortableX64Backend
         bool optimizeTailCalls,
         ref int dispatchBudget,
         IReadOnlyList<PortableInstructionOccurrence> occurrences,
-        List<PortableNativeSite>? sites)
+        List<PortableNativeSite>? sites, List<PortableNativeActivationMarker>? markers)
     {
         PortableExecutableFunction function = executable.Functions[functionIndex];
         UType returnType = ResolveType(executable, function.ReturnTypeIndex);
@@ -261,6 +272,7 @@ public static class PortableX64Backend
         scopes.Push(frame);
 
         output.AppendLine($"{label}:");
+        if (markers is not null) EmitActivationMarker(output, markers, (uint)functionIndex, true);
         output.AppendLine("  push rbp");
         output.AppendLine("  mov rbp, rsp");
         if (frame.FrameSize != 0)
@@ -298,7 +310,17 @@ public static class PortableX64Backend
         output.AppendLine(frame.EndLabel + ":");
         output.AppendLine("  mov rsp, rbp");
         output.AppendLine("  pop rbp");
+        if (markers is not null) EmitActivationMarker(output, markers, (uint)functionIndex, false);
         output.AppendLine("  ret");
+    }
+
+    private static void EmitActivationMarker(StringBuilder output,
+        List<PortableNativeActivationMarker> markers, uint function, bool enter)
+    {
+        string label = $"..@ubytec_prov_activation_{function}_{(enter ? "enter" : "leave")}";
+        markers.Add(new PortableNativeActivationMarker(function, enter, label));
+        output.AppendLine(label + ":");
+        output.AppendLine("  int3");
     }
 
     private static string CompileInstruction(

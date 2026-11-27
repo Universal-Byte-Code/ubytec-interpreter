@@ -12,6 +12,9 @@ public sealed record PortableElfSite(PortableInstructionOccurrence Occurrence,
     public IReadOnlyList<PortableNativeTrap> Traps { get; init; } = Array.Empty<PortableNativeTrap>();
 }
 
+/// <summary>Resolved INT3 lifecycle marker, outside ordinary instruction provenance.</summary>
+public readonly record struct PortableElfActivationMarker(uint FunctionIndex, bool Enter, ulong Offset);
+
 /// <summary>A resolved site is evidence of provenance, not proof of translation correctness or authority.</summary>
 public readonly record struct PortableElfAttribution(PortableInstructionOccurrence Occurrence, bool ExactUd2,
     PortableTrapKind TrapKind = PortableTrapKind.Unknown, int? InputIndex = null);
@@ -35,12 +38,16 @@ public sealed class PortableElfProvenance
     /// <summary>Validated image-relative marker intervals.</summary>
     public IReadOnlyList<PortableElfSite> Sites { get; }
 
-    private PortableElfProvenance(string artifactDigest, string assemblyDigest, ulong imageBase, PortableElfSite[] sites)
+    public IReadOnlyList<PortableElfActivationMarker> ActivationMarkers { get; }
+
+    private PortableElfProvenance(string artifactDigest, string assemblyDigest, ulong imageBase,
+        PortableElfSite[] sites, PortableElfActivationMarker[] markers)
     {
         ArtifactDigest = artifactDigest;
         AssemblyDigest = assemblyDigest;
         ImageBase = imageBase;
         Sites = Array.AsReadOnly(sites);
+        ActivationMarkers = Array.AsReadOnly(markers);
     }
 
     /// <summary>
@@ -94,6 +101,14 @@ public sealed class PortableElfProvenance
             foreach (string trap in site.Ud2Labels)
                 if (!wanted.Add(trap)) throw Invalid("Duplicate trap marker request.");
         }
+        var functionKeys = provenance.Sites.Select(s => s.Occurrence.FunctionIndex).ToHashSet();
+        var markerKeys = new HashSet<(uint, bool)>();
+        foreach (var marker in provenance.ActivationMarkers)
+            if (!functionKeys.Contains(marker.FunctionIndex) || !wanted.Add(marker.Label) ||
+                !markerKeys.Add((marker.FunctionIndex, marker.Enter)))
+                throw Invalid("Invalid or duplicate activation marker.");
+        if (markerKeys.Count != 0 && markerKeys.Count != 2 * functionKeys.Count)
+            throw Invalid("Incomplete activation marker set.");
         var found = new Dictionary<string, Symbol>(StringComparer.Ordinal);
         var utf8 = new UTF8Encoding(false, true);
         foreach (var table in sections.Where(s => s.Type == 2)) // SHT_SYMTAB
@@ -164,8 +179,27 @@ public sealed class PortableElfProvenance
             if (site.Start < previousEnd) throw Invalid("Overlapping nonempty provenance intervals.");
             previousEnd = site.End;
         }
+        var lifecycle = new List<PortableElfActivationMarker>();
+        var markerOffsets = new HashSet<ulong>();
+        foreach (var marker in provenance.ActivationMarkers)
+        {
+            Symbol symbol = found[marker.Label];
+            Section section = sections[symbol.SectionIndex];
+            if (symbol.Address < imageBase || section.Type != 1 || (section.Flags & 6) != 6 ||
+                !Contains(section.Address, section.Size, symbol.Address, 1))
+                throw Invalid("Activation marker outside executable section.");
+            var matching = segments.Where(s => s.Executable &&
+                Contains(s.Address, s.FileSize, symbol.Address, 1)).ToArray();
+            if (matching.Length != 1) throw Invalid("Activation marker outside unique executable segment.");
+            Segment segment = matching[0];
+            ulong offset = symbol.Address - imageBase;
+            if (Range(elf, segment.FileOffset + (symbol.Address - segment.Address), 1)[0] != 0xCC ||
+                !markerOffsets.Add(offset) || ordered.Any(s => offset >= s.Start && offset < s.End))
+                throw Invalid("Activation marker is not a distinct INT3 outside instruction ranges.");
+            lifecycle.Add(new PortableElfActivationMarker(marker.FunctionIndex, marker.Enter, offset));
+        }
         return new PortableElfProvenance(Convert.ToHexString(SHA256.HashData(elf)),
-            provenance.AssemblyDigest, imageBase, ordered);
+            provenance.AssemblyDigest, imageBase, ordered, lifecycle.OrderBy(m => m.Offset).ToArray());
     }
 
     /// <summary>Lookup using an already verified loaded artifact digest and image-relative instruction pointer.
