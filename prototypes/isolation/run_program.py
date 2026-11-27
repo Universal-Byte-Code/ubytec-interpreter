@@ -143,7 +143,9 @@ def main():
                 def stopped(pid):
                     path=Path("/proc")/str(pid)/"stat"
                     try: return path.read_text().split(") ",1)[1].split()[0]=="Z"
-                    except FileNotFoundError: return True
+                    # procfs can disappear before open (ENOENT) or during read (ESRCH).
+                    # Both mean this worker no longer exists; do not suppress other I/O errors.
+                    except (FileNotFoundError, ProcessLookupError): return True
                 while time.monotonic()<deadline and not all(stopped(row["worker_pid"]) for row in started):
                     time.sleep(.01)
                 if not all(stopped(row["worker_pid"]) for row in started):
