@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace Ubytec.Language.Portable;
 
 /// <summary>Identity of one loaded executable, not a capability to use it.</summary>
@@ -12,6 +14,12 @@ public readonly record struct PortableRuntimeEventId(PortableRuntimeContextId Co
 public readonly record struct PortableRuntimeEvent(
     PortableRuntimeEventId Id, PortableActivationId Activation,
     PortableLoadedInstanceId Instance, PortableInstructionOccurrence Occurrence);
+
+/// <summary>Observed fault, with optional static attribution. Signal is a host observation,
+/// not a portable trap reason; an exact UD2 address alone does not prove the signal cause.</summary>
+public readonly record struct PortableRuntimeFault(
+    PortableRuntimeEventId Id, PortableActivationId Activation, PortableLoadedInstanceId Instance,
+    string ArtifactDigest, ulong ImageOffset, int Signal, PortableElfAttribution? Attribution);
 
 /// <summary>
 /// Serial coordinator reference for event identity. Not thread-safe; callers must serialize all
@@ -29,7 +37,8 @@ public sealed class PortableRuntimeIdentity
     private readonly Dictionary<PortableRuntimeContextId, Context> _contexts = new();
 
     private sealed record Loaded(int FunctionCount,
-        IReadOnlyDictionary<(uint Function, uint Offset), PortableInstructionOccurrence> Sites);
+        IReadOnlyDictionary<(uint Function, uint Offset), PortableInstructionOccurrence> Sites,
+        PortableElfProvenance? Native = null);
     private sealed record Activation(PortableActivationId Id, PortableLoadedInstanceId Instance, uint Function);
     private sealed class Context
     {
@@ -49,6 +58,23 @@ public sealed class PortableRuntimeIdentity
         var id = new PortableLoadedInstanceId(Session, Next(ref _nextInstance));
         _instances.Add(id, new Loaded(count, sites));
         return id;
+    }
+
+    /// <summary>Associate a trusted loader's verified ELF bytes with an inactive loaded instance.
+    /// Does not inspect process mappings or grant execution authority.</summary>
+    public void BindNative(PortableLoadedInstanceId id, PortableElfProvenance map, ReadOnlySpan<byte> elf)
+    {
+        ArgumentNullException.ThrowIfNull(map);
+        Loaded loaded = Instance(id);
+        if (loaded.Native is not null)
+            throw new InvalidOperationException("Native artifact already bound.");
+        if (_contexts.Values.Any(context => context.Stack.Any(activation => activation.Instance == id)))
+            throw new InvalidOperationException("Cannot bind native code during an active invocation.");
+        if (Convert.ToHexString(SHA256.HashData(elf)) != map.ArtifactDigest ||
+            map.Sites.Count != loaded.Sites.Count ||
+            !loaded.Sites.Values.ToHashSet().SetEquals(map.Sites.Select(site => site.Occurrence)))
+            throw new InvalidDataException("Native map does not match loaded instance or artifact.");
+        _instances[id] = loaded with { Native = map };
     }
 
     /// <summary>Unload only an inactive instance; its ordinal is never reused.</summary>
@@ -112,6 +138,25 @@ public sealed class PortableRuntimeIdentity
             throw new InvalidDataException("Requested occurrence is not a verified instruction boundary.");
         var eventId = new PortableRuntimeEventId(id.Context, Next(ref context.LastEvent));
         return new PortableRuntimeEvent(eventId, id, active.Instance, occurrence);
+    }
+
+    /// <summary>Allocate a fault event from a trusted observer's signal and image-relative PC.
+    /// An unmapped PC remains unattributed. A conflicting activation is rejected.
+    /// Does not terminate or unwind the context; lifecycle is coordinator-owned.</summary>
+    public PortableRuntimeFault RecordNativeFault(PortableActivationId id, ulong imageOffset, int signal)
+    {
+        if (signal <= 0) throw new ArgumentOutOfRangeException(nameof(signal));
+        Context context = GetContext(id.Context);
+        if (!context.Stack.TryPeek(out var active) || active.Id != id)
+            throw new InvalidOperationException("Activation is not the current invocation.");
+        Loaded loaded = Instance(active.Instance);
+        var map = loaded.Native ?? throw new InvalidOperationException("No native artifact bound.");
+        var attribution = map.Attribute(map.ArtifactDigest, imageOffset);
+        if (attribution is { } site && site.Occurrence.FunctionIndex != active.Function)
+            throw new InvalidDataException("Native PC conflicts with the current activation.");
+        var eventId = new PortableRuntimeEventId(id.Context, Next(ref context.LastEvent));
+        return new PortableRuntimeFault(eventId, id, active.Instance, map.ArtifactDigest,
+            imageOffset, signal, attribution);
     }
 
     private Loaded Instance(PortableLoadedInstanceId id) =>
