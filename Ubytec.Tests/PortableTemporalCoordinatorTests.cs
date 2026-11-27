@@ -12,7 +12,7 @@ public sealed class PortableTemporalCoordinatorTests
         var runtime = new PortableTemporalCoordinator(source: () => values.Dequeue());
         Run(runtime);
         Assert.Empty(values);
-        Assert.Equal(new ulong[] { 1, 2, 3, 4, 5, 6 }, runtime.Events.Select(e => e.CommitSequence));
+        Assert.Equal(new ulong[] { 1, 2, 3, 4, 5, 6, 7 }, runtime.Events.Select(e => e.CommitSequence));
         Assert.Equal(new[] { PortableTemporalEffectKind.TimerRegister, PortableTemporalEffectKind.TimerRegister,
             PortableTemporalEffectKind.TimerSample, PortableTemporalEffectKind.TimerSample,
             PortableTemporalEffectKind.TimerExpire, PortableTemporalEffectKind.TimerExpire },
