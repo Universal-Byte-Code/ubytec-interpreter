@@ -54,6 +54,7 @@ public sealed class PortableRuntimeIdentity
     public Guid Session { get; } = Guid.NewGuid();
     private ulong _nextInstance;
     private ulong _nextContext;
+    private ulong _coordinatorEvent;
     private readonly Dictionary<PortableLoadedInstanceId, Loaded> _instances = new();
     private readonly Dictionary<PortableRuntimeContextId, Context> _contexts = new();
 
@@ -105,6 +106,16 @@ public sealed class PortableRuntimeIdentity
         if (_contexts.Values.Any(context => context.Stack.Any(activation => activation.Instance == id)))
             throw new InvalidOperationException("Cannot unload an instance with active invocations.");
         _instances.Remove(id);
+    }
+
+    /// <summary>Allocate an admitted context effect in the same sequence as lifecycle and instruction events.
+    /// The reserved coordinator ordinal zero has its own sequence. No execution authority is granted.</summary>
+    internal PortableRuntimeEventId AllocateEffect(PortableRuntimeContextId id)
+    {
+        if (id.Session != Session) throw new InvalidOperationException("Foreign session.");
+        if (id.Ordinal == 0) return new PortableRuntimeEventId(id, Next(ref _coordinatorEvent));
+        Context context = GetContext(id);
+        return new PortableRuntimeEventId(id, Next(ref context.LastEvent));
     }
 
     /// <summary>Allocate a context in the order admitted by the coordinator.</summary>
