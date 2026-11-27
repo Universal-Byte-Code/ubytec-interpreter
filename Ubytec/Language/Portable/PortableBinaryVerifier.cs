@@ -224,10 +224,11 @@ public static class PortableBinaryVerifier
             sections.Any(section => section.Kind == (ushort)kind));
         RawSection? callableSection = sections.SingleOrDefault(section =>
             section.Kind == (ushort)PortableModuleSectionKind.IndexedCallableSlots);
+        RawSection? entry = sections.FirstOrDefault(section => section.Kind == 0x0017);
         if (present == 0)
         {
-            if (requiredProfile.HasValue || callableSection is not null)
-                throw new InvalidDataException("Admission or callable slot section requires an indexed executable.");
+            if (requiredProfile.HasValue || callableSection is not null || entry is not null)
+                throw new InvalidDataException("Admission, callable slots or process entrypoint require an indexed executable.");
             return;
         }
         if (present != IndexedKinds.Length)
@@ -260,7 +261,6 @@ public static class PortableBinaryVerifier
         ParseConstantTable(constantsPayload);
         VerifyFunctionRanges(functions, codePayload.Length);
         VerifyCode(functions, imports, types, codePayload, contexts, callables, probe);
-        RawSection? entry = sections.FirstOrDefault(section => section.Kind == 0x0017);
         if (entry is not null)
         {
             if (entry.Flags != PortableModuleSectionFlags.None || entry.Payload.Length != 4)
