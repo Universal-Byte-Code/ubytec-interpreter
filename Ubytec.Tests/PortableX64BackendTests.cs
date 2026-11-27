@@ -85,6 +85,70 @@ public class PortableX64BackendTests
         Assert.Equal(sourceResult, portableResult);
     }
 
+    [Theory]
+    [InlineData("push 2\nswitch\nbranch 1\npush 10\nend\nbranch 2\npush 42\nend\ndefault\npush 99\nend\nreturn", 42L)]
+    [InlineData("push 3\nswitch\nbranch 1\npush 10\nend\ndefault\npush 99\nend\nreturn", 99L)]
+    [InlineData("push 2\nswitch\nbranch 2\npush 3\nswitch\nbranch 3\npush 42\nend\ndefault\npush 0\nend\nend\ndefault\npush 99\nend\nreturn", 42L)]
+    [InlineData("push 42\npush 1\nswitch\nbranch 1\nbreak\nend\nbranch 1\npop\npush 99\nend\nend\nreturn", 42L)]
+    [InlineData("push 42\npush 9\nswitch\nbranch 1\npop\npush 99\nend\nend\nreturn", 42L)]
+    public void PortableSwitchMatchesLegacy(string body, long expected)
+    {
+        SourceCompilation source = SourceCompiler.Compile(ExportedMain(body), emitProcessEntryPoint: false);
+        byte[] bytes = EncodeIndexed(source);
+        PortableBinaryVerifier.Verify(bytes);
+        Assert.Equal(bytes, PortableBinaryCodec.Encode(PortableBinaryCodec.Decode(bytes)));
+        PortableX64Compilation portable = PortableX64Backend.Compile(bytes);
+        Assert.Equal(expected, RunNoArguments(source.Assembly, source.GetFunctionLabel("Main")));
+        Assert.Equal(expected, RunNoArguments(portable.Assembly, portable.GetFunctionLabel(0)));
+    }
+
+    [Theory]
+    [InlineData(0x11, 0, 42L)]
+    [InlineData(0x18, 1, 42L)]
+    [InlineData(0x1D, 1, 7L)]
+    [InlineData(0x1E, 1, 7L)]
+    public void PortableExtendedStackWireRoundTripsAndExecutes(int opcode, int index, long expected)
+    {
+        SourceCompilation source = SourceCompiler.Compile(ExportedMain("push 42\nreturn"), emitProcessEntryPoint: false);
+        PortableBinaryModule binary = PortableBinaryCodec.Decode(EncodeIndexed(source));
+        PortableExecutableModule executable = binary.Executable!;
+        PortableInstruction[] initial = opcode == 0x11
+            ? [new PortablePushInstruction([42])]
+            : [new PortablePushInstruction([7]), new PortablePushInstruction([42])];
+        PortableInstruction[] code = [.. initial,
+            new PortableExtendedStackInstruction((byte)opcode, (ushort)index),
+            new PortableReturnInstruction(null)];
+        var functions = executable.Functions.ToArray();
+        functions[0] = functions[0] with { Instructions = code };
+        byte[] bytes = PortableBinaryCodec.Encode(binary with { Executable = executable with { Functions = functions } });
+        PortableBinaryVerifier.Verify(bytes);
+        Assert.Equal(bytes, PortableBinaryCodec.Encode(PortableBinaryCodec.Decode(bytes)));
+        PortableX64Compilation portable = PortableX64Backend.Compile(bytes);
+        Assert.Equal(expected, RunNoArguments(portable.Assembly, portable.GetFunctionLabel(0)));
+    }
+
+    [Theory]
+    [InlineData(0x11, 7)]
+    [InlineData(0x18, 1)]
+    [InlineData(0x1D, 1)]
+    [InlineData(0x1E, 1)]
+    public void IndependentVerifierRejectsExtendedAccessOutsideEvaluationStack(int opcode, int index)
+    {
+        SourceCompilation source = SourceCompiler.Compile(ExportedMain("push 42\nreturn"), emitProcessEntryPoint: false);
+        PortableBinaryModule binary = PortableBinaryCodec.Decode(EncodeIndexed(source));
+        PortableExecutableModule executable = binary.Executable!;
+        var functions = executable.Functions.ToArray();
+        functions[0] = functions[0] with
+        {
+            Instructions = [new PortablePushInstruction([42]),
+                new PortableExtendedStackInstruction((byte)opcode, (ushort)index),
+                new PortableReturnInstruction(null)]
+        };
+        byte[] bytes = PortableBinaryCodec.Encode(binary with { Executable = executable with { Functions = functions } });
+        Assert.Throws<InvalidDataException>(() => PortableBinaryVerifier.Verify(bytes));
+        Assert.Throws<InvalidDataException>(() => PortableX64Backend.Compile(bytes));
+    }
+
     [Fact]
     public void PortableBinaryBackendMatchesSourceForFunctionAddressAndIndirectCall()
     {
