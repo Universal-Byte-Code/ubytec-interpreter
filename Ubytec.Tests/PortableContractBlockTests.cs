@@ -21,6 +21,43 @@ public sealed class PortableContractBlockTests
         }
         """;
 
+    [Theory]
+    [InlineData("block checked (t_int64, t_int64) -> t_int16", "add\nbreak")]
+    [InlineData("block checked 9 (t_int64, t_int64) -> t_int16", "add\nloop\nbreak 9\nend")]
+    public void SourceSignatureAndLabeledBreakCrossPortablePipeline(string header, string body)
+    {
+        string sourceText = $$"""
+            module (name:"contract-source", version:"0.1", author:"Ubytec")
+            {
+                func Main() -> t_int64
+                {
+                    push 100
+                    push 2
+                    push 40
+                    {{header}}
+                    {{body}}
+                    end
+                    add
+                    return
+                }
+            }
+            """;
+        var source = SourceCompiler.Compile(sourceText, emitProcessEntryPoint: false);
+        byte[] bytes = PortableModuleFormat.Encode(source.Module, contractManifest: null,
+            includeIndexedExecutable: true, portableContracts: source.PortableContracts,
+            executionProfile: PortableExecutionProfile.DirectOnly);
+        PortableBinaryVerifier.Verify(bytes, PortableExecutionProfile.DirectOnly);
+        var decoded = PortableBinaryCodec.Decode(bytes);
+        var block = Assert.Single(decoded.Executable!.Functions[0].Instructions.OfType<PortableContractBlockInstruction>());
+        Assert.True(block.Checked);
+        Assert.Equal(2, block.InputTypeIndices.Count);
+        var native = PortableX64Backend.Compile(bytes);
+        Assert.Equal(142L, Assert.Single(NativeStack.Run(
+            $"call {source.GetFunctionLabel("Main")}\npush rax", 1, source.Assembly)));
+        Assert.Equal(142L, Assert.Single(NativeStack.Run(
+            $"call {native.GetFunctionLabel(0)}\npush rax", 1, native.Assembly)));
+    }
+
     private static byte[] Image(Func<uint, uint, PortableInstruction[]> instructions)
     {
         var source = SourceCompiler.Compile(Source, emitProcessEntryPoint: false);

@@ -264,7 +264,9 @@ namespace Ubytec.Language.AST
                         });
                     }
 
-                    bool namedInstruction = ((byteCode == IF.OP || byteCode == WHILE.OP) && currLine.Any(t => t.Source is "==" or "!=" or "<" or "<=" or ">" or ">=")) || byteCode == FunctionOperations.CALL.OP || byteCode == FunctionOperations.FNADDR.OP ||
+                    bool namedInstruction = (byteCode == BLOCK.OP && currLine.Skip(1).Any(t =>
+                        t.Source.Contains('(') || t.Source.Equals("checked", StringComparison.OrdinalIgnoreCase))) ||
+                        ((byteCode == IF.OP || byteCode == WHILE.OP) && currLine.Any(t => t.Source is "==" or "!=" or "<" or "<=" or ">" or ">=")) || byteCode == FunctionOperations.CALL.OP || byteCode == FunctionOperations.FNADDR.OP ||
                         ((byteCode == MemoryOperations.LOAD.OP || byteCode == MemoryOperations.STORE.OP) &&
                             currLine.Count > 1 && !currLine[1].Source.StartsWith("t_", StringComparison.OrdinalIgnoreCase) && !currLine[1].Scopes.DataSource.Any(s => s.StartsWith("constant.")));
 

@@ -18,10 +18,12 @@ internal static class FunctionStackValidator
         internal int BreakDepth { get; } = breakDepth;
         internal int? ContinueDepth { get; } = continueDepth;
         internal bool HasBreak { get; set; }
+        internal int? ContractFloor { get; init; }
     }
     internal static void Validate(SyntaxSentence definition, CompilationScopes scopes, UType result)
     {
         var controls = new List<FlowContext>();
+        int ActiveFloor() => controls.LastOrDefault(c => c.ContractFloor.HasValue)?.ContractFloor ?? 0;
         int? Visit(IEnumerable<SyntaxNode> nodes, int? state)
         {
             foreach (var node in nodes)
@@ -29,6 +31,25 @@ internal static class FunctionStackValidator
                 if (state is null) break; // Remaining statements are unreachable.
                 int depth = state.Value;
                 var children = node.Children ?? [];
+                if (node.Entity is BLOCK { InputTypes: { } inputs } contract)
+                {
+                    if (contract.BlockType is not UType output ||
+                        (output.Type != PrimitiveType.Void && !FunctionCode.IsCellType(output)) ||
+                        inputs.Length > 1024 || inputs.Any(t => !FunctionCode.IsCellType(t)))
+                        throw new SyntaxException(0xBAD092, "Invalid BLOCK signature.");
+                    if (depth - ActiveFloor() < inputs.Length)
+                        throw new SyntaxException(0xBAD095, "BLOCK inputs exceed available evaluation cells.");
+                    int floor = depth - inputs.Length;
+                    int expected = checked(floor + (output.Type == PrimitiveType.Void ? 0 : 1));
+                    var context = new FlowContext("block", contract.LabelIDx, expected, null) { ContractFloor = floor };
+                    controls.Add(context);
+                    try { state = Visit(children, depth); }
+                    finally { controls.RemoveAt(controls.Count - 1); }
+                    if (state is int exit && exit != expected)
+                        throw new SyntaxException(0xBAD08E, "BLOCK does not produce its declared result count.");
+                    if (context.HasBreak) state = expected;
+                    continue;
+                }
                 if (node.Entity is null or BLOCK)
                 {
                     state = Visit(children, depth);
@@ -44,7 +65,7 @@ internal static class FunctionStackValidator
                 if (node.Entity is not IOpCode op) continue;
                 void Need(int cells)
                 {
-                    if (depth < cells)
+                    if (depth - ActiveFloor() < cells)
                         throw new SyntaxException(0xBAD077, $"{op.GetType().Name} needs {cells} stack cell(s), but only {depth} are available.");
                 }
                 if (op is IF conditional)
@@ -136,7 +157,12 @@ internal static class FunctionStackValidator
                     continue;
                 }
                 if (op is TRAP) { state = null; continue; }
-                if (op is CLEAR) { state = 0; continue; }
+                if (op is CLEAR)
+                {
+                    if (controls.Any(c => c.ContractFloor.HasValue))
+                        throw new SyntaxException(0xBAD096, "CLEAR cannot reset the function stack inside a contracted BLOCK.");
+                    state = 0; continue;
+                }
                 if (op is FunctionOperations.CALL call)
                 {
                     var target = scopes.ResolveCallable(call.FunctionName);

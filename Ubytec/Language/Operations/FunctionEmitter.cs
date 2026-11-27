@@ -67,18 +67,20 @@ internal static class FunctionEmitter
         try
         {
             ValidateCurrentBody(definition!, locals, returnType, scopes);
-            var valueIR = scopes.OptimizeLoopReductions || scopes.OptimizeBlockReductions || scopes.OptimizeRecordReductions || scopes.OptimizeLookupReductions || scopes.OptimizeFrameRegisters || scopes.OptimizeEffectRegisters
+            // Existing optimizers do not model checked block boundaries or their input floors.
+            bool contracted = Instructions(definition!).Any(op => op is BLOCK { InputTypes: not null });
+            var valueIR = !contracted && (scopes.OptimizeLoopReductions || scopes.OptimizeBlockReductions || scopes.OptimizeRecordReductions || scopes.OptimizeLookupReductions || scopes.OptimizeFrameRegisters || scopes.OptimizeEffectRegisters)
                 ? Ubytec.Language.Tools.Optimization.FunctionValueIR.Lower(definition!) : null;
-            var reduction = scopes.OptimizeLoopReductions || scopes.OptimizeBlockReductions
+            var reduction = valueIR is not null && (scopes.OptimizeLoopReductions || scopes.OptimizeBlockReductions)
                 ? Ubytec.Language.Tools.Optimization.ByteReductionPlan.TryCreate(valueIR!, frame, arguments, locals, returnType)
                 : null;
-            var recordReduction = scopes.OptimizeRecordReductions
+            var recordReduction = valueIR is not null && scopes.OptimizeRecordReductions
                 ? Ubytec.Language.Tools.Optimization.RecordReductionPlan.TryCreate(valueIR!, frame, arguments, locals, returnType)
                 : null;
-            var lookupReduction = scopes.OptimizeLookupReductions
+            var lookupReduction = valueIR is not null && scopes.OptimizeLookupReductions
                 ? Ubytec.Language.Tools.Optimization.LookupReductionPlan.TryCreate(valueIR!, frame, arguments, locals, returnType)
                 : null;
-            bool registers = reduction is null && recordReduction is null && lookupReduction is null && (scopes.OptimizeFrameRegisters || scopes.OptimizeEffectRegisters) &&
+            bool registers = valueIR is not null && reduction is null && recordReduction is null && lookupReduction is null && (scopes.OptimizeFrameRegisters || scopes.OptimizeEffectRegisters) &&
                 Ubytec.Language.Tools.Optimization.FrameRegisterPlan.Apply(
                     valueIR!, frame,
                     new HashSet<string>(arguments.Select(a => a.Name).Concat(

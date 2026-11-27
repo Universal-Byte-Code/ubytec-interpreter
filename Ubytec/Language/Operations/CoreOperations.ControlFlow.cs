@@ -75,7 +75,7 @@ public static partial class CoreOperations
         foreach (var scope in scopes.All)
         {
             if (scope.DeclaredByKeyword is "func" or "action") break;
-            bool valid = continuing ? scope.IsLoop : scope.IsLoop || scope.DeclaredByKeyword is "switch" or "branch";
+            bool valid = continuing ? scope.IsLoop : scope.IsLoop || scope.IsContractBlock || scope.DeclaredByKeyword is "switch" or "branch";
             if (valid && (label is null || scope.LabelIndex == label))
             {
                 if (scope.DeclaredByKeyword == "branch") return scopes.All.SkipWhile(x => x != scope).Skip(1).First(x => x.DeclaredByKeyword == "switch");
