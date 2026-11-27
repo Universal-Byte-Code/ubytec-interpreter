@@ -34,7 +34,7 @@ def measure_text(a,compiler,out,report):
     source=bench.sources()['bench-native']
     for mode in ('plain','registers'):
         src=out/('text-'+mode+'.ubc');src.write_text(source);asm=out/('text-'+mode+'.nasm')
-        flags=['--host-io','--stack-transfers','--frame-registers']+(['--effect-registers'] if mode=='registers' else [])
+        flags=['--legacy-source-x64','--host-io','--stack-transfers','--frame-registers']+(['--effect-registers'] if mode=='registers' else [])
         for name in exports:flags+=['--host-export',name+'=ubytec_host_'+mode+'_'+name]
         command([a.dotnet,compiler,src,*flags,'-o',asm]);report['assembly_sha256']['text-'+mode]=sha(asm)
         report['source_sha256']['composed/text-'+mode]=sha(src)
@@ -73,13 +73,13 @@ def main():
     try:
         for mode in ('plain','registers'):
             source=out/(mode+'.ubc');source.write_bytes((ROOT/'effect-kernels.ubc').read_bytes());asm=out/(mode+'.nasm')
-            flags=['--library','--stack-transfers','--frame-registers']+(['--effect-registers'] if mode=='registers' else [])
+            flags=['--legacy-source-x64','--library','--stack-transfers','--frame-registers']+(['--effect-registers'] if mode=='registers' else [])
             for name in diag.KERNELS:flags+=['--host-export',name+'=ubytec_host_'+('plain_' if mode=='plain' else 'register_')+name]
             command([a.dotnet,compiler,source,*flags,'-o',asm]);report['assembly_sha256'][mode]=sha(asm)
             report['analysis'][mode]={name:{'frame_reads_static':len(re.findall(r'mov \w+, qword \[rbp [+-] \d+\]',body)),'cached':'; frame-registers:' in body or '; effect-registers: write-through' in body,'reloads':body.count('; effect-registers: reload')} for name,_,body in diag.functions(asm.read_text())}
             command(['nasm','-f','elf64',asm,'-o',out/(mode+'.o')])
         for mode in ('plain','registers'):
-            flags=['--library','--stack-transfers','--frame-registers']+(['--effect-registers'] if mode=='registers' else [])
+            flags=['--legacy-source-x64','--library','--stack-transfers','--frame-registers']+(['--effect-registers'] if mode=='registers' else [])
             flags+=['--host-export','EffectFault=ubytec_host_'+('plain_' if mode=='plain' else 'register_')+'EffectFault']
             asm=out/('fault-'+mode+'.nasm')
             command([a.dotnet,compiler,ROOT/'effect-faults.ubc',*flags,'-o',asm]);report['assembly_sha256']['fault-'+mode]=sha(asm)

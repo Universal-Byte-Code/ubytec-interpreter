@@ -34,7 +34,7 @@ def measure_text(a,compiler,out,report):
     source=bench.sources()['bench-native']
     for mode in ('plain','registers'):
         src=out/('text-'+mode+'.ubc');src.write_text(source);asm=out/('text-'+mode+'.nasm')
-        flags=['--host-io','--stack-transfers']+(['--frame-registers'] if mode=='registers' else [])
+        flags=['--legacy-source-x64','--host-io','--stack-transfers']+(['--frame-registers'] if mode=='registers' else [])
         for name in exports:flags+=['--host-export',name+'=ubytec_host_'+mode+'_'+name]
         command([a.dotnet,compiler,src,*flags,'-o',asm]);report['assembly_sha256']['text-'+mode]=sha(asm)
         report['source_sha256']['composed/text-'+mode]=sha(src)
@@ -71,7 +71,7 @@ def main():
     try:
         for mode in ('plain','registers'):
             source=out/(mode+'.ubc');source.write_bytes((ROOT/'diagnose-kernels.ubc').read_bytes());asm=out/(mode+'.nasm')
-            flags=['--library','--stack-transfers']+(['--frame-registers'] if mode=='registers' else [])
+            flags=['--legacy-source-x64','--library','--stack-transfers']+(['--frame-registers'] if mode=='registers' else [])
             for name in diag.KERNELS:flags+=['--host-export',name+'=ubytec_host_'+('plain_' if mode=='plain' else 'register_')+name]
             command([a.dotnet,compiler,source,*flags,'-o',asm]);report['assembly_sha256'][mode]=sha(asm)
             report['analysis'][mode]={name:{'frame_reads_static':len(re.findall(r'mov \w+, qword \[rbp [+-] \d+\]',body)),'cached':'; frame-registers:' in body} for name,_,body in diag.functions(asm.read_text())}

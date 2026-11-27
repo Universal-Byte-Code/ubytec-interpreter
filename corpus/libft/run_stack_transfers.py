@@ -27,7 +27,7 @@ def main():
                 assert (staged/src.name).read_text(encoding='utf-8')==source
                 shutil.copyfile(staged/src.name,src);shutil.copyfile(staged/asm.name,asm)
             else:
-                flags=['--host-io'] if name.startswith('diag-native') else ['--library']
+                flags=['--legacy-source-x64', '--host-io'] if name.startswith('diag-native') else ['--legacy-source-x64', '--library']
                 if name.endswith('optimized') or a.frame_values:flags+=['--stack-transfers']
                 if name.endswith('optimized') and a.frame_values:flags+=['--frame-values']
                 for export in bench.EXPORTS if name.startswith('diag-native') else diag.KERNELS:flags+=['--host-export',export+'=ubytec_host_contract_'+export]

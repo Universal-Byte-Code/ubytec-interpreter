@@ -63,7 +63,8 @@ def main():
                 if (staged/src.name).read_text(encoding='utf-8')!=source:raise RuntimeError('Source drift: '+name)
                 shutil.copyfile(staged/src.name,src);shutil.copyfile(staged/asm.name,asm)
             else:
-                flags=['--host-io'] if name=='diag-native' else ['--library']
+                # Instrumentation below depends on legacy function/loop label shapes.
+                flags=['--legacy-source-x64', '--host-io'] if name=='diag-native' else ['--legacy-source-x64', '--library']
                 for export in bench.EXPORTS if name=='diag-native' else KERNELS:flags+=['--host-export',export+'=ubytec_host_contract_'+export]
                 bench.command([args.dotnet,REPO/'Ubytec/bin/Release/net9.0/Ubytec.dll',src,*flags,'-o',asm])
             report['assembly_sha256'][name]=bench.sha(asm);report['composed_source_sha256'][name]=bench.sha(src)

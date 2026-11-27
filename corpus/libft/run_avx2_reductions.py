@@ -31,7 +31,7 @@ def main():
         source=out/'kernels.ubc';source.write_bytes((ROOT/'diagnose-kernels.ubc').read_bytes())
         for mode,symbol,extra in [('reference','register',[]),('scalar','loop',['--loop-reductions']),('block','block',['--block-reductions']),('native','native_block',['--block-reductions-native']),('portable','portable',['--block-reductions-native'])]:
             asm=out/(mode+'.nasm')
-            command([a.dotnet,compiler,source,'--library','--stack-transfers','--frame-registers',*extra,
+            command([a.dotnet,compiler,source,'--legacy-source-x64','--library','--stack-transfers','--frame-registers',*extra,
                      '--host-export','DiagBytes=ubytec_host_'+symbol+'_DiagBytes','-o',asm],
                     env={**os.environ,'DOTNET_EnableAVX2':'0','COMPlus_EnableAVX2':'0'} if mode=='portable' else None)
             report['assembly_sha256'][mode]=sha(asm)

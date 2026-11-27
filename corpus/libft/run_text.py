@@ -75,6 +75,9 @@ def main():
                 if a.record_reductions:flags+=['--record-reductions']
                 if a.lookup_reductions:flags+=['--lookup-reductions']
                 if a.effect_registers:flags+=['--effect-registers']
+                # Unoptimized corpus stays on verified UBCM; legacy-only experiments opt in explicitly.
+                if any((a.stack_transfers,a.frame_values,a.frame_registers,a.loop_reductions,a.block_reductions,a.block_reductions_native,a.record_reductions,a.lookup_reductions,a.effect_registers)):
+                    flags.insert(0,'--legacy-source-x64')
                 command([a.dotnet,(a.compiler or REPO/'Ubytec/bin/Release/net9.0/Ubytec.dll'),src,*flags,'-o',asm])
             report['assembly_sha256'][n]=digest(asm);report['composed_source_sha256'][n]=digest(src)
         if a.assembly_directory:
