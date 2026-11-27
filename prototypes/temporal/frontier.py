@@ -87,7 +87,7 @@ def prepare_turn(round_no, cid, ctx, quantum):
 
 def execute(programs, *, quantum=3, journal=(), samples=(),
             max_events=10000, max_contexts=128, max_messages=4096,
-            arrival_order=None, clock=None, clock_contexts=(), timer_contexts=()):
+            arrival_order=None, clock=None, clock_contexts=(), timer_contexts=(), worker_pool=None):
     """Journal rows (ordinal, round, 'cancel', context) or (ordinal, round, 'timer_sample', ns).
     Timer samples are explicit coordinator admissions; never inferred from wall time.
     Samples (round, context, nanoseconds) are request-keyed inputs.
@@ -199,7 +199,12 @@ def execute(programs, *, quantum=3, journal=(), samples=(),
         planned = tuple(prepare_turn(round_no, cid, contexts[cid], quantum) for cid in frontier)
         inbox = RoundInbox(round_no, frontier, max_contexts)
         expected = {p.key: p for p in planned}
-        arrivals = planned if arrival_order is None else arrival_order(planned)
+        if worker_pool is not None:
+            if arrival_order is not None:
+                raise ValueError("choose simulated arrival order or real workers")
+            arrivals = worker_pool.prepare(round_no, tuple((cid, replace(contexts[cid])) for cid in frontier), quantum)
+        else:
+            arrivals = planned if arrival_order is None else arrival_order(planned)
         for proposal in arrivals:
             if proposal.key not in expected or proposal != expected[proposal.key]:
                 raise ValueError("proposal differs from reference private work")
