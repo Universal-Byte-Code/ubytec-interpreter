@@ -42,6 +42,7 @@ class Context:
     pending: tuple | None = None
     terminal: str | None = None
     creation: tuple | None = None
+    timer: tuple | None = None  # (deadline, registration event ID, registration commit)
 
 
 @dataclass(frozen=True)
@@ -51,11 +52,14 @@ class Outcome:
     contexts: tuple
     messages: tuple
     fuel: tuple
+    timers: tuple = ()
 
 
 def prepare_turn(round_no, cid, ctx, quantum):
     """Pure private-work projection; never reads shared state or samples time."""
     key = TurnKey(round_no, cid)
+    if ctx.timer is not None:
+        raise ValueError("sleeping context has no turn")
     if ctx.pending is not None:
         return Proposal(key, ctx.pc, 0, ctx.pending)
     pc, charged = ctx.pc, 0
@@ -74,7 +78,7 @@ def prepare_turn(round_no, cid, ctx, quantum):
             if type(target) is not int or not 0 <= target < len(ctx.program):
                 raise ValueError("invalid abstract jump")
             pc = target
-        elif op in ("receive", "send", "read", "write", "rmw", "clock", "spawn", "yield", "fault"):
+        elif op in ("receive", "send", "read", "write", "rmw", "clock", "spawn", "yield", "fault", "sleep_until"):
             return Proposal(key, pc, charged, instruction)
         else:
             raise ValueError("unsupported abstract instruction")
@@ -83,8 +87,9 @@ def prepare_turn(round_no, cid, ctx, quantum):
 
 def execute(programs, *, quantum=3, journal=(), samples=(),
             max_events=10000, max_contexts=128, max_messages=4096,
-            arrival_order=None, clock=None, clock_contexts=()):
-    """Journal rows (ordinal, round, 'cancel', context).
+            arrival_order=None, clock=None, clock_contexts=(), timer_contexts=()):
+    """Journal rows (ordinal, round, 'cancel', context) or (ordinal, round, 'timer_sample', ns).
+    Timer samples are explicit coordinator admissions; never inferred from wall time.
     Samples (round, context, nanoseconds) are request-keyed inputs.
     Each abstract token costs one instruction, except synthetic termination.
     A pending receive is charged once. Spawned contexts join next round.
@@ -101,7 +106,12 @@ def execute(programs, *, quantum=3, journal=(), samples=(),
     for i, (ordinal, target_round, kind, target) in enumerate(journal, 1):
         if u64(ordinal) != i or u64(target_round) == 0 or target_round < prior_round:
             raise ValueError("journal ordering")
-        if kind != "cancel" or u64(target) == 0:
+        if kind == "cancel":
+            if u64(target) == 0:
+                raise ValueError("invalid cancellation target")
+        elif kind == "timer_sample":
+            u64(target)
+        else:
             raise ValueError("unsupported journal entry")
         prior_round = target_round
     samples = deque(samples)
@@ -114,6 +124,9 @@ def execute(programs, *, quantum=3, journal=(), samples=(),
         if cid not in contexts or cid in grants:
             raise ValueError("clock grants require distinct initial contexts")
         grants[cid] = clock.grant(cid)
+    timer_grants = frozenset(timer_contexts)
+    if not timer_grants.issubset(contexts):
+        raise ValueError("timer grants require initial contexts")
     last_sample = None
     events, committed, last = [], {}, {}
     memory = {}  # key -> (value, version, last writer event ID)
@@ -150,22 +163,39 @@ def execute(programs, *, quantum=3, journal=(), samples=(),
             raise ValueError("shared key must be text")
         return key
 
+    def deliver_timers(sample, cause):
+        # All eligible timers are ordered by deadline, registration commit, context.
+        due = sorted((c.timer[0], c.timer[2], cid, c.timer[1])
+                     for cid, c in contexts.items() if c.timer is not None and c.timer[0] <= sample)
+        for deadline, _, cid, registration in due:
+            commit(cid, "timer_expire", (deadline,), sample, (registration, cause))
+            contexts[cid].timer = None
+
     while any(c.terminal is None for c in contexts.values()):
         round_no = u64(round_no + 1)
         progressed = False
         while journal_index < len(journal) and journal[journal_index][1] == round_no:
             ordinal, _, kind, target = journal[journal_index]
-            ctx = get_context(target)
-            admission = commit(0, "admit", (ordinal, kind, target))
-            if ctx.terminal is None:
-                commit(target, "cancel", (ordinal,), ctx.pending, (admission.id,))
-                ctx.pending, ctx.terminal = None, "cancelled"
+            if kind == "timer_sample":
+                if last_sample is not None and target < last_sample:
+                    raise ValueError("clock regressed")
+                admission = commit(0, "timer_sample", (ordinal,), target)
+                last_sample = target
+                deliver_timers(target, admission.id)
             else:
-                # The admission records a no-op cancellation explicitly.
-                commit(0, "cancel_noop", (ordinal, target), ctx.terminal, (admission.id,))
+                ctx = get_context(target)
+                admission = commit(0, "admit", (ordinal, kind, target))
+                if ctx.terminal is None:
+                    registration = ctx.timer[1] if ctx.timer is not None else None
+                    commit(target, "cancel", (ordinal,), ctx.pending, (admission.id, registration))
+                    ctx.timer = None
+                    ctx.pending, ctx.terminal = None, "cancelled"
+                else:
+                    # The admission records a no-op cancellation explicitly.
+                    commit(0, "cancel_noop", (ordinal, target), ctx.terminal, (admission.id,))
             journal_index += 1
             progressed = True
-        frontier = tuple(cid for cid in sorted(contexts) if contexts[cid].terminal is None)
+        frontier = tuple(cid for cid in sorted(contexts) if contexts[cid].terminal is None and contexts[cid].timer is None)
         planned = tuple(prepare_turn(round_no, cid, contexts[cid], quantum) for cid in frontier)
         inbox = RoundInbox(round_no, frontier, max_contexts)
         expected = {p.key: p for p in planned}
@@ -246,10 +276,21 @@ def execute(programs, *, quantum=3, journal=(), samples=(),
                     value = u64(value)
                     if last_sample is not None and value < last_sample:
                         raise ValueError("clock regressed")
-                commit(cid, op, (), value)
+                if last_sample is not None and value < last_sample:
+                    raise ValueError("clock regressed across request and journal")
+                event = commit(cid, op, (), value)
+                deliver_timers(value, event.id)
                 if clock is None:
                     samples.popleft()
                 last_sample = value
+            elif op == "sleep_until":
+                (deadline,) = args
+                u64(deadline)
+                if cid not in timer_grants:
+                    raise PermissionError("timer not granted")
+                event = commit(cid, "timer_register", (deadline,), None)
+                ctx.timer = (deadline, event.id, event.commit)
+                # Expiry is driven only by a subsequent admitted sample, even for past deadlines.
             elif op == "spawn":
                 (program,) = args
                 if len(contexts) >= max_contexts:
@@ -272,6 +313,14 @@ def execute(programs, *, quantum=3, journal=(), samples=(),
             ctx.pending = None
             progressed = True
         if not progressed:
+            # Explicit journal admission is the only way to resume quiescence.
+            # Empty intervening rounds contain no observable transitions.
+            if journal_index < len(journal):
+                next_round = journal[journal_index][1]
+                if next_round <= round_no:
+                    raise ValueError("journal boundary already passed")
+                round_no = next_round - 1
+                continue
             break
     if journal_index != len(journal) or samples:
         raise ValueError("unused external inputs")
@@ -280,7 +329,8 @@ def execute(programs, *, quantum=3, journal=(), samples=(),
     return Outcome(tuple(events), tuple(sorted(memory.items())),
                    tuple((i, c.pc, c.pending, c.terminal) for i, c in contexts.items()),
                    tuple((key, tuple(q)) for key, q in sorted(mail.items()) if q),
-                   tuple((i, fuel[i]) for i in contexts))
+                   tuple((i, fuel[i]) for i in contexts),
+                   tuple((i, c.timer) for i, c in contexts.items() if c.timer is not None))
 
 
 def replay(programs, expected, *, journal=(), **limits):
@@ -360,6 +410,38 @@ class FrontierTests(unittest.TestCase):
             execute(programs, arrival_order=lambda p: p[1:])
         with self.assertRaisesRegex(ValueError, "differs"):
             execute(programs, arrival_order=lambda p: [replace(p[0], charged=99), *p[1:]])
+
+    def test_timers_equal_deadlines_and_quiescent_resume(self):
+        programs = [[("sleep_until", 10), ("yield",)], [("sleep_until", 10), ("yield",)]]
+        journal = [(1, 5, "timer_sample", 9), (2, 7, "timer_sample", 10)]
+        out = execute(programs, journal=journal, timer_contexts=(1, 2))
+        expiry = [e for e in out.events if e.kind == "timer_expire"]
+        self.assertEqual([(e.context, e.round) for e in expiry], [(1, 7), (2, 7)])
+        regs = [e for e in out.events if e.kind == "timer_register"]
+        sample = [e for e in out.events if e.kind == "timer_sample"][-1]
+        for e, reg in zip(expiry, regs):
+            self.assertEqual(set(e.dependencies), {reg.id, sample.id})
+        self.assertEqual(out.fuel, ((1, 2), (2, 2)))
+        self.assertEqual(replay(programs, out, journal=journal, timer_contexts=(1, 2)), out)
+        waiting = execute(programs, timer_contexts=(1, 2))
+        self.assertEqual(len(waiting.timers), 2)
+        self.assertFalse(any(e.kind == "timer_expire" for e in waiting.events))
+
+    def test_timer_cancel_and_clock_sample_delivery(self):
+        programs = [[("sleep_until", 5), ("yield",)], [("clock",), ("yield",)]]
+        out = execute(programs, timer_contexts=(1,), samples=[(1, 2, 5)])
+        self.assertEqual(next(e for e in out.events if e.kind == "timer_expire").round, 1)
+        self.assertEqual(next(e for e in out.events if e.kind == "yield" and e.context == 1).round, 2)
+        out = execute([[("sleep_until", 5)]], timer_contexts=(1,),
+                      journal=[(1, 4, "cancel", 1)])
+        self.assertEqual(out.contexts[0][3], "cancelled")
+        self.assertFalse(out.timers)
+        self.assertFalse(any(e.kind == "timer_expire" for e in out.events))
+        with self.assertRaises(PermissionError):
+            execute([[("sleep_until", 5)]])
+        with self.assertRaises(ValueError):
+            execute([[("sleep_until", 9)]], timer_contexts=(1,),
+                    journal=[(1, 3, "timer_sample", 8), (2, 4, "timer_sample", 7)])
 
     def test_order_clock_keys_and_replay_failure(self):
         a, b = [("rmw", "x", 1, 1)], [("rmw", "x", 2, 0)]
