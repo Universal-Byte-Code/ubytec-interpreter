@@ -33,6 +33,7 @@ internal static class CommandLineDriver
                 options.LegacySourceX64Requested = true;
             },
             ["--indexed-executable"] = options => options.IndexedExecutable = true,
+            ["--direct-only"] = options => options.DirectOnly = true,
             ["--arena-imports"] = options => options.ArenaImports = true,
             ["--host-io"] = options => options.HostIo = true,
             ["--module-calls"] = options => options.ModuleCalls = true,
@@ -60,6 +61,8 @@ internal static class CommandLineDriver
 
         if (args.Length == 2 && string.Equals(args[0], "--verify-module", StringComparison.Ordinal))
             return VerifyPortableModule(args[1]);
+        if (args.Length == 2 && string.Equals(args[0], "--verify-direct-only", StringComparison.Ordinal))
+            return VerifyPortableModule(args[1], requireDirectOnly: true);
 
         if (NeedsHelp(args))
         {
@@ -82,11 +85,13 @@ internal static class CommandLineDriver
         }
     }
 
-    private static int VerifyPortableModule(string path)
+    private static int VerifyPortableModule(string path, bool requireDirectOnly = false)
     {
         try
         {
             byte[] bytes = File.ReadAllBytes(path);
+            if (requireDirectOnly)
+                PortableBinaryVerifier.Verify(bytes, requireDirectOnly: true);
             PortableProcessEntrypoint.Verify(bytes);
             PortableModuleImage image = PortableModuleFormat.Decode(bytes);
             Console.WriteLine(
@@ -169,6 +174,8 @@ internal static class CommandLineDriver
     private static void Validate(Options options)
     {
         ValidatePipelineSelection(options);
+        if (options.DirectOnly && (!options.PortableX64 || options.TailCalls))
+            throw new ArgumentException("--direct-only requires the portable pipeline without --tail-calls.");
         ValidateOutputPaths(options);
         ValidateModeDependencies(options);
         if (options.PortableX64)
@@ -303,7 +310,8 @@ internal static class CommandLineDriver
             enableModuleCalls: options.ModuleCalls,
             enableHostIO: options.HostIo,
             optimizeTailCalls: options.TailCalls,
-            requestedExports: requestedExports);
+            requestedExports: requestedExports,
+            executionProfile: options.DirectOnly ? PortableExecutionProfile.DirectOnly : PortableExecutionProfile.UnsafeCells);
 
         string finalAssembly = result.NativeCompilation.Assembly.ReplaceLineEndings(CanonicalLineEnding);
         File.WriteAllText(options.OutputPath, finalAssembly, encoding);
@@ -450,6 +458,7 @@ internal static class CommandLineDriver
         [
             (options.Library, "library"),
             (options.PortableX64, "portable-x64-pipeline-v0"),
+            (options.DirectOnly, "direct-only-context-profile-v0"),
             (options.PortableX64 && !options.Library, "process-entrypoint-v0"),
             (options.LegacySourceX64Requested, "legacy-source-x64"),
             (options.TailCalls, "tail-calls"),
@@ -475,6 +484,8 @@ internal static class CommandLineDriver
     {
         Console.WriteLine("Usage: ubytec <source.ubc> [-o <output.nasm>] [--portable-x64] [--legacy-source-x64] [--portable-module <module.ubcm>] [--indexed-executable] [--grammar <grammar.json>] [--json <module.json>] [--metadata <metadata.json>] [--no-metadata] [--library] [--tail-calls] [--stack-transfers] [--frame-values] [--frame-registers] [--loop-reductions] [--block-reductions] [--block-reductions-native] [--record-reductions] [--lookup-reductions] [--effect-registers] [--module-calls] [--host-io] [--arena-imports] [--generated-source <source.ubc>] [--host-export Function=ubytec_host_symbol]");
         Console.WriteLine("       ubytec --verify-module <module.ubcm>");
+        Console.WriteLine("       ubytec --verify-direct-only <module.ubcm>");
+        Console.WriteLine("--direct-only selects the restricted scalar execution profile: no indirect calls, raw memory, imports or loan exports. Not a full memory-safety guarantee.");
         Console.WriteLine("       ubytec --format-stdin < input.ubc > output.ubc");
         Console.WriteLine("Portable x64 is the default native path: source -> semantic frontend -> indexed UBCM -> independent verifier -> typed decoder -> x64.");
         Console.WriteLine("--portable-x64 is retained as a compatibility alias for the canonical default pipeline.");
@@ -508,6 +519,7 @@ internal static class CommandLineDriver
         internal bool PortableX64Requested { get; set; }
         internal bool LegacySourceX64Requested { get; set; }
         internal bool IndexedExecutable { get; set; }
+        internal bool DirectOnly { get; set; }
         internal bool Library { get; set; }
         internal bool TailCalls { get; set; }
         internal bool StackTransfers { get; set; }
