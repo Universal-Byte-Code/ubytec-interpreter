@@ -267,6 +267,7 @@ public static class PortableX64Backend
         PortableExtendedStackInstruction extended => CompileExtendedStack(extended, scopes),
         PortableBranchInstruction branch => new BRANCH(unchecked((long)branch.CaseCell)).Compile(scopes),
         PortableControlTransferInstruction transfer => CompileTransfer(transfer, scopes),
+        PortableContractBlockInstruction contract => CompileContractBlock(contract, executable, scopes),
         PortableBlockInstruction block => new BLOCK(block.ResultTypeIndex is uint typeIndex
             ? ResolveType(executable, typeIndex) : null).Compile(scopes),
         PortableCallInstruction call => CompileCall(call, executable, scopes),
@@ -370,6 +371,25 @@ public static class PortableX64Backend
         return $"mov rax, 0x{instruction.InitialCell:X16}\n  mov qword {binding.Address}, rax";
     }
 
+    private static string CompileContractBlock(
+        PortableContractBlockInstruction instruction, PortableExecutableModule executable, CompilationScopes scopes)
+    {
+        string assembly = new BLOCK(ResolveType(executable, instruction.ResultTypeIndex)).Compile(scopes);
+        ScopeContext block = scopes.Peek();
+        block.IsContractBlock = true;
+        block.CheckedBlockResult = instruction.Checked;
+        var output = new System.Text.StringBuilder(assembly).AppendLine();
+        for (int i = 0; i < instruction.InputTypeIndices.Count; i++)
+        {
+            int offset = checked((instruction.InputTypeIndices.Count - 1 - i) * 8);
+            UType type = ResolveType(executable, instruction.InputTypeIndices[i]);
+            output.AppendLine($"  mov rax, qword [rsp + {offset}]");
+            output.AppendLine(FunctionCode.CanonicalizeBlockCell(type, instruction.Checked, scopes));
+            output.AppendLine($"  mov qword [rsp + {offset}], rax");
+        }
+        return output.ToString();
+    }
+
     private static string CompileTransfer(PortableControlTransferInstruction instruction, CompilationScopes scopes)
     {
         uint ordinal = instruction.TargetOrdinal;
@@ -377,7 +397,7 @@ public static class PortableX64Backend
         foreach (ScopeContext scope in scopes.All)
         {
             if (scope.DeclaredByKeyword is "func" or "action") break;
-            if (!scope.IsLoop && (continuing || scope.DeclaredByKeyword != "switch")) continue;
+            if (!scope.IsLoop && (continuing || (scope.DeclaredByKeyword != "switch" && !scope.IsContractBlock))) continue;
             if (ordinal == 0)
                 return continuing ? $"jmp {scope.StartLabel} ; CONTINUE" : $"jmp {scope.EndLabel} ; BREAK";
             ordinal--;

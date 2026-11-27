@@ -47,6 +47,16 @@ internal static class FunctionCode
         throw new SyntaxException(0xBAD062, $"Invalid integer initializer '{text}'.");
     }
 
+    // Checked cell conversion means canonicalization must preserve the full original bit pattern.
+    // It is not a signed/unsigned source-language cast: the evaluation cell has no source type.
+    internal static string CanonicalizeBlockCell(UType type, bool check, CompilationScopes scopes)
+    {
+        string conversion = Canonicalize(type);
+        if (!check) return conversion;
+        string ok = scopes.NextLabel("checked_block_cell");
+        return $"mov rcx, rax\n  {conversion}\n  cmp rax, rcx\n  je {ok}\n  ud2\n{ok}:";
+    }
+
     internal static string Canonicalize(UType type) => type.Type switch
     {
         PrimitiveType.Bool => "test rax, rax\n  setne al\n  movzx eax, al",

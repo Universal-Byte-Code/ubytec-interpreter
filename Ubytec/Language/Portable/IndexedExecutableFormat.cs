@@ -1566,6 +1566,24 @@ public static class IndexedExecutableFormat
                     case BLOCK.OP:
                     {
                         byte mode = reader.ReadByte("BLOCK result mode");
+                        if (mode == 2)
+                        {
+                            byte policy = reader.ReadByte("BLOCK conversion policy");
+                            if (policy > 1) throw new InvalidDataException("Unknown BLOCK conversion policy.");
+                            uint count = reader.ReadUInt32("BLOCK input count");
+                            if (count > PortableContractBlockInstruction.MaxInputs)
+                                throw new InvalidDataException("Too many BLOCK inputs.");
+                            for (uint i = 0; i <= count; i++)
+                            {
+                                uint index = reader.ReadUInt32("BLOCK contract TypeIndex");
+                                RequireIndex(index, types.Count, "BLOCK contract TypeIndex");
+                                var type = types[(int)index];
+                                if (!PortableCallableTable.IsScalarSignatureType(type.Primitive, type.Modifiers, type.FixedArraySize, i == count))
+                                    throw new InvalidDataException("Invalid BLOCK contract type.");
+                            }
+                            controls.Push(0xFE); // Internal marker only, not an opcode.
+                            break;
+                        }
                         if (mode == 1)
                         {
                             uint typeIndex = reader.ReadUInt32("BLOCK result TypeIndex");
@@ -1601,7 +1619,7 @@ public static class IndexedExecutableFormat
                     {
                         uint ordinal = reader.ReadUInt32("ControlTargetOrdinal");
                         int count = controls.Count(control => control == LOOP.OP || control == WHILE.OP ||
-                            (opcode == BREAK.OP && control is SWITCH.OP or DEFAULT.OP));
+                            (opcode == BREAK.OP && control is SWITCH.OP or DEFAULT.OP or 0xFE));
                         if (ordinal >= (uint)count)
                             throw new InvalidDataException("ControlTargetOrdinal is outside enclosing eligible control scopes.");
                         break;
