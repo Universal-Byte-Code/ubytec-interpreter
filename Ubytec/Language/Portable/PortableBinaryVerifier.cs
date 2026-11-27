@@ -1,5 +1,6 @@
 using System.Buffers.Binary;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using Ubytec.Language.Operations;
@@ -17,6 +18,53 @@ namespace Ubytec.Language.Portable;
 /// </summary>
 public static class PortableBinaryVerifier
 {
+    /// <summary>Derives a static occurrence only after the complete raw executable has verified.
+    /// This identity is not an authority grant and does not identify a dynamic execution.</summary>
+    public static PortableInstructionOccurrence IdentifyInstruction(
+        ReadOnlySpan<byte> bytes, uint functionIndex, uint instructionOffset,
+        PortableExecutionProfile? requiredProfile = null)
+    {
+        var probe = new OccurrenceProbe(functionIndex, instructionOffset);
+        VerifyCore(bytes, requiredProfile, probe);
+        return new PortableInstructionOccurrence(probe.Digest!, functionIndex, instructionOffset);
+    }
+
+    private sealed class OccurrenceProbe(uint functionIndex, uint instructionOffset)
+    {
+        internal bool Found { get; private set; }
+        internal string? Digest { get; set; }
+
+        internal void Observe(int function, int offset)
+        {
+            if ((uint)function == functionIndex && (uint)offset == instructionOffset)
+                Found = true;
+        }
+    }
+
+    // Include all v0 executable-semantic sections (including noncritical 0x0017).
+    // Exclude the transitional AST and unknown optional sections, never a known semantic section.
+    private static string ExecutableDigest(IReadOnlyList<RawSection> sections, ushort major, ushort minor)
+    {
+        var selected = sections.Where(section =>
+            section.Kind is 0x0002 or 0x0003 or (>= 0x0010 and <= 0x0019)).ToArray();
+        using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+        hash.AppendData("UBYTEC-EXEC-ID-V1\0"u8);
+        Span<byte> header = stackalloc byte[12];
+        BinaryPrimitives.WriteUInt16LittleEndian(header, major);
+        BinaryPrimitives.WriteUInt16LittleEndian(header[2..], minor);
+        BinaryPrimitives.WriteUInt32LittleEndian(header[4..], (uint)selected.Length);
+        hash.AppendData(header[..8]);
+        foreach (var section in selected)
+        {
+            BinaryPrimitives.WriteUInt16LittleEndian(header, section.Kind);
+            BinaryPrimitives.WriteUInt16LittleEndian(header[2..], (ushort)section.Flags);
+            BinaryPrimitives.WriteUInt64LittleEndian(header[4..], (ulong)section.Payload.Length);
+            hash.AppendData(header);
+            hash.AppendData(section.Payload);
+        }
+        return Convert.ToHexString(hash.GetHashAndReset());
+    }
+
     private static ReadOnlySpan<byte> Magic => "UBCM"u8;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly HashSet<byte> OperandFreeCoreOpcodes = DiscoverOperandFreeCoreOpcodes();
@@ -51,7 +99,8 @@ public static class PortableBinaryVerifier
     public static void Verify(ReadOnlySpan<byte> bytes, PortableExecutionProfile requiredProfile) =>
         VerifyCore(bytes, requiredProfile);
 
-    private static void VerifyCore(ReadOnlySpan<byte> bytes, PortableExecutionProfile? requiredProfile)
+    private static void VerifyCore(ReadOnlySpan<byte> bytes, PortableExecutionProfile? requiredProfile,
+        OccurrenceProbe? probe = null)
     {
         if (bytes.Length > PortableModuleFormat.MaxModuleBytes)
             throw new InvalidDataException($"Portable module exceeds the {PortableModuleFormat.MaxModuleBytes}-byte runtime limit.");
@@ -113,7 +162,13 @@ public static class PortableBinaryVerifier
         if ((ast.Flags & PortableModuleSectionFlags.Critical) == 0)
             throw new InvalidDataException("Semantic AST section must be critical.");
 
-        VerifyIndexedExecutable(sections, requiredProfile);
+        VerifyIndexedExecutable(sections, requiredProfile, probe);
+        if (probe is not null)
+        {
+            if (!probe.Found)
+                throw new InvalidDataException("Requested occurrence is not a verified instruction boundary.");
+            probe.Digest = ExecutableDigest(sections, major, minor);
+        }
     }
 
     private static void VerifySectionPayload(
@@ -162,7 +217,8 @@ public static class PortableBinaryVerifier
         }
     }
 
-    private static void VerifyIndexedExecutable(IReadOnlyList<RawSection> sections, PortableExecutionProfile? requiredProfile)
+    private static void VerifyIndexedExecutable(IReadOnlyList<RawSection> sections, PortableExecutionProfile? requiredProfile,
+        OccurrenceProbe? probe)
     {
         int present = IndexedKinds.Count(kind =>
             sections.Any(section => section.Kind == (ushort)kind));
@@ -203,7 +259,7 @@ public static class PortableBinaryVerifier
         ParseExportTable(exportsPayload, strings, functions, types, contexts);
         ParseConstantTable(constantsPayload);
         VerifyFunctionRanges(functions, codePayload.Length);
-        VerifyCode(functions, imports, types, codePayload, contexts, callables);
+        VerifyCode(functions, imports, types, codePayload, contexts, callables, probe);
         RawSection? entry = sections.FirstOrDefault(section => section.Kind == 0x0017);
         if (entry is not null)
         {
@@ -549,7 +605,8 @@ public static class PortableBinaryVerifier
         IReadOnlyList<TypeEntry> types,
         ReadOnlySpan<byte> code,
         PortableContextTable contexts,
-        PortableCallableTable? callables)
+        PortableCallableTable? callables,
+        OccurrenceProbe? probe)
     {
         VerifyFunctionTypes(functions, types);
 
@@ -606,6 +663,7 @@ public static class PortableBinaryVerifier
 
             while (!reader.AtEnd)
             {
+                probe?.Observe(functionIndex, reader.Position);
                 byte opcode = reader.ReadByte("Opcode");
                 if (opcode == CLEAR.OP && controls.Any(frame => frame.ContractFloor.HasValue))
                     throw new InvalidDataException("CLEAR cannot reset the function stack inside a contracted BLOCK.");
@@ -1583,3 +1641,6 @@ public static class PortableBinaryVerifier
         }
     }
 }
+
+/// <summary>Static executable identity, scoped to a versioned SHA-256 projection and verified wire boundary.</summary>
+public readonly record struct PortableInstructionOccurrence(string ExecutableDigest, uint FunctionIndex, uint InstructionOffset);
