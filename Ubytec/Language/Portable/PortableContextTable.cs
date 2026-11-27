@@ -14,8 +14,8 @@ public enum PortableExecutionProfile : uint
 public sealed class PortableContextTable
 {
     public const uint NoIndex = uint.MaxValue;
-    // Context v1 changes BREAK/CONTINUE wire operands; older draft images fail closed.
-    public const uint WireVersion = 1;
+    // Context v2 adds BLOCK result framing to the relative transfers introduced in v1.
+    public const uint WireVersion = 2;
     private readonly uint[] parents;
     private readonly int[] subtreeEnds;
 

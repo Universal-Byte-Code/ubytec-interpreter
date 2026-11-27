@@ -299,6 +299,13 @@ public static class IndexedExecutableFormat
             result.Add(TypeKey.From(callable.ReturnType));
             foreach (BindingInfo binding in callable.Bindings)
                 result.Add(TypeKey.From(binding.Type));
+            foreach (IOpCode operation in FunctionEmitter.Instructions(callable.Definition))
+            {
+                if (operation is BLOCK { BlockType: { } blockType } && blockType.Type != PrimitiveType.Default)
+                    result.Add(TypeKey.From(blockType));
+                if (operation is RETURN { BlockType: { } returnType })
+                    result.Add(TypeKey.From(returnType));
+            }
         }
 
         foreach (PortableImportContract import in contracts.Imports)
@@ -632,8 +639,17 @@ public static class IndexedExecutableFormat
                 return;
 
             case BLOCK block:
-                RequireDefaultBlockType(block.BlockType, operation);
                 stream.WriteByte(BLOCK.OP);
+                if (block.BlockType is not { } blockType || blockType.Type == PrimitiveType.Default)
+                {
+                    stream.WriteByte(0);
+                    return;
+                }
+                if (blockType.FixedArraySize != 1 ||
+                    (blockType.Type == PrimitiveType.Void ? blockType.Modifiers != TypeModifiers.None : !FunctionCode.IsCellType(blockType)))
+                    throw Unsupported(operation, "BLOCK result must be void or a scalar cell");
+                stream.WriteByte(1);
+                WriteUInt32(stream, TypeIndex(blockType, typeIndices));
                 return;
 
             case LOOP loopBlock:
@@ -1548,6 +1564,20 @@ public static class IndexedExecutableFormat
                         break;
 
                     case BLOCK.OP:
+                    {
+                        byte mode = reader.ReadByte("BLOCK result mode");
+                        if (mode == 1)
+                        {
+                            uint typeIndex = reader.ReadUInt32("BLOCK result TypeIndex");
+                            RequireIndex(typeIndex, types.Count, "BLOCK result TypeIndex");
+                            var type = types[(int)typeIndex];
+                            if (!PortableCallableTable.IsScalarSignatureType(type.Primitive, type.Modifiers, type.FixedArraySize, true))
+                                throw new InvalidDataException("BLOCK result must be void or a scalar cell.");
+                        }
+                        else if (mode != 0) throw new InvalidDataException("Unknown BLOCK result mode.");
+                        controls.Push(opcode);
+                        break;
+                    }
                     case LOOP.OP:
                     case IF.OP:
                     case WHILE.OP:

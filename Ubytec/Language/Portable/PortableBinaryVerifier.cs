@@ -850,8 +850,22 @@ public static class PortableBinaryVerifier
                         break;
 
                     case BLOCK.OP:
-                        controls.Push(new ControlFrame(ControlKind.Block, stackDepth, reachable));
+                    {
+                        byte mode = reader.ReadByte("BLOCK result mode");
+                        int? resultCells = null;
+                        if (mode == 1)
+                        {
+                            uint typeIndex = reader.ReadUInt32("BLOCK result TypeIndex");
+                            RequireIndex(typeIndex, types.Count, "BLOCK result TypeIndex");
+                            TypeEntry type = types[(int)typeIndex];
+                            if (!PortableCallableTable.IsScalarSignatureType(type.Primitive, type.Modifiers, type.FixedArraySize, true))
+                                throw new InvalidDataException("BLOCK result must be void or a scalar cell.");
+                            resultCells = IsVoid(type) ? 0 : 1;
+                        }
+                        else if (mode != 0) throw new InvalidDataException("Unknown BLOCK result mode.");
+                        controls.Push(new ControlFrame(ControlKind.Block, stackDepth, reachable) { BlockResultCells = resultCells });
                         break;
+                    }
 
                     case LOOP.OP:
                         controls.Push(new ControlFrame(ControlKind.Loop, stackDepth, reachable));
@@ -912,8 +926,9 @@ public static class PortableBinaryVerifier
                                 break;
 
                             case ControlKind.Block:
-                                RequireDepth(frame.EntryDepth, opcode, "BLOCK end");
-                                stackDepth = frame.EntryDepth;
+                                if (frame.BlockResultCells is int cells)
+                                    RequireDepth(checked(frame.EntryDepth + cells), opcode, "typed BLOCK end");
+                                // Untyped BLOCK is a lexical grouping; its reachable exit preserves the actual stack.
                                 break;
 
                             case ControlKind.If:
@@ -1431,6 +1446,7 @@ public static class PortableBinaryVerifier
         internal int ThenDepth { get; set; }
         internal bool HasReachableBreak { get; set; }
         internal bool HasDefault { get; set; }
+        internal int? BlockResultCells { get; init; }
         internal int? ExitDepth { get; private set; }
 
         internal void MergeExit(int depth)

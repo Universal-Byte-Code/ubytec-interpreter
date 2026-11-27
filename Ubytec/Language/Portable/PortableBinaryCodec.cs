@@ -112,6 +112,9 @@ public sealed record PortableCallableInstruction(byte Operation, uint Slot, uint
 /// <summary>Depth-one extended stack instruction with a little-endian UInt16 operand.</summary>
 public sealed record PortableExtendedStackInstruction(byte Operation, ushort Index) : PortableInstruction(0xFF);
 
+/// <summary>Lexical BLOCK, optionally declaring a void or one-cell result.</summary>
+public sealed record PortableBlockInstruction(uint? ResultTypeIndex) : PortableInstruction(BLOCK.OP);
+
 /// <summary>BREAK/CONTINUE with an ordinal among eligible enclosing control scopes.</summary>
 public sealed record PortableControlTransferInstruction(byte Operation, uint TargetOrdinal)
     : PortableInstruction(Operation);
@@ -448,6 +451,14 @@ public static class PortableBinaryCodec
                     break;
                 }
 
+                case BLOCK.OP:
+                {
+                    byte mode = reader.ReadByte();
+                    if (mode > 1) throw new InvalidDataException("Unknown BLOCK result mode.");
+                    result.Add(new PortableBlockInstruction(mode == 1 ? reader.ReadUInt32() : null));
+                    break;
+                }
+
                 case BREAK.OP:
                 case CONTINUE.OP:
                     result.Add(new PortableControlTransferInstruction(opcode, reader.ReadUInt32()));
@@ -631,9 +642,15 @@ public static class PortableBinaryCodec
             switch (instruction)
             {
                 case PortableOperandFreeInstruction operandFree:
-                    if (operandFree.OpCode is BREAK.OP or CONTINUE.OP)
-                        throw new InvalidDataException("Control transfer requires ControlTargetOrdinal.");
+                    if (operandFree.OpCode is BREAK.OP or CONTINUE.OP or BLOCK.OP)
+                        throw new InvalidDataException("Structured instruction requires explicit typed operands.");
                     stream.WriteByte(operandFree.OpCode);
+                    break;
+
+                case PortableBlockInstruction block:
+                    stream.WriteByte(BLOCK.OP);
+                    stream.WriteByte(block.ResultTypeIndex.HasValue ? (byte)1 : (byte)0);
+                    if (block.ResultTypeIndex is uint resultType) WriteUInt32(stream, resultType);
                     break;
 
                 case PortableControlTransferInstruction transfer:

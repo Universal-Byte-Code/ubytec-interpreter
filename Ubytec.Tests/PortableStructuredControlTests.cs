@@ -138,6 +138,64 @@ public class PortableStructuredControlTests
         Assert.Throws<InvalidDataException>(() => PortableBinaryVerifier.Verify(bytes));
     }
 
+    [Theory]
+    [InlineData("block t_int16\npush 65535\nend\nreturn", -1L)]
+    [InlineData("block\npush 42\nend\nreturn", 42L)]
+    [InlineData("block t_int16\nblock t_int16\npush 65535\nend\nend\nreturn", -1L)]
+    [InlineData("block t_int16\npush 42\nreturn\nend", 42L)]
+    public void BlocksPreserveLegacyResultSemantics(string body, long expected)
+    {
+        string source = $"""
+            module (name:"typed-block", version:"0.1", author:"Ubytec")
+            {
+                func Main() -> t_int64
+                {
+                    {{body}}
+                }
+            }
+            """;
+        SourceCompilation legacy = SourceCompiler.Compile(source, emitProcessEntryPoint: false);
+        byte[] bytes = PortableModuleFormat.Encode(legacy.Module, contractManifest: null,
+            includeIndexedExecutable: true, portableContracts: legacy.PortableContracts);
+        PortableBinaryVerifier.Verify(bytes);
+        var decoded = PortableBinaryCodec.Decode(bytes);
+        Assert.Contains(decoded.Executable!.Functions[0].Instructions, i => i is PortableBlockInstruction);
+        Assert.Equal(bytes, PortableBinaryCodec.Encode(decoded));
+        var native = PortableX64Backend.Compile(bytes);
+        Assert.Equal(expected, Assert.Single(NativeStack.Run(
+            $"call {legacy.GetFunctionLabel("Main")}\npush rax", 1, legacy.Assembly)));
+        Assert.Equal(expected, Assert.Single(NativeStack.Run(
+            $"call {native.GetFunctionLabel(0)}\npush rax", 1, native.Assembly)));
+    }
+
+    [Fact]
+    public void IndependentVerifierRejectsMissingTypedBlockResult()
+    {
+        const string source = """
+            module (name:"typed-block-mutation", version:"0.1", author:"Ubytec")
+            {
+                func Main() -> t_int64
+                {
+                    block t_int16
+                    push 42
+                    end
+                    return
+                }
+            }
+            """;
+        var legacy = SourceCompiler.Compile(source, emitProcessEntryPoint: false);
+        var module = PortableBinaryCodec.Decode(PortableModuleFormat.Encode(legacy.Module,
+            contractManifest: null, includeIndexedExecutable: true, portableContracts: legacy.PortableContracts));
+        var executable = module.Executable!;
+        var functions = executable.Functions.ToArray();
+        functions[0] = functions[0] with
+        {
+            Instructions = functions[0].Instructions.Where(i => i is not PortablePushInstruction).ToArray()
+        };
+        byte[] bytes = PortableBinaryCodec.Encode(module with { Executable = executable with { Functions = functions } });
+        Assert.Throws<InvalidDataException>(() => PortableBinaryVerifier.Verify(bytes));
+    }
+
     private static long RunOneArgument(string assembly, string label, long argument)
     {
         string body = $"mov rax, 0x{unchecked((ulong)argument):X16}\npush rax\n" +

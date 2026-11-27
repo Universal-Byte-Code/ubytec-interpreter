@@ -267,6 +267,8 @@ public static class PortableX64Backend
         PortableExtendedStackInstruction extended => CompileExtendedStack(extended, scopes),
         PortableBranchInstruction branch => new BRANCH(unchecked((long)branch.CaseCell)).Compile(scopes),
         PortableControlTransferInstruction transfer => CompileTransfer(transfer, scopes),
+        PortableBlockInstruction block => new BLOCK(block.ResultTypeIndex is uint typeIndex
+            ? ResolveType(executable, typeIndex) : null).Compile(scopes),
         PortableCallInstruction call => CompileCall(call, executable, scopes),
         PortableFunctionAddressInstruction address =>
             new FunctionOperations.FNADDR(FunctionName(checked((int)address.FunctionIndex))).Compile(scopes),
@@ -445,7 +447,7 @@ public static class PortableX64Backend
 
     private static string CompileOperandFree(byte opcode, CompilationScopes scopes)
     {
-        if (opcode is BLOCK.OP or LOOP.OP or IF.OP or ELSE.OP or END.OP or WHILE.OP or SWITCH.OP)
+        if (opcode is LOOP.OP or IF.OP or ELSE.OP or END.OP or WHILE.OP or SWITCH.OP)
             return CompileStructuredOperandFree(opcode, scopes);
 
         if (!OperandFreeOperations.TryGetValue(opcode, out Type? type) ||
@@ -468,7 +470,6 @@ public static class PortableX64Backend
         int depth = scopes.Count;
         IOpCode operation = opcode switch
         {
-            BLOCK.OP => new BLOCK(),
             LOOP.OP => new LOOP(),
             IF.OP => new IF(),
             ELSE.OP => new ELSE(),
