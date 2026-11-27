@@ -6,7 +6,8 @@ namespace Ubytec.Language.Portable;
 public enum PortableExecutionProfile : uint
 {
     UnsafeCells = 0,
-    DirectOnly = 1
+    DirectOnly = 1,
+    CallableLocal = 2
 }
 
 /// <summary>Canonical lexical declaration topology; independent of source/AST and native labels.</summary>
@@ -22,7 +23,7 @@ public sealed class PortableContextTable
     public PortableContextTable(PortableExecutionProfile profile, IReadOnlyList<uint> parentFunctionIndices)
     {
         ArgumentNullException.ThrowIfNull(parentFunctionIndices);
-        if (profile is not (PortableExecutionProfile.UnsafeCells or PortableExecutionProfile.DirectOnly))
+        if (profile is not (PortableExecutionProfile.UnsafeCells or PortableExecutionProfile.DirectOnly or PortableExecutionProfile.CallableLocal))
             throw new InvalidDataException("Unknown contextual execution profile.");
         Profile = profile;
         parents = parentFunctionIndices.ToArray();
@@ -92,28 +93,29 @@ public sealed class PortableContextTable
     }
 
     internal bool DirectOnly => Profile == PortableExecutionProfile.DirectOnly;
+    internal bool Restricted => Profile != PortableExecutionProfile.UnsafeCells;
 
     internal void RequireNoImports(int count)
     {
-        if (DirectOnly && count != 0)
+        if (Restricted && count != 0)
             throw new InvalidDataException("DirectOnly forbids imports.");
     }
 
     internal void RequireValueExport(PortablePassingMode mode)
     {
-        if (DirectOnly && mode != PortablePassingMode.Value)
+        if (Restricted && mode != PortablePassingMode.Value)
             throw new InvalidDataException("DirectOnly forbids loan exports.");
     }
 
     internal void RejectIndirect()
     {
-        if (DirectOnly)
+        if (Restricted)
             throw new InvalidDataException("DirectOnly forbids FNADDR and CALLI.");
     }
 
     internal void RequireNamedMemory(byte mode)
     {
-        if (DirectOnly && mode != 2)
+        if (Restricted && mode != 2)
             throw new InvalidDataException("DirectOnly forbids raw memory access.");
     }
 
@@ -121,7 +123,7 @@ public sealed class PortableContextTable
     // for the operand-free default branch, after handling explicit wire forms.
     internal void RequireAllowedOperandFree(byte opcode)
     {
-        if (!DirectOnly) return;
+        if (!Restricted) return;
         if (opcode is >= 0x20 and <= 0x2A or >= 0x30 and <= 0x36 or >= 0x40 and <= 0x49)
             return;
         if (opcode is

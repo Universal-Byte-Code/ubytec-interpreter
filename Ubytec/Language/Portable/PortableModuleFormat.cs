@@ -39,7 +39,10 @@ public enum PortableModuleSectionKind : ushort
     IndexedCode = 0x0016,
 
     /// <summary>Critical lexical context graph and declared execution profile.</summary>
-    IndexedFunctionContexts = 0x0018
+    IndexedFunctionContexts = 0x0018,
+
+    /// <summary>Critical activation-local callable slot signatures.</summary>
+    IndexedCallableSlots = 0x0019
 }
 
 /// <summary>Section behavior flags in Portable Module Format v0.</summary>
@@ -313,6 +316,7 @@ public static class PortableModuleFormat
             case PortableModuleSectionKind.IndexedConstantTable:
             case PortableModuleSectionKind.IndexedCode:
             case PortableModuleSectionKind.IndexedFunctionContexts:
+            case PortableModuleSectionKind.IndexedCallableSlots:
                 if (!critical)
                     throw new InvalidDataException($"Indexed executable section 0x{kind:X4} must be critical.");
                 break;
