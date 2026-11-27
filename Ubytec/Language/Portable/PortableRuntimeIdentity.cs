@@ -28,7 +28,8 @@ public sealed class PortableRuntimeIdentity
     private readonly Dictionary<PortableLoadedInstanceId, Loaded> _instances = new();
     private readonly Dictionary<PortableRuntimeContextId, Context> _contexts = new();
 
-    private sealed record Loaded(byte[] Bytes, PortableExecutionProfile Profile, int FunctionCount);
+    private sealed record Loaded(int FunctionCount,
+        IReadOnlyDictionary<(uint Function, uint Offset), PortableInstructionOccurrence> Sites);
     private sealed record Activation(PortableActivationId Id, PortableLoadedInstanceId Instance, uint Function);
     private sealed class Context
     {
@@ -38,13 +39,15 @@ public sealed class PortableRuntimeIdentity
     }
 
     /// <summary>Register an independently verified snapshot under an explicit admission profile.</summary>
-    public PortableLoadedInstanceId Load(ReadOnlySpan<byte> bytes, PortableExecutionProfile profile)
+    public PortableLoadedInstanceId Load(ReadOnlySpan<byte> bytes, PortableExecutionProfile profile,
+        int maxInstructions = 1_000_000)
     {
         byte[] snapshot = bytes.ToArray();
-        PortableBinaryVerifier.Verify(snapshot, profile);
+        var sites = PortableBinaryVerifier.IdentifyInstructions(snapshot, maxInstructions, profile)
+            .ToDictionary(site => (site.FunctionIndex, site.InstructionOffset));
         int count = PortableBinaryCodec.Decode(snapshot).Executable!.Functions.Count;
         var id = new PortableLoadedInstanceId(Session, Next(ref _nextInstance));
-        _instances.Add(id, new Loaded(snapshot, profile, count));
+        _instances.Add(id, new Loaded(count, sites));
         return id;
     }
 
@@ -97,8 +100,7 @@ public sealed class PortableRuntimeIdentity
 
     /// <summary>
     /// Attribute one admitted event to a verified instruction in the current invocation.
-    /// The reference re-verifies the snapshot per event; native integration needs a bounded
-    /// precomputed index. No event is allocated for a rejected site.
+    /// Uses the bounded verified index created at load time. No event is allocated for a rejected site.
     /// </summary>
     public PortableRuntimeEvent Record(PortableActivationId id, uint offset)
     {
@@ -106,7 +108,8 @@ public sealed class PortableRuntimeIdentity
         if (!context.Stack.TryPeek(out var active) || active.Id != id)
             throw new InvalidOperationException("Activation is not the current invocation.");
         Loaded loaded = Instance(active.Instance);
-        var occurrence = PortableBinaryVerifier.IdentifyInstruction(loaded.Bytes, active.Function, offset, loaded.Profile);
+        if (!loaded.Sites.TryGetValue((active.Function, offset), out var occurrence))
+            throw new InvalidDataException("Requested occurrence is not a verified instruction boundary.");
         var eventId = new PortableRuntimeEventId(id.Context, Next(ref context.LastEvent));
         return new PortableRuntimeEvent(eventId, id, active.Instance, occurrence);
     }
