@@ -124,6 +124,31 @@ public sealed class PortableInstructionIdentityTests
     }
 
     [Fact]
+    public void KnownEntrypointMetadataCannotBypassEitherVerifier()
+    {
+        var source = SourceCompiler.Compile(Source, emitProcessEntryPoint: false);
+        byte[] ast = PortableModuleFormat.Encode(source.Module);
+        // 0x0017 is a known optional section, not an opaque extension.
+        byte[] invalid = new byte[ast.Length + 16];
+        ast.CopyTo(invalid, 0);
+        BinaryPrimitives.WriteUInt32LittleEndian(invalid.AsSpan(8, 4), 2);
+        BinaryPrimitives.WriteUInt16LittleEndian(invalid.AsSpan(ast.Length, 2), 0x0017);
+        BinaryPrimitives.WriteUInt64LittleEndian(invalid.AsSpan(ast.Length + 4, 8), 4);
+        BinaryPrimitives.WriteUInt32LittleEndian(invalid.AsSpan(ast.Length + 12, 4), uint.MaxValue);
+        Assert.Throws<InvalidDataException>(() => PortableBinaryVerifier.Verify(invalid));
+        Assert.Throws<InvalidDataException>(() => PortableModuleFormat.Verify(invalid));
+
+        byte[] process = PortableProcessEntrypoint.Attach(Image(), 0);
+        int offset = 12;
+        while (BinaryPrimitives.ReadUInt16LittleEndian(process.AsSpan(offset, 2)) != 0x0017)
+            offset += checked(12 + (int)BinaryPrimitives.ReadUInt64LittleEndian(process.AsSpan(offset + 4, 8)));
+        BinaryPrimitives.WriteUInt32LittleEndian(process.AsSpan(offset + 12, 4), 1);
+        Assert.Throws<InvalidDataException>(() => PortableBinaryVerifier.Verify(process));
+        Assert.Throws<InvalidDataException>(() => PortableModuleFormat.Verify(process));
+        Assert.Throws<InvalidDataException>(() => PortableBinaryVerifier.IdentifyInstruction(process, 0, 0));
+    }
+
+    [Fact]
     public void InvalidImageCannotReturnEarlierOccurrence()
     {
         byte[] bytes = Image();
