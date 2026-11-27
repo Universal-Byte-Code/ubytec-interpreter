@@ -1130,10 +1130,14 @@ public static class PortableBinaryVerifier
             required = 1;
             delta = 0;
         }
-        else
+        else if (opcode == NOP.OP)
         {
             required = 0;
             delta = 0;
+        }
+        else
+        {
+            throw new InvalidDataException($"Opcode 0x{opcode:X2} lacks an explicit scalar stack-effect contract.");
         }
 
         if (stackDepth < required)
