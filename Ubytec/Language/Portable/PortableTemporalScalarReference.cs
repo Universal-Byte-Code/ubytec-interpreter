@@ -28,18 +28,60 @@ public static class PortableTemporalScalarReference
         internal readonly PortableRuntimeContextId Context = context;
         internal readonly uint Function = function;
         internal readonly Plan Plan = plan;
-        internal readonly Stack<ulong> Stack = new();
+        internal Stack<ulong> Stack = new();
         internal PortableActivationId? Activation;
         internal int Pc;
         internal ulong Fuel;
         internal bool AbortPending;
-        internal bool Done;
         internal ulong? Result;
+    }
+
+    private sealed record Prepared(PortableScalarBoundaryKind Kind, int Pc, ulong Fuel,
+        Stack<ulong>? Stack, PortableInstructionOccurrence? Occurrence, ulong? Result);
+
+    // Private evaluation reads only this context's snapshot and immutable verified plan.
+    // No identity allocation, host calls or shared commits may happen here.
+    private static Prepared Prepare(State state, int quantum)
+    {
+        if (state.Activation is null)
+            return new(PortableScalarBoundaryKind.Enter, state.Pc, state.Fuel, null, null, null);
+        if (state.AbortPending)
+            return new(PortableScalarBoundaryKind.Abort, state.Pc, state.Fuel, null, null, null);
+
+        var stack = new Stack<ulong>(state.Stack.Reverse());
+        int pc = state.Pc;
+        ulong fuel = state.Fuel;
+        for (int charged = 0; charged < quantum; charged++)
+        {
+            if (pc >= state.Plan.Code.Length) throw new InvalidDataException("Missing terminal instruction.");
+            var instruction = state.Plan.Code[pc];
+            var occurrence = state.Plan.Sites[pc++];
+            fuel = checked(fuel + 1);
+            switch (instruction)
+            {
+                case PortablePushInstruction push:
+                    stack.Push(BinaryPrimitives.ReadUInt64LittleEndian(push.Immediate));
+                    break;
+                case PortableOperandFreeInstruction op when op.OpCode == 0x20:
+                    ulong right = stack.Pop(), left = stack.Pop();
+                    stack.Push(unchecked(left + right));
+                    break;
+                case PortableReturnInstruction:
+                    return new(PortableScalarBoundaryKind.Return, pc, fuel, stack, occurrence, stack.Pop());
+                case PortableOperandFreeInstruction op when op.OpCode == TRAP.OP:
+                    return new(PortableScalarBoundaryKind.Trap, pc, fuel, stack, occurrence, null);
+                default:
+                    throw new InvalidDataException("Unexpected admitted instruction.");
+            }
+            if (charged + 1 == quantum)
+                return new(PortableScalarBoundaryKind.Budget, pc, fuel, stack, occurrence, null);
+        }
+        throw new InvalidOperationException("Invalid quantum.");
     }
 
     /// <summary>Execute one selected function per context in declaration order; one boundary per turn.</summary>
     public static PortableScalarOutcome Run(ReadOnlySpan<byte> image, IReadOnlyList<uint> functions,
-        int quantum = 3, int maxEvents = 100_000, int maxInstructions = 1_000_000)
+        int quantum = 3, int maxEvents = 100_000, int maxInstructions = 1_000_000, bool parallel = false)
     {
         ArgumentNullException.ThrowIfNull(functions);
         if (quantum <= 0 || maxEvents <= 0 || maxInstructions <= 0 ||
@@ -96,72 +138,38 @@ public static class PortableTemporalScalarReference
         var trace = new List<PortableScalarBoundary>();
         while (coordinator.LiveCount != 0)
         {
-            coordinator.RunRound(id => byContext[id], (id, state) =>
+            coordinator.RunRound(id => Prepare(byContext[id], quantum), (id, next) =>
             {
-                ulong round = coordinator.Round;
-                if (trace.Count >= maxEvents)
-                    throw new InvalidOperationException("Temporal reference event limit reached.");
-                if (state.Activation is null)
+                publication.RequireCapacity();
+                var state = byContext[id];
+                state.Pc = next.Pc;
+                state.Fuel = next.Fuel;
+                if (next.Stack is not null) state.Stack = next.Stack;
+                PortablePublishedEvent published;
+                switch (next.Kind)
                 {
-                    var entry = identity.EnterObserved(state.Context, loaded, state.Function);
-                    state.Activation = entry.Activation;
-                    trace.Add(new(round, PortableScalarBoundaryKind.Enter, publication.Publish(entry), 0, null, null));
-                    return;
-                }
-                var activation = state.Activation.Value;
-                if (state.AbortPending)
-                {
-                    var aborted = identity.CloseObserved(activation, aborted: true);
-                    trace.Add(new(round, PortableScalarBoundaryKind.Abort, publication.Publish(aborted),
-                        state.Fuel, null, null));
-                    state.Done = true;
-                    coordinator.Retire(id);
-                    return;
-                }
-
-                for (int charged = 1; charged <= quantum; charged++)
-                {
-                    if (state.Pc >= state.Plan.Code.Length)
-                        throw new InvalidDataException("Missing terminal instruction.");
-                    var instruction = state.Plan.Code[state.Pc];
-                    var occurrence = state.Plan.Sites[state.Pc++];
-                    state.Fuel = checked(state.Fuel + 1);
-                    switch (instruction)
-                    {
-                        case PortablePushInstruction push:
-                            state.Stack.Push(BinaryPrimitives.ReadUInt64LittleEndian(push.Immediate));
-                            break;
-                        case PortableOperandFreeInstruction op when op.OpCode == 0x20:
-                            ulong right = state.Stack.Pop(), left = state.Stack.Pop();
-                            state.Stack.Push(unchecked(left + right));
-                            break;
-                        case PortableReturnInstruction:
-                            state.Result = state.Stack.Pop();
-                            var returned = identity.CloseObserved(activation);
-                            trace.Add(new(round, PortableScalarBoundaryKind.Return, publication.Publish(returned),
-                                state.Fuel, occurrence, state.Result));
-                            state.Done = true;
-                            coordinator.Retire(id);
-                            break;
-                        case PortableOperandFreeInstruction op when op.OpCode == TRAP.OP:
-                            var fault = identity.Record(activation, occurrence.InstructionOffset);
-                            trace.Add(new(round, PortableScalarBoundaryKind.Trap, publication.Publish(fault),
-                                state.Fuel, occurrence, null));
-                            state.AbortPending = true;
-                            break;
-                        default:
-                            throw new InvalidDataException("Unexpected admitted instruction.");
-                    }
-                    if (state.Done || state.AbortPending) break;
-                    if (charged == quantum)
-                    {
-                        var boundary = identity.Record(activation, occurrence.InstructionOffset);
-                        trace.Add(new(round, PortableScalarBoundaryKind.Budget, publication.Publish(boundary),
-                            state.Fuel, occurrence, null));
+                    case PortableScalarBoundaryKind.Enter:
+                        var entry = identity.EnterObserved(id, loaded, state.Function);
+                        state.Activation = entry.Activation;
+                        published = publication.Publish(entry);
                         break;
-                    }
+                    case PortableScalarBoundaryKind.Return:
+                    case PortableScalarBoundaryKind.Abort:
+                        bool aborted = next.Kind == PortableScalarBoundaryKind.Abort;
+                        published = publication.Publish(identity.CloseObserved(state.Activation!.Value, aborted));
+                        state.Result = next.Result;
+                        coordinator.Retire(id);
+                        break;
+                    case PortableScalarBoundaryKind.Trap:
+                    case PortableScalarBoundaryKind.Budget:
+                        published = publication.Publish(identity.Record(state.Activation!.Value,
+                            next.Occurrence!.Value.InstructionOffset));
+                        state.AbortPending = next.Kind == PortableScalarBoundaryKind.Trap;
+                        break;
+                    default: throw new InvalidOperationException("Unknown boundary.");
                 }
-            });
+                trace.Add(new(coordinator.Round, next.Kind, published, next.Fuel, next.Occurrence, next.Result));
+            }, parallel);
         }
         identity.Unload(loaded);
         return new PortableScalarOutcome(trace.AsReadOnly(), Array.AsReadOnly(states.Select(s => s.Result).ToArray()));
