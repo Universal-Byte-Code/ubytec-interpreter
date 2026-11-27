@@ -61,7 +61,7 @@ public static class PortableTemporalScalarReference
             var function = module.Functions[(int)index];
             var type = module.Types[(int)function.ReturnTypeIndex];
             if (function.ArgumentTypeIndices.Count != 0 || function.LocalTypeIndices.Count != 0 ||
-                type.Primitive != PrimitiveType.Int64 || type.FixedArraySize != 0)
+                type.Primitive != PrimitiveType.Int64 || type.FixedArraySize != 1 || (uint)type.Modifiers != 0)
                 throw new NotSupportedException("Reference requires zero-argument/local scalar Int64 functions.");
             var code = function.Instructions.ToArray();
             var sites = byFunction[index];
