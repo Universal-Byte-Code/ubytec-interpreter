@@ -26,7 +26,7 @@ public sealed record PortableX64Compilation(
     /// <summary>Returns the unresolved native symbol assigned to one portable ImportIndex.</summary>
     public string GetImportLabel(int index) => ImportLabels[index];
 
-    /// <summary>Returns the native alias assigned to one portable ExportIndex.</summary>
+    /// <summary>Returns the object-local native alias assigned to one portable ExportIndex.</summary>
     public string GetExportLabel(int index) => ExportLabels[index];
 }
 
@@ -44,14 +44,14 @@ public static class PortableX64Backend
         DiscoverOperandFreeOperations();
 
     /// <summary>Verifies, decodes, and compiles canonical UBCM bytes to Linux x86-64 NASM.</summary>
-    public static PortableX64Compilation Compile(ReadOnlySpan<byte> bytes)
+    public static PortableX64Compilation Compile(ReadOnlySpan<byte> bytes, bool optimizeTailCalls = false)
     {
         PortableBinaryVerifier.Verify(bytes);
-        return Compile(PortableBinaryCodec.Decode(bytes));
+        return Compile(PortableBinaryCodec.Decode(bytes), optimizeTailCalls);
     }
 
     /// <summary>Compiles a typed portable module to Linux x86-64 NASM.</summary>
-    public static PortableX64Compilation Compile(PortableBinaryModule module)
+    public static PortableX64Compilation Compile(PortableBinaryModule module, bool optimizeTailCalls = false)
     {
         ArgumentNullException.ThrowIfNull(module);
         if (module.Executable is not { } executable)
@@ -80,14 +80,15 @@ public static class PortableX64Backend
             output.AppendLine($"extern {import}");
 
         for (int index = 0; index < executable.Functions.Count; index++)
-            EmitFunction(output, executable, index, functionLabels, moduleScope);
+            EmitFunction(output, executable, index, functionLabels, moduleScope, optimizeTailCalls);
 
         for (int index = 0; index < executable.Exports.Count; index++)
         {
             PortableExecutableExport export = executable.Exports[index];
             string alias = exportLabels[index];
             string target = functionLabels[checked((int)export.FunctionIndex)];
-            output.AppendLine($"global {alias}");
+            // ExportIndex is module-local. Only the ABI projection may publish host-facing symbols.
+            // Keeping this alias local allows independently assembled objects to share indices.
             output.AppendLine($"{alias}:");
             output.AppendLine($"  jmp {target}");
         }
@@ -144,7 +145,8 @@ public static class PortableX64Backend
         PortableExecutableModule executable,
         int functionIndex,
         IReadOnlyList<string> functionLabels,
-        ScopeContext moduleScope)
+        ScopeContext moduleScope,
+        bool optimizeTailCalls)
     {
         PortableExecutableFunction function = executable.Functions[functionIndex];
         UType returnType = ResolveType(executable, function.ReturnTypeIndex);
@@ -199,11 +201,23 @@ public static class PortableX64Backend
         if (frame.FrameSize != 0)
             output.AppendLine($"  sub rsp, {frame.FrameSize}");
 
-        foreach (PortableInstruction instruction in function.Instructions)
+        for (int index = 0; index < function.Instructions.Count; index++)
         {
-            string assembly = CompileInstruction(instruction, executable, functionIndex, function, scopes, frame);
+            if (optimizeTailCalls &&
+                PortableX64TailCallOptimizer.TryEmit(executable, function, index, functionLabels) is string tail)
+            {
+                AppendIndented(output, tail);
+                index++; // The verified adjacent RETURN is included in the tail transfer.
+                continue;
+            }
+
+            string assembly = CompileInstruction(function.Instructions[index], executable, functionIndex, function, scopes, frame);
             AppendIndented(output, assembly);
         }
+
+        if (scopes.Count != 2)
+            throw new InvalidDataException(
+                $"FunctionIndex {functionIndex} ended with {scopes.Count - 2} unterminated portable control scope(s).");
 
         if (returnType.Type == PrimitiveType.Void)
             output.AppendLine("  xor eax, eax");
@@ -324,6 +338,9 @@ public static class PortableX64Backend
 
     private static string CompileOperandFree(byte opcode, CompilationScopes scopes)
     {
+        if (opcode is BLOCK.OP or LOOP.OP or IF.OP or ELSE.OP or END.OP or BREAK.OP or CONTINUE.OP or WHILE.OP)
+            return CompileStructuredOperandFree(opcode, scopes);
+
         if (!OperandFreeOperations.TryGetValue(opcode, out Type? type) ||
             Activator.CreateInstance(type) is not IOpCode operation)
             throw new NotSupportedException($"Opcode 0x{opcode:X2} has no operand-free x64 lowering contract.");
@@ -331,8 +348,40 @@ public static class PortableX64Backend
         int depth = scopes.Count;
         string assembly = operation.Compile(scopes);
         if (scopes.Count != depth)
-            throw new NotSupportedException(
-                $"Opcode 0x{opcode:X2} requires structured scope state that indexed executable v0 does not encode.");
+            throw new InvalidDataException(
+                $"Opcode 0x{opcode:X2} unexpectedly changed portable structured scope state.");
+        return assembly;
+    }
+
+    private static string CompileStructuredOperandFree(byte opcode, CompilationScopes scopes)
+    {
+        if (opcode == END.OP && scopes.Count <= 2)
+            throw new InvalidDataException("Portable END cannot close the function or module scope.");
+
+        int depth = scopes.Count;
+        IOpCode operation = opcode switch
+        {
+            BLOCK.OP => new BLOCK(),
+            LOOP.OP => new LOOP(),
+            IF.OP => new IF(),
+            ELSE.OP => new ELSE(),
+            END.OP => new END(),
+            BREAK.OP => new BREAK(null),
+            CONTINUE.OP => new CONTINUE(null),
+            WHILE.OP => new WHILE(),
+            _ => throw new InvalidDataException($"Opcode 0x{opcode:X2} is not normalized structured control flow.")
+        };
+
+        string assembly = operation.Compile(scopes);
+        int expectedDepth = opcode switch
+        {
+            BLOCK.OP or LOOP.OP or IF.OP or WHILE.OP => depth + 1,
+            END.OP => depth - 1,
+            _ => depth
+        };
+        if (scopes.Count != expectedDepth)
+            throw new InvalidDataException(
+                $"Opcode 0x{opcode:X2} produced an invalid portable scope transition {depth}->{scopes.Count}; expected {expectedDepth}.");
         return assembly;
     }
 

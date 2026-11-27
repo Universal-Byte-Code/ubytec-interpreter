@@ -70,7 +70,7 @@ def main():
         target=out/'memory.ubc';target.write_text('export DiagLookup as Find (t_loan_ro,t_uint64,t_loan_ro,t_uint64) -> t_uint64\n'+(ROOT/'diagnose-kernels.ubc').read_text())
         report['assembly_transform']='Only Find public adapter replaced with jmp fixture_lookup; generated kernel and candidate adapter unchanged'
         for mode in ('reference','reduction'):
-            flags=['--library','--stack-transfers','--frame-registers']+(['--lookup-reductions'] if mode=='reduction' else [])
+            flags=['--legacy-source-x64','--library','--stack-transfers','--frame-registers']+(['--lookup-reductions'] if mode=='reduction' else [])
             original=out/(mode+'-original.nasm')
             command([a.dotnet,compiler,target,*flags,'--host-export','DiagLookup=ubytec_host_candidate_DiagLookup','-o',original])
             assembly=original.read_text();assert ('; lookup-reductions:' in assembly)==(mode=='reduction')

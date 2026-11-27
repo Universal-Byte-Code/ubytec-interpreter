@@ -60,7 +60,7 @@ def run(dotnet,compiler,out,native=False):
         command(['gcc','-O2','-ffreestanding','-fno-builtin','-fno-stack-protector','-fno-pic','-mcmodel=large','-mno-red-zone','-c',PROTO/'linux/bridge-runtime.c','-o',out/'runtime.o'])
         command(['ld','-T',PROTO/'linux/module.ld','-e','ubytec_host_contract_Main','-z','noexecstack',out/'caller.o',out/'runtime.o','-o',out/'caller.elf'])
         for mode,option in modes:
-            command([dotnet,compiler,target,'--library',option,'-o',out/(mode+'.nasm')])
+            command([dotnet,compiler,target,'--legacy-source-x64','--library',option,'-o',out/(mode+'.nasm')])
             assembly=(out/(mode+'.nasm')).read_text()
             if mode!='scalar':assert '; block-reductions:' in assembly
             report['targets'][mode]='AVX2' if 'page-bounded AVX2' in assembly else 'SSE2' if 'page-bounded SSE2' in assembly else 'scalar'

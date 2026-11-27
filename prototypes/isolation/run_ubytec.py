@@ -66,7 +66,7 @@ def main():
                          "-p:GenerateDocumentationFile=false"], timeout=120)
                 dll = project.parent/"bin/Release/net9.0/Ubytec.dll"
             dll = dll.resolve()
-            compiler_args = ["dotnet", dll, ROOT/"ubytec/attacks.ubc", "--library", "--tail-calls", "-o", assembly]
+            compiler_args = ["dotnet", dll, ROOT/"ubytec/attacks.ubc", "--library", "-o", assembly]
             for function, symbol in EXPORTS.items():
                 compiler_args.extend(["--host-export", f"{function}=ubytec_host_{symbol}"])
             command(compiler_args)

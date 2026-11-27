@@ -513,6 +513,7 @@ public static class PortableBinaryVerifier
             var reader = new RawReader(body);
             ulong bindingCount = (ulong)function.ArgumentCount + function.LocalCount;
             var initializedLocals = new bool[checked((int)function.LocalCount)];
+            var controls = new Stack<ControlFrame>();
             int stackDepth = 0;
             bool reachable = true;
 
@@ -529,6 +530,22 @@ public static class PortableBinaryVerifier
                 Need(required, opcode);
                 if (reachable)
                     stackDepth = checked(stackDepth + delta);
+            }
+
+            void RequireDepth(int expected, byte opcode, string boundary)
+            {
+                if (reachable && stackDepth != expected)
+                    throw new InvalidDataException(
+                        $"FunctionIndex {functionIndex} opcode 0x{opcode:X2} reaches {boundary} with evaluation " +
+                        $"stack depth {stackDepth}; expected {expected}.");
+            }
+
+            ControlFrame TransferTarget(byte opcode)
+            {
+                ControlFrame? target = controls.FirstOrDefault(frame =>
+                    frame.Kind is ControlKind.Loop or ControlKind.While);
+                return target ?? throw new InvalidDataException(
+                    $"FunctionIndex {functionIndex} opcode 0x{opcode:X2} requires an enclosing LOOP or WHILE.");
             }
 
             while (!reader.AtEnd)
@@ -716,6 +733,119 @@ public static class PortableBinaryVerifier
                         break;
                     }
 
+                    case BLOCK.OP:
+                        controls.Push(new ControlFrame(ControlKind.Block, stackDepth, reachable));
+                        break;
+
+                    case LOOP.OP:
+                        controls.Push(new ControlFrame(ControlKind.Loop, stackDepth, reachable));
+                        break;
+
+                    case IF.OP:
+                        Apply(1, -1, opcode);
+                        controls.Push(new ControlFrame(ControlKind.If, stackDepth, reachable));
+                        break;
+
+                    case WHILE.OP:
+                        Apply(1, -1, opcode);
+                        controls.Push(new ControlFrame(ControlKind.While, stackDepth, reachable));
+                        break;
+
+                    case ELSE.OP:
+                    {
+                        if (controls.Count == 0 || controls.Peek().Kind != ControlKind.If)
+                            throw new InvalidDataException(
+                                $"FunctionIndex {functionIndex} ELSE requires a directly enclosing IF.");
+                        ControlFrame conditional = controls.Pop();
+                        controls.Push(new ControlFrame(
+                            ControlKind.Else,
+                            conditional.EntryDepth,
+                            conditional.EntryReachable)
+                        {
+                            ThenReachable = reachable,
+                            ThenDepth = stackDepth
+                        });
+                        reachable = conditional.EntryReachable;
+                        stackDepth = conditional.EntryDepth;
+                        break;
+                    }
+
+                    case END.OP:
+                    {
+                        if (controls.Count == 0)
+                            throw new InvalidDataException(
+                                $"FunctionIndex {functionIndex} END has no matching structured control opener.");
+                        ControlFrame frame = controls.Pop();
+                        switch (frame.Kind)
+                        {
+                            case ControlKind.Block:
+                                RequireDepth(frame.EntryDepth, opcode, "BLOCK end");
+                                stackDepth = frame.EntryDepth;
+                                break;
+
+                            case ControlKind.If:
+                                RequireDepth(frame.EntryDepth, opcode, "IF end");
+                                reachable = frame.EntryReachable;
+                                stackDepth = frame.EntryDepth;
+                                break;
+
+                            case ControlKind.Else:
+                            {
+                                bool elseReachable = reachable;
+                                int elseDepth = stackDepth;
+                                if (frame.ThenReachable && elseReachable && frame.ThenDepth != elseDepth)
+                                    throw new InvalidDataException(
+                                        $"FunctionIndex {functionIndex} IF/ELSE branches merge with stack depths " +
+                                        $"{frame.ThenDepth} and {elseDepth}.");
+                                reachable = frame.ThenReachable || elseReachable;
+                                stackDepth = frame.ThenReachable
+                                    ? frame.ThenDepth
+                                    : elseReachable ? elseDepth : frame.EntryDepth;
+                                break;
+                            }
+
+                            case ControlKind.Loop:
+                                RequireDepth(frame.EntryDepth, opcode, "LOOP backedge");
+                                reachable = frame.HasReachableBreak;
+                                stackDepth = frame.EntryDepth;
+                                break;
+
+                            case ControlKind.While:
+                                RequireDepth(frame.EntryDepth + 1, opcode, "WHILE backedge");
+                                reachable = frame.EntryReachable || frame.HasReachableBreak;
+                                stackDepth = frame.EntryDepth;
+                                break;
+
+                            default:
+                                throw new InvalidDataException("Unknown portable structured control frame.");
+                        }
+                        break;
+                    }
+
+                    case BREAK.OP:
+                    {
+                        ControlFrame target = TransferTarget(opcode);
+                        RequireDepth(target.EntryDepth, opcode, "BREAK target");
+                        if (reachable)
+                        {
+                            target.HasReachableBreak = true;
+                            reachable = false;
+                        }
+                        break;
+                    }
+
+                    case CONTINUE.OP:
+                    {
+                        ControlFrame target = TransferTarget(opcode);
+                        int expected = target.Kind == ControlKind.While
+                            ? target.EntryDepth + 1
+                            : target.EntryDepth;
+                        RequireDepth(expected, opcode, "CONTINUE target");
+                        if (reachable)
+                            reachable = false;
+                        break;
+                    }
+
                     default:
                         if (!OperandFreeCoreOpcodes.Contains(opcode))
                             throw new InvalidDataException(
@@ -726,6 +856,10 @@ public static class PortableBinaryVerifier
             }
 
             reader.RequireEnd($"Function {functionIndex} code");
+
+            if (controls.Count != 0)
+                throw new InvalidDataException(
+                    $"FunctionIndex {functionIndex} contains {controls.Count} unterminated structured control scope(s).");
 
             for (int local = 0; local < initializedLocals.Length; local++)
             {
@@ -1138,6 +1272,25 @@ public static class PortableBinaryVerifier
         uint Modifiers,
         ulong FixedArraySize,
         uint NameStringIndex);
+
+    private enum ControlKind : byte
+    {
+        Block,
+        If,
+        Else,
+        Loop,
+        While
+    }
+
+    private sealed class ControlFrame(ControlKind kind, int entryDepth, bool entryReachable)
+    {
+        internal ControlKind Kind { get; } = kind;
+        internal int EntryDepth { get; } = entryDepth;
+        internal bool EntryReachable { get; } = entryReachable;
+        internal bool ThenReachable { get; set; }
+        internal int ThenDepth { get; set; }
+        internal bool HasReachableBreak { get; set; }
+    }
 
     private sealed class ByteArrayComparer : IComparer<byte[]>
     {
