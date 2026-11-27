@@ -70,6 +70,25 @@ public sealed class PortableElfProvenanceTests
             Assert.False(map.Attribute(map.ArtifactDigest, trap + 1)!.Value.ExactUd2);
             Assert.Null(map.Attribute(map.ArtifactDigest, site.End));
             Assert.Null(map.Attribute(map.ArtifactDigest, 0));
+
+            var runtime = new PortableRuntimeIdentity();
+            var loaded = runtime.Load(image, PortableExecutionProfile.DirectOnly);
+            var context = runtime.CreateContext();
+            Assert.Throws<InvalidDataException>(() => runtime.BindNative(loaded, map, new byte[1]));
+            runtime.BindNative(loaded, map, elf);
+            Assert.Throws<InvalidOperationException>(() => runtime.BindNative(loaded, map, elf));
+            var activation = runtime.Enter(context, loaded, 0);
+            var exact = runtime.RecordNativeFault(activation, trap, 4);
+            var unknown = runtime.RecordNativeFault(activation, 0, 11);
+            Assert.Equal(1UL, exact.Id.Sequence);
+            Assert.Equal(2UL, unknown.Id.Sequence);
+            Assert.Equal(attribution, exact.Attribution);
+            Assert.Null(unknown.Attribution);
+            Assert.Equal(4, exact.Signal);
+            Assert.Equal(11, unknown.Signal);
+            Assert.Equal(3UL, runtime.Record(activation, 0).Id.Sequence);
+            runtime.Leave(activation);
+            Assert.Throws<InvalidOperationException>(() => runtime.RecordNativeFault(activation, trap, 4));
             Assert.Throws<InvalidDataException>(() => map.Attribute(new string('0', 64), trap));
             Assert.Throws<InvalidDataException>(() => PortableElfProvenance.Resolve(elf,
                 native with { AssemblyDigest = new string('0', 64) }));
