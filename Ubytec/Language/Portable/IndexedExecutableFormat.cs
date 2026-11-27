@@ -303,6 +303,8 @@ public static class IndexedExecutableFormat
             {
                 if (operation is BLOCK { BlockType: { } blockType } && blockType.Type != PrimitiveType.Default)
                     result.Add(TypeKey.From(blockType));
+                if (operation is BLOCK { InputTypes: { } inputs })
+                    foreach (UType input in inputs) result.Add(TypeKey.From(input));
                 if (operation is RETURN { BlockType: { } returnType })
                     result.Add(TypeKey.From(returnType));
             }
@@ -500,7 +502,7 @@ public static class IndexedExecutableFormat
             EncodeInstruction(stream, operation, callable, typeIndices, functionIndices, topLevel, importIndices, controls);
             switch (operation)
             {
-                case BLOCK: controls.Add((BLOCK.OP, null)); break;
+                case BLOCK b: controls.Add((b.InputTypes is null ? BLOCK.OP : (byte)0xFE, b.LabelIDx)); break;
                 case LOOP: controls.Add((LOOP.OP, null)); break;
                 case IF: controls.Add((IF.OP, null)); break;
                 case WHILE loop:
@@ -640,6 +642,17 @@ public static class IndexedExecutableFormat
 
             case BLOCK block:
                 stream.WriteByte(BLOCK.OP);
+                if (block.InputTypes is { } inputs)
+                {
+                    if (block.BlockType is not UType output || inputs.Length > PortableContractBlockInstruction.MaxInputs)
+                        throw Unsupported(operation, "Invalid BLOCK contract");
+                    stream.WriteByte(2);
+                    stream.WriteByte(block.Checked ? (byte)1 : (byte)0);
+                    WriteUInt32(stream, (uint)inputs.Length);
+                    foreach (UType input in inputs) WriteUInt32(stream, TypeIndex(input, typeIndices));
+                    WriteUInt32(stream, TypeIndex(output, typeIndices));
+                    return;
+                }
                 if (block.BlockType is not { } blockType || blockType.Type == PrimitiveType.Default)
                 {
                     stream.WriteByte(0);
@@ -739,7 +752,7 @@ public static class IndexedExecutableFormat
         {
             (byte kind, int? declaredLabel) = controls[i];
             bool eligible = kind is LOOP.OP or WHILE.OP ||
-                (!continuing && kind is SWITCH.OP or BRANCH.OP);
+                (!continuing && kind is SWITCH.OP or BRANCH.OP or 0xFE);
             if (!eligible || (label.HasValue && label != declaredLabel)) continue;
             target = kind == BRANCH.OP ? i - 1 : i;
             if (target < 0 || (kind == BRANCH.OP && controls[target].Kind != SWITCH.OP))
@@ -750,7 +763,7 @@ public static class IndexedExecutableFormat
             throw new InvalidDataException("Control transfer has no enclosing target.");
         uint ordinal = 0;
         for (int i = controls.Count - 1; i > target; i--)
-            if (controls[i].Kind is LOOP.OP or WHILE.OP || (!continuing && controls[i].Kind == SWITCH.OP))
+            if (controls[i].Kind is LOOP.OP or WHILE.OP || (!continuing && controls[i].Kind is SWITCH.OP or 0xFE))
                 ordinal++;
         return ordinal;
     }
@@ -1566,6 +1579,24 @@ public static class IndexedExecutableFormat
                     case BLOCK.OP:
                     {
                         byte mode = reader.ReadByte("BLOCK result mode");
+                        if (mode == 2)
+                        {
+                            byte policy = reader.ReadByte("BLOCK conversion policy");
+                            if (policy > 1) throw new InvalidDataException("Unknown BLOCK conversion policy.");
+                            uint count = reader.ReadUInt32("BLOCK input count");
+                            if (count > PortableContractBlockInstruction.MaxInputs)
+                                throw new InvalidDataException("Too many BLOCK inputs.");
+                            for (uint i = 0; i <= count; i++)
+                            {
+                                uint index = reader.ReadUInt32("BLOCK contract TypeIndex");
+                                RequireIndex(index, types.Count, "BLOCK contract TypeIndex");
+                                var type = types[(int)index];
+                                if (!PortableCallableTable.IsScalarSignatureType(type.Primitive, type.Modifiers, type.FixedArraySize, i == count))
+                                    throw new InvalidDataException("Invalid BLOCK contract type.");
+                            }
+                            controls.Push(0xFE); // Internal marker only, not an opcode.
+                            break;
+                        }
                         if (mode == 1)
                         {
                             uint typeIndex = reader.ReadUInt32("BLOCK result TypeIndex");
@@ -1601,7 +1632,7 @@ public static class IndexedExecutableFormat
                     {
                         uint ordinal = reader.ReadUInt32("ControlTargetOrdinal");
                         int count = controls.Count(control => control == LOOP.OP || control == WHILE.OP ||
-                            (opcode == BREAK.OP && control is SWITCH.OP or DEFAULT.OP));
+                            (opcode == BREAK.OP && control is SWITCH.OP or DEFAULT.OP or 0xFE));
                         if (ordinal >= (uint)count)
                             throw new InvalidDataException("ControlTargetOrdinal is outside enclosing eligible control scopes.");
                         break;

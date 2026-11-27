@@ -565,9 +565,11 @@ public static class PortableBinaryVerifier
             int stackDepth = 0;
             bool reachable = true;
 
+            int ActiveFloor() => controls.FirstOrDefault(frame => frame.ContractFloor.HasValue)?.ContractFloor ?? 0;
+
             void Need(int cells, byte opcode)
             {
-                if (reachable && stackDepth < cells)
+                if (reachable && stackDepth - ActiveFloor() < cells)
                     throw new InvalidDataException(
                         $"FunctionIndex {functionIndex} opcode 0x{opcode:X2} needs {cells} evaluation stack cell(s), " +
                         $"but only {stackDepth} are available.");
@@ -593,7 +595,7 @@ public static class PortableBinaryVerifier
                 foreach (ControlFrame frame in controls)
                 {
                     if (frame.Kind is not (ControlKind.Loop or ControlKind.While) &&
-                        !(opcode == BREAK.OP && frame.Kind == ControlKind.Switch))
+                        !(opcode == BREAK.OP && (frame.Kind == ControlKind.Switch || frame.ContractFloor.HasValue)))
                         continue;
                     if (ordinal == 0) return frame;
                     ordinal--;
@@ -605,6 +607,8 @@ public static class PortableBinaryVerifier
             while (!reader.AtEnd)
             {
                 byte opcode = reader.ReadByte("Opcode");
+                if (opcode == CLEAR.OP && controls.Any(frame => frame.ContractFloor.HasValue))
+                    throw new InvalidDataException("CLEAR cannot reset the function stack inside a contracted BLOCK.");
                 if (controls.TryPeek(out ControlFrame? enclosing) && enclosing.Kind == ControlKind.Switch &&
                     !enclosing.HasDefault && opcode is not (BRANCH.OP or DEFAULT.OP or END.OP))
                     throw new InvalidDataException("SWITCH requires BRANCH, DEFAULT or END.");
@@ -846,13 +850,38 @@ public static class PortableBinaryVerifier
                             reachable = parent.EntryReachable;
                         }
                         else
-                            ApplyOperandFreeStackEffect(opcode, ref stackDepth, ref reachable, functionIndex);
+                            ApplyOperandFreeStackEffect(opcode, ref stackDepth, ref reachable, functionIndex, ActiveFloor());
                         break;
 
                     case BLOCK.OP:
                     {
                         byte mode = reader.ReadByte("BLOCK result mode");
                         int? resultCells = null;
+                        if (mode == 2)
+                        {
+                            byte policy = reader.ReadByte("BLOCK conversion policy");
+                            if (policy > 1) throw new InvalidDataException("Unknown BLOCK conversion policy.");
+                            uint count = reader.ReadUInt32("BLOCK input count");
+                            if (count > PortableContractBlockInstruction.MaxInputs)
+                                throw new InvalidDataException("Too many BLOCK inputs.");
+                            for (uint i = 0; i <= count; i++)
+                            {
+                                uint index = reader.ReadUInt32("BLOCK contract TypeIndex");
+                                RequireIndex(index, types.Count, "BLOCK contract TypeIndex");
+                                TypeEntry type = types[(int)index];
+                                if (!PortableCallableTable.IsScalarSignatureType(type.Primitive, type.Modifiers, type.FixedArraySize, i == count))
+                                    throw new InvalidDataException("Invalid BLOCK contract type.");
+                                if (i == count) resultCells = IsVoid(type) ? 0 : 1;
+                            }
+                            Need((int)count, opcode);
+                            int floor = reachable ? stackDepth - (int)count : ActiveFloor();
+                            controls.Push(new ControlFrame(ControlKind.Block, floor, reachable)
+                            {
+                                BlockResultCells = resultCells,
+                                ContractFloor = floor
+                            });
+                            break;
+                        }
                         if (mode == 1)
                         {
                             uint typeIndex = reader.ReadUInt32("BLOCK result TypeIndex");
@@ -927,7 +956,15 @@ public static class PortableBinaryVerifier
 
                             case ControlKind.Block:
                                 if (frame.BlockResultCells is int cells)
-                                    RequireDepth(checked(frame.EntryDepth + cells), opcode, "typed BLOCK end");
+                                {
+                                    int expected = checked(frame.EntryDepth + cells);
+                                    RequireDepth(expected, opcode, "typed BLOCK end");
+                                    if (frame.ContractFloor.HasValue)
+                                    {
+                                        reachable = reachable || frame.HasReachableBreak;
+                                        stackDepth = expected;
+                                    }
+                                }
                                 // Untyped BLOCK is a lexical grouping; its reachable exit preserves the actual stack.
                                 break;
 
@@ -973,7 +1010,10 @@ public static class PortableBinaryVerifier
                     case BREAK.OP:
                     {
                         ControlFrame target = TransferTarget(opcode, reader.ReadUInt32("ControlTargetOrdinal"));
-                        RequireDepth(target.EntryDepth, opcode, "BREAK target");
+                        int expected = target.ContractFloor.HasValue
+                            ? checked(target.EntryDepth + target.BlockResultCells!.Value)
+                            : target.EntryDepth;
+                        RequireDepth(expected, opcode, "BREAK target");
                         if (reachable)
                         {
                             target.HasReachableBreak = true;
@@ -999,7 +1039,7 @@ public static class PortableBinaryVerifier
                         if (!OperandFreeCoreOpcodes.Contains(opcode))
                             throw new InvalidDataException(
                                 $"Core opcode 0x{opcode:X2} has no supported indexed executable v0 wire contract.");
-                        ApplyOperandFreeStackEffect(opcode, ref stackDepth, ref reachable, functionIndex);
+                        ApplyOperandFreeStackEffect(opcode, ref stackDepth, ref reachable, functionIndex, ActiveFloor());
                         break;
                 }
             }
@@ -1065,7 +1105,8 @@ public static class PortableBinaryVerifier
         byte opcode,
         ref int stackDepth,
         ref bool reachable,
-        int functionIndex)
+        int functionIndex,
+        int floor)
     {
         if (!reachable)
             return;
@@ -1160,7 +1201,7 @@ public static class PortableBinaryVerifier
             throw new InvalidDataException($"Opcode 0x{opcode:X2} lacks an explicit scalar stack-effect contract.");
         }
 
-        if (stackDepth < required)
+        if (stackDepth - floor < required)
             throw new InvalidDataException(
                 $"FunctionIndex {functionIndex} opcode 0x{opcode:X2} needs {required} evaluation stack cell(s), " +
                 $"but only {stackDepth} are available.");
@@ -1447,6 +1488,7 @@ public static class PortableBinaryVerifier
         internal bool HasReachableBreak { get; set; }
         internal bool HasDefault { get; set; }
         internal int? BlockResultCells { get; init; }
+        internal int? ContractFloor { get; init; }
         internal int? ExitDepth { get; private set; }
 
         internal void MergeExit(int depth)

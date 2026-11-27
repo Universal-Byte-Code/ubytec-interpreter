@@ -14,8 +14,8 @@ public enum PortableExecutionProfile : uint
 public sealed class PortableContextTable
 {
     public const uint NoIndex = uint.MaxValue;
-    // Context v2 adds BLOCK result framing to the relative transfers introduced in v1.
-    public const uint WireVersion = 2;
+    // Context v3 introduces explicit contracted BLOCKs and their BREAK targets.
+    public const uint WireVersion = 3;
     private readonly uint[] parents;
     private readonly int[] subtreeEnds;
 

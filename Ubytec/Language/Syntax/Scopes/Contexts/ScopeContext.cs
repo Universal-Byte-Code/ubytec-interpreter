@@ -22,6 +22,8 @@ namespace Ubytec.Language.Syntax.Scopes.Contexts
         public Queue<int> SwitchSlots { get; } = new();
         public int? SwitchOffset { get; set; }
         public bool HasDefault { get; set; }
+        internal bool IsContractBlock { get; set; }
+        internal bool CheckedBlockResult { get; set; }
 
         /// <summary>
         /// Gets or sets the unique label marking the start of this scope.

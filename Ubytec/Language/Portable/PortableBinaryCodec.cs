@@ -115,6 +115,14 @@ public sealed record PortableExtendedStackInstruction(byte Operation, ushort Ind
 /// <summary>Lexical BLOCK, optionally declaring a void or one-cell result.</summary>
 public sealed record PortableBlockInstruction(uint? ResultTypeIndex) : PortableInstruction(BLOCK.OP);
 
+/// <summary>Explicit scalar input/result contract, eligible for structured BREAK.</summary>
+public sealed record PortableContractBlockInstruction(
+    IReadOnlyList<uint> InputTypeIndices, uint ResultTypeIndex, bool Checked)
+    : PortableInstruction(BLOCK.OP)
+{
+    public const int MaxInputs = 1024;
+}
+
 /// <summary>BREAK/CONTINUE with an ordinal among eligible enclosing control scopes.</summary>
 public sealed record PortableControlTransferInstruction(byte Operation, uint TargetOrdinal)
     : PortableInstruction(Operation);
@@ -454,8 +462,22 @@ public static class PortableBinaryCodec
                 case BLOCK.OP:
                 {
                     byte mode = reader.ReadByte();
-                    if (mode > 1) throw new InvalidDataException("Unknown BLOCK result mode.");
-                    result.Add(new PortableBlockInstruction(mode == 1 ? reader.ReadUInt32() : null));
+                    if (mode == 2)
+                    {
+                        byte policy = reader.ReadByte();
+                        if (policy > 1) throw new InvalidDataException("Unknown BLOCK conversion policy.");
+                        uint count = reader.ReadUInt32();
+                        if (count > PortableContractBlockInstruction.MaxInputs)
+                            throw new InvalidDataException("Too many BLOCK inputs.");
+                        var inputs = new uint[(int)count];
+                        for (int i = 0; i < inputs.Length; i++) inputs[i] = reader.ReadUInt32();
+                        result.Add(new PortableContractBlockInstruction(inputs, reader.ReadUInt32(), policy == 1));
+                    }
+                    else
+                    {
+                        if (mode > 1) throw new InvalidDataException("Unknown BLOCK result mode.");
+                        result.Add(new PortableBlockInstruction(mode == 1 ? reader.ReadUInt32() : null));
+                    }
                     break;
                 }
 
@@ -645,6 +667,17 @@ public static class PortableBinaryCodec
                     if (operandFree.OpCode is BREAK.OP or CONTINUE.OP or BLOCK.OP)
                         throw new InvalidDataException("Structured instruction requires explicit typed operands.");
                     stream.WriteByte(operandFree.OpCode);
+                    break;
+
+                case PortableContractBlockInstruction contract:
+                    if (contract.InputTypeIndices.Count > PortableContractBlockInstruction.MaxInputs)
+                        throw new InvalidDataException("Too many BLOCK inputs.");
+                    stream.WriteByte(BLOCK.OP);
+                    stream.WriteByte(2);
+                    stream.WriteByte(contract.Checked ? (byte)1 : (byte)0);
+                    WriteUInt32(stream, checked((uint)contract.InputTypeIndices.Count));
+                    foreach (uint input in contract.InputTypeIndices) WriteUInt32(stream, input);
+                    WriteUInt32(stream, contract.ResultTypeIndex);
                     break;
 
                 case PortableBlockInstruction block:
