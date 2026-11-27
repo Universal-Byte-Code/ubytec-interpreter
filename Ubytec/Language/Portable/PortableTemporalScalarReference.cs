@@ -87,18 +87,18 @@ public static class PortableTemporalScalarReference
             plans.Add(index, new Plan(code, sites));
         }
 
-        var identity = new PortableRuntimeIdentity();
+        var coordinator = new PortableTemporalCoordinator(maxEvents);
+        var identity = coordinator.Identity;
         var loaded = identity.Load(bytes, PortableExecutionProfile.DirectOnly, maxInstructions);
-        var publication = new PortableEventPublication(identity.Session, maxEvents);
-        var states = selected.Select(index => new State(identity.CreateContext(), index, plans[index])).ToArray();
+        var publication = coordinator.Publication;
+        var states = selected.Select(index => new State(coordinator.CreateContext(), index, plans[index])).ToArray();
+        var byContext = states.ToDictionary(state => state.Context);
         var trace = new List<PortableScalarBoundary>();
-        ulong round = 0;
-        while (states.Any(state => !state.Done))
+        while (coordinator.LiveCount != 0)
         {
-            round = checked(round + 1);
-            foreach (State state in states)
+            coordinator.RunRound(id => byContext[id], (id, state) =>
             {
-                if (state.Done) continue;
+                ulong round = coordinator.Round;
                 if (trace.Count >= maxEvents)
                     throw new InvalidOperationException("Temporal reference event limit reached.");
                 if (state.Activation is null)
@@ -106,7 +106,7 @@ public static class PortableTemporalScalarReference
                     var entry = identity.EnterObserved(state.Context, loaded, state.Function);
                     state.Activation = entry.Activation;
                     trace.Add(new(round, PortableScalarBoundaryKind.Enter, publication.Publish(entry), 0, null, null));
-                    continue;
+                    return;
                 }
                 var activation = state.Activation.Value;
                 if (state.AbortPending)
@@ -115,7 +115,8 @@ public static class PortableTemporalScalarReference
                     trace.Add(new(round, PortableScalarBoundaryKind.Abort, publication.Publish(aborted),
                         state.Fuel, null, null));
                     state.Done = true;
-                    continue;
+                    coordinator.Retire(id);
+                    return;
                 }
 
                 for (int charged = 1; charged <= quantum; charged++)
@@ -140,6 +141,7 @@ public static class PortableTemporalScalarReference
                             trace.Add(new(round, PortableScalarBoundaryKind.Return, publication.Publish(returned),
                                 state.Fuel, occurrence, state.Result));
                             state.Done = true;
+                            coordinator.Retire(id);
                             break;
                         case PortableOperandFreeInstruction op when op.OpCode == TRAP.OP:
                             var fault = identity.Record(activation, occurrence.InstructionOffset);
@@ -159,9 +161,8 @@ public static class PortableTemporalScalarReference
                         break;
                     }
                 }
-            }
+            });
         }
-        foreach (State state in states) identity.RetireContext(state.Context);
         identity.Unload(loaded);
         return new PortableScalarOutcome(trace.AsReadOnly(), Array.AsReadOnly(states.Select(s => s.Result).ToArray()));
     }
