@@ -98,25 +98,25 @@ public sealed class PortableContextTable
     internal void RequireNoImports(int count)
     {
         if (Restricted && count != 0)
-            throw new InvalidDataException("DirectOnly forbids imports.");
+            throw new InvalidDataException("Restricted profile forbids imports.");
     }
 
     internal void RequireValueExport(PortablePassingMode mode)
     {
         if (Restricted && mode != PortablePassingMode.Value)
-            throw new InvalidDataException("DirectOnly forbids loan exports.");
+            throw new InvalidDataException("Restricted profile forbids loan exports.");
     }
 
     internal void RejectIndirect()
     {
         if (Restricted)
-            throw new InvalidDataException("DirectOnly forbids FNADDR and CALLI.");
+            throw new InvalidDataException("Restricted profile forbids FNADDR and CALLI.");
     }
 
     internal void RequireNamedMemory(byte mode)
     {
         if (Restricted && mode != 2)
-            throw new InvalidDataException("DirectOnly forbids raw memory access.");
+            throw new InvalidDataException("Restricted profile forbids raw memory access.");
     }
 
     // The structural and raw verifier both invoke this closed opcode policy only
@@ -142,6 +142,6 @@ public sealed class PortableContextTable
             Ubytec.Language.Operations.StackOperations.TwoROT.OP or
             Ubytec.Language.Operations.StackOperations.TwoOVER.OP)
             return;
-        throw new InvalidDataException($"DirectOnly forbids opcode 0x{opcode:X2}.");
+        throw new InvalidDataException($"Restricted profile forbids opcode 0x{opcode:X2}.");
     }
 }

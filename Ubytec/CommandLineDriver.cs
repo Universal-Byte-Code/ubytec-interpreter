@@ -62,7 +62,9 @@ internal static class CommandLineDriver
         if (args.Length == 2 && string.Equals(args[0], "--verify-module", StringComparison.Ordinal))
             return VerifyPortableModule(args[1]);
         if (args.Length == 2 && string.Equals(args[0], "--verify-direct-only", StringComparison.Ordinal))
-            return VerifyPortableModule(args[1], requireDirectOnly: true);
+            return VerifyPortableModule(args[1], PortableExecutionProfile.DirectOnly);
+        if (args.Length == 2 && string.Equals(args[0], "--verify-callable-local", StringComparison.Ordinal))
+            return VerifyPortableModule(args[1], PortableExecutionProfile.CallableLocal);
 
         if (NeedsHelp(args))
         {
@@ -85,13 +87,13 @@ internal static class CommandLineDriver
         }
     }
 
-    private static int VerifyPortableModule(string path, bool requireDirectOnly = false)
+    private static int VerifyPortableModule(string path, PortableExecutionProfile? requiredProfile = null)
     {
         try
         {
             byte[] bytes = File.ReadAllBytes(path);
-            if (requireDirectOnly)
-                PortableBinaryVerifier.Verify(bytes, requireDirectOnly: true);
+            if (requiredProfile is PortableExecutionProfile profile)
+                PortableBinaryVerifier.Verify(bytes, profile);
             PortableProcessEntrypoint.Verify(bytes);
             PortableModuleImage image = PortableModuleFormat.Decode(bytes);
             Console.WriteLine(
@@ -485,6 +487,7 @@ internal static class CommandLineDriver
         Console.WriteLine("Usage: ubytec <source.ubc> [-o <output.nasm>] [--portable-x64] [--legacy-source-x64] [--portable-module <module.ubcm>] [--indexed-executable] [--grammar <grammar.json>] [--json <module.json>] [--metadata <metadata.json>] [--no-metadata] [--library] [--tail-calls] [--stack-transfers] [--frame-values] [--frame-registers] [--loop-reductions] [--block-reductions] [--block-reductions-native] [--record-reductions] [--lookup-reductions] [--effect-registers] [--module-calls] [--host-io] [--arena-imports] [--generated-source <source.ubc>] [--host-export Function=ubytec_host_symbol]");
         Console.WriteLine("       ubytec --verify-module <module.ubcm>");
         Console.WriteLine("       ubytec --verify-direct-only <module.ubcm>");
+        Console.WriteLine("       ubytec --verify-callable-local <module.ubcm>");
         Console.WriteLine("--direct-only selects the restricted scalar execution profile: no indirect calls, raw memory, imports or loan exports. Not a full memory-safety guarantee.");
         Console.WriteLine("       ubytec --format-stdin < input.ubc > output.ubc");
         Console.WriteLine("Portable x64 is the default native path: source -> semantic frontend -> indexed UBCM -> independent verifier -> typed decoder -> x64.");
