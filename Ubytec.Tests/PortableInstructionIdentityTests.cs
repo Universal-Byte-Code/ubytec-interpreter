@@ -1,4 +1,5 @@
 using System.Buffers.Binary;
+using System.Security.Cryptography;
 using Ubytec.Language.AST;
 using Ubytec.Language.Portable;
 using Xunit;
@@ -81,6 +82,45 @@ public sealed class PortableInstructionIdentityTests
         BinaryPrimitives.WriteUInt64LittleEndian(augmented.AsSpan(bytes.Length + 4, 8), 1);
         augmented[^1] = 0xAA;
         Assert.Equal(first, PortableBinaryVerifier.IdentifyInstruction(augmented, 0, 0));
+    }
+
+    [Fact]
+    public void DigestMatchesIndependentRawSectionProjectionAndEntrypoint()
+    {
+        byte[] library = Image();
+        byte[] process = PortableProcessEntrypoint.Attach(library, 0);
+        byte[] emptyProcess = PortableProcessEntrypoint.Attach(library, null);
+        var hashes = new HashSet<string>();
+        foreach (byte[] bytes in new[] { library, process, emptyProcess })
+        {
+            var occurrence = PortableBinaryVerifier.IdentifyInstruction(bytes, 0, 0);
+            Assert.Equal(Project(bytes), occurrence.ExecutableDigest);
+            Assert.True(hashes.Add(occurrence.ExecutableDigest));
+        }
+
+        static string Project(byte[] image)
+        {
+            // Independent oracle: copy raw serialized section framing, without using the decoder.
+            var selected = new List<byte[]>();
+            int offset = 12;
+            uint count = BinaryPrimitives.ReadUInt32LittleEndian(image.AsSpan(8, 4));
+            for (uint i = 0; i < count; i++)
+            {
+                ushort kind = BinaryPrimitives.ReadUInt16LittleEndian(image.AsSpan(offset, 2));
+                int size = checked(12 + (int)BinaryPrimitives.ReadUInt64LittleEndian(image.AsSpan(offset + 4, 8)));
+                if (kind == 2 || kind == 3 || (kind >= 16 && kind <= 25))
+                    selected.Add(image.AsSpan(offset, size).ToArray());
+                offset += size;
+            }
+            using var preimage = new MemoryStream();
+            preimage.Write("UBYTEC-EXEC-ID-V1\0"u8);
+            preimage.Write(image.AsSpan(4, 4));
+            using var writer = new BinaryWriter(preimage, System.Text.Encoding.UTF8, leaveOpen: true);
+            writer.Write((uint)selected.Count);
+            foreach (var section in selected) writer.Write(section);
+            writer.Flush();
+            return Convert.ToHexString(SHA256.HashData(preimage.ToArray()));
+        }
     }
 
     [Fact]
