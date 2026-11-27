@@ -103,6 +103,12 @@ public sealed record PortableFunctionAddressInstruction(uint FunctionIndex)
 public sealed record PortableCallIndirectInstruction(byte ArgumentCount, PrimitiveType ReturnType)
     : PortableInstruction(FunctionOperations.CALLI.OP);
 
+/// <summary>Depth-one extended stack instruction with a little-endian UInt16 operand.</summary>
+public sealed record PortableExtendedStackInstruction(byte Operation, ushort Index) : PortableInstruction(0xFF);
+
+/// <summary>Exact 64-bit case literal for structured BRANCH.</summary>
+public sealed record PortableBranchInstruction(ulong CaseCell) : PortableInstruction(BRANCH.OP);
+
 /// <summary>LOAD/STORE portable addressing operands.</summary>
 public sealed record PortableMemoryInstruction(
     byte MemoryOpCode,
@@ -400,7 +406,20 @@ public static class PortableBinaryCodec
             switch (opcode)
             {
                 case 0xFF:
-                    throw new NotSupportedException("Extended opcodes are not supported by indexed executable v0.");
+                {
+                    if (reader.ReadByte() != 0x10)
+                        throw new NotSupportedException("Unsupported extended opcode depth/group.");
+                    byte operation = reader.ReadByte();
+                    if (operation is not (0x11 or 0x18 or 0x1D or 0x1E))
+                        throw new InvalidDataException("Unknown extended stack opcode.");
+                    ushort index = BinaryPrimitives.ReadUInt16LittleEndian(reader.ReadBytes(2));
+                    result.Add(new PortableExtendedStackInstruction(operation, index));
+                    break;
+                }
+
+                case BRANCH.OP:
+                    result.Add(new PortableBranchInstruction(reader.ReadUInt64()));
+                    break;
 
                 case RETURN.OP:
                 {
@@ -602,6 +621,21 @@ public static class PortableBinaryCodec
                     stream.WriteByte(StackOperations.PUSH.OP);
                     stream.WriteByte(checked((byte)push.Immediate.Length));
                     stream.Write(push.Immediate);
+                    break;
+
+                case PortableExtendedStackInstruction extended:
+                    if (extended.Operation is not (0x11 or 0x18 or 0x1D or 0x1E))
+                        throw new InvalidDataException("Unknown extended stack opcode.");
+                    stream.WriteByte(0xFF);
+                    stream.WriteByte(0x10);
+                    stream.WriteByte(extended.Operation);
+                    stream.WriteByte((byte)extended.Index);
+                    stream.WriteByte((byte)(extended.Index >> 8));
+                    break;
+
+                case PortableBranchInstruction branch:
+                    stream.WriteByte(BRANCH.OP);
+                    WriteUInt64(stream, branch.CaseCell);
                     break;
 
                 case PortableStackIndexInstruction stack:
