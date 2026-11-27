@@ -23,3 +23,4 @@ jobs:
           python-version: '3.12'
       - run: python prototypes/temporal/reference.py
       - run: python prototypes/temporal/frontier.py
+      - run: python prototypes/temporal/clock_arbitration.py
