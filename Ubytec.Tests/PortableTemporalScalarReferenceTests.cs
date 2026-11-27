@@ -40,7 +40,7 @@ public sealed class PortableTemporalScalarReferenceTests
         Assert.Equal(PortableBinaryVerifier.IdentifyInstruction(image, 0, 10), outcome.Trace[2].Occurrence);
         Assert.Equal(outcome.Trace[2].Occurrence, outcome.Trace[3].Occurrence);
         Assert.NotEqual(outcome.Trace[2].Event.Id, outcome.Trace[3].Event.Id);
-        var again = PortableTemporalScalarReference.Run(image, [0, 0], quantum: 2);
+        var again = PortableTemporalScalarReference.Run(image, [0, 0], quantum: 2, parallel: true);
         Assert.Equal(Normalize(outcome), Normalize(again));
         Assert.NotEqual(outcome.Trace[0].Event.Id.Context.Session, again.Trace[0].Event.Id.Context.Session);
 
