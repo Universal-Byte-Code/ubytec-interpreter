@@ -60,6 +60,7 @@ public sealed class PortableTemporalCoordinator
     }
 
     private PortableRuntimeContextId Id(ulong ordinal) => new(Session, ordinal);
+    private ulong EffectRound => _inRound ? Round : checked(Round + 1);
 
     private void CheckUsable()
     {
@@ -139,7 +140,7 @@ public sealed class PortableTemporalCoordinator
     {
         Publication.RequireCapacity();
         return Publication.Publish(new PortableTemporalEffect(Identity.AllocateEffect(Id(context)), kind,
-            Round, value, Array.AsReadOnly(dependencies)));
+            EffectRound, value, Array.AsReadOnly(dependencies)));
     }
 
     private void ValidateSample(ulong value)
@@ -156,7 +157,7 @@ public sealed class PortableTemporalCoordinator
         Publication.RequireCapacity(checked(1 + due.Length));
         var sample = Publish(context, kind, value);
         _lastSample = value;
-        _observations.Add(new(Round, context, value));
+        _observations.Add(new(EffectRound, context, value));
         foreach (var pair in due)
         {
             Publish(pair.Key, PortableTemporalEffectKind.TimerExpire, value, pair.Value.Registration.Id, sample.Id);
@@ -169,7 +170,7 @@ public sealed class PortableTemporalCoordinator
     {
         if (_replay is not null)
         {
-            if (!_replay.TryPeek(out var row) || row.Round != Round || row.ContextOrdinal != context)
+            if (!_replay.TryPeek(out var row) || row.Round != EffectRound || row.ContextOrdinal != context)
                 throw new InvalidDataException("Missing or mismatched clock replay observation.");
             return row.Nanoseconds;
         }
