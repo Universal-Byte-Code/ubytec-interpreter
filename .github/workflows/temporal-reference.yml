@@ -24,3 +24,4 @@ jobs:
       - run: python prototypes/temporal/reference.py
       - run: python prototypes/temporal/frontier.py
       - run: python prototypes/temporal/clock_arbitration.py
+      - run: python prototypes/temporal/process_workers.py
