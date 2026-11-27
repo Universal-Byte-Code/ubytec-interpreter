@@ -15,11 +15,26 @@ public readonly record struct PortableRuntimeEvent(
     PortableRuntimeEventId Id, PortableActivationId Activation,
     PortableLoadedInstanceId Instance, PortableInstructionOccurrence Occurrence);
 
+/// <summary>Conservative classification of a Linux synchronous signal observation.</summary>
+public enum PortableFaultCategory { Unclassified, IntentionalTrap, ArithmeticSignal, MemorySignal }
+
 /// <summary>Observed fault, with optional static attribution. Signal is a host observation,
 /// not a portable trap reason; an exact UD2 address alone does not prove the signal cause.</summary>
 public readonly record struct PortableRuntimeFault(
     PortableRuntimeEventId Id, PortableActivationId Activation, PortableLoadedInstanceId Instance,
-    string ArtifactDigest, ulong ImageOffset, int Signal, PortableElfAttribution? Attribution);
+    string ArtifactDigest, ulong? ImageOffset, int Signal, PortableElfAttribution? Attribution,
+    int? SignalCode = null)
+{
+    /// <summary>Linux x64 only. Marker metadata is not an independent proof of the signal cause.</summary>
+    public PortableFaultCategory Category => (Signal, SignalCode) switch
+    {
+        (4, 2) when Attribution is { ExactUd2: true, TrapKind: not PortableTrapKind.Unknown } =>
+            PortableFaultCategory.IntentionalTrap,
+        (8, > 0) => PortableFaultCategory.ArithmeticSignal,
+        (7 or 11, > 0) => PortableFaultCategory.MemorySignal,
+        _ => PortableFaultCategory.Unclassified
+    };
+}
 
 /// <summary>
 /// Serial coordinator reference for event identity. Not thread-safe; callers must serialize all
@@ -143,7 +158,7 @@ public sealed class PortableRuntimeIdentity
     /// <summary>Allocate a fault event from a trusted observer's signal and image-relative PC.
     /// An unmapped PC remains unattributed. A conflicting activation is rejected.
     /// Does not terminate or unwind the context; lifecycle is coordinator-owned.</summary>
-    public PortableRuntimeFault RecordNativeFault(PortableActivationId id, ulong imageOffset, int signal)
+    public PortableRuntimeFault RecordNativeFault(PortableActivationId id, ulong? imageOffset, int signal, int? signalCode = null)
     {
         if (signal <= 0) throw new ArgumentOutOfRangeException(nameof(signal));
         Context context = GetContext(id.Context);
@@ -151,12 +166,12 @@ public sealed class PortableRuntimeIdentity
             throw new InvalidOperationException("Activation is not the current invocation.");
         Loaded loaded = Instance(active.Instance);
         var map = loaded.Native ?? throw new InvalidOperationException("No native artifact bound.");
-        var attribution = map.Attribute(map.ArtifactDigest, imageOffset);
+        var attribution = imageOffset.HasValue ? map.Attribute(map.ArtifactDigest, imageOffset.Value) : null;
         if (attribution is { } site && site.Occurrence.FunctionIndex != active.Function)
             throw new InvalidDataException("Native PC conflicts with the current activation.");
         var eventId = new PortableRuntimeEventId(id.Context, Next(ref context.LastEvent));
         return new PortableRuntimeFault(eventId, id, active.Instance, map.ArtifactDigest,
-            imageOffset, signal, attribution);
+            imageOffset, signal, attribution, signalCode);
     }
 
     private Loaded Instance(PortableLoadedInstanceId id) =>
