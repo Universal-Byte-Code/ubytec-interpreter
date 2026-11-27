@@ -101,6 +101,59 @@ public sealed class PortableCallableTests
     }
 
     [Fact]
+    public void SwitchSelectorAndCallableBankDoNotAlias()
+    {
+        PortableBinaryModule module = Fixture();
+        PortableExecutableModule executable = module.Executable!;
+        var functions = executable.Functions.ToArray();
+        functions[2] = functions[2] with
+        {
+            Instructions =
+            [
+                new PortableCallableInstruction(0, 0, 0),
+                new PortablePushInstruction([2]),
+                new PortableOperandFreeInstruction(0x0B), // SWITCH
+                new PortableBranchInstruction(2),
+                new PortableCallableInstruction(0, 1, 1),
+                new PortableOperandFreeInstruction(0x06),
+                new PortableOperandFreeInstruction(0x0E), // DEFAULT
+                new PortableCallableInstruction(0, 1, 0),
+                new PortableOperandFreeInstruction(0x06),
+                new PortableCallableInstruction(3, 0),
+                new PortableCallableInstruction(3, 1),
+                new PortableOperandFreeInstruction(0x20), // ADD
+                new PortableReturnInstruction(null)
+            ]
+        };
+        byte[] bytes = PortableBinaryCodec.Encode(module with { Executable = executable with { Functions = functions } });
+        PortableBinaryVerifier.Verify(bytes, PortableExecutionProfile.CallableLocal);
+        var native = PortableX64Backend.Compile(bytes);
+        Assert.Equal(18L, Assert.Single(NativeStack.Run(
+            "call ubytec_binary_f_2\npush rax", 1, native.Assembly)));
+    }
+
+    [Fact]
+    public void ExtendedReadCannotReachCallableBank()
+    {
+        PortableBinaryModule module = Fixture();
+        PortableExecutableModule executable = module.Executable!;
+        var functions = executable.Functions.ToArray();
+        functions[2] = functions[2] with
+        {
+            Instructions =
+            [
+                new PortableCallableInstruction(0, 0, 0),
+                new PortablePushInstruction([42]),
+                new PortableExtendedStackInstruction(0x11, 7),
+                new PortableReturnInstruction(null)
+            ]
+        };
+        byte[] bytes = PortableBinaryCodec.Encode(module with { Executable = executable with { Functions = functions } });
+        Assert.Throws<InvalidDataException>(() =>
+            PortableBinaryVerifier.Verify(bytes, PortableExecutionProfile.CallableLocal));
+    }
+
+    [Fact]
     public void NativeBackendRejectsTailReuse()
     {
         Assert.Throws<InvalidDataException>(() => PortableX64Backend.Compile(Bytes(), optimizeTailCalls: true));

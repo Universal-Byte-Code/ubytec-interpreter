@@ -503,9 +503,22 @@ public static class IndexedExecutableFormat
         IReadOnlyDictionary<string, uint> importIndices)
     {
         if (operation is IExtendedOpCode extended)
-            throw new NotSupportedException(
-                $"Indexed executable v0 reference lowering does not yet define operands for extended opcode " +
-                $"depth={extended.EscapeDepth}, group=0x{extended.ExtensionGroup:X2}, opcode=0x{extended.ExtendedOpCode:X2}.");
+        {
+            ushort index = operation switch
+            {
+                ExtendedStackOperations.PUSH16 value => value.StackIndex,
+                ExtendedStackOperations.DROP16 value => value.StackIndex,
+                ExtendedStackOperations.PICK16 value => value.N,
+                ExtendedStackOperations.ROLL16 value => value.N,
+                _ => throw new NotSupportedException("Unsupported indexed extended opcode.")
+            };
+            stream.WriteByte(0xFF);
+            stream.WriteByte(0x10);
+            stream.WriteByte(extended.ExtendedOpCode);
+            stream.WriteByte((byte)index);
+            stream.WriteByte((byte)(index >> 8));
+            return;
+        }
 
         switch (operation)
         {
@@ -636,6 +649,21 @@ public static class IndexedExecutableFormat
                 stream.WriteByte(IF.OP);
                 stream.WriteByte(BREAK.OP);
                 stream.WriteByte(END.OP);
+                return;
+
+            case SWITCH selection:
+                RequireDefaultBlockType(selection.BlockType, operation);
+                if (selection.TableIDx.HasValue)
+                    throw Unsupported(operation, "labeled SWITCH is not supported in indexed v0");
+                stream.WriteByte(SWITCH.OP);
+                return;
+
+            case BRANCH branch:
+                RequireDefaultBlockType(branch.BlockType, operation);
+                if (branch.LabelIDx.HasValue)
+                    throw Unsupported(operation, "labeled BRANCH is not supported in indexed v0");
+                stream.WriteByte(BRANCH.OP);
+                WriteUInt64(stream, unchecked((ulong)FunctionCode.InitialValue(new UType(PrimitiveType.Int64), branch.CaseValue)));
                 return;
 
             case ELSE alternate:
@@ -1309,6 +1337,9 @@ public static class IndexedExecutableFormat
             while (!reader.AtEnd)
             {
                 byte opcode = reader.ReadByte("Opcode");
+                if (controls.TryPeek(out byte enclosing) && enclosing == SWITCH.OP &&
+                    opcode is not (BRANCH.OP or DEFAULT.OP or END.OP))
+                    throw new InvalidDataException("SWITCH requires BRANCH, DEFAULT or END.");
                 if (opcode == 0xFF)
                 {
                     int depth = 1;
@@ -1321,6 +1352,13 @@ public static class IndexedExecutableFormat
                     byte extendedOpcode = reader.ReadByte("Extended opcode number");
                     if (group == 0xFF || extendedOpcode == 0xFF)
                         throw new InvalidDataException("0xFF is reserved in extended opcode group/code positions.");
+                    if (depth == 1 && group == 0x10 && extendedOpcode is 0x11 or 0x18 or 0x1D or 0x1E)
+                    {
+                        int index = reader.ReadByte("Extended stack index low");
+                        index |= reader.ReadByte("Extended stack index high") << 8;
+                        _ = index;
+                        continue;
+                    }
                     if (depth == 1 && group == 0x13)
                     {
                         if (callables is null || extendedOpcode > 3)
@@ -1442,6 +1480,27 @@ public static class IndexedExecutableFormat
                         break;
                     }
 
+                    case SWITCH.OP:
+                        controls.Push(SWITCH.OP);
+                        break;
+
+                    case BRANCH.OP:
+                        if (!controls.TryPeek(out byte selection) || selection != SWITCH.OP)
+                            throw new InvalidDataException("BRANCH requires SWITCH before DEFAULT.");
+                        _ = reader.ReadUInt64("BRANCH case cell");
+                        controls.Push(BRANCH.OP);
+                        break;
+
+                    case DEFAULT.OP:
+                        if (controls.TryPeek(out byte parent) && parent == SWITCH.OP)
+                        {
+                            controls.Pop();
+                            controls.Push(DEFAULT.OP);
+                        }
+                        else if (parent == DEFAULT.OP)
+                            throw new InvalidDataException("Duplicate SWITCH DEFAULT.");
+                        break;
+
                     case BLOCK.OP:
                     case LOOP.OP:
                     case IF.OP:
@@ -1463,7 +1522,8 @@ public static class IndexedExecutableFormat
 
                     case BREAK.OP:
                     case CONTINUE.OP:
-                        if (!controls.Any(control => control == LOOP.OP || control == WHILE.OP))
+                        if (!controls.Any(control => control == LOOP.OP || control == WHILE.OP ||
+                            (opcode == BREAK.OP && control is SWITCH.OP or DEFAULT.OP)))
                             throw new InvalidDataException(
                                 $"Portable opcode 0x{opcode:X2} requires an enclosing LOOP or WHILE.");
                         break;

@@ -591,7 +591,8 @@ public static class PortableBinaryVerifier
             ControlFrame TransferTarget(byte opcode)
             {
                 ControlFrame? target = controls.FirstOrDefault(frame =>
-                    frame.Kind is ControlKind.Loop or ControlKind.While);
+                    frame.Kind is ControlKind.Loop or ControlKind.While ||
+                    (opcode == BREAK.OP && frame.Kind == ControlKind.Switch));
                 return target ?? throw new InvalidDataException(
                     $"FunctionIndex {functionIndex} opcode 0x{opcode:X2} requires an enclosing LOOP or WHILE.");
             }
@@ -599,6 +600,9 @@ public static class PortableBinaryVerifier
             while (!reader.AtEnd)
             {
                 byte opcode = reader.ReadByte("Opcode");
+                if (controls.TryPeek(out ControlFrame? enclosing) && enclosing.Kind == ControlKind.Switch &&
+                    !enclosing.HasDefault && opcode is not (BRANCH.OP or DEFAULT.OP or END.OP))
+                    throw new InvalidDataException("SWITCH requires BRANCH, DEFAULT or END.");
                 if (opcode == 0xFF)
                 {
                     int escapeDepth = 1;
@@ -612,6 +616,15 @@ public static class PortableBinaryVerifier
                     if (group == 0xFF || extendedOpcode == 0xFF)
                         throw new InvalidDataException(
                             "0xFF is reserved in extended opcode group/code positions.");
+                    if (escapeDepth == 1 && group == 0x10 && extendedOpcode is 0x11 or 0x18 or 0x1D or 0x1E)
+                    {
+                        int index = reader.ReadByte("Extended stack index low");
+                        index |= reader.ReadByte("Extended stack index high") << 8;
+                        int required = extendedOpcode == 0x11 ? (index + 9) / 8 : index + 1;
+                        int delta = extendedOpcode == 0x18 ? -1 : extendedOpcode == 0x1E ? 0 : 1;
+                        Apply(required, delta, opcode);
+                        continue;
+                    }
                     if (escapeDepth == 1 && group == 0x13)
                     {
                         if (callables is null || extendedOpcode > 3)
@@ -801,6 +814,36 @@ public static class PortableBinaryVerifier
                         break;
                     }
 
+                    case SWITCH.OP:
+                        Apply(1, -1, opcode);
+                        controls.Push(new ControlFrame(ControlKind.Switch, stackDepth, reachable));
+                        reachable = false; // No executable body until a case or default.
+                        break;
+
+                    case BRANCH.OP:
+                    {
+                        if (!controls.TryPeek(out ControlFrame? selection) ||
+                            selection.Kind != ControlKind.Switch || selection.HasDefault)
+                            throw new InvalidDataException("BRANCH requires SWITCH before DEFAULT.");
+                        _ = reader.ReadUInt64("BRANCH case cell");
+                        stackDepth = selection.EntryDepth;
+                        reachable = selection.EntryReachable;
+                        controls.Push(new ControlFrame(ControlKind.Branch, stackDepth, reachable));
+                        break;
+                    }
+
+                    case DEFAULT.OP:
+                        if (controls.TryPeek(out ControlFrame? parent) && parent.Kind == ControlKind.Switch)
+                        {
+                            if (parent.HasDefault) throw new InvalidDataException("Duplicate SWITCH DEFAULT.");
+                            parent.HasDefault = true;
+                            stackDepth = parent.EntryDepth;
+                            reachable = parent.EntryReachable;
+                        }
+                        else
+                            ApplyOperandFreeStackEffect(opcode, ref stackDepth, ref reachable, functionIndex);
+                        break;
+
                     case BLOCK.OP:
                         controls.Push(new ControlFrame(ControlKind.Block, stackDepth, reachable));
                         break;
@@ -846,6 +889,23 @@ public static class PortableBinaryVerifier
                         ControlFrame frame = controls.Pop();
                         switch (frame.Kind)
                         {
+                            case ControlKind.Branch:
+                            {
+                                ControlFrame selection = controls.Peek();
+                                if (reachable) selection.MergeExit(stackDepth);
+                                stackDepth = selection.EntryDepth;
+                                reachable = false;
+                                break;
+                            }
+
+                            case ControlKind.Switch:
+                                if (frame.HasDefault && reachable) frame.MergeExit(stackDepth);
+                                if ((!frame.HasDefault && frame.EntryReachable) || frame.HasReachableBreak)
+                                    frame.MergeExit(frame.EntryDepth);
+                                reachable = frame.ExitDepth.HasValue;
+                                stackDepth = frame.ExitDepth ?? frame.EntryDepth;
+                                break;
+
                             case ControlKind.Block:
                                 RequireDepth(frame.EntryDepth, opcode, "BLOCK end");
                                 stackDepth = frame.EntryDepth;
@@ -1348,7 +1408,9 @@ public static class PortableBinaryVerifier
         If,
         Else,
         Loop,
-        While
+        While,
+        Switch,
+        Branch
     }
 
     private sealed class ControlFrame(ControlKind kind, int entryDepth, bool entryReachable)
@@ -1359,6 +1421,15 @@ public static class PortableBinaryVerifier
         internal bool ThenReachable { get; set; }
         internal int ThenDepth { get; set; }
         internal bool HasReachableBreak { get; set; }
+        internal bool HasDefault { get; set; }
+        internal int? ExitDepth { get; private set; }
+
+        internal void MergeExit(int depth)
+        {
+            if (ExitDepth is int previous && previous != depth)
+                throw new InvalidDataException("SWITCH paths leave different evaluation stack depths.");
+            ExitDepth = depth;
+        }
     }
 
     private sealed class ByteArrayComparer : IComparer<byte[]>

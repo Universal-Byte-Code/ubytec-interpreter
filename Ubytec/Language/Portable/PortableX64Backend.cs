@@ -162,6 +162,7 @@ public static class PortableX64Backend
 
         string label = functionLabels[functionIndex];
         int slotCount = executable.CallableSlots?.Banks[functionIndex].Count ?? 0;
+        int switchCount = function.Instructions.Count(instruction => instruction.OpCode == SWITCH.OP);
         // Scalar bindings keep their original offsets. The callable bank sits below all
         // locals, above the evaluation-stack baseline and has no BindingIndex.
         int localCount = function.LocalTypeIndices.Count;
@@ -177,7 +178,7 @@ public static class PortableX64Backend
             DeclaredByKeyword = "func",
             ExpectedReturnType = returnType,
             ArgumentCount = function.ArgumentTypeIndices.Count,
-            FrameSize = Align16(checked((localCount + slotCount) * 8))
+            FrameSize = Align16(checked((localCount + slotCount + switchCount) * 8))
         };
         frame.Callables.Add(
             FunctionName(functionIndex),
@@ -206,6 +207,9 @@ public static class PortableX64Backend
                 -8 * (local + 1),
                 IsReadOnly(type)));
         }
+
+        for (int index = 0; index < switchCount; index++)
+            frame.SwitchSlots.Enqueue(checked(-8 * (localCount + slotCount + index + 1)));
 
         var scopes = new CompilationScopes { EmitProcessEntryPoint = false };
         scopes.Push(CloneModuleScope(moduleScope));
@@ -260,6 +264,8 @@ public static class PortableX64Backend
         PortableVariableInstruction variable => CompileVariable(variable, function, frame),
         PortablePushInstruction push => new StackOperations.PUSH(push.Immediate.ToArray()).Compile(scopes),
         PortableStackIndexInstruction stack => CompileStackIndex(stack, scopes),
+        PortableExtendedStackInstruction extended => CompileExtendedStack(extended, scopes),
+        PortableBranchInstruction branch => new BRANCH(unchecked((long)branch.CaseCell)).Compile(scopes),
         PortableCallInstruction call => CompileCall(call, executable, scopes),
         PortableFunctionAddressInstruction address =>
             new FunctionOperations.FNADDR(FunctionName(checked((int)address.FunctionIndex))).Compile(scopes),
@@ -361,6 +367,16 @@ public static class PortableX64Backend
         return $"mov rax, 0x{instruction.InitialCell:X16}\n  mov qword {binding.Address}, rax";
     }
 
+    private static string CompileExtendedStack(PortableExtendedStackInstruction instruction, CompilationScopes scopes) =>
+        instruction.Operation switch
+        {
+            0x11 => new ExtendedStackOperations.PUSH16(instruction.Index).Compile(scopes),
+            0x18 => new ExtendedStackOperations.DROP16(instruction.Index).Compile(scopes),
+            0x1D => new ExtendedStackOperations.PICK16(instruction.Index).Compile(scopes),
+            0x1E => new ExtendedStackOperations.ROLL16(instruction.Index).Compile(scopes),
+            _ => throw new InvalidDataException("Unknown extended stack opcode.")
+        };
+
     private static string CompileStackIndex(PortableStackIndexInstruction instruction, CompilationScopes scopes) =>
         instruction.StackOpCode switch
         {
@@ -413,7 +429,7 @@ public static class PortableX64Backend
 
     private static string CompileOperandFree(byte opcode, CompilationScopes scopes)
     {
-        if (opcode is BLOCK.OP or LOOP.OP or IF.OP or ELSE.OP or END.OP or BREAK.OP or CONTINUE.OP or WHILE.OP)
+        if (opcode is BLOCK.OP or LOOP.OP or IF.OP or ELSE.OP or END.OP or BREAK.OP or CONTINUE.OP or WHILE.OP or SWITCH.OP)
             return CompileStructuredOperandFree(opcode, scopes);
 
         if (!OperandFreeOperations.TryGetValue(opcode, out Type? type) ||
@@ -444,13 +460,14 @@ public static class PortableX64Backend
             BREAK.OP => new BREAK(null),
             CONTINUE.OP => new CONTINUE(null),
             WHILE.OP => new WHILE(),
+            SWITCH.OP => new SWITCH(null),
             _ => throw new InvalidDataException($"Opcode 0x{opcode:X2} is not normalized structured control flow.")
         };
 
         string assembly = operation.Compile(scopes);
         int expectedDepth = opcode switch
         {
-            BLOCK.OP or LOOP.OP or IF.OP or WHILE.OP => depth + 1,
+            BLOCK.OP or LOOP.OP or IF.OP or WHILE.OP or SWITCH.OP => depth + 1,
             END.OP => depth - 1,
             _ => depth
         };
