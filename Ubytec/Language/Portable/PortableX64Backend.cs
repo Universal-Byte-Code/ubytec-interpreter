@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using Ubytec.Language.Operations;
 using Ubytec.Language.Operations.Extended;
@@ -30,6 +31,14 @@ public sealed record PortableX64Compilation(
     public string GetExportLabel(int index) => ExportLabels[index];
 }
 
+/// <summary>Assembly-symbol interval for one verified occurrence; zero-length intervals are permitted.</summary>
+public sealed record PortableNativeSite(PortableInstructionOccurrence Occurrence,
+    string BeginLabel, string EndLabel, IReadOnlyList<string> Ud2Labels);
+
+/// <summary>Provenance candidate for emitted NASM, not a resolved or authenticated ELF address map.</summary>
+public sealed record PortableX64Provenance(PortableX64Compilation Compilation,
+    string AssemblyDigest, IReadOnlyList<PortableNativeSite> Sites);
+
 /// <summary>
 /// Reference x64 backend for indexed Portable Module Format v0.
 ///
@@ -51,7 +60,23 @@ public static class PortableX64Backend
     }
 
     /// <summary>Compiles a typed portable module to Linux x86-64 NASM.</summary>
-    public static PortableX64Compilation Compile(PortableBinaryModule module, bool optimizeTailCalls = false)
+    public static PortableX64Compilation Compile(PortableBinaryModule module, bool optimizeTailCalls = false) =>
+        CompileCore(module, optimizeTailCalls, null, 0);
+
+    /// <summary>Emit unoptimized NASM with object-local marker symbols for each verified instruction
+    /// and each emitted UD2. The returned map must still be resolved and bound to the assembled artifact.</summary>
+    public static PortableX64Provenance CompileWithProvenance(ReadOnlySpan<byte> bytes,
+        int maxInstructions = 1_000_000)
+    {
+        PortableBinaryVerifier.Verify(bytes);
+        var sites = new List<PortableNativeSite>();
+        var compilation = CompileCore(PortableBinaryCodec.Decode(bytes), false, sites, maxInstructions);
+        string digest = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(compilation.Assembly)));
+        return new PortableX64Provenance(compilation, digest, sites.AsReadOnly());
+    }
+
+    private static PortableX64Compilation CompileCore(PortableBinaryModule module, bool optimizeTailCalls,
+        List<PortableNativeSite>? sites, int maxInstructions)
     {
         ArgumentNullException.ThrowIfNull(module);
         if (module.Executable is not { } executable)
@@ -66,6 +91,10 @@ public static class PortableX64Backend
         if (executable.Contexts.Restricted && optimizeTailCalls)
             throw new InvalidDataException("Restricted profiles do not permit frame-reusing tail calls.");
         int dispatchBudget = 65536;
+        var occurrences = sites is null ? null :
+            PortableBinaryVerifier.IdentifyInstructions(canonical, maxInstructions)
+                .GroupBy(site => site.FunctionIndex)
+                .ToDictionary(group => group.Key, group => group.ToArray());
 
         string[] functionLabels = Enumerable.Range(0, executable.Functions.Count)
             .Select(FunctionLabel)
@@ -86,7 +115,8 @@ public static class PortableX64Backend
             output.AppendLine($"extern {import}");
 
         for (int index = 0; index < executable.Functions.Count; index++)
-            EmitFunction(output, executable, index, functionLabels, moduleScope, optimizeTailCalls, ref dispatchBudget);
+            EmitFunction(output, executable, index, functionLabels, moduleScope, optimizeTailCalls, ref dispatchBudget,
+                occurrences?.GetValueOrDefault((uint)index) ?? Array.Empty<PortableInstructionOccurrence>(), sites);
 
         for (int index = 0; index < executable.Exports.Count; index++)
         {
@@ -153,7 +183,9 @@ public static class PortableX64Backend
         IReadOnlyList<string> functionLabels,
         ScopeContext moduleScope,
         bool optimizeTailCalls,
-        ref int dispatchBudget)
+        ref int dispatchBudget,
+        IReadOnlyList<PortableInstructionOccurrence> occurrences,
+        List<PortableNativeSite>? sites)
     {
         PortableExecutableFunction function = executable.Functions[functionIndex];
         UType returnType = ResolveType(executable, function.ReturnTypeIndex);
@@ -223,6 +255,8 @@ public static class PortableX64Backend
         for (int slot = 0; slot < slotCount; slot++)
             output.AppendLine($"  mov qword {CallableAddress(localCount, (uint)slot)}, 0");
 
+        if (sites is not null && occurrences.Count != function.Instructions.Count)
+            throw new InvalidDataException("Verified instruction boundaries disagree with typed decoder.");
         for (int index = 0; index < function.Instructions.Count; index++)
         {
             if (optimizeTailCalls &&
@@ -236,7 +270,10 @@ public static class PortableX64Backend
             string assembly = function.Instructions[index] is PortableCallableInstruction callable
                 ? CompileCallable(callable, executable, functionIndex, index, localCount, bindTargets, scopes, ref dispatchBudget)
                 : CompileInstruction(function.Instructions[index], executable, functionIndex, function, scopes, frame);
-            AppendIndented(output, assembly);
+            if (sites is null)
+                AppendIndented(output, assembly);
+            else
+                AppendWithProvenance(output, assembly, occurrences[index], sites);
         }
 
         if (scopes.Count != 2)
@@ -598,6 +635,31 @@ public static class PortableX64Backend
     private static string FunctionLabel(int index) => $"ubytec_binary_f_{index}";
     private static string ImportLabel(int index) => $"ubytec_binary_import_{index}";
     private static string ExportLabel(int index) => $"ubytec_binary_export_{index}";
+
+    private static void AppendWithProvenance(StringBuilder output, string assembly,
+        PortableInstructionOccurrence occurrence, List<PortableNativeSite> sites)
+    {
+        // NASM ..@ labels do not change the scope of ordinary local labels.
+        // Symbols are object-local (no global directive) and may be stripped by a linker.
+        string prefix = $"..@ubytec_prov_{occurrence.FunctionIndex}_{occurrence.InstructionOffset}";
+        string begin = prefix + "_begin", end = prefix + "_end";
+        var traps = new List<string>();
+        output.AppendLine(begin + ":");
+        foreach (string line in assembly.ReplaceLineEndings("\n").Split('\n'))
+        {
+            if (line.Length == 0) continue;
+            string mnemonic = line.Split(';', 2)[0].Trim();
+            if (string.Equals(mnemonic, "ud2", StringComparison.OrdinalIgnoreCase))
+            {
+                string trap = prefix + "_ud2_" + traps.Count;
+                traps.Add(trap);
+                output.AppendLine(trap + ":");
+            }
+            output.Append("  ").AppendLine(line);
+        }
+        output.AppendLine(end + ":");
+        sites.Add(new PortableNativeSite(occurrence, begin, end, traps.AsReadOnly()));
+    }
 
     private static void AppendIndented(StringBuilder output, string assembly)
     {

@@ -29,13 +29,32 @@ public static class PortableBinaryVerifier
         return new PortableInstructionOccurrence(probe.Digest!, functionIndex, instructionOffset);
     }
 
-    private sealed class OccurrenceProbe(uint functionIndex, uint instructionOffset)
+    /// <summary>Enumerate verified instruction starts with an explicit resource bound.</summary>
+    public static IReadOnlyList<PortableInstructionOccurrence> IdentifyInstructions(
+        ReadOnlySpan<byte> bytes, int maxInstructions, PortableExecutionProfile? requiredProfile = null)
+    {
+        if (maxInstructions <= 0)
+            throw new ArgumentOutOfRangeException(nameof(maxInstructions));
+        var probe = new OccurrenceProbe(0, 0, maxInstructions);
+        VerifyCore(bytes, requiredProfile, probe);
+        return Array.AsReadOnly(probe.Boundaries!.Select(site =>
+            new PortableInstructionOccurrence(probe.Digest!, site.Function, site.Offset)).ToArray());
+    }
+
+    private sealed class OccurrenceProbe(uint functionIndex, uint instructionOffset, int maxInstructions = 0)
     {
         internal bool Found { get; private set; }
         internal string? Digest { get; set; }
+        internal List<(uint Function, uint Offset)>? Boundaries { get; } = maxInstructions == 0 ? null : new();
 
         internal void Observe(int function, int offset)
         {
+            if (Boundaries is not null)
+            {
+                if (Boundaries.Count == maxInstructions)
+                    throw new InvalidDataException("Instruction identity index exceeds its resource limit.");
+                Boundaries.Add(((uint)function, (uint)offset));
+            }
             if ((uint)function == functionIndex && (uint)offset == instructionOffset)
                 Found = true;
         }
@@ -165,8 +184,10 @@ public static class PortableBinaryVerifier
         VerifyIndexedExecutable(sections, requiredProfile, probe);
         if (probe is not null)
         {
-            if (!probe.Found)
+            if (probe.Boundaries is null && !probe.Found)
                 throw new InvalidDataException("Requested occurrence is not a verified instruction boundary.");
+            if (!sections.Any(section => section.Kind == (ushort)PortableModuleSectionKind.IndexedCode))
+                throw new InvalidDataException("Instruction identity requires an indexed executable.");
             probe.Digest = ExecutableDigest(sections, major, minor);
         }
     }
