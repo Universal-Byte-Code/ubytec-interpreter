@@ -60,6 +60,8 @@ public static class PortableX64Backend
         // Re-encoding validates caller-constructed typed models without consulting source state.
         byte[] canonical = PortableBinaryCodec.Encode(module);
         PortableBinaryVerifier.Verify(canonical);
+        if (executable.Contexts.DirectOnly && optimizeTailCalls)
+            throw new InvalidDataException("DirectOnly does not permit frame-reusing tail calls.");
 
         string[] functionLabels = Enumerable.Range(0, executable.Functions.Count)
             .Select(FunctionLabel)

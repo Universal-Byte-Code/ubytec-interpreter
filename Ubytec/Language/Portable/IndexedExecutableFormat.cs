@@ -33,7 +33,8 @@ public static class IndexedExecutableFormat
         PortableModuleSectionKind.IndexedImportTable,
         PortableModuleSectionKind.IndexedExportTable,
         PortableModuleSectionKind.IndexedConstantTable,
-        PortableModuleSectionKind.IndexedCode
+        PortableModuleSectionKind.IndexedCode,
+        PortableModuleSectionKind.IndexedFunctionContexts
     ];
 
     /// <summary>Returns true when the decoded PMF image carries the complete indexed profile.</summary>
@@ -45,7 +46,8 @@ public static class IndexedExecutableFormat
 
     internal static IReadOnlyList<IndexedSectionPayload> EncodeSections(
         Module module,
-        PortableModuleContracts? contracts)
+        PortableModuleContracts? contracts,
+        PortableExecutionProfile executionProfile = PortableExecutionProfile.UnsafeCells)
     {
         ArgumentNullException.ThrowIfNull(module);
         contracts ??= PortableModuleContracts.Empty;
@@ -120,7 +122,10 @@ public static class IndexedExecutableFormat
             new(PortableModuleSectionKind.IndexedImportTable, importEncoding.Table),
             new(PortableModuleSectionKind.IndexedExportTable, exportTable),
             new(PortableModuleSectionKind.IndexedConstantTable, EmptyTable()),
-            new(PortableModuleSectionKind.IndexedCode, codeSection)
+            new(PortableModuleSectionKind.IndexedCode, codeSection),
+            new(PortableModuleSectionKind.IndexedFunctionContexts,
+                new PortableContextTable(executionProfile, callables.Select(callable =>
+                    callable.Parent is null ? PortableContextTable.NoIndex : functionIndices[callable.Parent]).ToArray()).Encode())
         ];
     }
 
@@ -139,7 +144,7 @@ public static class IndexedExecutableFormat
         int present = SectionKinds.Count(kind => sections.Any(section => section.Kind == (ushort)kind));
         if (present == 0) return;
         if (present != SectionKinds.Length)
-            throw new InvalidDataException("Indexed executable PMF sections 0x0010..0x0016 must be present as a complete group.");
+            throw new InvalidDataException("Indexed executable sections 0x0010..0x0016 and 0x0018 must be present as a complete group.");
 
         foreach (PortableModuleSectionKind kind in SectionKinds)
         {
@@ -160,10 +165,13 @@ public static class IndexedExecutableFormat
         List<TypeEntry> types = ParseTypeTable(typesPayload.Span, strings.Count);
         List<FunctionEntry> functions = ParseFunctionTable(functionsPayload.Span, types.Count);
         List<ImportEntry> imports = ParseImportTable(importsPayload.Span, strings, types);
-        ParseExportTable(exportsPayload.Span, strings, functions, types);
+        PortableContextTable contexts = PortableContextTable.Decode(
+            Required(sections, PortableModuleSectionKind.IndexedFunctionContexts).Payload.Span, functions.Count);
+        contexts.RequireNoImports(imports.Count);
+        ParseExportTable(exportsPayload.Span, strings, functions, types, contexts);
         ParseConstantTable(constantsPayload.Span);
         VerifyFunctionRanges(functions, codePayload.Length);
-        VerifyCode(functions, imports.Count, types, codePayload.Span);
+        VerifyCode(functions, imports.Count, types, codePayload.Span, contexts);
     }
 
     private static PortableModuleSection Required(
@@ -1127,7 +1135,8 @@ public static class IndexedExecutableFormat
         ReadOnlySpan<byte> payload,
         IReadOnlyList<byte[]> strings,
         IReadOnlyList<FunctionEntry> functions,
-        IReadOnlyList<TypeEntry> types)
+        IReadOnlyList<TypeEntry> types,
+        PortableContextTable contexts)
     {
         var reader = new SpanReader(payload);
         uint count = reader.ReadUInt32("Export table entry count");
@@ -1140,6 +1149,7 @@ public static class IndexedExecutableFormat
             RequireNonEmptyString(symbol, strings, "Export symbol StringIndex");
             uint functionIndex = reader.ReadUInt32("Export FunctionIndex");
             RequireIndex(functionIndex, functions.Count, "Export FunctionIndex");
+            contexts.RequireTopLevel(functionIndex, "Export");
             uint returnType = reader.ReadUInt32("Export return TypeIndex");
             RequireBoundaryReturnType(returnType, types, "Export return TypeIndex");
             uint arguments = reader.ReadUInt32("Export argument count");
@@ -1155,6 +1165,7 @@ public static class IndexedExecutableFormat
             for (int argument = 0; argument < checked((int)arguments); argument++)
             {
                 BoundaryDescriptor descriptor = ReadBoundaryDescriptor(ref reader, types, "Export argument");
+                contexts.RequireValueExport(descriptor.PassingMode);
                 TypeEntry carrier = types[checked((int)descriptor.TypeIndex)];
                 TypeEntry internalType = types[checked((int)function.ArgumentTypes[argument])];
                 if (!MatchesBoundaryCarrier(internalType, carrier))
@@ -1269,7 +1280,8 @@ public static class IndexedExecutableFormat
         IReadOnlyList<FunctionEntry> functions,
         int importCount,
         IReadOnlyList<TypeEntry> types,
-        ReadOnlySpan<byte> code)
+        ReadOnlySpan<byte> code,
+        PortableContextTable contexts)
     {
         for (int functionIndex = 0; functionIndex < functions.Count; functionIndex++)
         {
@@ -1346,6 +1358,7 @@ public static class IndexedExecutableFormat
                         {
                             case 0:
                                 RequireIndex(targetIndex, functions.Count, "CALL FunctionIndex");
+                                contexts.RequireVisible(functionIndex, targetIndex);
                                 break;
                             case 1:
                                 RequireIndex(targetIndex, importCount, "CALL ImportIndex");
@@ -1357,11 +1370,13 @@ public static class IndexedExecutableFormat
                     }
 
                     case FunctionOperations.FNADDR.OP:
-                        RequireIndex(reader.ReadUInt32("FunctionIndex"), functions.Count, "FunctionIndex");
+                        contexts.RejectIndirect();
+                        contexts.RequireVisible(functionIndex, reader.ReadUInt32("FunctionIndex"));
                         break;
 
                     case FunctionOperations.CALLI.OP:
                     {
+                        contexts.RejectIndirect();
                         _ = reader.ReadByte("CALLI argument count");
                         byte returnType = reader.ReadByte("CALLI return primitive type");
                         if (!Enum.IsDefined(typeof(PrimitiveType), (PrimitiveType)returnType))
@@ -1376,6 +1391,7 @@ public static class IndexedExecutableFormat
                     case MemoryOperations.STORE.OP:
                     {
                         byte mode = reader.ReadByte("LOAD/STORE mode");
+                        contexts.RequireNamedMemory(mode);
                         switch (mode)
                         {
                             case 0:
@@ -1428,6 +1444,7 @@ public static class IndexedExecutableFormat
                         break;
 
                     default:
+                        contexts.RequireAllowedOperandFree(opcode);
                         if (!OperandFreeCoreOpcodes.Contains(opcode))
                             throw new InvalidDataException($"Core opcode 0x{opcode:X2} has no supported indexed executable v0 wire contract.");
                         break;

@@ -81,6 +81,7 @@ public static class PortableProcessEntrypoint
     {
         if (functionIndex >= executable.Functions.Count)
             throw new InvalidDataException("Process entry FunctionIndex is outside the Function table.");
+        executable.Contexts.RequireTopLevel(functionIndex, "Process entrypoint");
         PortableExecutableFunction function = executable.Functions[checked((int)functionIndex)];
         if (function.ArgumentTypeIndices.Count != 0)
             throw new InvalidDataException("Portable process entry function must have zero arguments.");

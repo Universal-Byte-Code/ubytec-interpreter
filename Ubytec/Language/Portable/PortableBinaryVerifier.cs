@@ -29,7 +29,8 @@ public static class PortableBinaryVerifier
         PortableModuleSectionKind.IndexedImportTable,
         PortableModuleSectionKind.IndexedExportTable,
         PortableModuleSectionKind.IndexedConstantTable,
-        PortableModuleSectionKind.IndexedCode
+        PortableModuleSectionKind.IndexedCode,
+        PortableModuleSectionKind.IndexedFunctionContexts
     ];
 
     private const int HeaderSize = 12;
@@ -40,7 +41,10 @@ public static class PortableBinaryVerifier
     private const uint NoIndex = uint.MaxValue;
 
     /// <summary>Verifies one canonical PMF v0 image directly from its bytes.</summary>
-    public static void Verify(ReadOnlySpan<byte> bytes)
+    public static void Verify(ReadOnlySpan<byte> bytes) => Verify(bytes, requireDirectOnly: false);
+
+    /// <summary>Independently verifies raw wire bytes and enforces the caller's optional admission policy.</summary>
+    public static void Verify(ReadOnlySpan<byte> bytes, bool requireDirectOnly)
     {
         if (bytes.Length > PortableModuleFormat.MaxModuleBytes)
             throw new InvalidDataException($"Portable module exceeds the {PortableModuleFormat.MaxModuleBytes}-byte runtime limit.");
@@ -102,7 +106,7 @@ public static class PortableBinaryVerifier
         if ((ast.Flags & PortableModuleSectionFlags.Critical) == 0)
             throw new InvalidDataException("Semantic AST section must be critical.");
 
-        VerifyIndexedExecutable(sections);
+        VerifyIndexedExecutable(sections, requireDirectOnly);
     }
 
     private static void VerifySectionPayload(
@@ -138,6 +142,7 @@ public static class PortableBinaryVerifier
             case PortableModuleSectionKind.IndexedExportTable:
             case PortableModuleSectionKind.IndexedConstantTable:
             case PortableModuleSectionKind.IndexedCode:
+            case PortableModuleSectionKind.IndexedFunctionContexts:
                 if (!critical)
                     throw new InvalidDataException($"Indexed executable section 0x{kind:X4} must be critical.");
                 break;
@@ -149,14 +154,19 @@ public static class PortableBinaryVerifier
         }
     }
 
-    private static void VerifyIndexedExecutable(IReadOnlyList<RawSection> sections)
+    private static void VerifyIndexedExecutable(IReadOnlyList<RawSection> sections, bool requireDirectOnly)
     {
         int present = IndexedKinds.Count(kind =>
             sections.Any(section => section.Kind == (ushort)kind));
-        if (present == 0) return;
+        if (present == 0)
+        {
+            if (requireDirectOnly)
+                throw new InvalidDataException("Admission requires a DirectOnly indexed executable.");
+            return;
+        }
         if (present != IndexedKinds.Length)
             throw new InvalidDataException(
-                "Indexed executable PMF sections 0x0010..0x0016 must be present as a complete group.");
+                "Indexed executable sections 0x0010..0x0016 and 0x0018 must be present as a complete group.");
 
         byte[] stringsPayload = Required(sections, PortableModuleSectionKind.IndexedStringTable).Payload;
         byte[] typesPayload = Required(sections, PortableModuleSectionKind.IndexedTypeTable).Payload;
@@ -170,10 +180,28 @@ public static class PortableBinaryVerifier
         List<TypeEntry> types = ParseTypeTable(typesPayload, strings.Count);
         List<FunctionEntry> functions = ParseFunctionTable(functionsPayload, types.Count);
         List<ImportEntry> imports = ParseImportTable(importsPayload, strings, types);
-        ParseExportTable(exportsPayload, strings, functions, types);
+        PortableContextTable contexts = PortableContextTable.Decode(
+            Required(sections, PortableModuleSectionKind.IndexedFunctionContexts).Payload, functions.Count);
+        if (requireDirectOnly && !contexts.DirectOnly)
+            throw new InvalidDataException("Admission requires the DirectOnly profile.");
+        contexts.RequireNoImports(imports.Count);
+        ParseExportTable(exportsPayload, strings, functions, types, contexts);
         ParseConstantTable(constantsPayload);
         VerifyFunctionRanges(functions, codePayload.Length);
-        VerifyCode(functions, imports, types, codePayload);
+        VerifyCode(functions, imports, types, codePayload, contexts);
+        RawSection? entry = sections.FirstOrDefault(section => section.Kind == 0x0017);
+        if (entry is not null)
+        {
+            if (entry.Flags != PortableModuleSectionFlags.None || entry.Payload.Length != 4)
+                throw new InvalidDataException("Invalid process entrypoint section.");
+            uint index = BinaryPrimitives.ReadUInt32LittleEndian(entry.Payload);
+            if (index != NoIndex)
+            {
+                contexts.RequireTopLevel(index, "Process entrypoint");
+                if (functions[(int)index].ArgumentCount != 0)
+                    throw new InvalidDataException("Process entry function must have zero arguments.");
+            }
+        }
     }
 
     private static RawSection Required(
@@ -354,7 +382,8 @@ public static class PortableBinaryVerifier
         ReadOnlySpan<byte> payload,
         IReadOnlyList<byte[]> strings,
         IReadOnlyList<FunctionEntry> functions,
-        IReadOnlyList<TypeEntry> types)
+        IReadOnlyList<TypeEntry> types,
+        PortableContextTable contexts)
     {
         var reader = new RawReader(payload);
         uint count = reader.ReadUInt32("Export table entry count");
@@ -368,6 +397,7 @@ public static class PortableBinaryVerifier
             RequireNonEmptyString(symbol, strings, "Export symbol StringIndex");
             uint functionIndex = reader.ReadUInt32("Export FunctionIndex");
             RequireIndex(functionIndex, functions.Count, "Export FunctionIndex");
+            contexts.RequireTopLevel(functionIndex, "Export");
             uint returnType = reader.ReadUInt32("Export return TypeIndex");
             RequireBoundaryReturnType(returnType, types, "Export return TypeIndex");
             uint argumentCount = reader.ReadUInt32("Export argument count");
@@ -383,6 +413,7 @@ public static class PortableBinaryVerifier
             for (int argument = 0; argument < checked((int)argumentCount); argument++)
             {
                 BoundaryDescriptor descriptor = ReadBoundaryDescriptor(ref reader, types, "Export argument");
+                contexts.RequireValueExport(descriptor.PassingMode);
                 TypeEntry carrier = types[checked((int)descriptor.TypeIndex)];
                 TypeEntry internalType = types[checked((int)function.ArgumentTypes[argument])];
                 if (!MatchesBoundaryCarrier(internalType, carrier))
@@ -501,7 +532,8 @@ public static class PortableBinaryVerifier
         IReadOnlyList<FunctionEntry> functions,
         IReadOnlyList<ImportEntry> imports,
         IReadOnlyList<TypeEntry> types,
-        ReadOnlySpan<byte> code)
+        ReadOnlySpan<byte> code,
+        PortableContextTable contexts)
     {
         VerifyFunctionTypes(functions, types);
 
@@ -650,6 +682,7 @@ public static class PortableBinaryVerifier
                             case 0:
                             {
                                 RequireIndex(targetIndex, functions.Count, "CALL FunctionIndex");
+                                contexts.RequireVisible(functionIndex, targetIndex);
                                 FunctionEntry target = functions[checked((int)targetIndex)];
                                 int arguments = checked((int)target.ArgumentCount);
                                 int results = IsVoid(types[checked((int)target.ReturnType)]) ? 0 : 1;
@@ -672,12 +705,14 @@ public static class PortableBinaryVerifier
                     }
 
                     case FunctionOperations.FNADDR.OP:
-                        RequireIndex(reader.ReadUInt32("FunctionIndex"), functions.Count, "FunctionIndex");
+                        contexts.RejectIndirect();
+                        contexts.RequireVisible(functionIndex, reader.ReadUInt32("FunctionIndex"));
                         Apply(0, 1, opcode);
                         break;
 
                     case FunctionOperations.CALLI.OP:
                     {
+                        contexts.RejectIndirect();
                         byte argumentCount = reader.ReadByte("CALLI argument count");
                         byte returnTypeRaw = reader.ReadByte("CALLI return primitive type");
                         if (!Enum.IsDefined(typeof(PrimitiveType), (PrimitiveType)returnTypeRaw))
@@ -697,6 +732,7 @@ public static class PortableBinaryVerifier
                     case MemoryOperations.STORE.OP:
                     {
                         byte mode = reader.ReadByte("LOAD/STORE mode");
+                        contexts.RequireNamedMemory(mode);
                         switch (mode)
                         {
                             case 0:
@@ -847,6 +883,7 @@ public static class PortableBinaryVerifier
                     }
 
                     default:
+                        contexts.RequireAllowedOperandFree(opcode);
                         if (!OperandFreeCoreOpcodes.Contains(opcode))
                             throw new InvalidDataException(
                                 $"Core opcode 0x{opcode:X2} has no supported indexed executable v0 wire contract.");

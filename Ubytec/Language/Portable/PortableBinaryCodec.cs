@@ -23,7 +23,8 @@ public sealed record PortableExecutableModule(
     IReadOnlyList<PortableExecutableFunction> Functions,
     IReadOnlyList<PortableExecutableImport> Imports,
     IReadOnlyList<PortableExecutableExport> Exports,
-    IReadOnlyList<byte[]> Constants);
+    IReadOnlyList<byte[]> Constants,
+    PortableContextTable Contexts);
 
 /// <summary>One indexed type-table entry.</summary>
 public sealed record PortableExecutableType(
@@ -152,7 +153,7 @@ public static class PortableBinaryCodec
         ArgumentNullException.ThrowIfNull(module);
         ArgumentNullException.ThrowIfNull(module.ContainerSections);
 
-        var sections = new List<PortableModuleSection>(module.ContainerSections.Count + 7);
+        var sections = new List<PortableModuleSection>(module.ContainerSections.Count + 8);
         foreach (PortableModuleSection section in module.ContainerSections)
         {
             if (IsIndexedExecutableKind(section.Kind))
@@ -224,7 +225,9 @@ public static class PortableBinaryCodec
                 DecodeInstructions(body)));
         }
 
-        return new PortableExecutableModule(strings, types, functions, imports, exports, constants);
+        PortableContextTable contexts = PortableContextTable.Decode(
+            Required(image, PortableModuleSectionKind.IndexedFunctionContexts).Span, functions.Count);
+        return new PortableExecutableModule(strings, types, functions, imports, exports, constants, contexts);
     }
 
     private static IReadOnlyList<PortableModuleSection> EncodeExecutableSections(PortableExecutableModule executable)
@@ -256,7 +259,8 @@ public static class PortableBinaryCodec
             Critical(PortableModuleSectionKind.IndexedImportTable, imports),
             Critical(PortableModuleSectionKind.IndexedExportTable, exports),
             Critical(PortableModuleSectionKind.IndexedConstantTable, constants),
-            Critical(PortableModuleSectionKind.IndexedCode, code.ToArray())
+            Critical(PortableModuleSectionKind.IndexedCode, code.ToArray()),
+            Critical(PortableModuleSectionKind.IndexedFunctionContexts, executable.Contexts.Encode())
         ];
     }
 
@@ -268,7 +272,8 @@ public static class PortableBinaryCodec
 
     private static bool IsIndexedExecutableKind(ushort kind) =>
         kind is >= (ushort)PortableModuleSectionKind.IndexedStringTable
-            and <= (ushort)PortableModuleSectionKind.IndexedCode;
+            and <= (ushort)PortableModuleSectionKind.IndexedCode
+            or (ushort)PortableModuleSectionKind.IndexedFunctionContexts;
 
     private static List<string> DecodeStringTable(ReadOnlyMemory<byte> payload)
     {
