@@ -29,7 +29,8 @@ public static class PortableBinaryVerifier
         PortableModuleSectionKind.IndexedImportTable,
         PortableModuleSectionKind.IndexedExportTable,
         PortableModuleSectionKind.IndexedConstantTable,
-        PortableModuleSectionKind.IndexedCode
+        PortableModuleSectionKind.IndexedCode,
+        PortableModuleSectionKind.IndexedFunctionContexts
     ];
 
     private const int HeaderSize = 12;
@@ -40,7 +41,17 @@ public static class PortableBinaryVerifier
     private const uint NoIndex = uint.MaxValue;
 
     /// <summary>Verifies one canonical PMF v0 image directly from its bytes.</summary>
-    public static void Verify(ReadOnlySpan<byte> bytes)
+    public static void Verify(ReadOnlySpan<byte> bytes) => VerifyCore(bytes, null);
+
+    /// <summary>Independently verifies raw wire bytes and enforces the caller's optional admission policy.</summary>
+    public static void Verify(ReadOnlySpan<byte> bytes, bool requireDirectOnly) =>
+        VerifyCore(bytes, requireDirectOnly ? PortableExecutionProfile.DirectOnly : null);
+
+    /// <summary>Require an exact execution profile, never a producer-selected downgrade.</summary>
+    public static void Verify(ReadOnlySpan<byte> bytes, PortableExecutionProfile requiredProfile) =>
+        VerifyCore(bytes, requiredProfile);
+
+    private static void VerifyCore(ReadOnlySpan<byte> bytes, PortableExecutionProfile? requiredProfile)
     {
         if (bytes.Length > PortableModuleFormat.MaxModuleBytes)
             throw new InvalidDataException($"Portable module exceeds the {PortableModuleFormat.MaxModuleBytes}-byte runtime limit.");
@@ -102,7 +113,7 @@ public static class PortableBinaryVerifier
         if ((ast.Flags & PortableModuleSectionFlags.Critical) == 0)
             throw new InvalidDataException("Semantic AST section must be critical.");
 
-        VerifyIndexedExecutable(sections);
+        VerifyIndexedExecutable(sections, requiredProfile);
     }
 
     private static void VerifySectionPayload(
@@ -138,6 +149,8 @@ public static class PortableBinaryVerifier
             case PortableModuleSectionKind.IndexedExportTable:
             case PortableModuleSectionKind.IndexedConstantTable:
             case PortableModuleSectionKind.IndexedCode:
+            case PortableModuleSectionKind.IndexedFunctionContexts:
+            case PortableModuleSectionKind.IndexedCallableSlots:
                 if (!critical)
                     throw new InvalidDataException($"Indexed executable section 0x{kind:X4} must be critical.");
                 break;
@@ -149,14 +162,21 @@ public static class PortableBinaryVerifier
         }
     }
 
-    private static void VerifyIndexedExecutable(IReadOnlyList<RawSection> sections)
+    private static void VerifyIndexedExecutable(IReadOnlyList<RawSection> sections, PortableExecutionProfile? requiredProfile)
     {
         int present = IndexedKinds.Count(kind =>
             sections.Any(section => section.Kind == (ushort)kind));
-        if (present == 0) return;
+        RawSection? callableSection = sections.SingleOrDefault(section =>
+            section.Kind == (ushort)PortableModuleSectionKind.IndexedCallableSlots);
+        if (present == 0)
+        {
+            if (requiredProfile.HasValue || callableSection is not null)
+                throw new InvalidDataException("Admission or callable slot section requires an indexed executable.");
+            return;
+        }
         if (present != IndexedKinds.Length)
             throw new InvalidDataException(
-                "Indexed executable PMF sections 0x0010..0x0016 must be present as a complete group.");
+                "Indexed executable sections 0x0010..0x0016 and 0x0018 must be present as a complete group.");
 
         byte[] stringsPayload = Required(sections, PortableModuleSectionKind.IndexedStringTable).Payload;
         byte[] typesPayload = Required(sections, PortableModuleSectionKind.IndexedTypeTable).Payload;
@@ -170,10 +190,33 @@ public static class PortableBinaryVerifier
         List<TypeEntry> types = ParseTypeTable(typesPayload, strings.Count);
         List<FunctionEntry> functions = ParseFunctionTable(functionsPayload, types.Count);
         List<ImportEntry> imports = ParseImportTable(importsPayload, strings, types);
-        ParseExportTable(exportsPayload, strings, functions, types);
+        PortableContextTable contexts = PortableContextTable.Decode(
+            Required(sections, PortableModuleSectionKind.IndexedFunctionContexts).Payload, functions.Count);
+        if (requiredProfile.HasValue && requiredProfile.Value != contexts.Profile)
+            throw new InvalidDataException($"Admission requires the {requiredProfile.Value} profile.");
+        PortableCallableTable? callables = PortableCallableTable.ReadSection(contexts,
+            callableSection is not null,
+            callableSection is null ? ReadOnlyMemory<byte>.Empty : new ReadOnlyMemory<byte>(callableSection.Payload), functions.Count,
+            (index, result) => index < (uint)types.Count && PortableCallableTable.IsScalarSignatureType(
+                types[(int)index].Primitive, types[(int)index].Modifiers, types[(int)index].FixedArraySize, result));
+        contexts.RequireNoImports(imports.Count);
+        ParseExportTable(exportsPayload, strings, functions, types, contexts);
         ParseConstantTable(constantsPayload);
         VerifyFunctionRanges(functions, codePayload.Length);
-        VerifyCode(functions, imports, types, codePayload);
+        VerifyCode(functions, imports, types, codePayload, contexts, callables);
+        RawSection? entry = sections.FirstOrDefault(section => section.Kind == 0x0017);
+        if (entry is not null)
+        {
+            if (entry.Flags != PortableModuleSectionFlags.None || entry.Payload.Length != 4)
+                throw new InvalidDataException("Invalid process entrypoint section.");
+            uint index = BinaryPrimitives.ReadUInt32LittleEndian(entry.Payload);
+            if (index != NoIndex)
+            {
+                contexts.RequireTopLevel(index, "Process entrypoint");
+                if (functions[(int)index].ArgumentCount != 0)
+                    throw new InvalidDataException("Process entry function must have zero arguments.");
+            }
+        }
     }
 
     private static RawSection Required(
@@ -354,7 +397,8 @@ public static class PortableBinaryVerifier
         ReadOnlySpan<byte> payload,
         IReadOnlyList<byte[]> strings,
         IReadOnlyList<FunctionEntry> functions,
-        IReadOnlyList<TypeEntry> types)
+        IReadOnlyList<TypeEntry> types,
+        PortableContextTable contexts)
     {
         var reader = new RawReader(payload);
         uint count = reader.ReadUInt32("Export table entry count");
@@ -368,6 +412,7 @@ public static class PortableBinaryVerifier
             RequireNonEmptyString(symbol, strings, "Export symbol StringIndex");
             uint functionIndex = reader.ReadUInt32("Export FunctionIndex");
             RequireIndex(functionIndex, functions.Count, "Export FunctionIndex");
+            contexts.RequireTopLevel(functionIndex, "Export");
             uint returnType = reader.ReadUInt32("Export return TypeIndex");
             RequireBoundaryReturnType(returnType, types, "Export return TypeIndex");
             uint argumentCount = reader.ReadUInt32("Export argument count");
@@ -383,6 +428,7 @@ public static class PortableBinaryVerifier
             for (int argument = 0; argument < checked((int)argumentCount); argument++)
             {
                 BoundaryDescriptor descriptor = ReadBoundaryDescriptor(ref reader, types, "Export argument");
+                contexts.RequireValueExport(descriptor.PassingMode);
                 TypeEntry carrier = types[checked((int)descriptor.TypeIndex)];
                 TypeEntry internalType = types[checked((int)function.ArgumentTypes[argument])];
                 if (!MatchesBoundaryCarrier(internalType, carrier))
@@ -501,7 +547,9 @@ public static class PortableBinaryVerifier
         IReadOnlyList<FunctionEntry> functions,
         IReadOnlyList<ImportEntry> imports,
         IReadOnlyList<TypeEntry> types,
-        ReadOnlySpan<byte> code)
+        ReadOnlySpan<byte> code,
+        PortableContextTable contexts,
+        PortableCallableTable? callables)
     {
         VerifyFunctionTypes(functions, types);
 
@@ -540,17 +588,26 @@ public static class PortableBinaryVerifier
                         $"stack depth {stackDepth}; expected {expected}.");
             }
 
-            ControlFrame TransferTarget(byte opcode)
+            ControlFrame TransferTarget(byte opcode, uint ordinal)
             {
-                ControlFrame? target = controls.FirstOrDefault(frame =>
-                    frame.Kind is ControlKind.Loop or ControlKind.While);
-                return target ?? throw new InvalidDataException(
-                    $"FunctionIndex {functionIndex} opcode 0x{opcode:X2} requires an enclosing LOOP or WHILE.");
+                foreach (ControlFrame frame in controls)
+                {
+                    if (frame.Kind is not (ControlKind.Loop or ControlKind.While) &&
+                        !(opcode == BREAK.OP && frame.Kind == ControlKind.Switch))
+                        continue;
+                    if (ordinal == 0) return frame;
+                    ordinal--;
+                }
+                throw new InvalidDataException(
+                    $"FunctionIndex {functionIndex} ControlTargetOrdinal is outside enclosing eligible control scopes.");
             }
 
             while (!reader.AtEnd)
             {
                 byte opcode = reader.ReadByte("Opcode");
+                if (controls.TryPeek(out ControlFrame? enclosing) && enclosing.Kind == ControlKind.Switch &&
+                    !enclosing.HasDefault && opcode is not (BRANCH.OP or DEFAULT.OP or END.OP))
+                    throw new InvalidDataException("SWITCH requires BRANCH, DEFAULT or END.");
                 if (opcode == 0xFF)
                 {
                     int escapeDepth = 1;
@@ -564,6 +621,31 @@ public static class PortableBinaryVerifier
                     if (group == 0xFF || extendedOpcode == 0xFF)
                         throw new InvalidDataException(
                             "0xFF is reserved in extended opcode group/code positions.");
+                    if (escapeDepth == 1 && group == 0x10 && extendedOpcode is 0x11 or 0x18 or 0x1D or 0x1E)
+                    {
+                        int index = reader.ReadByte("Extended stack index low");
+                        index |= reader.ReadByte("Extended stack index high") << 8;
+                        int required = extendedOpcode == 0x11 ? (index + 9) / 8 : index + 1;
+                        int delta = extendedOpcode == 0x18 ? -1 : extendedOpcode == 0x1E ? 0 : 1;
+                        Apply(required, delta, opcode);
+                        continue;
+                    }
+                    if (escapeDepth == 1 && group == 0x13)
+                    {
+                        if (callables is null || extendedOpcode > 3)
+                            throw new InvalidDataException("Unsupported callable opcode or execution profile.");
+                        uint slot = reader.ReadUInt32("CallableSlotIndex");
+                        uint? second = extendedOpcode <= 1 ? reader.ReadUInt32("Callable target/source") : null;
+                        PortableCallableSignature signature = callables.VerifyOperation(contexts, functionIndex, extendedOpcode, slot, second,
+                            target => new PortableCallableSignature(functions[(int)target].ReturnType, functions[(int)target].ArgumentTypes));
+                        if (extendedOpcode == 3)
+                        {
+                            int arguments = signature.ArgumentTypeIndices.Count;
+                            int results = IsVoid(types[(int)signature.ReturnTypeIndex]) ? 0 : 1;
+                            Apply(arguments, results - arguments, opcode);
+                        }
+                        continue;
+                    }
                     throw new NotSupportedException(
                         $"Portable binary verifier does not yet support extended opcode " +
                         $"depth={escapeDepth}, group=0x{group:X2}, opcode=0x{extendedOpcode:X2}.");
@@ -650,6 +732,7 @@ public static class PortableBinaryVerifier
                             case 0:
                             {
                                 RequireIndex(targetIndex, functions.Count, "CALL FunctionIndex");
+                                contexts.RequireVisible(functionIndex, targetIndex);
                                 FunctionEntry target = functions[checked((int)targetIndex)];
                                 int arguments = checked((int)target.ArgumentCount);
                                 int results = IsVoid(types[checked((int)target.ReturnType)]) ? 0 : 1;
@@ -672,12 +755,14 @@ public static class PortableBinaryVerifier
                     }
 
                     case FunctionOperations.FNADDR.OP:
-                        RequireIndex(reader.ReadUInt32("FunctionIndex"), functions.Count, "FunctionIndex");
+                        contexts.RejectIndirect();
+                        contexts.RequireVisible(functionIndex, reader.ReadUInt32("FunctionIndex"));
                         Apply(0, 1, opcode);
                         break;
 
                     case FunctionOperations.CALLI.OP:
                     {
+                        contexts.RejectIndirect();
                         byte argumentCount = reader.ReadByte("CALLI argument count");
                         byte returnTypeRaw = reader.ReadByte("CALLI return primitive type");
                         if (!Enum.IsDefined(typeof(PrimitiveType), (PrimitiveType)returnTypeRaw))
@@ -697,6 +782,7 @@ public static class PortableBinaryVerifier
                     case MemoryOperations.STORE.OP:
                     {
                         byte mode = reader.ReadByte("LOAD/STORE mode");
+                        contexts.RequireNamedMemory(mode);
                         switch (mode)
                         {
                             case 0:
@@ -733,9 +819,53 @@ public static class PortableBinaryVerifier
                         break;
                     }
 
-                    case BLOCK.OP:
-                        controls.Push(new ControlFrame(ControlKind.Block, stackDepth, reachable));
+                    case SWITCH.OP:
+                        Apply(1, -1, opcode);
+                        controls.Push(new ControlFrame(ControlKind.Switch, stackDepth, reachable));
+                        reachable = false; // No executable body until a case or default.
                         break;
+
+                    case BRANCH.OP:
+                    {
+                        if (!controls.TryPeek(out ControlFrame? selection) ||
+                            selection.Kind != ControlKind.Switch || selection.HasDefault)
+                            throw new InvalidDataException("BRANCH requires SWITCH before DEFAULT.");
+                        _ = reader.ReadUInt64("BRANCH case cell");
+                        stackDepth = selection.EntryDepth;
+                        reachable = selection.EntryReachable;
+                        controls.Push(new ControlFrame(ControlKind.Branch, stackDepth, reachable));
+                        break;
+                    }
+
+                    case DEFAULT.OP:
+                        if (controls.TryPeek(out ControlFrame? parent) && parent.Kind == ControlKind.Switch)
+                        {
+                            if (parent.HasDefault) throw new InvalidDataException("Duplicate SWITCH DEFAULT.");
+                            parent.HasDefault = true;
+                            stackDepth = parent.EntryDepth;
+                            reachable = parent.EntryReachable;
+                        }
+                        else
+                            ApplyOperandFreeStackEffect(opcode, ref stackDepth, ref reachable, functionIndex);
+                        break;
+
+                    case BLOCK.OP:
+                    {
+                        byte mode = reader.ReadByte("BLOCK result mode");
+                        int? resultCells = null;
+                        if (mode == 1)
+                        {
+                            uint typeIndex = reader.ReadUInt32("BLOCK result TypeIndex");
+                            RequireIndex(typeIndex, types.Count, "BLOCK result TypeIndex");
+                            TypeEntry type = types[(int)typeIndex];
+                            if (!PortableCallableTable.IsScalarSignatureType(type.Primitive, type.Modifiers, type.FixedArraySize, true))
+                                throw new InvalidDataException("BLOCK result must be void or a scalar cell.");
+                            resultCells = IsVoid(type) ? 0 : 1;
+                        }
+                        else if (mode != 0) throw new InvalidDataException("Unknown BLOCK result mode.");
+                        controls.Push(new ControlFrame(ControlKind.Block, stackDepth, reachable) { BlockResultCells = resultCells });
+                        break;
+                    }
 
                     case LOOP.OP:
                         controls.Push(new ControlFrame(ControlKind.Loop, stackDepth, reachable));
@@ -778,9 +908,27 @@ public static class PortableBinaryVerifier
                         ControlFrame frame = controls.Pop();
                         switch (frame.Kind)
                         {
+                            case ControlKind.Branch:
+                            {
+                                ControlFrame selection = controls.Peek();
+                                if (reachable) selection.MergeExit(stackDepth);
+                                stackDepth = selection.EntryDepth;
+                                reachable = false;
+                                break;
+                            }
+
+                            case ControlKind.Switch:
+                                if (frame.HasDefault && reachable) frame.MergeExit(stackDepth);
+                                if ((!frame.HasDefault && frame.EntryReachable) || frame.HasReachableBreak)
+                                    frame.MergeExit(frame.EntryDepth);
+                                reachable = frame.ExitDepth.HasValue;
+                                stackDepth = frame.ExitDepth ?? frame.EntryDepth;
+                                break;
+
                             case ControlKind.Block:
-                                RequireDepth(frame.EntryDepth, opcode, "BLOCK end");
-                                stackDepth = frame.EntryDepth;
+                                if (frame.BlockResultCells is int cells)
+                                    RequireDepth(checked(frame.EntryDepth + cells), opcode, "typed BLOCK end");
+                                // Untyped BLOCK is a lexical grouping; its reachable exit preserves the actual stack.
                                 break;
 
                             case ControlKind.If:
@@ -824,7 +972,7 @@ public static class PortableBinaryVerifier
 
                     case BREAK.OP:
                     {
-                        ControlFrame target = TransferTarget(opcode);
+                        ControlFrame target = TransferTarget(opcode, reader.ReadUInt32("ControlTargetOrdinal"));
                         RequireDepth(target.EntryDepth, opcode, "BREAK target");
                         if (reachable)
                         {
@@ -836,7 +984,7 @@ public static class PortableBinaryVerifier
 
                     case CONTINUE.OP:
                     {
-                        ControlFrame target = TransferTarget(opcode);
+                        ControlFrame target = TransferTarget(opcode, reader.ReadUInt32("ControlTargetOrdinal"));
                         int expected = target.Kind == ControlKind.While
                             ? target.EntryDepth + 1
                             : target.EntryDepth;
@@ -847,6 +995,7 @@ public static class PortableBinaryVerifier
                     }
 
                     default:
+                        contexts.RequireAllowedOperandFree(opcode);
                         if (!OperandFreeCoreOpcodes.Contains(opcode))
                             throw new InvalidDataException(
                                 $"Core opcode 0x{opcode:X2} has no supported indexed executable v0 wire contract.");
@@ -1001,10 +1150,14 @@ public static class PortableBinaryVerifier
             required = 1;
             delta = 0;
         }
-        else
+        else if (opcode == NOP.OP)
         {
             required = 0;
             delta = 0;
+        }
+        else
+        {
+            throw new InvalidDataException($"Opcode 0x{opcode:X2} lacks an explicit scalar stack-effect contract.");
         }
 
         if (stackDepth < required)
@@ -1279,7 +1432,9 @@ public static class PortableBinaryVerifier
         If,
         Else,
         Loop,
-        While
+        While,
+        Switch,
+        Branch
     }
 
     private sealed class ControlFrame(ControlKind kind, int entryDepth, bool entryReachable)
@@ -1290,6 +1445,16 @@ public static class PortableBinaryVerifier
         internal bool ThenReachable { get; set; }
         internal int ThenDepth { get; set; }
         internal bool HasReachableBreak { get; set; }
+        internal bool HasDefault { get; set; }
+        internal int? BlockResultCells { get; init; }
+        internal int? ExitDepth { get; private set; }
+
+        internal void MergeExit(int depth)
+        {
+            if (ExitDepth is int previous && previous != depth)
+                throw new InvalidDataException("SWITCH paths leave different evaluation stack depths.");
+            ExitDepth = depth;
+        }
     }
 
     private sealed class ByteArrayComparer : IComparer<byte[]>

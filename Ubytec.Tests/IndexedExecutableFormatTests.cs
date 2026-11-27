@@ -52,7 +52,8 @@ public class IndexedExecutableFormatTests
 
         PortableModuleImage image = PortableModuleFormat.Decode(first);
         Assert.True(IndexedExecutableFormat.IsPresent(image));
-        Assert.Equal(8, image.Sections.Count);
+        Assert.Equal(9, image.Sections.Count);
+        Assert.NotNull(image.GetSection(PortableModuleSectionKind.IndexedFunctionContexts));
         Assert.NotNull(image.GetSection(PortableModuleSectionKind.IndexedStringTable));
         Assert.NotNull(image.GetSection(PortableModuleSectionKind.IndexedTypeTable));
         Assert.NotNull(image.GetSection(PortableModuleSectionKind.IndexedFunctionTable));

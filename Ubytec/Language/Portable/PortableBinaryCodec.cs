@@ -23,7 +23,9 @@ public sealed record PortableExecutableModule(
     IReadOnlyList<PortableExecutableFunction> Functions,
     IReadOnlyList<PortableExecutableImport> Imports,
     IReadOnlyList<PortableExecutableExport> Exports,
-    IReadOnlyList<byte[]> Constants);
+    IReadOnlyList<byte[]> Constants,
+    PortableContextTable Contexts,
+    PortableCallableTable? CallableSlots = null);
 
 /// <summary>One indexed type-table entry.</summary>
 public sealed record PortableExecutableType(
@@ -103,6 +105,23 @@ public sealed record PortableFunctionAddressInstruction(uint FunctionIndex)
 public sealed record PortableCallIndirectInstruction(byte ArgumentCount, PrimitiveType ReturnType)
     : PortableInstruction(FunctionOperations.CALLI.OP);
 
+/// <summary>Depth-one group 0x13 callable operations; never scalar addresses.</summary>
+public sealed record PortableCallableInstruction(byte Operation, uint Slot, uint? Second = null)
+    : PortableInstruction(0xFF);
+
+/// <summary>Depth-one extended stack instruction with a little-endian UInt16 operand.</summary>
+public sealed record PortableExtendedStackInstruction(byte Operation, ushort Index) : PortableInstruction(0xFF);
+
+/// <summary>Lexical BLOCK, optionally declaring a void or one-cell result.</summary>
+public sealed record PortableBlockInstruction(uint? ResultTypeIndex) : PortableInstruction(BLOCK.OP);
+
+/// <summary>BREAK/CONTINUE with an ordinal among eligible enclosing control scopes.</summary>
+public sealed record PortableControlTransferInstruction(byte Operation, uint TargetOrdinal)
+    : PortableInstruction(Operation);
+
+/// <summary>Exact 64-bit case literal for structured BRANCH.</summary>
+public sealed record PortableBranchInstruction(ulong CaseCell) : PortableInstruction(BRANCH.OP);
+
 /// <summary>LOAD/STORE portable addressing operands.</summary>
 public sealed record PortableMemoryInstruction(
     byte MemoryOpCode,
@@ -152,7 +171,7 @@ public static class PortableBinaryCodec
         ArgumentNullException.ThrowIfNull(module);
         ArgumentNullException.ThrowIfNull(module.ContainerSections);
 
-        var sections = new List<PortableModuleSection>(module.ContainerSections.Count + 7);
+        var sections = new List<PortableModuleSection>(module.ContainerSections.Count + 8);
         foreach (PortableModuleSection section in module.ContainerSections)
         {
             if (IsIndexedExecutableKind(section.Kind))
@@ -224,7 +243,14 @@ public static class PortableBinaryCodec
                 DecodeInstructions(body)));
         }
 
-        return new PortableExecutableModule(strings, types, functions, imports, exports, constants);
+        PortableContextTable contexts = PortableContextTable.Decode(
+            Required(image, PortableModuleSectionKind.IndexedFunctionContexts).Span, functions.Count);
+        PortableModuleSection? callableSection = image.GetSection(PortableModuleSectionKind.IndexedCallableSlots);
+        PortableCallableTable? slots = PortableCallableTable.ReadSection(contexts, callableSection is not null,
+            callableSection is null ? ReadOnlyMemory<byte>.Empty : callableSection.Payload, functions.Count,
+            (index, result) => index < (uint)types.Count && PortableCallableTable.IsScalarSignatureType(
+                types[(int)index].Primitive, (uint)types[(int)index].Modifiers, types[(int)index].FixedArraySize, result));
+        return new PortableExecutableModule(strings, types, functions, imports, exports, constants, contexts, slots);
     }
 
     private static IReadOnlyList<PortableModuleSection> EncodeExecutableSections(PortableExecutableModule executable)
@@ -248,16 +274,20 @@ public static class PortableBinaryCodec
         }
         byte[] functions = EncodeFunctionTable(functionEncodings);
 
-        return
-        [
+        var sections = new List<PortableModuleSection>
+        {
             Critical(PortableModuleSectionKind.IndexedStringTable, strings),
             Critical(PortableModuleSectionKind.IndexedTypeTable, types),
             Critical(PortableModuleSectionKind.IndexedFunctionTable, functions),
             Critical(PortableModuleSectionKind.IndexedImportTable, imports),
             Critical(PortableModuleSectionKind.IndexedExportTable, exports),
             Critical(PortableModuleSectionKind.IndexedConstantTable, constants),
-            Critical(PortableModuleSectionKind.IndexedCode, code.ToArray())
-        ];
+            Critical(PortableModuleSectionKind.IndexedCode, code.ToArray()),
+            Critical(PortableModuleSectionKind.IndexedFunctionContexts, executable.Contexts.Encode())
+        };
+        if (executable.CallableSlots is not null)
+            sections.Add(Critical(PortableModuleSectionKind.IndexedCallableSlots, executable.CallableSlots.Encode()));
+        return sections;
     }
 
     private static PortableModuleSection Critical(PortableModuleSectionKind kind, byte[] payload) =>
@@ -267,6 +297,8 @@ public static class PortableBinaryCodec
         image.GetRequiredSection(kind).Payload;
 
     private static bool IsIndexedExecutableKind(ushort kind) =>
+        kind == (ushort)PortableModuleSectionKind.IndexedCallableSlots ||
+        kind == (ushort)PortableModuleSectionKind.IndexedFunctionContexts ||
         kind is >= (ushort)PortableModuleSectionKind.IndexedStringTable
             and <= (ushort)PortableModuleSectionKind.IndexedCode;
 
@@ -400,7 +432,41 @@ public static class PortableBinaryCodec
             switch (opcode)
             {
                 case 0xFF:
-                    throw new NotSupportedException("Extended opcodes are not supported by indexed executable v0.");
+                {
+                    byte group = reader.ReadByte();
+                    byte operation = reader.ReadByte();
+                    if (group == 0x10)
+                    {
+                        if (operation is not (0x11 or 0x18 or 0x1D or 0x1E))
+                            throw new InvalidDataException("Unknown extended stack opcode.");
+                        ushort index = BinaryPrimitives.ReadUInt16LittleEndian(reader.ReadBytes(2));
+                        result.Add(new PortableExtendedStackInstruction(operation, index));
+                        break;
+                    }
+                    if (group != 0x13)
+                        throw new NotSupportedException("Unsupported extended opcode depth/group.");
+                    if (operation > 3) throw new InvalidDataException("Unknown callable opcode.");
+                    uint slot = reader.ReadUInt32();
+                    result.Add(new PortableCallableInstruction(operation, slot, operation <= 1 ? reader.ReadUInt32() : null));
+                    break;
+                }
+
+                case BLOCK.OP:
+                {
+                    byte mode = reader.ReadByte();
+                    if (mode > 1) throw new InvalidDataException("Unknown BLOCK result mode.");
+                    result.Add(new PortableBlockInstruction(mode == 1 ? reader.ReadUInt32() : null));
+                    break;
+                }
+
+                case BREAK.OP:
+                case CONTINUE.OP:
+                    result.Add(new PortableControlTransferInstruction(opcode, reader.ReadUInt32()));
+                    break;
+
+                case BRANCH.OP:
+                    result.Add(new PortableBranchInstruction(reader.ReadUInt64()));
+                    break;
 
                 case RETURN.OP:
                 {
@@ -576,7 +642,22 @@ public static class PortableBinaryCodec
             switch (instruction)
             {
                 case PortableOperandFreeInstruction operandFree:
+                    if (operandFree.OpCode is BREAK.OP or CONTINUE.OP or BLOCK.OP)
+                        throw new InvalidDataException("Structured instruction requires explicit typed operands.");
                     stream.WriteByte(operandFree.OpCode);
+                    break;
+
+                case PortableBlockInstruction block:
+                    stream.WriteByte(BLOCK.OP);
+                    stream.WriteByte(block.ResultTypeIndex.HasValue ? (byte)1 : (byte)0);
+                    if (block.ResultTypeIndex is uint resultType) WriteUInt32(stream, resultType);
+                    break;
+
+                case PortableControlTransferInstruction transfer:
+                    if (transfer.Operation is not (BREAK.OP or CONTINUE.OP))
+                        throw new InvalidDataException("Unknown control transfer opcode.");
+                    stream.WriteByte(transfer.Operation);
+                    WriteUInt32(stream, transfer.TargetOrdinal);
                     break;
 
                 case PortableReturnInstruction ret:
@@ -604,6 +685,21 @@ public static class PortableBinaryCodec
                     stream.Write(push.Immediate);
                     break;
 
+                case PortableExtendedStackInstruction extended:
+                    if (extended.Operation is not (0x11 or 0x18 or 0x1D or 0x1E))
+                        throw new InvalidDataException("Unknown extended stack opcode.");
+                    stream.WriteByte(0xFF);
+                    stream.WriteByte(0x10);
+                    stream.WriteByte(extended.Operation);
+                    stream.WriteByte((byte)extended.Index);
+                    stream.WriteByte((byte)(extended.Index >> 8));
+                    break;
+
+                case PortableBranchInstruction branch:
+                    stream.WriteByte(BRANCH.OP);
+                    WriteUInt64(stream, branch.CaseCell);
+                    break;
+
                 case PortableStackIndexInstruction stack:
                     stream.WriteByte(stack.StackOpCode);
                     stream.WriteByte(stack.Index);
@@ -624,6 +720,16 @@ public static class PortableBinaryCodec
                     stream.WriteByte(FunctionOperations.CALLI.OP);
                     stream.WriteByte(indirect.ArgumentCount);
                     stream.WriteByte((byte)indirect.ReturnType);
+                    break;
+
+                case PortableCallableInstruction callable:
+                    if (callable.Operation > 3 || (callable.Operation <= 1) != callable.Second.HasValue)
+                        throw new InvalidDataException("Invalid callable opcode operands.");
+                    stream.WriteByte(0xFF);
+                    stream.WriteByte(0x13);
+                    stream.WriteByte(callable.Operation);
+                    WriteUInt32(stream, callable.Slot);
+                    if (callable.Second is uint second) WriteUInt32(stream, second);
                     break;
 
                 case PortableMemoryInstruction memory:

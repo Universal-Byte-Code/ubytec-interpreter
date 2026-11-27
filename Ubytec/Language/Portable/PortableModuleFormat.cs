@@ -36,7 +36,13 @@ public enum PortableModuleSectionKind : ushort
     IndexedConstantTable = 0x0015,
 
     /// <summary>Indexed executable Ubytec opcode stream.</summary>
-    IndexedCode = 0x0016
+    IndexedCode = 0x0016,
+
+    /// <summary>Critical lexical context graph and declared execution profile.</summary>
+    IndexedFunctionContexts = 0x0018,
+
+    /// <summary>Critical activation-local callable slot signatures.</summary>
+    IndexedCallableSlots = 0x0019
 }
 
 /// <summary>Section behavior flags in Portable Module Format v0.</summary>
@@ -113,8 +119,11 @@ public static class PortableModuleFormat
         string? contractManifest = null,
         IEnumerable<string>? capabilities = null,
         bool includeIndexedExecutable = false,
-        PortableModuleContracts? portableContracts = null)
+        PortableModuleContracts? portableContracts = null,
+        PortableExecutionProfile executionProfile = PortableExecutionProfile.UnsafeCells)
     {
+        if (!includeIndexedExecutable && executionProfile != PortableExecutionProfile.UnsafeCells)
+            throw new InvalidDataException("Execution profile requires indexed executable sections.");
         byte[] serializedAst = JsonSerializer.SerializeToUtf8Bytes(module, global::SerializerOptionsHelper.Options);
         byte[] canonicalAst = CanonicalizeJson(
             serializedAst,
@@ -158,7 +167,7 @@ public static class PortableModuleFormat
         if (includeIndexedExecutable)
         {
             foreach (IndexedExecutableFormat.IndexedSectionPayload section in
-                IndexedExecutableFormat.EncodeSections(module, portableContracts))
+                IndexedExecutableFormat.EncodeSections(module, portableContracts, executionProfile))
             {
                 sections.Add(new(
                     (ushort)section.Kind,
@@ -306,6 +315,8 @@ public static class PortableModuleFormat
             case PortableModuleSectionKind.IndexedExportTable:
             case PortableModuleSectionKind.IndexedConstantTable:
             case PortableModuleSectionKind.IndexedCode:
+            case PortableModuleSectionKind.IndexedFunctionContexts:
+            case PortableModuleSectionKind.IndexedCallableSlots:
                 if (!critical)
                     throw new InvalidDataException($"Indexed executable section 0x{kind:X4} must be critical.");
                 break;

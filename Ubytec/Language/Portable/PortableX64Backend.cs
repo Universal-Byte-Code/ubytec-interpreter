@@ -60,6 +60,12 @@ public static class PortableX64Backend
         // Re-encoding validates caller-constructed typed models without consulting source state.
         byte[] canonical = PortableBinaryCodec.Encode(module);
         PortableBinaryVerifier.Verify(canonical);
+        // Emit from a private decoded snapshot of the exact verified bytes, not mutable
+        // caller-owned instruction/array objects.
+        executable = PortableBinaryCodec.Decode(canonical).Executable!;
+        if (executable.Contexts.Restricted && optimizeTailCalls)
+            throw new InvalidDataException("Restricted profiles do not permit frame-reusing tail calls.");
+        int dispatchBudget = 65536;
 
         string[] functionLabels = Enumerable.Range(0, executable.Functions.Count)
             .Select(FunctionLabel)
@@ -80,7 +86,7 @@ public static class PortableX64Backend
             output.AppendLine($"extern {import}");
 
         for (int index = 0; index < executable.Functions.Count; index++)
-            EmitFunction(output, executable, index, functionLabels, moduleScope, optimizeTailCalls);
+            EmitFunction(output, executable, index, functionLabels, moduleScope, optimizeTailCalls, ref dispatchBudget);
 
         for (int index = 0; index < executable.Exports.Count; index++)
         {
@@ -146,7 +152,8 @@ public static class PortableX64Backend
         int functionIndex,
         IReadOnlyList<string> functionLabels,
         ScopeContext moduleScope,
-        bool optimizeTailCalls)
+        bool optimizeTailCalls,
+        ref int dispatchBudget)
     {
         PortableExecutableFunction function = executable.Functions[functionIndex];
         UType returnType = ResolveType(executable, function.ReturnTypeIndex);
@@ -154,6 +161,16 @@ public static class PortableX64Backend
             throw new NotSupportedException($"FunctionIndex {functionIndex} return type is not supported by the x64 cell ABI.");
 
         string label = functionLabels[functionIndex];
+        int slotCount = executable.CallableSlots?.Banks[functionIndex].Count ?? 0;
+        int switchCount = function.Instructions.Count(instruction => instruction.OpCode == SWITCH.OP);
+        // Scalar bindings keep their original offsets. The callable bank sits below all
+        // locals, above the evaluation-stack baseline and has no BindingIndex.
+        int localCount = function.LocalTypeIndices.Count;
+        uint[] bindTargets = function.Instructions.OfType<PortableCallableInstruction>()
+            .Where(instruction => instruction.Operation == 0)
+            .Select(instruction => instruction.Second!.Value).Distinct().OrderBy(target => target).ToArray();
+        if (bindTargets.Length > 256)
+            throw new NotSupportedException("CallableLocal x64 supports at most 256 distinct bind targets per function.");
         var frame = new ScopeContext
         {
             StartLabel = label,
@@ -161,7 +178,7 @@ public static class PortableX64Backend
             DeclaredByKeyword = "func",
             ExpectedReturnType = returnType,
             ArgumentCount = function.ArgumentTypeIndices.Count,
-            FrameSize = Align16(checked(function.LocalTypeIndices.Count * 8))
+            FrameSize = Align16(checked((localCount + slotCount + switchCount) * 8))
         };
         frame.Callables.Add(
             FunctionName(functionIndex),
@@ -191,6 +208,9 @@ public static class PortableX64Backend
                 IsReadOnly(type)));
         }
 
+        for (int index = 0; index < switchCount; index++)
+            frame.SwitchSlots.Enqueue(checked(-8 * (localCount + slotCount + index + 1)));
+
         var scopes = new CompilationScopes { EmitProcessEntryPoint = false };
         scopes.Push(CloneModuleScope(moduleScope));
         scopes.Push(frame);
@@ -200,6 +220,8 @@ public static class PortableX64Backend
         output.AppendLine("  mov rbp, rsp");
         if (frame.FrameSize != 0)
             output.AppendLine($"  sub rsp, {frame.FrameSize}");
+        for (int slot = 0; slot < slotCount; slot++)
+            output.AppendLine($"  mov qword {CallableAddress(localCount, (uint)slot)}, 0");
 
         for (int index = 0; index < function.Instructions.Count; index++)
         {
@@ -211,7 +233,9 @@ public static class PortableX64Backend
                 continue;
             }
 
-            string assembly = CompileInstruction(function.Instructions[index], executable, functionIndex, function, scopes, frame);
+            string assembly = function.Instructions[index] is PortableCallableInstruction callable
+                ? CompileCallable(callable, executable, functionIndex, index, localCount, bindTargets, scopes, ref dispatchBudget)
+                : CompileInstruction(function.Instructions[index], executable, functionIndex, function, scopes, frame);
             AppendIndented(output, assembly);
         }
 
@@ -240,6 +264,11 @@ public static class PortableX64Backend
         PortableVariableInstruction variable => CompileVariable(variable, function, frame),
         PortablePushInstruction push => new StackOperations.PUSH(push.Immediate.ToArray()).Compile(scopes),
         PortableStackIndexInstruction stack => CompileStackIndex(stack, scopes),
+        PortableExtendedStackInstruction extended => CompileExtendedStack(extended, scopes),
+        PortableBranchInstruction branch => new BRANCH(unchecked((long)branch.CaseCell)).Compile(scopes),
+        PortableControlTransferInstruction transfer => CompileTransfer(transfer, scopes),
+        PortableBlockInstruction block => new BLOCK(block.ResultTypeIndex is uint typeIndex
+            ? ResolveType(executable, typeIndex) : null).Compile(scopes),
         PortableCallInstruction call => CompileCall(call, executable, scopes),
         PortableFunctionAddressInstruction address =>
             new FunctionOperations.FNADDR(FunctionName(checked((int)address.FunctionIndex))).Compile(scopes),
@@ -249,6 +278,61 @@ public static class PortableX64Backend
         _ => throw new NotSupportedException(
             $"Portable instruction type '{instruction.GetType().Name}' has no x64 lowering contract.")
     };
+
+    private static string CallableAddress(int localCount, uint slot) =>
+        $"[rbp - {checked((localCount + (int)slot + 1) * 8)}]";
+
+    private static string CompileCallable(
+        PortableCallableInstruction instruction, PortableExecutableModule executable,
+        int functionIndex, int instructionIndex, int localCount, IReadOnlyList<uint> bindTargets,
+        CompilationScopes scopes, ref int dispatchBudget)
+    {
+        PortableCallableTable table = executable.CallableSlots
+            ?? throw new InvalidDataException("Callable instruction has no slot bank.");
+        PortableCallableSignature signature = table.Get(functionIndex, instruction.Slot);
+        string destination = CallableAddress(localCount, instruction.Slot);
+        switch (instruction.Operation)
+        {
+            case 0:
+                // Zero is Empty. Selectors are private, never guest scalar values.
+                return $"mov qword {destination}, {checked(instruction.Second!.Value + 1)}";
+            case 1:
+                return $"mov rax, {CallableAddress(localCount, instruction.Second!.Value)}\n  mov qword {destination}, rax";
+            case 2:
+                return $"mov qword {destination}, 0";
+            case 3:
+            {
+                // A slot may acquire any compatible target minted by this activation,
+                // including via COPY. Restrict dispatch to that finite set, not all code.
+                dispatchBudget -= Math.Max(1, bindTargets.Count);
+                if (dispatchBudget < 0)
+                    throw new NotSupportedException("CallableLocal x64 dispatch expansion limit exceeded.");
+                string prefix = $"ubytec_binary_f_{functionIndex}__cap_{instructionIndex}";
+                var output = new StringBuilder();
+                uint[] allowed = bindTargets.Where(target =>
+                {
+                    PortableExecutableFunction function = executable.Functions[(int)target];
+                    return signature.Matches(function.ReturnTypeIndex, function.ArgumentTypeIndices);
+                }).ToArray();
+                foreach (uint target in allowed)
+                {
+                    output.AppendLine($"cmp qword {destination}, {checked(target + 1)}");
+                    output.AppendLine($"je {prefix}_target_{target}");
+                }
+                output.AppendLine("ud2 ; empty or invalid callable selector");
+                foreach (uint target in allowed)
+                {
+                    output.AppendLine($"{prefix}_target_{target}:");
+                    output.AppendLine(CompileCall(new PortableCallInstruction(PortableCallTargetKind.LocalFunction, target), executable, scopes));
+                    output.AppendLine($"jmp {prefix}_end");
+                }
+                output.AppendLine($"{prefix}_end:");
+                return output.ToString();
+            }
+            default:
+                throw new InvalidDataException("Unknown callable opcode.");
+        }
+    }
 
     private static string CompileReturn(
         PortableReturnInstruction instruction,
@@ -285,6 +369,31 @@ public static class PortableX64Backend
             throw new InvalidDataException("VAR BindingIndex is outside the function frame.");
         return $"mov rax, 0x{instruction.InitialCell:X16}\n  mov qword {binding.Address}, rax";
     }
+
+    private static string CompileTransfer(PortableControlTransferInstruction instruction, CompilationScopes scopes)
+    {
+        uint ordinal = instruction.TargetOrdinal;
+        bool continuing = instruction.Operation == CONTINUE.OP;
+        foreach (ScopeContext scope in scopes.All)
+        {
+            if (scope.DeclaredByKeyword is "func" or "action") break;
+            if (!scope.IsLoop && (continuing || scope.DeclaredByKeyword != "switch")) continue;
+            if (ordinal == 0)
+                return continuing ? $"jmp {scope.StartLabel} ; CONTINUE" : $"jmp {scope.EndLabel} ; BREAK";
+            ordinal--;
+        }
+        throw new InvalidDataException("Verified control target does not exist in native scopes.");
+    }
+
+    private static string CompileExtendedStack(PortableExtendedStackInstruction instruction, CompilationScopes scopes) =>
+        instruction.Operation switch
+        {
+            0x11 => new ExtendedStackOperations.PUSH16(instruction.Index).Compile(scopes),
+            0x18 => new ExtendedStackOperations.DROP16(instruction.Index).Compile(scopes),
+            0x1D => new ExtendedStackOperations.PICK16(instruction.Index).Compile(scopes),
+            0x1E => new ExtendedStackOperations.ROLL16(instruction.Index).Compile(scopes),
+            _ => throw new InvalidDataException("Unknown extended stack opcode.")
+        };
 
     private static string CompileStackIndex(PortableStackIndexInstruction instruction, CompilationScopes scopes) =>
         instruction.StackOpCode switch
@@ -338,7 +447,7 @@ public static class PortableX64Backend
 
     private static string CompileOperandFree(byte opcode, CompilationScopes scopes)
     {
-        if (opcode is BLOCK.OP or LOOP.OP or IF.OP or ELSE.OP or END.OP or BREAK.OP or CONTINUE.OP or WHILE.OP)
+        if (opcode is LOOP.OP or IF.OP or ELSE.OP or END.OP or WHILE.OP or SWITCH.OP)
             return CompileStructuredOperandFree(opcode, scopes);
 
         if (!OperandFreeOperations.TryGetValue(opcode, out Type? type) ||
@@ -361,21 +470,19 @@ public static class PortableX64Backend
         int depth = scopes.Count;
         IOpCode operation = opcode switch
         {
-            BLOCK.OP => new BLOCK(),
             LOOP.OP => new LOOP(),
             IF.OP => new IF(),
             ELSE.OP => new ELSE(),
             END.OP => new END(),
-            BREAK.OP => new BREAK(null),
-            CONTINUE.OP => new CONTINUE(null),
             WHILE.OP => new WHILE(),
+            SWITCH.OP => new SWITCH(null),
             _ => throw new InvalidDataException($"Opcode 0x{opcode:X2} is not normalized structured control flow.")
         };
 
         string assembly = operation.Compile(scopes);
         int expectedDepth = opcode switch
         {
-            BLOCK.OP or LOOP.OP or IF.OP or WHILE.OP => depth + 1,
+            BLOCK.OP or LOOP.OP or IF.OP or WHILE.OP or SWITCH.OP => depth + 1,
             END.OP => depth - 1,
             _ => depth
         };

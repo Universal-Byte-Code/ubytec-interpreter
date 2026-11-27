@@ -28,7 +28,8 @@ public static class PortableSourceX64Pipeline
         bool enableModuleCalls = false,
         bool enableHostIO = false,
         bool optimizeTailCalls = false,
-        IReadOnlyList<PortableRequestedExport>? requestedExports = null)
+        IReadOnlyList<PortableRequestedExport>? requestedExports = null,
+        PortableExecutionProfile executionProfile = PortableExecutionProfile.UnsafeCells)
     {
         SourceSemanticCompilation frontend = SourceCompiler.CompileSemantic(
             source,
@@ -54,7 +55,8 @@ public static class PortableSourceX64Pipeline
             frontend.Module,
             contractManifest: string.IsNullOrEmpty(contractManifest) ? null : contractManifest,
             includeIndexedExecutable: true,
-            portableContracts: portableContracts);
+            portableContracts: portableContracts,
+            executionProfile: executionProfile);
 
         if (processImage)
         {

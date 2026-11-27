@@ -33,7 +33,8 @@ public static class IndexedExecutableFormat
         PortableModuleSectionKind.IndexedImportTable,
         PortableModuleSectionKind.IndexedExportTable,
         PortableModuleSectionKind.IndexedConstantTable,
-        PortableModuleSectionKind.IndexedCode
+        PortableModuleSectionKind.IndexedCode,
+        PortableModuleSectionKind.IndexedFunctionContexts
     ];
 
     /// <summary>Returns true when the decoded PMF image carries the complete indexed profile.</summary>
@@ -45,10 +46,13 @@ public static class IndexedExecutableFormat
 
     internal static IReadOnlyList<IndexedSectionPayload> EncodeSections(
         Module module,
-        PortableModuleContracts? contracts)
+        PortableModuleContracts? contracts,
+        PortableExecutionProfile executionProfile = PortableExecutionProfile.UnsafeCells)
     {
         ArgumentNullException.ThrowIfNull(module);
         contracts ??= PortableModuleContracts.Empty;
+        if (executionProfile == PortableExecutionProfile.CallableLocal)
+            throw new NotSupportedException("CallableLocal source lowering is not implemented; use the typed executable codec.");
 
         List<CallableInfo> callables = FlattenCallables(module);
         foreach (CallableInfo callable in callables)
@@ -120,7 +124,10 @@ public static class IndexedExecutableFormat
             new(PortableModuleSectionKind.IndexedImportTable, importEncoding.Table),
             new(PortableModuleSectionKind.IndexedExportTable, exportTable),
             new(PortableModuleSectionKind.IndexedConstantTable, EmptyTable()),
-            new(PortableModuleSectionKind.IndexedCode, codeSection)
+            new(PortableModuleSectionKind.IndexedCode, codeSection),
+            new(PortableModuleSectionKind.IndexedFunctionContexts,
+                new PortableContextTable(executionProfile, callables.Select(callable =>
+                    callable.Parent is null ? PortableContextTable.NoIndex : functionIndices[callable.Parent]).ToArray()).Encode())
         ];
     }
 
@@ -137,9 +144,15 @@ public static class IndexedExecutableFormat
     internal static void VerifySections(IReadOnlyList<PortableModuleSection> sections)
     {
         int present = SectionKinds.Count(kind => sections.Any(section => section.Kind == (ushort)kind));
-        if (present == 0) return;
+        PortableModuleSection? callableSection = sections.SingleOrDefault(section =>
+            section.Kind == (ushort)PortableModuleSectionKind.IndexedCallableSlots);
+        if (present == 0)
+        {
+            if (callableSection is not null) throw new InvalidDataException("Callable slot section requires indexed executable sections.");
+            return;
+        }
         if (present != SectionKinds.Length)
-            throw new InvalidDataException("Indexed executable PMF sections 0x0010..0x0016 must be present as a complete group.");
+            throw new InvalidDataException("Indexed executable sections 0x0010..0x0016 and 0x0018 must be present as a complete group.");
 
         foreach (PortableModuleSectionKind kind in SectionKinds)
         {
@@ -160,10 +173,19 @@ public static class IndexedExecutableFormat
         List<TypeEntry> types = ParseTypeTable(typesPayload.Span, strings.Count);
         List<FunctionEntry> functions = ParseFunctionTable(functionsPayload.Span, types.Count);
         List<ImportEntry> imports = ParseImportTable(importsPayload.Span, strings, types);
-        ParseExportTable(exportsPayload.Span, strings, functions, types);
+        PortableContextTable contexts = PortableContextTable.Decode(
+            Required(sections, PortableModuleSectionKind.IndexedFunctionContexts).Payload.Span, functions.Count);
+        if (callableSection is not null && callableSection.Flags != PortableModuleSectionFlags.Critical)
+            throw new InvalidDataException("Callable slot section must be critical.");
+        PortableCallableTable? callables = PortableCallableTable.ReadSection(contexts, callableSection is not null,
+            callableSection is null ? ReadOnlyMemory<byte>.Empty : callableSection.Payload, functions.Count,
+            (index, result) => index < (uint)types.Count && PortableCallableTable.IsScalarSignatureType(
+                types[(int)index].Primitive, types[(int)index].Modifiers, types[(int)index].FixedArraySize, result));
+        contexts.RequireNoImports(imports.Count);
+        ParseExportTable(exportsPayload.Span, strings, functions, types, contexts);
         ParseConstantTable(constantsPayload.Span);
         VerifyFunctionRanges(functions, codePayload.Length);
-        VerifyCode(functions, imports.Count, types, codePayload.Span);
+        VerifyCode(functions, imports.Count, types, codePayload.Span, contexts, callables);
     }
 
     private static PortableModuleSection Required(
@@ -277,6 +299,13 @@ public static class IndexedExecutableFormat
             result.Add(TypeKey.From(callable.ReturnType));
             foreach (BindingInfo binding in callable.Bindings)
                 result.Add(TypeKey.From(binding.Type));
+            foreach (IOpCode operation in FunctionEmitter.Instructions(callable.Definition))
+            {
+                if (operation is BLOCK { BlockType: { } blockType } && blockType.Type != PrimitiveType.Default)
+                    result.Add(TypeKey.From(blockType));
+                if (operation is RETURN { BlockType: { } returnType })
+                    result.Add(TypeKey.From(returnType));
+            }
         }
 
         foreach (PortableImportContract import in contracts.Imports)
@@ -465,8 +494,28 @@ public static class IndexedExecutableFormat
             WriteUInt64(stream, unchecked((ulong)FunctionCode.InitialValue(local.Type, local.InitialValue)));
         }
 
+        var controls = new List<(byte Kind, int? Label)>();
         foreach (IOpCode operation in FunctionEmitter.Instructions(callable.Definition))
-            EncodeInstruction(stream, operation, callable, typeIndices, functionIndices, topLevel, importIndices);
+        {
+            EncodeInstruction(stream, operation, callable, typeIndices, functionIndices, topLevel, importIndices, controls);
+            switch (operation)
+            {
+                case BLOCK: controls.Add((BLOCK.OP, null)); break;
+                case LOOP: controls.Add((LOOP.OP, null)); break;
+                case IF: controls.Add((IF.OP, null)); break;
+                case WHILE loop:
+                    controls.Add((WHILE.OP, loop.LabelIDxs is { Length: 1 } ids ? ids[0] : null));
+                    break;
+                case SWITCH selection: controls.Add((SWITCH.OP, selection.TableIDx)); break;
+                case BRANCH branch: controls.Add((BRANCH.OP, branch.LabelIDx)); break;
+                case END:
+                    if (controls.Count == 0) throw new InvalidDataException("END without a control scope.");
+                    controls.RemoveAt(controls.Count - 1);
+                    break;
+            }
+        }
+
+        if (controls.Count != 0) throw new InvalidDataException("Unclosed source control scope.");
 
         return stream.ToArray();
     }
@@ -478,12 +527,26 @@ public static class IndexedExecutableFormat
         IReadOnlyDictionary<TypeKey, uint> typeIndices,
         IReadOnlyDictionary<CallableInfo, uint> functionIndices,
         IReadOnlyDictionary<string, CallableInfo> topLevel,
-        IReadOnlyDictionary<string, uint> importIndices)
+        IReadOnlyDictionary<string, uint> importIndices,
+        IReadOnlyList<(byte Kind, int? Label)> controls)
     {
         if (operation is IExtendedOpCode extended)
-            throw new NotSupportedException(
-                $"Indexed executable v0 reference lowering does not yet define operands for extended opcode " +
-                $"depth={extended.EscapeDepth}, group=0x{extended.ExtensionGroup:X2}, opcode=0x{extended.ExtendedOpCode:X2}.");
+        {
+            ushort index = operation switch
+            {
+                ExtendedStackOperations.PUSH16 value => value.StackIndex,
+                ExtendedStackOperations.DROP16 value => value.StackIndex,
+                ExtendedStackOperations.PICK16 value => value.N,
+                ExtendedStackOperations.ROLL16 value => value.N,
+                _ => throw new NotSupportedException("Unsupported indexed extended opcode.")
+            };
+            stream.WriteByte(0xFF);
+            stream.WriteByte(0x10);
+            stream.WriteByte(extended.ExtendedOpCode);
+            stream.WriteByte((byte)index);
+            stream.WriteByte((byte)(index >> 8));
+            return;
+        }
 
         switch (operation)
         {
@@ -576,8 +639,17 @@ public static class IndexedExecutableFormat
                 return;
 
             case BLOCK block:
-                RequireDefaultBlockType(block.BlockType, operation);
                 stream.WriteByte(BLOCK.OP);
+                if (block.BlockType is not { } blockType || blockType.Type == PrimitiveType.Default)
+                {
+                    stream.WriteByte(0);
+                    return;
+                }
+                if (blockType.FixedArraySize != 1 ||
+                    (blockType.Type == PrimitiveType.Void ? blockType.Modifiers != TypeModifiers.None : !FunctionCode.IsCellType(blockType)))
+                    throw Unsupported(operation, "BLOCK result must be void or a scalar cell");
+                stream.WriteByte(1);
+                WriteUInt32(stream, TypeIndex(blockType, typeIndices));
                 return;
 
             case LOOP loopBlock:
@@ -597,8 +669,8 @@ public static class IndexedExecutableFormat
                 return;
 
             case WHILE whileBlock:
-                if (whileBlock.LabelIDxs is { Length: > 0 })
-                    throw Unsupported(operation, "labeled WHILE has no indexed executable v0 wire contract");
+                if (whileBlock.LabelIDxs is { Length: > 1 })
+                    throw Unsupported(operation, "WHILE accepts at most one label identifier");
                 if (whileBlock.Condition is null)
                 {
                     RequireDefaultBlockType(whileBlock.BlockType, operation);
@@ -613,7 +685,19 @@ public static class IndexedExecutableFormat
                 stream.WriteByte(ComparisonOperations.EQ.OP);
                 stream.WriteByte(IF.OP);
                 stream.WriteByte(BREAK.OP);
+                WriteUInt32(stream, 0); // Nearest eligible control target is the normalized LOOP.
                 stream.WriteByte(END.OP);
+                return;
+
+            case SWITCH selection:
+                RequireDefaultBlockType(selection.BlockType, operation);
+                stream.WriteByte(SWITCH.OP);
+                return;
+
+            case BRANCH branch:
+                RequireDefaultBlockType(branch.BlockType, operation);
+                stream.WriteByte(BRANCH.OP);
+                WriteUInt64(stream, unchecked((ulong)FunctionCode.InitialValue(new UType(PrimitiveType.Int64), branch.CaseValue)));
                 return;
 
             case ELSE alternate:
@@ -621,12 +705,14 @@ public static class IndexedExecutableFormat
                 stream.WriteByte(ELSE.OP);
                 return;
 
-            case BREAK breakOperation when breakOperation.LabelIDx is null:
+            case BREAK breakOperation:
                 stream.WriteByte(BREAK.OP);
+                WriteUInt32(stream, ResolveControlTarget(controls, breakOperation.LabelIDx, continuing: false));
                 return;
 
-            case CONTINUE continueOperation when continueOperation.LabelIDx is null:
+            case CONTINUE continueOperation:
                 stream.WriteByte(CONTINUE.OP);
+                WriteUInt32(stream, ResolveControlTarget(controls, continueOperation.LabelIDx, continuing: true));
                 return;
 
             case END _:
@@ -641,6 +727,32 @@ public static class IndexedExecutableFormat
                 }
                 throw Unsupported(operation, "opcode has semantic fields but no indexed executable v0 operand contract");
         }
+    }
+
+    // Resolve source labels before encoding. Count only eligible, distinct
+    // enclosing targets from innermost to outermost; BRANCH aliases its SWITCH.
+    private static uint ResolveControlTarget(
+        IReadOnlyList<(byte Kind, int? Label)> controls, int? label, bool continuing)
+    {
+        int target = -1;
+        for (int i = controls.Count - 1; i >= 0; i--)
+        {
+            (byte kind, int? declaredLabel) = controls[i];
+            bool eligible = kind is LOOP.OP or WHILE.OP ||
+                (!continuing && kind is SWITCH.OP or BRANCH.OP);
+            if (!eligible || (label.HasValue && label != declaredLabel)) continue;
+            target = kind == BRANCH.OP ? i - 1 : i;
+            if (target < 0 || (kind == BRANCH.OP && controls[target].Kind != SWITCH.OP))
+                throw new InvalidDataException("BRANCH has no owning SWITCH.");
+            break;
+        }
+        if (target < 0)
+            throw new InvalidDataException("Control transfer has no enclosing target.");
+        uint ordinal = 0;
+        for (int i = controls.Count - 1; i > target; i--)
+            if (controls[i].Kind is LOOP.OP or WHILE.OP || (!continuing && controls[i].Kind == SWITCH.OP))
+                ordinal++;
+        return ordinal;
     }
 
     private static void EncodeMemory(
@@ -1127,7 +1239,8 @@ public static class IndexedExecutableFormat
         ReadOnlySpan<byte> payload,
         IReadOnlyList<byte[]> strings,
         IReadOnlyList<FunctionEntry> functions,
-        IReadOnlyList<TypeEntry> types)
+        IReadOnlyList<TypeEntry> types,
+        PortableContextTable contexts)
     {
         var reader = new SpanReader(payload);
         uint count = reader.ReadUInt32("Export table entry count");
@@ -1140,6 +1253,7 @@ public static class IndexedExecutableFormat
             RequireNonEmptyString(symbol, strings, "Export symbol StringIndex");
             uint functionIndex = reader.ReadUInt32("Export FunctionIndex");
             RequireIndex(functionIndex, functions.Count, "Export FunctionIndex");
+            contexts.RequireTopLevel(functionIndex, "Export");
             uint returnType = reader.ReadUInt32("Export return TypeIndex");
             RequireBoundaryReturnType(returnType, types, "Export return TypeIndex");
             uint arguments = reader.ReadUInt32("Export argument count");
@@ -1155,6 +1269,7 @@ public static class IndexedExecutableFormat
             for (int argument = 0; argument < checked((int)arguments); argument++)
             {
                 BoundaryDescriptor descriptor = ReadBoundaryDescriptor(ref reader, types, "Export argument");
+                contexts.RequireValueExport(descriptor.PassingMode);
                 TypeEntry carrier = types[checked((int)descriptor.TypeIndex)];
                 TypeEntry internalType = types[checked((int)function.ArgumentTypes[argument])];
                 if (!MatchesBoundaryCarrier(internalType, carrier))
@@ -1269,7 +1384,9 @@ public static class IndexedExecutableFormat
         IReadOnlyList<FunctionEntry> functions,
         int importCount,
         IReadOnlyList<TypeEntry> types,
-        ReadOnlySpan<byte> code)
+        ReadOnlySpan<byte> code,
+        PortableContextTable contexts,
+        PortableCallableTable? callables)
     {
         for (int functionIndex = 0; functionIndex < functions.Count; functionIndex++)
         {
@@ -1282,6 +1399,9 @@ public static class IndexedExecutableFormat
             while (!reader.AtEnd)
             {
                 byte opcode = reader.ReadByte("Opcode");
+                if (controls.TryPeek(out byte enclosing) && enclosing == SWITCH.OP &&
+                    opcode is not (BRANCH.OP or DEFAULT.OP or END.OP))
+                    throw new InvalidDataException("SWITCH requires BRANCH, DEFAULT or END.");
                 if (opcode == 0xFF)
                 {
                     int depth = 1;
@@ -1294,6 +1414,23 @@ public static class IndexedExecutableFormat
                     byte extendedOpcode = reader.ReadByte("Extended opcode number");
                     if (group == 0xFF || extendedOpcode == 0xFF)
                         throw new InvalidDataException("0xFF is reserved in extended opcode group/code positions.");
+                    if (depth == 1 && group == 0x10 && extendedOpcode is 0x11 or 0x18 or 0x1D or 0x1E)
+                    {
+                        int index = reader.ReadByte("Extended stack index low");
+                        index |= reader.ReadByte("Extended stack index high") << 8;
+                        _ = index;
+                        continue;
+                    }
+                    if (depth == 1 && group == 0x13)
+                    {
+                        if (callables is null || extendedOpcode > 3)
+                            throw new InvalidDataException("Unsupported callable opcode or execution profile.");
+                        uint slot = reader.ReadUInt32("CallableSlotIndex");
+                        uint? second = extendedOpcode <= 1 ? reader.ReadUInt32("Callable target/source") : null;
+                        _ = callables.VerifyOperation(contexts, functionIndex, extendedOpcode, slot, second,
+                            target => new PortableCallableSignature(functions[(int)target].ReturnType, functions[(int)target].ArgumentTypes));
+                        continue;
+                    }
                     throw new NotSupportedException(
                         $"Indexed executable v0 reference verifier does not yet support extended opcode " +
                         $"depth={depth}, group=0x{group:X2}, opcode=0x{extendedOpcode:X2}.");
@@ -1346,6 +1483,7 @@ public static class IndexedExecutableFormat
                         {
                             case 0:
                                 RequireIndex(targetIndex, functions.Count, "CALL FunctionIndex");
+                                contexts.RequireVisible(functionIndex, targetIndex);
                                 break;
                             case 1:
                                 RequireIndex(targetIndex, importCount, "CALL ImportIndex");
@@ -1357,11 +1495,13 @@ public static class IndexedExecutableFormat
                     }
 
                     case FunctionOperations.FNADDR.OP:
-                        RequireIndex(reader.ReadUInt32("FunctionIndex"), functions.Count, "FunctionIndex");
+                        contexts.RejectIndirect();
+                        contexts.RequireVisible(functionIndex, reader.ReadUInt32("FunctionIndex"));
                         break;
 
                     case FunctionOperations.CALLI.OP:
                     {
+                        contexts.RejectIndirect();
                         _ = reader.ReadByte("CALLI argument count");
                         byte returnType = reader.ReadByte("CALLI return primitive type");
                         if (!Enum.IsDefined(typeof(PrimitiveType), (PrimitiveType)returnType))
@@ -1376,6 +1516,7 @@ public static class IndexedExecutableFormat
                     case MemoryOperations.STORE.OP:
                     {
                         byte mode = reader.ReadByte("LOAD/STORE mode");
+                        contexts.RequireNamedMemory(mode);
                         switch (mode)
                         {
                             case 0:
@@ -1401,7 +1542,42 @@ public static class IndexedExecutableFormat
                         break;
                     }
 
+                    case SWITCH.OP:
+                        controls.Push(SWITCH.OP);
+                        break;
+
+                    case BRANCH.OP:
+                        if (!controls.TryPeek(out byte selection) || selection != SWITCH.OP)
+                            throw new InvalidDataException("BRANCH requires SWITCH before DEFAULT.");
+                        _ = reader.ReadUInt64("BRANCH case cell");
+                        controls.Push(BRANCH.OP);
+                        break;
+
+                    case DEFAULT.OP:
+                        if (controls.TryPeek(out byte parent) && parent == SWITCH.OP)
+                        {
+                            controls.Pop();
+                            controls.Push(DEFAULT.OP);
+                        }
+                        else if (parent == DEFAULT.OP)
+                            throw new InvalidDataException("Duplicate SWITCH DEFAULT.");
+                        break;
+
                     case BLOCK.OP:
+                    {
+                        byte mode = reader.ReadByte("BLOCK result mode");
+                        if (mode == 1)
+                        {
+                            uint typeIndex = reader.ReadUInt32("BLOCK result TypeIndex");
+                            RequireIndex(typeIndex, types.Count, "BLOCK result TypeIndex");
+                            var type = types[(int)typeIndex];
+                            if (!PortableCallableTable.IsScalarSignatureType(type.Primitive, type.Modifiers, type.FixedArraySize, true))
+                                throw new InvalidDataException("BLOCK result must be void or a scalar cell.");
+                        }
+                        else if (mode != 0) throw new InvalidDataException("Unknown BLOCK result mode.");
+                        controls.Push(opcode);
+                        break;
+                    }
                     case LOOP.OP:
                     case IF.OP:
                     case WHILE.OP:
@@ -1422,12 +1598,17 @@ public static class IndexedExecutableFormat
 
                     case BREAK.OP:
                     case CONTINUE.OP:
-                        if (!controls.Any(control => control == LOOP.OP || control == WHILE.OP))
-                            throw new InvalidDataException(
-                                $"Portable opcode 0x{opcode:X2} requires an enclosing LOOP or WHILE.");
+                    {
+                        uint ordinal = reader.ReadUInt32("ControlTargetOrdinal");
+                        int count = controls.Count(control => control == LOOP.OP || control == WHILE.OP ||
+                            (opcode == BREAK.OP && control is SWITCH.OP or DEFAULT.OP));
+                        if (ordinal >= (uint)count)
+                            throw new InvalidDataException("ControlTargetOrdinal is outside enclosing eligible control scopes.");
                         break;
+                    }
 
                     default:
+                        contexts.RequireAllowedOperandFree(opcode);
                         if (!OperandFreeCoreOpcodes.Contains(opcode))
                             throw new InvalidDataException($"Core opcode 0x{opcode:X2} has no supported indexed executable v0 wire contract.");
                         break;
