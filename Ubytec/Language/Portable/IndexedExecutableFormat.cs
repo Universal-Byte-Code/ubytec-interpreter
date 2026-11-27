@@ -51,6 +51,8 @@ public static class IndexedExecutableFormat
     {
         ArgumentNullException.ThrowIfNull(module);
         contracts ??= PortableModuleContracts.Empty;
+        if (executionProfile == PortableExecutionProfile.CallableLocal)
+            throw new NotSupportedException("CallableLocal source lowering is not implemented; use the typed executable codec.");
 
         List<CallableInfo> callables = FlattenCallables(module);
         foreach (CallableInfo callable in callables)
@@ -142,7 +144,13 @@ public static class IndexedExecutableFormat
     internal static void VerifySections(IReadOnlyList<PortableModuleSection> sections)
     {
         int present = SectionKinds.Count(kind => sections.Any(section => section.Kind == (ushort)kind));
-        if (present == 0) return;
+        PortableModuleSection? callableSection = sections.SingleOrDefault(section =>
+            section.Kind == (ushort)PortableModuleSectionKind.IndexedCallableSlots);
+        if (present == 0)
+        {
+            if (callableSection is not null) throw new InvalidDataException("Callable slot section requires indexed executable sections.");
+            return;
+        }
         if (present != SectionKinds.Length)
             throw new InvalidDataException("Indexed executable sections 0x0010..0x0016 and 0x0018 must be present as a complete group.");
 
@@ -167,11 +175,17 @@ public static class IndexedExecutableFormat
         List<ImportEntry> imports = ParseImportTable(importsPayload.Span, strings, types);
         PortableContextTable contexts = PortableContextTable.Decode(
             Required(sections, PortableModuleSectionKind.IndexedFunctionContexts).Payload.Span, functions.Count);
+        if (callableSection is not null && callableSection.Flags != PortableModuleSectionFlags.Critical)
+            throw new InvalidDataException("Callable slot section must be critical.");
+        PortableCallableTable? callables = PortableCallableTable.ReadSection(contexts, callableSection is not null,
+            callableSection is null ? ReadOnlyMemory<byte>.Empty : callableSection.Payload, functions.Count,
+            (index, result) => index < (uint)types.Count && PortableCallableTable.IsScalarSignatureType(
+                types[(int)index].Primitive, types[(int)index].Modifiers, types[(int)index].FixedArraySize, result));
         contexts.RequireNoImports(imports.Count);
         ParseExportTable(exportsPayload.Span, strings, functions, types, contexts);
         ParseConstantTable(constantsPayload.Span);
         VerifyFunctionRanges(functions, codePayload.Length);
-        VerifyCode(functions, imports.Count, types, codePayload.Span, contexts);
+        VerifyCode(functions, imports.Count, types, codePayload.Span, contexts, callables);
     }
 
     private static PortableModuleSection Required(
@@ -1281,7 +1295,8 @@ public static class IndexedExecutableFormat
         int importCount,
         IReadOnlyList<TypeEntry> types,
         ReadOnlySpan<byte> code,
-        PortableContextTable contexts)
+        PortableContextTable contexts,
+        PortableCallableTable? callables)
     {
         for (int functionIndex = 0; functionIndex < functions.Count; functionIndex++)
         {
@@ -1306,6 +1321,16 @@ public static class IndexedExecutableFormat
                     byte extendedOpcode = reader.ReadByte("Extended opcode number");
                     if (group == 0xFF || extendedOpcode == 0xFF)
                         throw new InvalidDataException("0xFF is reserved in extended opcode group/code positions.");
+                    if (depth == 1 && group == 0x13)
+                    {
+                        if (callables is null || extendedOpcode > 3)
+                            throw new InvalidDataException("Unsupported callable opcode or execution profile.");
+                        uint slot = reader.ReadUInt32("CallableSlotIndex");
+                        uint? second = extendedOpcode <= 1 ? reader.ReadUInt32("Callable target/source") : null;
+                        _ = callables.VerifyOperation(contexts, functionIndex, extendedOpcode, slot, second,
+                            target => new PortableCallableSignature(functions[(int)target].ReturnType, functions[(int)target].ArgumentTypes));
+                        continue;
+                    }
                     throw new NotSupportedException(
                         $"Indexed executable v0 reference verifier does not yet support extended opcode " +
                         $"depth={depth}, group=0x{group:X2}, opcode=0x{extendedOpcode:X2}.");

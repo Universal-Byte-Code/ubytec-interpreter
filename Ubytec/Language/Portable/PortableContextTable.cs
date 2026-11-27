@@ -6,7 +6,8 @@ namespace Ubytec.Language.Portable;
 public enum PortableExecutionProfile : uint
 {
     UnsafeCells = 0,
-    DirectOnly = 1
+    DirectOnly = 1,
+    CallableLocal = 2
 }
 
 /// <summary>Canonical lexical declaration topology; independent of source/AST and native labels.</summary>
@@ -22,7 +23,7 @@ public sealed class PortableContextTable
     public PortableContextTable(PortableExecutionProfile profile, IReadOnlyList<uint> parentFunctionIndices)
     {
         ArgumentNullException.ThrowIfNull(parentFunctionIndices);
-        if (profile is not (PortableExecutionProfile.UnsafeCells or PortableExecutionProfile.DirectOnly))
+        if (profile is not (PortableExecutionProfile.UnsafeCells or PortableExecutionProfile.DirectOnly or PortableExecutionProfile.CallableLocal))
             throw new InvalidDataException("Unknown contextual execution profile.");
         Profile = profile;
         parents = parentFunctionIndices.ToArray();
@@ -92,39 +93,41 @@ public sealed class PortableContextTable
     }
 
     internal bool DirectOnly => Profile == PortableExecutionProfile.DirectOnly;
+    internal bool Restricted => Profile != PortableExecutionProfile.UnsafeCells;
 
     internal void RequireNoImports(int count)
     {
-        if (DirectOnly && count != 0)
-            throw new InvalidDataException("DirectOnly forbids imports.");
+        if (Restricted && count != 0)
+            throw new InvalidDataException("Restricted profile forbids imports.");
     }
 
     internal void RequireValueExport(PortablePassingMode mode)
     {
-        if (DirectOnly && mode != PortablePassingMode.Value)
-            throw new InvalidDataException("DirectOnly forbids loan exports.");
+        if (Restricted && mode != PortablePassingMode.Value)
+            throw new InvalidDataException("Restricted profile forbids loan exports.");
     }
 
     internal void RejectIndirect()
     {
-        if (DirectOnly)
-            throw new InvalidDataException("DirectOnly forbids FNADDR and CALLI.");
+        if (Restricted)
+            throw new InvalidDataException("Restricted profile forbids FNADDR and CALLI.");
     }
 
     internal void RequireNamedMemory(byte mode)
     {
-        if (DirectOnly && mode != 2)
-            throw new InvalidDataException("DirectOnly forbids raw memory access.");
+        if (Restricted && mode != 2)
+            throw new InvalidDataException("Restricted profile forbids raw memory access.");
     }
 
     // The structural and raw verifier both invoke this closed opcode policy only
     // for the operand-free default branch, after handling explicit wire forms.
     internal void RequireAllowedOperandFree(byte opcode)
     {
-        if (!DirectOnly) return;
+        if (!Restricted) return;
         if (opcode is >= 0x20 and <= 0x2A or >= 0x30 and <= 0x36 or >= 0x40 and <= 0x49)
             return;
         if (opcode is
+            Ubytec.Language.Operations.CoreOperations.NOP.OP or
             Ubytec.Language.Operations.CoreOperations.TRAP.OP or
             Ubytec.Language.Operations.CoreOperations.CLEAR.OP or
             Ubytec.Language.Operations.CoreOperations.NULL.OP or
@@ -140,6 +143,6 @@ public sealed class PortableContextTable
             Ubytec.Language.Operations.StackOperations.TwoROT.OP or
             Ubytec.Language.Operations.StackOperations.TwoOVER.OP)
             return;
-        throw new InvalidDataException($"DirectOnly forbids opcode 0x{opcode:X2}.");
+        throw new InvalidDataException($"Restricted profile forbids opcode 0x{opcode:X2}.");
     }
 }

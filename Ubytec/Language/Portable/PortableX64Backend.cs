@@ -60,8 +60,12 @@ public static class PortableX64Backend
         // Re-encoding validates caller-constructed typed models without consulting source state.
         byte[] canonical = PortableBinaryCodec.Encode(module);
         PortableBinaryVerifier.Verify(canonical);
-        if (executable.Contexts.DirectOnly && optimizeTailCalls)
-            throw new InvalidDataException("DirectOnly does not permit frame-reusing tail calls.");
+        // Emit from a private decoded snapshot of the exact verified bytes, not mutable
+        // caller-owned instruction/array objects.
+        executable = PortableBinaryCodec.Decode(canonical).Executable!;
+        if (executable.Contexts.Restricted && optimizeTailCalls)
+            throw new InvalidDataException("Restricted profiles do not permit frame-reusing tail calls.");
+        int dispatchBudget = 65536;
 
         string[] functionLabels = Enumerable.Range(0, executable.Functions.Count)
             .Select(FunctionLabel)
@@ -82,7 +86,7 @@ public static class PortableX64Backend
             output.AppendLine($"extern {import}");
 
         for (int index = 0; index < executable.Functions.Count; index++)
-            EmitFunction(output, executable, index, functionLabels, moduleScope, optimizeTailCalls);
+            EmitFunction(output, executable, index, functionLabels, moduleScope, optimizeTailCalls, ref dispatchBudget);
 
         for (int index = 0; index < executable.Exports.Count; index++)
         {
@@ -148,7 +152,8 @@ public static class PortableX64Backend
         int functionIndex,
         IReadOnlyList<string> functionLabels,
         ScopeContext moduleScope,
-        bool optimizeTailCalls)
+        bool optimizeTailCalls,
+        ref int dispatchBudget)
     {
         PortableExecutableFunction function = executable.Functions[functionIndex];
         UType returnType = ResolveType(executable, function.ReturnTypeIndex);
@@ -156,6 +161,15 @@ public static class PortableX64Backend
             throw new NotSupportedException($"FunctionIndex {functionIndex} return type is not supported by the x64 cell ABI.");
 
         string label = functionLabels[functionIndex];
+        int slotCount = executable.CallableSlots?.Banks[functionIndex].Count ?? 0;
+        // Scalar bindings keep their original offsets. The callable bank sits below all
+        // locals, above the evaluation-stack baseline and has no BindingIndex.
+        int localCount = function.LocalTypeIndices.Count;
+        uint[] bindTargets = function.Instructions.OfType<PortableCallableInstruction>()
+            .Where(instruction => instruction.Operation == 0)
+            .Select(instruction => instruction.Second!.Value).Distinct().OrderBy(target => target).ToArray();
+        if (bindTargets.Length > 256)
+            throw new NotSupportedException("CallableLocal x64 supports at most 256 distinct bind targets per function.");
         var frame = new ScopeContext
         {
             StartLabel = label,
@@ -163,7 +177,7 @@ public static class PortableX64Backend
             DeclaredByKeyword = "func",
             ExpectedReturnType = returnType,
             ArgumentCount = function.ArgumentTypeIndices.Count,
-            FrameSize = Align16(checked(function.LocalTypeIndices.Count * 8))
+            FrameSize = Align16(checked((localCount + slotCount) * 8))
         };
         frame.Callables.Add(
             FunctionName(functionIndex),
@@ -202,6 +216,8 @@ public static class PortableX64Backend
         output.AppendLine("  mov rbp, rsp");
         if (frame.FrameSize != 0)
             output.AppendLine($"  sub rsp, {frame.FrameSize}");
+        for (int slot = 0; slot < slotCount; slot++)
+            output.AppendLine($"  mov qword {CallableAddress(localCount, (uint)slot)}, 0");
 
         for (int index = 0; index < function.Instructions.Count; index++)
         {
@@ -213,7 +229,9 @@ public static class PortableX64Backend
                 continue;
             }
 
-            string assembly = CompileInstruction(function.Instructions[index], executable, functionIndex, function, scopes, frame);
+            string assembly = function.Instructions[index] is PortableCallableInstruction callable
+                ? CompileCallable(callable, executable, functionIndex, index, localCount, bindTargets, scopes, ref dispatchBudget)
+                : CompileInstruction(function.Instructions[index], executable, functionIndex, function, scopes, frame);
             AppendIndented(output, assembly);
         }
 
@@ -251,6 +269,61 @@ public static class PortableX64Backend
         _ => throw new NotSupportedException(
             $"Portable instruction type '{instruction.GetType().Name}' has no x64 lowering contract.")
     };
+
+    private static string CallableAddress(int localCount, uint slot) =>
+        $"[rbp - {checked((localCount + (int)slot + 1) * 8)}]";
+
+    private static string CompileCallable(
+        PortableCallableInstruction instruction, PortableExecutableModule executable,
+        int functionIndex, int instructionIndex, int localCount, IReadOnlyList<uint> bindTargets,
+        CompilationScopes scopes, ref int dispatchBudget)
+    {
+        PortableCallableTable table = executable.CallableSlots
+            ?? throw new InvalidDataException("Callable instruction has no slot bank.");
+        PortableCallableSignature signature = table.Get(functionIndex, instruction.Slot);
+        string destination = CallableAddress(localCount, instruction.Slot);
+        switch (instruction.Operation)
+        {
+            case 0:
+                // Zero is Empty. Selectors are private, never guest scalar values.
+                return $"mov qword {destination}, {checked(instruction.Second!.Value + 1)}";
+            case 1:
+                return $"mov rax, {CallableAddress(localCount, instruction.Second!.Value)}\n  mov qword {destination}, rax";
+            case 2:
+                return $"mov qword {destination}, 0";
+            case 3:
+            {
+                // A slot may acquire any compatible target minted by this activation,
+                // including via COPY. Restrict dispatch to that finite set, not all code.
+                dispatchBudget -= Math.Max(1, bindTargets.Count);
+                if (dispatchBudget < 0)
+                    throw new NotSupportedException("CallableLocal x64 dispatch expansion limit exceeded.");
+                string prefix = $"ubytec_binary_f_{functionIndex}__cap_{instructionIndex}";
+                var output = new StringBuilder();
+                uint[] allowed = bindTargets.Where(target =>
+                {
+                    PortableExecutableFunction function = executable.Functions[(int)target];
+                    return signature.Matches(function.ReturnTypeIndex, function.ArgumentTypeIndices);
+                }).ToArray();
+                foreach (uint target in allowed)
+                {
+                    output.AppendLine($"cmp qword {destination}, {checked(target + 1)}");
+                    output.AppendLine($"je {prefix}_target_{target}");
+                }
+                output.AppendLine("ud2 ; empty or invalid callable selector");
+                foreach (uint target in allowed)
+                {
+                    output.AppendLine($"{prefix}_target_{target}:");
+                    output.AppendLine(CompileCall(new PortableCallInstruction(PortableCallTargetKind.LocalFunction, target), executable, scopes));
+                    output.AppendLine($"jmp {prefix}_end");
+                }
+                output.AppendLine($"{prefix}_end:");
+                return output.ToString();
+            }
+            default:
+                throw new InvalidDataException("Unknown callable opcode.");
+        }
+    }
 
     private static string CompileReturn(
         PortableReturnInstruction instruction,

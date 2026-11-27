@@ -24,7 +24,8 @@ public sealed record PortableExecutableModule(
     IReadOnlyList<PortableExecutableImport> Imports,
     IReadOnlyList<PortableExecutableExport> Exports,
     IReadOnlyList<byte[]> Constants,
-    PortableContextTable Contexts);
+    PortableContextTable Contexts,
+    PortableCallableTable? CallableSlots = null);
 
 /// <summary>One indexed type-table entry.</summary>
 public sealed record PortableExecutableType(
@@ -103,6 +104,10 @@ public sealed record PortableFunctionAddressInstruction(uint FunctionIndex)
 /// <summary>Indirect-call signature operands.</summary>
 public sealed record PortableCallIndirectInstruction(byte ArgumentCount, PrimitiveType ReturnType)
     : PortableInstruction(FunctionOperations.CALLI.OP);
+
+/// <summary>Depth-one group 0x13 callable operations; never scalar addresses.</summary>
+public sealed record PortableCallableInstruction(byte Operation, uint Slot, uint? Second = null)
+    : PortableInstruction(0xFF);
 
 /// <summary>LOAD/STORE portable addressing operands.</summary>
 public sealed record PortableMemoryInstruction(
@@ -227,7 +232,12 @@ public static class PortableBinaryCodec
 
         PortableContextTable contexts = PortableContextTable.Decode(
             Required(image, PortableModuleSectionKind.IndexedFunctionContexts).Span, functions.Count);
-        return new PortableExecutableModule(strings, types, functions, imports, exports, constants, contexts);
+        PortableModuleSection? callableSection = image.GetSection(PortableModuleSectionKind.IndexedCallableSlots);
+        PortableCallableTable? slots = PortableCallableTable.ReadSection(contexts, callableSection is not null,
+            callableSection is null ? ReadOnlyMemory<byte>.Empty : callableSection.Payload, functions.Count,
+            (index, result) => index < (uint)types.Count && PortableCallableTable.IsScalarSignatureType(
+                types[(int)index].Primitive, (uint)types[(int)index].Modifiers, types[(int)index].FixedArraySize, result));
+        return new PortableExecutableModule(strings, types, functions, imports, exports, constants, contexts, slots);
     }
 
     private static IReadOnlyList<PortableModuleSection> EncodeExecutableSections(PortableExecutableModule executable)
@@ -251,8 +261,8 @@ public static class PortableBinaryCodec
         }
         byte[] functions = EncodeFunctionTable(functionEncodings);
 
-        return
-        [
+        var sections = new List<PortableModuleSection>
+        {
             Critical(PortableModuleSectionKind.IndexedStringTable, strings),
             Critical(PortableModuleSectionKind.IndexedTypeTable, types),
             Critical(PortableModuleSectionKind.IndexedFunctionTable, functions),
@@ -261,7 +271,10 @@ public static class PortableBinaryCodec
             Critical(PortableModuleSectionKind.IndexedConstantTable, constants),
             Critical(PortableModuleSectionKind.IndexedCode, code.ToArray()),
             Critical(PortableModuleSectionKind.IndexedFunctionContexts, executable.Contexts.Encode())
-        ];
+        };
+        if (executable.CallableSlots is not null)
+            sections.Add(Critical(PortableModuleSectionKind.IndexedCallableSlots, executable.CallableSlots.Encode()));
+        return sections;
     }
 
     private static PortableModuleSection Critical(PortableModuleSectionKind kind, byte[] payload) =>
@@ -271,6 +284,7 @@ public static class PortableBinaryCodec
         image.GetRequiredSection(kind).Payload;
 
     private static bool IsIndexedExecutableKind(ushort kind) =>
+        kind == (ushort)PortableModuleSectionKind.IndexedCallableSlots ||
         kind == (ushort)PortableModuleSectionKind.IndexedFunctionContexts ||
         kind is >= (ushort)PortableModuleSectionKind.IndexedStringTable
             and <= (ushort)PortableModuleSectionKind.IndexedCode;
@@ -405,7 +419,15 @@ public static class PortableBinaryCodec
             switch (opcode)
             {
                 case 0xFF:
-                    throw new NotSupportedException("Extended opcodes are not supported by indexed executable v0.");
+                {
+                    if (reader.ReadByte() != 0x13)
+                        throw new NotSupportedException("Unsupported extended opcode depth/group.");
+                    byte operation = reader.ReadByte();
+                    if (operation > 3) throw new InvalidDataException("Unknown callable opcode.");
+                    uint slot = reader.ReadUInt32();
+                    result.Add(new PortableCallableInstruction(operation, slot, operation <= 1 ? reader.ReadUInt32() : null));
+                    break;
+                }
 
                 case RETURN.OP:
                 {
@@ -629,6 +651,16 @@ public static class PortableBinaryCodec
                     stream.WriteByte(FunctionOperations.CALLI.OP);
                     stream.WriteByte(indirect.ArgumentCount);
                     stream.WriteByte((byte)indirect.ReturnType);
+                    break;
+
+                case PortableCallableInstruction callable:
+                    if (callable.Operation > 3 || (callable.Operation <= 1) != callable.Second.HasValue)
+                        throw new InvalidDataException("Invalid callable opcode operands.");
+                    stream.WriteByte(0xFF);
+                    stream.WriteByte(0x13);
+                    stream.WriteByte(callable.Operation);
+                    WriteUInt32(stream, callable.Slot);
+                    if (callable.Second is uint second) WriteUInt32(stream, second);
                     break;
 
                 case PortableMemoryInstruction memory:

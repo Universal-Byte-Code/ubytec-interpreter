@@ -41,10 +41,17 @@ public static class PortableBinaryVerifier
     private const uint NoIndex = uint.MaxValue;
 
     /// <summary>Verifies one canonical PMF v0 image directly from its bytes.</summary>
-    public static void Verify(ReadOnlySpan<byte> bytes) => Verify(bytes, requireDirectOnly: false);
+    public static void Verify(ReadOnlySpan<byte> bytes) => VerifyCore(bytes, null);
 
     /// <summary>Independently verifies raw wire bytes and enforces the caller's optional admission policy.</summary>
-    public static void Verify(ReadOnlySpan<byte> bytes, bool requireDirectOnly)
+    public static void Verify(ReadOnlySpan<byte> bytes, bool requireDirectOnly) =>
+        VerifyCore(bytes, requireDirectOnly ? PortableExecutionProfile.DirectOnly : null);
+
+    /// <summary>Require an exact execution profile, never a producer-selected downgrade.</summary>
+    public static void Verify(ReadOnlySpan<byte> bytes, PortableExecutionProfile requiredProfile) =>
+        VerifyCore(bytes, requiredProfile);
+
+    private static void VerifyCore(ReadOnlySpan<byte> bytes, PortableExecutionProfile? requiredProfile)
     {
         if (bytes.Length > PortableModuleFormat.MaxModuleBytes)
             throw new InvalidDataException($"Portable module exceeds the {PortableModuleFormat.MaxModuleBytes}-byte runtime limit.");
@@ -106,7 +113,7 @@ public static class PortableBinaryVerifier
         if ((ast.Flags & PortableModuleSectionFlags.Critical) == 0)
             throw new InvalidDataException("Semantic AST section must be critical.");
 
-        VerifyIndexedExecutable(sections, requireDirectOnly);
+        VerifyIndexedExecutable(sections, requiredProfile);
     }
 
     private static void VerifySectionPayload(
@@ -143,6 +150,7 @@ public static class PortableBinaryVerifier
             case PortableModuleSectionKind.IndexedConstantTable:
             case PortableModuleSectionKind.IndexedCode:
             case PortableModuleSectionKind.IndexedFunctionContexts:
+            case PortableModuleSectionKind.IndexedCallableSlots:
                 if (!critical)
                     throw new InvalidDataException($"Indexed executable section 0x{kind:X4} must be critical.");
                 break;
@@ -154,14 +162,16 @@ public static class PortableBinaryVerifier
         }
     }
 
-    private static void VerifyIndexedExecutable(IReadOnlyList<RawSection> sections, bool requireDirectOnly)
+    private static void VerifyIndexedExecutable(IReadOnlyList<RawSection> sections, PortableExecutionProfile? requiredProfile)
     {
         int present = IndexedKinds.Count(kind =>
             sections.Any(section => section.Kind == (ushort)kind));
+        RawSection? callableSection = sections.SingleOrDefault(section =>
+            section.Kind == (ushort)PortableModuleSectionKind.IndexedCallableSlots);
         if (present == 0)
         {
-            if (requireDirectOnly)
-                throw new InvalidDataException("Admission requires a DirectOnly indexed executable.");
+            if (requiredProfile.HasValue || callableSection is not null)
+                throw new InvalidDataException("Admission or callable slot section requires an indexed executable.");
             return;
         }
         if (present != IndexedKinds.Length)
@@ -182,13 +192,18 @@ public static class PortableBinaryVerifier
         List<ImportEntry> imports = ParseImportTable(importsPayload, strings, types);
         PortableContextTable contexts = PortableContextTable.Decode(
             Required(sections, PortableModuleSectionKind.IndexedFunctionContexts).Payload, functions.Count);
-        if (requireDirectOnly && !contexts.DirectOnly)
-            throw new InvalidDataException("Admission requires the DirectOnly profile.");
+        if (requiredProfile.HasValue && requiredProfile.Value != contexts.Profile)
+            throw new InvalidDataException($"Admission requires the {requiredProfile.Value} profile.");
+        PortableCallableTable? callables = PortableCallableTable.ReadSection(contexts,
+            callableSection is not null,
+            callableSection is null ? ReadOnlyMemory<byte>.Empty : new ReadOnlyMemory<byte>(callableSection.Payload), functions.Count,
+            (index, result) => index < (uint)types.Count && PortableCallableTable.IsScalarSignatureType(
+                types[(int)index].Primitive, types[(int)index].Modifiers, types[(int)index].FixedArraySize, result));
         contexts.RequireNoImports(imports.Count);
         ParseExportTable(exportsPayload, strings, functions, types, contexts);
         ParseConstantTable(constantsPayload);
         VerifyFunctionRanges(functions, codePayload.Length);
-        VerifyCode(functions, imports, types, codePayload, contexts);
+        VerifyCode(functions, imports, types, codePayload, contexts, callables);
         RawSection? entry = sections.FirstOrDefault(section => section.Kind == 0x0017);
         if (entry is not null)
         {
@@ -533,7 +548,8 @@ public static class PortableBinaryVerifier
         IReadOnlyList<ImportEntry> imports,
         IReadOnlyList<TypeEntry> types,
         ReadOnlySpan<byte> code,
-        PortableContextTable contexts)
+        PortableContextTable contexts,
+        PortableCallableTable? callables)
     {
         VerifyFunctionTypes(functions, types);
 
@@ -596,6 +612,22 @@ public static class PortableBinaryVerifier
                     if (group == 0xFF || extendedOpcode == 0xFF)
                         throw new InvalidDataException(
                             "0xFF is reserved in extended opcode group/code positions.");
+                    if (escapeDepth == 1 && group == 0x13)
+                    {
+                        if (callables is null || extendedOpcode > 3)
+                            throw new InvalidDataException("Unsupported callable opcode or execution profile.");
+                        uint slot = reader.ReadUInt32("CallableSlotIndex");
+                        uint? second = extendedOpcode <= 1 ? reader.ReadUInt32("Callable target/source") : null;
+                        PortableCallableSignature signature = callables.VerifyOperation(contexts, functionIndex, extendedOpcode, slot, second,
+                            target => new PortableCallableSignature(functions[(int)target].ReturnType, functions[(int)target].ArgumentTypes));
+                        if (extendedOpcode == 3)
+                        {
+                            int arguments = signature.ArgumentTypeIndices.Count;
+                            int results = IsVoid(types[(int)signature.ReturnTypeIndex]) ? 0 : 1;
+                            Apply(arguments, results - arguments, opcode);
+                        }
+                        continue;
+                    }
                     throw new NotSupportedException(
                         $"Portable binary verifier does not yet support extended opcode " +
                         $"depth={escapeDepth}, group=0x{group:X2}, opcode=0x{extendedOpcode:X2}.");
