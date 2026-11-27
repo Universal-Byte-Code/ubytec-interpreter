@@ -588,13 +588,18 @@ public static class PortableBinaryVerifier
                         $"stack depth {stackDepth}; expected {expected}.");
             }
 
-            ControlFrame TransferTarget(byte opcode)
+            ControlFrame TransferTarget(byte opcode, uint ordinal)
             {
-                ControlFrame? target = controls.FirstOrDefault(frame =>
-                    frame.Kind is ControlKind.Loop or ControlKind.While ||
-                    (opcode == BREAK.OP && frame.Kind == ControlKind.Switch));
-                return target ?? throw new InvalidDataException(
-                    $"FunctionIndex {functionIndex} opcode 0x{opcode:X2} requires an enclosing LOOP or WHILE.");
+                foreach (ControlFrame frame in controls)
+                {
+                    if (frame.Kind is not (ControlKind.Loop or ControlKind.While) &&
+                        !(opcode == BREAK.OP && frame.Kind == ControlKind.Switch))
+                        continue;
+                    if (ordinal == 0) return frame;
+                    ordinal--;
+                }
+                throw new InvalidDataException(
+                    $"FunctionIndex {functionIndex} ControlTargetOrdinal is outside enclosing eligible control scopes.");
             }
 
             while (!reader.AtEnd)
@@ -952,7 +957,7 @@ public static class PortableBinaryVerifier
 
                     case BREAK.OP:
                     {
-                        ControlFrame target = TransferTarget(opcode);
+                        ControlFrame target = TransferTarget(opcode, reader.ReadUInt32("ControlTargetOrdinal"));
                         RequireDepth(target.EntryDepth, opcode, "BREAK target");
                         if (reachable)
                         {
@@ -964,7 +969,7 @@ public static class PortableBinaryVerifier
 
                     case CONTINUE.OP:
                     {
-                        ControlFrame target = TransferTarget(opcode);
+                        ControlFrame target = TransferTarget(opcode, reader.ReadUInt32("ControlTargetOrdinal"));
                         int expected = target.Kind == ControlKind.While
                             ? target.EntryDepth + 1
                             : target.EntryDepth;

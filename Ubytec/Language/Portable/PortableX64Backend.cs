@@ -266,6 +266,7 @@ public static class PortableX64Backend
         PortableStackIndexInstruction stack => CompileStackIndex(stack, scopes),
         PortableExtendedStackInstruction extended => CompileExtendedStack(extended, scopes),
         PortableBranchInstruction branch => new BRANCH(unchecked((long)branch.CaseCell)).Compile(scopes),
+        PortableControlTransferInstruction transfer => CompileTransfer(transfer, scopes),
         PortableCallInstruction call => CompileCall(call, executable, scopes),
         PortableFunctionAddressInstruction address =>
             new FunctionOperations.FNADDR(FunctionName(checked((int)address.FunctionIndex))).Compile(scopes),
@@ -367,6 +368,21 @@ public static class PortableX64Backend
         return $"mov rax, 0x{instruction.InitialCell:X16}\n  mov qword {binding.Address}, rax";
     }
 
+    private static string CompileTransfer(PortableControlTransferInstruction instruction, CompilationScopes scopes)
+    {
+        uint ordinal = instruction.TargetOrdinal;
+        bool continuing = instruction.Operation == CONTINUE.OP;
+        foreach (ScopeContext scope in scopes.All)
+        {
+            if (scope.DeclaredByKeyword is "func" or "action") break;
+            if (!scope.IsLoop && (continuing || scope.DeclaredByKeyword != "switch")) continue;
+            if (ordinal == 0)
+                return continuing ? $"jmp {scope.StartLabel} ; CONTINUE" : $"jmp {scope.EndLabel} ; BREAK";
+            ordinal--;
+        }
+        throw new InvalidDataException("Verified control target does not exist in native scopes.");
+    }
+
     private static string CompileExtendedStack(PortableExtendedStackInstruction instruction, CompilationScopes scopes) =>
         instruction.Operation switch
         {
@@ -429,7 +445,7 @@ public static class PortableX64Backend
 
     private static string CompileOperandFree(byte opcode, CompilationScopes scopes)
     {
-        if (opcode is BLOCK.OP or LOOP.OP or IF.OP or ELSE.OP or END.OP or BREAK.OP or CONTINUE.OP or WHILE.OP or SWITCH.OP)
+        if (opcode is BLOCK.OP or LOOP.OP or IF.OP or ELSE.OP or END.OP or WHILE.OP or SWITCH.OP)
             return CompileStructuredOperandFree(opcode, scopes);
 
         if (!OperandFreeOperations.TryGetValue(opcode, out Type? type) ||
@@ -457,8 +473,6 @@ public static class PortableX64Backend
             IF.OP => new IF(),
             ELSE.OP => new ELSE(),
             END.OP => new END(),
-            BREAK.OP => new BREAK(null),
-            CONTINUE.OP => new CONTINUE(null),
             WHILE.OP => new WHILE(),
             SWITCH.OP => new SWITCH(null),
             _ => throw new InvalidDataException($"Opcode 0x{opcode:X2} is not normalized structured control flow.")

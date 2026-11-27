@@ -14,6 +14,8 @@ public enum PortableExecutionProfile : uint
 public sealed class PortableContextTable
 {
     public const uint NoIndex = uint.MaxValue;
+    // Context v1 changes BREAK/CONTINUE wire operands; older draft images fail closed.
+    public const uint WireVersion = 1;
     private readonly uint[] parents;
     private readonly int[] subtreeEnds;
 
@@ -53,7 +55,7 @@ public sealed class PortableContextTable
     public byte[] Encode()
     {
         byte[] bytes = new byte[checked(12 + 4 * parents.Length)];
-        BinaryPrimitives.WriteUInt32LittleEndian(bytes.AsSpan(0, 4), 0);
+        BinaryPrimitives.WriteUInt32LittleEndian(bytes.AsSpan(0, 4), WireVersion);
         BinaryPrimitives.WriteUInt32LittleEndian(bytes.AsSpan(4, 4), (uint)Profile);
         BinaryPrimitives.WriteUInt32LittleEndian(bytes.AsSpan(8, 4), (uint)parents.Length);
         for (int i = 0; i < parents.Length; i++)
@@ -65,7 +67,7 @@ public sealed class PortableContextTable
     public static PortableContextTable Decode(ReadOnlySpan<byte> bytes, int functionCount)
     {
         if (functionCount < 0 || bytes.Length < 12 ||
-            BinaryPrimitives.ReadUInt32LittleEndian(bytes[..4]) != 0)
+            BinaryPrimitives.ReadUInt32LittleEndian(bytes[..4]) != WireVersion)
             throw new InvalidDataException("Invalid function context table header/version.");
         uint count = BinaryPrimitives.ReadUInt32LittleEndian(bytes.Slice(8, 4));
         if (count != (uint)functionCount || bytes.Length != 12L + 4L * count)

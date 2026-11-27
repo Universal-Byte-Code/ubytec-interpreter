@@ -487,8 +487,28 @@ public static class IndexedExecutableFormat
             WriteUInt64(stream, unchecked((ulong)FunctionCode.InitialValue(local.Type, local.InitialValue)));
         }
 
+        var controls = new List<(byte Kind, int? Label)>();
         foreach (IOpCode operation in FunctionEmitter.Instructions(callable.Definition))
-            EncodeInstruction(stream, operation, callable, typeIndices, functionIndices, topLevel, importIndices);
+        {
+            EncodeInstruction(stream, operation, callable, typeIndices, functionIndices, topLevel, importIndices, controls);
+            switch (operation)
+            {
+                case BLOCK: controls.Add((BLOCK.OP, null)); break;
+                case LOOP: controls.Add((LOOP.OP, null)); break;
+                case IF: controls.Add((IF.OP, null)); break;
+                case WHILE loop:
+                    controls.Add((WHILE.OP, loop.LabelIDxs is { Length: 1 } ids ? ids[0] : null));
+                    break;
+                case SWITCH selection: controls.Add((SWITCH.OP, selection.TableIDx)); break;
+                case BRANCH branch: controls.Add((BRANCH.OP, branch.LabelIDx)); break;
+                case END:
+                    if (controls.Count == 0) throw new InvalidDataException("END without a control scope.");
+                    controls.RemoveAt(controls.Count - 1);
+                    break;
+            }
+        }
+
+        if (controls.Count != 0) throw new InvalidDataException("Unclosed source control scope.");
 
         return stream.ToArray();
     }
@@ -500,7 +520,8 @@ public static class IndexedExecutableFormat
         IReadOnlyDictionary<TypeKey, uint> typeIndices,
         IReadOnlyDictionary<CallableInfo, uint> functionIndices,
         IReadOnlyDictionary<string, CallableInfo> topLevel,
-        IReadOnlyDictionary<string, uint> importIndices)
+        IReadOnlyDictionary<string, uint> importIndices,
+        IReadOnlyList<(byte Kind, int? Label)> controls)
     {
         if (operation is IExtendedOpCode extended)
         {
@@ -632,8 +653,8 @@ public static class IndexedExecutableFormat
                 return;
 
             case WHILE whileBlock:
-                if (whileBlock.LabelIDxs is { Length: > 0 })
-                    throw Unsupported(operation, "labeled WHILE has no indexed executable v0 wire contract");
+                if (whileBlock.LabelIDxs is { Length: > 1 })
+                    throw Unsupported(operation, "WHILE accepts at most one label identifier");
                 if (whileBlock.Condition is null)
                 {
                     RequireDefaultBlockType(whileBlock.BlockType, operation);
@@ -648,20 +669,17 @@ public static class IndexedExecutableFormat
                 stream.WriteByte(ComparisonOperations.EQ.OP);
                 stream.WriteByte(IF.OP);
                 stream.WriteByte(BREAK.OP);
+                WriteUInt32(stream, 0); // Nearest eligible control target is the normalized LOOP.
                 stream.WriteByte(END.OP);
                 return;
 
             case SWITCH selection:
                 RequireDefaultBlockType(selection.BlockType, operation);
-                if (selection.TableIDx.HasValue)
-                    throw Unsupported(operation, "labeled SWITCH is not supported in indexed v0");
                 stream.WriteByte(SWITCH.OP);
                 return;
 
             case BRANCH branch:
                 RequireDefaultBlockType(branch.BlockType, operation);
-                if (branch.LabelIDx.HasValue)
-                    throw Unsupported(operation, "labeled BRANCH is not supported in indexed v0");
                 stream.WriteByte(BRANCH.OP);
                 WriteUInt64(stream, unchecked((ulong)FunctionCode.InitialValue(new UType(PrimitiveType.Int64), branch.CaseValue)));
                 return;
@@ -671,12 +689,14 @@ public static class IndexedExecutableFormat
                 stream.WriteByte(ELSE.OP);
                 return;
 
-            case BREAK breakOperation when breakOperation.LabelIDx is null:
+            case BREAK breakOperation:
                 stream.WriteByte(BREAK.OP);
+                WriteUInt32(stream, ResolveControlTarget(controls, breakOperation.LabelIDx, continuing: false));
                 return;
 
-            case CONTINUE continueOperation when continueOperation.LabelIDx is null:
+            case CONTINUE continueOperation:
                 stream.WriteByte(CONTINUE.OP);
+                WriteUInt32(stream, ResolveControlTarget(controls, continueOperation.LabelIDx, continuing: true));
                 return;
 
             case END _:
@@ -691,6 +711,32 @@ public static class IndexedExecutableFormat
                 }
                 throw Unsupported(operation, "opcode has semantic fields but no indexed executable v0 operand contract");
         }
+    }
+
+    // Resolve source labels before encoding. Count only eligible, distinct
+    // enclosing targets from innermost to outermost; BRANCH aliases its SWITCH.
+    private static uint ResolveControlTarget(
+        IReadOnlyList<(byte Kind, int? Label)> controls, int? label, bool continuing)
+    {
+        int target = -1;
+        for (int i = controls.Count - 1; i >= 0; i--)
+        {
+            (byte kind, int? declaredLabel) = controls[i];
+            bool eligible = kind is LOOP.OP or WHILE.OP ||
+                (!continuing && kind is SWITCH.OP or BRANCH.OP);
+            if (!eligible || (label.HasValue && label != declaredLabel)) continue;
+            target = kind == BRANCH.OP ? i - 1 : i;
+            if (target < 0 || (kind == BRANCH.OP && controls[target].Kind != SWITCH.OP))
+                throw new InvalidDataException("BRANCH has no owning SWITCH.");
+            break;
+        }
+        if (target < 0)
+            throw new InvalidDataException("Control transfer has no enclosing target.");
+        uint ordinal = 0;
+        for (int i = controls.Count - 1; i > target; i--)
+            if (controls[i].Kind is LOOP.OP or WHILE.OP || (!continuing && controls[i].Kind == SWITCH.OP))
+                ordinal++;
+        return ordinal;
     }
 
     private static void EncodeMemory(
@@ -1522,11 +1568,14 @@ public static class IndexedExecutableFormat
 
                     case BREAK.OP:
                     case CONTINUE.OP:
-                        if (!controls.Any(control => control == LOOP.OP || control == WHILE.OP ||
-                            (opcode == BREAK.OP && control is SWITCH.OP or DEFAULT.OP)))
-                            throw new InvalidDataException(
-                                $"Portable opcode 0x{opcode:X2} requires an enclosing LOOP or WHILE.");
+                    {
+                        uint ordinal = reader.ReadUInt32("ControlTargetOrdinal");
+                        int count = controls.Count(control => control == LOOP.OP || control == WHILE.OP ||
+                            (opcode == BREAK.OP && control is SWITCH.OP or DEFAULT.OP));
+                        if (ordinal >= (uint)count)
+                            throw new InvalidDataException("ControlTargetOrdinal is outside enclosing eligible control scopes.");
                         break;
+                    }
 
                     default:
                         contexts.RequireAllowedOperandFree(opcode);

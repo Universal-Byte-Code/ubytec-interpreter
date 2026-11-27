@@ -112,6 +112,10 @@ public sealed record PortableCallableInstruction(byte Operation, uint Slot, uint
 /// <summary>Depth-one extended stack instruction with a little-endian UInt16 operand.</summary>
 public sealed record PortableExtendedStackInstruction(byte Operation, ushort Index) : PortableInstruction(0xFF);
 
+/// <summary>BREAK/CONTINUE with an ordinal among eligible enclosing control scopes.</summary>
+public sealed record PortableControlTransferInstruction(byte Operation, uint TargetOrdinal)
+    : PortableInstruction(Operation);
+
 /// <summary>Exact 64-bit case literal for structured BRANCH.</summary>
 public sealed record PortableBranchInstruction(ulong CaseCell) : PortableInstruction(BRANCH.OP);
 
@@ -444,6 +448,11 @@ public static class PortableBinaryCodec
                     break;
                 }
 
+                case BREAK.OP:
+                case CONTINUE.OP:
+                    result.Add(new PortableControlTransferInstruction(opcode, reader.ReadUInt32()));
+                    break;
+
                 case BRANCH.OP:
                     result.Add(new PortableBranchInstruction(reader.ReadUInt64()));
                     break;
@@ -622,7 +631,16 @@ public static class PortableBinaryCodec
             switch (instruction)
             {
                 case PortableOperandFreeInstruction operandFree:
+                    if (operandFree.OpCode is BREAK.OP or CONTINUE.OP)
+                        throw new InvalidDataException("Control transfer requires ControlTargetOrdinal.");
                     stream.WriteByte(operandFree.OpCode);
+                    break;
+
+                case PortableControlTransferInstruction transfer:
+                    if (transfer.Operation is not (BREAK.OP or CONTINUE.OP))
+                        throw new InvalidDataException("Unknown control transfer opcode.");
+                    stream.WriteByte(transfer.Operation);
+                    WriteUInt32(stream, transfer.TargetOrdinal);
                     break;
 
                 case PortableReturnInstruction ret:
