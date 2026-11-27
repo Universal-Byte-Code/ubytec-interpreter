@@ -94,7 +94,8 @@ public sealed class PortableCliTests
         Assert.Equal(0u, export.FunctionIndex);
 
         string emitted = File.ReadAllText(nasm).ReplaceLineEndings("\n");
-        Assert.Contains("global ubytec_binary_export_0", emitted);
+        Assert.DoesNotContain("global ubytec_binary_export_0", emitted);
+        Assert.Contains("ubytec_binary_export_0:\n", emitted);
         Assert.Contains("global portable_echo", emitted);
         Assert.Contains("portable_echo:\n", emitted);
         Assert.Contains("call ubytec_binary_export_0", emitted);

@@ -26,7 +26,7 @@ public sealed record PortableX64Compilation(
     /// <summary>Returns the unresolved native symbol assigned to one portable ImportIndex.</summary>
     public string GetImportLabel(int index) => ImportLabels[index];
 
-    /// <summary>Returns the native alias assigned to one portable ExportIndex.</summary>
+    /// <summary>Returns the object-local native alias assigned to one portable ExportIndex.</summary>
     public string GetExportLabel(int index) => ExportLabels[index];
 }
 
@@ -87,7 +87,8 @@ public static class PortableX64Backend
             PortableExecutableExport export = executable.Exports[index];
             string alias = exportLabels[index];
             string target = functionLabels[checked((int)export.FunctionIndex)];
-            output.AppendLine($"global {alias}");
+            // ExportIndex is module-local. Only the ABI projection may publish host-facing symbols.
+            // Keeping this alias local allows independently assembled objects to share indices.
             output.AppendLine($"{alias}:");
             output.AppendLine($"  jmp {target}");
         }
