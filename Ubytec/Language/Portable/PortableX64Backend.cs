@@ -31,9 +31,22 @@ public sealed record PortableX64Compilation(
     public string GetExportLabel(int index) => ExportLabels[index];
 }
 
+/// <summary>Semantic cause of an emitted intentional trap, not a host signal classification.</summary>
+public enum PortableTrapKind
+{
+    Unknown, ExplicitTrap, CheckedBlockInput, CheckedBlockResult, InvalidCallableSelector
+}
+
+/// <summary>One intentional trap marker and its optional checked input ordinal.</summary>
+public sealed record PortableNativeTrap(string Label, PortableTrapKind Kind, int? InputIndex);
+
 /// <summary>Assembly-symbol interval for one verified occurrence; zero-length intervals are permitted.</summary>
 public sealed record PortableNativeSite(PortableInstructionOccurrence Occurrence,
-    string BeginLabel, string EndLabel, IReadOnlyList<string> Ud2Labels);
+    string BeginLabel, string EndLabel, IReadOnlyList<string> Ud2Labels)
+{
+    /// <summary>Semantic annotations for emitted UD2 sites, in emission order.</summary>
+    public IReadOnlyList<PortableNativeTrap> Traps { get; init; } = Array.Empty<PortableNativeTrap>();
+}
 
 /// <summary>Provenance candidate for emitted NASM, not a resolved or authenticated ELF address map.</summary>
 public sealed record PortableX64Provenance(PortableX64Compilation Compilation,
@@ -273,7 +286,7 @@ public static class PortableX64Backend
             if (sites is null)
                 AppendIndented(output, assembly);
             else
-                AppendWithProvenance(output, assembly, occurrences[index], sites);
+                AppendWithProvenance(output, assembly, occurrences[index], function.Instructions[index], sites);
         }
 
         if (scopes.Count != 2)
@@ -637,13 +650,14 @@ public static class PortableX64Backend
     private static string ExportLabel(int index) => $"ubytec_binary_export_{index}";
 
     private static void AppendWithProvenance(StringBuilder output, string assembly,
-        PortableInstructionOccurrence occurrence, List<PortableNativeSite> sites)
+        PortableInstructionOccurrence occurrence, PortableInstruction instruction, List<PortableNativeSite> sites)
     {
         // NASM ..@ labels do not change the scope of ordinary local labels.
         // Symbols are object-local (no global directive) and may be stripped by a linker.
         string prefix = $"..@ubytec_prov_{occurrence.FunctionIndex}_{occurrence.InstructionOffset}";
         string begin = prefix + "_begin", end = prefix + "_end";
         var traps = new List<string>();
+        var reasons = new List<PortableNativeTrap>();
         output.AppendLine(begin + ":");
         foreach (string line in assembly.ReplaceLineEndings("\n").Split('\n'))
         {
@@ -652,13 +666,29 @@ public static class PortableX64Backend
             if (string.Equals(mnemonic, "ud2", StringComparison.OrdinalIgnoreCase))
             {
                 string trap = prefix + "_ud2_" + traps.Count;
+                int ordinal = traps.Count;
                 traps.Add(trap);
+                // Classification derives from the lowering contract. A BREAK jumps to its
+                // owning END's shared result guard; that guard's actual site remains END.
+                var reason = instruction switch
+                {
+                    PortableContractBlockInstruction { Checked: true } block when ordinal < block.InputTypeIndices.Count =>
+                        new PortableNativeTrap(trap, PortableTrapKind.CheckedBlockInput, ordinal),
+                    PortableCallableInstruction { Operation: 3 } =>
+                        new PortableNativeTrap(trap, PortableTrapKind.InvalidCallableSelector, null),
+                    _ when instruction.OpCode == TRAP.OP =>
+                        new PortableNativeTrap(trap, PortableTrapKind.ExplicitTrap, null),
+                    _ when instruction.OpCode == END.OP =>
+                        new PortableNativeTrap(trap, PortableTrapKind.CheckedBlockResult, null),
+                    _ => new PortableNativeTrap(trap, PortableTrapKind.Unknown, null)
+                };
+                reasons.Add(reason);
                 output.AppendLine(trap + ":");
             }
             output.Append("  ").AppendLine(line);
         }
         output.AppendLine(end + ":");
-        sites.Add(new PortableNativeSite(occurrence, begin, end, traps.AsReadOnly()));
+        sites.Add(new PortableNativeSite(occurrence, begin, end, traps.AsReadOnly()) { Traps = reasons.AsReadOnly() });
     }
 
     private static void AppendIndented(StringBuilder output, string assembly)

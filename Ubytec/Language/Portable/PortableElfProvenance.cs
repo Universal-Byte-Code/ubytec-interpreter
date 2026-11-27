@@ -6,10 +6,15 @@ namespace Ubytec.Language.Portable;
 
 /// <summary>Resolved half-open interval in a linked ELF image. Addresses are relative to ImageBase.</summary>
 public sealed record PortableElfSite(PortableInstructionOccurrence Occurrence,
-    ulong Start, ulong End, IReadOnlyList<ulong> Ud2Offsets);
+    ulong Start, ulong End, IReadOnlyList<ulong> Ud2Offsets)
+{
+    /// <summary>Validated marker annotations in the same order as Ud2Offsets.</summary>
+    public IReadOnlyList<PortableNativeTrap> Traps { get; init; } = Array.Empty<PortableNativeTrap>();
+}
 
 /// <summary>A resolved site is evidence of provenance, not proof of translation correctness or authority.</summary>
-public readonly record struct PortableElfAttribution(PortableInstructionOccurrence Occurrence, bool ExactUd2);
+public readonly record struct PortableElfAttribution(PortableInstructionOccurrence Occurrence, bool ExactUd2,
+    PortableTrapKind TrapKind = PortableTrapKind.Unknown, int? InputIndex = null);
 
 /// <summary>
 /// Linux ELF64 little-endian x86-64 provenance for a trusted, single-module linked image.
@@ -135,6 +140,8 @@ public sealed class PortableElfProvenance
             if (matching.Length != 1) throw Invalid("Marker interval outside unique executable file segment.");
             var segment = matching[0];
             var traps = new List<ulong>();
+            if (site.Traps.Count != 0 && !site.Traps.Select(t => t.Label).SequenceEqual(site.Ud2Labels))
+                throw Invalid("Trap annotations do not match marker order.");
             foreach (string trapName in site.Ud2Labels)
             {
                 var trap = found[trapName];
@@ -148,7 +155,7 @@ public sealed class PortableElfProvenance
             }
             if (traps.Distinct().Count() != traps.Count) throw Invalid("Duplicate UD2 address.");
             resolved.Add(new PortableElfSite(site.Occurrence, begin.Address - imageBase,
-                end.Address - imageBase, traps.AsReadOnly()));
+                end.Address - imageBase, traps.AsReadOnly()) { Traps = Array.AsReadOnly(site.Traps.ToArray()) });
         }
         var ordered = resolved.OrderBy(s => s.Start).ThenBy(s => s.End).ToArray();
         ulong previousEnd = 0;
@@ -169,7 +176,14 @@ public sealed class PortableElfProvenance
             throw Invalid("Loaded artifact digest mismatch.");
         foreach (var site in Sites)
             if (imageOffset >= site.Start && imageOffset < site.End)
-                return new PortableElfAttribution(site.Occurrence, site.Ud2Offsets.Contains(imageOffset));
+            {
+                for (int i = 0; i < site.Ud2Offsets.Count; i++)
+                    if (site.Ud2Offsets[i] == imageOffset)
+                        return i < site.Traps.Count
+                            ? new PortableElfAttribution(site.Occurrence, true, site.Traps[i].Kind, site.Traps[i].InputIndex)
+                            : new PortableElfAttribution(site.Occurrence, true);
+                return new PortableElfAttribution(site.Occurrence, false);
+            }
         return null;
     }
 
