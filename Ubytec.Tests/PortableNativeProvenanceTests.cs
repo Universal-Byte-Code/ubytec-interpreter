@@ -36,7 +36,7 @@ public sealed class PortableNativeProvenanceTests
     {
         byte[] bytes = Image(false);
         var index = PortableBinaryVerifier.IdentifyInstructions(bytes, 2);
-        Assert.Equal(new uint[] { 0, 3 }, index.Select(site => site.InstructionOffset).ToArray());
+        Assert.Equal(new uint[] { 0, 10 }, index.Select(site => site.InstructionOffset).ToArray());
         Assert.Throws<InvalidDataException>(() => PortableBinaryVerifier.IdentifyInstructions(bytes, 1));
         var native = PortableX64Backend.CompileWithProvenance(bytes);
         Assert.Equal(index.ToArray(), native.Sites.Select(site => site.Occurrence).ToArray());
