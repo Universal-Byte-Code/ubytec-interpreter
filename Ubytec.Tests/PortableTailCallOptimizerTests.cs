@@ -41,7 +41,15 @@ public class PortableTailCallOptimizerTests
         string assembly = compilation.NativeCompilation.Assembly.ReplaceLineEndings("\n");
         Assert.Contains("; tail call: reuse incoming argument cells", assembly);
         Assert.Contains("jmp ubytec_binary_f_0", assembly);
-        Assert.DoesNotContain("call ubytec_binary_f_0\n    add rsp, 16\n    push rax\n  pop rax", assembly);
+        Assert.DoesNotContain("call ubytec_binary_f_0\n", assembly);
+        Assert.DoesNotContain("\r", compilation.NativeCompilation.Assembly);
+
+        PortableSourceX64Result ordinary = PortableSourceX64Pipeline.Compile(
+            TailSource, processImage: false);
+        Assert.Equal(ordinary.ModuleBytes, compilation.ModuleBytes);
+        string body = "push 3\npush 10\ncall ubytec_binary_f_0\nadd rsp, 16\npush rax";
+        Assert.Equal(31L, Assert.Single(NativeStack.Run(body, 1, ordinary.NativeCompilation.Assembly)));
+        Assert.Equal(31L, Assert.Single(NativeStack.Run(body, 1, compilation.NativeCompilation.Assembly)));
     }
 
     [Fact]

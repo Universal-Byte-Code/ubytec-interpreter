@@ -91,20 +91,20 @@ public static class PortableProcessEntrypoint
 public static class PortableProcessX64Backend
 {
     /// <summary>Verifies, decodes and emits Linux x86-64 NASM including _start when process metadata is present.</summary>
-    public static PortableX64Compilation Compile(ReadOnlySpan<byte> bytes)
+    public static PortableX64Compilation Compile(ReadOnlySpan<byte> bytes, bool optimizeTailCalls = false)
     {
         PortableProcessEntrypoint.Verify(bytes);
-        return Compile(PortableBinaryCodec.Decode(bytes));
+        return Compile(PortableBinaryCodec.Decode(bytes), optimizeTailCalls);
     }
 
     /// <summary>Emits Linux x86-64 NASM from a typed portable module and optional process-entry metadata.</summary>
-    public static PortableX64Compilation Compile(PortableBinaryModule module)
+    public static PortableX64Compilation Compile(PortableBinaryModule module, bool optimizeTailCalls = false)
     {
         ArgumentNullException.ThrowIfNull(module);
         byte[] canonical = PortableBinaryCodec.Encode(module);
         PortableProcessEntrypoint.Verify(canonical);
 
-        PortableX64Compilation native = PortableX64Backend.Compile(module);
+        PortableX64Compilation native = PortableX64Backend.Compile(module, optimizeTailCalls);
         PortableProcessEntrypointInfo? entrypoint = PortableProcessEntrypoint.Read(module);
         if (entrypoint is null)
             return native;

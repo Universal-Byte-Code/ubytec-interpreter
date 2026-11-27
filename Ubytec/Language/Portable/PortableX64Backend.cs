@@ -44,14 +44,14 @@ public static class PortableX64Backend
         DiscoverOperandFreeOperations();
 
     /// <summary>Verifies, decodes, and compiles canonical UBCM bytes to Linux x86-64 NASM.</summary>
-    public static PortableX64Compilation Compile(ReadOnlySpan<byte> bytes)
+    public static PortableX64Compilation Compile(ReadOnlySpan<byte> bytes, bool optimizeTailCalls = false)
     {
         PortableBinaryVerifier.Verify(bytes);
-        return Compile(PortableBinaryCodec.Decode(bytes));
+        return Compile(PortableBinaryCodec.Decode(bytes), optimizeTailCalls);
     }
 
     /// <summary>Compiles a typed portable module to Linux x86-64 NASM.</summary>
-    public static PortableX64Compilation Compile(PortableBinaryModule module)
+    public static PortableX64Compilation Compile(PortableBinaryModule module, bool optimizeTailCalls = false)
     {
         ArgumentNullException.ThrowIfNull(module);
         if (module.Executable is not { } executable)
@@ -80,7 +80,7 @@ public static class PortableX64Backend
             output.AppendLine($"extern {import}");
 
         for (int index = 0; index < executable.Functions.Count; index++)
-            EmitFunction(output, executable, index, functionLabels, moduleScope);
+            EmitFunction(output, executable, index, functionLabels, moduleScope, optimizeTailCalls);
 
         for (int index = 0; index < executable.Exports.Count; index++)
         {
@@ -145,7 +145,8 @@ public static class PortableX64Backend
         PortableExecutableModule executable,
         int functionIndex,
         IReadOnlyList<string> functionLabels,
-        ScopeContext moduleScope)
+        ScopeContext moduleScope,
+        bool optimizeTailCalls)
     {
         PortableExecutableFunction function = executable.Functions[functionIndex];
         UType returnType = ResolveType(executable, function.ReturnTypeIndex);
@@ -200,9 +201,17 @@ public static class PortableX64Backend
         if (frame.FrameSize != 0)
             output.AppendLine($"  sub rsp, {frame.FrameSize}");
 
-        foreach (PortableInstruction instruction in function.Instructions)
+        for (int index = 0; index < function.Instructions.Count; index++)
         {
-            string assembly = CompileInstruction(instruction, executable, functionIndex, function, scopes, frame);
+            if (optimizeTailCalls &&
+                PortableX64TailCallOptimizer.TryEmit(executable, function, index, functionLabels) is string tail)
+            {
+                AppendIndented(output, tail);
+                index++; // The verified adjacent RETURN is included in the tail transfer.
+                continue;
+            }
+
+            string assembly = CompileInstruction(function.Instructions[index], executable, functionIndex, function, scopes, frame);
             AppendIndented(output, assembly);
         }
 
