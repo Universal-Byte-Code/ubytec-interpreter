@@ -86,18 +86,18 @@ public sealed class PortableCallableTable
     }
 
     internal static PortableCallableTable? ReadSection(
-        PortableContextTable contexts, ReadOnlyMemory<byte>? payload, int functionCount,
+        PortableContextTable contexts, bool present, ReadOnlyMemory<byte> payload, int functionCount,
         Func<uint, bool, bool> validType)
     {
         if (contexts.Profile != PortableExecutionProfile.CallableLocal)
         {
-            if (payload.HasValue)
+            if (present)
                 throw new InvalidDataException("Callable slot section requires CallableLocal profile.");
             return null;
         }
-        if (!payload.HasValue)
+        if (!present)
             throw new InvalidDataException("CallableLocal requires the critical callable slot section.");
-        ReadOnlySpan<byte> data = payload.Value.Span;
+        ReadOnlySpan<byte> data = payload.Span;
         if (Read(ref data) != 0 || Read(ref data) != (uint)functionCount)
             throw new InvalidDataException("Invalid callable slot version or function count.");
         if (functionCount < 0 || functionCount > data.Length / 4)

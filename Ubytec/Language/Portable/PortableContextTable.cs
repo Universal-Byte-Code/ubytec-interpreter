@@ -127,6 +127,7 @@ public sealed class PortableContextTable
         if (opcode is >= 0x20 and <= 0x2A or >= 0x30 and <= 0x36 or >= 0x40 and <= 0x49)
             return;
         if (opcode is
+            Ubytec.Language.Operations.CoreOperations.NOP.OP or
             Ubytec.Language.Operations.CoreOperations.TRAP.OP or
             Ubytec.Language.Operations.CoreOperations.CLEAR.OP or
             Ubytec.Language.Operations.CoreOperations.NULL.OP or

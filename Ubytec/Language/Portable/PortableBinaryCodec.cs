@@ -232,8 +232,9 @@ public static class PortableBinaryCodec
 
         PortableContextTable contexts = PortableContextTable.Decode(
             Required(image, PortableModuleSectionKind.IndexedFunctionContexts).Span, functions.Count);
-        PortableCallableTable? slots = PortableCallableTable.ReadSection(contexts,
-            image.GetSection(PortableModuleSectionKind.IndexedCallableSlots)?.Payload, functions.Count,
+        PortableModuleSection? callableSection = image.GetSection(PortableModuleSectionKind.IndexedCallableSlots);
+        PortableCallableTable? slots = PortableCallableTable.ReadSection(contexts, callableSection is not null,
+            callableSection is null ? ReadOnlyMemory<byte>.Empty : callableSection.Payload, functions.Count,
             (index, result) => index < (uint)types.Count && PortableCallableTable.IsScalarSignatureType(
                 types[(int)index].Primitive, (uint)types[(int)index].Modifiers, types[(int)index].FixedArraySize, result));
         return new PortableExecutableModule(strings, types, functions, imports, exports, constants, contexts, slots);

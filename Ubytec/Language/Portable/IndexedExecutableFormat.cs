@@ -177,7 +177,8 @@ public static class IndexedExecutableFormat
             Required(sections, PortableModuleSectionKind.IndexedFunctionContexts).Payload.Span, functions.Count);
         if (callableSection is not null && callableSection.Flags != PortableModuleSectionFlags.Critical)
             throw new InvalidDataException("Callable slot section must be critical.");
-        PortableCallableTable? callables = PortableCallableTable.ReadSection(contexts, callableSection?.Payload, functions.Count,
+        PortableCallableTable? callables = PortableCallableTable.ReadSection(contexts, callableSection is not null,
+            callableSection is null ? ReadOnlyMemory<byte>.Empty : callableSection.Payload, functions.Count,
             (index, result) => index < (uint)types.Count && PortableCallableTable.IsScalarSignatureType(
                 types[(int)index].Primitive, types[(int)index].Modifiers, types[(int)index].FixedArraySize, result));
         contexts.RequireNoImports(imports.Count);

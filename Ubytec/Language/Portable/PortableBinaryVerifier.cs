@@ -195,7 +195,8 @@ public static class PortableBinaryVerifier
         if (requiredProfile.HasValue && requiredProfile.Value != contexts.Profile)
             throw new InvalidDataException($"Admission requires the {requiredProfile.Value} profile.");
         PortableCallableTable? callables = PortableCallableTable.ReadSection(contexts,
-            callableSection is null ? null : new ReadOnlyMemory<byte>(callableSection.Payload), functions.Count,
+            callableSection is not null,
+            callableSection is null ? ReadOnlyMemory<byte>.Empty : new ReadOnlyMemory<byte>(callableSection.Payload), functions.Count,
             (index, result) => index < (uint)types.Count && PortableCallableTable.IsScalarSignatureType(
                 types[(int)index].Primitive, types[(int)index].Modifiers, types[(int)index].FixedArraySize, result));
         contexts.RequireNoImports(imports.Count);

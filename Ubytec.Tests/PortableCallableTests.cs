@@ -63,6 +63,21 @@ public sealed class PortableCallableTests
 
     private static byte[] Bytes() => PortableBinaryCodec.Encode(Fixture());
 
+    [Theory]
+    [InlineData(PortableExecutionProfile.UnsafeCells)]
+    [InlineData(PortableExecutionProfile.DirectOnly)]
+    public void OrdinaryProfilesDoNotRequireCallableSlotSection(PortableExecutionProfile profile)
+    {
+        byte[] bytes = PortableSourceX64Pipeline.Compile(Source, processImage: false,
+            executionProfile: profile).ModuleBytes;
+        PortableBinaryVerifier.Verify(bytes, profile);
+        PortableBinaryModule module = PortableBinaryCodec.Decode(bytes);
+        Assert.Null(module.Executable!.CallableSlots);
+        Assert.Equal(bytes, PortableBinaryCodec.Encode(module));
+        Assert.Throws<InvalidDataException>(() =>
+            PortableBinaryVerifier.Verify(bytes, PortableExecutionProfile.CallableLocal));
+    }
+
     [Fact]
     public void IndependentVerifierAndTypedCodecAcceptExactCallableProfile()
     {
