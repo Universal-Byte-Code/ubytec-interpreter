@@ -88,7 +88,7 @@ public class PortableStructuredControlTests
     [InlineData("switch", "branch 1 7", "break 7")]
     public void LabeledBreakResolvesToOuterSwitchWithoutSerializingSourceLabel(string selection, string branch, string transfer)
     {
-        string source = $"""
+        string source = $$"""
             module (name:"control-label", version:"0.1", author:"Ubytec")
             {
                 func Main() -> t_int64
@@ -145,7 +145,7 @@ public class PortableStructuredControlTests
     [InlineData("block t_int16\npush 42\nreturn\nend", 42L)]
     public void BlocksPreserveLegacyResultSemantics(string body, long expected)
     {
-        string source = $"""
+        string source = $$"""
             module (name:"typed-block", version:"0.1", author:"Ubytec")
             {
                 func Main() -> t_int64
