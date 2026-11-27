@@ -271,9 +271,9 @@ public static class PortableBinaryCodec
         image.GetRequiredSection(kind).Payload;
 
     private static bool IsIndexedExecutableKind(ushort kind) =>
+        kind == (ushort)PortableModuleSectionKind.IndexedFunctionContexts ||
         kind is >= (ushort)PortableModuleSectionKind.IndexedStringTable
-            and <= (ushort)PortableModuleSectionKind.IndexedCode
-            or (ushort)PortableModuleSectionKind.IndexedFunctionContexts;
+            and <= (ushort)PortableModuleSectionKind.IndexedCode;
 
     private static List<string> DecodeStringTable(ReadOnlyMemory<byte> payload)
     {
