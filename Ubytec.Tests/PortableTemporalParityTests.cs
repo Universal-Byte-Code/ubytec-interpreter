@@ -27,6 +27,30 @@ public sealed class PortableTemporalParityTests
     }
 
     [Fact]
+    public void ParallelWorkersActuallyOverlapAndClockRemainsCoordinatorOwned()
+    {
+        // A host with one available logical CPU cannot establish this parallelism evidence.
+        if (Environment.ProcessorCount < 2) return;
+        int owner = Environment.CurrentManagedThreadId;
+        using var rendezvous = new Barrier(2);
+        var workers = new System.Collections.Concurrent.ConcurrentBag<int>();
+        var observations = new List<int>();
+        var c = new PortableTemporalCoordinator(source: () => { observations.Add(Environment.CurrentManagedThreadId); return 7; });
+        c.CreateContext(clock: true); c.CreateContext(clock: true);
+        c.RunRound(k =>
+        {
+            workers.Add(Environment.CurrentManagedThreadId);
+            if (!rendezvous.SignalAndWait(TimeSpan.FromSeconds(15)))
+                throw new TimeoutException("Parallel preparation did not overlap.");
+            return new(k, PortableTurnKind.SampleClock);
+        }, parallel: true);
+        Assert.Equal(2, workers.Distinct().Count());
+        Assert.Equal(new[] { owner, owner }, observations.ToArray());
+        Assert.Equal(new ulong[] { 1, 2 }, c.Observations.Select(o => o.ContextOrdinal));
+        c.RunRound(k => new(k, PortableTurnKind.Terminate));
+    }
+
+    [Fact]
     public void PhysicalClockAdapterRemainsOnOwnerAndWaitExpiresOnSample()
     {
         int owner = Environment.CurrentManagedThreadId;
