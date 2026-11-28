@@ -1,11 +1,12 @@
 namespace Ubytec.Language.Portable;
 
-public enum PortableTemporalEffectKind { ClockSample, TimerSample, TimerRegister, TimerExpire, TimerCancel, ContextCreated, ContextTerminated, ContextCancelled, CancelAdmission, Yield }
+public enum PortableTemporalEffectKind { ClockSample, TimerSample, TimerRegister, TimerExpire, TimerCancel, ContextCreated, ContextTerminated, ContextCancelled, CancelAdmission, Yield, SharedRead, SharedWrite, SharedAdd, SharedCompareExchange, MessageSend, MessageReceive, ReceiveCancel }
 public enum PortableEventDomain { Diagnostic, Semantic }
 
 /// <summary>Coordinator-owned effect; unlike an instruction event, it need not have an activation.</summary>
 public sealed record PortableTemporalEffect(PortableRuntimeEventId Id, PortableTemporalEffectKind Kind,
-    ulong Round, ulong Value, IReadOnlyList<PortableRuntimeEventId> Dependencies, ulong Auxiliary = 0);
+    ulong Round, ulong Value, IReadOnlyList<PortableRuntimeEventId> Dependencies, ulong Auxiliary = 0,
+    PortableSharedEffectData? Shared = null, PortableMessageEffectData? Message = null);
 
 public sealed record PortableScalarEventData(ulong Round, PortableScalarBoundaryKind Kind,
     ulong Fuel, PortableInstructionOccurrence? Occurrence, ulong? Result);
