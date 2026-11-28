@@ -9,7 +9,8 @@ public sealed record PortableTemporalEffect(PortableRuntimeEventId Id, PortableT
     PortableSharedEffectData? Shared = null, PortableMessageEffectData? Message = null);
 
 public sealed record PortableScalarEventData(ulong Round, PortableScalarBoundaryKind Kind,
-    ulong Fuel, PortableInstructionOccurrence? Occurrence, ulong? Result);
+    ulong Fuel, PortableInstructionOccurrence? Occurrence, ulong? Result,
+    uint? TargetFunction = null, string? FaultReason = null);
 
 /// <summary>One committed runtime event. Sequence is the coordinator order, not host arrival time.</summary>
 public sealed record PortablePublishedEvent(
