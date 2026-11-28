@@ -1,0 +1,504 @@
+module (name:"temporal_stack",version:"0.1",author:"Ubytec")
+{
+    // Returns new depth + 1, or zero. Internal opcode 273 denotes escaped PUSH16.
+    func TemporalPrivateDepth(t_uint64 op,t_uint64 idx,t_uint64 depth,t_uint64 capacity) -> t_uint64
+    {
+        local
+        {
+            t_uint64 required 0
+            t_uint64 produced 0
+        }
+        // Scalar operators consume one or two cells and produce one.
+        load @op
+        call TemporalIsUnary
+        if
+            load @depth
+            load @capacity
+            push 1
+            push 1
+            call TemporalDepthShape
+            return
+        end
+        load @op
+        call TemporalIsBinary
+        if
+            load @depth
+            load @capacity
+            push 2
+            push 1
+            call TemporalDepthShape
+            return
+        end
+        // Stack contracts describe a top window: how many cells are needed
+        // and how many occupy that window after the operation.
+        load @op
+        switch
+            branch 13
+                // CLEAR
+                push 1
+                return
+            end
+            branch 15
+                // NULL: 0 -> 1
+                push 1
+                store @produced
+            end
+            branch 18
+                // POP: 1 -> 0
+                push 1
+                store @required
+            end
+            branch 19
+                // DUP: 1 -> 2
+                push 1
+                store @required
+                push 2
+                store @produced
+            end
+            branch 20
+                // SWAP: 2 -> 2
+                push 2
+                dup
+                store @required
+                store @produced
+            end
+            branch 21
+                // ROT: 3 -> 3
+                push 3
+                dup
+                store @required
+                store @produced
+            end
+            branch 22
+                // OVER: 2 -> 3
+                push 2
+                store @required
+                push 3
+                store @produced
+            end
+            branch 23
+                // NIP: 2 -> 1
+                push 2
+                store @required
+                push 1
+                store @produced
+            end
+            branch 24
+                // DROP / DROP16
+                load @idx
+                inc
+                store @required
+                load @idx
+                store @produced
+            end
+            branch 25
+                // 2DUP: 2 -> 4
+                push 2
+                store @required
+                push 4
+                store @produced
+            end
+            branch 26
+                // 2SWAP: 4 -> 4
+                push 4
+                dup
+                store @required
+                store @produced
+            end
+            branch 27
+                // 2ROT: 6 -> 6
+                push 6
+                dup
+                store @required
+                store @produced
+            end
+            branch 28
+                // 2OVER: 4 -> 6
+                push 4
+                store @required
+                push 6
+                store @produced
+            end
+            branch 29
+                // PICK / PICK16
+                load @idx
+                inc
+                dup
+                store @required
+                inc
+                store @produced
+            end
+            branch 30
+                // ROLL / ROLL16
+                load @idx
+                inc
+                dup
+                store @required
+                store @produced
+            end
+            branch 273
+                // PUSH16 reads two bytes, potentially across a cell boundary.
+                load @idx
+                inc
+                push 8
+                udiv
+                inc
+                dup
+                store @required
+                inc
+                store @produced
+            end
+            default
+                push 0
+                return
+        end
+        load @depth
+        load @capacity
+        load @required
+        load @produced
+        call TemporalDepthShape
+        return
+    }
+
+    // A result of zero rejects the shape; otherwise return next depth + 1.
+    // Subtract only after proving the top window is present.
+    func TemporalDepthShape(t_uint64 depth,t_uint64 capacity,t_uint64 required,t_uint64 produced) -> t_uint64
+    {
+        local
+        {
+            t_uint64 nextdepth 0
+        }
+        load @depth
+        load @required
+        ult
+        if
+            push 0
+            return
+        end
+        load @produced
+        load @depth
+        load @required
+        block (t_uint64,t_uint64,t_uint64) -> t_uint64
+            sub
+            add
+        end
+        store @nextdepth
+        load @nextdepth
+        load @capacity
+        ugt
+        if
+            push 0
+            return
+        end
+        load @nextdepth
+        inc
+        return
+    }
+
+    // Private transformations. Admission and turn dispatch both enforce the
+    // stack shape first. 1 = success, 2 = arithmetic trap, 0 = invariant failure.
+    func TemporalPrivateApply(t_uint64 cells,t_uint64 depth,t_uint64 op,t_uint64 idx) -> t_uint64
+    {
+        local
+        {
+            t_uint64 lhs 0 t_uint64 rhs 0
+        }
+        load @op
+        switch
+            branch 13
+                // CLEAR changes depth only.
+                nop
+            end
+            branch 15
+                // NULL
+                load @cells
+                load @depth
+                push 0
+                call TemporalCellSet
+            end
+            branch 18
+                // POP changes depth only.
+                nop
+            end
+            branch 19
+                // DUP
+                load @cells
+                load @depth
+                push 0
+                call TemporalPick
+            end
+            branch 20
+                // SWAP
+                load @cells
+                load @depth
+                push 2
+                push 1
+                call TemporalRotate
+            end
+            branch 21
+                // ROT
+                load @cells
+                load @depth
+                push 3
+                push 1
+                call TemporalRotate
+            end
+            branch 22
+                // OVER
+                load @cells
+                load @depth
+                push 1
+                call TemporalPick
+            end
+            branch 23
+                // NIP
+                load @cells
+                load @depth
+                push 1
+                call TemporalRemove
+            end
+            branch 24
+                // DROP / DROP16
+                load @cells
+                load @depth
+                load @idx
+                call TemporalRemove
+            end
+            branch 25
+                // 2DUP
+                load @cells
+                load @depth
+                push 2
+                call TemporalCopyPair
+            end
+            branch 26
+                // 2SWAP
+                load @cells
+                load @depth
+                push 4
+                push 2
+                call TemporalRotate
+            end
+            branch 27
+                // 2ROT
+                load @cells
+                load @depth
+                push 6
+                push 2
+                call TemporalRotate
+            end
+            branch 28
+                // 2OVER
+                load @cells
+                load @depth
+                push 4
+                call TemporalCopyPair
+            end
+            branch 29
+                // PICK / PICK16
+                load @cells
+                load @depth
+                load @idx
+                call TemporalPick
+            end
+            branch 30
+                // ROLL / ROLL16
+                load @cells
+                load @depth
+                load @idx
+                inc
+                push 1
+                call TemporalRotate
+            end
+            branch 273
+                // PUSH16: word at byte offset in top-first stack representation.
+                load @cells
+                load @depth
+                load @cells
+                load @depth
+                load @idx
+                call TemporalStackWord
+                call TemporalCellSet
+            end
+            default
+                load @cells
+                load @depth
+                push 0
+                call TemporalStackGet
+                store @rhs
+                load @op
+                call TemporalIsUnary
+                if
+                    load @cells
+                    load @depth
+                    dec
+                    load @op
+                    load @rhs
+                    call TemporalUnary
+                    call TemporalCellSet
+                else
+                    load @cells
+                    load @depth
+                    push 1
+                    call TemporalStackGet
+                    store @lhs
+                    load @op
+                    load @lhs
+                    load @rhs
+                    call TemporalArithmeticSafe
+                    if
+                    else
+                        push 2
+                        return
+                    end
+                    load @cells
+                    load @depth
+                    push 2
+                    sub
+                    load @op
+                    load @lhs
+                    load @rhs
+                    call TemporalBinary
+                    call TemporalCellSet
+                end
+        end
+        push 1
+        return
+    }
+
+    // Stack indices are top-relative; cell indices are bottom-relative.
+    func TemporalStackGet(t_uint64 cells,t_uint64 depth,t_uint64 index) -> t_uint64
+    {
+        load @cells
+        load @depth
+        dec
+        load @index
+        sub
+        call TemporalCellGet
+        return
+    }
+
+    func TemporalPick(t_uint64 cells,t_uint64 depth,t_uint64 index) -> t_void
+    {
+        load @cells
+        load @depth
+        load @cells
+        load @depth
+        load @index
+        call TemporalStackGet
+        call TemporalCellSet
+        return
+    }
+
+    func TemporalRemove(t_uint64 cells,t_uint64 depth,t_uint64 index) -> t_void
+    {
+        local
+        {
+            t_uint64 pos 0 t_uint64 last 0
+        }
+        load @depth
+        dec
+        store @last
+        load @last
+        load @index
+        sub
+        store @pos
+        while @pos < @last
+            load @cells
+            load @pos
+            load @cells
+            load @pos
+            inc
+            call TemporalCellGet
+            call TemporalCellSet
+            load @pos
+            inc
+            store @pos
+        end
+        return
+    }
+
+    func TemporalRotate(t_uint64 cells,t_uint64 depth,t_uint64 span,t_uint64 count) -> t_void
+    {
+        local
+        {
+            t_uint64 i 0 t_uint64 value 0
+        }
+        while @i < @count
+            load @cells
+            load @depth
+            load @span
+            dec
+            call TemporalStackGet
+            store @value
+            load @cells
+            load @depth
+            load @span
+            dec
+            call TemporalRemove
+            load @cells
+            load @depth
+            dec
+            load @value
+            call TemporalCellSet
+            load @i
+            inc
+            store @i
+        end
+        return
+    }
+
+    func TemporalCopyPair(t_uint64 cells,t_uint64 depth,t_uint64 span) -> t_void
+    {
+        load @cells
+        load @depth
+        load @span
+        dec
+        call TemporalPick
+        load @cells
+        load @depth
+        inc
+        load @span
+        dec
+        call TemporalPick
+        return
+    }
+
+    func TemporalStackByte(t_uint64 cells,t_uint64 depth,t_uint64 offset) -> t_uint64
+    {
+        load @cells
+        load @depth
+        load @offset
+        push 8
+        udiv
+        call TemporalStackGet
+        load @offset
+        push 8
+        umod
+        push 8
+        mul
+        lshr
+        push 255
+        and
+        return
+    }
+
+    func TemporalStackWord(t_uint64 cells,t_uint64 depth,t_uint64 offset) -> t_uint64
+    {
+        load @cells
+        load @depth
+        load @offset
+        call TemporalStackByte
+        load @cells
+        load @depth
+        load @offset
+        inc
+        call TemporalStackByte
+        block (t_uint64,t_uint64) -> t_uint64
+            push 8
+            shl
+            or
+        end
+        return
+    }
+}

@@ -1,0 +1,290 @@
+module (name:"temporal_decoder",version:"0.1",author:"Ubytec")
+{
+    func TemporalDecode(t_uint64 code,t_uint64 length,t_uint64 pc,t_uint64 row,t_uint64 site) -> t_uint64
+    {
+        local
+        {
+            t_uint64 op 0 t_uint64 idx 0 t_uint64 n 0
+        }
+        load @code
+        load @pc
+        add
+        push 0
+        add
+        load t_byte
+        store @op
+        load @pc
+        push 1
+        add
+        store @pc
+        push 0
+        store @idx
+        // Decode operand-bearing instructions and only the admitted BLOCK mode.
+        if @op == 17
+            load @length
+            load @pc
+            sub
+            push 1
+            ult
+            if
+                push 0
+                return
+            end
+            load @code
+            load @pc
+            add
+            push 0
+            add
+            load t_byte
+            store @idx
+            load @pc
+            push 1
+            add
+            store @pc
+            if @idx == 0
+                push 0
+                return
+            end
+            if @idx > 8
+                push 0
+                return
+            end
+            load @idx
+            load @length
+            load @pc
+            sub
+            ugt
+            if
+                push 0
+                return
+            end
+            load @code
+            load @pc
+            add
+            load @idx
+            call TemporalReadImmediate
+            store @n
+            load @pc
+            load @idx
+            add
+            store @pc
+            load @n
+            store @idx
+        else
+            if @op == 255
+                load @length
+                load @pc
+                sub
+                push 4
+                ult
+                if
+                    push 0
+                    return
+                end
+                load @code
+                load @pc
+                add
+                push 0
+                add
+                load t_byte
+                push 16
+                neq
+                if
+                    push 0
+                    return
+                end
+                load @code
+                load @pc
+                add
+                push 1
+                add
+                load t_byte
+                store @op
+                if @op == 17
+                    push 273
+                    store @op
+                else
+                    load @op
+                    push 24
+                    eq
+                    load @op
+                    push 29
+                    eq
+                    or
+                    load @op
+                    push 30
+                    eq
+                    or
+                    if
+                    else
+                        push 0
+                        return
+                    end
+                end
+                load @code
+                load @pc
+                add
+                push 2
+                add
+                load t_uint16
+                store @idx
+                load @pc
+                push 4
+                add
+                store @pc
+            else
+                load @op
+                push 24
+                eq
+                load @op
+                push 29
+                eq
+                or
+                load @op
+                push 30
+                eq
+                or
+                if
+                    load @length
+                    load @pc
+                    sub
+                    push 1
+                    ult
+                    if
+                        push 0
+                        return
+                    end
+                    load @code
+                    load @pc
+                    add
+                    push 0
+                    add
+                    load t_byte
+                    store @idx
+                    load @pc
+                    push 1
+                    add
+                    store @pc
+                end
+                load @op
+                push 2
+                eq
+                load @op
+                push 9
+                eq
+                or
+                if
+                    load @length
+                    load @pc
+                    sub
+                    push 1
+                    ult
+                    if
+                        push 0
+                        return
+                    end
+                    load @code
+                    load @pc
+                    add
+                    push 0
+                    add
+                    load t_byte
+                    if
+                        push 0
+                        return
+                    end
+                    load @pc
+                    push 1
+                    add
+                    store @pc
+                end
+                load @op
+                push 7
+                eq
+                load @op
+                push 8
+                eq
+                or
+                if
+                    load @length
+                    load @pc
+                    sub
+                    push 4
+                    ult
+                    if
+                        push 0
+                        return
+                    end
+                    load @code
+                    load @pc
+                    add
+                    push 0
+                    add
+                    load t_uint32
+                    store @idx
+                    load @pc
+                    push 4
+                    add
+                    store @pc
+                end
+            end
+        end
+        // Record the normalized operation and ordinal successor.
+        load @row
+        load @op
+        call TemporalPlanSetOpcode
+        load @row
+        load @site
+        inc
+        call TemporalPlanSetNext
+        load @row
+        load @site
+        inc
+        call TemporalPlanSetTarget
+        load @row
+        push 0
+        call TemporalPlanSetParentLink
+        load @row
+        push 0
+        call TemporalPlanSetElseLink
+        load @row
+        push 0
+        call TemporalPlanSetDepthMark
+        load @row
+        load @idx
+        call TemporalPlanSetOperand
+        load @row
+        push 0
+        call TemporalPlanSetExit
+        load @pc
+        return
+    }
+
+    // Bounded little-endian decode, used only after the planner validates length.
+    func TemporalReadImmediate(t_uint64 bytes,t_uint64 length) -> t_uint64
+    {
+        local
+        {
+            t_uint64 value 0
+            t_uint64 i 0
+        }
+        while @i < @length
+            load @bytes
+            load @i
+            add
+            load t_byte
+            load @i
+            push 8
+            mul
+            shl
+            load @value
+            or
+            store @value
+            load @i
+            inc
+            store @i
+        end
+        load @value
+        return
+    }
+}

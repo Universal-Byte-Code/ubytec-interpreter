@@ -2,6 +2,7 @@ using System.Runtime.InteropServices;
 using System.Buffers.Binary;
 using Ubytec.Language.AST;
 using Ubytec.Language.Portable;
+using Ubytec.Language.Tools;
 using Xunit;
 
 namespace Ubytec.Tests;
@@ -251,7 +252,8 @@ public sealed class PortableSelfHostedTemporalTests
     private static ulong[] RunNative(byte[] code, int contexts, int quantum, int limit, bool module = false, bool untouched = false, Action<byte[]>? inspectPlan = null)
     {
         const int capacity = 32;
-        var native = NativeRuntime.Value;
+        var runtime = NativeRuntime.Value;
+        var native = runtime.Native;
         nint input = Marshal.AllocHGlobal(code.Length);
         nint states = Marshal.AllocHGlobal(contexts * 64);
         nint stacks = Marshal.AllocHGlobal(contexts * capacity * 8);
@@ -270,7 +272,7 @@ public sealed class PortableSelfHostedTemporalTests
                 contexts.ToString(), capacity.ToString(), quantum.ToString(), Address(ledger), limit.ToString(), Address(plan)];
             if (module) args = [.. args, Address(view)];
             string body = string.Join("\n", args.Select(arg => $"mov rax, {arg}\npush rax")) +
-                $"\ncall {native.GetFunctionLabel(module ? 3 : 1)}\nadd rsp, {args.Length * 8}\npush rax";
+                $"\ncall {native.GetFunctionLabel(module ? runtime.ModuleEntry : runtime.RawEntry)}\nadd rsp, {args.Length * 8}\npush rax";
             long count = Assert.Single(NativeStack.Run(body, 1, native.Assembly));
             Assert.InRange(count, 0, limit);
             byte[] planBytes = new byte[planSentinel.Length];
@@ -301,14 +303,28 @@ public sealed class PortableSelfHostedTemporalTests
         }
     }
 
-    private static readonly Lazy<PortableX64Compilation> NativeRuntime = new(() =>
+    private sealed record RuntimeCompilation(PortableX64Compilation Native, int RawEntry, int ModuleEntry);
+
+    private static readonly Lazy<RuntimeCompilation> NativeRuntime = new(() =>
     {
-        string source = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "temporal-runtime.ubc"));
-        var compiled = SourceCompiler.Compile(source, emitProcessEntryPoint: false);
+        string source = TemporalRuntimeSource.Compose(Path.Combine(AppContext.BaseDirectory, "temporal-runtime"));
+        var compiled = SourceCompiler.CompileSemantic(source, processImage: false);
+        var functions = compiled.Module.Functions.ToArray();
+        Assert.All(functions, f =>
+        {
+            Assert.Empty(f.Locals?.Functions ?? []);
+            Assert.Empty(f.Locals?.Actions ?? []);
+        });
+        int Entry(string name)
+        {
+            int index = Array.FindIndex(functions, f => f.Name == name);
+            Assert.True(index >= 0, $"Missing runtime entry '{name}'.");
+            return index;
+        }
         byte[] runtime = PortableModuleFormat.Encode(compiled.Module,
             contractManifest: null, includeIndexedExecutable: true, portableContracts: compiled.PortableContracts,
             executionProfile: PortableExecutionProfile.UnsafeCells);
-        return PortableX64Backend.Compile(runtime);
+        return new RuntimeCompilation(PortableX64Backend.Compile(runtime), Entry("TemporalRun"), Entry("TemporalRunModule"));
     });
 
     [Theory]

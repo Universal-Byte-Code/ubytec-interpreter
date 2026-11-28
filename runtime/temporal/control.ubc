@@ -1,0 +1,361 @@
+module (name:"temporal_control",version:"0.1",author:"Ubytec")
+{
+    func TemporalLinkScopes(t_uint64 code,t_uint64 length,t_uint64 plan) -> t_uint64
+    {
+        local
+        {
+            t_uint64 pc 0 t_uint64 site 0 t_uint64 row 0 t_uint64 op 0 t_uint64 idx 0
+            t_uint64 top 0 t_uint64 scope 0 t_uint64 kind 0 t_uint64 alternate 0
+            t_uint64 cursor 0 t_uint64 ordinal 0
+        }
+        while @pc < @length
+            load @plan
+            load @site
+            call TemporalPlanRow
+            store @row
+            load @row
+            load @pc
+            call TemporalPlanSetWireOffset
+            load @code
+            load @length
+            load @pc
+            load @row
+            load @site
+            call TemporalDecode
+            store @pc
+            if @pc == 0
+                push 0
+                return
+            end
+            load @row
+            call TemporalPlanOpcode
+            store @op
+            load @row
+            call TemporalPlanOperand
+            store @idx
+            load @op
+            push 2
+            eq
+            load @op
+            push 3
+            eq
+            or
+            load @op
+            push 4
+            eq
+            or
+            load @op
+            push 12
+            eq
+            or
+            if
+                load @row
+                load @top
+                call TemporalPlanSetParentLink
+                load @site
+                inc
+                store @top
+            else
+                if @op == 5
+                    if @top == 0
+                        push 0
+                        return
+                    end
+                    load @plan
+                    load @top
+                    dec
+                    call TemporalPlanRow
+                    store @scope
+                    load @scope
+                    call TemporalPlanOpcode
+                    push 4
+                    neq
+                    if
+                        push 0
+                        return
+                    end
+                    load @scope
+                    call TemporalPlanElseLink
+                    if
+                        push 0
+                        return
+                    end
+                    load @scope
+                    load @site
+                    inc
+                    call TemporalPlanSetElseLink
+                    load @scope
+                    load @site
+                    inc
+                    call TemporalPlanSetTarget
+                else
+                    if @op == 6
+                        if @top == 0
+                            push 0
+                            return
+                        end
+                        load @plan
+                        load @top
+                        dec
+                        call TemporalPlanRow
+                        store @scope
+                        load @scope
+                        call TemporalPlanOpcode
+                        store @kind
+                        load @scope
+                        call TemporalPlanParentLink
+                        store @top
+                        load @scope
+                        load @site
+                        inc
+                        call TemporalPlanSetExit
+                        if @kind == 3
+                            load @row
+                            load @scope
+                            call TemporalPlanNext
+                            call TemporalPlanSetTarget
+                        end
+                        if @kind == 12
+                            load @row
+                            load @scope
+                            load @plan
+                            call TemporalPlanOrdinal
+                            call TemporalPlanSetTarget
+                            load @scope
+                            load @site
+                            inc
+                            call TemporalPlanSetTarget
+                        end
+                        if @kind == 4
+                            load @scope
+                            call TemporalPlanElseLink
+                            store @alternate
+                            if @alternate == 0
+                                load @scope
+                                load @site
+                                inc
+                                call TemporalPlanSetTarget
+                            else
+                                load @plan
+                                load @alternate
+                                dec
+                                call TemporalPlanRow
+                                store @scope
+                                load @scope
+                                load @site
+                                inc
+                                call TemporalPlanSetTarget
+                            end
+                        end
+                    else
+                        load @op
+                        push 7
+                        eq
+                        load @op
+                        push 8
+                        eq
+                        or
+                        if
+                            load @top
+                            store @cursor
+                            load @idx
+                            store @ordinal
+                            loop
+                                if @cursor == 0
+                                    push 0
+                                    return
+                                end
+                                load @plan
+                                load @cursor
+                                dec
+                                call TemporalPlanRow
+                                store @scope
+                                load @scope
+                                call TemporalPlanOpcode
+                                store @kind
+                                load @kind
+                                push 3
+                                eq
+                                load @kind
+                                push 12
+                                eq
+                                or
+                                if
+                                    if @ordinal == 0
+                                        break
+                                    end
+                                    load @ordinal
+                                    dec
+                                    store @ordinal
+                                end
+                                load @scope
+                                call TemporalPlanParentLink
+                                store @cursor
+                            end
+                            load @row
+                            load @cursor
+                            call TemporalPlanSetParentLink
+                            if @op == 8
+                                if @kind == 3
+                                    load @row
+                                    load @scope
+                                    call TemporalPlanNext
+                                    call TemporalPlanSetTarget
+                                else
+                                    load @row
+                                    load @cursor
+                                    dec
+                                    call TemporalPlanSetTarget
+                                end
+                            end
+                        else
+                            load @op
+                            push 0
+                            eq
+                            load @op
+                            push 1
+                            eq
+                            or
+                            load @op
+                            push 9
+                            eq
+                            or
+                            load @op
+                            push 17
+                            eq
+                            or
+                            if
+                            else
+                                // Reject unsupported private forms even on unreachable paths.
+                                load @op
+                                load @idx
+                                push 65536
+                                push 65538
+                                call TemporalPrivateDepth
+                                if
+                                else
+                                    push 0
+                                    return
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+            load @site
+            inc
+            store @site
+        end
+        if @top != 0
+            push 0
+            return
+        end
+        load @plan
+        load @site
+        call TemporalPlanSetCount
+        push 1
+        return
+    }
+
+    func TemporalResolveBreaks(t_uint64 length,t_uint64 plan) -> t_uint64
+    {
+        local
+        {
+            t_uint64 pc 0 t_uint64 row 0 t_uint64 op 0 t_uint64 scope 0
+        }
+        // Resolve forward BREAK destinations now that all scopes have closed.
+        push 0
+        store @pc
+        while @pc < @length
+            load @plan
+            load @pc
+            call TemporalPlanRow
+            store @row
+            load @row
+            call TemporalPlanOpcode
+            store @op
+            if @op == 7
+                load @plan
+                load @row
+                call TemporalPlanParentLink
+                dec
+                call TemporalPlanRow
+                store @scope
+                load @row
+                load @scope
+                call TemporalPlanExit
+                call TemporalPlanSetTarget
+            end
+            load @row
+            call TemporalPlanNext
+            store @pc
+        end
+        push 1
+        return
+    }
+
+    func TemporalValidateTransfers(t_uint64 length,t_uint64 plan) -> t_uint64
+    {
+        local
+        {
+            t_uint64 pc 0 t_uint64 row 0 t_uint64 op 0 t_uint64 depth 0 t_uint64 scope 0 t_uint64 shape 0 t_uint64 kind 0
+        }
+        // Match portable BREAK/CONTINUE entry-depth constraints, not merely graph joins.
+        push 0
+        store @pc
+        while @pc < @length
+            load @plan
+            load @pc
+            call TemporalPlanRow
+            store @row
+            load @row
+            call TemporalPlanOpcode
+            store @op
+            load @op
+            push 7
+            eq
+            load @op
+            push 8
+            eq
+            or
+            if
+                load @row
+                call TemporalPlanDepthMark
+                store @depth
+                if @depth != 0
+                    load @plan
+                    load @row
+                    call TemporalPlanParentLink
+                    dec
+                    call TemporalPlanRow
+                    store @scope
+                    load @scope
+                    call TemporalPlanDepthMark
+                    store @shape
+                    load @scope
+                    call TemporalPlanOpcode
+                    store @kind
+                    if @kind == 12
+                        if @op == 7
+                            load @shape
+                            dec
+                            store @shape
+                        end
+                    end
+                    load @depth
+                    load @shape
+                    neq
+                    if
+                        push 0
+                        return
+                    end
+                end
+            end
+            load @row
+            call TemporalPlanNext
+            store @pc
+        end
+        push 1
+        return
+    }
+}

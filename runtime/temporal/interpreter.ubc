@@ -1,0 +1,332 @@
+module (name:"temporal_interpreter",version:"0.1",author:"Ubytec")
+{
+    // Execute one admitted turn. The plan owns instruction framing and operands;
+    // guest fuel counts plan entries, not the native instructions implementing them.
+    func TemporalTurn(t_uint64 count,t_uint64 state,t_uint64 cells,t_uint64 capacity,t_uint64 quantum,t_uint64 plan) -> t_uint64
+    {
+        local
+        {
+            t_uint64 pc 0 t_uint64 depth 0 t_uint64 fuel 0 t_uint64 phase 0
+            t_uint64 site 0 t_uint64 charged 0 t_uint64 op 0 t_uint64 operand 0
+            t_uint64 row 0 t_uint64 target 0 t_uint64 shape 0 t_uint64 status 0
+        }
+        if @quantum == 0
+            push 6
+            return
+        end
+        load @capacity
+        push 4096
+        ugt
+        if
+            push 6
+            return
+        end
+        load @state
+        call TemporalStatePhase
+        store @phase
+        load @phase
+        switch
+            branch 0
+                // Pending entry becomes runnable; entry itself costs no fuel.
+                load @state
+                push 1
+                push 0
+                call TemporalSetPhase
+                return
+            end
+            branch 2
+                load @state
+                push 5
+                push 5
+                call TemporalSetPhase
+                return
+            end
+            branch 3
+                load @state
+                push 4
+                push 4
+                call TemporalSetPhase
+                return
+            end
+            branch 4
+                load @state
+                push 5
+                push 5
+                call TemporalSetPhase
+                return
+            end
+            branch 1
+                // Runnable.
+                nop
+            end
+            default
+                push 6
+                return
+        end
+        load @state
+        call TemporalStatePc
+        store @pc
+        load @state
+        call TemporalStateDepth
+        store @depth
+        load @state
+        call TemporalStateFuel
+        store @fuel
+        loop
+            load @pc
+            load @count
+            uge
+            if
+                load @state
+                call TemporalFail
+                return
+            end
+            load @fuel
+            inc
+            if
+            else
+                load @state
+                call TemporalFail
+                return
+            end
+            load @pc
+            store @site
+            load @plan
+            load @site
+            call TemporalPlanRow
+            store @row
+            // PC is an internal ordinal; ledger identity is the wire offset.
+            load @row
+            call TemporalPlanWireOffset
+            store @site
+            // The admitted stack depth is a cheap runtime invariant.
+            load @row
+            call TemporalPlanDepthMark
+            load @depth
+            inc
+            neq
+            if
+                load @state
+                call TemporalFail
+                return
+            end
+            load @row
+            call TemporalPlanOpcode
+            store @op
+            load @row
+            call TemporalPlanNext
+            store @pc
+            load @row
+            call TemporalPlanTarget
+            store @target
+            load @row
+            call TemporalPlanOperand
+            store @operand
+            load @fuel
+            inc
+            store @fuel
+            load @charged
+            inc
+            store @charged
+            load @op
+            switch
+                branch 0
+                    // TRAP
+                    load @state
+                    load @pc
+                    load @depth
+                    load @fuel
+                    load @site
+                    push 3
+                    call TemporalSaveBoundary
+                    return
+                end
+                branch 1
+                    // NOP
+                    nop
+                end
+                branch 2
+                    // Untyped BLOCK
+                    nop
+                end
+                branch 3
+                    // LOOP
+                    nop
+                end
+                branch 4
+                    // IF
+                    load @cells
+                    load @depth
+                    call TemporalCondition
+                    if
+                    else
+                        load @target
+                        store @pc
+                    end
+                    load @depth
+                    dec
+                    store @depth
+                end
+                branch 5
+                    // ELSE
+                    load @target
+                    store @pc
+                end
+                branch 6
+                    // END
+                    load @target
+                    store @pc
+                end
+                branch 7
+                    // BREAK
+                    load @target
+                    store @pc
+                end
+                branch 8
+                    // CONTINUE
+                    load @target
+                    store @pc
+                end
+                branch 9
+                    // RETURN
+                    load @depth
+                    dec
+                    store @depth
+                    load @state
+                    load @cells
+                    load @depth
+                    call TemporalCellGet
+                    call TemporalStateSetResult
+                    load @state
+                    load @pc
+                    load @depth
+                    load @fuel
+                    load @site
+                    push 2
+                    call TemporalSaveBoundary
+                    return
+                end
+                branch 12
+                    // WHILE
+                    load @cells
+                    load @depth
+                    call TemporalCondition
+                    if
+                    else
+                        load @target
+                        store @pc
+                    end
+                    load @depth
+                    dec
+                    store @depth
+                end
+                branch 17
+                    // PUSH: immediate already decoded by admission.
+                    load @cells
+                    load @depth
+                    load @operand
+                    call TemporalCellSet
+                    load @depth
+                    inc
+                    store @depth
+                end
+                default
+                    load @op
+                    load @operand
+                    load @depth
+                    load @capacity
+                    call TemporalPrivateDepth
+                    store @shape
+                    if @shape == 0
+                        load @state
+                        call TemporalFail
+                        return
+                    end
+                    load @cells
+                    load @depth
+                    load @op
+                    load @operand
+                    call TemporalPrivateApply
+                    store @status
+                    if @status == 2
+                        load @state
+                        load @pc
+                        load @depth
+                        load @fuel
+                        load @site
+                        push 3
+                        call TemporalSaveBoundary
+                        return
+                    end
+                    if @status != 1
+                        load @state
+                        call TemporalFail
+                        return
+                    end
+                    load @shape
+                    dec
+                    store @depth
+            end
+            if @charged == @quantum
+                load @state
+                load @pc
+                load @depth
+                load @fuel
+                load @site
+                push 1
+                call TemporalSaveBoundary
+                return
+            end
+        end
+    }
+
+    func TemporalCondition(t_uint64 cells,t_uint64 depth) -> t_uint64
+    {
+        load @cells
+        load @depth
+        dec
+        call TemporalCellGet
+        return
+    }
+
+    // State layout: PC, depth, fuel, phase, last site, result, sequence, clock.
+    // Phase changes and boundary snapshots have one implementation.
+    func TemporalSetPhase(t_uint64 state,t_uint64 phase,t_uint64 boundary) -> t_uint64
+    {
+        load @state
+        load @phase
+        call TemporalStateSetPhase
+        load @boundary
+        return
+    }
+
+    func TemporalFail(t_uint64 state) -> t_uint64
+    {
+        load @state
+        push 6
+        push 6
+        call TemporalSetPhase
+        return
+    }
+
+    func TemporalSaveBoundary(t_uint64 state,t_uint64 pc,t_uint64 depth,t_uint64 fuel,t_uint64 site,t_uint64 kind) -> t_uint64
+    {
+        load @state
+        load @pc
+        call TemporalStateSetPc
+        load @state
+        load @depth
+        call TemporalStateSetDepth
+        load @state
+        load @fuel
+        call TemporalStateSetFuel
+        load @state
+        load @site
+        call TemporalStateSetSite
+        load @state
+        load @kind
+        load @kind
+        call TemporalSetPhase
+        return
+    }
+}

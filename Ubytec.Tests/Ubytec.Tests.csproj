@@ -28,7 +28,8 @@
     <None Include="../corpus/libft/lists.ubc" Link="lists.ubc" CopyToOutputDirectory="PreserveNewest" />
     <None Include="../corpus/libft/lists-fixtures.ubc" Link="lists-fixtures.ubc" CopyToOutputDirectory="PreserveNewest" />
     <None Include="../corpus/libft/text-analyzer.ubc" Link="text-analyzer.ubc" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="../runtime/temporal/temporal.ubc" Link="temporal-runtime.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../runtime/temporal/*.ubc" Link="temporal-runtime/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../runtime/temporal/sources.txt" Link="temporal-runtime/sources.txt" CopyToOutputDirectory="PreserveNewest" />
     <None Include="../prototypes/temporal/observe_native_fault.c" Link="observe_native_fault.c" CopyToOutputDirectory="PreserveNewest" />
     <None Update="legacy-opcodes.json" CopyToOutputDirectory="PreserveNewest" />
     <ProjectReference Include="../Ubytec/Ubytec.csproj" />

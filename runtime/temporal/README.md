@@ -1,6 +1,6 @@
 # Native Ubytec temporal runtime (bootstrap)
  
-The implementation language of the runtime is Ubytec. The existing C# temporal reference is retained as an executable oracle, not a dependency of the native scheduler. Compile `temporal.ubc` via the normal source -> indexed UBCM -> x64 pipeline. No Python, additional opcode encoding, or C# turn callback is involved in native execution.
+The implementation language of the runtime is Ubytec. The existing C# temporal reference is retained as an executable oracle, not a dependency of the native scheduler. Compose the files in `sources.txt` with `TemporalRuntimeSource.Compose`, then compile the resulting source via the normal semantic source -> indexed UBCM -> x64 pipeline. No Python, additional opcode encoding, or C# turn callback is involved in native execution.
 
 ## Admission and ABI (internal, not frozen)
  
@@ -12,7 +12,7 @@ This slice consumes the exact Code bytes of one zero-argument/local Int64 functi
 
 ## Internal organization and refactoring constraints
 
-Keep one UBC module during this bootstrap; functions are grouped by responsibility, with independent layouts for context, plan and ledger records. Do not allocate guest wire opcodes or change the ledger ABI as a side effect of refactoring.
+Source is physically split into ten UBC files with an explicit ordered manifest. The compiler still receives one module; cross-fragment calls are ordinary direct UBC calls. This is static source composition, not separately linked binary modules. Context, plan and ledger layouts are independent and owned by `records.ubc`. Do not allocate guest wire opcodes or change the ledger ABI as a side effect of refactoring.
 
 | Component | Functions |
 | --- | --- |
@@ -24,7 +24,7 @@ Keep one UBC module during this bootstrap; functions are grouped by responsibili
 | Scheduler | TemporalRunPrepared, TemporalRun, TemporalRunModule |
 | Event projection | TemporalLedgerRow/Write |
 
-Use typed block contracts where they express real stack transformations, structured SWITCH dispatch for opcode selection, and one implementation of each state transition. Preserve differential traces, fuel, malformed-input rejection and native test results. Numeric wire constants remain visible in decoding/dispatch until there is an explicit source-level constant mechanism; do not introduce a second registry. PMF traversal and profile policy are separate: bounded section framing precedes the per-kind payload validators; root signature validation follows required-section checks. The plan is compact and independent of the event identity. Physical module separation and further consolidation of numeric field selectors remain open.
+Use typed block contracts where they express real stack transformations, structured SWITCH dispatch for opcode selection, and one implementation of each state transition. Preserve differential traces, fuel, malformed-input rejection and native test results. Numeric wire constants remain visible in decoding/dispatch until there is an explicit source-level constant mechanism; do not introduce a second registry. The test harness resolves entry indices by semantic function name rather than hard-coded positions. The manifest is checked for missing, extra and duplicate source files. PMF traversal and profile policy are separate: bounded section framing precedes the per-kind payload validators; root signature validation follows required-section checks. The plan is compact and independent of event identity. Named plan and context accessors keep layout selectors inside `records.ubc`; the ledger is written only by its dedicated writer. Numeric wire opcodes remain registry values.
 
 ## Scalar execution
 

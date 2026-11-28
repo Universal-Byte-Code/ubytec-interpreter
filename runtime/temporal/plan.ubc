@@ -1,0 +1,304 @@
+module (name:"temporal_plan",version:"0.1",author:"Ubytec")
+{
+    // Admission pipeline: decode/lexical links, forward edges, dataflow, transfer contracts.
+    func TemporalPlanPrepare(t_uint64 code,t_uint64 length,t_uint64 capacity,t_uint64 plan) -> t_uint64
+    {
+        local
+        {
+            t_uint64 count 0
+        }
+        if @length == 0
+            push 0
+            return
+        end
+        load @length
+        push 4096
+        ugt
+        if
+            push 0
+            return
+        end
+        if @capacity == 0
+            push 0
+            return
+        end
+        load @capacity
+        push 4096
+        ugt
+        if
+            push 0
+            return
+        end
+        load @plan
+        push 0
+        call TemporalPlanSetCount
+        load @code
+        load @length
+        load @plan
+        call TemporalLinkScopes
+        if
+        else
+            push 0
+            return
+        end
+        load @plan
+        call TemporalPlanCount
+        store @count
+        load @count
+        load @plan
+        call TemporalResolveBreaks
+        if
+        else
+            push 0
+            return
+        end
+        load @count
+        load @capacity
+        load @plan
+        call TemporalAnalyzeDepth
+        if
+        else
+            push 0
+            return
+        end
+        load @count
+        load @plan
+        call TemporalValidateTransfers
+        return
+    }
+
+    // Count header, 24-byte instruction records, u16 work queue.
+    // Execution links use ordinals; event identity uses the original byte offset.
+    func TemporalPlanEdge(t_uint64 plan,t_uint64 work,t_uint64 length,t_uint64 tail,t_uint64 dest,t_uint64 depth) -> t_uint64
+    {
+        local
+        {
+            t_uint64 row 0 t_uint64 seen 0
+        }
+        load @dest
+        load @length
+        uge
+        if
+            push 0
+            return
+        end
+        load @plan
+        load @dest
+        call TemporalPlanRow
+        store @row
+        load @row
+        call TemporalPlanDepthMark
+        store @seen
+        if @seen == 0
+            load @tail
+            load @length
+            uge
+            if
+                push 0
+                return
+            end
+            load @row
+            load @depth
+            inc
+            call TemporalPlanSetDepthMark
+            load @work
+            load @tail
+            push 2
+            mul
+            add
+            load @dest
+            store t_uint16
+            load @tail
+            inc
+            store @tail
+        else
+            load @seen
+            load @depth
+            inc
+            neq
+            if
+                push 0
+                return
+            end
+        end
+        load @tail
+        inc
+        return
+    }
+
+    func TemporalAnalyzeDepth(t_uint64 length,t_uint64 capacity,t_uint64 plan) -> t_uint64
+    {
+        local
+        {
+            t_uint64 work 0 t_uint64 row 0 t_uint64 head 0 t_uint64 tail 0
+            t_uint64 site 0 t_uint64 op 0 t_uint64 next 0 t_uint64 target 0 t_uint64 depth 0 t_uint64 shape 0
+        }
+        // Reachability and exact stack-depth dataflow. Each site is queued at most once.
+        load @plan
+        load @length
+        call TemporalPlanRow
+        store @work
+        load @plan
+        push 0
+        call TemporalPlanRow
+        store @row
+        load @row
+        push 1
+        call TemporalPlanSetDepthMark
+        load @work
+        push 0
+        store t_uint16
+        push 1
+        store @tail
+        while @head < @tail
+            load @work
+            load @head
+            push 2
+            mul
+            add
+            load t_uint16
+            store @site
+            load @head
+            inc
+            store @head
+            load @plan
+            load @site
+            call TemporalPlanRow
+            store @row
+            load @row
+            call TemporalPlanOpcode
+            store @op
+            load @row
+            call TemporalPlanNext
+            store @next
+            load @row
+            call TemporalPlanTarget
+            store @target
+            load @row
+            call TemporalPlanDepthMark
+            dec
+            store @depth
+            if @op == 9
+                if @depth == 0
+                    push 0
+                    return
+                end
+            else
+                if @op == 0
+                else
+                    load @op
+                    push 4
+                    eq
+                    load @op
+                    push 12
+                    eq
+                    or
+                    if
+                        if @depth == 0
+                            push 0
+                            return
+                        end
+                        load @depth
+                        dec
+                        store @depth
+                        // Conditional false edge; true edge is enqueued below.
+                        load @plan
+                        load @work
+                        load @length
+                        load @tail
+                        load @target
+                        load @depth
+                        call TemporalPlanEdge
+                        store @tail
+                        if @tail == 0
+                            push 0
+                            return
+                        end
+                        load @tail
+                        dec
+                        store @tail
+                    else
+                        load @op
+                        push 5
+                        eq
+                        load @op
+                        push 6
+                        eq
+                        or
+                        load @op
+                        push 7
+                        eq
+                        or
+                        load @op
+                        push 8
+                        eq
+                        or
+                        if
+                            load @target
+                            store @next
+                        else
+                            load @op
+                            push 1
+                            eq
+                            load @op
+                            push 2
+                            eq
+                            or
+                            load @op
+                            push 3
+                            eq
+                            or
+                            if
+                            else
+                                if @op == 17
+                                    load @depth
+                                    inc
+                                    store @depth
+                                    load @depth
+                                    load @capacity
+                                    ugt
+                                    if
+                                        push 0
+                                        return
+                                    end
+                                else
+                                    load @op
+                                    load @row
+                                    call TemporalPlanOperand
+                                    load @depth
+                                    load @capacity
+                                    call TemporalPrivateDepth
+                                    store @shape
+                                    if @shape == 0
+                                        push 0
+                                        return
+                                    end
+                                    load @shape
+                                    dec
+                                    store @depth
+                                end
+                            end
+                        end
+                    end
+                    load @plan
+                    load @work
+                    load @length
+                    load @tail
+                    load @next
+                    load @depth
+                    call TemporalPlanEdge
+                    store @tail
+                    if @tail == 0
+                        push 0
+                        return
+                    end
+                    load @tail
+                    dec
+                    store @tail
+                end
+            end
+        end
+        push 1
+        return
+    }
+}
