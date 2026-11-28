@@ -10,7 +10,7 @@ public readonly record struct PortableTurnProposal(PortableTurnKey Key, Portable
     ulong Value = 0, bool ClockGrant = false, bool TimerGrant = false,
     PortableSharedRequest? Shared = null, PortableMessageRequest? Message = null);
 public enum PortableRoundState { Progressed, Quiescent, Terminated }
-public enum PortableAdmissionKind { TimerSample, CancelWait, CancelContext }
+public enum PortableAdmissionKind { TimerSample, CancelWait, CancelContext, RevokeClock }
 public readonly record struct PortableJournalEntry(ulong Ordinal, ulong Round, PortableAdmissionKind Kind, ulong Value);
 public readonly record struct PortableClockObservation(ulong Round, ulong ContextOrdinal, ulong Nanoseconds, ulong RequestOrdinal);
 public readonly record struct PortableClockInstant(Guid Domain, ulong Nanoseconds);
@@ -40,7 +40,7 @@ public sealed partial class PortableTemporalCoordinator
     private sealed record Timer(ulong Deadline, PortablePublishedEvent Registration);
     private sealed class Context(bool clock, bool timer)
     {
-        internal bool Clock { get; } = clock;
+        internal bool Clock { get; set; } = clock;
         internal bool Timer { get; } = timer;
         internal string Status = "Live";
     }
@@ -171,12 +171,12 @@ public sealed partial class PortableTemporalCoordinator
         return Create(0, clock, timer);
     }
 
-    private void Terminate(ulong ordinal, bool cancelled, params PortableRuntimeEventId[] dependencies)
+    private void Terminate(ulong ordinal, bool cancelled, PortableRuntimeEventId[]? dependencies = null, ulong retainedSource = 0)
     {
         Publication.RequireCapacity();
         Identity.RequireInactive(Id(ordinal));
         Publish(ordinal, cancelled ? PortableTemporalEffectKind.ContextCancelled : PortableTemporalEffectKind.ContextTerminated,
-            0, 0, dependencies);
+            retainedSource, 0, dependencies ?? Array.Empty<PortableRuntimeEventId>());
         Identity.RetireContext(Id(ordinal));
         _live.Remove(ordinal);
         _timers.Remove(ordinal);
@@ -251,7 +251,14 @@ public sealed partial class PortableTemporalCoordinator
             return;
         }
         ulong target = entry.Value;
-        if (!_live.Contains(target)) throw new InvalidDataException("Cancellation target is not live.");
+        if (!_live.Contains(target)) throw new InvalidDataException("Admission target is not live.");
+        if (entry.Kind == PortableAdmissionKind.RevokeClock)
+        {
+            if (!_contexts[target].Clock) throw new InvalidDataException("Clock grant is not active.");
+            Publish(0, PortableTemporalEffectKind.ClockGrantRevoked, target, entry.Ordinal);
+            _contexts[target].Clock = false;
+            return;
+        }
         _timers.TryGetValue(target, out var timer);
         bool receiving = _blocked.TryGetValue(target, out var retained);
         if (entry.Kind == PortableAdmissionKind.CancelWait && timer is null && !receiving)
@@ -260,7 +267,8 @@ public sealed partial class PortableTemporalCoordinator
         Publication.RequireCapacity(2);
         var admission = Publish(0, PortableTemporalEffectKind.CancelAdmission, target, entry.Ordinal);
         var deps = timer is null ? new[] { admission.Id } : new[] { timer.Registration.Id, admission.Id };
-        if (entry.Kind == PortableAdmissionKind.CancelContext) Terminate(target, true, deps);
+        if (entry.Kind == PortableAdmissionKind.CancelContext) Terminate(target, true, deps,
+            receiving ? retained.Peer.Ordinal : 0);
         else if (timer is not null)
         {
             Publish(target, PortableTemporalEffectKind.TimerCancel, timer.Deadline, 0, deps);
