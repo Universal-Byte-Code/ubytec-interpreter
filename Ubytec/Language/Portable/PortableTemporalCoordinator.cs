@@ -1,146 +1,180 @@
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace Ubytec.Language.Portable;
 
-public readonly record struct PortableClockObservation(ulong Round, ulong ContextOrdinal, ulong Nanoseconds);
+public readonly record struct PortableTurnKey(ulong Round, PortableRuntimeContextId Context);
+public enum PortableTurnKind { Yield, SampleClock, SleepUntil, Spawn, Terminate }
+public readonly record struct PortableTurnProposal(PortableTurnKey Key, PortableTurnKind Kind,
+    ulong Value = 0, bool ClockGrant = false, bool TimerGrant = false);
+public enum PortableRoundState { Progressed, Quiescent, Terminated }
+public enum PortableAdmissionKind { TimerSample, CancelWait, CancelContext }
+public readonly record struct PortableJournalEntry(ulong Ordinal, ulong Round, PortableAdmissionKind Kind, ulong Value);
+public readonly record struct PortableClockObservation(ulong Round, ulong ContextOrdinal, ulong Nanoseconds, ulong RequestOrdinal);
+public readonly record struct PortableClockInstant(Guid Domain, ulong Nanoseconds);
+public sealed record PortableClockDomain(Guid Id, string Source, ulong? ResolutionNanoseconds, bool? ExcludesSuspend);
+public readonly record struct PortableFixedSteps(ulong Steps, ulong Remainder)
+{
+    public static PortableFixedSteps Advance(ulong accumulator, ulong elapsed, ulong duration, ulong cap)
+    {
+        if (duration == 0) throw new ArgumentOutOfRangeException(nameof(duration));
+        ulong total = checked(accumulator + elapsed);
+        ulong steps = Math.Min(total / duration, cap);
+        return new(steps, total - steps * duration);
+    }
+}
 
-/// <summary>Coordinator-owned temporal runtime for admitted managed contexts. No Python dependency.
-/// Single coordinator thread; private preparation may run concurrently. Host adapters are trusted.
-/// No protected native capability boundary or autonomous wakeup policy is implied.</summary>
+public sealed record PortableTemporalSnapshot(ulong Round, IReadOnlyList<string> Trace,
+    IReadOnlyList<string> Contexts, IReadOnlyList<PortableJournalEntry> Journal,
+    IReadOnlyList<PortableClockObservation> Observations, IReadOnlyList<PortableJournalEntry> Pending,
+    string ClockPolicy);
+
+/// <summary>Managed semantic coordinator; trusted host calls are serialized. Workers return values,
+/// never authority. One primary turn proposal; synthetic delivery is coordinator-owned.
+/// Finite event/context bounds also bound all event counters and Lamport clocks below u64 exhaustion.
+/// This is not a native protection boundary or the complete temporal profile.</summary>
 public sealed class PortableTemporalCoordinator
 {
     private sealed record Timer(ulong Deadline, PortablePublishedEvent Registration);
+    private sealed class Context(bool clock, bool timer)
+    {
+        internal bool Clock { get; } = clock;
+        internal bool Timer { get; } = timer;
+        internal string Status = "Live";
+    }
+
+    private readonly SortedDictionary<ulong, Context> _contexts = new();
     private readonly SortedSet<ulong> _live = new();
-    private readonly HashSet<ulong> _clockGrants = new();
-    private readonly HashSet<ulong> _timerGrants = new();
     private readonly Dictionary<ulong, Timer> _timers = new();
     private readonly Func<ulong>? _source;
     private readonly Queue<PortableClockObservation>? _replay;
     private readonly List<PortableClockObservation> _observations = new();
-    private readonly int _maxContexts;
+    private readonly List<PortableJournalEntry> _journal = new();
+    private readonly Queue<PortableJournalEntry> _pending = new();
+    private readonly int _maxContexts, _maxEvents;
+    private readonly int _owner = Environment.CurrentManagedThreadId;
     private ulong? _lastSample;
-    private ulong? _turn;
-    private bool _inRound;
-    private bool _failed;
+    private bool _inRound, _failed, _started;
 
     internal PortableRuntimeIdentity Identity { get; } = new();
     internal PortableEventPublication Publication { get; }
     public Guid Session => Identity.Session;
+    public PortableClockDomain ClockDomain { get; }
     public ulong Round { get; private set; }
     public IReadOnlyList<PortablePublishedEvent> Events => Publication.Events;
     public IReadOnlyList<PortableClockObservation> Observations => _observations.AsReadOnly();
+    public IReadOnlyList<PortableJournalEntry> Journal => _journal.AsReadOnly();
     public int LiveCount => _live.Count;
     public int SuspendedCount => _timers.Count;
 
-    /// <summary>Source provides elapsed ns in one monotonic domain. Null source means no clock.
-    /// Injected sources are intended for testing or explicitly specified host adapters.</summary>
     public PortableTemporalCoordinator(int maxEvents = 100_000, int maxContexts = 128,
-        Func<ulong>? source = null, IEnumerable<PortableClockObservation>? replay = null)
+        Func<ulong>? source = null, IEnumerable<PortableClockObservation>? replay = null,
+        PortableClockDomain? clockPolicy = null)
     {
         if (maxEvents <= 0 || maxContexts <= 0 || (source is not null && replay is not null))
             throw new ArgumentException("Invalid coordinator configuration.");
         _maxContexts = maxContexts;
+        _maxEvents = maxEvents;
         _source = source;
-        _replay = replay is null ? null : new Queue<PortableClockObservation>(replay);
-        Publication = new PortableEventPublication(Session, maxEvents);
+        if (replay is not null)
+        {
+            var bounded = replay.Take(maxEvents == int.MaxValue ? maxEvents : maxEvents + 1).ToArray();
+            if (bounded.Length > maxEvents) throw new InvalidDataException("Replay observation limit.");
+            _replay = new(bounded);
+        }
+        ClockDomain = clockPolicy is null
+            ? new(Session, "explicit-monotonic-ns", null, null)
+            : clockPolicy with { Id = Session };
+        Publication = new PortableEventPublication(Session, maxEvents, PortableEventDomain.Semantic);
     }
 
-    /// <summary>Linux Stopwatch is backed by the monotonic host clock. The domain starts here.
-    /// Explicitly reject other platforms until their suspend semantics are specified.</summary>
     public static PortableTemporalCoordinator LiveLinux(int maxEvents = 100_000, int maxContexts = 128)
     {
         if (!OperatingSystem.IsLinux()) throw new PlatformNotSupportedException("Linux monotonic domain required.");
         long origin = Stopwatch.GetTimestamp();
+        // Tick conversion granularity, not measured host clock precision.
         return new(maxEvents, maxContexts, () =>
         {
             long ticks = checked(Stopwatch.GetTimestamp() - origin);
             if (ticks < 0) throw new InvalidDataException("Host clock regressed.");
             return checked((ulong)((UInt128)(ulong)ticks * 1_000_000_000 / (ulong)Stopwatch.Frequency));
-        });
+        }, clockPolicy: new(Guid.Empty, $"linux-stopwatch-{Stopwatch.Frequency}-ticks-per-second", null, true));
+    }
+
+    public PortableClockInstant Instant(PortableClockObservation observation)
+    {
+        RequireBoundary();
+        if (observation.RequestOrdinal == 0 || observation.RequestOrdinal > (ulong)_observations.Count ||
+            _observations[(int)observation.RequestOrdinal - 1] != observation)
+            throw new InvalidDataException("Unknown observation in this session.");
+        return new(Session, observation.Nanoseconds);
+    }
+
+    public static ulong Elapsed(PortableClockInstant first, PortableClockInstant second)
+    {
+        if (first.Domain == Guid.Empty || first.Domain != second.Domain || second.Nanoseconds < first.Nanoseconds)
+            throw new InvalidDataException("Incompatible clock instants.");
+        return second.Nanoseconds - first.Nanoseconds;
     }
 
     private PortableRuntimeContextId Id(ulong ordinal) => new(Session, ordinal);
-    private ulong EffectRound => _inRound ? Round : checked(Round + 1);
-
-    private void CheckUsable()
-    {
-        if (_failed) throw new InvalidOperationException("Coordinator aborted after a failed round.");
-    }
-
     private void RequireBoundary()
     {
-        CheckUsable();
-        if (_inRound) throw new InvalidOperationException("Only between rounds.");
-    }
-
-    private void RequireTurn(PortableRuntimeContextId context)
-    {
-        CheckUsable();
-        if (context.Session != Session || _turn != context.Ordinal || !_live.Contains(context.Ordinal))
-            throw new InvalidOperationException("Not the admitted context turn.");
-    }
-
-    /// <summary>Allocate context in deterministic host admission order, with explicit authority.</summary>
-    public PortableRuntimeContextId CreateContext(bool clock = false, bool timer = false)
-    {
-        RequireBoundary();
-        if (_live.Count >= _maxContexts) throw new InvalidOperationException("Context limit.");
-        var id = Identity.CreateContext();
-        _live.Add(id.Ordinal);
-        if (clock) _clockGrants.Add(id.Ordinal);
-        if (timer) _timerGrants.Add(id.Ordinal);
-        return id;
-    }
-
-    /// <summary>Close a context only after its activations have been closed.</summary>
-    public void Retire(PortableRuntimeContextId context)
-    {
-        RequireTurn(context);
-        if (_timers.ContainsKey(context.Ordinal)) throw new InvalidOperationException("Context suspended.");
-        Identity.RetireContext(context);
-        _live.Remove(context.Ordinal);
-        _clockGrants.Remove(context.Ordinal);
-        _timerGrants.Remove(context.Ordinal);
-    }
-
-    /// <summary>Prepare private work from snapshots, then commit in ascending admitted context order.
-    /// Callers MUST NOT perform shared effects or use the coordinator in prepare.
-    /// A preparation failure aborts before any turn commits; a commit failure poisons the session.</summary>
-    public void RunRound<T>(Func<PortableRuntimeContextId, T> prepare,
-        Action<PortableRuntimeContextId, T> commit, bool parallel = false)
-    {
-        ArgumentNullException.ThrowIfNull(prepare);
-        ArgumentNullException.ThrowIfNull(commit);
-        RequireBoundary();
-        if (_live.Count == 0) throw new InvalidOperationException("No live contexts.");
-        ulong[] frontier = _live.Where(c => !_timers.ContainsKey(c)).ToArray();
-        if (frontier.Length == 0) throw new InvalidOperationException("Quiescent; admit a timer sample.");
-        Round = checked(Round + 1);
-        _inRound = true;
-        try
-        {
-            var proposals = new T[frontier.Length];
-            if (parallel)
-                Parallel.For(0, frontier.Length, i => proposals[i] = prepare(Id(frontier[i])));
-            else
-                for (int i = 0; i < frontier.Length; i++) proposals[i] = prepare(Id(frontier[i]));
-            for (int i = 0; i < frontier.Length; i++)
-            {
-                _turn = frontier[i];
-                commit(Id(frontier[i]), proposals[i]);
-                _turn = null;
-            }
-        }
-        catch { _failed = true; throw; }
-        finally { _turn = null; _inRound = false; }
+        if (Environment.CurrentManagedThreadId != _owner || _inRound)
+            throw new InvalidOperationException("Only the coordinator owner between rounds may admit work.");
+        if (_failed) throw new InvalidOperationException("Coordinator aborted.");
     }
 
     private PortablePublishedEvent Publish(ulong context, PortableTemporalEffectKind kind, ulong value,
-        params PortableRuntimeEventId[] dependencies)
+        ulong auxiliary = 0, params PortableRuntimeEventId[] dependencies)
     {
         Publication.RequireCapacity();
         return Publication.Publish(new PortableTemporalEffect(Identity.AllocateEffect(Id(context)), kind,
-            EffectRound, value, Array.AsReadOnly(dependencies)));
+            Round, value, Array.AsReadOnly(dependencies), auxiliary));
+    }
+
+    private PortableRuntimeContextId Create(ulong parent, bool clock, bool timer)
+    {
+        if (_contexts.Count >= _maxContexts) throw new InvalidOperationException("Session context limit.");
+        Publication.RequireCapacity();
+        var id = Identity.CreateContext();
+        var created = Publish(parent, PortableTemporalEffectKind.ContextCreated, id.Ordinal,
+            (clock ? 1UL : 0UL) | (timer ? 2UL : 0UL));
+        Publication.RegisterCreation(id, created.Id);
+        _contexts.Add(id.Ordinal, new(clock, timer));
+        _live.Add(id.Ordinal);
+        return id;
+    }
+
+    public PortableRuntimeContextId CreateContext(bool clock = false, bool timer = false)
+    {
+        RequireBoundary();
+        if (_started) throw new InvalidOperationException("Initial admission closed; use Spawn.");
+        return Create(0, clock, timer);
+    }
+
+    private void Terminate(ulong ordinal, bool cancelled, params PortableRuntimeEventId[] dependencies)
+    {
+        Publication.RequireCapacity();
+        Identity.RequireInactive(Id(ordinal));
+        Publish(ordinal, cancelled ? PortableTemporalEffectKind.ContextCancelled : PortableTemporalEffectKind.ContextTerminated,
+            0, 0, dependencies);
+        Identity.RetireContext(Id(ordinal));
+        _live.Remove(ordinal);
+        _timers.Remove(ordinal);
+        _contexts[ordinal].Status = cancelled ? "Cancelled" : "Terminated";
+    }
+
+    /// <summary>Queue an explicit external entry before its boundary. No late insertion or implicit host time.</summary>
+    public void QueueAdmission(PortableJournalEntry entry)
+    {
+        RequireBoundary();
+        if (_started && _live.Count == 0) throw new InvalidOperationException("Session terminated.");
+        int count = checked(_journal.Count + _pending.Count);
+        if (count >= _maxEvents || entry.Ordinal != (ulong)count + 1 || entry.Round <= Round ||
+            (_pending.TryPeek(out _) && entry.Round < _pending.Last().Round) || !Enum.IsDefined(entry.Kind))
+            throw new InvalidDataException("Invalid journal order, boundary or limit.");
+        _pending.Enqueue(entry);
     }
 
     private void ValidateSample(ulong value)
@@ -148,79 +182,184 @@ public sealed class PortableTemporalCoordinator
         if (_lastSample is ulong last && value < last) throw new InvalidDataException("Clock regressed.");
     }
 
-    private PortablePublishedEvent Observe(ulong context, PortableTemporalEffectKind kind, ulong value)
+    private ulong NextObservationOrdinal => checked((ulong)_observations.Count + 1);
+    private void Observe(ulong context, PortableTemporalEffectKind kind, ulong value, ulong admissionOrdinal = 0)
     {
         ValidateSample(value);
         var due = _timers.Where(pair => pair.Value.Deadline <= value)
             .OrderBy(pair => pair.Value.Deadline).ThenBy(pair => pair.Value.Registration.CommitSequence)
             .ThenBy(pair => pair.Key).ToArray();
         Publication.RequireCapacity(checked(1 + due.Length));
-        var sample = Publish(context, kind, value);
+        ulong ordinal = NextObservationOrdinal;
+        var row = new PortableClockObservation(Round, context, value, ordinal);
+        if (_replay is not null && (!_replay.TryPeek(out var expected) || expected != row))
+            throw new InvalidDataException("Missing or mismatched replay observation.");
+        // Counts of all allocated semantic events and causal predecessors are bounded by maxEvents.
+        // Preflight the complete deterministic batch before mutating state or allocating an event.
+        var sample = Publish(context, kind, value, admissionOrdinal == 0 ? ordinal : admissionOrdinal);
         _lastSample = value;
-        _observations.Add(new(EffectRound, context, value));
+        _observations.Add(row);
         foreach (var pair in due)
         {
-            Publish(pair.Key, PortableTemporalEffectKind.TimerExpire, value, pair.Value.Registration.Id, sample.Id);
+            Publish(pair.Key, PortableTemporalEffectKind.TimerExpire, value, 0, pair.Value.Registration.Id, sample.Id);
             _timers.Remove(pair.Key);
         }
-        return sample;
+        _replay?.Dequeue();
     }
 
-    private ulong GetObservation(ulong context)
+    private void Sample(ulong context)
     {
+        if (!_contexts[context].Clock) throw new UnauthorizedAccessException("Clock not granted.");
+        Publication.RequireCapacity();
+        ulong value;
         if (_replay is not null)
         {
-            if (!_replay.TryPeek(out var row) || row.Round != EffectRound || row.ContextOrdinal != context)
-                throw new InvalidDataException("Missing or mismatched clock replay observation.");
-            return row.Nanoseconds;
+            if (!_replay.TryPeek(out var row) || row.Round != Round || row.ContextOrdinal != context ||
+                row.RequestOrdinal != NextObservationOrdinal)
+                throw new InvalidDataException("Missing or mismatched clock replay request.");
+            value = row.Nanoseconds;
         }
-        return _source?.Invoke() ?? throw new InvalidOperationException("No clock adapter admitted.");
+        else value = _source?.Invoke() ?? throw new InvalidOperationException("No clock adapter admitted.");
+        Observe(context, PortableTemporalEffectKind.ClockSample, value);
     }
 
-    public ulong Sample(PortableRuntimeContextId context)
+    private void Admit(PortableJournalEntry entry)
     {
-        RequireTurn(context);
-        if (!_clockGrants.Contains(context.Ordinal)) throw new UnauthorizedAccessException("Clock not granted.");
-        Publication.RequireCapacity();
-        ulong value = GetObservation(context.Ordinal);
-        Observe(context.Ordinal, PortableTemporalEffectKind.ClockSample, value);
-        _replay?.Dequeue();
-        return value;
+        if (entry.Kind == PortableAdmissionKind.TimerSample)
+        {
+            Observe(0, PortableTemporalEffectKind.TimerSample, entry.Value, entry.Ordinal);
+            return;
+        }
+        ulong target = entry.Value;
+        if (!_live.Contains(target)) throw new InvalidDataException("Cancellation target is not live.");
+        _timers.TryGetValue(target, out var timer);
+        if (entry.Kind == PortableAdmissionKind.CancelWait && timer is null)
+            throw new InvalidDataException("No pending timer to cancel.");
+        if (entry.Kind == PortableAdmissionKind.CancelContext) Identity.RequireInactive(Id(target));
+        Publication.RequireCapacity(2);
+        var admission = Publish(0, PortableTemporalEffectKind.CancelAdmission, target, entry.Ordinal);
+        var deps = timer is null ? new[] { admission.Id } : new[] { timer.Registration.Id, admission.Id };
+        if (entry.Kind == PortableAdmissionKind.CancelContext) Terminate(target, true, deps);
+        else
+        {
+            Publish(target, PortableTemporalEffectKind.TimerCancel, timer!.Deadline, 0, deps);
+            _timers.Remove(target);
+        }
     }
 
-    public void SleepUntil(PortableRuntimeContextId context, ulong deadline)
+    private void Commit(PortableTurnProposal proposal)
     {
-        RequireTurn(context);
-        if (!_timerGrants.Contains(context.Ordinal)) throw new UnauthorizedAccessException("Timer not granted.");
-        if (_timers.ContainsKey(context.Ordinal)) throw new InvalidOperationException("Already suspended.");
-        var registration = Publish(context.Ordinal, PortableTemporalEffectKind.TimerRegister, deadline);
-        _timers.Add(context.Ordinal, new(deadline, registration));
+        ulong ordinal = proposal.Key.Context.Ordinal;
+        var context = _contexts[ordinal];
+        if (proposal.Kind != PortableTurnKind.Spawn && (proposal.ClockGrant || proposal.TimerGrant) ||
+            proposal.Kind != PortableTurnKind.SleepUntil && proposal.Value != 0)
+            throw new InvalidDataException("Noncanonical turn proposal.");
+        switch (proposal.Kind)
+        {
+            case PortableTurnKind.Yield: Publish(ordinal, PortableTemporalEffectKind.Yield, 0); break;
+            case PortableTurnKind.SampleClock: Sample(ordinal); break;
+            case PortableTurnKind.SleepUntil:
+                if (!context.Timer) throw new UnauthorizedAccessException("Timer not granted.");
+                var registration = Publish(ordinal, PortableTemporalEffectKind.TimerRegister, proposal.Value);
+                _timers.Add(ordinal, new(proposal.Value, registration));
+                break;
+            case PortableTurnKind.Spawn:
+                if (proposal.ClockGrant && !context.Clock || proposal.TimerGrant && !context.Timer)
+                    throw new UnauthorizedAccessException("Spawn cannot amplify grants.");
+                Create(ordinal, proposal.ClockGrant, proposal.TimerGrant);
+                break;
+            case PortableTurnKind.Terminate: Terminate(ordinal, false); break;
+            default: throw new InvalidDataException("Unknown primary effect.");
+        }
     }
 
-    /// <summary>Explicit coordinator admission before the next round. Replay never reads the host.</summary>
-    public void AdmitTimerSample()
+    public PortableRoundState RunRound(Func<PortableTurnKey, PortableTurnProposal> prepare, bool parallel = false) =>
+        RunCore(prepare, (key, proposal) =>
+        {
+            if (proposal.Key != key) throw new InvalidDataException("Stale or foreign turn proposal.");
+            Commit(proposal);
+        }, parallel);
+
+    // Internal verified interpreter bridge. Exactly one primary ledger event per turn.
+    // No external callback may directly mutate identity/publication or use this bridge.
+    internal PortableRoundState RunScalarRound<T>(Func<PortableTurnKey, T> prepare,
+        Action<PortableTurnKey, T> commit, bool parallel) =>
+        RunCore(prepare, (key, proposal) =>
+        {
+            int before = Events.Count;
+            commit(key, proposal);
+            if (Events.Count != before + 1 || Events[^1].Id.Context != key.Context)
+                throw new InvalidDataException("Interpreter must commit exactly one primary boundary.");
+        }, parallel);
+
+    internal void TerminateScalar(PortableTurnKey key) => Terminate(key.Context.Ordinal, false);
+
+    private PortableRoundState RunCore<T>(Func<PortableTurnKey, T> prepare, Action<PortableTurnKey, T> commit, bool parallel)
+    {
+        ArgumentNullException.ThrowIfNull(prepare);
+        RequireBoundary();
+        if (_live.Count == 0) return PortableRoundState.Terminated;
+        if (_live.All(_timers.ContainsKey) && _pending.Count == 0) return PortableRoundState.Quiescent;
+        _started = true;
+        try
+        {
+            ulong next = checked(Round + 1);
+            if (_live.All(_timers.ContainsKey) && _pending.TryPeek(out var future)) next = future.Round;
+            Round = next;
+            _inRound = true;
+            while (_pending.TryPeek(out var entry) && entry.Round == Round)
+            {
+                Admit(entry);
+                _journal.Add(_pending.Dequeue());
+            }
+            var frontier = _live.Where(c => !_timers.ContainsKey(c)).Select(c => new PortableTurnKey(Round, Id(c))).ToArray();
+            var proposals = new T[frontier.Length];
+            if (parallel) Parallel.For(0, frontier.Length, i => proposals[i] = prepare(frontier[i]));
+            else for (int i = 0; i < frontier.Length; i++) proposals[i] = prepare(frontier[i]);
+            // A typed, immutable proposal is the only public commit input.
+            for (int i = 0; i < frontier.Length; i++) commit(frontier[i], proposals[i]);
+            if (_live.Count == 0) return PortableRoundState.Terminated;
+            return PortableRoundState.Progressed;
+        }
+        catch { _failed = true; throw; }
+        finally { _inRound = false; }
+    }
+
+    public PortableTemporalSnapshot Capture()
     {
         RequireBoundary();
-        if (_live.Count == 0) throw new InvalidOperationException("No live contexts.");
-        Publication.RequireCapacity();
-        ulong value = GetObservation(0);
-        Observe(0, PortableTemporalEffectKind.TimerSample, value);
-        _replay?.Dequeue();
+        var trace = Events.Select(e => JsonSerializer.Serialize(new
+        {
+            e.CommitSequence, e.LogicalTime, Context = e.Id.Context.Ordinal, e.Id.Sequence,
+            Lifecycle = e.Lifecycle?.Kind, Activation = e.Lifecycle?.Activation.Ordinal ?? e.Instruction?.Activation.Ordinal,
+            Instance = e.Lifecycle?.Instance.Ordinal ?? e.Instruction?.Instance.Ordinal,
+            Function = e.Lifecycle?.FunctionIndex ?? e.Instruction?.Occurrence.FunctionIndex,
+            Occurrence = e.Instruction?.Occurrence,
+            Dependency = e.Dependency is { } d ? new[] { d.Context.Ordinal, d.Sequence } : null,
+            Kind = e.Effect?.Kind, Round = e.Effect?.Round, Value = e.Effect?.Value, Aux = e.Effect?.Auxiliary,
+            Dependencies = e.Effect?.Dependencies.Select(d => new[] { d.Context.Ordinal, d.Sequence }).ToArray()
+        })).ToArray();
+        var contexts = _contexts.Select(pair => JsonSerializer.Serialize(new
+        {
+            Ordinal = pair.Key, pair.Value.Status, pair.Value.Clock, pair.Value.Timer,
+            Deadline = _timers.TryGetValue(pair.Key, out var timer) ? (ulong?)timer.Deadline : null
+        })).ToArray();
+        string policy = JsonSerializer.Serialize(new { ClockDomain.Source, ClockDomain.ResolutionNanoseconds, ClockDomain.ExcludesSuspend });
+        return new(Round, Array.AsReadOnly(trace), Array.AsReadOnly(contexts),
+            Array.AsReadOnly(_journal.ToArray()), Array.AsReadOnly(_observations.ToArray()),
+            Array.AsReadOnly(_pending.ToArray()), policy);
     }
 
-    /// <summary>Explicit host cancellation of a pending wait (resumes context next round).</summary>
-    public void CancelTimer(PortableRuntimeContextId context)
+    public void VerifyReplayComplete(PortableTemporalSnapshot expected)
     {
+        ArgumentNullException.ThrowIfNull(expected);
         RequireBoundary();
-        if (context.Session != Session || !_timers.TryGetValue(context.Ordinal, out var timer))
-            throw new InvalidOperationException("No pending timer.");
-        Publish(context.Ordinal, PortableTemporalEffectKind.TimerCancel, timer.Deadline, timer.Registration.Id);
-        _timers.Remove(context.Ordinal);
-    }
-
-    public void VerifyReplayComplete()
-    {
-        RequireBoundary();
-        if (_replay is { Count: > 0 }) throw new InvalidDataException("Unused clock observations.");
+        if (_replay is null || _replay.Count != 0) throw new InvalidDataException("Replay has unused observations or no replay source.");
+        var actual = Capture();
+        if (actual.Round != expected.Round || actual.ClockPolicy != expected.ClockPolicy ||
+            !actual.Trace.SequenceEqual(expected.Trace) || !actual.Contexts.SequenceEqual(expected.Contexts) ||
+            !actual.Journal.SequenceEqual(expected.Journal) || !actual.Observations.SequenceEqual(expected.Observations) ||
+            !actual.Pending.SequenceEqual(expected.Pending))
+            throw new InvalidDataException("Replay trace or final state mismatch.");
     }
 }
