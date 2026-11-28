@@ -15,7 +15,7 @@ public sealed record PortableScalarOutcome(IReadOnlyList<PortableScalarBoundary>
 
 /// <summary>Managed DirectOnly reference. Supports a bounded scalar/control/call subset; rejects
 /// unsupported instructions throughout the statically reachable call graph before execution.
-/// Guest capabilities, raw memory, switch and remaining arithmetic/stack operations are not admitted yet.</summary>
+/// Guest capabilities, raw memory and switch are not admitted yet.</summary>
 public static class PortableTemporalScalarReference
 {
     private sealed record Plan(uint Function, PortableInstruction[] Code, PortableInstructionOccurrence[] Sites,
@@ -82,6 +82,94 @@ public static class PortableTemporalScalarReference
         ulong value = 0;
         for (int i = 0; i < bytes.Length; i++) value |= (ulong)bytes[i] << (i * 8);
         return value;
+    }
+
+    private static bool IsPrivate(byte op) => op is 0x0D or 0x0F or >= 0x12 and <= 0x17
+        or >= 0x19 and <= 0x1C or >= 0x20 and <= 0x2A or >= 0x30 and <= 0x36 or >= 0x40 and <= 0x49;
+
+    private static void Reserve(List<ulong> stack, int count, int limit)
+    {
+        if (count > limit - stack.Count) throw new InvalidOperationException("Evaluation stack limit.");
+    }
+
+    private static void ApplyIndexed(List<ulong> stack, byte op, int index, int limit, bool extendedWord = false)
+    {
+        if (extendedWord)
+        {
+            Reserve(stack, 1, limit);
+            ulong ReadByte(int offset) => (stack[stack.Count - 1 - offset / 8] >> (8 * (offset % 8))) & 255UL;
+            stack.Add(ReadByte(index) | (ReadByte(index + 1) << 8));
+            return;
+        }
+        int position = stack.Count - 1 - index;
+        ulong value = stack[position];
+        if (op == 0x1D) { Reserve(stack, 1, limit); stack.Add(value); }
+        else
+        {
+            stack.RemoveAt(position);
+            if (op == 0x1E) stack.Add(value);
+        }
+    }
+
+    // Full private scalar core. A false result denotes an attempted arithmetic trap;
+    // do not execute division in the host on zero or signed quotient overflow.
+    private static bool ApplyPrivate(List<ulong> stack, byte op, int limit)
+    {
+        void Copy(int depth, int count)
+        {
+            Reserve(stack, count, limit);
+            stack.AddRange(stack.GetRange(stack.Count - depth, count));
+        }
+        void Rotate(int depth, int count)
+        {
+            int start = stack.Count - depth;
+            var prefix = stack.GetRange(start, count);
+            stack.RemoveRange(start, count);
+            stack.AddRange(prefix);
+        }
+        switch (op)
+        {
+            case 0x0D: stack.Clear(); return true;
+            case 0x0F: Reserve(stack, 1, limit); stack.Add(0); return true;
+            case 0x12: Pop(stack); return true;
+            case 0x13: Copy(1, 1); return true;
+            case 0x14: Rotate(2, 1); return true;
+            case 0x15: Rotate(3, 1); return true;
+            case 0x16: Copy(2, 1); return true;
+            case 0x17: stack.RemoveAt(stack.Count - 2); return true;
+            case 0x19: Copy(2, 2); return true;
+            case 0x1A: Rotate(4, 2); return true;
+            case 0x1B: Rotate(6, 2); return true;
+            case 0x1C: Copy(4, 2); return true;
+            case 0x25: stack[^1] = unchecked(stack[^1] + 1); return true;
+            case 0x26: stack[^1] = unchecked(stack[^1] - 1); return true;
+            case 0x27: stack[^1] = unchecked(0UL - stack[^1]); return true;
+            case 0x28: if (unchecked((long)stack[^1]) < 0) stack[^1] = unchecked(0UL - stack[^1]); return true;
+            case 0x33: stack[^1] = ~stack[^1]; return true;
+        }
+
+        ulong right = stack[^1], left = stack[^2];
+        long l = unchecked((long)left), r = unchecked((long)right);
+        if ((op is 0x23 or 0x24 or 0x29 or 0x2A) && right == 0 ||
+            (op is 0x23 or 0x24) && l == long.MinValue && r == -1)
+            return false;
+        static ulong Bool(bool value) => value ? 1UL : 0UL;
+        ulong result = op switch
+        {
+            0x20 => unchecked(left + right), 0x21 => unchecked(left - right), 0x22 => unchecked(left * right),
+            0x23 => unchecked((ulong)(l / r)), 0x24 => unchecked((ulong)(l % r)),
+            0x29 => left / right, 0x2A => left % right,
+            0x30 => left & right, 0x31 => left | right, 0x32 => left ^ right,
+            0x34 => left << (int)(right & 63), 0x35 => unchecked((ulong)(l >> (int)(right & 63))),
+            0x36 => left >> (int)(right & 63),
+            0x40 => Bool(left == right), 0x41 => Bool(left != right),
+            0x42 => Bool(l < r), 0x43 => Bool(l <= r), 0x44 => Bool(l > r), 0x45 => Bool(l >= r),
+            0x46 => Bool(left < right), 0x47 => Bool(left <= right), 0x48 => Bool(left > right), 0x49 => Bool(left >= right),
+            _ => throw new InvalidDataException("Unsupported private operation.")
+        };
+        stack.RemoveAt(stack.Count - 1);
+        stack[^1] = result;
+        return true;
     }
 
     // Only the top frame is privately copied; callers remain suspended until a return commit.
@@ -164,16 +252,14 @@ public static class PortableTemporalScalarReference
                     if (!ExitBlock(plan.BlockExit[site])) return Fault("CheckedBlockResult");
                     pc = plan.Targets[site];
                     break;
-                case PortableOperandFreeInstruction op when op.OpCode == 0x20:
-                    ulong right = Pop(stack), left = Pop(stack);
-                    stack.Add(unchecked(left + right));
+                case PortableStackIndexInstruction indexed:
+                    ApplyIndexed(stack, indexed.StackOpCode, indexed.Index, maxStackCells);
                     break;
-                case PortableOperandFreeInstruction op when op.OpCode == 0x26:
-                    stack[^1] = unchecked(stack[^1] - 1);
+                case PortableExtendedStackInstruction extended:
+                    ApplyIndexed(stack, extended.Operation, extended.Index, maxStackCells, extendedWord: extended.Operation == 0x11);
                     break;
-                case PortableOperandFreeInstruction op when op.OpCode == 0x43:
-                    long rhs = unchecked((long)Pop(stack)), lhs = unchecked((long)Pop(stack));
-                    stack.Add(lhs <= rhs ? 1UL : 0UL);
+                case PortableOperandFreeInstruction op when IsPrivate(op.OpCode):
+                    if (!ApplyPrivate(stack, op.OpCode, maxStackCells)) return Fault("ArithmeticFault");
                     break;
                 case PortableCallInstruction call:
                     if (state.Frames.Count >= maxDepth) throw new InvalidOperationException("Activation depth limit.");
@@ -214,7 +300,9 @@ public static class PortableTemporalScalarReference
                 PortableMemoryInstruction memory => memory.Mode == PortableMemoryAccessMode.Binding,
                 PortableBlockInstruction or PortableContractBlockInstruction => true,
                 PortableCallInstruction call => call.TargetKind == PortableCallTargetKind.LocalFunction,
-                PortableOperandFreeInstruction op => op.OpCode is 0x20 or 0x26 or 0x43 or TRAP.OP or NOP.OP
+                PortableStackIndexInstruction indexed => indexed.StackOpCode is 0x18 or 0x1D or 0x1E,
+                PortableExtendedStackInstruction extended => extended.Operation is 0x11 or 0x18 or 0x1D or 0x1E,
+                PortableOperandFreeInstruction op => IsPrivate(op.OpCode) || op.OpCode is TRAP.OP or NOP.OP
                     or LOOP.OP or END.OP or IF.OP or ELSE.OP or WHILE.OP,
                 PortableControlTransferInstruction transfer => transfer.Operation is BREAK.OP or CONTINUE.OP,
                 PortableReturnInstruction => true,
