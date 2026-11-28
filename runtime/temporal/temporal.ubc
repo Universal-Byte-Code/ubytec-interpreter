@@ -919,116 +919,206 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
     {
         local
         {
-            t_uint64 needed 0 t_uint64 nextdepth 0 t_uint64 known 0
+            t_uint64 required 0
+            t_uint64 produced 0
         }
+        // Scalar operators consume one or two cells and produce one.
         load @op
-        push 13
-        eq
+        call TemporalIsUnary
         if
-            push 0
-            store @needed
-            push 0
-            store @nextdepth
+            load @depth
+            load @capacity
             push 1
-            store @known
+            push 1
+            call TemporalDepthShape
+            return
         end
         load @op
-        push 15
-        eq
+        call TemporalIsBinary
+        if
+            load @depth
+            load @capacity
+            push 2
+            push 1
+            call TemporalDepthShape
+            return
+        end
+        // Stack contracts describe a top window: how many cells are needed
+        // and how many occupy that window after the operation.
+        load @op
+        switch
+            branch 13
+                // CLEAR
+                push 1
+                return
+            end
+            branch 15
+                // NULL: 0 -> 1
+                push 1
+                store @produced
+            end
+            branch 18
+                // POP: 1 -> 0
+                push 1
+                store @required
+            end
+            branch 19
+                // DUP: 1 -> 2
+                push 1
+                store @required
+                push 2
+                store @produced
+            end
+            branch 20
+                // SWAP: 2 -> 2
+                push 2
+                dup
+                store @required
+                store @produced
+            end
+            branch 21
+                // ROT: 3 -> 3
+                push 3
+                dup
+                store @required
+                store @produced
+            end
+            branch 22
+                // OVER: 2 -> 3
+                push 2
+                store @required
+                push 3
+                store @produced
+            end
+            branch 23
+                // NIP: 2 -> 1
+                push 2
+                store @required
+                push 1
+                store @produced
+            end
+            branch 24
+                // DROP / DROP16
+                load @idx
+                inc
+                store @required
+                load @idx
+                store @produced
+            end
+            branch 25
+                // 2DUP: 2 -> 4
+                push 2
+                store @required
+                push 4
+                store @produced
+            end
+            branch 26
+                // 2SWAP: 4 -> 4
+                push 4
+                dup
+                store @required
+                store @produced
+            end
+            branch 27
+                // 2ROT: 6 -> 6
+                push 6
+                dup
+                store @required
+                store @produced
+            end
+            branch 28
+                // 2OVER: 4 -> 6
+                push 4
+                store @required
+                push 6
+                store @produced
+            end
+            branch 29
+                // PICK / PICK16
+                load @idx
+                inc
+                dup
+                store @required
+                inc
+                store @produced
+            end
+            branch 30
+                // ROLL / ROLL16
+                load @idx
+                inc
+                dup
+                store @required
+                store @produced
+            end
+            branch 273
+                // PUSH16 reads two bytes, potentially across a cell boundary.
+                load @idx
+                inc
+                push 8
+                udiv
+                inc
+                dup
+                store @required
+                inc
+                store @produced
+            end
+            default
+                push 0
+                return
+        end
+        load @depth
+        load @capacity
+        load @required
+        load @produced
+        call TemporalDepthShape
+        return
+    }
+
+    // A result of zero rejects the shape; otherwise return next depth + 1.
+    // Subtract only after proving the top window is present.
+    func TemporalDepthShape(t_uint64 depth,t_uint64 capacity,t_uint64 required,t_uint64 produced) -> t_uint64
+    {
+        local
+        {
+            t_uint64 nextdepth 0
+        }
+        load @depth
+        load @required
+        ult
         if
             push 0
-            store @needed
-            load @depth
-            push 1
-            add
-            store @nextdepth
-            push 1
-            store @known
+            return
         end
-        load @op
-        push 18
-        eq
-        if
-            push 1
-            store @needed
-            load @depth
-            push 1
+        load @produced
+        load @depth
+        load @required
+        block (t_uint64,t_uint64,t_uint64) -> t_uint64
             sub
-            store @nextdepth
-            push 1
-            store @known
-        end
-        load @op
-        push 19
-        eq
-        if
-            push 1
-            store @needed
-            load @depth
-            push 1
             add
-            store @nextdepth
-            push 1
-            store @known
         end
-        load @op
-        push 20
-        eq
+        store @nextdepth
+        load @nextdepth
+        load @capacity
+        ugt
         if
-            push 2
-            store @needed
-            load @depth
-            store @nextdepth
-            push 1
-            store @known
+            push 0
+            return
         end
-        load @op
-        push 21
-        eq
-        if
-            push 3
-            store @needed
-            load @depth
-            store @nextdepth
-            push 1
-            store @known
-        end
-        load @op
-        push 22
-        eq
-        if
-            push 2
-            store @needed
-            load @depth
-            push 1
-            add
-            store @nextdepth
-            push 1
-            store @known
-        end
-        load @op
-        push 23
-        eq
+        load @nextdepth
+        inc
+        return
+    }
+
+    func TemporalIsBinary(t_uint64 op) -> t_uint64
+    {
+        // Contiguous assigned registry ranges, excluding unary operations.
         load @op
         push 32
-        eq
-        or
-        load @op
-        push 33
-        eq
-        or
-        load @op
-        push 34
-        eq
-        or
-        load @op
-        push 35
-        eq
-        or
+        uge
         load @op
         push 36
-        eq
-        or
+        ule
+        and
         load @op
         push 41
         eq
@@ -1039,230 +1129,28 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
         or
         load @op
         push 48
-        eq
-        or
-        load @op
-        push 49
-        eq
-        or
+        uge
         load @op
         push 50
-        eq
+        ule
+        and
         or
         load @op
         push 52
-        eq
-        or
-        load @op
-        push 53
-        eq
-        or
+        uge
         load @op
         push 54
-        eq
+        ule
+        and
         or
         load @op
         push 64
-        eq
-        or
-        load @op
-        push 65
-        eq
-        or
-        load @op
-        push 66
-        eq
-        or
-        load @op
-        push 67
-        eq
-        or
-        load @op
-        push 68
-        eq
-        or
-        load @op
-        push 69
-        eq
-        or
-        load @op
-        push 70
-        eq
-        or
-        load @op
-        push 71
-        eq
-        or
-        load @op
-        push 72
-        eq
-        or
+        uge
         load @op
         push 73
-        eq
+        ule
+        and
         or
-        if
-            push 2
-            store @needed
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            push 1
-            store @known
-        end
-        load @op
-        push 24
-        eq
-        if
-            load @idx
-            inc
-            store @needed
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            push 1
-            store @known
-        end
-        load @op
-        push 25
-        eq
-        if
-            push 2
-            store @needed
-            load @depth
-            push 2
-            add
-            store @nextdepth
-            push 1
-            store @known
-        end
-        load @op
-        push 26
-        eq
-        if
-            push 4
-            store @needed
-            load @depth
-            store @nextdepth
-            push 1
-            store @known
-        end
-        load @op
-        push 27
-        eq
-        if
-            push 6
-            store @needed
-            load @depth
-            store @nextdepth
-            push 1
-            store @known
-        end
-        load @op
-        push 28
-        eq
-        if
-            push 4
-            store @needed
-            load @depth
-            push 2
-            add
-            store @nextdepth
-            push 1
-            store @known
-        end
-        load @op
-        push 29
-        eq
-        if
-            load @idx
-            inc
-            store @needed
-            load @depth
-            push 1
-            add
-            store @nextdepth
-            push 1
-            store @known
-        end
-        load @op
-        push 30
-        eq
-        if
-            load @idx
-            inc
-            store @needed
-            load @depth
-            store @nextdepth
-            push 1
-            store @known
-        end
-        load @op
-        push 273
-        eq
-        if
-            load @idx
-            inc
-            push 8
-            udiv
-            inc
-            store @needed
-            load @depth
-            push 1
-            add
-            store @nextdepth
-            push 1
-            store @known
-        end
-        load @op
-        push 37
-        eq
-        load @op
-        push 38
-        eq
-        or
-        load @op
-        push 39
-        eq
-        or
-        load @op
-        push 40
-        eq
-        or
-        load @op
-        push 51
-        eq
-        or
-        if
-            push 1
-            store @needed
-            load @depth
-            store @nextdepth
-            push 1
-            store @known
-        end
-        if @known == 0
-            push 0
-            return
-        end
-        load @depth
-        load @needed
-        ult
-        if
-            push 0
-            return
-        end
-        load @nextdepth
-        load @capacity
-        ugt
-        if
-            push 0
-            return
-        end
-        load @nextdepth
-        inc
         return
     }
 
