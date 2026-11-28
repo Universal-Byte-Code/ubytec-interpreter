@@ -216,7 +216,39 @@ public sealed class PortableSelfHostedTemporalTests
             Assert.Empty(RunNative(code, 1, 2, 32, untouched: true));
     }
 
-    private static ulong[] RunNative(byte[] code, int contexts, int quantum, int limit, bool module = false, bool untouched = false)
+    [Fact]
+    public void CompactPlanPreservesWireOffsetsAndFullWidthImmediate()
+    {
+        byte[] code = [0x11, 8, 1, 2, 3, 4, 5, 6, 7, 8, 0x01, 0x09, 0];
+        ulong[] rows = RunNative(code, 1, 1, 16, inspectPlan: plan =>
+        {
+            Assert.Equal(3UL, BinaryPrimitives.ReadUInt64LittleEndian(plan));
+            Assert.Equal((ushort)0, BinaryPrimitives.ReadUInt16LittleEndian(plan.AsSpan(8 + 14)));
+            Assert.Equal((ushort)10, BinaryPrimitives.ReadUInt16LittleEndian(plan.AsSpan(8 + 24 + 14)));
+            Assert.Equal((ushort)11, BinaryPrimitives.ReadUInt16LittleEndian(plan.AsSpan(8 + 48 + 14)));
+            Assert.Equal(0x0807060504030201UL, BinaryPrimitives.ReadUInt64LittleEndian(plan.AsSpan(8 + 16)));
+        });
+        Assert.Equal(6 * 9, rows.Length);
+        Assert.Equal(new ulong[] { 0, 10, 11 }, new[] { rows[2 * 9 + 7], rows[3 * 9 + 7], rows[4 * 9 + 7] });
+        Assert.Equal(0x0807060504030201UL, rows[4 * 9 + 8]);
+    }
+
+    [Fact]
+    public void CompactPlanHandlesMaximumCodeAndRejectsLargerInput()
+    {
+        byte[] code = [.. Enumerable.Repeat((byte)0x01, 4095), 0x00];
+        ulong[] rows = RunNative(code, 1, 4096, 8, inspectPlan: plan =>
+        {
+            Assert.Equal(4096UL, BinaryPrimitives.ReadUInt64LittleEndian(plan));
+            Assert.Equal((ushort)4095, BinaryPrimitives.ReadUInt16LittleEndian(plan.AsSpan(8 + 4095 * 24 + 14)));
+        });
+        Assert.NotEmpty(rows);
+        Assert.Equal(4095UL, rows[2 * 9 + 7]); // attempted TRAP retains original offset
+        Assert.Equal(4096UL, rows[2 * 9 + 6]); // one fuel per instruction
+        Assert.Empty(RunNative([.. code, 0x01], 1, 4096, 8, untouched: true));
+    }
+
+    private static ulong[] RunNative(byte[] code, int contexts, int quantum, int limit, bool module = false, bool untouched = false, Action<byte[]>? inspectPlan = null)
     {
         const int capacity = 32;
         var native = NativeRuntime.Value;
@@ -225,10 +257,13 @@ public sealed class PortableSelfHostedTemporalTests
         nint stacks = Marshal.AllocHGlobal(contexts * capacity * 8);
         nint ledger = Marshal.AllocHGlobal(limit * 72);
         nint view = Marshal.AllocHGlobal(16);
-        nint plan = Marshal.AllocHGlobal(Math.Max(1, Math.Min(code.Length, 4096)) * 72);
+        int planCapacity = checked(8 + 26 * Math.Min(code.Length, 4096));
+        byte[] planSentinel = Enumerable.Repeat((byte)0xA5, planCapacity + 16).ToArray();
+        nint plan = Marshal.AllocHGlobal(planSentinel.Length);
         try
         {
             Marshal.Copy(code, 0, input, code.Length);
+            Marshal.Copy(planSentinel, 0, plan, planSentinel.Length);
             byte[] sentinel = Enumerable.Repeat((byte)0xA5, limit * 72).ToArray();
             Marshal.Copy(sentinel, 0, ledger, sentinel.Length);
             string[] args = [Address(input), code.Length.ToString(), Address(states), Address(stacks),
@@ -238,6 +273,17 @@ public sealed class PortableSelfHostedTemporalTests
                 $"\ncall {native.GetFunctionLabel(module ? 3 : 1)}\nadd rsp, {args.Length * 8}\npush rax";
             long count = Assert.Single(NativeStack.Run(body, 1, native.Assembly));
             Assert.InRange(count, 0, limit);
+            byte[] planBytes = new byte[planSentinel.Length];
+            Marshal.Copy(plan, planBytes, 0, planBytes.Length);
+            Assert.Equal(planSentinel[planCapacity..], planBytes[planCapacity..]);
+            if (count > 0)
+            {
+                ulong instructions = BinaryPrimitives.ReadUInt64LittleEndian(planBytes);
+                Assert.InRange(instructions, 1UL, (ulong)Math.Min(code.Length, 4096));
+                int used = checked(8 + 26 * (int)instructions);
+                Assert.Equal(planSentinel[used..], planBytes[used..]);
+            }
+            inspectPlan?.Invoke(planBytes[..planCapacity]);
             if (untouched)
             {
                 byte[] actual = new byte[sentinel.Length];
