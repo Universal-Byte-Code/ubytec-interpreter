@@ -59,6 +59,7 @@ public sealed class PortableNativeActivationTraceTests
             Assert.Equal(elf, File.ReadAllBytes(exe));
             var trace = PortableNativeActivationTrace.Consume(bytes, PortableExecutionProfile.DirectOnly, map, elf, observations);
             var events = trace.Events;
+            Assert.All(events, e => Assert.Equal(PortableEventDomain.Diagnostic, e.Domain));
             Assert.Equal(Enumerable.Range(1, events.Count).Select(i => (ulong)i), events.Select(e => e.CommitSequence));
             Assert.Equal(events.Select(e => e.CommitSequence), events.Select(e => e.LogicalTime));
             Assert.Equal(events.Select(e => e.CommitSequence), events.Select(e => e.Id.Sequence));
@@ -114,6 +115,9 @@ public sealed class PortableNativeActivationTraceTests
         Assert.Throws<InvalidDataException>(() => publisher.Publish(first));
         Assert.Throws<InvalidDataException>(() => new PortableEventPublication(Guid.NewGuid()).Publish(first));
         Assert.Equal(3, publisher.Events.Count);
+        var semantic = new PortableEventPublication(identity.Session, domain: PortableEventDomain.Semantic);
+        Assert.Throws<InvalidDataException>(() => semantic.Publish(first));
+        Assert.Empty(semantic.Events);
     }
 
     private static string Run(string executable, string directory, params string[] arguments)
