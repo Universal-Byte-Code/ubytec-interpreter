@@ -1,19 +1,14 @@
 module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
 {
-    // Bootstrap native library. Code is the exact admitted UBCM function bytes.
-    // State: pc, depth, fuel, phase, last site, result (six u64 cells).
-    // Phase: 0 enter, 1 runnable, 2 returned, 3 trapped, 4 aborted,
-    // 5 terminated, 6 infrastructure failure. Boundary values mirror phase
-    // except 1=budget. No guest pointer is ever interpreted as a host address.
-    // Caller owns disjoint code/state/stack buffers and admits a verified
-    // zero-argument Int64 straight-line function. No full PMF verifier yet.
-    func TemporalTurn(t_uint64 code,t_uint64 length,t_uint64 state,t_uint64 cells,t_uint64 capacity,t_uint64 quantum,t_uint64 plan) -> t_uint64
+    // Execute one admitted turn. The plan owns instruction framing and operands;
+    // guest fuel counts plan entries, not the native instructions implementing them.
+    func TemporalTurn(t_uint64 length,t_uint64 state,t_uint64 cells,t_uint64 capacity,t_uint64 quantum,t_uint64 plan) -> t_uint64
     {
         local
         {
             t_uint64 pc 0 t_uint64 depth 0 t_uint64 fuel 0 t_uint64 phase 0
-            t_uint64 site 0 t_uint64 charged 0 t_uint64 op 0 t_uint64 n 0
-            t_uint64 i 0 t_uint64 value 0 t_uint64 idx 0 t_uint64 shape 0 t_uint64 status 0 t_uint64 row 0
+            t_uint64 site 0 t_uint64 charged 0 t_uint64 op 0 t_uint64 operand 0
+            t_uint64 row 0 t_uint64 target 0 t_uint64 shape 0 t_uint64 status 0
         }
         if @quantum == 0
             push 6
@@ -27,641 +22,265 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             return
         end
         load @state
-        push 24
-        add
-        load t_uint64
+        push 3
+        call TemporalCellGet
         store @phase
-        if @phase == 0
-            load @state
-            push 24
-            add
-            push 1
-            store t_uint64
-            push 0
-            return
-        end
-        if @phase == 2
-            load @state
-            push 24
-            add
-            push 5
-            store t_uint64
-            push 5
-            return
-        end
-        if @phase == 3
-            load @state
-            push 24
-            add
-            push 4
-            store t_uint64
-            push 4
-            return
-        end
-        if @phase == 4
-            load @state
-            push 24
-            add
-            push 5
-            store t_uint64
-            push 5
-            return
-        end
-        if @phase != 1
-            push 6
-            return
+        load @phase
+        switch
+            branch 0
+                // Pending entry becomes runnable; entry itself costs no fuel.
+                load @state
+                push 1
+                push 0
+                call TemporalSetPhase
+                return
+            end
+            branch 2
+                load @state
+                push 5
+                push 5
+                call TemporalSetPhase
+                return
+            end
+            branch 3
+                load @state
+                push 4
+                push 4
+                call TemporalSetPhase
+                return
+            end
+            branch 4
+                load @state
+                push 5
+                push 5
+                call TemporalSetPhase
+                return
+            end
+            branch 1
+                // Runnable.
+                nop
+            end
+            default
+                push 6
+                return
         end
         load @state
         push 0
-        add
-        load t_uint64
+        call TemporalCellGet
         store @pc
         load @state
-        push 8
-        add
-        load t_uint64
+        push 1
+        call TemporalCellGet
         store @depth
         load @state
-        push 16
-        add
-        load t_uint64
+        push 2
+        call TemporalCellGet
         store @fuel
-        load @depth
-        load @capacity
-        ugt
-        if
-            load @state
-            push 24
-            add
-            push 6
-            store t_uint64
-            push 6
-            return
-        end
         loop
             load @pc
             load @length
             uge
             if
                 load @state
-                push 24
-                add
-                push 6
-                store t_uint64
-                push 6
+                call TemporalFail
                 return
             end
             load @fuel
-            push 1
-            add
+            inc
             if
             else
                 load @state
-                push 24
-                add
-                push 6
-                store t_uint64
-                push 6
+                call TemporalFail
                 return
             end
             load @pc
             store @site
-            load @code
-            load @pc
-            add
-            load t_byte
-            store @op
-            load @pc
+            load @plan
+            load @site
+            call TemporalPlanRow
+            store @row
+            // The admitted stack depth is a cheap runtime invariant.
+            load @row
+            push 5
+            call TemporalCellGet
+            load @depth
             inc
+            neq
+            if
+                load @state
+                call TemporalFail
+                return
+            end
+            load @row
+            push 0
+            call TemporalCellGet
+            store @op
+            load @row
+            push 1
+            call TemporalCellGet
             store @pc
+            load @row
+            push 2
+            call TemporalCellGet
+            store @target
+            load @row
+            push 6
+            call TemporalCellGet
+            store @operand
             load @fuel
             inc
             store @fuel
             load @charged
             inc
             store @charged
-            // TRAP: attempted guest opcode, not a trap in the host runtime.
-            if @op == 0
-                load @state
-                push 0
-                add
-                load @pc
-                store t_uint64
-                load @state
-                push 8
-                add
-                load @depth
-                store t_uint64
-                load @state
-                push 16
-                add
-                load @fuel
-                store t_uint64
-                load @state
-                push 24
-                add
-                push 3
-                store t_uint64
-                load @state
-                push 32
-                add
-                load @site
-                store t_uint64
-                push 3
-                return
-            end
-            // Structured control uses the admitted lexical plan, not arbitrary guest offsets.
-            load @plan
-            load @site
-            push 64
-            mul
-            add
-            store @row
             load @op
-            push 2
-            eq
-            load @op
-            push 3
-            eq
-            or
-            load @op
-            push 4
-            eq
-            or
-            load @op
-            push 5
-            eq
-            or
-            load @op
-            push 6
-            eq
-            or
-            load @op
-            push 7
-            eq
-            or
-            load @op
-            push 8
-            eq
-            or
-            load @op
-            push 12
-            eq
-            or
-            if
-                load @row
-                push 8
-                add
-                load t_uint64
-                store @pc
-                load @op
-                push 4
-                eq
-                load @op
-                push 12
-                eq
-                or
-                if
+            switch
+                branch 0
+                    // TRAP
+                    load @state
+                    load @pc
+                    load @depth
+                    load @fuel
+                    load @site
+                    push 3
+                    call TemporalSaveBoundary
+                    return
+                end
+                branch 1
+                    // NOP
+                    nop
+                end
+                branch 2
+                    // Untyped BLOCK
+                    nop
+                end
+                branch 3
+                    // LOOP
+                    nop
+                end
+                branch 4
+                    // IF
+                    load @cells
+                    load @depth
+                    call TemporalCondition
+                    if
+                    else
+                        load @target
+                        store @pc
+                    end
                     load @depth
                     dec
                     store @depth
+                end
+                branch 5
+                    // ELSE
+                    load @target
+                    store @pc
+                end
+                branch 6
+                    // END
+                    load @target
+                    store @pc
+                end
+                branch 7
+                    // BREAK
+                    load @target
+                    store @pc
+                end
+                branch 8
+                    // CONTINUE
+                    load @target
+                    store @pc
+                end
+                branch 9
+                    // RETURN
+                    load @depth
+                    dec
+                    store @depth
+                    load @state
+                    push 5
                     load @cells
                     load @depth
-                    push 8
-                    mul
-                    add
-                    load t_uint64
+                    call TemporalCellGet
+                    call TemporalCellSet
+                    load @state
+                    load @pc
+                    load @depth
+                    load @fuel
+                    load @site
+                    push 2
+                    call TemporalSaveBoundary
+                    return
+                end
+                branch 12
+                    // WHILE
+                    load @cells
+                    load @depth
+                    call TemporalCondition
                     if
                     else
-                        load @row
-                        push 16
-                        add
-                        load t_uint64
+                        load @target
                         store @pc
                     end
-                else
-                    load @op
-                    push 5
-                    eq
-                    load @op
-                    push 6
-                    eq
-                    or
-                    load @op
-                    push 7
-                    eq
-                    or
-                    load @op
-                    push 8
-                    eq
-                    or
-                    if
-                        load @row
-                        push 16
-                        add
-                        load t_uint64
-                        store @pc
-                    end
+                    load @depth
+                    dec
+                    store @depth
                 end
-            else
-                // NOP
-                if @op == 1
-                else
-                    // PUSH: canonical zero-extended little endian 1..8 bytes.
-                    if @op == 17
-                        load @pc
-                        load @length
-                        uge
-                        if
-                            load @state
-                            push 24
-                            add
-                            push 6
-                            store t_uint64
-                            push 6
-                            return
-                        end
-                        load @code
-                        load @pc
-                        add
-                        load t_byte
-                        store @n
-                        load @pc
-                        inc
-                        store @pc
-                        if @n == 0
-                            load @state
-                            push 24
-                            add
-                            push 6
-                            store t_uint64
-                            push 6
-                            return
-                        end
-                        if @n > 8
-                            load @state
-                            push 24
-                            add
-                            push 6
-                            store t_uint64
-                            push 6
-                            return
-                        end
-                        load @n
-                        load @length
-                        load @pc
-                        sub
-                        ugt
-                        if
-                            load @state
-                            push 24
-                            add
-                            push 6
-                            store t_uint64
-                            push 6
-                            return
-                        end
-                        load @depth
-                        load @capacity
-                        uge
-                        if
-                            load @state
-                            push 24
-                            add
-                            push 6
-                            store t_uint64
-                            push 6
-                            return
-                        end
-                        push 0
-                        store @value
-                        push 0
-                        store @i
-                        while @i < @n
-                            load @code
-                            load @pc
-                            add
-                            load @i
-                            add
-                            load t_byte
-                            load @i
-                            push 8
-                            mul
-                            shl
-                            load @value
-                            or
-                            store @value
-                            load @i
-                            inc
-                            store @i
-                        end
-                        load @pc
-                        load @n
-                        add
-                        store @pc
-                        load @cells
-                        load @depth
-                        push 8
-                        mul
-                        add
-                        load @value
-                        store t_uint64
-                        load @depth
-                        inc
-                        store @depth
-                    else
-                        if @op != 9
-                            push 0
-                            store @idx
-                            if @op == 255
-                                load @length
-                                load @pc
-                                sub
-                                push 4
-                                ult
-                                if
-                                    load @state
-                                    push 24
-                                    add
-                                    push 6
-                                    store t_uint64
-                                    push 6
-                                    return
-                                end
-                                load @code
-                                load @pc
-                                add
-                                load t_byte
-                                push 16
-                                neq
-                                if
-                                    load @state
-                                    push 24
-                                    add
-                                    push 6
-                                    store t_uint64
-                                    push 6
-                                    return
-                                end
-                                load @code
-                                load @pc
-                                add
-                                push 1
-                                add
-                                load t_byte
-                                store @op
-                                if @op == 17
-                                    push 273
-                                    store @op
-                                else
-                                    load @op
-                                    push 24
-                                    eq
-                                    load @op
-                                    push 29
-                                    eq
-                                    or
-                                    load @op
-                                    push 30
-                                    eq
-                                    or
-                                    if
-                                    else
-                                        load @state
-                                        push 24
-                                        add
-                                        push 6
-                                        store t_uint64
-                                        push 6
-                                        return
-                                    end
-                                end
-                                load @code
-                                load @pc
-                                add
-                                push 2
-                                add
-                                load t_uint16
-                                store @idx
-                                load @pc
-                                push 4
-                                add
-                                store @pc
-                            else
-                                load @op
-                                push 24
-                                eq
-                                load @op
-                                push 29
-                                eq
-                                or
-                                load @op
-                                push 30
-                                eq
-                                or
-                                if
-                                    if @pc == @length
-                                        load @state
-                                        push 24
-                                        add
-                                        push 6
-                                        store t_uint64
-                                        push 6
-                                        return
-                                    end
-                                    load @code
-                                    load @pc
-                                    add
-                                    load t_byte
-                                    store @idx
-                                    load @pc
-                                    inc
-                                    store @pc
-                                end
-                            end
-                            load @op
-                            load @idx
-                            load @depth
-                            load @capacity
-                            call TemporalPrivateDepth
-                            store @shape
-                            if @shape == 0
-                                load @state
-                                push 24
-                                add
-                                push 6
-                                store t_uint64
-                                push 6
-                                return
-                            end
-                            load @cells
-                            load @depth
-                            load @op
-                            load @idx
-                            call TemporalPrivateApply
-                            store @status
-                            if @status == 2
-                                load @state
-                                push 0
-                                add
-                                load @pc
-                                store t_uint64
-                                load @state
-                                push 8
-                                add
-                                load @depth
-                                store t_uint64
-                                load @state
-                                push 16
-                                add
-                                load @fuel
-                                store t_uint64
-                                load @state
-                                push 32
-                                add
-                                load @site
-                                store t_uint64
-                                load @state
-                                push 24
-                                add
-                                push 3
-                                store t_uint64
-                                push 3
-                                return
-                            end
-                            if @status != 1
-                                load @state
-                                push 24
-                                add
-                                push 6
-                                store t_uint64
-                                push 6
-                                return
-                            end
-                            load @shape
-                            dec
-                            store @depth
-                        else
-                            // RETURN inferred type only. Root is admitted Int64.
-                            if @op == 9
-                                load @pc
-                                load @length
-                                uge
-                                if
-                                    load @state
-                                    push 24
-                                    add
-                                    push 6
-                                    store t_uint64
-                                    push 6
-                                    return
-                                end
-                                load @code
-                                load @pc
-                                add
-                                load t_byte
-                                if
-                                    load @state
-                                    push 24
-                                    add
-                                    push 6
-                                    store t_uint64
-                                    push 6
-                                    return
-                                end
-                                if @depth == 0
-                                    load @state
-                                    push 24
-                                    add
-                                    push 6
-                                    store t_uint64
-                                    push 6
-                                    return
-                                end
-                                load @pc
-                                inc
-                                store @pc
-                                load @depth
-                                dec
-                                store @depth
-                                load @state
-                                push 40
-                                add
-                                load @cells
-                                load @depth
-                                push 8
-                                mul
-                                add
-                                load t_uint64
-                                store t_uint64
-                                load @state
-                                push 0
-                                add
-                                load @pc
-                                store t_uint64
-                                load @state
-                                push 8
-                                add
-                                load @depth
-                                store t_uint64
-                                load @state
-                                push 16
-                                add
-                                load @fuel
-                                store t_uint64
-                                load @state
-                                push 24
-                                add
-                                push 2
-                                store t_uint64
-                                load @state
-                                push 32
-                                add
-                                load @site
-                                store t_uint64
-                                push 2
-                                return
-                            else
-                                // Unsupported/malformed code is not a guest trap.
-                                load @state
-                                push 24
-                                add
-                                push 6
-                                store t_uint64
-                                push 6
-                                return
-                            end
-                        end
-                    end
+                branch 17
+                    // PUSH: immediate already decoded by admission.
+                    load @cells
+                    load @depth
+                    load @operand
+                    call TemporalCellSet
+                    load @depth
+                    inc
+                    store @depth
                 end
+                default
+                    load @op
+                    load @operand
+                    load @depth
+                    load @capacity
+                    call TemporalPrivateDepth
+                    store @shape
+                    if @shape == 0
+                        load @state
+                        call TemporalFail
+                        return
+                    end
+                    load @cells
+                    load @depth
+                    load @op
+                    load @operand
+                    call TemporalPrivateApply
+                    store @status
+                    if @status == 2
+                        load @state
+                        load @pc
+                        load @depth
+                        load @fuel
+                        load @site
+                        push 3
+                        call TemporalSaveBoundary
+                        return
+                    end
+                    if @status != 1
+                        load @state
+                        call TemporalFail
+                        return
+                    end
+                    load @shape
+                    dec
+                    store @depth
             end
             if @charged == @quantum
                 load @state
-                push 0
-                add
                 load @pc
-                store t_uint64
-                load @state
-                push 8
-                add
                 load @depth
-                store t_uint64
-                load @state
-                push 16
-                add
                 load @fuel
-                store t_uint64
-                load @state
-                push 24
-                add
-                push 1
-                store t_uint64
-                load @state
-                push 32
-                add
                 load @site
-                store t_uint64
                 push 1
+                call TemporalSaveBoundary
                 return
             end
         end
@@ -858,7 +477,6 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                     mul
                     add
                     store @cells
-                    load @code
                     load @length
                     load @state
                     load @cells
@@ -3570,10 +3188,18 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                     push 0
                     return
                 end
+                load @code
+                load @pc
+                add
+                load @idx
+                call TemporalReadImmediate
+                store @n
                 load @pc
                 load @idx
                 add
                 store @pc
+                load @n
+                store @idx
             else
                 if @op == 255
                     load @length
@@ -4327,6 +3953,131 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             store @pc
         end
         push 1
+        return
+    }
+
+    // Internal typed cell abstraction. Addresses never originate in guest cells.
+    func TemporalCellAddress(t_uint64 base,t_uint64 index) -> t_uint64
+    {
+        load @base
+        load @index
+        block (t_uint64,t_uint64) -> t_uint64
+            push 8
+            mul
+            add
+        end
+        return
+    }
+
+    func TemporalCellGet(t_uint64 base,t_uint64 index) -> t_uint64
+    {
+        load @base
+        load @index
+        call TemporalCellAddress
+        load t_uint64
+        return
+    }
+
+    func TemporalCellSet(t_uint64 base,t_uint64 index,t_uint64 value) -> t_void
+    {
+        load @base
+        load @index
+        call TemporalCellAddress
+        load @value
+        store t_uint64
+        return
+    }
+
+    func TemporalPlanRow(t_uint64 plan,t_uint64 site) -> t_uint64
+    {
+        load @plan
+        load @site
+        push 64
+        mul
+        add
+        return
+    }
+
+    func TemporalCondition(t_uint64 cells,t_uint64 depth) -> t_uint64
+    {
+        load @cells
+        load @depth
+        dec
+        call TemporalCellGet
+        return
+    }
+
+    // State layout: PC, depth, fuel, phase, last site, result, sequence, clock.
+    // Phase changes and boundary snapshots have one implementation.
+    func TemporalSetPhase(t_uint64 state,t_uint64 phase,t_uint64 boundary) -> t_uint64
+    {
+        load @state
+        push 3
+        load @phase
+        call TemporalCellSet
+        load @boundary
+        return
+    }
+
+    func TemporalFail(t_uint64 state) -> t_uint64
+    {
+        load @state
+        push 6
+        push 6
+        call TemporalSetPhase
+        return
+    }
+
+    func TemporalSaveBoundary(t_uint64 state,t_uint64 pc,t_uint64 depth,t_uint64 fuel,t_uint64 site,t_uint64 kind) -> t_uint64
+    {
+        load @state
+        push 0
+        load @pc
+        call TemporalCellSet
+        load @state
+        push 1
+        load @depth
+        call TemporalCellSet
+        load @state
+        push 2
+        load @fuel
+        call TemporalCellSet
+        load @state
+        push 4
+        load @site
+        call TemporalCellSet
+        load @state
+        load @kind
+        load @kind
+        call TemporalSetPhase
+        return
+    }
+
+    // Bounded little-endian decode, used only after the planner validates length.
+    func TemporalReadImmediate(t_uint64 bytes,t_uint64 length) -> t_uint64
+    {
+        local
+        {
+            t_uint64 value 0
+            t_uint64 i 0
+        }
+        while @i < @length
+            load @bytes
+            load @i
+            add
+            load t_byte
+            load @i
+            push 8
+            mul
+            shl
+            load @value
+            or
+            store @value
+            load @i
+            inc
+            store @i
+        end
+        load @value
         return
     }
 }
