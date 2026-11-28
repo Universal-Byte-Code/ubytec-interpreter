@@ -16,426 +16,426 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             t_uint64 i 0 t_uint64 value 0 t_uint64 lhs 0 t_uint64 rhs 0
         }
         if @quantum == 0
-        push 6
-        return
-    end
-    if @capacity > 4096
-    push 6
-    return
-end
-load @state
-push 24
-add
-load t_uint64
-store @phase
-if @phase == 0
-load @state
-push 24
-add
-push 1
-store t_uint64
-push 0
-return
-end
-if @phase == 2
-load @state
-push 24
-add
-push 5
-store t_uint64
-push 5
-return
-end
-if @phase == 3
-load @state
-push 24
-add
-push 4
-store t_uint64
-push 4
-return
-end
-if @phase == 4
-load @state
-push 24
-add
-push 5
-store t_uint64
-push 5
-return
-end
-if @phase != 1
-push 6
-return
-end
-load @state
-push 0
-add
-load t_uint64
-store @pc
-load @state
-push 8
-add
-load t_uint64
-store @depth
-load @state
-push 16
-add
-load t_uint64
-store @fuel
-load @depth
-load @capacity
-ugt
-if
-load @state
-push 24
-add
-push 6
-store t_uint64
-push 6
-return
-end
-loop
-load @pc
-load @length
-uge
-if
-load @state
-push 24
-add
-push 6
-store t_uint64
-push 6
-return
-end
-load @fuel
-push 1
-add
-if
-else
-load @state
-push 24
-add
-push 6
-store t_uint64
-push 6
-return
-end
-load @pc
-store @site
-load @code
-load @pc
-add
-load t_byte
-store @op
-load @pc
-inc
-store @pc
-load @fuel
-inc
-store @fuel
-load @charged
-inc
-store @charged
-// TRAP: attempted guest opcode, not a trap in the host runtime.
-if @op == 0
-load @state
-push 0
-add
-load @pc
-store t_uint64
-load @state
-push 8
-add
-load @depth
-store t_uint64
-load @state
-push 16
-add
-load @fuel
-store t_uint64
-load @state
-push 24
-add
-push 3
-store t_uint64
-load @state
-push 32
-add
-load @site
-store t_uint64
-push 3
-return
-end
-// NOP
-if @op == 1
-else
-// PUSH: canonical zero-extended little endian 1..8 bytes.
-if @op == 17
-load @pc
-load @length
-uge
-if
-load @state
-push 24
-add
-push 6
-store t_uint64
-push 6
-return
-end
-load @code
-load @pc
-add
-load t_byte
-store @n
-load @pc
-inc
-store @pc
-if @n == 0
-load @state
-push 24
-add
-push 6
-store t_uint64
-push 6
-return
-end
-if @n > 8
-load @state
-push 24
-add
-push 6
-store t_uint64
-push 6
-return
-end
-load @n
-load @length
-load @pc
-sub
-ugt
-if
-load @state
-push 24
-add
-push 6
-store t_uint64
-push 6
-return
-end
-load @depth
-load @capacity
-uge
-if
-load @state
-push 24
-add
-push 6
-store t_uint64
-push 6
-return
-end
-push 0
-store @value
-push 0
-store @i
-while @i < @n
-load @code
-load @pc
-add
-load @i
-add
-load t_byte
-load @i
-push 8
-mul
-shl
-load @value
-or
-store @value
-load @i
-inc
-store @i
-end
-load @pc
-load @n
-add
-store @pc
-load @cells
-load @depth
-push 8
-mul
-add
-load @value
-store t_uint64
-load @depth
-inc
-store @depth
-else
-// ADD: modulo 2^64, only private guest cells.
-if @op == 32
-if @depth < 2
-load @state
-push 24
-add
-push 6
-store t_uint64
-push 6
-return
-end
-load @depth
-dec
-store @depth
-load @cells
-load @depth
-push 8
-mul
-add
-load t_uint64
-store @rhs
-load @cells
-load @depth
-dec
-push 8
-mul
-add
-load t_uint64
-store @lhs
-load @cells
-load @depth
-dec
-push 8
-mul
-add
-load @lhs
-load @rhs
-add
-store t_uint64
-else
-// RETURN inferred type only. Root is admitted Int64.
-if @op == 9
-load @pc
-load @length
-uge
-if
-load @state
-push 24
-add
-push 6
-store t_uint64
-push 6
-return
-end
-load @code
-load @pc
-add
-load t_byte
-if
-load @state
-push 24
-add
-push 6
-store t_uint64
-push 6
-return
-end
-if @depth == 0
-load @state
-push 24
-add
-push 6
-store t_uint64
-push 6
-return
-end
-load @pc
-inc
-store @pc
-load @depth
-dec
-store @depth
-load @state
-push 40
-add
-load @cells
-load @depth
-push 8
-mul
-add
-load t_uint64
-store t_uint64
-load @state
-push 0
-add
-load @pc
-store t_uint64
-load @state
-push 8
-add
-load @depth
-store t_uint64
-load @state
-push 16
-add
-load @fuel
-store t_uint64
-load @state
-push 24
-add
-push 2
-store t_uint64
-load @state
-push 32
-add
-load @site
-store t_uint64
-push 2
-return
-else
-// Unsupported/malformed code is not a guest trap.
-load @state
-push 24
-add
-push 6
-store t_uint64
-push 6
-return
-end
-end
-end
-end
-if @charged == @quantum
-load @state
-push 0
-add
-load @pc
-store t_uint64
-load @state
-push 8
-add
-load @depth
-store t_uint64
-load @state
-push 16
-add
-load @fuel
-store t_uint64
-load @state
-push 24
-add
-push 1
-store t_uint64
-load @state
-push 32
-add
-load @site
-store t_uint64
-push 1
-return
-end
-end
-}
+            push 6
+            return
+        end
+        if @capacity > 4096
+            push 6
+            return
+        end
+        load @state
+        push 24
+        add
+        load t_uint64
+        store @phase
+        if @phase == 0
+            load @state
+            push 24
+            add
+            push 1
+            store t_uint64
+            push 0
+            return
+        end
+        if @phase == 2
+            load @state
+            push 24
+            add
+            push 5
+            store t_uint64
+            push 5
+            return
+        end
+        if @phase == 3
+            load @state
+            push 24
+            add
+            push 4
+            store t_uint64
+            push 4
+            return
+        end
+        if @phase == 4
+            load @state
+            push 24
+            add
+            push 5
+            store t_uint64
+            push 5
+            return
+        end
+        if @phase != 1
+            push 6
+            return
+        end
+        load @state
+        push 0
+        add
+        load t_uint64
+        store @pc
+        load @state
+        push 8
+        add
+        load t_uint64
+        store @depth
+        load @state
+        push 16
+        add
+        load t_uint64
+        store @fuel
+        load @depth
+        load @capacity
+        ugt
+        if
+            load @state
+            push 24
+            add
+            push 6
+            store t_uint64
+            push 6
+            return
+        end
+        loop
+            load @pc
+            load @length
+            uge
+            if
+                load @state
+                push 24
+                add
+                push 6
+                store t_uint64
+                push 6
+                return
+            end
+            load @fuel
+            push 1
+            add
+            if
+            else
+                load @state
+                push 24
+                add
+                push 6
+                store t_uint64
+                push 6
+                return
+            end
+            load @pc
+            store @site
+            load @code
+            load @pc
+            add
+            load t_byte
+            store @op
+            load @pc
+            inc
+            store @pc
+            load @fuel
+            inc
+            store @fuel
+            load @charged
+            inc
+            store @charged
+            // TRAP: attempted guest opcode, not a trap in the host runtime.
+            if @op == 0
+                load @state
+                push 0
+                add
+                load @pc
+                store t_uint64
+                load @state
+                push 8
+                add
+                load @depth
+                store t_uint64
+                load @state
+                push 16
+                add
+                load @fuel
+                store t_uint64
+                load @state
+                push 24
+                add
+                push 3
+                store t_uint64
+                load @state
+                push 32
+                add
+                load @site
+                store t_uint64
+                push 3
+                return
+            end
+            // NOP
+            if @op == 1
+            else
+                // PUSH: canonical zero-extended little endian 1..8 bytes.
+                if @op == 17
+                    load @pc
+                    load @length
+                    uge
+                    if
+                        load @state
+                        push 24
+                        add
+                        push 6
+                        store t_uint64
+                        push 6
+                        return
+                    end
+                    load @code
+                    load @pc
+                    add
+                    load t_byte
+                    store @n
+                    load @pc
+                    inc
+                    store @pc
+                    if @n == 0
+                        load @state
+                        push 24
+                        add
+                        push 6
+                        store t_uint64
+                        push 6
+                        return
+                    end
+                    if @n > 8
+                        load @state
+                        push 24
+                        add
+                        push 6
+                        store t_uint64
+                        push 6
+                        return
+                    end
+                    load @n
+                    load @length
+                    load @pc
+                    sub
+                    ugt
+                    if
+                        load @state
+                        push 24
+                        add
+                        push 6
+                        store t_uint64
+                        push 6
+                        return
+                    end
+                    load @depth
+                    load @capacity
+                    uge
+                    if
+                        load @state
+                        push 24
+                        add
+                        push 6
+                        store t_uint64
+                        push 6
+                        return
+                    end
+                    push 0
+                    store @value
+                    push 0
+                    store @i
+                    while @i < @n
+                        load @code
+                        load @pc
+                        add
+                        load @i
+                        add
+                        load t_byte
+                        load @i
+                        push 8
+                        mul
+                        shl
+                        load @value
+                        or
+                        store @value
+                        load @i
+                        inc
+                        store @i
+                    end
+                    load @pc
+                    load @n
+                    add
+                    store @pc
+                    load @cells
+                    load @depth
+                    push 8
+                    mul
+                    add
+                    load @value
+                    store t_uint64
+                    load @depth
+                    inc
+                    store @depth
+                else
+                    // ADD: modulo 2^64, only private guest cells.
+                    if @op == 32
+                        if @depth < 2
+                            load @state
+                            push 24
+                            add
+                            push 6
+                            store t_uint64
+                            push 6
+                            return
+                        end
+                        load @depth
+                        dec
+                        store @depth
+                        load @cells
+                        load @depth
+                        push 8
+                        mul
+                        add
+                        load t_uint64
+                        store @rhs
+                        load @cells
+                        load @depth
+                        dec
+                        push 8
+                        mul
+                        add
+                        load t_uint64
+                        store @lhs
+                        load @cells
+                        load @depth
+                        dec
+                        push 8
+                        mul
+                        add
+                        load @lhs
+                        load @rhs
+                        add
+                        store t_uint64
+                    else
+                        // RETURN inferred type only. Root is admitted Int64.
+                        if @op == 9
+                            load @pc
+                            load @length
+                            uge
+                            if
+                                load @state
+                                push 24
+                                add
+                                push 6
+                                store t_uint64
+                                push 6
+                                return
+                            end
+                            load @code
+                            load @pc
+                            add
+                            load t_byte
+                            if
+                                load @state
+                                push 24
+                                add
+                                push 6
+                                store t_uint64
+                                push 6
+                                return
+                            end
+                            if @depth == 0
+                                load @state
+                                push 24
+                                add
+                                push 6
+                                store t_uint64
+                                push 6
+                                return
+                            end
+                            load @pc
+                            inc
+                            store @pc
+                            load @depth
+                            dec
+                            store @depth
+                            load @state
+                            push 40
+                            add
+                            load @cells
+                            load @depth
+                            push 8
+                            mul
+                            add
+                            load t_uint64
+                            store t_uint64
+                            load @state
+                            push 0
+                            add
+                            load @pc
+                            store t_uint64
+                            load @state
+                            push 8
+                            add
+                            load @depth
+                            store t_uint64
+                            load @state
+                            push 16
+                            add
+                            load @fuel
+                            store t_uint64
+                            load @state
+                            push 24
+                            add
+                            push 2
+                            store t_uint64
+                            load @state
+                            push 32
+                            add
+                            load @site
+                            store t_uint64
+                            push 2
+                            return
+                        else
+                            // Unsupported/malformed code is not a guest trap.
+                            load @state
+                            push 24
+                            add
+                            push 6
+                            store t_uint64
+                            push 6
+                            return
+                        end
+                    end
+                end
+            end
+            if @charged == @quantum
+                load @state
+                push 0
+                add
+                load @pc
+                store t_uint64
+                load @state
+                push 8
+                add
+                load @depth
+                store t_uint64
+                load @state
+                push 16
+                add
+                load @fuel
+                store t_uint64
+                load @state
+                push 24
+                add
+                push 1
+                store t_uint64
+                load @state
+                push 32
+                add
+                load @site
+                store t_uint64
+                push 1
+                return
+            end
+        end
+    }
 
     // Serial reference scheduler. Each context occupies eight cells (six state
     // fields plus local sequence and Lamport clock). Ledger row has nine cells:
