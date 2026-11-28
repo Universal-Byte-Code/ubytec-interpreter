@@ -310,14 +310,17 @@ public sealed partial class PortableTemporalCoordinator
         }
     }
 
-    public PortableRoundState RunRound(Func<PortableTurnKey, PortableTurnProposal> prepare, bool parallel = false) =>
-        RunCore(key => _blocked.TryGetValue(key.Context.Ordinal, out var request)
+    public PortableRoundState RunRound(Func<PortableTurnKey, PortableTurnProposal> prepare, bool parallel = false)
+    {
+        ArgumentNullException.ThrowIfNull(prepare);
+        return RunCore(key => _blocked.TryGetValue(key.Context.Ordinal, out var request)
             ? new PortableTurnProposal(key, PortableTurnKind.Receive, Message: request)
             : prepare(key), (key, proposal) =>
         {
             if (proposal.Key != key) throw new InvalidDataException("Stale or foreign turn proposal.");
             Commit(proposal);
         }, parallel);
+    }
 
     // Internal verified interpreter bridge. Exactly one primary ledger event per turn.
     // No external callback may directly mutate identity/publication or use this bridge.
