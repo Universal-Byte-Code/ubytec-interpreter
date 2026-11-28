@@ -34,64 +34,53 @@ internal static class FunctionEmitter
             foreach (var op in Instructions(child)) yield return op;
     }
 
-    internal static string Compile(string name, Guid id, string kind, Argument[] arguments, LocalContext? locals,
+    /// <summary>
+    /// Validates one callable and its nested callables without emitting native code.
+    /// The checks are shared with the legacy emitter so semantic and native paths cannot drift.
+    /// </summary>
+    internal static void Validate(string name, Guid id, string kind, Argument[] arguments, LocalContext? locals,
         SyntaxSentence? definition, UType returnType, CompilationScopes scopes)
     {
-        if (definition is null) throw new SyntaxException(0xBAD06B, $"'{name}' has no executable body.");
-        if (returnType.Type != PrimitiveType.Void && !FunctionCode.IsCellType(returnType))
-            throw new SyntaxException(0xBAD06C, $"Return type {returnType} is not supported by the cell ABI.");
-        var frame = new ScopeContext
-        {
-            StartLabel = FunctionCode.Label(kind, name, id, "start"),
-            EndLabel = FunctionCode.Label(kind, name, id, "end"),
-            DeclaredByKeyword = kind,
-            ExpectedReturnType = returnType,
-            ArgumentCount = arguments.Length
-        };
-        frame.Callables.Add(name, new(name, frame.StartLabel, arguments.Length, returnType));
-        void Add(StackBinding binding)
-        {
-            if (!FunctionCode.IsCellType(binding.Type))
-                throw new SyntaxException(0xBAD06E, $"Unsupported frame type for '{binding.Name}': {binding.Type}.");
-            if (!frame.Symbols.TryAdd(binding.Name, binding))
-                throw new SyntaxException(0xBAD06F, $"Duplicate frame symbol '{binding.Name}'.");
-        }
-        for (int i = 0; i < arguments.Length; i++)
-        {
-            var arg = arguments[i];
-            Add(new(arg.Name, arg.Type, 16 + (arguments.Length - 1 - i) * 8,
-                arg.Modifiers.HasFlag(TypeModifiers.ReadOnly)));
-        }
-        int slots = 0;
-        foreach (var local in locals?.Variables ?? [])
-            Add(new(local.Name, local.Type, -8 * ++slots,
-                local.Modifiers.HasFlag(TypeModifiers.ReadOnly) || local.Modifiers.HasFlag(TypeModifiers.Const)));
-        foreach (VAR op in Instructions(definition).OfType<VAR>())
-            Add(new(op.Variable.Name, op.Variable.Type, -8 * ++slots,
-                op.Variable.Type.Modifiers.HasFlag(TypeModifiers.ReadOnly) || op.Variable.Type.Modifiers.HasFlag(TypeModifiers.Const)));
-        foreach (var selection in Instructions(definition).OfType<SWITCH>()) frame.SwitchSlots.Enqueue(-8 * ++slots);
-        frame.FrameSize = (slots * 8 + 15) & ~15;
-
-        foreach (var nested in locals?.Functions ?? []) frame.Callables.Add(nested.Name, Binding(nested));
-        foreach (var nested in locals?.Actions ?? []) frame.Callables.Add(nested.Name, Binding(nested));
-
+        ScopeContext frame = CreateFrame(name, id, kind, arguments, locals, definition, returnType);
         int originalCount = scopes.Count;
         scopes.Push(frame);
         try
         {
-            FunctionStackValidator.Validate(definition, scopes, returnType);
-            var valueIR = scopes.OptimizeLoopReductions || scopes.OptimizeBlockReductions || scopes.OptimizeRecordReductions || scopes.OptimizeLookupReductions || scopes.OptimizeFrameRegisters || scopes.OptimizeEffectRegisters
-                ? Ubytec.Language.Tools.Optimization.FunctionValueIR.Lower(definition) : null;
-            var reduction = scopes.OptimizeLoopReductions || scopes.OptimizeBlockReductions
+            ValidateCurrentBody(definition!, locals, returnType, scopes);
+            foreach (var nested in locals?.Functions ?? [])
+                Validate(nested.Name, nested.ID, "func", nested.Arguments, nested.Locals, nested.Definition, nested.ReturnType, scopes);
+            foreach (var nested in locals?.Actions ?? [])
+                Validate(nested.Name, nested.ID, "action", nested.Arguments, nested.Locals, nested.Definition, new UType(PrimitiveType.Void), scopes);
+        }
+        finally
+        {
+            while (scopes.Count > originalCount) scopes.Pop();
+        }
+    }
+
+    internal static string Compile(string name, Guid id, string kind, Argument[] arguments, LocalContext? locals,
+        SyntaxSentence? definition, UType returnType, CompilationScopes scopes)
+    {
+        ScopeContext frame = CreateFrame(name, id, kind, arguments, locals, definition, returnType);
+        int originalCount = scopes.Count;
+        scopes.Push(frame);
+        try
+        {
+            ValidateCurrentBody(definition!, locals, returnType, scopes);
+            // Existing optimizers do not model checked block boundaries or their input floors.
+            bool contracted = Instructions(definition!).Any(op => op is BLOCK { InputTypes: not null });
+            var valueIR = !contracted && (scopes.OptimizeLoopReductions || scopes.OptimizeBlockReductions || scopes.OptimizeRecordReductions || scopes.OptimizeLookupReductions || scopes.OptimizeFrameRegisters || scopes.OptimizeEffectRegisters)
+                ? Ubytec.Language.Tools.Optimization.FunctionValueIR.Lower(definition!) : null;
+            var reduction = valueIR is not null && (scopes.OptimizeLoopReductions || scopes.OptimizeBlockReductions)
                 ? Ubytec.Language.Tools.Optimization.ByteReductionPlan.TryCreate(valueIR!, frame, arguments, locals, returnType)
                 : null;
-            var recordReduction = scopes.OptimizeRecordReductions
+            var recordReduction = valueIR is not null && scopes.OptimizeRecordReductions
                 ? Ubytec.Language.Tools.Optimization.RecordReductionPlan.TryCreate(valueIR!, frame, arguments, locals, returnType)
                 : null;
-            var lookupReduction = scopes.OptimizeLookupReductions
+            var lookupReduction = valueIR is not null && scopes.OptimizeLookupReductions
                 ? Ubytec.Language.Tools.Optimization.LookupReductionPlan.TryCreate(valueIR!, frame, arguments, locals, returnType)
                 : null;
-            bool registers = reduction is null && recordReduction is null && lookupReduction is null && (scopes.OptimizeFrameRegisters || scopes.OptimizeEffectRegisters) &&
+            bool registers = valueIR is not null && reduction is null && recordReduction is null && lookupReduction is null && (scopes.OptimizeFrameRegisters || scopes.OptimizeEffectRegisters) &&
                 Ubytec.Language.Tools.Optimization.FrameRegisterPlan.Apply(
                     valueIR!, frame,
                     new HashSet<string>(arguments.Select(a => a.Name).Concat(
@@ -114,9 +103,9 @@ internal static class FunctionEmitter
                 foreach (var binding in frame.Symbols.Values.Where(b => b.Register is not null))
                     output.AppendLine($"mov {binding.Register}, qword {binding.Address}");
             }
-            // Compile the reference body even when replacing it: its scope/type/readonly
-            // validation and return tracking must run with exactly the original rules.
-            string body = ASTCompiler.CompileAST(new SyntaxTree(definition), scopes);
+            // Compile the reference body even when replacing it: native scope/control validation and
+            // return tracking must continue to run with exactly the original backend rules.
+            string body = ASTCompiler.CompileAST(new SyntaxTree(definition!), scopes);
             output.Append(lookupReduction is not null ? lookupReduction.Emit(frame) : recordReduction is not null ? recordReduction.Emit(frame) : reduction is null ? body : scopes.OptimizeBlockReductions
                 ? Ubytec.Language.Tools.Optimization.BlockByteReductionPlan.Emit(reduction, frame, scopes.UseAvx2BlockReductions)
                 : reduction.Emit(frame));
@@ -132,6 +121,98 @@ internal static class FunctionEmitter
         finally
         {
             while (scopes.Count > originalCount) scopes.Pop();
+        }
+    }
+
+    private static ScopeContext CreateFrame(
+        string name,
+        Guid id,
+        string kind,
+        Argument[] arguments,
+        LocalContext? locals,
+        SyntaxSentence? definition,
+        UType returnType)
+    {
+        if (definition is null) throw new SyntaxException(0xBAD06B, $"'{name}' has no executable body.");
+        if (returnType.Type != PrimitiveType.Void && !FunctionCode.IsCellType(returnType))
+            throw new SyntaxException(0xBAD06C, $"Return type {returnType} is not supported by the cell ABI.");
+
+        var frame = new ScopeContext
+        {
+            StartLabel = FunctionCode.Label(kind, name, id, "start"),
+            EndLabel = FunctionCode.Label(kind, name, id, "end"),
+            DeclaredByKeyword = kind,
+            ExpectedReturnType = returnType,
+            ArgumentCount = arguments.Length
+        };
+        frame.Callables.Add(name, new(name, frame.StartLabel, arguments.Length, returnType));
+
+        void Add(StackBinding binding)
+        {
+            if (!FunctionCode.IsCellType(binding.Type))
+                throw new SyntaxException(0xBAD06E, $"Unsupported frame type for '{binding.Name}': {binding.Type}.");
+            if (!frame.Symbols.TryAdd(binding.Name, binding))
+                throw new SyntaxException(0xBAD06F, $"Duplicate frame symbol '{binding.Name}'.");
+        }
+
+        for (int i = 0; i < arguments.Length; i++)
+        {
+            var arg = arguments[i];
+            Add(new(arg.Name, arg.Type, 16 + (arguments.Length - 1 - i) * 8,
+                arg.Modifiers.HasFlag(TypeModifiers.ReadOnly)));
+        }
+
+        int slots = 0;
+        foreach (var local in locals?.Variables ?? [])
+            Add(new(local.Name, local.Type, -8 * ++slots,
+                local.Modifiers.HasFlag(TypeModifiers.ReadOnly) || local.Modifiers.HasFlag(TypeModifiers.Const)));
+        foreach (VAR op in Instructions(definition).OfType<VAR>())
+            Add(new(op.Variable.Name, op.Variable.Type, -8 * ++slots,
+                op.Variable.Type.Modifiers.HasFlag(TypeModifiers.ReadOnly) || op.Variable.Type.Modifiers.HasFlag(TypeModifiers.Const)));
+        foreach (var selection in Instructions(definition).OfType<SWITCH>()) frame.SwitchSlots.Enqueue(-8 * ++slots);
+        frame.FrameSize = (slots * 8 + 15) & ~15;
+
+        foreach (var nested in locals?.Functions ?? []) frame.Callables.Add(nested.Name, Binding(nested));
+        foreach (var nested in locals?.Actions ?? []) frame.Callables.Add(nested.Name, Binding(nested));
+        return frame;
+    }
+
+    private static void ValidateCurrentBody(
+        SyntaxSentence definition,
+        LocalContext? locals,
+        UType returnType,
+        CompilationScopes scopes)
+    {
+        FunctionStackValidator.Validate(definition, scopes, returnType);
+
+        foreach (var local in locals?.Variables ?? [])
+            _ = FunctionCode.InitialValue(local.Type, local.Value);
+
+        foreach (IOpCode operation in Instructions(definition))
+        {
+            switch (operation)
+            {
+                case VAR declaration:
+                    _ = FunctionCode.InitialValue(declaration.Variable.Type, declaration.Variable.Value);
+                    break;
+
+                case RETURN { BlockType: UType actual }:
+                    if (actual.Type != returnType.Type || actual.Modifiers != returnType.Modifiers)
+                        throw new SyntaxException(0xBAD073, $"RETURN type {actual} differs from function type {returnType}.");
+                    break;
+
+                case MemoryOperations.LOAD { VariableName: { } name }:
+                    _ = scopes.ResolveSymbol(name);
+                    break;
+
+                case MemoryOperations.STORE { VariableName: { } name }:
+                {
+                    StackBinding binding = scopes.ResolveSymbol(name);
+                    if (binding.ReadOnly)
+                        throw new SyntaxException(0xBAD064, $"Cannot store to readonly symbol '{binding.Name}'.");
+                    break;
+                }
+            }
         }
     }
 }

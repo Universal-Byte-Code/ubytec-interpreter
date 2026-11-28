@@ -17,7 +17,7 @@ def main():
         command(['gcc','-O2','-ffreestanding','-fno-builtin','-fno-stack-protector','-fno-pic','-mcmodel=large','-mno-red-zone','-c',PROTO/'linux/bridge-runtime.c','-o',out/'runtime.o'])
         command(['ld','-T',PROTO/'linux/module.ld','-e','ubytec_host_contract_Main','-z','noexecstack',out/'caller.o',out/'runtime.o','-o',out/'caller.elf'])
         for mode in ('reference','reduction'):
-            flags=['--library','--stack-transfers','--frame-registers']+(['--record-reductions'] if mode=='reduction' else [])
+            flags=['--legacy-source-x64','--library','--stack-transfers','--frame-registers']+(['--record-reductions'] if mode=='reduction' else [])
             command([a.dotnet,compiler,target,*flags,'-o',out/(mode+'.nasm')]);assert ('; record-reductions:' in (out/(mode+'.nasm')).read_text())==(mode=='reduction')
             command(['nasm','-f','elf64',out/(mode+'.nasm'),'-o',out/(mode+'.o')])
             command(['ld','-T',PROTO/'linux/module.ld','-e','ubytec_host_contract_Fold','-z','noexecstack',out/(mode+'.o'),'-o',out/(mode+'.elf')])

@@ -1,0 +1,277 @@
+{
+  "schemaCommit": "338676c8814a1ad2856a93c486f3bc0fa911c0e2",
+  "opcodes": [
+    {
+      "id": "00",
+      "name": "TRAP"
+    },
+    {
+      "id": "01",
+      "name": "NOP"
+    },
+    {
+      "id": "02",
+      "name": "BLOCK"
+    },
+    {
+      "id": "03",
+      "name": "LOOP"
+    },
+    {
+      "id": "04",
+      "name": "IF"
+    },
+    {
+      "id": "05",
+      "name": "ELSE"
+    },
+    {
+      "id": "06",
+      "name": "END"
+    },
+    {
+      "id": "07",
+      "name": "BREAK"
+    },
+    {
+      "id": "08",
+      "name": "CONTINUE"
+    },
+    {
+      "id": "09",
+      "name": "RETURN"
+    },
+    {
+      "id": "0A",
+      "name": "BRANCH"
+    },
+    {
+      "id": "0B",
+      "name": "SWITCH"
+    },
+    {
+      "id": "0C",
+      "name": "WHILE"
+    },
+    {
+      "id": "0D",
+      "name": "CLEAR"
+    },
+    {
+      "id": "0E",
+      "name": "DEFAULT"
+    },
+    {
+      "id": "0F",
+      "name": "NULL"
+    },
+    {
+      "id": "10",
+      "name": "VAR"
+    },
+    {
+      "id": "11",
+      "name": "PUSH"
+    },
+    {
+      "id": "12",
+      "name": "POP"
+    },
+    {
+      "id": "13",
+      "name": "DUP"
+    },
+    {
+      "id": "14",
+      "name": "SWAP"
+    },
+    {
+      "id": "15",
+      "name": "ROT"
+    },
+    {
+      "id": "16",
+      "name": "OVER"
+    },
+    {
+      "id": "17",
+      "name": "NIP"
+    },
+    {
+      "id": "18",
+      "name": "DROP"
+    },
+    {
+      "id": "19",
+      "name": "2DUP"
+    },
+    {
+      "id": "1A",
+      "name": "2SWAP"
+    },
+    {
+      "id": "1B",
+      "name": "2ROT"
+    },
+    {
+      "id": "1C",
+      "name": "2OVER"
+    },
+    {
+      "id": "1D",
+      "name": "PICK"
+    },
+    {
+      "id": "1E",
+      "name": "ROLL"
+    },
+    {
+      "id": "20",
+      "name": "ADD"
+    },
+    {
+      "id": "21",
+      "name": "SUB"
+    },
+    {
+      "id": "22",
+      "name": "MUL"
+    },
+    {
+      "id": "23",
+      "name": "DIV"
+    },
+    {
+      "id": "24",
+      "name": "MOD"
+    },
+    {
+      "id": "25",
+      "name": "INC"
+    },
+    {
+      "id": "26",
+      "name": "DEC"
+    },
+    {
+      "id": "27",
+      "name": "NEG"
+    },
+    {
+      "id": "28",
+      "name": "ABS"
+    },
+    {
+      "id": "29",
+      "name": "UDIV"
+    },
+    {
+      "id": "2A",
+      "name": "UMOD"
+    },
+    {
+      "id": "30",
+      "name": "AND"
+    },
+    {
+      "id": "31",
+      "name": "OR"
+    },
+    {
+      "id": "32",
+      "name": "XOR"
+    },
+    {
+      "id": "33",
+      "name": "NOT"
+    },
+    {
+      "id": "34",
+      "name": "SHL"
+    },
+    {
+      "id": "35",
+      "name": "SHR"
+    },
+    {
+      "id": "36",
+      "name": "LSHR"
+    },
+    {
+      "id": "40",
+      "name": "EQ"
+    },
+    {
+      "id": "41",
+      "name": "NEQ"
+    },
+    {
+      "id": "42",
+      "name": "LT"
+    },
+    {
+      "id": "43",
+      "name": "LE"
+    },
+    {
+      "id": "44",
+      "name": "GT"
+    },
+    {
+      "id": "45",
+      "name": "GE"
+    },
+    {
+      "id": "46",
+      "name": "ULT"
+    },
+    {
+      "id": "47",
+      "name": "ULE"
+    },
+    {
+      "id": "48",
+      "name": "UGT"
+    },
+    {
+      "id": "49",
+      "name": "UGE"
+    },
+    {
+      "id": "50",
+      "name": "LOAD"
+    },
+    {
+      "id": "51",
+      "name": "STORE"
+    },
+    {
+      "id": "60",
+      "name": "CALL"
+    },
+    {
+      "id": "61",
+      "name": "FNADDR"
+    },
+    {
+      "id": "62",
+      "name": "CALLI"
+    },
+    {
+      "id": "FF1011",
+      "name": "PUSH16"
+    },
+    {
+      "id": "FF1018",
+      "name": "DROP16"
+    },
+    {
+      "id": "FF101D",
+      "name": "PICK16"
+    },
+    {
+      "id": "FF101E",
+      "name": "ROLL16"
+    }
+  ]
+}

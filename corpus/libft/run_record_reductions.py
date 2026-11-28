@@ -34,7 +34,7 @@ def measure_text(a,compiler,out,report):
     source=bench.sources()['bench-native']
     for mode in ('plain','registers'):
         src=out/('text-'+mode+'.ubc');src.write_text(source);asm=out/('text-'+mode+'.nasm')
-        flags=['--host-io','--stack-transfers','--frame-registers']+(['--record-reductions'] if mode=='registers' else [])
+        flags=['--legacy-source-x64','--host-io','--stack-transfers','--frame-registers']+(['--record-reductions'] if mode=='registers' else [])
         for name in exports:flags+=['--host-export',name+'=ubytec_host_'+mode+'_'+name]
         command([a.dotnet,compiler,src,*flags,'-o',asm]);report['assembly_sha256']['text-'+mode]=sha(asm)
         report['source_sha256']['composed/text-'+mode]=sha(src)
@@ -79,7 +79,7 @@ def main():
         report['loop_analysis']={}
         objects=[]
         for mode in ('reference','reduction'):
-            asm=out/(mode+'.nasm');flags=['--library','--stack-transfers','--frame-registers']
+            asm=out/(mode+'.nasm');flags=['--legacy-source-x64','--library','--stack-transfers','--frame-registers']
             if mode=='reduction':flags+=['--record-reductions']
             command([a.dotnet,compiler,src,*flags,'--host-export','DiagRecords=ubytec_host_'+mode+'_DiagRecords','-o',asm])
             text=asm.read_text();report['assembly_sha256'][mode]=sha(asm)

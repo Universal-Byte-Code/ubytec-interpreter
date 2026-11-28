@@ -23,6 +23,28 @@ Windows, but its standalone executable output targets Linux.
 Optional CLI arguments: --grammar path/to/grammar.json and --json module.json.
 Use --help for usage. Parse and compilation failures return exit status 1.
 
+## Portable modules
+
+Emit the architecture-neutral Portable Module Format v0 alongside the current
+x86-64 backend output:
+
+    dotnet run --project Ubytec/Ubytec.csproj -- examples/answer.ubc -o answer.nasm --portable-module answer.ubcm
+
+Add the architecture-neutral indexed executable tables and opcode stream:
+
+    dotnet run --project Ubytec/Ubytec.csproj -- examples/answer.ubc -o answer.nasm --portable-module answer.ubcm --indexed-executable
+
+Verify framing, canonical payloads and the indexed executable profile when present
+without compiling the module:
+
+    dotnet run --project Ubytec/Ubytec.csproj -- --verify-module answer.ubcm
+
+PMF v0 serializes the normalized semantic AST and portable contract/capability
+metadata with deterministic binary framing. `--indexed-executable` additionally
+lowers supported function, frame, type and module-boundary references to canonical
+indices while remaining architecture-neutral. AST-only PMF output remains the
+default. See [Portable Module Format](Wiki/docs/portable-module-format.md).
+
 ## Tests and supported subset
 
     dotnet test Ubytec.Tests/Ubytec.Tests.csproj -c Release
@@ -30,7 +52,8 @@ Use --help for usage. Parse and compilation failures return exit status 1.
 Native tests require NASM and Windows/Linux x64. Set UBYTEC_NASM when the
 executable is not on PATH.
 
-See [data opcodes](Wiki/docs/opcodes.md) and
+See [data opcodes](Wiki/docs/opcodes.md),
+[portable modules](Wiki/docs/portable-module-format.md), and
 [functions, variables and remaining work](Wiki/docs/functions.md), and
 [verified structured control flow](Wiki/docs/control-flow.md).
 Floating-point arithmetic, 128-bit values, unrestricted external calls and

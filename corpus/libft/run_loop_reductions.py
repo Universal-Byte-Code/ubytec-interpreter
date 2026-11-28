@@ -25,7 +25,7 @@ def main():
     try:
         source=out/'kernels.ubc';source.write_bytes((ROOT/'diagnose-kernels.ubc').read_bytes())
         for mode,symbol in [('reference','ubytec_host_register_DiagBytes'),('reduction','ubytec_host_loop_DiagBytes')]:
-            asm=out/(mode+'.nasm');flags=['--library','--stack-transfers','--frame-registers']
+            asm=out/(mode+'.nasm');flags=['--legacy-source-x64','--library','--stack-transfers','--frame-registers']
             if mode=='reduction':flags+=['--loop-reductions']
             command([a.dotnet,compiler,source,*flags,'--host-export','DiagBytes='+symbol,'-o',asm])
             text=asm.read_text();assert ('; loop-reductions:' in text)==(mode=='reduction')

@@ -65,7 +65,7 @@ namespace Ubytec.Language.Operations
                 sb.AppendLine($"{blockContext.EndLabel}: ; END of {blockContext.StartLabel}");
                 if (blockContext.DeclaredByKeyword == "block" && blockContext.ExpectedReturnType is { } resultType &&
                     resultType.Type != Ubytec.Language.Syntax.TypeSystem.Types.PrimitiveType.Void)
-                    sb.AppendLine("pop rax\n  " + FunctionCode.Canonicalize(resultType) + "\n  push rax");
+                    sb.AppendLine("pop rax\n  " + FunctionCode.CanonicalizeBlockCell(resultType, blockContext.CheckedBlockResult, scopes) + "\n  push rax");
                 return sb.ToString();
             }
         }

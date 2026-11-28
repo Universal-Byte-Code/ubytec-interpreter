@@ -28,6 +28,7 @@
     <None Include="../corpus/libft/lists.ubc" Link="lists.ubc" CopyToOutputDirectory="PreserveNewest" />
     <None Include="../corpus/libft/lists-fixtures.ubc" Link="lists-fixtures.ubc" CopyToOutputDirectory="PreserveNewest" />
     <None Include="../corpus/libft/text-analyzer.ubc" Link="text-analyzer.ubc" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="legacy-opcodes.json" CopyToOutputDirectory="PreserveNewest" />
     <ProjectReference Include="../Ubytec/Ubytec.csproj" />
   </ItemGroup>
 </Project>
