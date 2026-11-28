@@ -2,7 +2,7 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
 {
     // Execute one admitted turn. The plan owns instruction framing and operands;
     // guest fuel counts plan entries, not the native instructions implementing them.
-    func TemporalTurn(t_uint64 length,t_uint64 state,t_uint64 cells,t_uint64 capacity,t_uint64 quantum,t_uint64 plan) -> t_uint64
+    func TemporalTurn(t_uint64 count,t_uint64 state,t_uint64 cells,t_uint64 capacity,t_uint64 quantum,t_uint64 plan) -> t_uint64
     {
         local
         {
@@ -78,7 +78,7 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
         store @fuel
         loop
             load @pc
-            load @length
+            load @count
             uge
             if
                 load @state
@@ -310,7 +310,6 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             push 0
             return
         end
-        load @length
         load @states
         load @stacks
         load @contexts
@@ -553,10 +552,6 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             push 0
             return
         end
-        load @view
-        push 8
-        add
-        load t_uint64
         load @states
         load @stacks
         load @contexts
@@ -2814,14 +2809,14 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
     }
 
     // The scheduler only sees an immutable admitted plan, never guest Code.
-    func TemporalRunPrepared(t_uint64 length,t_uint64 states,t_uint64 stacks,t_uint64 contexts,t_uint64 capacity,t_uint64 quantum,t_uint64 ledger,t_uint64 limit,t_uint64 plan) -> t_uint64
+    func TemporalRunPrepared(t_uint64 states,t_uint64 stacks,t_uint64 contexts,t_uint64 capacity,t_uint64 quantum,t_uint64 ledger,t_uint64 limit,t_uint64 plan) -> t_uint64
     {
         local
         {
             t_uint64 round 0 t_uint64 commit 0 t_uint64 i 0 t_uint64 live 0
             t_uint64 state 0 t_uint64 cells 0 t_uint64 row 0 t_uint64 kind 0
             t_uint64 seq 0 t_uint64 logical 0 t_uint64 site 0 t_uint64 result 0
-            t_uint64 fuel 0 t_uint64 j 0
+            t_uint64 fuel 0 t_uint64 j 0 t_uint64 instructionCount 0
         }
         if @contexts == 0
             push 0
@@ -2864,6 +2859,10 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             return
         end
 
+        load @plan
+        push 0
+        call TemporalCellGet
+        store @instructionCount
         // Initial admissions, round zero.
         while @i < @contexts
             load @states
@@ -2941,9 +2940,7 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                     mul
                     call TemporalCellAddress
                     store @cells
-                    load @plan
-                    push 0
-                    call TemporalCellGet
+                    load @instructionCount
                     load @state
                     load @cells
                     load @capacity
