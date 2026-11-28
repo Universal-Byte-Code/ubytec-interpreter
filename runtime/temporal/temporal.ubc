@@ -99,10 +99,15 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             load @site
             call TemporalPlanRow
             store @row
+            // PC is an internal ordinal; ledger identity is the wire offset.
+            load @row
+            push 8
+            call TemporalPlanGet
+            store @site
             // The admitted stack depth is a cheap runtime invariant.
             load @row
             push 5
-            call TemporalCellGet
+            call TemporalPlanGet
             load @depth
             inc
             neq
@@ -113,19 +118,19 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             end
             load @row
             push 0
-            call TemporalCellGet
+            call TemporalPlanGet
             store @op
             load @row
             push 1
-            call TemporalCellGet
+            call TemporalPlanGet
             store @pc
             load @row
             push 2
-            call TemporalCellGet
+            call TemporalPlanGet
             store @target
             load @row
             push 6
-            call TemporalCellGet
+            call TemporalPlanGet
             store @operand
             load @fuel
             inc
@@ -1325,10 +1330,8 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
         return
     }
 
-    // Plan records (64 bytes per Code byte): normalized opcode, next PC, jump PC,
-    // parent scope+1, ELSE site+1, depth+1 (zero=unvisited), operand, scope exit.
-    // Only instruction starts are initialized/read. Work queue: length u64 cells
-    // immediately after the records. Every edge is created from lexical boundaries.
+    // Count header, 24-byte instruction records, u16 work queue.
+    // Execution links use ordinals; event identity uses the original byte offset.
     func TemporalPlanEdge(t_uint64 plan,t_uint64 work,t_uint64 length,t_uint64 tail,t_uint64 dest,t_uint64 depth) -> t_uint64
     {
         local
@@ -1344,14 +1347,11 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
         end
         load @plan
         load @dest
-        push 64
-        mul
-        add
+        call TemporalPlanRow
         store @row
         load @row
-        push 40
-        add
-        load t_uint64
+        push 5
+        call TemporalPlanGet
         store @seen
         if @seen == 0
             load @tail
@@ -1362,18 +1362,17 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                 return
             end
             load @row
-            push 40
-            add
+            push 5
             load @depth
             inc
-            store t_uint64
+            call TemporalPlanSet
             load @work
             load @tail
-            push 8
+            push 2
             mul
             add
             load @dest
-            store t_uint64
+            store t_uint16
             load @tail
             inc
             store @tail
@@ -1395,6 +1394,10 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
     // Admission pipeline: decode/lexical links, forward edges, dataflow, transfer contracts.
     func TemporalPlanPrepare(t_uint64 code,t_uint64 length,t_uint64 capacity,t_uint64 plan) -> t_uint64
     {
+        local
+        {
+            t_uint64 count 0
+        }
         if @length == 0
             push 0
             return
@@ -1406,6 +1409,21 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             push 0
             return
         end
+        if @capacity == 0
+            push 0
+            return
+        end
+        load @capacity
+        push 4096
+        ugt
+        if
+            push 0
+            return
+        end
+        load @plan
+        push 0
+        push 0
+        call TemporalCellSet
         load @code
         load @length
         load @plan
@@ -1415,7 +1433,11 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             push 0
             return
         end
-        load @length
+        load @plan
+        push 0
+        call TemporalCellGet
+        store @count
+        load @count
         load @plan
         call TemporalResolveBreaks
         if
@@ -1423,7 +1445,7 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             push 0
             return
         end
-        load @length
+        load @count
         load @capacity
         load @plan
         call TemporalAnalyzeDepth
@@ -1432,13 +1454,13 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             push 0
             return
         end
-        load @length
+        load @count
         load @plan
         call TemporalValidateTransfers
         return
     }
 
-    func TemporalDecode(t_uint64 code,t_uint64 length,t_uint64 pc,t_uint64 row) -> t_uint64
+    func TemporalDecode(t_uint64 code,t_uint64 length,t_uint64 pc,t_uint64 row,t_uint64 site) -> t_uint64
     {
         local
         {
@@ -1667,47 +1689,41 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                 end
             end
         end
-        // Initialize the record; keep the original wire offset as its identity.
+        // Record the normalized operation and ordinal successor.
         load @row
         push 0
-        add
         load @op
-        store t_uint64
+        call TemporalPlanSet
         load @row
-        push 8
-        add
-        load @pc
-        store t_uint64
+        push 1
+        load @site
+        inc
+        call TemporalPlanSet
         load @row
-        push 16
-        add
-        load @pc
-        store t_uint64
+        push 2
+        load @site
+        inc
+        call TemporalPlanSet
         load @row
-        push 24
-        add
+        push 3
         push 0
-        store t_uint64
+        call TemporalPlanSet
         load @row
-        push 32
-        add
+        push 4
         push 0
-        store t_uint64
+        call TemporalPlanSet
         load @row
-        push 40
-        add
+        push 5
         push 0
-        store t_uint64
+        call TemporalPlanSet
         load @row
-        push 48
-        add
+        push 6
         load @idx
-        store t_uint64
+        call TemporalPlanSet
         load @row
-        push 56
-        add
+        push 7
         push 0
-        store t_uint64
+        call TemporalPlanSet
         load @pc
         return
     }
@@ -1721,16 +1737,19 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             t_uint64 cursor 0 t_uint64 ordinal 0
         }
         while @pc < @length
-            load @pc
-            store @site
             load @plan
             load @site
             call TemporalPlanRow
             store @row
+            load @row
+            push 8
+            load @pc
+            call TemporalPlanSet
             load @code
             load @length
             load @pc
             load @row
+            load @site
             call TemporalDecode
             store @pc
             if @pc == 0
@@ -1739,11 +1758,11 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             end
             load @row
             push 0
-            call TemporalCellGet
+            call TemporalPlanGet
             store @op
             load @row
             push 6
-            call TemporalCellGet
+            call TemporalPlanGet
             store @idx
             load @op
             push 2
@@ -1762,10 +1781,9 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             or
             if
                 load @row
-                push 24
-                add
+                push 3
                 load @top
-                store t_uint64
+                call TemporalPlanSet
                 load @site
                 inc
                 store @top
@@ -1778,13 +1796,11 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                     load @plan
                     load @top
                     dec
-                    push 64
-                    mul
-                    add
+                    call TemporalPlanRow
                     store @scope
                     load @scope
                     push 0
-                    call TemporalCellGet
+                    call TemporalPlanGet
                     push 4
                     neq
                     if
@@ -1793,22 +1809,21 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                     end
                     load @scope
                     push 4
-                    call TemporalCellGet
+                    call TemporalPlanGet
                     if
                         push 0
                         return
                     end
                     load @scope
-                    push 32
-                    add
+                    push 4
                     load @site
                     inc
-                    store t_uint64
+                    call TemporalPlanSet
                     load @scope
-                    push 16
-                    add
-                    load @pc
-                    store t_uint64
+                    push 2
+                    load @site
+                    inc
+                    call TemporalPlanSet
                 else
                     if @op == 6
                         if @top == 0
@@ -1818,72 +1833,64 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                         load @plan
                         load @top
                         dec
-                        push 64
-                        mul
-                        add
+                        call TemporalPlanRow
                         store @scope
                         load @scope
                         push 0
-                        call TemporalCellGet
+                        call TemporalPlanGet
                         store @kind
                         load @scope
                         push 3
-                        call TemporalCellGet
+                        call TemporalPlanGet
                         store @top
                         load @scope
-                        push 56
-                        add
-                        load @pc
-                        store t_uint64
+                        push 7
+                        load @site
+                        inc
+                        call TemporalPlanSet
                         if @kind == 3
                             load @row
-                            push 16
-                            add
+                            push 2
                             load @scope
                             push 1
-                            call TemporalCellGet
-                            store t_uint64
+                            call TemporalPlanGet
+                            call TemporalPlanSet
                         end
                         if @kind == 12
                             load @row
-                            push 16
-                            add
+                            push 2
                             load @scope
                             load @plan
-                            sub
-                            push 64
-                            udiv
-                            store t_uint64
+                            call TemporalPlanOrdinal
+                            call TemporalPlanSet
                             load @scope
-                            push 16
-                            add
-                            load @pc
-                            store t_uint64
+                            push 2
+                            load @site
+                            inc
+                            call TemporalPlanSet
                         end
                         if @kind == 4
                             load @scope
                             push 4
-                            call TemporalCellGet
+                            call TemporalPlanGet
                             store @alternate
                             if @alternate == 0
                                 load @scope
-                                push 16
-                                add
-                                load @pc
-                                store t_uint64
+                                push 2
+                                load @site
+                                inc
+                                call TemporalPlanSet
                             else
                                 load @plan
                                 load @alternate
                                 dec
-                                push 64
-                                mul
-                                add
+                                call TemporalPlanRow
                                 store @scope
                                 load @scope
-                                push 16
-                                add
-                                load @pc
-                                store t_uint64
+                                push 2
+                                load @site
+                                inc
+                                call TemporalPlanSet
                             end
                         end
                     else
@@ -1907,13 +1914,11 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                                 load @plan
                                 load @cursor
                                 dec
-                                push 64
-                                mul
-                                add
+                                call TemporalPlanRow
                                 store @scope
                                 load @scope
                                 push 0
-                                call TemporalCellGet
+                                call TemporalPlanGet
                                 store @kind
                                 load @kind
                                 push 3
@@ -1932,30 +1937,27 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                                 end
                                 load @scope
                                 push 3
-                                call TemporalCellGet
+                                call TemporalPlanGet
                                 store @cursor
                             end
                             load @row
-                            push 24
-                            add
+                            push 3
                             load @cursor
-                            store t_uint64
+                            call TemporalPlanSet
                             if @op == 8
                                 if @kind == 3
                                     load @row
-                                    push 16
-                                    add
+                                    push 2
                                     load @scope
                                     push 1
-                                    call TemporalCellGet
-                                    store t_uint64
+                                    call TemporalPlanGet
+                                    call TemporalPlanSet
                                 else
                                     load @row
-                                    push 16
-                                    add
+                                    push 2
                                     load @cursor
                                     dec
-                                    store t_uint64
+                                    call TemporalPlanSet
                                 end
                             end
                         else
@@ -1992,11 +1994,18 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                     end
                 end
             end
+            load @site
+            inc
+            store @site
         end
         if @top != 0
             push 0
             return
         end
+        load @plan
+        push 0
+        load @site
+        call TemporalCellSet
         push 1
         return
     }
@@ -2017,29 +2026,26 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             store @row
             load @row
             push 0
-            call TemporalCellGet
+            call TemporalPlanGet
             store @op
             if @op == 7
                 load @plan
                 load @row
                 push 3
-                call TemporalCellGet
+                call TemporalPlanGet
                 dec
-                push 64
-                mul
-                add
+                call TemporalPlanRow
                 store @scope
                 load @row
-                push 16
-                add
+                push 2
                 load @scope
                 push 7
-                call TemporalCellGet
-                store t_uint64
+                call TemporalPlanGet
+                call TemporalPlanSet
             end
             load @row
             push 1
-            call TemporalCellGet
+            call TemporalPlanGet
             store @pc
         end
         push 1
@@ -2056,29 +2062,28 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
         // Reachability and exact stack-depth dataflow. Each site is queued at most once.
         load @plan
         load @length
-        push 64
-        mul
-        add
+        call TemporalPlanRow
         store @work
         load @plan
+        push 0
+        call TemporalPlanRow
         store @row
         load @row
-        push 40
-        add
+        push 5
         push 1
-        store t_uint64
+        call TemporalPlanSet
         load @work
         push 0
-        store t_uint64
+        store t_uint16
         push 1
         store @tail
         while @head < @tail
             load @work
             load @head
-            push 8
+            push 2
             mul
             add
-            load t_uint64
+            load t_uint16
             store @site
             load @head
             inc
@@ -2089,19 +2094,19 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             store @row
             load @row
             push 0
-            call TemporalCellGet
+            call TemporalPlanGet
             store @op
             load @row
             push 1
-            call TemporalCellGet
+            call TemporalPlanGet
             store @next
             load @row
             push 2
-            call TemporalCellGet
+            call TemporalPlanGet
             store @target
             load @row
             push 5
-            call TemporalCellGet
+            call TemporalPlanGet
             dec
             store @depth
             if @op == 9
@@ -2191,7 +2196,7 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                                     load @op
                                     load @row
                                     push 6
-                                    call TemporalCellGet
+                                    call TemporalPlanGet
                                     load @depth
                                     load @capacity
                                     call TemporalPrivateDepth
@@ -2245,7 +2250,7 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             store @row
             load @row
             push 0
-            call TemporalCellGet
+            call TemporalPlanGet
             store @op
             load @op
             push 7
@@ -2257,25 +2262,23 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             if
                 load @row
                 push 5
-                call TemporalCellGet
+                call TemporalPlanGet
                 store @depth
                 if @depth != 0
                     load @plan
                     load @row
                     push 3
-                    call TemporalCellGet
+                    call TemporalPlanGet
                     dec
-                    push 64
-                    mul
-                    add
+                    call TemporalPlanRow
                     store @scope
                     load @scope
                     push 5
-                    call TemporalCellGet
+                    call TemporalPlanGet
                     store @shape
                     load @scope
                     push 0
-                    call TemporalCellGet
+                    call TemporalPlanGet
                     store @kind
                     if @kind == 12
                         if @op == 7
@@ -2295,7 +2298,7 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             end
             load @row
             push 1
-            call TemporalCellGet
+            call TemporalPlanGet
             store @pc
         end
         push 1
@@ -2337,8 +2340,10 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
     func TemporalPlanRow(t_uint64 plan,t_uint64 site) -> t_uint64
     {
         load @plan
+        push 8
+        add
         load @site
-        push 64
+        push 24
         mul
         add
         return
@@ -2936,7 +2941,9 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                     mul
                     call TemporalCellAddress
                     store @cells
-                    load @length
+                    load @plan
+                    push 0
+                    call TemporalCellGet
                     load @state
                     load @cells
                     load @capacity
@@ -3080,6 +3087,72 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
         push 64
         mul
         add
+        return
+    }
+
+    // Logical fields 0..5 are u16; field 6 is the u64 operand;
+    // fields 7/8 are u16 scope exit and original wire offset.
+    func TemporalPlanField(t_uint64 row,t_uint64 fieldIndex) -> t_uint64
+    {
+        if @fieldIndex == 6
+            load @row
+            push 16
+            add
+            return
+        end
+        if @fieldIndex > 6
+            load @row
+            load @fieldIndex
+            dec
+            push 2
+            mul
+            add
+            return
+        end
+        load @row
+        load @fieldIndex
+        push 2
+        mul
+        add
+        return
+    }
+
+    func TemporalPlanGet(t_uint64 row,t_uint64 fieldIndex) -> t_uint64
+    {
+        load @row
+        load @fieldIndex
+        call TemporalPlanField
+        if @fieldIndex == 6
+            load t_uint64
+            return
+        end
+        load t_uint16
+        return
+    }
+
+    func TemporalPlanSet(t_uint64 row,t_uint64 fieldIndex,t_uint64 value) -> t_void
+    {
+        load @row
+        load @fieldIndex
+        call TemporalPlanField
+        load @value
+        if @fieldIndex == 6
+            store t_uint64
+            return
+        end
+        store t_uint16
+        return
+    }
+
+    func TemporalPlanOrdinal(t_uint64 row,t_uint64 plan) -> t_uint64
+    {
+        load @row
+        load @plan
+        sub
+        push 8
+        sub
+        push 24
+        udiv
         return
     }
 }
