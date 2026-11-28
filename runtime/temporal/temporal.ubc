@@ -2372,9 +2372,9 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
     }
 
     // Internal typed cell abstraction. Addresses never originate in guest cells.
-    func TemporalCellAddress(t_uint64 base,t_uint64 index) -> t_uint64
+    func TemporalCellAddress(t_uint64 address,t_uint64 index) -> t_uint64
     {
-        load @base
+        load @address
         load @index
         block (t_uint64,t_uint64) -> t_uint64
             push 8
@@ -2384,18 +2384,18 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
         return
     }
 
-    func TemporalCellGet(t_uint64 base,t_uint64 index) -> t_uint64
+    func TemporalCellGet(t_uint64 address,t_uint64 index) -> t_uint64
     {
-        load @base
+        load @address
         load @index
         call TemporalCellAddress
         load t_uint64
         return
     }
 
-    func TemporalCellSet(t_uint64 base,t_uint64 index,t_uint64 value) -> t_void
+    func TemporalCellSet(t_uint64 address,t_uint64 index,t_uint64 value) -> t_void
     {
-        load @base
+        load @address
         load @index
         call TemporalCellAddress
         load @value
