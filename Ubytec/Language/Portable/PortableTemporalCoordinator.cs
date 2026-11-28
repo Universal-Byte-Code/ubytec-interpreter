@@ -184,7 +184,7 @@ public sealed class PortableTemporalCoordinator
         if (_started && _live.Count == 0) throw new InvalidOperationException("Session terminated.");
         int count = checked(_journal.Count + _pending.Count);
         if (count >= _maxEvents || entry.Ordinal != (ulong)count + 1 || entry.Round <= Round ||
-            (_pending.TryPeek(out _) && entry.Round < _pending.Last().Round) || !Enum.IsDefined(entry.Kind))
+            (_pending.TryPeek(out _) && entry.Round < _pending.Last().Round) || !Enum.IsDefined(typeof(PortableAdmissionKind), entry.Kind))
             throw new InvalidDataException("Invalid journal order, boundary or limit.");
         _pending.Enqueue(entry);
     }
