@@ -1511,1535 +1511,177 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
         return
     }
 
-    // Called only after shape validation. 1 success, 2 guest arithmetic trap.
+    // Private transformations. Admission and turn dispatch both enforce the
+    // stack shape first. 1 = success, 2 = arithmetic trap, 0 = invariant failure.
     func TemporalPrivateApply(t_uint64 cells,t_uint64 depth,t_uint64 op,t_uint64 idx) -> t_uint64
     {
         local
         {
-            t_uint64 v0 0 t_uint64 v1 0 t_uint64 v2 0 t_uint64 v3 0 t_uint64 v4 0 t_uint64 v5 0 t_uint64 i 0 t_uint64 pos 0 t_uint64 bytepos 0 t_uint64 value 0
+            t_uint64 lhs 0 t_uint64 rhs 0
         }
-        if @op == 13
-            push 1
-            return
-        end
-        if @op == 15
-            load @cells
-            load @depth
-            push 8
-            mul
-            add
-            push 0
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 18
-            push 1
-            return
-        end
-        if @op == 19
-            load @cells
-            load @depth
-            push 8
-            mul
-            add
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 22
-            load @cells
-            load @depth
-            push 8
-            mul
-            add
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 20
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v1
-            store t_uint64
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 21
-            load @cells
-            load @depth
-            push 3
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v2
-            load @cells
-            load @depth
-            push 3
-            sub
-            push 8
-            mul
-            add
-            load @v1
-            store t_uint64
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v2
-            store t_uint64
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 26
-            load @cells
-            load @depth
-            push 4
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 3
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v2
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v3
-            load @cells
-            load @depth
-            push 4
-            sub
-            push 8
-            mul
-            add
-            load @v2
-            store t_uint64
-            load @cells
-            load @depth
-            push 3
-            sub
-            push 8
-            mul
-            add
-            load @v3
-            store t_uint64
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            store t_uint64
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load @v1
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 27
-            load @cells
-            load @depth
-            push 6
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 5
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-            load @cells
-            load @depth
-            push 4
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v2
-            load @cells
-            load @depth
-            push 3
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v3
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v4
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v5
-            load @cells
-            load @depth
-            push 6
-            sub
-            push 8
-            mul
-            add
-            load @v2
-            store t_uint64
-            load @cells
-            load @depth
-            push 5
-            sub
-            push 8
-            mul
-            add
-            load @v3
-            store t_uint64
-            load @cells
-            load @depth
-            push 4
-            sub
-            push 8
-            mul
-            add
-            load @v4
-            store t_uint64
-            load @cells
-            load @depth
-            push 3
-            sub
-            push 8
-            mul
-            add
-            load @v5
-            store t_uint64
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            store t_uint64
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load @v1
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 23
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 24
-            load @depth
-            load @idx
-            sub
-            dec
-            store @pos
-            load @cells
-            load @pos
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @pos
-            store @i
-            while @i < @depth
-                load @i
-                inc
-                load @depth
-                uge
-                if
-                    break
-                end
-                load @cells
-                load @i
-                push 8
-                mul
-                add
-                load @cells
-                load @i
-                inc
-                push 8
-                mul
-                add
-                load t_uint64
-                store t_uint64
-                load @i
-                inc
-                store @i
+        load @op
+        switch
+            branch 13
+                // CLEAR changes depth only.
+                nop
             end
-            push 1
-            return
-        end
-        if @op == 30
-            load @depth
-            load @idx
-            sub
-            dec
-            store @pos
-            load @cells
-            load @pos
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @pos
-            store @i
-            while @i < @depth
-                load @i
-                inc
+            branch 15
+                // NULL
+                load @cells
                 load @depth
-                uge
-                if
-                    break
-                end
-                load @cells
-                load @i
-                push 8
-                mul
-                add
-                load @cells
-                load @i
-                inc
-                push 8
-                mul
-                add
-                load t_uint64
-                store t_uint64
-                load @i
-                inc
-                store @i
+                push 0
+                call TemporalCellSet
             end
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 29
-            load @cells
-            load @depth
-            push 8
-            mul
-            add
-            load @cells
-            load @depth
-            load @idx
-            sub
-            dec
-            push 8
-            mul
-            add
-            load t_uint64
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 25
-            load @cells
-            load @depth
-            push 8
-            mul
-            add
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store t_uint64
-            load @cells
-            load @depth
-            inc
-            push 8
-            mul
-            add
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 28
-            load @cells
-            load @depth
-            push 8
-            mul
-            add
-            load @cells
-            load @depth
-            push 4
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store t_uint64
-            load @cells
-            load @depth
-            inc
-            push 8
-            mul
-            add
-            load @cells
-            load @depth
-            push 3
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 273
-            // Native evaluation-stack bytes run from top cell downward; word can cross cells.
-            push 0
-            store @i
-            while @i < 2
+            branch 18
+                // POP changes depth only.
+                nop
+            end
+            branch 19
+                // DUP
+                load @cells
+                load @depth
+                push 0
+                call TemporalPick
+            end
+            branch 20
+                // SWAP
+                load @cells
+                load @depth
+                push 2
+                push 1
+                call TemporalRotate
+            end
+            branch 21
+                // ROT
+                load @cells
+                load @depth
+                push 3
+                push 1
+                call TemporalRotate
+            end
+            branch 22
+                // OVER
+                load @cells
+                load @depth
+                push 1
+                call TemporalPick
+            end
+            branch 23
+                // NIP
+                load @cells
+                load @depth
+                push 1
+                call TemporalRemove
+            end
+            branch 24
+                // DROP / DROP16
+                load @cells
+                load @depth
                 load @idx
-                load @i
-                add
-                store @bytepos
-                load @depth
-                dec
-                load @bytepos
-                push 8
-                udiv
-                sub
-                store @pos
+                call TemporalRemove
+            end
+            branch 25
+                // 2DUP
                 load @cells
-                load @pos
-                push 8
-                mul
-                add
-                load @bytepos
-                push 8
-                umod
-                add
-                load t_byte
-                load @i
-                push 8
-                mul
-                shl
-                load @value
-                or
-                store @value
-                load @i
+                load @depth
+                push 2
+                call TemporalCopyPair
+            end
+            branch 26
+                // 2SWAP
+                load @cells
+                load @depth
+                push 4
+                push 2
+                call TemporalRotate
+            end
+            branch 27
+                // 2ROT
+                load @cells
+                load @depth
+                push 6
+                push 2
+                call TemporalRotate
+            end
+            branch 28
+                // 2OVER
+                load @cells
+                load @depth
+                push 4
+                call TemporalCopyPair
+            end
+            branch 29
+                // PICK / PICK16
+                load @cells
+                load @depth
+                load @idx
+                call TemporalPick
+            end
+            branch 30
+                // ROLL / ROLL16
+                load @cells
+                load @depth
+                load @idx
                 inc
-                store @i
+                push 1
+                call TemporalRotate
             end
-            load @cells
-            load @depth
-            push 8
-            mul
-            add
-            load @value
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 32
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            add
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 33
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            sub
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 34
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            mul
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 35
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-            if @v1 == 0
-                push 2
-                return
+            branch 273
+                // PUSH16: word at byte offset in top-first stack representation.
+                load @cells
+                load @depth
+                load @cells
+                load @depth
+                load @idx
+                call TemporalStackWord
+                call TemporalCellSet
             end
-            load @v0
-            push 1
-            push 63
-            shl
-            eq
-            load @v1
-            push 0
-            not
-            eq
-            and
-            if
-                push 2
-                return
-            end
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            div
-            store t_uint64
-            push 1
-            return
+            default
+                load @cells
+                load @depth
+                push 0
+                call TemporalStackGet
+                store @rhs
+                load @op
+                call TemporalIsUnary
+                if
+                    load @cells
+                    load @depth
+                    dec
+                    load @op
+                    load @rhs
+                    call TemporalUnary
+                    call TemporalCellSet
+                else
+                    load @cells
+                    load @depth
+                    push 1
+                    call TemporalStackGet
+                    store @lhs
+                    load @op
+                    load @lhs
+                    load @rhs
+                    call TemporalArithmeticSafe
+                    if
+                    else
+                        push 2
+                        return
+                    end
+                    load @cells
+                    load @depth
+                    push 2
+                    sub
+                    load @op
+                    load @lhs
+                    load @rhs
+                    call TemporalBinary
+                    call TemporalCellSet
+                end
         end
-        if @op == 36
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-            if @v1 == 0
-                push 2
-                return
-            end
-            load @v0
-            push 1
-            push 63
-            shl
-            eq
-            load @v1
-            push 0
-            not
-            eq
-            and
-            if
-                push 2
-                return
-            end
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            mod
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 41
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-            if @v1 == 0
-                push 2
-                return
-            end
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            udiv
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 42
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-            if @v1 == 0
-                push 2
-                return
-            end
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            umod
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 48
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            and
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 49
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            or
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 50
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            xor
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 52
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            shl
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 53
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            shr
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 54
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            lshr
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 64
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            eq
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 65
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            neq
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 66
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            lt
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 67
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            le
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 68
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            gt
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 69
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            ge
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 70
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            ult
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 71
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            ule
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 72
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            ugt
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 73
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v0
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            store @v1
-
-            load @cells
-            load @depth
-            push 2
-            sub
-            push 8
-            mul
-            add
-            load @v0
-            load @v1
-            uge
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 37
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            inc
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 38
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            dec
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 39
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            neg
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 40
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            abs
-            store t_uint64
-            push 1
-            return
-        end
-        if @op == 51
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load @cells
-            load @depth
-            push 1
-            sub
-            push 8
-            mul
-            add
-            load t_uint64
-            not
-            store t_uint64
-            push 1
-            return
-        end
-        push 0
+        push 1
         return
     }
+
     // Plan records (64 bytes per Code byte): normalized opcode, next PC, jump PC,
     // parent scope+1, ELSE site+1, depth+1 (zero=unvisited), operand, scope exit.
     // Only instruction starts are initialized/read. Work queue: length u64 cells
@@ -4079,5 +2721,386 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
         end
         load @value
         return
+    }
+
+    // Stack indices are top-relative; cell indices are bottom-relative.
+    func TemporalStackGet(t_uint64 cells,t_uint64 depth,t_uint64 index) -> t_uint64
+    {
+        load @cells
+        load @depth
+        dec
+        load @index
+        sub
+        call TemporalCellGet
+        return
+    }
+
+    func TemporalPick(t_uint64 cells,t_uint64 depth,t_uint64 index) -> t_void
+    {
+        load @cells
+        load @depth
+        load @cells
+        load @depth
+        load @index
+        call TemporalStackGet
+        call TemporalCellSet
+        return
+    }
+
+    func TemporalRemove(t_uint64 cells,t_uint64 depth,t_uint64 index) -> t_void
+    {
+        local
+        {
+            t_uint64 pos 0 t_uint64 last 0
+        }
+        load @depth
+        dec
+        store @last
+        load @last
+        load @index
+        sub
+        store @pos
+        while @pos < @last
+            load @cells
+            load @pos
+            load @cells
+            load @pos
+            inc
+            call TemporalCellGet
+            call TemporalCellSet
+            load @pos
+            inc
+            store @pos
+        end
+        return
+    }
+
+    func TemporalRotate(t_uint64 cells,t_uint64 depth,t_uint64 span,t_uint64 count) -> t_void
+    {
+        local
+        {
+            t_uint64 i 0 t_uint64 value 0
+        }
+        while @i < @count
+            load @cells
+            load @depth
+            load @span
+            dec
+            call TemporalStackGet
+            store @value
+            load @cells
+            load @depth
+            load @span
+            dec
+            call TemporalRemove
+            load @cells
+            load @depth
+            dec
+            load @value
+            call TemporalCellSet
+            load @i
+            inc
+            store @i
+        end
+        return
+    }
+
+    func TemporalCopyPair(t_uint64 cells,t_uint64 depth,t_uint64 span) -> t_void
+    {
+        load @cells
+        load @depth
+        load @span
+        dec
+        call TemporalPick
+        load @cells
+        load @depth
+        inc
+        load @span
+        dec
+        call TemporalPick
+        return
+    }
+
+    func TemporalStackByte(t_uint64 cells,t_uint64 depth,t_uint64 offset) -> t_uint64
+    {
+        load @cells
+        load @depth
+        load @offset
+        push 8
+        udiv
+        call TemporalStackGet
+        load @offset
+        push 8
+        umod
+        push 8
+        mul
+        lshr
+        push 255
+        and
+        return
+    }
+
+    func TemporalStackWord(t_uint64 cells,t_uint64 depth,t_uint64 offset) -> t_uint64
+    {
+        load @cells
+        load @depth
+        load @offset
+        call TemporalStackByte
+        load @cells
+        load @depth
+        load @offset
+        inc
+        call TemporalStackByte
+        block (t_uint64,t_uint64) -> t_uint64
+            push 8
+            shl
+            or
+        end
+        return
+    }
+
+    func TemporalIsUnary(t_uint64 op) -> t_uint64
+    {
+        load @op
+        push 37
+        uge
+        load @op
+        push 40
+        ule
+        and
+        load @op
+        push 51
+        eq
+        or
+        return
+    }
+
+    func TemporalArithmeticSafe(t_uint64 op,t_uint64 lhs,t_uint64 rhs) -> t_uint64
+    {
+        load @op
+        push 35
+        eq
+        load @op
+        push 36
+        eq
+        or
+        if
+            if @rhs == 0
+                push 0
+                return
+            end
+            load @lhs
+            push 1
+            push 63
+            shl
+            eq
+            load @rhs
+            push 0
+            not
+            eq
+            and
+            if
+                push 0
+                return
+            end
+        end
+        load @op
+        push 41
+        eq
+        load @op
+        push 42
+        eq
+        or
+        if
+            if @rhs == 0
+                push 0
+                return
+            end
+        end
+        push 1
+        return
+    }
+
+    func TemporalUnary(t_uint64 op,t_uint64 value) -> t_uint64
+    {
+        load @op
+        switch
+            branch 37
+                load @value
+                inc
+                return
+            end
+            branch 38
+                load @value
+                dec
+                return
+            end
+            branch 39
+                load @value
+                neg
+                return
+            end
+            branch 40
+                load @value
+                abs
+                return
+            end
+            branch 51
+                load @value
+                not
+                return
+            end
+            default
+                trap
+        end
+    }
+
+    // Opcode registry values are localized here. Each branch implements exactly
+    // one cell transformation; the caller owns admission, fuel and fault checks.
+    func TemporalBinary(t_uint64 op,t_uint64 lhs,t_uint64 rhs) -> t_uint64
+    {
+        load @op
+        switch
+            branch 32
+                load @lhs
+                load @rhs
+                add
+                return
+            end
+            branch 33
+                load @lhs
+                load @rhs
+                sub
+                return
+            end
+            branch 34
+                load @lhs
+                load @rhs
+                mul
+                return
+            end
+            branch 35
+                load @lhs
+                load @rhs
+                div
+                return
+            end
+            branch 36
+                load @lhs
+                load @rhs
+                mod
+                return
+            end
+            branch 41
+                load @lhs
+                load @rhs
+                udiv
+                return
+            end
+            branch 42
+                load @lhs
+                load @rhs
+                umod
+                return
+            end
+            branch 48
+                load @lhs
+                load @rhs
+                and
+                return
+            end
+            branch 49
+                load @lhs
+                load @rhs
+                or
+                return
+            end
+            branch 50
+                load @lhs
+                load @rhs
+                xor
+                return
+            end
+            branch 52
+                load @lhs
+                load @rhs
+                shl
+                return
+            end
+            branch 53
+                load @lhs
+                load @rhs
+                shr
+                return
+            end
+            branch 54
+                load @lhs
+                load @rhs
+                lshr
+                return
+            end
+            branch 64
+                load @lhs
+                load @rhs
+                eq
+                return
+            end
+            branch 65
+                load @lhs
+                load @rhs
+                neq
+                return
+            end
+            branch 66
+                load @lhs
+                load @rhs
+                lt
+                return
+            end
+            branch 67
+                load @lhs
+                load @rhs
+                le
+                return
+            end
+            branch 68
+                load @lhs
+                load @rhs
+                gt
+                return
+            end
+            branch 69
+                load @lhs
+                load @rhs
+                ge
+                return
+            end
+            branch 70
+                load @lhs
+                load @rhs
+                ult
+                return
+            end
+            branch 71
+                load @lhs
+                load @rhs
+                ule
+                return
+            end
+            branch 72
+                load @lhs
+                load @rhs
+                ugt
+                return
+            end
+            branch 73
+                load @lhs
+                load @rhs
+                uge
+                return
+            end
+            default
+                trap
+        end
     }
 }
