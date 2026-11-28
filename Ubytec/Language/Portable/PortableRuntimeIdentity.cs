@@ -54,6 +54,7 @@ public sealed class PortableRuntimeIdentity
     public Guid Session { get; } = Guid.NewGuid();
     private ulong _nextInstance;
     private ulong _nextContext;
+    private ulong _coordinatorEvent;
     private readonly Dictionary<PortableLoadedInstanceId, Loaded> _instances = new();
     private readonly Dictionary<PortableRuntimeContextId, Context> _contexts = new();
 
@@ -107,6 +108,16 @@ public sealed class PortableRuntimeIdentity
         _instances.Remove(id);
     }
 
+    /// <summary>Allocate an admitted context effect in the same sequence as lifecycle and instruction events.
+    /// The reserved coordinator ordinal zero has its own sequence. No execution authority is granted.</summary>
+    internal PortableRuntimeEventId AllocateEffect(PortableRuntimeContextId id)
+    {
+        if (id.Session != Session) throw new InvalidOperationException("Foreign session.");
+        if (id.Ordinal == 0) return new PortableRuntimeEventId(id, Next(ref _coordinatorEvent));
+        Context context = GetContext(id);
+        return new PortableRuntimeEventId(id, Next(ref context.LastEvent));
+    }
+
     /// <summary>Allocate a context in the order admitted by the coordinator.</summary>
     public PortableRuntimeContextId CreateContext()
     {
@@ -118,10 +129,14 @@ public sealed class PortableRuntimeIdentity
     /// <summary>Retire an inactive context; its ordinal and local event namespace are not reused.</summary>
     public void RetireContext(PortableRuntimeContextId id)
     {
-        Context context = GetContext(id);
-        if (context.Stack.Count != 0)
-            throw new InvalidOperationException("Cannot retire a context with active invocations.");
+        RequireInactive(id);
         _contexts.Remove(id);
+    }
+
+    internal void RequireInactive(PortableRuntimeContextId id)
+    {
+        if (GetContext(id).Stack.Count != 0)
+            throw new InvalidOperationException("Cannot retire a context with active invocations.");
     }
 
     /// <summary>Record invocation entry. This does not validate call authority or call edges.</summary>

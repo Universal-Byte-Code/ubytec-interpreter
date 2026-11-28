@@ -1,0 +1,206 @@
+module (name:"temporal_scheduler",version:"0.1",author:"Ubytec")
+{
+    // The scheduler only sees an immutable admitted plan, never guest Code.
+    func TemporalRunPrepared(t_uint64 states,t_uint64 stacks,t_uint64 contexts,t_uint64 capacity,t_uint64 quantum,t_uint64 ledger,t_uint64 limit,t_uint64 plan) -> t_uint64
+    {
+        local
+        {
+            t_uint64 round 0 t_uint64 commit 0 t_uint64 i 0 t_uint64 live 0
+            t_uint64 state 0 t_uint64 cells 0 t_uint64 row 0 t_uint64 kind 0
+            t_uint64 seq 0 t_uint64 logical 0 t_uint64 site 0 t_uint64 result 0
+            t_uint64 fuel 0 t_uint64 j 0 t_uint64 instructionCount 0
+        }
+        if @contexts == 0
+            push 0
+            return
+        end
+        load @contexts
+        push 128
+        ugt
+        if
+            push 0
+            return
+        end
+        if @capacity == 0
+            push 0
+            return
+        end
+        load @capacity
+        push 4096
+        ugt
+        if
+            push 0
+            return
+        end
+        if @quantum == 0
+            push 0
+            return
+        end
+        load @limit
+        push 1000000
+        ugt
+        if
+            push 0
+            return
+        end
+        load @contexts
+        load @limit
+        ugt
+        if
+            push 0
+            return
+        end
+        load @plan
+        call TemporalPlanCount
+        store @instructionCount
+        // Initial admissions, round zero.
+        while @i < @contexts
+            load @states
+            load @i
+            call TemporalContextRow
+            store @state
+            push 0
+            store @j
+            while @j < 8
+                load @state
+                load @j
+                push 0
+                call TemporalCellSet
+                load @j
+                inc
+                store @j
+            end
+            load @state
+            load @i
+            inc
+            call TemporalStateSetClock
+            load @ledger
+            load @commit
+            call TemporalLedgerRow
+            load @round
+            push 0
+            load @commit
+            inc
+            dup
+            dup
+            push 7
+            push 0
+            push 4294967295
+            load @i
+            inc
+            call TemporalLedgerWrite
+            load @commit
+            inc
+            store @commit
+            load @i
+            inc
+            store @i
+        end
+        load @contexts
+        store @live
+        loop
+            if @live == 0
+                load @commit
+                return
+            end
+            load @round
+            inc
+            store @round
+            push 0
+            store @i
+            while @i < @contexts
+                load @states
+                load @i
+                call TemporalContextRow
+                store @state
+                load @state
+                call TemporalStatePhase
+                push 5
+                neq
+                if
+                    if @commit == @limit
+                        push 0
+                        return
+                    end
+                    load @stacks
+                    load @i
+                    load @capacity
+                    mul
+                    call TemporalCellAddress
+                    store @cells
+                    load @instructionCount
+                    load @state
+                    load @cells
+                    load @capacity
+                    load @quantum
+                    load @plan
+                    call TemporalTurn
+                    store @kind
+                    if @kind == 6
+                        push 0
+                        return
+                    end
+                    if @kind == 5
+                        load @live
+                        dec
+                        store @live
+                    end
+                    load @state
+                    call TemporalStateSequence
+                    inc
+                    store @seq
+                    load @state
+                    call TemporalStateClock
+                    inc
+                    store @logical
+                    load @state
+                    load @seq
+                    call TemporalStateSetSequence
+                    load @state
+                    load @logical
+                    call TemporalStateSetClock
+                    load @state
+                    call TemporalStateFuel
+                    store @fuel
+                    push 4294967295
+                    store @site
+                    if @kind > 0
+                        if @kind < 4
+                            load @state
+                            call TemporalStateSite
+                            store @site
+                        end
+                    end
+                    push 0
+                    store @result
+                    if @kind == 2
+                        load @state
+                        call TemporalStateResult
+                        store @result
+                    end
+                    load @ledger
+                    load @commit
+                    call TemporalLedgerRow
+                    load @round
+                    load @i
+                    inc
+                    load @seq
+                    load @logical
+                    load @commit
+                    inc
+                    load @kind
+                    load @fuel
+                    load @site
+                    load @result
+                    call TemporalLedgerWrite
+                    load @commit
+                    inc
+                    store @commit
+                end
+                load @i
+                inc
+                store @i
+            end
+        end
+    }
+}

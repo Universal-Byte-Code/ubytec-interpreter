@@ -1,0 +1,59 @@
+module (name:"temporal_temporal",version:"0.1",author:"Ubytec")
+{
+    // Serial reference scheduler. Each context occupies eight cells (six state
+    // fields plus local sequence and Lamport clock). Ledger row has nine cells:
+    // round, context ordinal, sequence, logical time, commit, kind, fuel,
+    // last instruction offset (NoIndex for synthetic boundaries), result.
+    // Kind 7 is coordinator context creation. Initial creation causality makes
+    // context i's first logical clock i+1. Return 0 means infrastructure failure.
+    // The host supplies non-overlapping sized buffers; no guest physical addresses.
+    func TemporalRun(t_uint64 code,t_uint64 length,t_uint64 states,t_uint64 stacks,t_uint64 contexts,t_uint64 capacity,t_uint64 quantum,t_uint64 ledger,t_uint64 limit,t_uint64 plan) -> t_uint64
+    {
+        load @code
+        load @length
+        load @capacity
+        load @plan
+        call TemporalPlanPrepare
+        if
+        else
+            push 0
+            return
+        end
+        load @states
+        load @stacks
+        load @contexts
+        load @capacity
+        load @quantum
+        load @ledger
+        load @limit
+        load @plan
+        call TemporalRunPrepared
+        return
+    }
+
+    // Public bootstrap entry: complete PMF bytes, not a pre-extracted Code segment.
+    func TemporalRunModule(t_uint64 image,t_uint64 length,t_uint64 states,t_uint64 stacks,t_uint64 contexts,t_uint64 capacity,t_uint64 quantum,t_uint64 ledger,t_uint64 limit,t_uint64 plan,t_uint64 view) -> t_uint64
+    {
+        load @image
+        load @length
+        load @capacity
+        load @view
+        load @plan
+        call TemporalAdmit
+        if
+        else
+            push 0
+            return
+        end
+        load @states
+        load @stacks
+        load @contexts
+        load @capacity
+        load @quantum
+        load @ledger
+        load @limit
+        load @plan
+        call TemporalRunPrepared
+        return
+    }
+}

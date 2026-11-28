@@ -1,0 +1,446 @@
+module (name:"temporal_records",version:"0.1",author:"Ubytec")
+{
+    // Internal typed cell abstraction. Addresses never originate in guest cells.
+    func TemporalCellAddress(t_uint64 address,t_uint64 index) -> t_uint64
+    {
+        load @address
+        load @index
+        block (t_uint64,t_uint64) -> t_uint64
+            push 8
+            mul
+            add
+        end
+        return
+    }
+
+    func TemporalCellGet(t_uint64 address,t_uint64 index) -> t_uint64
+    {
+        load @address
+        load @index
+        call TemporalCellAddress
+        load t_uint64
+        return
+    }
+
+    func TemporalCellSet(t_uint64 address,t_uint64 index,t_uint64 value) -> t_void
+    {
+        load @address
+        load @index
+        call TemporalCellAddress
+        load @value
+        store t_uint64
+        return
+    }
+
+    func TemporalPlanRow(t_uint64 plan,t_uint64 site) -> t_uint64
+    {
+        load @plan
+        push 8
+        add
+        load @site
+        push 24
+        mul
+        add
+        return
+    }
+
+    func TemporalPlanOrdinal(t_uint64 row,t_uint64 plan) -> t_uint64
+    {
+        load @row
+        load @plan
+        sub
+        push 8
+        sub
+        push 24
+        udiv
+        return
+    }
+
+    // Context records and instruction records have independent layouts,
+    // even though their bootstrap strides happen to be equal.
+    func TemporalContextRow(t_uint64 states,t_uint64 ordinal) -> t_uint64
+    {
+        load @states
+        load @ordinal
+        push 64
+        mul
+        add
+        return
+    }
+
+    func TemporalLedgerRow(t_uint64 ledger,t_uint64 ordinal) -> t_uint64
+    {
+        load @ledger
+        load @ordinal
+        push 72
+        mul
+        add
+        return
+    }
+
+    // The event projection is written in a single place for all boundary kinds.
+    func TemporalLedgerWrite(t_uint64 row,t_uint64 round,t_uint64 context,t_uint64 seq,t_uint64 logical,t_uint64 commit,t_uint64 kind,t_uint64 fuel,t_uint64 site,t_uint64 result) -> t_void
+    {
+        load @row
+        push 0
+        load @round
+        call TemporalCellSet
+        load @row
+        push 1
+        load @context
+        call TemporalCellSet
+        load @row
+        push 2
+        load @seq
+        call TemporalCellSet
+        load @row
+        push 3
+        load @logical
+        call TemporalCellSet
+        load @row
+        push 4
+        load @commit
+        call TemporalCellSet
+        load @row
+        push 5
+        load @kind
+        call TemporalCellSet
+        load @row
+        push 6
+        load @fuel
+        call TemporalCellSet
+        load @row
+        push 7
+        load @site
+        call TemporalCellSet
+        load @row
+        push 8
+        load @result
+        call TemporalCellSet
+        return
+    }
+
+    // Named instruction fields: the compact physical layout is local to this module.
+    func TemporalPlanOpcode(t_uint64 row) -> t_uint64
+    {
+        load @row
+        push 0
+        add
+        load t_uint16
+        return
+    }
+
+    func TemporalPlanSetOpcode(t_uint64 row,t_uint64 value) -> t_void
+    {
+        load @row
+        push 0
+        add
+        load @value
+        store t_uint16
+        return
+    }
+
+    func TemporalPlanNext(t_uint64 row) -> t_uint64
+    {
+        load @row
+        push 2
+        add
+        load t_uint16
+        return
+    }
+
+    func TemporalPlanSetNext(t_uint64 row,t_uint64 value) -> t_void
+    {
+        load @row
+        push 2
+        add
+        load @value
+        store t_uint16
+        return
+    }
+
+    func TemporalPlanTarget(t_uint64 row) -> t_uint64
+    {
+        load @row
+        push 4
+        add
+        load t_uint16
+        return
+    }
+
+    func TemporalPlanSetTarget(t_uint64 row,t_uint64 value) -> t_void
+    {
+        load @row
+        push 4
+        add
+        load @value
+        store t_uint16
+        return
+    }
+
+    func TemporalPlanParentLink(t_uint64 row) -> t_uint64
+    {
+        load @row
+        push 6
+        add
+        load t_uint16
+        return
+    }
+
+    func TemporalPlanSetParentLink(t_uint64 row,t_uint64 value) -> t_void
+    {
+        load @row
+        push 6
+        add
+        load @value
+        store t_uint16
+        return
+    }
+
+    func TemporalPlanElseLink(t_uint64 row) -> t_uint64
+    {
+        load @row
+        push 8
+        add
+        load t_uint16
+        return
+    }
+
+    func TemporalPlanSetElseLink(t_uint64 row,t_uint64 value) -> t_void
+    {
+        load @row
+        push 8
+        add
+        load @value
+        store t_uint16
+        return
+    }
+
+    func TemporalPlanDepthMark(t_uint64 row) -> t_uint64
+    {
+        load @row
+        push 10
+        add
+        load t_uint16
+        return
+    }
+
+    func TemporalPlanSetDepthMark(t_uint64 row,t_uint64 value) -> t_void
+    {
+        load @row
+        push 10
+        add
+        load @value
+        store t_uint16
+        return
+    }
+
+    func TemporalPlanOperand(t_uint64 row) -> t_uint64
+    {
+        load @row
+        push 16
+        add
+        load t_uint64
+        return
+    }
+
+    func TemporalPlanSetOperand(t_uint64 row,t_uint64 value) -> t_void
+    {
+        load @row
+        push 16
+        add
+        load @value
+        store t_uint64
+        return
+    }
+
+    func TemporalPlanExit(t_uint64 row) -> t_uint64
+    {
+        load @row
+        push 12
+        add
+        load t_uint16
+        return
+    }
+
+    func TemporalPlanSetExit(t_uint64 row,t_uint64 value) -> t_void
+    {
+        load @row
+        push 12
+        add
+        load @value
+        store t_uint16
+        return
+    }
+
+    func TemporalPlanWireOffset(t_uint64 row) -> t_uint64
+    {
+        load @row
+        push 14
+        add
+        load t_uint16
+        return
+    }
+
+    func TemporalPlanSetWireOffset(t_uint64 row,t_uint64 value) -> t_void
+    {
+        load @row
+        push 14
+        add
+        load @value
+        store t_uint16
+        return
+    }
+
+    func TemporalPlanCount(t_uint64 plan) -> t_uint64
+    {
+        load @plan
+        load t_uint64
+        return
+    }
+
+    func TemporalPlanSetCount(t_uint64 plan,t_uint64 count) -> t_void
+    {
+        load @plan
+        load @count
+        store t_uint64
+        return
+    }
+
+    // Named context fields: distinct from instruction records and ledger rows.
+    func TemporalStatePc(t_uint64 state) -> t_uint64
+    {
+        load @state
+        push 0
+        call TemporalCellGet
+        return
+    }
+
+    func TemporalStateSetPc(t_uint64 state,t_uint64 value) -> t_void
+    {
+        load @state
+        push 0
+        load @value
+        call TemporalCellSet
+        return
+    }
+
+    func TemporalStateDepth(t_uint64 state) -> t_uint64
+    {
+        load @state
+        push 1
+        call TemporalCellGet
+        return
+    }
+
+    func TemporalStateSetDepth(t_uint64 state,t_uint64 value) -> t_void
+    {
+        load @state
+        push 1
+        load @value
+        call TemporalCellSet
+        return
+    }
+
+    func TemporalStateFuel(t_uint64 state) -> t_uint64
+    {
+        load @state
+        push 2
+        call TemporalCellGet
+        return
+    }
+
+    func TemporalStateSetFuel(t_uint64 state,t_uint64 value) -> t_void
+    {
+        load @state
+        push 2
+        load @value
+        call TemporalCellSet
+        return
+    }
+
+    func TemporalStatePhase(t_uint64 state) -> t_uint64
+    {
+        load @state
+        push 3
+        call TemporalCellGet
+        return
+    }
+
+    func TemporalStateSetPhase(t_uint64 state,t_uint64 value) -> t_void
+    {
+        load @state
+        push 3
+        load @value
+        call TemporalCellSet
+        return
+    }
+
+    func TemporalStateSite(t_uint64 state) -> t_uint64
+    {
+        load @state
+        push 4
+        call TemporalCellGet
+        return
+    }
+
+    func TemporalStateSetSite(t_uint64 state,t_uint64 value) -> t_void
+    {
+        load @state
+        push 4
+        load @value
+        call TemporalCellSet
+        return
+    }
+
+    func TemporalStateResult(t_uint64 state) -> t_uint64
+    {
+        load @state
+        push 5
+        call TemporalCellGet
+        return
+    }
+
+    func TemporalStateSetResult(t_uint64 state,t_uint64 value) -> t_void
+    {
+        load @state
+        push 5
+        load @value
+        call TemporalCellSet
+        return
+    }
+
+    func TemporalStateSequence(t_uint64 state) -> t_uint64
+    {
+        load @state
+        push 6
+        call TemporalCellGet
+        return
+    }
+
+    func TemporalStateSetSequence(t_uint64 state,t_uint64 value) -> t_void
+    {
+        load @state
+        push 6
+        load @value
+        call TemporalCellSet
+        return
+    }
+
+    func TemporalStateClock(t_uint64 state) -> t_uint64
+    {
+        load @state
+        push 7
+        call TemporalCellGet
+        return
+    }
+
+    func TemporalStateSetClock(t_uint64 state,t_uint64 value) -> t_void
+    {
+        load @state
+        push 7
+        load @value
+        call TemporalCellSet
+        return
+    }
+}

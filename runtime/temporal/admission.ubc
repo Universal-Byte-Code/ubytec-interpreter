@@ -1,0 +1,569 @@
+module (name:"temporal_admission",version:"0.1",author:"Ubytec")
+{
+    // Verify the executable projection for the deliberately narrow bootstrap profile.
+    // Returns 1 on success; writes (Code pointer, Code length) only after admission.
+    // AST JSON is opaque and never executed. No manifests or imports are admitted.
+    // All pointer arithmetic uses host-owned, immutable, contiguous input bytes.
+    func TemporalAdmit(t_uint64 image,t_uint64 length,t_uint64 capacity,t_uint64 view,t_uint64 plan) -> t_uint64
+    {
+        local
+        {
+            t_uint64 cursor 12 t_uint64 count 0 t_uint64 index 0 t_uint64 previous 0
+            t_uint64 header 0 t_uint64 kind 0 t_uint64 flags 0 t_uint64 size 0 t_uint64 payload 0
+            t_uint64 seen 0 t_uint64 types 0 t_uint64 typesize 0 t_uint64 functions 0
+            t_uint64 code 0 t_uint64 codesize 0
+        }
+        load @length
+        push 12
+        ult
+        if
+            push 0
+            return
+        end
+        load @length
+        push 67108864
+        ugt
+        if
+            push 0
+            return
+        end
+        load @image
+        push 0
+        add
+        load t_uint32
+        push 1296253525
+        neq
+        if
+            push 0
+            return
+        end
+        load @image
+        push 4
+        add
+        load t_uint32
+        push 0
+        neq
+        if
+            push 0
+            return
+        end
+        load @image
+        push 8
+        add
+        load t_uint32
+        store @count
+        if @count == 0
+            push 0
+            return
+        end
+        if @count > 32
+            push 0
+            return
+        end
+        while @index < @count
+            load @length
+            load @cursor
+            sub
+            push 12
+            ult
+            if
+                push 0
+                return
+            end
+            load @image
+            load @cursor
+            add
+            store @header
+            load @header
+            push 0
+            add
+            load t_uint16
+            store @kind
+            load @header
+            push 2
+            add
+            load t_uint16
+            store @flags
+            load @header
+            push 4
+            add
+            load t_uint64
+            store @size
+            load @kind
+            load @previous
+            ule
+            if
+                push 0
+                return
+            end
+            load @kind
+            store @previous
+            if @flags > 1
+                push 0
+                return
+            end
+            load @cursor
+            push 12
+            add
+            store @cursor
+            load @size
+            load @length
+            load @cursor
+            sub
+            ugt
+            if
+                push 0
+                return
+            end
+            load @image
+            load @cursor
+            add
+            store @payload
+            load @kind
+            load @flags
+            load @payload
+            load @size
+            call TemporalValidateSection
+            if
+            else
+                push 0
+                return
+            end
+            // Collect only the tables needed by the current execution profile.
+            load @kind
+            switch
+                branch 1
+                    load @seen
+                    push 1
+                    or
+                    store @seen
+                end
+                branch 17
+                    load @payload
+                    store @types
+                    load @size
+                    store @typesize
+                end
+                branch 18
+                    load @payload
+                    store @functions
+                end
+                branch 22
+                    load @payload
+                    store @code
+                    load @size
+                    store @codesize
+                end
+            end
+            load @kind
+            call TemporalIndexedSection
+            if
+                load @seen
+                push 1
+                load @kind
+                push 15
+                sub
+                shl
+                or
+                store @seen
+            end
+            load @cursor
+            load @size
+            add
+            store @cursor
+            load @index
+            inc
+            store @index
+        end
+        if @cursor != @length
+            push 0
+            return
+        end
+        // Bits 0..7 and 9 represent AST and all eight executable sections.
+        if @seen != 767
+            push 0
+            return
+        end
+        load @types
+        load @typesize
+        load @functions
+        load @codesize
+        call TemporalValidateRootSignature
+        if
+        else
+            push 0
+            return
+        end
+        load @code
+        load @codesize
+        load @capacity
+        load @plan
+        call TemporalPlanPrepare
+        if
+        else
+            push 0
+            return
+        end
+        load @view
+        load @code
+        store t_uint64
+        load @view
+        push 8
+        add
+        load @codesize
+        store t_uint64
+        push 1
+        return
+    }
+
+    // Section framing is checked by the caller before any of these payload reads.
+    func TemporalIndexedSection(t_uint64 kind) -> t_uint64
+    {
+        load @kind
+        push 16
+        uge
+        load @kind
+        push 22
+        ule
+        and
+        load @kind
+        push 24
+        eq
+        or
+        return
+    }
+
+    func TemporalReadU32(t_uint64 address,t_uint64 offset) -> t_uint64
+    {
+        load @address
+        load @offset
+        add
+        load t_uint32
+        return
+    }
+
+    func TemporalEmptyTable(t_uint64 payload,t_uint64 size) -> t_uint64
+    {
+        if @size != 4
+            push 0
+            return
+        end
+        load @payload
+        push 0
+        call TemporalReadU32
+        push 0
+        eq
+        return
+    }
+
+    func TemporalValidateFunctionTable(t_uint64 payload,t_uint64 size) -> t_uint64
+    {
+        // One root function, no arguments, locals or flags, Code offset zero.
+        if @size != 28
+            push 0
+            return
+        end
+        load @payload
+        push 0
+        call TemporalReadU32
+        push 1
+        eq
+        load @payload
+        push 8
+        call TemporalReadU32
+        push 0
+        eq
+        and
+        load @payload
+        push 12
+        call TemporalReadU32
+        push 0
+        eq
+        and
+        load @payload
+        push 16
+        call TemporalReadU32
+        push 0
+        eq
+        and
+        load @payload
+        push 24
+        call TemporalReadU32
+        push 0
+        eq
+        and
+        return
+    }
+
+    func TemporalValidateContextTable(t_uint64 payload,t_uint64 size) -> t_uint64
+    {
+        // Context wire v3, DirectOnly, one root, no parent.
+        if @size != 16
+            push 0
+            return
+        end
+        load @payload
+        push 0
+        call TemporalReadU32
+        push 3
+        eq
+        load @payload
+        push 4
+        call TemporalReadU32
+        push 1
+        eq
+        and
+        load @payload
+        push 8
+        call TemporalReadU32
+        push 1
+        eq
+        and
+        load @payload
+        push 12
+        call TemporalReadU32
+        push 4294967295
+        eq
+        and
+        return
+    }
+
+    func TemporalValidateEntry(t_uint64 payload,t_uint64 size) -> t_uint64
+    {
+        if @size != 4
+            push 0
+            return
+        end
+        load @payload
+        push 0
+        call TemporalReadU32
+        dup
+        push 0
+        eq
+        swap
+        push 4294967295
+        eq
+        or
+        return
+    }
+
+    // Apply the restricted execution profile without mixing it with PMF traversal.
+    func TemporalValidateSection(t_uint64 kind,t_uint64 flags,t_uint64 payload,t_uint64 size) -> t_uint64
+    {
+        load @kind
+        call TemporalIndexedSection
+        if
+            if @flags != 1
+                push 0
+                return
+            end
+        end
+        load @kind
+        switch
+            branch 1
+                // Opaque, nonempty critical AST.
+                load @flags
+                push 1
+                eq
+                load @size
+                push 0
+                neq
+                and
+                return
+            end
+            branch 2
+                // No contract manifest in this profile.
+                push 0
+                return
+            end
+            branch 3
+                // No capability manifest.
+                push 0
+                return
+            end
+            branch 16
+                // String table.
+                load @payload
+                load @size
+                call TemporalEmptyTable
+                return
+            end
+            branch 17
+                // Type table: full root signature checked after traversal.
+                load @size
+                push 29
+                uge
+                return
+            end
+            branch 18
+                load @payload
+                load @size
+                call TemporalValidateFunctionTable
+                return
+            end
+            branch 19
+                // Imports.
+                load @payload
+                load @size
+                call TemporalEmptyTable
+                return
+            end
+            branch 20
+                // Exports.
+                load @payload
+                load @size
+                call TemporalEmptyTable
+                return
+            end
+            branch 21
+                // Constants.
+                load @payload
+                load @size
+                call TemporalEmptyTable
+                return
+            end
+            branch 22
+                // Code: framed and analyzed by TemporalPlanPrepare.
+                push 1
+                return
+            end
+            branch 23
+                if @flags != 0
+                    push 0
+                    return
+                end
+                load @payload
+                load @size
+                call TemporalValidateEntry
+                return
+            end
+            branch 24
+                load @payload
+                load @size
+                call TemporalValidateContextTable
+                return
+            end
+            branch 25
+                // Callable slots require a different execution profile.
+                push 0
+                return
+            end
+            default
+                // Unknown sections are accepted only when noncritical.
+                load @flags
+                push 0
+                eq
+                return
+        end
+    }
+
+    func TemporalValidateRootSignature(t_uint64 types,t_uint64 typesize,t_uint64 functions,t_uint64 codesize) -> t_uint64
+    {
+        local
+        {
+            t_uint64 resulttype 0 t_uint64 typecount 0 t_uint64 typeptr 0
+        }
+        load @types
+        push 0
+        add
+        load t_uint32
+        store @typecount
+        if @typecount == 0
+            push 0
+            return
+        end
+        load @typecount
+        push 25
+        mul
+        push 4
+        add
+        load @typesize
+        neq
+        if
+            push 0
+            return
+        end
+        load @functions
+        push 4
+        add
+        load t_uint32
+        store @resulttype
+        load @resulttype
+        load @typecount
+        uge
+        if
+            push 0
+            return
+        end
+        load @types
+        push 4
+        add
+        load @resulttype
+        push 25
+        mul
+        add
+        store @typeptr
+        load @typeptr
+        push 0
+        add
+        load t_byte
+        push 11
+        neq
+        if
+            push 0
+            return
+        end
+        load @typeptr
+        push 1
+        add
+        load t_uint32
+        push 0
+        neq
+        if
+            push 0
+            return
+        end
+        load @typeptr
+        push 5
+        add
+        load t_uint64
+        push 1
+        neq
+        if
+            push 0
+            return
+        end
+        load @typeptr
+        push 13
+        add
+        load t_uint32
+        push 4294967295
+        neq
+        if
+            push 0
+            return
+        end
+        load @typeptr
+        push 17
+        add
+        load t_uint64
+        push 0
+        neq
+        if
+            push 0
+            return
+        end
+        load @functions
+        push 20
+        add
+        load t_uint32
+        load @codesize
+        neq
+        if
+            push 0
+            return
+        end
+        push 1
+        return
+    }
+}
