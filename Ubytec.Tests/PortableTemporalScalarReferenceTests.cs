@@ -65,6 +65,30 @@ public sealed class PortableTemporalScalarReferenceTests
     }
 
     [Fact]
+    public void LoopTransfersChargeOnlyAttemptedInstructionsAndReturnBeatsBudget()
+    {
+        var outcome = PortableTemporalScalarReference.Run(
+            Image("loop\nnop\nbreak\nend\npush 42\nreturn"), [0], quantum: 2);
+        Assert.Equal(42UL, Assert.Single(outcome.Results));
+        Assert.Equal(new[] { PortableScalarBoundaryKind.Enter, PortableScalarBoundaryKind.Budget,
+            PortableScalarBoundaryKind.Budget, PortableScalarBoundaryKind.Return, PortableScalarBoundaryKind.Terminate },
+            outcome.Trace.Select(e => e.Kind));
+        Assert.Equal(new ulong[] { 0, 2, 4, 5, 5 }, outcome.Trace.Select(e => e.Fuel));
+
+        var exact = PortableTemporalScalarReference.Run(Image("nop\npush 42\nreturn"), [0], quantum: 3);
+        Assert.DoesNotContain(exact.Trace, e => e.Kind == PortableScalarBoundaryKind.Budget);
+        Assert.Equal(3UL, exact.Trace.Single(e => e.Kind == PortableScalarBoundaryKind.Return).Fuel);
+    }
+
+    [Fact]
+    public void PureLoopAndContinueCannotEscapeEventBudget()
+    {
+        foreach (string body in new[] { "loop\nnop\nend", "loop\ncontinue\nend" })
+            Assert.Throws<InvalidOperationException>(() =>
+                PortableTemporalScalarReference.Run(Image(body), [0], quantum: 2, maxEvents: 5));
+    }
+
+    [Fact]
     public void UnsupportedAndInvalidImagesFailClosed()
     {
         Assert.Throws<NotSupportedException>(() =>
