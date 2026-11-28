@@ -7,12 +7,15 @@ public enum PortableEventDomain { Diagnostic, Semantic }
 public sealed record PortableTemporalEffect(PortableRuntimeEventId Id, PortableTemporalEffectKind Kind,
     ulong Round, ulong Value, IReadOnlyList<PortableRuntimeEventId> Dependencies, ulong Auxiliary = 0);
 
+public sealed record PortableScalarEventData(ulong Round, PortableScalarBoundaryKind Kind,
+    ulong Fuel, PortableInstructionOccurrence? Occurrence, ulong? Result);
+
 /// <summary>One committed runtime event. Sequence is the coordinator order, not host arrival time.</summary>
 public sealed record PortablePublishedEvent(
     ulong CommitSequence, ulong LogicalTime, PortableRuntimeEventId Id,
     PortableLifecycleEvent? Lifecycle, PortableRuntimeEvent? Instruction, PortableRuntimeFault? Fault,
     PortableRuntimeEventId? Dependency, PortableTemporalEffect? Effect = null,
-    PortableEventDomain Domain = PortableEventDomain.Diagnostic);
+    PortableEventDomain Domain = PortableEventDomain.Diagnostic, PortableScalarEventData? Scalar = null);
 
 /// <summary>
 /// Serial reference publication ledger. Caller supplies an already admitted order; this class is
@@ -44,6 +47,11 @@ public sealed class PortableEventPublication(Guid session, int maxEvents = 100_0
     public PortablePublishedEvent Publish(PortableRuntimeFault value, PortableRuntimeEventId? dependency = null) =>
         Commit(value.Id, null, null, value, dependency);
 
+    internal PortablePublishedEvent PublishScalar(PortableLifecycleEvent value, PortableScalarEventData data) =>
+        Commit(value.Id, value, null, null, null, scalar: data);
+    internal PortablePublishedEvent PublishScalar(PortableRuntimeEvent value, PortableScalarEventData data) =>
+        Commit(value.Id, null, value, null, null, scalar: data);
+
     internal PortablePublishedEvent Publish(PortableTemporalEffect value) =>
         Commit(value.Id, null, null, null, null, value);
 
@@ -55,13 +63,13 @@ public sealed class PortableEventPublication(Guid session, int maxEvents = 100_0
 
     private PortablePublishedEvent Commit(PortableRuntimeEventId id, PortableLifecycleEvent? lifecycle,
         PortableRuntimeEvent? instruction, PortableRuntimeFault? fault, PortableRuntimeEventId? dependency,
-        PortableTemporalEffect? effect = null)
+        PortableTemporalEffect? effect = null, PortableScalarEventData? scalar = null)
     {
         RequireCapacity();
-        if (domain == PortableEventDomain.Semantic && fault is not null)
-            throw new InvalidDataException("Native diagnostic faults require explicit semantic mediation.");
-        if (domain == PortableEventDomain.Diagnostic && effect is not null)
-            throw new InvalidDataException("Semantic effects cannot enter a diagnostic ledger.");
+        if (domain == PortableEventDomain.Semantic && (fault is not null || effect is null && scalar is null))
+            throw new InvalidDataException("Diagnostic observations require explicit semantic mediation.");
+        if (domain == PortableEventDomain.Diagnostic && (effect is not null || scalar is not null))
+            throw new InvalidDataException("Semantic events cannot enter a diagnostic ledger.");
         if (id.Context.Session != session || (id.Context.Ordinal == 0 && effect is null))
             throw new InvalidDataException("Event belongs to another session or invalid context.");
         if (effect is null)
@@ -97,7 +105,7 @@ public sealed class PortableEventPublication(Guid session, int maxEvents = 100_0
                 logical = Math.Max(logical, cause.LogicalTime);
             }
         var entry = new PortablePublishedEvent((ulong)_events.Count + 1, checked(logical + 1),
-            id, lifecycle, instruction, fault, dependency, effect, domain);
+            id, lifecycle, instruction, fault, dependency, effect, domain, scalar);
         _committed.Add(id, entry);
         _last[id.Context] = entry;
         _events.Add(entry);
