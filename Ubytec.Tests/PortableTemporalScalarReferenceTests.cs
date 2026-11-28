@@ -28,20 +28,23 @@ public sealed class PortableTemporalScalarReferenceTests
         byte[] image = Image("push 20\npush 22\nadd\nreturn");
         var outcome = PortableTemporalScalarReference.Run(image, [0, 0], quantum: 2);
         Assert.Equal(new ulong?[] { 42, 42 }, outcome.Results.ToArray());
-        Assert.Equal(new ulong[] { 1, 1, 2, 2, 3, 3 }, outcome.Trace.Select(e => e.Round));
+        Assert.Equal(new ulong[] { 1, 1, 2, 2, 3, 3, 4, 4 }, outcome.Trace.Select(e => e.Round));
         Assert.Equal(new[] { PortableScalarBoundaryKind.Enter, PortableScalarBoundaryKind.Enter,
             PortableScalarBoundaryKind.Budget, PortableScalarBoundaryKind.Budget,
-            PortableScalarBoundaryKind.Return, PortableScalarBoundaryKind.Return },
+            PortableScalarBoundaryKind.Return, PortableScalarBoundaryKind.Return,
+            PortableScalarBoundaryKind.Terminate, PortableScalarBoundaryKind.Terminate },
             outcome.Trace.Select(e => e.Kind));
-        Assert.Equal(new ulong[] { 0, 0, 2, 2, 4, 4 }, outcome.Trace.Select(e => e.Fuel));
-        Assert.Equal(new ulong[] { 1, 2, 1, 2, 1, 2 }, outcome.Trace.Select(e => e.Event.Id.Context.Ordinal));
-        Assert.Equal(new ulong[] { 1, 2, 3, 4, 5, 6 }, outcome.Trace.Select(e => e.Event.CommitSequence));
-        Assert.Equal(new ulong[] { 1, 1, 2, 2, 3, 3 }, outcome.Trace.Select(e => e.Event.LogicalTime));
+        Assert.Equal(new ulong[] { 0, 0, 2, 2, 4, 4, 4, 4 }, outcome.Trace.Select(e => e.Fuel));
+        Assert.Equal(new ulong[] { 1, 2, 1, 2, 1, 2, 1, 2 }, outcome.Trace.Select(e => e.Event.Id.Context.Ordinal));
+        Assert.Equal(new ulong[] { 3, 4, 5, 6, 7, 8, 9, 10 }, outcome.Trace.Select(e => e.Event.CommitSequence));
+        Assert.Equal(new ulong[] { 2, 3, 3, 4, 4, 5, 5, 6 }, outcome.Trace.Select(e => e.Event.LogicalTime));
         Assert.Equal(PortableBinaryVerifier.IdentifyInstruction(image, 0, 10), outcome.Trace[2].Occurrence);
         Assert.Equal(outcome.Trace[2].Occurrence, outcome.Trace[3].Occurrence);
         Assert.NotEqual(outcome.Trace[2].Event.Id, outcome.Trace[3].Event.Id);
         var again = PortableTemporalScalarReference.Run(image, [0, 0], quantum: 2, parallel: true);
         Assert.Equal(Normalize(outcome), Normalize(again));
+        Assert.Equal(outcome.SemanticState.Trace.ToArray(), again.SemanticState.Trace.ToArray());
+        Assert.Equal(outcome.SemanticState.Contexts.ToArray(), again.SemanticState.Contexts.ToArray());
         Assert.NotEqual(outcome.Trace[0].Event.Id.Context.Session, again.Trace[0].Event.Id.Context.Session);
 
         var native = PortableX64Backend.Compile(image);
@@ -55,8 +58,8 @@ public sealed class PortableTemporalScalarReferenceTests
         var outcome = PortableTemporalScalarReference.Run(Image("trap"), [0], quantum: 1);
         Assert.Null(Assert.Single(outcome.Results));
         Assert.Equal(new[] { PortableScalarBoundaryKind.Enter, PortableScalarBoundaryKind.Trap,
-            PortableScalarBoundaryKind.Abort }, outcome.Trace.Select(e => e.Kind));
-        Assert.Equal(new ulong[] { 0, 1, 1 }, outcome.Trace.Select(e => e.Fuel));
+            PortableScalarBoundaryKind.Abort, PortableScalarBoundaryKind.Terminate }, outcome.Trace.Select(e => e.Kind));
+        Assert.Equal(new ulong[] { 0, 1, 1, 1 }, outcome.Trace.Select(e => e.Fuel));
         Assert.Equal(0U, outcome.Trace[1].Occurrence!.Value.InstructionOffset);
         Assert.Equal(PortableLifecycleKind.Abort, outcome.Trace[2].Event.Lifecycle!.Value.Kind);
     }
