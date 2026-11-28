@@ -95,8 +95,7 @@ public sealed class PortableTemporalScalarReferenceTests
     [Fact]
     public void UnsupportedAndInvalidImagesFailClosed()
     {
-        Assert.Throws<NotSupportedException>(() =>
-            PortableTemporalScalarReference.Run(Image("push 3\npush 2\nsub\nreturn"), [0]));
+        Assert.Equal(1UL, Assert.Single(PortableTemporalScalarReference.Run(Image("push 3\npush 2\nsub\nreturn"), [0]).Results));
         byte[] image = Image("push 1\nreturn");
         Assert.Throws<InvalidDataException>(() => PortableTemporalScalarReference.Run(image, [1]));
         Assert.Throws<InvalidDataException>(() => PortableTemporalScalarReference.Run(image[..^1], [0]));
