@@ -1,27 +1,39 @@
 namespace Ubytec.Language.Portable;
 
-public enum PortableTemporalEffectKind { ClockSample, TimerSample, TimerRegister, TimerExpire, TimerCancel }
+public enum PortableTemporalEffectKind { ClockSample, TimerSample, TimerRegister, TimerExpire, TimerCancel, ContextCreated, ContextTerminated, ContextCancelled, CancelAdmission, Yield }
+public enum PortableEventDomain { Diagnostic, Semantic }
 
 /// <summary>Coordinator-owned effect; unlike an instruction event, it need not have an activation.</summary>
 public sealed record PortableTemporalEffect(PortableRuntimeEventId Id, PortableTemporalEffectKind Kind,
-    ulong Round, ulong Value, IReadOnlyList<PortableRuntimeEventId> Dependencies);
+    ulong Round, ulong Value, IReadOnlyList<PortableRuntimeEventId> Dependencies, ulong Auxiliary = 0);
 
 /// <summary>One committed runtime event. Sequence is the coordinator order, not host arrival time.</summary>
 public sealed record PortablePublishedEvent(
     ulong CommitSequence, ulong LogicalTime, PortableRuntimeEventId Id,
     PortableLifecycleEvent? Lifecycle, PortableRuntimeEvent? Instruction, PortableRuntimeFault? Fault,
-    PortableRuntimeEventId? Dependency, PortableTemporalEffect? Effect = null);
+    PortableRuntimeEventId? Dependency, PortableTemporalEffect? Effect = null,
+    PortableEventDomain Domain = PortableEventDomain.Diagnostic);
 
 /// <summary>
 /// Serial reference publication ledger. Caller supplies an already admitted order; this class is
 /// not a deterministic scheduler and must never arbitrate parallel requests by arrival time.
 /// Logical time tracks local order and an explicitly named, previously committed dependency.
 /// </summary>
-public sealed class PortableEventPublication(Guid session, int maxEvents = 100_000)
+public sealed class PortableEventPublication(Guid session, int maxEvents = 100_000,
+    PortableEventDomain domain = PortableEventDomain.Diagnostic)
 {
     private readonly Dictionary<PortableRuntimeContextId, PortablePublishedEvent> _last = new();
     private readonly Dictionary<PortableRuntimeEventId, PortablePublishedEvent> _committed = new();
     private readonly List<PortablePublishedEvent> _events = new();
+    private readonly Dictionary<PortableRuntimeContextId, PortableRuntimeEventId> _creation = new();
+    public PortableEventDomain Domain => domain;
+
+    internal void RegisterCreation(PortableRuntimeContextId context, PortableRuntimeEventId cause)
+    {
+        if (context.Session != session || !_committed.ContainsKey(cause) || _last.ContainsKey(context))
+            throw new InvalidDataException("Invalid creation dependency.");
+        _creation.Add(context, cause);
+    }
 
     public IReadOnlyList<PortablePublishedEvent> Events => _events.AsReadOnly();
 
@@ -46,6 +58,10 @@ public sealed class PortableEventPublication(Guid session, int maxEvents = 100_0
         PortableTemporalEffect? effect = null)
     {
         RequireCapacity();
+        if (domain == PortableEventDomain.Semantic && fault is not null)
+            throw new InvalidDataException("Native diagnostic faults require explicit semantic mediation.");
+        if (domain == PortableEventDomain.Diagnostic && effect is not null)
+            throw new InvalidDataException("Semantic effects cannot enter a diagnostic ledger.");
         if (id.Context.Session != session || (id.Context.Ordinal == 0 && effect is null))
             throw new InvalidDataException("Event belongs to another session or invalid context.");
         if (effect is null)
@@ -60,6 +76,13 @@ public sealed class PortableEventPublication(Guid session, int maxEvents = 100_0
         if (id.Sequence != checked((last?.Id.Sequence ?? 0) + 1))
             throw new InvalidDataException("Event sequence is duplicated or has a gap.");
         ulong logical = last?.LogicalTime ?? 0;
+        if (last is null && _creation.TryGetValue(id.Context, out var creation))
+        {
+            if (effect is not null)
+                effect = effect with { Dependencies = Array.AsReadOnly(effect.Dependencies.Append(creation).Distinct().ToArray()) };
+            else if (dependency is null || dependency == creation) dependency = creation;
+            else throw new InvalidDataException("First lifecycle event must include creation dependency.");
+        }
         if (dependency is { } predecessor)
         {
             if (!_committed.TryGetValue(predecessor, out var cause))
@@ -74,7 +97,7 @@ public sealed class PortableEventPublication(Guid session, int maxEvents = 100_0
                 logical = Math.Max(logical, cause.LogicalTime);
             }
         var entry = new PortablePublishedEvent((ulong)_events.Count + 1, checked(logical + 1),
-            id, lifecycle, instruction, fault, dependency, effect);
+            id, lifecycle, instruction, fault, dependency, effect, domain);
         _committed.Add(id, entry);
         _last[id.Context] = entry;
         _events.Add(entry);
