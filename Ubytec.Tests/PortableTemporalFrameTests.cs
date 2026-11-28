@@ -132,7 +132,7 @@ public sealed class PortableTemporalFrameTests
     }
 
     [Fact]
-    public void UnsupportedCalleeFailsAdmissionEvenBeforeItsCall()
+    public void NewlySupportedCalleeExecutesThroughDirectCall()
     {
         byte[] image = Image("""
             func Main() -> t_int64 {
@@ -146,6 +146,6 @@ public sealed class PortableTemporalFrameTests
                 return
             }
             """);
-        Assert.Throws<NotSupportedException>(() => PortableTemporalScalarReference.Run(image, [0]));
+        Assert.Equal(1UL, Assert.Single(PortableTemporalScalarReference.Run(image, [0]).Results));
     }
 }
