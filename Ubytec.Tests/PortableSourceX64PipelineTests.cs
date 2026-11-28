@@ -124,8 +124,14 @@ public class PortableSourceX64PipelineTests
                 .Select(section => section.Kind == PortableProcessEntrypoint.SectionKind ? replacement : section)
                 .ToArray()
         };
-        byte[] bytes = PortableBinaryCodec.Encode(malformed);
-
+        Assert.Throws<InvalidDataException>(() => PortableBinaryCodec.Encode(malformed));
+        // The typed encoder now fails closed as well; mutate wire bytes to test independent readers.
+        byte[] bytes = result.ModuleBytes.ToArray();
+        int offset = 12;
+        while (BinaryPrimitives.ReadUInt16LittleEndian(bytes.AsSpan(offset, 2)) != PortableProcessEntrypoint.SectionKind)
+            offset += checked(12 + (int)BinaryPrimitives.ReadUInt64LittleEndian(bytes.AsSpan(offset + 4, 8)));
+        BinaryPrimitives.WriteUInt32LittleEndian(bytes.AsSpan(offset + 12, 4), 123456u);
+        Assert.Throws<InvalidDataException>(() => PortableBinaryVerifier.Verify(bytes));
         Assert.Throws<InvalidDataException>(() => PortableProcessEntrypoint.Verify(bytes));
         Assert.Throws<InvalidDataException>(() => PortableProcessX64Backend.Compile(bytes));
     }
