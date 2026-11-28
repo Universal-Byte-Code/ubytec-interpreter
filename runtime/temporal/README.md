@@ -18,17 +18,17 @@ Keep one UBC module during this bootstrap; functions are grouped by responsibili
 | --- | --- |
 | Cell access | TemporalCellAddress/Get/Set |
 | Stack | TemporalStackGet, Pick, Remove, Rotate, CopyPair, StackByte/Word |
-| Scalar dispatch | TemporalPrivateDepth/Apply, TemporalUnary/Binary, TemporalArithmeticSafe |
-| Admission | TemporalAdmit, TemporalDecode, TemporalPlanPrepare, TemporalLinkScopes, TemporalResolveBreaks, TemporalAnalyzeDepth, TemporalValidateTransfers |
+| Scalar dispatch | TemporalPrivateDepth/Apply, TemporalDepthShape, TemporalUnary/Binary, TemporalArithmeticSafe |
+| Admission | TemporalAdmit, TemporalValidateSection, TemporalValidateRootSignature, TemporalDecode, TemporalPlanPrepare, TemporalLinkScopes, TemporalResolveBreaks, TemporalAnalyzeDepth, TemporalValidateTransfers |
 | Interpreter | TemporalTurn, TemporalSaveBoundary, TemporalSetPhase |
 | Scheduler | TemporalRunPrepared, TemporalRun, TemporalRunModule |
 | Event projection | TemporalLedgerRow/Write |
 
-Use typed block contracts where they express real stack transformations, structured SWITCH dispatch for opcode selection, and one implementation of each state transition. Preserve differential traces, fuel, malformed-input rejection and native test results. Numeric wire constants remain visible in decoding/dispatch until there is an explicit source-level constant mechanism; do not introduce a second registry. Further decomposition of PMF admission and a compact plan layout remain open.
+Use typed block contracts where they express real stack transformations, structured SWITCH dispatch for opcode selection, and one implementation of each state transition. Preserve differential traces, fuel, malformed-input rejection and native test results. Numeric wire constants remain visible in decoding/dispatch until there is an explicit source-level constant mechanism; do not introduce a second registry. PMF traversal and profile policy are separate: bounded section framing precedes the per-kind payload validators; root signature validation follows required-section checks. A compact plan layout and physical module split remain open.
 
 ## Scalar execution
 
-`TemporalPrivateDepth` validates required stack depth and resulting capacity for both admission and execution. `TemporalPrivateApply` implements private cell operations in Ubytec; execution charges one guest instruction regardless of helper instruction count. Integer arithmetic wraps modulo 2^64 except DIV/MOD/UDIV/UMOD, which trap on zero, and signed DIV/MOD also trap on min-int / -1 before native division. ABS of min-int preserves its bit pattern. Shift counts use the low six bits; signed and unsigned comparisons yield canonical 0/1. PUSH16 is a zero-extended two-byte read in the native top-first stack byte layout (including cross-cell words); the other extended forms index cells, not bytes. Internal dispatch value 273 distinguishes PUSH16 from core PUSH; it is not a new guest opcode.
+`TemporalPrivateDepth` classifies the admitted opcode into its required and resulting top-window cell counts. `TemporalDepthShape` validates the window and computes the next depth using a typed BLOCK, with the prefix preserved; CLEAR resets depth explicitly. Both admission and execution share this rule. `TemporalPrivateApply` implements private cell operations in Ubytec; execution charges one guest instruction regardless of helper instruction count. Integer arithmetic wraps modulo 2^64 except DIV/MOD/UDIV/UMOD, which trap on zero, and signed DIV/MOD also trap on min-int / -1 before native division. ABS of min-int preserves its bit pattern. Shift counts use the low six bits; signed and unsigned comparisons yield canonical 0/1. PUSH16 is a zero-extended two-byte read in the native top-first stack byte layout (including cross-cell words); the other extended forms index cells, not bytes. Internal dispatch value 273 distinguishes PUSH16 from core PUSH; it is not a new guest opcode.
 
 ## Complete module admission
 
