@@ -149,18 +149,19 @@ public static class PortableTemporalScalarReference
                 state.Pc = next.Pc;
                 state.Fuel = next.Fuel;
                 if (next.Stack is not null) state.Stack = next.Stack;
+                var data = new PortableScalarEventData(coordinator.Round, next.Kind, next.Fuel, next.Occurrence, next.Result);
                 PortablePublishedEvent published;
                 switch (next.Kind)
                 {
                     case PortableScalarBoundaryKind.Enter:
                         var entry = identity.EnterObserved(id, loaded, state.Function);
                         state.Activation = entry.Activation;
-                        published = publication.Publish(entry);
+                        published = publication.PublishScalar(entry, data);
                         break;
                     case PortableScalarBoundaryKind.Return:
                     case PortableScalarBoundaryKind.Abort:
                         bool aborted = next.Kind == PortableScalarBoundaryKind.Abort;
-                        published = publication.Publish(identity.CloseObserved(state.Activation!.Value, aborted));
+                        published = publication.PublishScalar(identity.CloseObserved(state.Activation!.Value, aborted), data);
                         state.Result = next.Result;
                         state.TerminationPending = true;
                         break;
@@ -170,8 +171,8 @@ public static class PortableTemporalScalarReference
                         break;
                     case PortableScalarBoundaryKind.Trap:
                     case PortableScalarBoundaryKind.Budget:
-                        published = publication.Publish(identity.Record(state.Activation!.Value,
-                            next.Occurrence!.Value.InstructionOffset));
+                        published = publication.PublishScalar(identity.Record(state.Activation!.Value,
+                            next.Occurrence!.Value.InstructionOffset), data);
                         state.AbortPending = next.Kind == PortableScalarBoundaryKind.Trap;
                         break;
                     default: throw new InvalidOperationException("Unknown boundary.");
