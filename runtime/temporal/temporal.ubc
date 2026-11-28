@@ -19,7 +19,10 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             push 6
             return
         end
-        if @capacity > 4096
+        load @capacity
+        push 4096
+        ugt
+        if
             push 6
             return
         end
@@ -457,7 +460,10 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             push 0
             return
         end
-        if @contexts > 128
+        load @contexts
+        push 128
+        ugt
+        if
             push 0
             return
         end
@@ -465,7 +471,10 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             push 0
             return
         end
-        if @capacity > 4096
+        load @capacity
+        push 4096
+        ugt
+        if
             push 0
             return
         end
@@ -473,7 +482,10 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             push 0
             return
         end
-        if @limit > 1000000
+        load @limit
+        push 1000000
+        ugt
+        if
             push 0
             return
         end
