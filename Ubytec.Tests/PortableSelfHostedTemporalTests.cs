@@ -36,6 +36,20 @@ public sealed class PortableSelfHostedTemporalTests
     [InlineData("push 20\npush 22\nadd\nreturn", 2, 2)]
     [InlineData("nop\npush 42\nreturn", 3, 1)]
     [InlineData("push 1\ntrap", 1, 3)]
+    [InlineData("push 20\npush 3\nsub\npush 2\nmul\ninc\ndec\nneg\nabs\nreturn", 2, 2)]
+    [InlineData("push 20\npush 3\ndiv\npush 7\npush 4\nmod\nadd\npush 2\nudiv\npush 2\numod\nreturn", 3, 1)]
+    [InlineData("push 1\npush 63\nshl\npush 65\nshr\npush 2\nlshr\nnot\npush 15\nand\npush 2\nor\npush 3\nxor\nreturn", 4, 1)]
+    [InlineData("push 1\nneg\npush 1\nlt\npush 1\nle\npush 0\ngt\npush 1\nge\npush 1\neq\npush 0\nneq\nreturn", 3, 1)]
+    [InlineData("push 1\nneg\npush 1\nugt\npush 2\nult\npush 1\nule\npush 1\nuge\nreturn", 2, 2)]
+    [InlineData("push 1\npush 2\npush 3\nrot\nswap\nover\nnip\ndup\npop\npick 1\nroll 2\ndrop 1\nadd\nadd\nreturn", 3, 1)]
+    [InlineData("push 1\npush 2\npush 3\npush 4\npush 5\npush 6\n2rot\n2swap\n2dup\n2over\nclear\nnull\nreturn", 4, 2)]
+    [InlineData("push 18\npush 1\npush 56\nshl\npush16 7\npick16 2\nroll16 1\ndrop16 2\nadd\nreturn", 2, 1)]
+    [InlineData("push 1\npush 0\ndiv\nreturn", 3, 2)]
+    [InlineData("push 1\npush 0\nmod\nreturn", 2, 1)]
+    [InlineData("push 1\npush 0\nudiv\nreturn", 3, 1)]
+    [InlineData("push 1\npush 0\numod\nreturn", 3, 1)]
+    [InlineData("push 1\npush 63\nshl\npush 1\nneg\ndiv\nreturn", 3, 1)]
+    [InlineData("push 1\npush 63\nshl\npush 1\nneg\nmod\nreturn", 3, 1)]
     public void NativeUbytecSchedulerMatchesManagedLedger(string body, int quantum, int contexts)
     {
         byte[] image = Image(body);
@@ -62,7 +76,7 @@ public sealed class PortableSelfHostedTemporalTests
     public void NativeUbytecSchedulerRejectsTruncatedUnsupportedAndExhaustedGuest()
     {
         Assert.Empty(RunNative([0x11, 8, 1], 1, 2, 16));
-        Assert.Empty(RunNative([0x21], 1, 2, 16));
+        Assert.Empty(RunNative([0x62], 1, 2, 16));
         Assert.Empty(RunNative([0x01, 0x01, 0x00], 1, 1, 2));
     }
 
@@ -85,10 +99,10 @@ public sealed class PortableSelfHostedTemporalTests
         changed = valid.ToArray();
         changed[Find(changed, 0x0012) + 16] = 1; Reject(changed); // nonzero CodeOffset
         changed = valid.ToArray();
-        changed[Find(changed, 0x0016)] = 0x21; Reject(changed); // unsupported opcode
+        changed[Find(changed, 0x0016)] = 0x62; Reject(changed); // unsupported opcode
         changed = valid.ToArray();
         changed[Find(changed, 0x0016) + 1] = 0xff; Reject(changed); // invalid immediate length
-        Reject(Image("push 3\npush 2\nsub\nreturn"));
+        Reject(Image("loop\nnop\nbreak\nend\npush 1\nreturn"));
 
         static int Find(byte[] image, ushort kind)
         {
