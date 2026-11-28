@@ -334,7 +334,7 @@ public sealed class PortableTemporalCoordinator
             Lifecycle = e.Lifecycle?.Kind, Activation = e.Lifecycle?.Activation.Ordinal ?? e.Instruction?.Activation.Ordinal,
             Instance = e.Lifecycle?.Instance.Ordinal ?? e.Instruction?.Instance.Ordinal,
             Function = e.Lifecycle?.FunctionIndex ?? e.Instruction?.Occurrence.FunctionIndex,
-            Occurrence = e.Instruction?.Occurrence,
+            Occurrence = e.Instruction?.Occurrence, e.Scalar,
             Dependency = e.Dependency is { } d ? new[] { d.Context.Ordinal, d.Sequence } : null,
             Kind = e.Effect?.Kind, Round = e.Effect?.Round, Value = e.Effect?.Value, Aux = e.Effect?.Auxiliary,
             Dependencies = e.Effect?.Dependencies.Select(d => new[] { d.Context.Ordinal, d.Sequence }).ToArray()
