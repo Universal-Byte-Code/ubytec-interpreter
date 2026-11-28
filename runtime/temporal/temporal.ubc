@@ -2932,7 +2932,7 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
         while @i < @contexts
             load @states
             load @i
-            call TemporalPlanRow
+            call TemporalContextRow
             store @state
             push 0
             store @j
@@ -2987,7 +2987,7 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             while @i < @contexts
                 load @states
                 load @i
-                call TemporalPlanRow
+                call TemporalContextRow
                 store @state
                 load @state
                 push 3
@@ -3137,6 +3137,18 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
         push 8
         load @result
         call TemporalCellSet
+        return
+    }
+
+    // Context records and instruction records have independent layouts,
+    // even though their bootstrap strides happen to be equal.
+    func TemporalContextRow(t_uint64 states,t_uint64 ordinal) -> t_uint64
+    {
+        load @states
+        load @ordinal
+        push 64
+        mul
+        add
         return
     }
 }
