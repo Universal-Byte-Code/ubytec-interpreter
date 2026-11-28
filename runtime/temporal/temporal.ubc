@@ -1629,1096 +1629,352 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
     // Returns new depth + 1, or zero. Internal opcode 273 denotes escaped PUSH16.
     func TemporalPrivateDepth(t_uint64 op,t_uint64 idx,t_uint64 depth,t_uint64 capacity) -> t_uint64
     {
-        local { t_uint64 needed 0 t_uint64 nextdepth 0 }
-        if @op == 13
+        local { t_uint64 needed 0 t_uint64 nextdepth 0 t_uint64 known 0 }
+        load @op
+        push 13
+        eq
+        if
             push 0
             store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
             push 0
             store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
+            push 1
+            store @known
         end
-        if @op == 15
+        load @op
+        push 15
+        eq
+        if
             push 0
             store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
             load @depth
             push 1
             add
             store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
+            push 1
+            store @known
         end
-        if @op == 18
+        load @op
+        push 18
+        eq
+        if
             push 1
             store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
             load @depth
             push 1
             sub
             store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
+            push 1
+            store @known
         end
-        if @op == 19
+        load @op
+        push 19
+        eq
+        if
             push 1
             store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
             load @depth
             push 1
             add
             store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
+            push 1
+            store @known
         end
-        if @op == 20
+        load @op
+        push 20
+        eq
+        if
             push 2
             store @needed
             load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
             store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
+            push 1
+            store @known
         end
-        if @op == 21
+        load @op
+        push 21
+        eq
+        if
             push 3
             store @needed
             load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
             store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
+            push 1
+            store @known
         end
-        if @op == 22
+        load @op
+        push 22
+        eq
+        if
             push 2
             store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
             load @depth
             push 1
             add
             store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
+            push 1
+            store @known
         end
-        if @op == 23
+        load @op
+        push 23
+        eq
+        load @op
+        push 32
+        eq
+        or
+        load @op
+        push 33
+        eq
+        or
+        load @op
+        push 34
+        eq
+        or
+        load @op
+        push 35
+        eq
+        or
+        load @op
+        push 36
+        eq
+        or
+        load @op
+        push 41
+        eq
+        or
+        load @op
+        push 42
+        eq
+        or
+        load @op
+        push 48
+        eq
+        or
+        load @op
+        push 49
+        eq
+        or
+        load @op
+        push 50
+        eq
+        or
+        load @op
+        push 52
+        eq
+        or
+        load @op
+        push 53
+        eq
+        or
+        load @op
+        push 54
+        eq
+        or
+        load @op
+        push 64
+        eq
+        or
+        load @op
+        push 65
+        eq
+        or
+        load @op
+        push 66
+        eq
+        or
+        load @op
+        push 67
+        eq
+        or
+        load @op
+        push 68
+        eq
+        or
+        load @op
+        push 69
+        eq
+        or
+        load @op
+        push 70
+        eq
+        or
+        load @op
+        push 71
+        eq
+        or
+        load @op
+        push 72
+        eq
+        or
+        load @op
+        push 73
+        eq
+        or
+        if
             push 2
             store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
             load @depth
             push 1
             sub
             store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
+            push 1
+            store @known
         end
-        if @op == 24
+        load @op
+        push 24
+        eq
+        if
             load @idx
             inc
             store @needed
             load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
             push 1
             sub
             store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
+            push 1
+            store @known
         end
-        if @op == 25
+        load @op
+        push 25
+        eq
+        if
             push 2
             store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
             load @depth
             push 2
             add
             store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
+            push 1
+            store @known
         end
-        if @op == 26
+        load @op
+        push 26
+        eq
+        if
             push 4
             store @needed
             load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
             store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
+            push 1
+            store @known
         end
-        if @op == 27
+        load @op
+        push 27
+        eq
+        if
             push 6
             store @needed
             load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
             store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
+            push 1
+            store @known
         end
-        if @op == 28
+        load @op
+        push 28
+        eq
+        if
             push 4
             store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
             load @depth
             push 2
             add
             store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
+            push 1
+            store @known
         end
-        if @op == 29
+        load @op
+        push 29
+        eq
+        if
             load @idx
             inc
             store @needed
             load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
             push 1
             add
             store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
+            push 1
+            store @known
         end
-        if @op == 30
+        load @op
+        push 30
+        eq
+        if
             load @idx
             inc
             store @needed
             load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
             store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 273
-            load @idx
             push 1
-            add
+            store @known
+        end
+        load @op
+        push 273
+        eq
+        if
+            load @idx
+            inc
             push 8
             udiv
             inc
             store @needed
             load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
             push 1
             add
             store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 32
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
             push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
+            store @known
         end
-        if @op == 33
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 34
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 35
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 36
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 41
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 42
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 48
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 49
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 50
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 52
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 53
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 54
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 64
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 65
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 66
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 67
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 68
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 69
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 70
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 71
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 72
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 73
-            push 2
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            push 1
-            sub
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 37
+        load @op
+        push 37
+        eq
+        load @op
+        push 38
+        eq
+        or
+        load @op
+        push 39
+        eq
+        or
+        load @op
+        push 40
+        eq
+        or
+        load @op
+        push 51
+        eq
+        or
+        if
             push 1
             store @needed
             load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
             store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        if @op == 38
             push 1
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
+            store @known
+        end
+        if @known == 0
+            push 0
             return
         end
-        if @op == 39
-            push 1
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
+        load @depth
+        load @needed
+        ult
+        if
+            push 0
             return
         end
-        if @op == 40
-            push 1
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
+        load @nextdepth
+        load @capacity
+        ugt
+        if
+            push 0
             return
         end
-        if @op == 51
-            push 1
-            store @needed
-            load @depth
-            load @needed
-            ult
-            if
-                push 0
-                return
-            end
-            load @depth
-            store @nextdepth
-            load @nextdepth
-            load @capacity
-            ugt
-            if
-                push 0
-                return
-            end
-            load @nextdepth
-            inc
-            return
-        end
-        push 0
+        load @nextdepth
+        inc
         return
     }
+
     // Called only after shape validation. 1 success, 2 guest arithmetic trap.
     func TemporalPrivateApply(t_uint64 cells,t_uint64 depth,t_uint64 op,t_uint64 idx) -> t_uint64
     {
