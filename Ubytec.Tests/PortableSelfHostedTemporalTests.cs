@@ -147,6 +147,75 @@ public sealed class PortableSelfHostedTemporalTests
         Assert.Empty(RunNative([0x03, 0x01, 0x06], 2, 2, 8));
     }
 
+    [Fact]
+    public void ModuleSectionPolicyIsIndependentOfScheduler()
+    {
+        byte[] image = Image("push 42\nreturn");
+        ulong[] expected = RunNative(image, 1, 2, 32, module: true);
+        Assert.NotEmpty(expected);
+        // Unknown optional section after the last indexed section: no semantic effect.
+        Assert.Equal(expected, RunNative(AppendSection(image, 0x8000, 0, [1, 2, 3]), 1, 2, 32, module: true));
+        // Critical unknown, reserved flags and duplicate/out-of-order known section.
+        Reject(AppendSection(image, 0x8000, 1, []));
+        Reject(AppendSection(image, 0x8000, 2, []));
+        Reject(AppendSection(image, 0x0018, 1, []));
+        // Every required indexed section is checked, independently of its content.
+        foreach (ushort kind in new ushort[] { 1, 16, 17, 18, 19, 20, 21, 22, 24 })
+            Reject(RemoveSection(image, kind));
+
+        void Reject(byte[] bytes) =>
+            Assert.Empty(RunNative(bytes, 1, 2, 32, module: true, untouched: true));
+
+        static byte[] AppendSection(byte[] bytes, ushort kind, ushort flags, byte[] payload)
+        {
+            byte[] result = new byte[checked(bytes.Length + 12 + payload.Length)];
+            bytes.CopyTo(result, 0);
+            BinaryPrimitives.WriteUInt32LittleEndian(result.AsSpan(8),
+                BinaryPrimitives.ReadUInt32LittleEndian(bytes.AsSpan(8)) + 1);
+            BinaryPrimitives.WriteUInt16LittleEndian(result.AsSpan(bytes.Length), kind);
+            BinaryPrimitives.WriteUInt16LittleEndian(result.AsSpan(bytes.Length + 2), flags);
+            BinaryPrimitives.WriteUInt64LittleEndian(result.AsSpan(bytes.Length + 4), (ulong)payload.Length);
+            payload.CopyTo(result, bytes.Length + 12);
+            return result;
+        }
+
+        static byte[] RemoveSection(byte[] bytes, ushort kind)
+        {
+            int offset = 12;
+            while (offset < bytes.Length)
+            {
+                int extent = checked(12 + (int)BinaryPrimitives.ReadUInt64LittleEndian(bytes.AsSpan(offset + 4)));
+                if (BinaryPrimitives.ReadUInt16LittleEndian(bytes.AsSpan(offset)) == kind)
+                {
+                    byte[] result = [.. bytes[..offset], .. bytes[(offset + extent)..]];
+                    BinaryPrimitives.WriteUInt32LittleEndian(result.AsSpan(8),
+                        BinaryPrimitives.ReadUInt32LittleEndian(bytes.AsSpan(8)) - 1);
+                    return result;
+                }
+                offset += extent;
+            }
+            throw new InvalidDataException("Expected required section.");
+        }
+    }
+
+    [Fact]
+    public void StackWindowContractsRejectUnderflowAndCapacityBeforePublishing()
+    {
+        // Each test is raw Code, not a C# pre-verified image.
+        byte[][] invalid =
+        [
+            [0x12, 0x00],                            // POP with empty stack
+            [0x11, 1, 1, 0x15, 0x00],               // ROT needs three cells
+            [0x11, 1, 1, 0x1d, 1, 0x00],            // PICK index outside stack
+            [0x11, 1, 1, 0xff, 0x10, 0x18, 0xff, 0xff, 0x00], // DROP16 max index
+            [0x11, 1, 1, 0xff, 0x10, 0x11, 7, 0, 0x00],       // PUSH16 word crosses absent cell
+            [0x11, 1, 1, 0x20, 0x00],               // binary op needs two cells
+            [.. Enumerable.Repeat((byte)0x0f, 33), 0x00]       // capacity is 32 cells
+        ];
+        foreach (byte[] code in invalid)
+            Assert.Empty(RunNative(code, 1, 2, 32, untouched: true));
+    }
+
     private static ulong[] RunNative(byte[] code, int contexts, int quantum, int limit, bool module = false, bool untouched = false)
     {
         const int capacity = 32;
