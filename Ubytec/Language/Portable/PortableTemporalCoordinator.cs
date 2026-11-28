@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 
 namespace Ubytec.Language.Portable;
@@ -88,9 +89,21 @@ public sealed class PortableTemporalCoordinator
         Publication = new PortableEventPublication(Session, maxEvents, PortableEventDomain.Semantic);
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    private struct Timespec { public long Seconds; public long Nanoseconds; }
+
+    [DllImport("libc", EntryPoint = "clock_getres", SetLastError = true)]
+    private static extern int ClockGetResolution(int clockId, out Timespec resolution);
+
     public static PortableTemporalCoordinator LiveLinux(int maxEvents = 100_000, int maxContexts = 128)
     {
-        if (!OperatingSystem.IsLinux()) throw new PlatformNotSupportedException("Linux monotonic domain required.");
+        if (!OperatingSystem.IsLinux() || IntPtr.Size != 8)
+            throw new PlatformNotSupportedException("64-bit Linux monotonic domain required.");
+        if (ClockGetResolution(1, out var resolution) != 0 || resolution.Seconds < 0 ||
+            resolution.Nanoseconds is < 0 or >= 1_000_000_000)
+            throw new InvalidOperationException("CLOCK_MONOTONIC resolution unavailable.");
+        ulong ns = checked((ulong)resolution.Seconds * 1_000_000_000UL + (ulong)resolution.Nanoseconds);
+        if (ns == 0) throw new InvalidOperationException("Invalid clock resolution.");
         long origin = Stopwatch.GetTimestamp();
         // Tick conversion granularity, not measured host clock precision.
         return new(maxEvents, maxContexts, () =>
@@ -98,7 +111,7 @@ public sealed class PortableTemporalCoordinator
             long ticks = checked(Stopwatch.GetTimestamp() - origin);
             if (ticks < 0) throw new InvalidDataException("Host clock regressed.");
             return checked((ulong)((UInt128)(ulong)ticks * 1_000_000_000 / (ulong)Stopwatch.Frequency));
-        }, clockPolicy: new(Guid.Empty, $"linux-stopwatch-{Stopwatch.Frequency}-ticks-per-second", null, true));
+        }, clockPolicy: new(Guid.Empty, $"linux-stopwatch-{Stopwatch.Frequency}-ticks-per-second", ns, true));
     }
 
     public PortableClockInstant Instant(ulong requestOrdinal)
@@ -298,7 +311,11 @@ public sealed class PortableTemporalCoordinator
     {
         ArgumentNullException.ThrowIfNull(prepare);
         RequireBoundary();
-        if (_live.Count == 0) return PortableRoundState.Terminated;
+        if (_live.Count == 0)
+        {
+            if (_pending.Count != 0) throw new InvalidDataException("Unused journal after termination.");
+            return PortableRoundState.Terminated;
+        }
         if (_live.All(_timers.ContainsKey) && _pending.Count == 0) return PortableRoundState.Quiescent;
         _started = true;
         try
@@ -318,7 +335,11 @@ public sealed class PortableTemporalCoordinator
             else for (int i = 0; i < frontier.Length; i++) proposals[i] = prepare(frontier[i]);
             // A typed, immutable proposal is the only public commit input.
             for (int i = 0; i < frontier.Length; i++) commit(frontier[i], proposals[i]);
-            if (_live.Count == 0) return PortableRoundState.Terminated;
+            if (_live.Count == 0)
+            {
+                if (_pending.Count != 0) throw new InvalidDataException("Unused journal after termination.");
+                return PortableRoundState.Terminated;
+            }
             return PortableRoundState.Progressed;
         }
         catch { _failed = true; throw; }
