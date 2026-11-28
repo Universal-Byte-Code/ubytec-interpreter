@@ -50,6 +50,14 @@ public sealed class PortableSelfHostedTemporalTests
     [InlineData("push 1\npush 0\numod\nreturn", 3, 1)]
     [InlineData("push 1\npush 63\nshl\npush 1\nneg\ndiv\nreturn", 3, 1)]
     [InlineData("push 1\npush 63\nshl\npush 1\nneg\nmod\nreturn", 3, 1)]
+    [InlineData("loop\nnop\nbreak\nend\npush 42\nreturn", 2, 2)]
+    [InlineData("push 3\nloop\ndec\ndup\nif\ncontinue\nend\nbreak\nend\nreturn", 1, 2)]
+    [InlineData("push 3\ndup\nwhile\ndec\ndup\nend\nreturn", 2, 2)]
+    [InlineData("push 0\nif\npush 7\nelse\npush 42\nend\nreturn", 1, 1)]
+    [InlineData("push 1\nif\npush 42\nelse\npush 7\nend\nreturn", 2, 2)]
+    [InlineData("block\npush 42\nend\nreturn", 1, 1)]
+    [InlineData("loop\nloop\nbreak\nend\nbreak\nend\npush 42\nreturn", 2, 2)]
+    [InlineData("push 0\nwhile\nnop\npush 0\nend\npush 42\nreturn", 3, 1)]
     public void NativeUbytecSchedulerMatchesManagedLedger(string body, int quantum, int contexts)
     {
         byte[] image = Image(body);
@@ -102,7 +110,7 @@ public sealed class PortableSelfHostedTemporalTests
         changed[Find(changed, 0x0016)] = 0x62; Reject(changed); // unsupported opcode
         changed = valid.ToArray();
         changed[Find(changed, 0x0016) + 1] = 0xff; Reject(changed); // invalid immediate length
-        Reject(Image("loop\nnop\nbreak\nend\npush 1\nreturn"));
+        Reject(Image("block checked () -> t_int16\npush 1\nend\nreturn")); // typed BLOCK still outside this slice
 
         static int Find(byte[] image, ushort kind)
         {
@@ -116,6 +124,29 @@ public sealed class PortableSelfHostedTemporalTests
         }
     }
 
+    [Fact]
+    public void StructuredAdmissionRejectsBadScopesTransfersAndStackJoins()
+    {
+        // Raw Code is now independently planned as well. No event can be
+        // published for a malformed scope or inconsistent reachable join.
+        byte[][] invalid =
+        [
+            [0x06],                                  // unmatched END
+            [0x03, 0x00],                            // unterminated LOOP
+            [0x05, 0x00],                            // ELSE outside IF
+            [0x07, 0, 0, 0, 0, 0x00],              // BREAK outside LOOP
+            [0x03, 0x08, 1, 0, 0, 0, 0x06],        // missing outer target
+            [0x11, 1, 1, 0x04, 0x11, 1, 2, 0x06, 0x00], // IF join differs
+            [0x03, 0x11, 1, 1, 0x06],               // LOOP grows stack
+            [0x03, 0x11, 1, 1, 0x07, 0, 0, 0, 0, 0x06, 0x00], // BREAK wrong depth
+            [0x11, 1, 1, 0x04, 0x05, 0x05, 0x06, 0x00] // duplicate ELSE
+        ];
+        foreach (byte[] code in invalid)
+            Assert.Empty(RunNative(code, 1, 2, 32, untouched: true));
+        // A valid infinite loop is admitted, but is subject to event limits.
+        Assert.Empty(RunNative([0x03, 0x01, 0x06], 2, 2, 8));
+    }
+
     private static ulong[] RunNative(byte[] code, int contexts, int quantum, int limit, bool module = false, bool untouched = false)
     {
         const int capacity = 32;
@@ -125,13 +156,14 @@ public sealed class PortableSelfHostedTemporalTests
         nint stacks = Marshal.AllocHGlobal(contexts * capacity * 8);
         nint ledger = Marshal.AllocHGlobal(limit * 72);
         nint view = Marshal.AllocHGlobal(16);
+        nint plan = Marshal.AllocHGlobal(Math.Max(1, Math.Min(code.Length, 4096)) * 72);
         try
         {
             Marshal.Copy(code, 0, input, code.Length);
             byte[] sentinel = Enumerable.Repeat((byte)0xA5, limit * 72).ToArray();
             Marshal.Copy(sentinel, 0, ledger, sentinel.Length);
             string[] args = [Address(input), code.Length.ToString(), Address(states), Address(stacks),
-                contexts.ToString(), capacity.ToString(), quantum.ToString(), Address(ledger), limit.ToString()];
+                contexts.ToString(), capacity.ToString(), quantum.ToString(), Address(ledger), limit.ToString(), Address(plan)];
             if (module) args = [.. args, Address(view)];
             string body = string.Join("\n", args.Select(arg => $"mov rax, {arg}\npush rax")) +
                 $"\ncall {native.GetFunctionLabel(module ? 3 : 1)}\nadd rsp, {args.Length * 8}\npush rax";
@@ -150,7 +182,7 @@ public sealed class PortableSelfHostedTemporalTests
         finally
         {
             Marshal.FreeHGlobal(input); Marshal.FreeHGlobal(states);
-            Marshal.FreeHGlobal(stacks); Marshal.FreeHGlobal(ledger); Marshal.FreeHGlobal(view);
+            Marshal.FreeHGlobal(stacks); Marshal.FreeHGlobal(ledger); Marshal.FreeHGlobal(view); Marshal.FreeHGlobal(plan);
         }
     }
 
