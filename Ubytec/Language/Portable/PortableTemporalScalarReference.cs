@@ -16,13 +16,14 @@ public sealed record PortableScalarOutcome(IReadOnlyList<PortableScalarBoundary>
 
 /// <summary>
 /// First actual UBCM temporal reference slice. Accepts only verified DirectOnly modules and
-/// selected straight-line zero-argument/local Int64 functions using eight-byte PUSH, ADD,
-/// RETURN or explicit TRAP. No host effects, calls, branches, timers or shared memory.
+/// selected zero-argument/local Int64 functions using eight-byte PUSH, ADD, NOP,
+/// LOOP/END, loop BREAK/CONTINUE, RETURN or explicit TRAP. No host effects, calls,
+/// conditional branches, timers or shared memory.
 /// This is an interpreter, not native code generation or full temporal-v0 conformance.
 /// </summary>
 public static class PortableTemporalScalarReference
 {
-    private sealed record Plan(PortableInstruction[] Code, PortableInstructionOccurrence[] Sites);
+    private sealed record Plan(PortableInstruction[] Code, PortableInstructionOccurrence[] Sites, int[] Targets);
     private sealed class State(PortableRuntimeContextId context, uint function, Plan plan)
     {
         internal readonly PortableRuntimeContextId Context = context;
@@ -64,6 +65,12 @@ public static class PortableTemporalScalarReference
             {
                 case PortablePushInstruction push:
                     stack.Push(BinaryPrimitives.ReadUInt64LittleEndian(push.Immediate));
+                    break;
+                case PortableOperandFreeInstruction op when op.OpCode is NOP.OP or LOOP.OP:
+                    break;
+                case PortableOperandFreeInstruction op when op.OpCode == END.OP:
+                case PortableControlTransferInstruction:
+                    pc = state.Plan.Targets[pc - 1];
                     break;
                 case PortableOperandFreeInstruction op when op.OpCode == 0x20:
                     ulong right = stack.Pop(), left = stack.Pop();
@@ -117,19 +124,38 @@ public static class PortableTemporalScalarReference
                 bool supported = instruction switch
                 {
                     PortablePushInstruction push => push.Immediate.Length == 8,
-                    PortableOperandFreeInstruction op => op.OpCode is 0x20 or TRAP.OP,
+                    PortableOperandFreeInstruction op => op.OpCode is 0x20 or TRAP.OP or NOP.OP or LOOP.OP or END.OP,
+                    PortableControlTransferInstruction transfer => transfer.Operation is BREAK.OP or CONTINUE.OP,
                     PortableReturnInstruction ret => ret.TypeIndex is null || ret.TypeIndex == function.ReturnTypeIndex,
                     _ => false
                 };
                 if (!supported)
                     throw new NotSupportedException($"Unsupported temporal scalar opcode 0x{instruction.OpCode:X2}.");
             }
-            // The subset intentionally rejects implicit fallthrough and unreachable tails.
-            if (code.Length == 0 || code[^1] is not PortableReturnInstruction &&
-                code[^1].OpCode != TRAP.OP ||
-                code.Take(code.Length - 1).Any(op => op is PortableReturnInstruction || op.OpCode == TRAP.OP))
-                throw new NotSupportedException("Reference requires a single final RETURN or TRAP.");
-            plans.Add(index, new Plan(code, sites));
+            // Resolve only loop scopes, never native labels. LOOP charges on entry;
+            // END/CONTINUE target the first body instruction. BREAK skips END.
+            int[] targets = new int[code.Length];
+            var loops = new Stack<int>();
+            var exits = new Dictionary<int, int>();
+            var breaks = new List<(int Site, int Loop)>();
+            for (int i = 0; i < code.Length; i++)
+            {
+                if (code[i].OpCode == LOOP.OP) loops.Push(i);
+                else if (code[i].OpCode == END.OP)
+                {
+                    int start = loops.Pop();
+                    targets[i] = start + 1;
+                    exits.Add(start, i + 1);
+                }
+                else if (code[i] is PortableControlTransferInstruction transfer)
+                {
+                    int start = loops.ElementAt(checked((int)transfer.TargetOrdinal));
+                    if (transfer.Operation == CONTINUE.OP) targets[i] = start + 1;
+                    else breaks.Add((i, start));
+                }
+            }
+            foreach (var site in breaks) targets[site.Site] = exits[site.Loop];
+            plans.Add(index, new Plan(code, sites, targets));
         }
 
         var coordinator = new PortableTemporalCoordinator(maxEvents);
