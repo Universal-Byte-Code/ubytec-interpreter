@@ -1629,7 +1629,10 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
     // Returns new depth + 1, or zero. Internal opcode 273 denotes escaped PUSH16.
     func TemporalPrivateDepth(t_uint64 op,t_uint64 idx,t_uint64 depth,t_uint64 capacity) -> t_uint64
     {
-        local { t_uint64 needed 0 t_uint64 nextdepth 0 t_uint64 known 0 }
+        local
+        {
+            t_uint64 needed 0 t_uint64 nextdepth 0 t_uint64 known 0
+        }
         load @op
         push 13
         eq
@@ -1978,7 +1981,10 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
     // Called only after shape validation. 1 success, 2 guest arithmetic trap.
     func TemporalPrivateApply(t_uint64 cells,t_uint64 depth,t_uint64 op,t_uint64 idx) -> t_uint64
     {
-        local { t_uint64 v0 0 t_uint64 v1 0 t_uint64 v2 0 t_uint64 v3 0 t_uint64 v4 0 t_uint64 v5 0 t_uint64 i 0 t_uint64 pos 0 t_uint64 bytepos 0 t_uint64 value 0 }
+        local
+        {
+            t_uint64 v0 0 t_uint64 v1 0 t_uint64 v2 0 t_uint64 v3 0 t_uint64 v4 0 t_uint64 v5 0 t_uint64 i 0 t_uint64 pos 0 t_uint64 bytepos 0 t_uint64 value 0
+        }
         if @op == 13
             push 1
             return
