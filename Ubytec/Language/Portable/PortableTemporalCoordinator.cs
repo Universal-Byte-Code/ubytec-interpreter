@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Collections.Concurrent;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 
@@ -329,7 +330,10 @@ public sealed partial class PortableTemporalCoordinator
         {
             if (proposal.Key != key) throw new InvalidDataException("Stale or foreign turn proposal.");
             Commit(proposal);
-        }, parallel);
+        }, parallel, (key, proposal) =>
+        {
+            if (proposal.Key != key) throw new InvalidDataException("Stale or foreign turn proposal.");
+        });
     }
 
     // Internal verified interpreter bridge. Exactly one primary ledger event per turn.
@@ -346,7 +350,8 @@ public sealed partial class PortableTemporalCoordinator
 
     internal void TerminateScalar(PortableTurnKey key) => Terminate(key.Context.Ordinal, false);
 
-    private PortableRoundState RunCore<T>(Func<PortableTurnKey, T> prepare, Action<PortableTurnKey, T> commit, bool parallel)
+    private PortableRoundState RunCore<T>(Func<PortableTurnKey, T> prepare, Action<PortableTurnKey, T> commit, bool parallel,
+        Action<PortableTurnKey, T>? validate = null)
     {
         ArgumentNullException.ThrowIfNull(prepare);
         RequireBoundary();
@@ -369,11 +374,19 @@ public sealed partial class PortableTemporalCoordinator
                 _journal.Add(_pending.Dequeue());
             }
             var frontier = _live.Where(c => !_timers.ContainsKey(c)).Select(c => new PortableTurnKey(Round, Id(c))).ToArray();
-            var proposals = new T[frontier.Length];
-            if (parallel) Parallel.For(0, frontier.Length, i => proposals[i] = prepare(frontier[i]));
-            else for (int i = 0; i < frontier.Length; i++) proposals[i] = prepare(frontier[i]);
-            // A typed, immutable proposal is the only public commit input.
-            for (int i = 0; i < frontier.Length; i++) commit(frontier[i], proposals[i]);
+            var arrivals = new ConcurrentQueue<(PortableTurnKey Key, T Proposal)>();
+            void Prepare(int i)
+            {
+                var key = frontier[i];
+                var proposal = prepare(key);
+                arrivals.Enqueue((key, proposal));
+            }
+            if (parallel) Parallel.For(0, frontier.Length, Prepare);
+            else for (int i = 0; i < frontier.Length; i++) Prepare(i);
+            var ordered = PortableTurnFrontier.OrderCore(frontier, arrivals.ToArray(), item => item.Key);
+            // Validate all worker identities before committing any primary turn.
+            foreach (var item in ordered) validate?.Invoke(item.Key, item.Proposal);
+            foreach (var item in ordered) commit(item.Key, item.Proposal);
             if (_live.Count == 0)
             {
                 if (_pending.Count != 0) throw new InvalidDataException("Unused journal after termination.");
