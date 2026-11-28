@@ -162,7 +162,7 @@ public sealed partial class PortableTemporalCoordinator
     private IReadOnlyList<string> CaptureResources()
     {
         var rows = new List<string>();
-        rows.Add(JsonSerializer.Serialize(new { MaxLocations = _maxLocations, MaxChannels = _maxChannels, MaxMessages = _maxMessages }));
+        rows.Add(JsonSerializer.Serialize(new { MaxEvents = _maxEvents, MaxContexts = _maxContexts, MaxLocations = _maxLocations, MaxChannels = _maxChannels, MaxMessages = _maxMessages }));
         foreach (var pair in _cells)
         {
             var c = pair.Value;
