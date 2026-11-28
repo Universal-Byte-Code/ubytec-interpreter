@@ -119,12 +119,7 @@ public sealed class PortableSelfHostedTemporalTests
     private static ulong[] RunNative(byte[] code, int contexts, int quantum, int limit, bool module = false, bool untouched = false)
     {
         const int capacity = 32;
-        string source = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "temporal-runtime.ubc"));
-        var compiled = SourceCompiler.Compile(source, emitProcessEntryPoint: false);
-        byte[] runtime = PortableModuleFormat.Encode(compiled.Module,
-            contractManifest: null, includeIndexedExecutable: true, portableContracts: compiled.PortableContracts,
-            executionProfile: PortableExecutionProfile.UnsafeCells);
-        var native = PortableX64Backend.Compile(runtime);
+        var native = NativeRuntime.Value;
         nint input = Marshal.AllocHGlobal(code.Length);
         nint states = Marshal.AllocHGlobal(contexts * 64);
         nint stacks = Marshal.AllocHGlobal(contexts * capacity * 8);
@@ -157,6 +152,36 @@ public sealed class PortableSelfHostedTemporalTests
             Marshal.FreeHGlobal(input); Marshal.FreeHGlobal(states);
             Marshal.FreeHGlobal(stacks); Marshal.FreeHGlobal(ledger); Marshal.FreeHGlobal(view);
         }
+    }
+
+    private static readonly Lazy<PortableX64Compilation> NativeRuntime = new(() =>
+    {
+        string source = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "temporal-runtime.ubc"));
+        var compiled = SourceCompiler.Compile(source, emitProcessEntryPoint: false);
+        byte[] runtime = PortableModuleFormat.Encode(compiled.Module,
+            contractManifest: null, includeIndexedExecutable: true, portableContracts: compiled.PortableContracts,
+            executionProfile: PortableExecutionProfile.UnsafeCells);
+        return PortableX64Backend.Compile(runtime);
+    });
+
+    [Theory]
+    [InlineData("push 1\npush 2\n2dup\nreturn", 2)]
+    [InlineData("push 1\npush 2\npush 3\npush 4\n2swap\nreturn", 2)]
+    [InlineData("push 1\npush 2\npush 3\npush 4\npush 5\npush 6\n2rot\nreturn", 2)]
+    [InlineData("push 1\npush 2\npush 3\npush 4\n2over\nreturn", 2)]
+    [InlineData("push 18\npush 1\npush 56\nshl\npush16 7\nreturn", 4609)]
+    [InlineData("push 1\npush 2\npush 3\nroll16 2\nreturn", 1)]
+    [InlineData("push 1\npush 2\npush 3\ndrop16 1\nadd\nreturn", 4)]
+    public void ExplicitStackVectorsMatchBothReferences(string body, long expected)
+    {
+        byte[] image = Image(body);
+        var managed = PortableTemporalScalarReference.Run(image, [0], quantum: 2);
+        Assert.Equal((ulong)expected, Assert.Single(managed.Results));
+        ulong[] rows = RunNative(image, 1, 2, 128, module: true);
+        Assert.NotEmpty(rows);
+        Assert.Equal((ulong)expected, rows[^10]); // result in penultimate row (RETURN)
+        var native = PortableX64Backend.Compile(image);
+        Assert.Equal(expected, Assert.Single(NativeStack.Run($"call {native.GetFunctionLabel(0)}\npush rax", 1, native.Assembly)));
     }
 
     private static string Address(nint address) => $"0x{unchecked((ulong)(nuint)address):X16}";
