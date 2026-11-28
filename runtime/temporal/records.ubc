@@ -307,7 +307,6 @@ module (name:"temporal_records",version:"0.1",author:"Ubytec")
         return
     }
 
-
     // Named context fields: distinct from instruction records and ledger rows.
     func TemporalStatePc(t_uint64 state) -> t_uint64
     {
