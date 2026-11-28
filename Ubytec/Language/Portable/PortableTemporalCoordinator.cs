@@ -5,9 +5,10 @@ using System.Text.Json;
 namespace Ubytec.Language.Portable;
 
 public readonly record struct PortableTurnKey(ulong Round, PortableRuntimeContextId Context);
-public enum PortableTurnKind { Yield, SampleClock, SleepUntil, Spawn, Terminate }
+public enum PortableTurnKind { Yield, SampleClock, SleepUntil, Spawn, Terminate, SharedRead, SharedWrite, SharedAdd, SharedCompareExchange, Send, Receive }
 public readonly record struct PortableTurnProposal(PortableTurnKey Key, PortableTurnKind Kind,
-    ulong Value = 0, bool ClockGrant = false, bool TimerGrant = false);
+    ulong Value = 0, bool ClockGrant = false, bool TimerGrant = false,
+    PortableSharedRequest? Shared = null, PortableMessageRequest? Message = null);
 public enum PortableRoundState { Progressed, Quiescent, Terminated }
 public enum PortableAdmissionKind { TimerSample, CancelWait, CancelContext }
 public readonly record struct PortableJournalEntry(ulong Ordinal, ulong Round, PortableAdmissionKind Kind, ulong Value);
@@ -28,13 +29,13 @@ public readonly record struct PortableFixedSteps(ulong Steps, ulong Remainder)
 public sealed record PortableTemporalSnapshot(ulong Round, IReadOnlyList<string> Trace,
     IReadOnlyList<string> Contexts, IReadOnlyList<PortableJournalEntry> Journal,
     IReadOnlyList<PortableClockObservation> Observations, IReadOnlyList<PortableJournalEntry> Pending,
-    string ClockPolicy);
+    string ClockPolicy, IReadOnlyList<string> Resources);
 
 /// <summary>Managed semantic coordinator; trusted host calls are serialized. Workers return values,
 /// never authority. One primary turn proposal; synthetic delivery is coordinator-owned.
 /// Finite event/context bounds also bound all event counters and Lamport clocks below u64 exhaustion.
 /// This is not a native protection boundary or the complete temporal profile.</summary>
-public sealed class PortableTemporalCoordinator
+public sealed partial class PortableTemporalCoordinator
 {
     private sealed record Timer(ulong Deadline, PortablePublishedEvent Registration);
     private sealed class Context(bool clock, bool timer)
@@ -70,12 +71,17 @@ public sealed class PortableTemporalCoordinator
 
     public PortableTemporalCoordinator(int maxEvents = 100_000, int maxContexts = 128,
         Func<ulong>? source = null, IEnumerable<PortableClockObservation>? replay = null,
-        PortableClockDomain? clockPolicy = null)
+        PortableClockDomain? clockPolicy = null, int maxLocations = 1024,
+        int maxChannels = 1024, int maxMessages = 4096)
     {
-        if (maxEvents <= 0 || maxContexts <= 0 || (source is not null && replay is not null))
+        if (maxEvents <= 0 || maxContexts <= 0 || maxLocations <= 0 || maxChannels <= 0 || maxMessages <= 0 ||
+            (source is not null && replay is not null))
             throw new ArgumentException("Invalid coordinator configuration.");
         _maxContexts = maxContexts;
         _maxEvents = maxEvents;
+        _maxLocations = maxLocations;
+        _maxChannels = maxChannels;
+        _maxMessages = maxMessages;
         _source = source;
         if (replay is not null)
         {
@@ -174,6 +180,7 @@ public sealed class PortableTemporalCoordinator
         Identity.RetireContext(Id(ordinal));
         _live.Remove(ordinal);
         _timers.Remove(ordinal);
+        _blocked.Remove(ordinal);
         _contexts[ordinal].Status = cancelled ? "Cancelled" : "Terminated";
     }
 
@@ -246,17 +253,23 @@ public sealed class PortableTemporalCoordinator
         ulong target = entry.Value;
         if (!_live.Contains(target)) throw new InvalidDataException("Cancellation target is not live.");
         _timers.TryGetValue(target, out var timer);
-        if (entry.Kind == PortableAdmissionKind.CancelWait && timer is null)
-            throw new InvalidDataException("No pending timer to cancel.");
+        bool receiving = _blocked.TryGetValue(target, out var retained);
+        if (entry.Kind == PortableAdmissionKind.CancelWait && timer is null && !receiving)
+            throw new InvalidDataException("No pending wait to cancel.");
         if (entry.Kind == PortableAdmissionKind.CancelContext) Identity.RequireInactive(Id(target));
         Publication.RequireCapacity(2);
         var admission = Publish(0, PortableTemporalEffectKind.CancelAdmission, target, entry.Ordinal);
         var deps = timer is null ? new[] { admission.Id } : new[] { timer.Registration.Id, admission.Id };
         if (entry.Kind == PortableAdmissionKind.CancelContext) Terminate(target, true, deps);
+        else if (timer is not null)
+        {
+            Publish(target, PortableTemporalEffectKind.TimerCancel, timer.Deadline, 0, deps);
+            _timers.Remove(target);
+        }
         else
         {
-            Publish(target, PortableTemporalEffectKind.TimerCancel, timer!.Deadline, 0, deps);
-            _timers.Remove(target);
+            Publish(target, PortableTemporalEffectKind.ReceiveCancel, retained.Peer.Ordinal, 0, deps);
+            _blocked.Remove(target);
         }
     }
 
@@ -264,7 +277,10 @@ public sealed class PortableTemporalCoordinator
     {
         ulong ordinal = proposal.Key.Context.Ordinal;
         var context = _contexts[ordinal];
-        if (proposal.Kind != PortableTurnKind.Spawn && (proposal.ClockGrant || proposal.TimerGrant) ||
+        bool shared = proposal.Kind is PortableTurnKind.SharedRead or PortableTurnKind.SharedWrite or PortableTurnKind.SharedAdd or PortableTurnKind.SharedCompareExchange;
+        bool message = proposal.Kind is PortableTurnKind.Send or PortableTurnKind.Receive;
+        if (shared != proposal.Shared.HasValue || message != proposal.Message.HasValue ||
+            proposal.Kind != PortableTurnKind.Spawn && (proposal.ClockGrant || proposal.TimerGrant) ||
             proposal.Kind != PortableTurnKind.SleepUntil && proposal.Value != 0)
             throw new InvalidDataException("Noncanonical turn proposal.");
         switch (proposal.Kind)
@@ -282,12 +298,22 @@ public sealed class PortableTemporalCoordinator
                 Create(ordinal, proposal.ClockGrant, proposal.TimerGrant);
                 break;
             case PortableTurnKind.Terminate: Terminate(ordinal, false); break;
+            case PortableTurnKind.SharedRead:
+            case PortableTurnKind.SharedWrite:
+            case PortableTurnKind.SharedAdd:
+            case PortableTurnKind.SharedCompareExchange:
+                CommitShared(ordinal, proposal.Kind, proposal.Shared!.Value); break;
+            case PortableTurnKind.Send:
+            case PortableTurnKind.Receive:
+                CommitMessage(ordinal, proposal.Kind, proposal.Message!.Value); break;
             default: throw new InvalidDataException("Unknown primary effect.");
         }
     }
 
     public PortableRoundState RunRound(Func<PortableTurnKey, PortableTurnProposal> prepare, bool parallel = false) =>
-        RunCore(prepare, (key, proposal) =>
+        RunCore(key => _blocked.TryGetValue(key.Context.Ordinal, out var request)
+            ? new PortableTurnProposal(key, PortableTurnKind.Receive, Message: request)
+            : prepare(key), (key, proposal) =>
         {
             if (proposal.Key != key) throw new InvalidDataException("Stale or foreign turn proposal.");
             Commit(proposal);
@@ -316,12 +342,12 @@ public sealed class PortableTemporalCoordinator
             if (_pending.Count != 0) throw new InvalidDataException("Unused journal after termination.");
             return PortableRoundState.Terminated;
         }
-        if (_live.All(_timers.ContainsKey) && _pending.Count == 0) return PortableRoundState.Quiescent;
+        if (!_live.Any(CanProgress) && _pending.Count == 0) return PortableRoundState.Quiescent;
         _started = true;
         try
         {
             ulong next = checked(Round + 1);
-            if (_live.All(_timers.ContainsKey) && _pending.TryPeek(out var future)) next = future.Round;
+            if (!_live.Any(CanProgress) && _pending.TryPeek(out var future)) next = future.Round;
             Round = next;
             _inRound = true;
             while (_pending.TryPeek(out var entry) && entry.Round == Round)
@@ -358,6 +384,7 @@ public sealed class PortableTemporalCoordinator
             Occurrence = e.Instruction?.Occurrence, e.Scalar,
             Dependency = e.Dependency is { } d ? new[] { d.Context.Ordinal, d.Sequence } : null,
             Kind = e.Effect?.Kind, Round = e.Effect?.Round, Value = e.Effect?.Value, Aux = e.Effect?.Auxiliary,
+            Shared = e.Effect?.Shared, Message = e.Effect?.Message,
             Dependencies = e.Effect?.Dependencies.Select(d => new[] { d.Context.Ordinal, d.Sequence }).ToArray()
         })).ToArray();
         var contexts = _contexts.Select(pair => JsonSerializer.Serialize(new
@@ -368,7 +395,7 @@ public sealed class PortableTemporalCoordinator
         string policy = JsonSerializer.Serialize(new { ClockDomain.Source, ClockDomain.ResolutionNanoseconds, ClockDomain.ExcludesSuspend });
         return new(Round, Array.AsReadOnly(trace), Array.AsReadOnly(contexts),
             Array.AsReadOnly(_journal.ToArray()), Array.AsReadOnly(_observations.ToArray()),
-            Array.AsReadOnly(_pending.ToArray()), policy);
+            Array.AsReadOnly(_pending.ToArray()), policy, CaptureResources());
     }
 
     public void VerifyReplayComplete(PortableTemporalSnapshot expected)
@@ -380,7 +407,7 @@ public sealed class PortableTemporalCoordinator
         if (actual.Round != expected.Round || actual.ClockPolicy != expected.ClockPolicy ||
             !actual.Trace.SequenceEqual(expected.Trace) || !actual.Contexts.SequenceEqual(expected.Contexts) ||
             !actual.Journal.SequenceEqual(expected.Journal) || !actual.Observations.SequenceEqual(expected.Observations) ||
-            !actual.Pending.SequenceEqual(expected.Pending))
+            !actual.Pending.SequenceEqual(expected.Pending) || !actual.Resources.SequenceEqual(expected.Resources))
             throw new InvalidDataException("Replay trace or final state mismatch.");
     }
 }
