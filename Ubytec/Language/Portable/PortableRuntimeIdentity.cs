@@ -129,10 +129,14 @@ public sealed class PortableRuntimeIdentity
     /// <summary>Retire an inactive context; its ordinal and local event namespace are not reused.</summary>
     public void RetireContext(PortableRuntimeContextId id)
     {
-        Context context = GetContext(id);
-        if (context.Stack.Count != 0)
-            throw new InvalidOperationException("Cannot retire a context with active invocations.");
+        RequireInactive(id);
         _contexts.Remove(id);
+    }
+
+    internal void RequireInactive(PortableRuntimeContextId id)
+    {
+        if (GetContext(id).Stack.Count != 0)
+            throw new InvalidOperationException("Cannot retire a context with active invocations.");
     }
 
     /// <summary>Record invocation entry. This does not validate call authority or call edges.</summary>
