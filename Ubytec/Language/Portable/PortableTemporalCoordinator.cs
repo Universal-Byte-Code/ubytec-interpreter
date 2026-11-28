@@ -101,13 +101,12 @@ public sealed class PortableTemporalCoordinator
         }, clockPolicy: new(Guid.Empty, $"linux-stopwatch-{Stopwatch.Frequency}-ticks-per-second", null, true));
     }
 
-    public PortableClockInstant Instant(PortableClockObservation observation)
+    public PortableClockInstant Instant(ulong requestOrdinal)
     {
         RequireBoundary();
-        if (observation.RequestOrdinal == 0 || observation.RequestOrdinal > (ulong)_observations.Count ||
-            _observations[(int)observation.RequestOrdinal - 1] != observation)
+        if (requestOrdinal == 0 || requestOrdinal > (ulong)_observations.Count)
             throw new InvalidDataException("Unknown observation in this session.");
-        return new(Session, observation.Nanoseconds);
+        return new(Session, _observations[(int)requestOrdinal - 1].Nanoseconds);
     }
 
     public static ulong Elapsed(PortableClockInstant first, PortableClockInstant second)
@@ -225,6 +224,7 @@ public sealed class PortableTemporalCoordinator
 
     private void Admit(PortableJournalEntry entry)
     {
+        if (_live.Count == 0) throw new InvalidDataException("No admissions after termination.");
         if (entry.Kind == PortableAdmissionKind.TimerSample)
         {
             Observe(0, PortableTemporalEffectKind.TimerSample, entry.Value, entry.Ordinal);
