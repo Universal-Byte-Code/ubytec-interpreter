@@ -170,6 +170,37 @@ public sealed class PortableTemporalCoordinatorTests
     }
 
     [Fact]
+    public void MultipleBoundarySamplesHaveDistinctKeysAndJournalOrderIsChecked()
+    {
+        var c = new PortableTemporalCoordinator();
+        c.CreateContext(timer: true);
+        Assert.Throws<InvalidDataException>(() => c.QueueAdmission(new(2, 2, PortableAdmissionKind.TimerSample, 5)));
+        c.QueueAdmission(new(1, 2, PortableAdmissionKind.TimerSample, 5));
+        Assert.Throws<InvalidDataException>(() => c.QueueAdmission(new(2, 1, PortableAdmissionKind.TimerSample, 5)));
+        c.QueueAdmission(new(2, 2, PortableAdmissionKind.TimerSample, 5));
+        c.RunRound(k => Turn(k, PortableTurnKind.SleepUntil, 5));
+        c.RunRound(k => Turn(k, PortableTurnKind.Terminate));
+        Assert.Equal(new ulong[] { 2, 2 }, c.Observations.Select(o => o.Round));
+        Assert.Equal(new ulong[] { 1, 2 }, c.Observations.Select(o => o.RequestOrdinal));
+        Assert.Equal(0UL, PortableTemporalCoordinator.Elapsed(c.Instant(1), c.Instant(2)));
+        Assert.Single(c.Events.Where(e => e.Effect!.Kind == PortableTemporalEffectKind.TimerExpire));
+    }
+
+    [Fact]
+    public void LinuxClockReportsResolutionAndMonotonicSamples()
+    {
+        if (!OperatingSystem.IsLinux() || IntPtr.Size != 8) return;
+        var c = PortableTemporalCoordinator.LiveLinux();
+        Assert.True(c.ClockDomain.ResolutionNanoseconds is > 0);
+        Assert.True(c.ClockDomain.ExcludesSuspend == true);
+        c.CreateContext(clock: true);
+        c.RunRound(k => Turn(k, PortableTurnKind.SampleClock));
+        c.RunRound(k => Turn(k, PortableTurnKind.SampleClock));
+        Assert.True(c.Observations[1].Nanoseconds >= c.Observations[0].Nanoseconds);
+        c.RunRound(k => Turn(k, PortableTurnKind.Terminate));
+    }
+
+    [Fact]
     public void FixedStepsRetainBacklogAndClockDomainsCannotMix()
     {
         Assert.Equal(new PortableFixedSteps(5, 25), PortableFixedSteps.Advance(0, 105, 16, 5));
