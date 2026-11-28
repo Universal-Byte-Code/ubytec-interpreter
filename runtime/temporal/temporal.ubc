@@ -1461,15 +1461,9 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
         return
     }
 
+    // Admission pipeline: decode/lexical links, forward edges, dataflow, transfer contracts.
     func TemporalPlanPrepare(t_uint64 code,t_uint64 length,t_uint64 capacity,t_uint64 plan) -> t_uint64
     {
-        local
-        {
-            t_uint64 pc 0 t_uint64 site 0 t_uint64 row 0 t_uint64 op 0 t_uint64 idx 0
-            t_uint64 parent 0 t_uint64 top 0 t_uint64 scope 0 t_uint64 kind 0 t_uint64 alternate 0
-            t_uint64 cursor 0 t_uint64 ordinal 0 t_uint64 target 0 t_uint64 next 0 t_uint64 shape 0
-            t_uint64 depth 0 t_uint64 work 0 t_uint64 head 0 t_uint64 tail 0 t_uint64 n 0
-        }
         if @length == 0
             push 0
             return
@@ -1481,34 +1475,114 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             push 0
             return
         end
-        while @pc < @length
+        load @code
+        load @length
+        load @plan
+        call TemporalLinkScopes
+        if
+        else
+            push 0
+            return
+        end
+        load @length
+        load @plan
+        call TemporalResolveBreaks
+        if
+        else
+            push 0
+            return
+        end
+        load @length
+        load @capacity
+        load @plan
+        call TemporalAnalyzeDepth
+        if
+        else
+            push 0
+            return
+        end
+        load @length
+        load @plan
+        call TemporalValidateTransfers
+        return
+    }
+
+    func TemporalDecode(t_uint64 code,t_uint64 length,t_uint64 pc,t_uint64 row) -> t_uint64
+    {
+        local
+        {
+            t_uint64 op 0 t_uint64 idx 0 t_uint64 n 0
+        }
+        load @code
+        load @pc
+        add
+        push 0
+        add
+        load t_byte
+        store @op
+        load @pc
+        push 1
+        add
+        store @pc
+        push 0
+        store @idx
+        // Decode operand-bearing instructions and only the admitted BLOCK mode.
+        if @op == 17
+            load @length
             load @pc
-            store @site
-            load @plan
-            load @site
-            push 64
-            mul
-            add
-            store @row
+            sub
+            push 1
+            ult
+            if
+                push 0
+                return
+            end
             load @code
             load @pc
             add
             push 0
             add
             load t_byte
-            store @op
+            store @idx
             load @pc
             push 1
             add
             store @pc
-            push 0
+            if @idx == 0
+                push 0
+                return
+            end
+            if @idx > 8
+                push 0
+                return
+            end
+            load @idx
+            load @length
+            load @pc
+            sub
+            ugt
+            if
+                push 0
+                return
+            end
+            load @code
+            load @pc
+            add
+            load @idx
+            call TemporalReadImmediate
+            store @n
+            load @pc
+            load @idx
+            add
+            store @pc
+            load @n
             store @idx
-            // Decode operand-bearing instructions and only the admitted BLOCK mode.
-            if @op == 17
+        else
+            if @op == 255
                 load @length
                 load @pc
                 sub
-                push 1
+                push 4
                 ult
                 if
                     push 0
@@ -1520,24 +1594,8 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                 push 0
                 add
                 load t_byte
-                store @idx
-                load @pc
-                push 1
-                add
-                store @pc
-                if @idx == 0
-                    push 0
-                    return
-                end
-                if @idx > 8
-                    push 0
-                    return
-                end
-                load @idx
-                load @length
-                load @pc
-                sub
-                ugt
+                push 16
+                neq
                 if
                     push 0
                     return
@@ -1545,17 +1603,116 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                 load @code
                 load @pc
                 add
-                load @idx
-                call TemporalReadImmediate
-                store @n
+                push 1
+                add
+                load t_byte
+                store @op
+                if @op == 17
+                    push 273
+                    store @op
+                else
+                    load @op
+                    push 24
+                    eq
+                    load @op
+                    push 29
+                    eq
+                    or
+                    load @op
+                    push 30
+                    eq
+                    or
+                    if
+                    else
+                        push 0
+                        return
+                    end
+                end
+                load @code
                 load @pc
-                load @idx
+                add
+                push 2
+                add
+                load t_uint16
+                store @idx
+                load @pc
+                push 4
                 add
                 store @pc
-                load @n
-                store @idx
             else
-                if @op == 255
+                load @op
+                push 24
+                eq
+                load @op
+                push 29
+                eq
+                or
+                load @op
+                push 30
+                eq
+                or
+                if
+                    load @length
+                    load @pc
+                    sub
+                    push 1
+                    ult
+                    if
+                        push 0
+                        return
+                    end
+                    load @code
+                    load @pc
+                    add
+                    push 0
+                    add
+                    load t_byte
+                    store @idx
+                    load @pc
+                    push 1
+                    add
+                    store @pc
+                end
+                load @op
+                push 2
+                eq
+                load @op
+                push 9
+                eq
+                or
+                if
+                    load @length
+                    load @pc
+                    sub
+                    push 1
+                    ult
+                    if
+                        push 0
+                        return
+                    end
+                    load @code
+                    load @pc
+                    add
+                    push 0
+                    add
+                    load t_byte
+                    if
+                        push 0
+                        return
+                    end
+                    load @pc
+                    push 1
+                    add
+                    store @pc
+                end
+                load @op
+                push 7
+                eq
+                load @op
+                push 8
+                eq
+                or
+                if
                     load @length
                     load @pc
                     sub
@@ -1570,190 +1727,93 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                     add
                     push 0
                     add
-                    load t_byte
-                    push 16
-                    neq
-                    if
-                        push 0
-                        return
-                    end
-                    load @code
-                    load @pc
-                    add
-                    push 1
-                    add
-                    load t_byte
-                    store @op
-                    if @op == 17
-                        push 273
-                        store @op
-                    else
-                        load @op
-                        push 24
-                        eq
-                        load @op
-                        push 29
-                        eq
-                        or
-                        load @op
-                        push 30
-                        eq
-                        or
-                        if
-                        else
-                            push 0
-                            return
-                        end
-                    end
-                    load @code
-                    load @pc
-                    add
-                    push 2
-                    add
-                    load t_uint16
+                    load t_uint32
                     store @idx
                     load @pc
                     push 4
                     add
                     store @pc
-                else
-                    load @op
-                    push 24
-                    eq
-                    load @op
-                    push 29
-                    eq
-                    or
-                    load @op
-                    push 30
-                    eq
-                    or
-                    if
-                        load @length
-                        load @pc
-                        sub
-                        push 1
-                        ult
-                        if
-                            push 0
-                            return
-                        end
-                        load @code
-                        load @pc
-                        add
-                        push 0
-                        add
-                        load t_byte
-                        store @idx
-                        load @pc
-                        push 1
-                        add
-                        store @pc
-                    end
-                    load @op
-                    push 2
-                    eq
-                    load @op
-                    push 9
-                    eq
-                    or
-                    if
-                        load @length
-                        load @pc
-                        sub
-                        push 1
-                        ult
-                        if
-                            push 0
-                            return
-                        end
-                        load @code
-                        load @pc
-                        add
-                        push 0
-                        add
-                        load t_byte
-                        if
-                            push 0
-                            return
-                        end
-                        load @pc
-                        push 1
-                        add
-                        store @pc
-                    end
-                    load @op
-                    push 7
-                    eq
-                    load @op
-                    push 8
-                    eq
-                    or
-                    if
-                        load @length
-                        load @pc
-                        sub
-                        push 4
-                        ult
-                        if
-                            push 0
-                            return
-                        end
-                        load @code
-                        load @pc
-                        add
-                        push 0
-                        add
-                        load t_uint32
-                        store @idx
-                        load @pc
-                        push 4
-                        add
-                        store @pc
-                    end
                 end
             end
-            // Initialize the record; keep the original wire offset as its identity.
-            load @row
-            push 0
-            add
-            load @op
-            store t_uint64
-            load @row
-            push 8
-            add
+        end
+        // Initialize the record; keep the original wire offset as its identity.
+        load @row
+        push 0
+        add
+        load @op
+        store t_uint64
+        load @row
+        push 8
+        add
+        load @pc
+        store t_uint64
+        load @row
+        push 16
+        add
+        load @pc
+        store t_uint64
+        load @row
+        push 24
+        add
+        push 0
+        store t_uint64
+        load @row
+        push 32
+        add
+        push 0
+        store t_uint64
+        load @row
+        push 40
+        add
+        push 0
+        store t_uint64
+        load @row
+        push 48
+        add
+        load @idx
+        store t_uint64
+        load @row
+        push 56
+        add
+        push 0
+        store t_uint64
+        load @pc
+        return
+    }
+
+    func TemporalLinkScopes(t_uint64 code,t_uint64 length,t_uint64 plan) -> t_uint64
+    {
+        local
+        {
+            t_uint64 pc 0 t_uint64 site 0 t_uint64 row 0 t_uint64 op 0 t_uint64 idx 0
+            t_uint64 top 0 t_uint64 scope 0 t_uint64 kind 0 t_uint64 alternate 0
+            t_uint64 cursor 0 t_uint64 ordinal 0
+        }
+        while @pc < @length
             load @pc
-            store t_uint64
-            load @row
-            push 16
-            add
+            store @site
+            load @plan
+            load @site
+            call TemporalPlanRow
+            store @row
+            load @code
+            load @length
             load @pc
-            store t_uint64
             load @row
-            push 24
-            add
+            call TemporalDecode
+            store @pc
+            if @pc == 0
+                push 0
+                return
+            end
+            load @row
             push 0
-            store t_uint64
+            call TemporalCellGet
+            store @op
             load @row
-            push 32
-            add
-            push 0
-            store t_uint64
-            load @row
-            push 40
-            add
-            push 0
-            store t_uint64
-            load @row
-            push 48
-            add
-            load @idx
-            store t_uint64
-            load @row
-            push 56
-            add
-            push 0
-            store t_uint64
+            push 6
+            call TemporalCellGet
+            store @idx
             load @op
             push 2
             eq
@@ -1793,8 +1853,7 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                     store @scope
                     load @scope
                     push 0
-                    add
-                    load t_uint64
+                    call TemporalCellGet
                     push 4
                     neq
                     if
@@ -1802,9 +1861,8 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                         return
                     end
                     load @scope
-                    push 32
-                    add
-                    load t_uint64
+                    push 4
+                    call TemporalCellGet
                     if
                         push 0
                         return
@@ -1835,13 +1893,11 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                         store @scope
                         load @scope
                         push 0
-                        add
-                        load t_uint64
+                        call TemporalCellGet
                         store @kind
                         load @scope
-                        push 24
-                        add
-                        load t_uint64
+                        push 3
+                        call TemporalCellGet
                         store @top
                         load @scope
                         push 56
@@ -1853,9 +1909,8 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                             push 16
                             add
                             load @scope
-                            push 8
-                            add
-                            load t_uint64
+                            push 1
+                            call TemporalCellGet
                             store t_uint64
                         end
                         if @kind == 12
@@ -1876,9 +1931,8 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                         end
                         if @kind == 4
                             load @scope
-                            push 32
-                            add
-                            load t_uint64
+                            push 4
+                            call TemporalCellGet
                             store @alternate
                             if @alternate == 0
                                 load @scope
@@ -1928,8 +1982,7 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                                 store @scope
                                 load @scope
                                 push 0
-                                add
-                                load t_uint64
+                                call TemporalCellGet
                                 store @kind
                                 load @kind
                                 push 3
@@ -1947,9 +2000,8 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                                     store @ordinal
                                 end
                                 load @scope
-                                push 24
-                                add
-                                load t_uint64
+                                push 3
+                                call TemporalCellGet
                                 store @cursor
                             end
                             load @row
@@ -1963,9 +2015,8 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                                     push 16
                                     add
                                     load @scope
-                                    push 8
-                                    add
-                                    load t_uint64
+                                    push 1
+                                    call TemporalCellGet
                                     store t_uint64
                                 else
                                     load @row
@@ -2015,27 +2066,33 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             push 0
             return
         end
+        push 1
+        return
+    }
+
+    func TemporalResolveBreaks(t_uint64 length,t_uint64 plan) -> t_uint64
+    {
+        local
+        {
+            t_uint64 pc 0 t_uint64 row 0 t_uint64 op 0 t_uint64 scope 0
+        }
         // Resolve forward BREAK destinations now that all scopes have closed.
         push 0
         store @pc
         while @pc < @length
             load @plan
             load @pc
-            push 64
-            mul
-            add
+            call TemporalPlanRow
             store @row
             load @row
             push 0
-            add
-            load t_uint64
+            call TemporalCellGet
             store @op
             if @op == 7
                 load @plan
                 load @row
-                push 24
-                add
-                load t_uint64
+                push 3
+                call TemporalCellGet
                 dec
                 push 64
                 mul
@@ -2045,17 +2102,26 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                 push 16
                 add
                 load @scope
-                push 56
-                add
-                load t_uint64
+                push 7
+                call TemporalCellGet
                 store t_uint64
             end
             load @row
-            push 8
-            add
-            load t_uint64
+            push 1
+            call TemporalCellGet
             store @pc
         end
+        push 1
+        return
+    }
+
+    func TemporalAnalyzeDepth(t_uint64 length,t_uint64 capacity,t_uint64 plan) -> t_uint64
+    {
+        local
+        {
+            t_uint64 work 0 t_uint64 row 0 t_uint64 head 0 t_uint64 tail 0
+            t_uint64 site 0 t_uint64 op 0 t_uint64 next 0 t_uint64 target 0 t_uint64 depth 0 t_uint64 shape 0
+        }
         // Reachability and exact stack-depth dataflow. Each site is queued at most once.
         load @plan
         load @length
@@ -2088,29 +2154,23 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             store @head
             load @plan
             load @site
-            push 64
-            mul
-            add
+            call TemporalPlanRow
             store @row
             load @row
             push 0
-            add
-            load t_uint64
+            call TemporalCellGet
             store @op
             load @row
-            push 8
-            add
-            load t_uint64
+            push 1
+            call TemporalCellGet
             store @next
             load @row
-            push 16
-            add
-            load t_uint64
+            push 2
+            call TemporalCellGet
             store @target
             load @row
-            push 40
-            add
-            load t_uint64
+            push 5
+            call TemporalCellGet
             dec
             store @depth
             if @op == 9
@@ -2199,9 +2259,8 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                                 else
                                     load @op
                                     load @row
-                                    push 48
-                                    add
-                                    load t_uint64
+                                    push 6
+                                    call TemporalCellGet
                                     load @depth
                                     load @capacity
                                     call TemporalPrivateDepth
@@ -2235,20 +2294,27 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                 end
             end
         end
+        push 1
+        return
+    }
+
+    func TemporalValidateTransfers(t_uint64 length,t_uint64 plan) -> t_uint64
+    {
+        local
+        {
+            t_uint64 pc 0 t_uint64 row 0 t_uint64 op 0 t_uint64 depth 0 t_uint64 scope 0 t_uint64 shape 0 t_uint64 kind 0
+        }
         // Match portable BREAK/CONTINUE entry-depth constraints, not merely graph joins.
         push 0
         store @pc
         while @pc < @length
             load @plan
             load @pc
-            push 64
-            mul
-            add
+            call TemporalPlanRow
             store @row
             load @row
             push 0
-            add
-            load t_uint64
+            call TemporalCellGet
             store @op
             load @op
             push 7
@@ -2259,30 +2325,26 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             or
             if
                 load @row
-                push 40
-                add
-                load t_uint64
+                push 5
+                call TemporalCellGet
                 store @depth
                 if @depth != 0
                     load @plan
                     load @row
-                    push 24
-                    add
-                    load t_uint64
+                    push 3
+                    call TemporalCellGet
                     dec
                     push 64
                     mul
                     add
                     store @scope
                     load @scope
-                    push 40
-                    add
-                    load t_uint64
+                    push 5
+                    call TemporalCellGet
                     store @shape
                     load @scope
                     push 0
-                    add
-                    load t_uint64
+                    call TemporalCellGet
                     store @kind
                     if @kind == 12
                         if @op == 7
@@ -2301,9 +2363,8 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
                 end
             end
             load @row
-            push 8
-            add
-            load t_uint64
+            push 1
+            call TemporalCellGet
             store @pc
         end
         push 1
