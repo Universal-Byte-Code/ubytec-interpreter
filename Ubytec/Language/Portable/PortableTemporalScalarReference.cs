@@ -5,14 +5,14 @@ using static Ubytec.Language.Operations.CoreOperations;
 namespace Ubytec.Language.Portable;
 
 /// <summary>Boundary kind of the restricted scalar temporal reference, not a new ISA opcode.</summary>
-public enum PortableScalarBoundaryKind { Enter, Budget, Return, Trap, Abort }
+public enum PortableScalarBoundaryKind { Enter, Budget, Return, Trap, Abort, Terminate }
 
 /// <summary>One admitted boundary with the existing runtime identity/commit and logical fuel accounting.</summary>
 public sealed record PortableScalarBoundary(ulong Round, PortableScalarBoundaryKind Kind,
     PortablePublishedEvent Event, ulong Fuel, PortableInstructionOccurrence? Occurrence, ulong? Result);
 
 /// <summary>Execution outcome in admitted context order. A null result means a trapped context.</summary>
-public sealed record PortableScalarOutcome(IReadOnlyList<PortableScalarBoundary> Trace, IReadOnlyList<ulong?> Results);
+public sealed record PortableScalarOutcome(IReadOnlyList<PortableScalarBoundary> Trace, IReadOnlyList<ulong?> Results, PortableTemporalSnapshot SemanticState);
 
 /// <summary>
 /// First actual UBCM temporal reference slice. Accepts only verified DirectOnly modules and
@@ -33,6 +33,7 @@ public static class PortableTemporalScalarReference
         internal int Pc;
         internal ulong Fuel;
         internal bool AbortPending;
+        internal bool TerminationPending;
         internal ulong? Result;
     }
 
@@ -43,6 +44,8 @@ public static class PortableTemporalScalarReference
     // No identity allocation, host calls or shared commits may happen here.
     private static Prepared Prepare(State state, int quantum)
     {
+        if (state.TerminationPending)
+            return new(PortableScalarBoundaryKind.Terminate, state.Pc, state.Fuel, null, null, state.Result);
         if (state.Activation is null)
             return new(PortableScalarBoundaryKind.Enter, state.Pc, state.Fuel, null, null, null);
         if (state.AbortPending)
@@ -138,8 +141,9 @@ public static class PortableTemporalScalarReference
         var trace = new List<PortableScalarBoundary>();
         while (coordinator.LiveCount != 0)
         {
-            coordinator.RunRound(id => Prepare(byContext[id], quantum), (id, next) =>
+            coordinator.RunScalarRound(key => Prepare(byContext[key.Context], quantum), (key, next) =>
             {
+                var id = key.Context;
                 publication.RequireCapacity();
                 var state = byContext[id];
                 state.Pc = next.Pc;
@@ -158,7 +162,11 @@ public static class PortableTemporalScalarReference
                         bool aborted = next.Kind == PortableScalarBoundaryKind.Abort;
                         published = publication.Publish(identity.CloseObserved(state.Activation!.Value, aborted));
                         state.Result = next.Result;
-                        coordinator.Retire(id);
+                        state.TerminationPending = true;
+                        break;
+                    case PortableScalarBoundaryKind.Terminate:
+                        coordinator.TerminateScalar(key);
+                        published = coordinator.Events[^1];
                         break;
                     case PortableScalarBoundaryKind.Trap:
                     case PortableScalarBoundaryKind.Budget:
@@ -172,6 +180,6 @@ public static class PortableTemporalScalarReference
             }, parallel);
         }
         identity.Unload(loaded);
-        return new PortableScalarOutcome(trace.AsReadOnly(), Array.AsReadOnly(states.Select(s => s.Result).ToArray()));
+        return new PortableScalarOutcome(trace.AsReadOnly(), Array.AsReadOnly(states.Select(s => s.Result).ToArray()), coordinator.Capture());
     }
 }
