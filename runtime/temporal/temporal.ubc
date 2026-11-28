@@ -329,9 +329,7 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             t_uint64 cursor 12 t_uint64 count 0 t_uint64 index 0 t_uint64 previous 0
             t_uint64 header 0 t_uint64 kind 0 t_uint64 flags 0 t_uint64 size 0 t_uint64 payload 0
             t_uint64 seen 0 t_uint64 types 0 t_uint64 typesize 0 t_uint64 functions 0
-            t_uint64 code 0 t_uint64 codesize 0 t_uint64 resulttype 0 t_uint64 typecount 0
-            t_uint64 typeptr 0 t_uint64 pc 0 t_uint64 op 0 t_uint64 n 0 t_uint64 depth 0
-            t_uint64 terminal 0 t_uint64 entry 4294967295 t_uint64 idx 0 t_uint64 shape 0
+            t_uint64 code 0 t_uint64 codesize 0
         }
         load @length
         push 12
@@ -439,269 +437,53 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             load @cursor
             add
             store @payload
-            if @kind == 1
-                if @flags != 1
-                    push 0
-                    return
+            load @kind
+            load @flags
+            load @payload
+            load @size
+            call TemporalValidateSection
+            if
+            else
+                push 0
+                return
+            end
+            // Collect only the tables needed by the current execution profile.
+            load @kind
+            switch
+                branch 1
+                    load @seen
+                    push 1
+                    or
+                    store @seen
                 end
-                if @size == 0
-                    push 0
-                    return
+                branch 17
+                    load @payload
+                    store @types
+                    load @size
+                    store @typesize
                 end
+                branch 18
+                    load @payload
+                    store @functions
+                end
+                branch 22
+                    load @payload
+                    store @code
+                    load @size
+                    store @codesize
+                end
+            end
+            load @kind
+            call TemporalIndexedSection
+            if
                 load @seen
                 push 1
+                load @kind
+                push 15
+                sub
+                shl
                 or
                 store @seen
-            else
-                if @kind == 2
-                    push 0
-                    return
-                end
-                if @kind == 3
-                    push 0
-                    return
-                end
-                if @kind == 25
-                    push 0
-                    return
-                end
-                if @kind == 23
-                    if @flags != 0
-                        push 0
-                        return
-                    end
-                    if @size != 4
-                        push 0
-                        return
-                    end
-                    load @payload
-                    push 0
-                    add
-                    load t_uint32
-                    store @entry
-                    if @entry != 0
-                        if @entry != 4294967295
-                            push 0
-                            return
-                        end
-                    end
-                else
-                    load @kind
-                    push 16
-                    uge
-                    load @kind
-                    push 22
-                    ule
-                    and
-                    load @kind
-                    push 24
-                    eq
-                    or
-                    if
-                        if @flags != 1
-                            push 0
-                            return
-                        end
-                        load @seen
-                        push 1
-                        load @kind
-                        push 15
-                        sub
-                        shl
-                        or
-                        store @seen
-                        if @kind == 16
-                            // No named types or boundaries in this initial projection.
-                            if @size != 4
-                                push 0
-                                return
-                            end
-                            load @payload
-                            push 0
-                            add
-                            load t_uint32
-                            push 0
-                            neq
-                            if
-                                push 0
-                                return
-                            end
-                        end
-                        if @kind == 17
-                            if @size < 29
-                                push 0
-                                return
-                            end
-                            load @payload
-                            store @types
-                            load @size
-                            store @typesize
-                        end
-                        if @kind == 18
-                            if @size != 28
-                                push 0
-                                return
-                            end
-                            load @payload
-                            push 0
-                            add
-                            load t_uint32
-                            push 1
-                            neq
-                            if
-                                push 0
-                                return
-                            end
-                            load @payload
-                            push 8
-                            add
-                            load t_uint32
-                            push 0
-                            neq
-                            if
-                                push 0
-                                return
-                            end
-                            load @payload
-                            push 12
-                            add
-                            load t_uint32
-                            push 0
-                            neq
-                            if
-                                push 0
-                                return
-                            end
-                            load @payload
-                            push 16
-                            add
-                            load t_uint32
-                            push 0
-                            neq
-                            if
-                                push 0
-                                return
-                            end
-                            load @payload
-                            push 24
-                            add
-                            load t_uint32
-                            push 0
-                            neq
-                            if
-                                push 0
-                                return
-                            end
-                            load @payload
-                            store @functions
-                        end
-                        if @kind == 19
-                            if @size != 4
-                                push 0
-                                return
-                            end
-                            load @payload
-                            push 0
-                            add
-                            load t_uint32
-                            push 0
-                            neq
-                            if
-                                push 0
-                                return
-                            end
-                        end
-                        if @kind == 20
-                            if @size != 4
-                                push 0
-                                return
-                            end
-                            load @payload
-                            push 0
-                            add
-                            load t_uint32
-                            push 0
-                            neq
-                            if
-                                push 0
-                                return
-                            end
-                        end
-                        if @kind == 21
-                            if @size != 4
-                                push 0
-                                return
-                            end
-                            load @payload
-                            push 0
-                            add
-                            load t_uint32
-                            push 0
-                            neq
-                            if
-                                push 0
-                                return
-                            end
-                        end
-                        if @kind == 22
-                            load @payload
-                            store @code
-                            load @size
-                            store @codesize
-                        end
-                        if @kind == 24
-                            if @size != 16
-                                push 0
-                                return
-                            end
-                            load @payload
-                            push 0
-                            add
-                            load t_uint32
-                            push 3
-                            neq
-                            if
-                                push 0
-                                return
-                            end
-                            load @payload
-                            push 4
-                            add
-                            load t_uint32
-                            push 1
-                            neq
-                            if
-                                push 0
-                                return
-                            end
-                            load @payload
-                            push 8
-                            add
-                            load t_uint32
-                            push 1
-                            neq
-                            if
-                                push 0
-                                return
-                            end
-                            load @payload
-                            push 12
-                            add
-                            load t_uint32
-                            push 4294967295
-                            neq
-                            if
-                                push 0
-                                return
-                            end
-                        end
-                    else
-                        if @flags != 0
-                            push 0
-                            return
-                        end
-                    end
-                end
             end
             load @cursor
             load @size
@@ -720,6 +502,285 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             push 0
             return
         end
+        load @types
+        load @typesize
+        load @functions
+        load @codesize
+        call TemporalValidateRootSignature
+        if
+        else
+            push 0
+            return
+        end
+        load @code
+        load @codesize
+        load @capacity
+        load @plan
+        call TemporalPlanPrepare
+        if
+        else
+            push 0
+            return
+        end
+        load @view
+        load @code
+        store t_uint64
+        load @view
+        push 8
+        add
+        load @codesize
+        store t_uint64
+        push 1
+        return
+    }
+
+    // Section framing is checked by the caller before any of these payload reads.
+    func TemporalIndexedSection(t_uint64 kind) -> t_uint64
+    {
+        load @kind
+        push 16
+        uge
+        load @kind
+        push 22
+        ule
+        and
+        load @kind
+        push 24
+        eq
+        or
+        return
+    }
+
+    func TemporalReadU32(t_uint64 address,t_uint64 offset) -> t_uint64
+    {
+        load @address
+        load @offset
+        add
+        load t_uint32
+        return
+    }
+
+    func TemporalEmptyTable(t_uint64 payload,t_uint64 size) -> t_uint64
+    {
+        if @size != 4
+            push 0
+            return
+        end
+        load @payload
+        push 0
+        call TemporalReadU32
+        push 0
+        eq
+        return
+    }
+
+    func TemporalValidateFunctionTable(t_uint64 payload,t_uint64 size) -> t_uint64
+    {
+        // One root function, no arguments, locals or flags, Code offset zero.
+        if @size != 28
+            push 0
+            return
+        end
+        load @payload
+        push 0
+        call TemporalReadU32
+        push 1
+        eq
+        load @payload
+        push 8
+        call TemporalReadU32
+        push 0
+        eq
+        and
+        load @payload
+        push 12
+        call TemporalReadU32
+        push 0
+        eq
+        and
+        load @payload
+        push 16
+        call TemporalReadU32
+        push 0
+        eq
+        and
+        load @payload
+        push 24
+        call TemporalReadU32
+        push 0
+        eq
+        and
+        return
+    }
+
+    func TemporalValidateContextTable(t_uint64 payload,t_uint64 size) -> t_uint64
+    {
+        // Context wire v3, DirectOnly, one root, no parent.
+        if @size != 16
+            push 0
+            return
+        end
+        load @payload
+        push 0
+        call TemporalReadU32
+        push 3
+        eq
+        load @payload
+        push 4
+        call TemporalReadU32
+        push 1
+        eq
+        and
+        load @payload
+        push 8
+        call TemporalReadU32
+        push 1
+        eq
+        and
+        load @payload
+        push 12
+        call TemporalReadU32
+        push 4294967295
+        eq
+        and
+        return
+    }
+
+    func TemporalValidateEntry(t_uint64 payload,t_uint64 size) -> t_uint64
+    {
+        if @size != 4
+            push 0
+            return
+        end
+        load @payload
+        push 0
+        call TemporalReadU32
+        dup
+        push 0
+        eq
+        swap
+        push 4294967295
+        eq
+        or
+        return
+    }
+
+    // Apply the restricted execution profile without mixing it with PMF traversal.
+    func TemporalValidateSection(t_uint64 kind,t_uint64 flags,t_uint64 payload,t_uint64 size) -> t_uint64
+    {
+        load @kind
+        call TemporalIndexedSection
+        if
+            if @flags != 1
+                push 0
+                return
+            end
+        end
+        load @kind
+        switch
+            branch 1
+                // Opaque, nonempty critical AST.
+                load @flags
+                push 1
+                eq
+                load @size
+                push 0
+                neq
+                and
+                return
+            end
+            branch 2
+                // No contract manifest in this profile.
+                push 0
+                return
+            end
+            branch 3
+                // No capability manifest.
+                push 0
+                return
+            end
+            branch 16
+                // String table.
+                load @payload
+                load @size
+                call TemporalEmptyTable
+                return
+            end
+            branch 17
+                // Type table: full root signature checked after traversal.
+                load @size
+                push 29
+                uge
+                return
+            end
+            branch 18
+                load @payload
+                load @size
+                call TemporalValidateFunctionTable
+                return
+            end
+            branch 19
+                // Imports.
+                load @payload
+                load @size
+                call TemporalEmptyTable
+                return
+            end
+            branch 20
+                // Exports.
+                load @payload
+                load @size
+                call TemporalEmptyTable
+                return
+            end
+            branch 21
+                // Constants.
+                load @payload
+                load @size
+                call TemporalEmptyTable
+                return
+            end
+            branch 22
+                // Code: framed and analyzed by TemporalPlanPrepare.
+                push 1
+                return
+            end
+            branch 23
+                if @flags != 0
+                    push 0
+                    return
+                end
+                load @payload
+                load @size
+                call TemporalValidateEntry
+                return
+            end
+            branch 24
+                load @payload
+                load @size
+                call TemporalValidateContextTable
+                return
+            end
+            branch 25
+                // Callable slots require a different execution profile.
+                push 0
+                return
+            end
+            default
+                // Unknown sections are accepted only when noncritical.
+                load @flags
+                push 0
+                eq
+                return
+        end
+    }
+
+    func TemporalValidateRootSignature(t_uint64 types,t_uint64 typesize,t_uint64 functions,t_uint64 codesize) -> t_uint64
+    {
+        local
+        {
+            t_uint64 resulttype 0 t_uint64 typecount 0 t_uint64 typeptr 0
+        }
         load @types
         push 0
         add
@@ -820,24 +881,6 @@ module (name:"temporal_runtime",version:"0.1",author:"Ubytec")
             push 0
             return
         end
-        load @code
-        load @codesize
-        load @capacity
-        load @plan
-        call TemporalPlanPrepare
-        if
-        else
-            push 0
-            return
-        end
-        load @view
-        load @code
-        store t_uint64
-        load @view
-        push 8
-        add
-        load @codesize
-        store t_uint64
         push 1
         return
     }
