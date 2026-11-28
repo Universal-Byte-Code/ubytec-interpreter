@@ -436,4 +436,303 @@ return
 end
 end
 }
+
+    // Serial reference scheduler. Each context occupies eight cells (six state
+    // fields plus local sequence and Lamport clock). Ledger row has nine cells:
+    // round, context ordinal, sequence, logical time, commit, kind, fuel,
+    // last instruction offset (NoIndex for synthetic boundaries), result.
+    // Kind 7 is coordinator context creation. Initial creation causality makes
+    // context i's first logical clock i+1. Return 0 means infrastructure failure.
+    // The host supplies non-overlapping sized buffers; no guest physical addresses.
+    func TemporalRun(t_uint64 code,t_uint64 length,t_uint64 states,t_uint64 stacks,t_uint64 contexts,t_uint64 capacity,t_uint64 quantum,t_uint64 ledger,t_uint64 limit) -> t_uint64
+    {
+        local
+        {
+            t_uint64 round 0 t_uint64 commit 0 t_uint64 i 0 t_uint64 live 0
+            t_uint64 state 0 t_uint64 cells 0 t_uint64 row 0 t_uint64 kind 0
+            t_uint64 seq 0 t_uint64 logical 0 t_uint64 site 0 t_uint64 result 0
+            t_uint64 fuel 0 t_uint64 j 0
+        }
+        if @contexts == 0
+            push 0
+            return
+        end
+        if @contexts > 128
+            push 0
+            return
+        end
+        if @capacity == 0
+            push 0
+            return
+        end
+        if @capacity > 4096
+            push 0
+            return
+        end
+        if @quantum == 0
+            push 0
+            return
+        end
+        if @limit > 1000000
+            push 0
+            return
+        end
+        load @contexts
+        load @limit
+        ugt
+        if
+            push 0
+            return
+        end
+        // Establish initial admission and creation events in ordinal order.
+        while @i < @contexts
+            load @states
+            load @i
+            push 64
+            mul
+            add
+            store @state
+            push 0
+            store @j
+            while @j < 8
+                load @state
+                load @j
+                push 8
+                mul
+                add
+                push 0
+                store t_uint64
+                load @j
+                inc
+                store @j
+            end
+            load @state
+            push 56
+            add
+            load @i
+            inc
+            store t_uint64
+            load @ledger
+            load @commit
+            push 72
+            mul
+            add
+            store @row
+            load @commit
+            inc
+            store @commit
+            load @row
+            push 0
+            add
+            load @round
+            store t_uint64
+            load @row
+            push 8
+            add
+            push 0
+            store t_uint64
+            load @row
+            push 16
+            add
+            load @commit
+            store t_uint64
+            load @row
+            push 24
+            add
+            load @commit
+            store t_uint64
+            load @row
+            push 32
+            add
+            load @commit
+            store t_uint64
+            load @row
+            push 40
+            add
+            push 7
+            store t_uint64
+            load @row
+            push 48
+            add
+            push 0
+            store t_uint64
+            load @row
+            push 56
+            add
+            push 4294967295
+            store t_uint64
+            load @row
+            push 64
+            add
+            load @i
+            inc
+            store t_uint64
+            load @i
+            inc
+            store @i
+        end
+        load @contexts
+        store @live
+        loop
+            if @live == 0
+                load @commit
+                return
+            end
+            load @round
+            inc
+            store @round
+            push 0
+            store @i
+            while @i < @contexts
+                load @states
+                load @i
+                push 64
+                mul
+                add
+                store @state
+                load @state
+                push 24
+                add
+                load t_uint64
+                push 5
+                neq
+                if
+                    if @commit == @limit
+                        push 0
+                        return
+                    end
+                    load @stacks
+                    load @i
+                    load @capacity
+                    mul
+                    push 8
+                    mul
+                    add
+                    store @cells
+                    load @code
+                    load @length
+                    load @state
+                    load @cells
+                    load @capacity
+                    load @quantum
+                    call TemporalTurn
+                    store @kind
+                    if @kind == 6
+                        push 0
+                        return
+                    end
+                    if @kind == 5
+                        load @live
+                        dec
+                        store @live
+                    end
+                    load @state
+                    push 48
+                    add
+                    load t_uint64
+                    inc
+                    store @seq
+                    load @state
+                    push 56
+                    add
+                    load t_uint64
+                    inc
+                    store @logical
+                    load @state
+                    push 48
+                    add
+                    load @seq
+                    store t_uint64
+                    load @state
+                    push 56
+                    add
+                    load @logical
+                    store t_uint64
+                    load @state
+                    push 16
+                    add
+                    load t_uint64
+                    store @fuel
+                    push 4294967295
+                    store @site
+                    if @kind > 0
+                        if @kind < 4
+                            load @state
+                            push 32
+                            add
+                            load t_uint64
+                            store @site
+                        end
+                    end
+                    push 0
+                    store @result
+                    if @kind == 2
+                        load @state
+                        push 40
+                        add
+                        load t_uint64
+                        store @result
+                    end
+                    load @ledger
+                    load @commit
+                    push 72
+                    mul
+                    add
+                    store @row
+                    load @commit
+                    inc
+                    store @commit
+                    load @row
+                    push 0
+                    add
+                    load @round
+                    store t_uint64
+                    load @row
+                    push 8
+                    add
+                    load @i
+                    inc
+                    store t_uint64
+                    load @row
+                    push 16
+                    add
+                    load @seq
+                    store t_uint64
+                    load @row
+                    push 24
+                    add
+                    load @logical
+                    store t_uint64
+                    load @row
+                    push 32
+                    add
+                    load @commit
+                    store t_uint64
+                    load @row
+                    push 40
+                    add
+                    load @kind
+                    store t_uint64
+                    load @row
+                    push 48
+                    add
+                    load @fuel
+                    store t_uint64
+                    load @row
+                    push 56
+                    add
+                    load @site
+                    store t_uint64
+                    load @row
+                    push 64
+                    add
+                    load @result
+                    store t_uint64
+                end
+                load @i
+                inc
+                store @i
+            end
+        end
+    }
 }
