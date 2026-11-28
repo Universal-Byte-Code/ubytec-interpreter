@@ -84,8 +84,12 @@ public sealed class PortableTemporalScalarReferenceTests
     public void PureLoopAndContinueCannotEscapeEventBudget()
     {
         foreach (string body in new[] { "loop\nnop\nend", "loop\ncontinue\nend" })
-            Assert.Throws<InvalidOperationException>(() =>
-                PortableTemporalScalarReference.Run(Image(body), [0], quantum: 2, maxEvents: 5));
+        {
+            byte[] image = Image(body + "\npush 42\nreturn");
+            var error = Assert.Throws<InvalidOperationException>(() =>
+                PortableTemporalScalarReference.Run(image, [0], quantum: 2, maxEvents: 5));
+            Assert.Contains("Publication resource limit", error.Message);
+        }
     }
 
     [Fact]
