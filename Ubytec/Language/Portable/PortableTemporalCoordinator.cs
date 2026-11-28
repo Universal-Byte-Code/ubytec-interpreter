@@ -255,7 +255,9 @@ public sealed partial class PortableTemporalCoordinator
         if (entry.Kind == PortableAdmissionKind.RevokeClock)
         {
             if (!_contexts[target].Clock) throw new InvalidDataException("Clock grant is not active.");
-            Publish(0, PortableTemporalEffectKind.ClockGrantRevoked, target, entry.Ordinal);
+            Publication.RequireCapacity(2);
+            var revoke = Publish(0, PortableTemporalEffectKind.ClockRevokeAdmission, target, entry.Ordinal);
+            Publish(target, PortableTemporalEffectKind.ClockGrantRevoked, 0, 0, revoke.Id);
             _contexts[target].Clock = false;
             return;
         }
